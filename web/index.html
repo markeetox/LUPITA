@@ -1,0 +1,306 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Fish habitat map</title>
+<link href="https://cdn.jsdelivr.net/npm/maplibre-gl@4.7.1/dist/maplibre-gl.css" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0b1626; --card: #0f1b2d; --line: #22344f; --text: #e6edf6; --muted: #8fa3bd;
+    --mahi: #34d399; --yellowtail: #fbbf24; --snook: #60a5fa;
+  }
+  * { box-sizing: border-box; }
+  html, body { height: 100%; margin: 0; background: var(--bg); color: var(--text);
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; }
+  #map { position: absolute; inset: 0; }
+
+  .panel { position: absolute; top: calc(env(safe-area-inset-top, 0px) + 12px); left: 12px; z-index: 5;
+    max-width: min(320px, calc(100% - 24px)); background: rgba(15,27,45,.92); border: 1px solid var(--line);
+    border-radius: 14px; padding: 12px 14px; backdrop-filter: blur(6px); }
+  .panel h1 { font-size: 15px; margin: 0 0 2px; letter-spacing: .2px; }
+  .panel p { margin: 0; font-size: 12px; color: var(--muted); line-height: 1.4; }
+  .chip { display: inline-block; margin-top: 8px; font-size: 11px; padding: 3px 8px; border-radius: 999px;
+    border: 1px solid var(--line); color: var(--muted); }
+  .chip.warn { color: #fbbf24; border-color: #5b4a1a; }
+  .chip.ok { color: #34d399; border-color: #1c5a47; }
+
+  .maplibregl-popup { max-width: 350px !important; }
+  .maplibregl-popup-content { background: var(--card); color: var(--text); padding: 0; border-radius: 16px;
+    border: 1px solid var(--line); box-shadow: 0 12px 40px rgba(0,0,0,.5); overflow: hidden; }
+  .maplibregl-popup-anchor-bottom .maplibregl-popup-tip { border-top-color: var(--card); }
+  .maplibregl-popup-anchor-top .maplibregl-popup-tip { border-bottom-color: var(--card); }
+  .maplibregl-popup-anchor-left .maplibregl-popup-tip { border-right-color: var(--card); }
+  .maplibregl-popup-anchor-right .maplibregl-popup-tip { border-left-color: var(--card); }
+  .maplibregl-popup-close-button { color: #fff; font-size: 22px; padding: 2px 10px; z-index: 2; }
+  .maplibregl-ctrl-attrib { font-size: 10px; }
+
+  .pop { max-height: min(72vh, 560px); overflow-y: auto; }
+  .hero { position: relative; height: 120px; display: flex; align-items: flex-end; padding: 12px 14px;
+    background: linear-gradient(135deg, var(--c) 0%, #0b1626 120%); }
+  .hero .photo { position: absolute; top: 10px; left: 14px; font-size: 10px; letter-spacing: .6px;
+    text-transform: uppercase; padding: 3px 7px; border-radius: 6px; background: rgba(0,0,0,.35); color: #dbe7f5; }
+  .hero h2 { margin: 0; font-size: 20px; line-height: 1.1; text-shadow: 0 1px 8px rgba(0,0,0,.4); }
+  .hero small { display: block; font-style: italic; opacity: .85; font-size: 12px; margin-top: 2px; }
+  .score { position: absolute; right: 14px; bottom: 12px; text-align: center; background: rgba(11,22,38,.78);
+    border-radius: 12px; padding: 6px 10px; }
+  .score b { display: block; font-size: 18px; }
+  .score span { font-size: 10px; color: var(--muted); text-transform: uppercase; letter-spacing: .5px; }
+  .sample { background: #3a2f10; color: #fbbf24; font-size: 11px; padding: 6px 14px; }
+
+  .sec { padding: 12px 14px; border-top: 1px solid var(--line); }
+  .sec h3 { margin: 0 0 8px; font-size: 11px; text-transform: uppercase; letter-spacing: .8px; color: var(--muted); }
+  .reason { display: flex; gap: 8px; align-items: flex-start; font-size: 13px; line-height: 1.4; margin-bottom: 8px; }
+  .reason:last-child { margin-bottom: 0; }
+  .tag { flex: none; margin-top: 1px; font-size: 9px; text-transform: uppercase; letter-spacing: .5px;
+    padding: 2px 6px; border-radius: 5px; font-weight: 600; }
+  .tag.measured { background: #12392f; color: #34d399; }
+  .tag.modeled  { background: #14304f; color: #60a5fa; }
+  .tag.seasonal { background: #3b2d12; color: #fbbf24; }
+  .tag.static   { background: #2a2a3d; color: #b4b4e8; }
+  dl { display: grid; grid-template-columns: 92px 1fr; gap: 6px 10px; margin: 0; font-size: 13px; }
+  dt { color: var(--muted); }
+  dd { margin: 0; }
+  a { color: #7cc0ff; }
+  .foot { font-size: 11px; color: var(--muted); padding: 10px 14px 14px; border-top: 1px solid var(--line); }
+
+  .hovertip .maplibregl-popup-content { padding: 5px 10px; font-size: 12px; border-radius: 8px; }
+  .hovertip .maplibregl-popup-tip { display: none; }
+  .buoy { padding: 12px 14px; min-width: 220px; }
+  .buoy h2 { margin: 0 0 2px; font-size: 15px; }
+  .buoy small { color: var(--muted); }
+  .buoy dl { margin-top: 10px; }
+</style>
+</head>
+<body>
+<div id="map"></div>
+<div class="panel">
+  <h1>Fish habitat map</h1>
+  <p>Tap a fish marker or zone to see why it may be there. Preview build.</p>
+  <span id="status" class="chip warn">Sample fish data</span>
+  <span id="buoyStatus" class="chip">Buoys: not connected</span>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/maplibre-gl@4.7.1/dist/maplibre-gl.js"></script>
+<script>
+/* ------------------------------------------------------------------
+   CONFIG
+   Live buoy data: the Actions job publishes latest.json to the "data" branch.
+   Set the URL below, or open the page with ?data=<url> to try it.
+   Example: https://raw.githubusercontent.com/YOUR_USER/YOUR_REPO/data/latest.json
+------------------------------------------------------------------- */
+const DATA_URL_DEFAULT = "";
+const DATA_URL = new URLSearchParams(location.search).get("data") || DATA_URL_DEFAULT;
+
+const BASE_STYLE = "https://tiles.openfreemap.org/styles/liberty";
+const FALLBACK_STYLE = {
+  version: 8,
+  sources: { osm: { type: "raster", tileSize: 256, tiles: ["https://tile.openstreetmap.org/{z}/{x}/{y}.png"],
+    attribution: "&copy; OpenStreetMap contributors" } },
+  layers: [{ id: "osm", type: "raster", source: "osm" }]
+};
+
+/* ------------------------------------------------------------------
+   SAMPLE DATA (placeholder values, NOT real predictions)
+   The real pipeline will write the same shape: one entry per spot,
+   with reasons built from live readings.
+------------------------------------------------------------------- */
+const SPECIES = {
+  "mahi-mahi": { name: "Mahi-mahi", sci: "Coryphaena hippurus", color: "#34d399",
+    specs: [["Typical size", "Common up to about 50 lb; can reach about 100 lb"],
+            ["Diet", "Small fish, crabs, shrimp, flying fish, mackerels"],
+            ["Where", "Offshore, near floating weed lines and debris"],
+            ["Lifespan", "About 6 years"]] },
+  "yellowtail-snapper": { name: "Yellowtail snapper", sci: "Ocyurus chrysurus", color: "#fbbf24",
+    specs: [["Typical size", "8 to 14 in; up to about 34 in"],
+            ["Diet", "Fish and invertebrates"],
+            ["Adult depth", "Mostly 10-70 m near offshore reefs"],
+            ["Spawning", "April through August"]] },
+  "snook": { name: "Common snook", sci: "Centropomus undecimalis", color: "#60a5fa",
+    specs: [["Typical size", "Up to about 48 in (50 lb)"],
+            ["Diet", "Fish and large crustaceans"],
+            ["Where", "Mangroves, seagrass, inlets, docks, beaches"],
+            ["Cold limit", "Cannot tolerate water below about 60 F"]] }
+};
+
+const SPOTS = {
+  m1: { species: "mahi-mahi", title: "Temperature break, offshore", score: 0.78, confidence: "Medium",
+    reasons: [
+      ["measured", "Water is 27.8 C at the nearest buoy, inside the 25-29 C range where mahi are most active. (sample)"],
+      ["modeled", "A sharp temperature break runs through this zone, where warm and cooler water meet. Bait and mahi gather there. (sample)"],
+      ["modeled", "Chlorophyll is low and the water is clean blue, the type mahi favor. (sample)"],
+      ["modeled", "Current of about 1.8 kn is carrying drifting weed along the edge. (sample)"]],
+    location: [["Water depth", "About 300 m"], ["Surface temp", "27.8 C (sample)"], ["Current", "1.8 kn, northbound (sample)"], ["Nearest buoy", "Fowey Rocks (sample)"]] },
+  y1: { species: "yellowtail-snapper", title: "Reef ledge, Fowey Rocks area", score: 0.71, confidence: "Medium",
+    reasons: [
+      ["static", "This is natural reef, the structure yellowtail hold on. (sample)"],
+      ["static", "Depth of about 18 m sits inside the 10-70 m range adults use. (sample)"],
+      ["measured", "Water is 28.1 C, within the 22-28 C range yellowtail prefer. (sample)"],
+      ["seasonal", "Spawning season runs April to August, so check the date before relying on this. (sample)"]],
+    location: [["Water depth", "About 18 m (sample)"], ["Bottom", "Natural reef / ledge"], ["Surface temp", "28.1 C (sample)"], ["Nearest buoy", "Fowey Rocks (sample)"]] },
+  s1: { species: "snook", title: "Inlet and mangrove edge", score: 0.66, confidence: "Low",
+    reasons: [
+      ["measured", "Water is 28.4 C, well above the cold limit where snook stop feeding. (sample)"],
+      ["static", "Mangrove edge and seawalls give snook cover to ambush prey. (sample)"],
+      ["modeled", "The tide is falling, flushing bait out past the spots where snook wait. (sample)"],
+      ["seasonal", "Snook gather at inlets to spawn from spring through early fall. (sample)"]],
+    location: [["Water depth", "1-4 m (sample)"], ["Bottom", "Mangrove edge, seawall"], ["Tide", "Falling (sample)"], ["Nearest inlet", "Haulover Inlet (sample)"]] }
+};
+
+const SAMPLE_POINTS = [
+  { id: "m1", coords: [-79.93, 25.52] },
+  { id: "y1", coords: [-80.078, 25.585] },
+  { id: "s1", coords: [-80.125, 25.903] }
+];
+const SAMPLE_ZONES = [
+  { id: "m1", ring: [[-80.00, 25.42], [-79.84, 25.40], [-79.80, 25.62], [-79.96, 25.66], [-80.00, 25.42]] },
+  { id: "y1", ring: [[-80.12, 25.56], [-80.04, 25.55], [-80.03, 25.63], [-80.11, 25.64], [-80.12, 25.56]] },
+  { id: "s1", ring: [[-80.15, 25.88], [-80.10, 25.88], [-80.10, 25.93], [-80.15, 25.93], [-80.15, 25.88]] }
+];
+
+/* ------------------------------------------------------------------ */
+function esc(v) {
+  return String(v == null ? "" : v).replace(/[&<>"']/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
+}
+const TAG_LABEL = { measured: "Measured", modeled: "Modeled", seasonal: "Seasonal", static: "Mapped" };
+
+function spotHTML(spotId) {
+  const s = SPOTS[spotId], sp = SPECIES[s.species];
+  return `<div class="pop">
+    <div class="hero" style="--c:${sp.color}">
+      <span class="photo">Photo coming soon</span>
+      <div><h2>${esc(sp.name)}</h2><small>${esc(sp.sci)}</small></div>
+      <div class="score"><b>${Math.round(s.score * 100)}%</b><span>${esc(s.confidence)} conf.</span></div>
+    </div>
+    <div class="sample">Sample data: placeholder values, not a real prediction.</div>
+    <div class="sec"><h3>Why it may be here</h3>
+      ${s.reasons.map(r => `<div class="reason"><span class="tag ${r[0]}">${TAG_LABEL[r[0]]}</span><span>${esc(r[1])}</span></div>`).join("")}
+    </div>
+    <div class="sec"><h3>About this spot: ${esc(s.title)}</h3>
+      <dl>${s.location.map(x => `<dt>${esc(x[0])}</dt><dd>${esc(x[1])}</dd>`).join("")}</dl>
+    </div>
+    <div class="sec"><h3>About the fish</h3>
+      <dl>${sp.specs.map(x => `<dt>${esc(x[0])}</dt><dd>${esc(x[1])}</dd>`).join("")}</dl>
+    </div>
+    <div class="foot">Check current size and bag limits before keeping any fish:
+      <a href="https://myfwc.com/fishing/saltwater/" target="_blank" rel="noopener">FWC saltwater fishing</a></div>
+  </div>`;
+}
+
+function fmt(v, unit, digits) {
+  return (v === null || v === undefined) ? "n/a" : (typeof v === "number" ? v.toFixed(digits == null ? 1 : digits) : v) + (unit ? " " + unit : "");
+}
+function buoyHTML(b) {
+  return `<div class="buoy"><h2>${esc(b.name || b.station)}</h2><small>Station ${esc(b.station)} &middot; ${esc(b.time_utc || "")}</small>
+    <dl>
+      <dt>Water temp</dt><dd>${esc(fmt(b.water_temp_c, "C"))}</dd>
+      <dt>24 h change</dt><dd>${esc(fmt(b.water_temp_change_24h_c, "C"))}</dd>
+      <dt>Wind</dt><dd>${esc(fmt(b.wind_kn, "kn"))}${b.wind_dir_deg != null ? " from " + esc(Math.round(b.wind_dir_deg)) + "&deg;" : ""}</dd>
+      <dt>Waves</dt><dd>${esc(fmt(b.wave_height_m, "m"))}</dd>
+      <dt>Pressure</dt><dd>${esc(fmt(b.pressure_hpa, "hPa"))} (${esc(fmt(b.pressure_change_3h_hpa, "hPa", 1))} / 3 h)</dd>
+    </dl></div>`;
+}
+
+/* ---------------- map ---------------- */
+const map = new maplibregl.Map({
+  container: "map", style: BASE_STYLE, center: [-80.0, 25.72], zoom: 8.7, attributionControl: { compact: true }
+});
+map.addControl(new maplibregl.NavigationControl({ showCompass: false }), "bottom-right");
+map.addControl(new maplibregl.GeolocateControl({ trackUserLocation: false }), "bottom-right");
+
+let usedFallback = false, handlersBound = false, buoyData = null;
+map.on("error", () => {
+  if (!map.isStyleLoaded() && !usedFallback) { usedFallback = true; map.setStyle(FALLBACK_STYLE); }
+});
+
+const colorMatch = ["match", ["get", "species"]].concat(
+  Object.entries(SPECIES).flatMap(([k, v]) => [k, v.color]), ["#ffffff"]);
+
+function addData() {
+  if (map.getSource("spots")) return;
+  map.addSource("zones", { type: "geojson", data: { type: "FeatureCollection", features: SAMPLE_ZONES.map(z => ({
+    type: "Feature", properties: { spotId: z.id, species: SPOTS[z.id].species },
+    geometry: { type: "Polygon", coordinates: [z.ring] } })) } });
+  map.addSource("spots", { type: "geojson", data: { type: "FeatureCollection", features: SAMPLE_POINTS.map(p => ({
+    type: "Feature", properties: { spotId: p.id, species: SPOTS[p.id].species },
+    geometry: { type: "Point", coordinates: p.coords } })) } });
+  map.addLayer({ id: "zones-fill", type: "fill", source: "zones", paint: { "fill-color": colorMatch, "fill-opacity": 0.2 } });
+  map.addLayer({ id: "zones-line", type: "line", source: "zones",
+    paint: { "line-color": colorMatch, "line-width": 2, "line-dasharray": [2, 2] } });
+  map.addLayer({ id: "spots-halo", type: "circle", source: "spots",
+    paint: { "circle-radius": 17, "circle-color": colorMatch, "circle-opacity": 0.28 } });
+  map.addLayer({ id: "spots", type: "circle", source: "spots",
+    paint: { "circle-radius": 9, "circle-color": colorMatch, "circle-stroke-color": "#ffffff", "circle-stroke-width": 2.5 } });
+  addBuoys();
+  bindHandlers();
+}
+
+function addBuoys() {
+  if (!buoyData || map.getSource("buoys")) return;
+  const feats = buoyData.filter(b => b.ok && b.lat != null && b.lon != null).map(b => ({
+    type: "Feature", properties: { idx: buoyData.indexOf(b) }, geometry: { type: "Point", coordinates: [b.lon, b.lat] } }));
+  map.addSource("buoys", { type: "geojson", data: { type: "FeatureCollection", features: feats } });
+  map.addLayer({ id: "buoys", type: "circle", source: "buoys",
+    paint: { "circle-radius": 5, "circle-color": "#0b1626", "circle-stroke-color": "#e6edf6", "circle-stroke-width": 2 } });
+}
+
+let popup = null;
+function openPopup(lngLat, html, maxWidth) {
+  if (popup) popup.remove();
+  popup = new maplibregl.Popup({ maxWidth: maxWidth || "350px", offset: 14, focusAfterOpen: false })
+    .setLngLat(lngLat).setHTML(html).addTo(map);
+}
+
+function bindHandlers() {
+  if (handlersBound) return;
+  handlersBound = true;
+  const hover = new maplibregl.Popup({ closeButton: false, closeOnClick: false, offset: 16, className: "hovertip" });
+  ["spots", "zones-fill", "buoys"].forEach(layer => {
+    map.on("mouseenter", layer, () => { map.getCanvas().style.cursor = "pointer"; });
+    map.on("mouseleave", layer, () => { map.getCanvas().style.cursor = ""; hover.remove(); });
+  });
+  map.on("mousemove", "spots", e => {
+    const f = e.features[0];
+    hover.setLngLat(f.geometry.coordinates).setText(SPECIES[f.properties.species].name).addTo(map);
+  });
+  map.on("click", "spots", e => {
+    e.originalEvent.__handled = true;
+    openPopup(e.features[0].geometry.coordinates, spotHTML(e.features[0].properties.spotId));
+  });
+  map.on("click", "zones-fill", e => {
+    if (e.originalEvent.__handled) return;
+    e.originalEvent.__handled = true;
+    openPopup(e.lngLat, spotHTML(e.features[0].properties.spotId));
+  });
+  map.on("click", "buoys", e => {
+    if (e.originalEvent.__handled) return;
+    e.originalEvent.__handled = true;
+    openPopup(e.features[0].geometry.coordinates, buoyHTML(buoyData[e.features[0].properties.idx]), "300px");
+  });
+}
+
+map.on("style.load", addData);
+
+/* ---------------- live buoys (optional) ---------------- */
+async function loadBuoys() {
+  const chip = document.getElementById("buoyStatus");
+  if (!DATA_URL) { chip.textContent = "Buoys: set data URL to connect"; return; }
+  try {
+    const res = await fetch(DATA_URL, { cache: "no-store" });
+    if (!res.ok) throw new Error("HTTP " + res.status);
+    const json = await res.json();
+    buoyData = json.buoys || [];
+    const ok = buoyData.filter(b => b.ok).length;
+    chip.textContent = `Live buoys: ${ok} of ${buoyData.length}`;
+    chip.className = "chip " + (ok ? "ok" : "warn");
+    if (map.isStyleLoaded()) addBuoys();
+  } catch (err) {
+    chip.textContent = "Buoys: could not load";
+    chip.className = "chip warn";
+    console.warn("Buoy data failed:", err);
+  }
+}
+loadBuoys();
+</script>
+</body>
+</html>
