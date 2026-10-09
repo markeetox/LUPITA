@@ -1,0 +1,11 @@
+{
+  "note": "Approximate coordinates. Verify each station ID and that it reports water temperature (run: python -m pipeline.check_sources). Some stations do not report every field.",
+  "stations": [
+    { "id": "FWYF1", "name": "Fowey Rocks, FL",        "lat": 25.59, "lon": -80.10 },
+    { "id": "VAKF1", "name": "Virginia Key, FL",       "lat": 25.73, "lon": -80.16 },
+    { "id": "MLRF1", "name": "Molasses Reef, FL",      "lat": 25.01, "lon": -80.38 },
+    { "id": "LKWF1", "name": "Lake Worth Pier, FL",    "lat": 26.61, "lon": -80.03 },
+    { "id": "SMKF1", "name": "Sombrero Key, FL",       "lat": 24.63, "lon": -81.11 },
+    { "id": "41114", "name": "Fort Pierce, FL (buoy)", "lat": 27.55, "lon": -80.22 }
+  ]
+}

@@ -1,0 +1,34 @@
+name: Pull ocean data
+
+on:
+  schedule:
+    - cron: "0 */3 * * *"   # every 3 hours (UTC)
+  workflow_dispatch: {}
+
+permissions:
+  contents: write
+
+jobs:
+  pull:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: pip install -r requirements.txt
+      - run: python -m pytest -q
+      - run: python -m pipeline.run_v1
+      # Publishes data/live (plus the species files and parameter registry) to a "data" branch,
+      # so Vercel does not redeploy on every pull and Seabound can fetch the JSON from there.
+      - run: |
+          mkdir -p publish
+          cp data/live/*.json publish/ || true
+          cp data/parameters.json publish/
+          cp -r data/species publish/species
+      - uses: peaceiris/actions-gh-pages@v4
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./publish
+          publish_branch: data
+          force_orphan: true
