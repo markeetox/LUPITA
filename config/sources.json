@@ -1,5 +1,5 @@
 {
-  "note": "ERDDAP dataset IDs and dimensions must be confirmed with: python -m pipeline.check_sources. Datasets can be renamed or retired.",
+  "note": "ERDDAP dataset IDs and dimensions verified with check_sources. gradient_min values are placeholders to calibrate against real grids.",
   "region": { "name": "south_florida", "lat": [24.5, 27.0], "lon": [-81.0, -78.5] },
   "ndbc": { "realtime_url": "https://www.ndbc.noaa.gov/data/realtime2/{station}.txt" },
   "erddap": {
@@ -10,17 +10,23 @@
       "variable": "analysed_sst",
       "dims": ["time", "latitude", "longitude"],
       "stride": { "latitude": 2, "longitude": 2 },
-      "parameter": "sst_c"
+      "parameter": "sst_c",
+      "log_scale": false,
+      "gradient_unit": "degC per km",
+      "gradient_min": 0.05
     },
     "chlorophyll": {
-      "enabled": false,
+      "enabled": true,
       "base": "https://coastwatch.pfeg.noaa.gov/erddap",
       "dataset": "nesdisVHNSQchlaDaily",
       "variable": "chlor_a",
       "dims": ["time", "altitude", "latitude", "longitude"],
       "stride": { "latitude": 2, "longitude": 2 },
       "parameter": "chlorophyll",
-      "note": "Disabled until the dataset ID and dimensions are verified."
+      "log_scale": true,
+      "gradient_unit": "log10(mg/m3) per km",
+      "gradient_min": 0.02,
+      "note": "Daily scenes have gaps under cloud; see valid_fraction in the output."
     }
   }
 }
