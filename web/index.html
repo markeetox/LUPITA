@@ -19,19 +19,36 @@
   .maplibregl-map, .maplibregl-ctrl, .maplibregl-ctrl-attrib { font-family: var(--font); }
   .maplibregl-ctrl-attrib { font-size: 11px; }
 
-  .panel { position: absolute; top: calc(env(safe-area-inset-top, 0px) + 12px); left: 12px; z-index: 5;
-    max-width: min(340px, calc(100% - 24px)); background: rgba(15,27,45,.92); border: 1px solid var(--line);
-    border-radius: 14px; padding: 12px 14px; backdrop-filter: blur(6px); }
-  .panel h1 { font-size: 20px; margin: 0 0 2px; }
-  .panel p { margin: 0; font-size: 14px; color: var(--muted); line-height: 1.35; }
-  .chip { display: inline-block; margin: 8px 6px 0 0; font-size: 13px; padding: 3px 9px; border-radius: 999px;
+  /* top panel: slides down from the top, hides back up, leaving only an arrow tab */
+  .topsheet { position: fixed; top: 0; left: 0; right: 0; margin: 0 auto; width: 100%; max-width: 560px; z-index: 15;
+    background: rgba(15,27,45,.96); border: 1px solid var(--line); border-top: none; border-radius: 0 0 20px 20px;
+    box-shadow: 0 14px 40px rgba(0,0,0,.5); backdrop-filter: blur(8px);
+    padding: calc(env(safe-area-inset-top, 0px) + 12px) 16px 16px;
+    transition: transform .34s cubic-bezier(.2,.8,.2,1); }
+  .topsheet.closed { transform: translateY(-100%); box-shadow: none; }
+  .topsheet h1 { font-size: 22px; margin: 0 0 8px; }
+  .lbl { display: block; font-size: 13px; color: var(--muted); margin-bottom: 4px; }
+  .select { width: 100%; font-size: 17px; color: var(--text); background-color: #0b1626; border: 1px solid var(--line);
+    border-radius: 12px; padding: 11px 40px 11px 12px; appearance: none; -webkit-appearance: none;
+    background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='14' height='9' viewBox='0 0 14 9'><path d='M1 1l6 6 6-6' fill='none' stroke='%238fa3bd' stroke-width='2' stroke-linecap='round'/></svg>");
+    background-repeat: no-repeat; background-position: right 14px center; }
+  .select:focus { outline: 2px solid #3b82f6; outline-offset: 1px; }
+  .note { margin: 10px 0 0; font-size: 14px; line-height: 1.35; }
+  .note div { display: flex; gap: 8px; margin-bottom: 5px; color: var(--muted); }
+  .note i { flex: none; width: 10px; height: 10px; border-radius: 50%; margin-top: 5px; }
+  .note b { color: var(--text); }
+  .chips { margin-top: 4px; }
+  .chip { display: inline-block; margin: 6px 6px 0 0; font-size: 13px; padding: 3px 9px; border-radius: 999px;
     border: 1px solid var(--line); color: var(--muted); }
   .chip.warn { color: #fbbf24; border-color: #5b4a1a; }
   .chip.ok { color: #34d399; border-color: #1c5a47; }
-  .list { margin: 10px 0 0; padding: 8px 0 0; border-top: 1px solid var(--line); font-size: 14px; line-height: 1.35; }
-  .list div { display: flex; gap: 8px; margin-bottom: 5px; color: var(--muted); }
-  .list i { flex: none; width: 10px; height: 10px; border-radius: 50%; margin-top: 5px; }
-  .list b { color: var(--text); }
+  .hint { margin: 10px 0 0; font-size: 13px; color: var(--muted); line-height: 1.35; }
+  .tab { position: absolute; top: 100%; left: 50%; width: 76px; height: 30px; margin-left: -38px; padding: 0;
+    display: flex; align-items: center; justify-content: center; cursor: pointer; color: var(--text);
+    background: rgba(15,27,45,.96); border: 1px solid var(--line); border-top: none; border-radius: 0 0 16px 16px; }
+  .tab svg { transition: transform .3s; }
+  .topsheet:not(.closed) .tab svg { transform: rotate(180deg); }
+  .topsheet.closed .tab { margin-top: env(safe-area-inset-top, 0px); }
 
   .sheet { position: fixed; left: 0; right: 0; bottom: 0; margin: 0 auto; width: 100%; max-width: 560px;
     max-height: 72vh; display: flex; flex-direction: column; z-index: 20;
@@ -82,12 +99,19 @@
 <body>
 <div id="map"></div>
 
-<div class="panel">
-  <h1>Fish habitat map</h1>
-  <p>Tap a marker or zone to see why a fish may be there. Experimental.</p>
-  <span id="status" class="chip">Loading...</span><span id="buoyStatus" class="chip">Buoys: loading...</span>
-  <div id="speciesList" class="list" hidden></div>
-</div>
+<section id="topsheet" class="topsheet" aria-label="Fish and map controls">
+  <div id="topBody">
+    <h1>Fish habitat map</h1>
+    <label for="fishSelect" class="lbl">Show fish</label>
+    <select id="fishSelect" class="select"><option value="all">All fish</option></select>
+    <div id="fishNote" class="note"></div>
+    <div class="chips"><span id="status" class="chip">Loading...</span><span id="buoyStatus" class="chip">Buoys: loading...</span></div>
+    <p class="hint">Tap a marker or zone to see why a fish may be there. Experimental.</p>
+  </div>
+  <button id="topTab" class="tab" type="button" aria-expanded="true" aria-label="Hide panel">
+    <svg width="18" height="11" viewBox="0 0 18 11" aria-hidden="true"><path d="M2 2l7 7 7-7" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+  </button>
+</section>
 
 <section id="sheet" class="sheet" aria-hidden="true" aria-label="Details">
   <div id="grab" class="grab"></div>
@@ -142,7 +166,11 @@ const SAMPLE = {
 };
 
 /* ---------------- state ---------------- */
-let FISH = null, BUOYS = null;
+const store = {
+  get(k) { try { return localStorage.getItem(k); } catch (e) { return null; } },
+  set(k, v) { try { localStorage.setItem(k, v); } catch (e) { /* private mode: ignore */ } }
+};
+let FISH = null, BUOYS = null, FILTER = store.get("fhm.fish") || "all";
 const SPECIES = {}, SPOTS = {};
 function setFish(data) {
   FISH = data;
@@ -206,6 +234,7 @@ const closeBtn = document.getElementById("sheetClose");
 const grab = document.getElementById("grab");
 
 function openSheet(html, lngLat) {
+  if (window.innerWidth < 700) setTop(false, false);       // keep the small screen free for the details
   sheetBody.innerHTML = html;
   sheetBody.scrollTop = 0;
   sheet.classList.add("open");
@@ -256,8 +285,11 @@ function spotZone(s) {
   if (s.ring && s.ring.length > 3) return { type: "Polygon", coordinates: [s.ring] };
   return null;
 }
+function visibleSpots() {
+  return Object.values(SPOTS).filter(s => FILTER === "all" || s.species === FILTER);
+}
 function spotFeatures() {
-  const spots = Object.values(SPOTS);
+  const spots = visibleSpots();
   const color = s => (SPECIES[s.species] || {}).color || "#ffffff";
   return {
     points: { type: "FeatureCollection", features: spots.map(s => ({ type: "Feature",
@@ -286,10 +318,11 @@ function addData() {
 }
 
 function fitToSpots() {
-  const pts = Object.values(SPOTS).flatMap(s => (s.rings ? s.rings.flat() : (s.ring && s.ring.length > 3 ? s.ring : [s.coords])));
+  const pts = visibleSpots().flatMap(s => (s.rings ? s.rings.flat() : (s.ring && s.ring.length > 3 ? s.ring : [s.coords])));
   if (!pts.length) return;
   const b = pts.reduce((bb, p) => bb.extend(p), new maplibregl.LngLatBounds(pts[0], pts[0]));
-  map.fitBounds(b, { padding: { top: 150, left: 40, right: 40, bottom: 60 }, maxZoom: 10, duration: 800 });
+  const top = topSheet.classList.contains("closed") ? 70 : topSheet.offsetHeight + 24;
+  map.fitBounds(b, { padding: { top, left: 40, right: 40, bottom: 60 }, maxZoom: 10, duration: 800 });
 }
 
 function refreshSpots() {
@@ -336,17 +369,56 @@ function ago(iso) {
   if (!isFinite(m)) return "";
   return m < 90 ? `${Math.max(m, 1)} min ago` : m < 2880 ? `${Math.round(m / 60)} h ago` : `${Math.round(m / 1440)} days ago`;
 }
+/* top panel: slide up/down, remembered between visits */
+const topSheet = document.getElementById("topsheet"), topTab = document.getElementById("topTab");
+const fishSelect = document.getElementById("fishSelect"), fishNote = document.getElementById("fishNote");
+function setTop(open, save) {
+  topSheet.classList.toggle("closed", !open);
+  topTab.setAttribute("aria-expanded", String(open));
+  topTab.setAttribute("aria-label", open ? "Hide panel" : "Show panel");
+  document.getElementById("topBody").setAttribute("aria-hidden", String(!open));
+  if (save !== false) store.set("fhm.panel", open ? "open" : "closed");
+}
+topTab.addEventListener("click", () => setTop(topSheet.classList.contains("closed")));
+let tStart = null;                                           // swipe up on the panel to hide it
+topSheet.addEventListener("touchstart", e => { tStart = (e.target.closest && e.target.closest("select")) ? null : e.touches[0].clientY; }, { passive: true });
+topSheet.addEventListener("touchend", e => {
+  if (tStart == null) return;
+  const dy = e.changedTouches[0].clientY - tStart;
+  tStart = null;
+  if (dy < -50) setTop(false);
+});
+setTop(store.get("fhm.panel") !== "closed", false);
+
+function speciesLabel(s) {
+  if (s.status === "ok") return `${s.spots} area${s.spots === 1 ? "" : "s"}`;
+  return s.status === "unavailable" ? "no data yet" : "none today";
+}
+function renderNote() {
+  const list = (FISH.species || []).filter(s => FILTER === "all" || s.id === FILTER);
+  fishNote.innerHTML = list.map(s => {
+    const note = s.status === "ok" ? `${s.spots} area${s.spots === 1 ? "" : "s"} today` : (s.message || s.status);
+    return `<div><i style="background:${esc(s.color)}"></i><span><b>${esc(s.name)}</b>: ${esc(note)}</span></div>`;
+  }).join("");
+}
+fishSelect.addEventListener("change", () => {
+  FILTER = fishSelect.value;
+  store.set("fhm.fish", FILTER);
+  renderNote();
+  closeSheet();
+  refreshSpots();
+});
 function renderPanel() {
-  const chip = document.getElementById("status"), list = document.getElementById("speciesList");
+  const chip = document.getElementById("status");
   if (!FISH) return;
   if (FISH.sample) { chip.textContent = "Sample data (live data not found)"; chip.className = "chip warn"; }
   else if (FISH.error) { chip.textContent = FISH.error; chip.className = "chip warn"; }
   else { chip.textContent = "Live, experimental" + (FISH.generated_utc ? " · " + ago(FISH.generated_utc) : ""); chip.className = "chip ok"; }
-  list.hidden = false;
-  list.innerHTML = (FISH.species || []).map(s => {
-    const note = s.status === "ok" ? `${s.spots} area${s.spots === 1 ? "" : "s"} today` : (s.message || s.status);
-    return `<div><i style="background:${esc(s.color)}"></i><span><b>${esc(s.name)}</b>: ${esc(note)}</span></div>`;
-  }).join("");
+  if (FILTER !== "all" && !SPECIES[FILTER]) FILTER = "all";    // saved choice no longer exists
+  fishSelect.innerHTML = `<option value="all">All fish</option>` +
+    (FISH.species || []).map(s => `<option value="${esc(s.id)}">${esc(s.name)} (${esc(speciesLabel(s))})</option>`).join("");
+  fishSelect.value = FILTER;
+  renderNote();
 }
 
 /* ---------------- load data ---------------- */
