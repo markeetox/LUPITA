@@ -251,6 +251,11 @@ map.on("error", () => {
   if (!map.isStyleLoaded() && !usedFallback) { usedFallback = true; map.setStyle(FALLBACK_STYLE); }
 });
 
+function spotZone(s) {
+  if (s.rings && s.rings.length) return { type: "MultiPolygon", coordinates: s.rings.map(r => [r]) };
+  if (s.ring && s.ring.length > 3) return { type: "Polygon", coordinates: [s.ring] };
+  return null;
+}
 function spotFeatures() {
   const spots = Object.values(SPOTS);
   const color = s => (SPECIES[s.species] || {}).color || "#ffffff";
@@ -258,9 +263,9 @@ function spotFeatures() {
     points: { type: "FeatureCollection", features: spots.map(s => ({ type: "Feature",
       properties: { spotId: s.id, species: s.species, color: color(s) },
       geometry: { type: "Point", coordinates: s.coords } })) },
-    zones: { type: "FeatureCollection", features: spots.filter(s => s.ring && s.ring.length > 3).map(s => ({ type: "Feature",
-      properties: { spotId: s.id, species: s.species, color: color(s) },
-      geometry: { type: "Polygon", coordinates: [s.ring] } })) }
+    zones: { type: "FeatureCollection", features: spots.filter(s => spotZone(s)).map(s => ({ type: "Feature",
+      properties: { spotId: s.id, species: s.species, color: color(s), outline: !s.rings },
+      geometry: spotZone(s) })) }
   };
 }
 
@@ -271,7 +276,7 @@ function addData() {
   map.addSource("spots", { type: "geojson", data: f.points });
   const col = ["get", "color"];
   map.addLayer({ id: "zones-fill", type: "fill", source: "zones", paint: { "fill-color": col, "fill-opacity": 0.2 } });
-  map.addLayer({ id: "zones-line", type: "line", source: "zones", paint: { "line-color": col, "line-width": 2, "line-dasharray": [2, 2] } });
+  map.addLayer({ id: "zones-line", type: "line", source: "zones", filter: ["==", ["get", "outline"], true], paint: { "line-color": col, "line-width": 2, "line-dasharray": [2, 2] } });
   map.addLayer({ id: "spots-halo", type: "circle", source: "spots", paint: { "circle-radius": 17, "circle-color": col, "circle-opacity": 0.28 } });
   map.addLayer({ id: "spots", type: "circle", source: "spots",
     paint: { "circle-radius": 9, "circle-color": col, "circle-stroke-color": "#ffffff", "circle-stroke-width": 2.5 } });
@@ -281,7 +286,7 @@ function addData() {
 }
 
 function fitToSpots() {
-  const pts = Object.values(SPOTS).flatMap(s => (s.ring && s.ring.length > 3 ? s.ring : [s.coords]));
+  const pts = Object.values(SPOTS).flatMap(s => (s.rings ? s.rings.flat() : (s.ring && s.ring.length > 3 ? s.ring : [s.coords])));
   if (!pts.length) return;
   const b = pts.reduce((bb, p) => bb.extend(p), new maplibregl.LngLatBounds(pts[0], pts[0]));
   map.fitBounds(b, { padding: { top: 150, left: 40, right: 40, bottom: 60 }, maxZoom: 10, duration: 800 });

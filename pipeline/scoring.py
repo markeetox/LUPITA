@@ -73,6 +73,11 @@ def factor_score(f: dict, layers: dict, ref_cache: dict):
             rng = [None if x is None else float(np.log10(x)) for x in rng]
             ideal = [None if x is None else float(np.log10(x)) for x in ideal]
         return trapezoid(v, rng, ideal)
+    if f["kind"] == "category":
+        preferred = set(f.get("preferred") or [])
+        if not preferred:
+            return None
+        return np.vectorize(lambda x: 1.0 if x in preferred else (np.nan if x is None else 0.0), otypes=[float])(grid)
     if f["kind"] == "higher_is_better":
         if p not in ref_cache:
             ref_cache[p] = offshore_reference(grid, layers.get("depth_m"))
@@ -130,26 +135,37 @@ def score_species(profile: dict, layers: dict) -> dict:
             "ref": ref_cache, "missing": missing}
 
 
-def find_spots(score: np.ndarray, lats: np.ndarray, lons: np.ndarray):
-    """Best connected areas. Returns (spots, best_score)."""
+def _cell_ring(lat: float, lon: float, dlat: float, dlon: float) -> list[list[float]]:
+    a, b, c, d = lon - dlon / 2, lat - dlat / 2, lon + dlon / 2, lat + dlat / 2
+    return [[a, b], [c, b], [c, d], [a, d], [a, b]]
+
+
+def find_spots(score: np.ndarray, lats: np.ndarray, lons: np.ndarray, min_cells: int = MIN_CELLS,
+               max_spots: int = MAX_SPOTS, zone_style: str = "hull"):
+    """Best connected areas. Returns (spots, best_score).
+    zone_style 'hull' outlines each area; 'cells' keeps the exact cells (for reefs and other thin features)."""
     ok = np.isfinite(score)
     if not ok.any():
         return [], None
     best = float(np.nanmax(score))
     cutoff = max(MIN_SCORE_REPORT, float(np.nanpercentile(score[ok], 100 * (1 - TOP_FRACTION))))
-    dlat, dlon = abs(lats[1] - lats[0]), abs(lons[1] - lons[0])
+    dlat, dlon = abs(float(lats[1] - lats[0])), abs(float(lons[1] - lons[0]))
     spots = []
     for comp in components(ok & (score >= cutoff)):
-        if len(comp) < MIN_CELLS:
+        if len(comp) < min_cells:
             continue
         vals = [score[i, j] for i, j in comp]
         bi, bj = comp[int(np.argmax(vals))]
-        pts = [(float(lons[j] + sx * dlon / 2), float(lats[i] + sy * dlat / 2))
-               for i, j in comp for sx in (-1, 1) for sy in (-1, 1)]
-        ring = convex_hull(pts)
-        ring.append(ring[0])
-        spots.append({"cell": (bi, bj), "score": float(max(vals)), "mean": float(np.mean(vals)),
-                      "cells": len(comp), "area_km2": len(comp) * cell_km2(float(lats[bi]), dlat, dlon),
-                      "ring": ring})
-    spots.sort(key=lambda s: -s["score"])
-    return spots[:MAX_SPOTS], best
+        spot = {"cell": (bi, bj), "score": float(max(vals)), "mean": float(np.mean(vals)), "cells": len(comp),
+                "members": comp, "area_km2": len(comp) * cell_km2(float(lats[bi]), dlat, dlon)}
+        if zone_style == "cells":
+            spot["rings"] = [_cell_ring(float(lats[i]), float(lons[j]), dlat, dlon) for i, j in comp]
+        else:
+            pts = [(float(lons[j] + sx * dlon / 2), float(lats[i] + sy * dlat / 2))
+                   for i, j in comp for sx in (-1, 1) for sy in (-1, 1)]
+            ring = convex_hull(pts)
+            ring.append(ring[0])
+            spot["ring"] = ring
+        spots.append(spot)
+    spots.sort(key=lambda s: (-round(s["score"], 2), -s["cells"]))
+    return spots[:max_spots], best

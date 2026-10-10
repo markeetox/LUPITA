@@ -44,6 +44,54 @@ def _near_edge(name: str, param: str, value: float, f: dict, reg: dict) -> str:
     return f"{label} is {_fmt(param, value)} {unit}, just {side} the {lo}-{hi} {unit} sweet spot for {name}, so it still scores well."
 
 
+def _ft(v) -> str:
+    return "unknown" if v is None else f"{float(v):.0f}"
+
+
+def structure_reason(layers: dict, cell: tuple):
+    i, j = cell
+    info = layers.get("structure_info", {}).get(cell)
+    if info:
+        top = max(info, key=lambda x: float(x.get("relief_ft") or 0))
+        more = f" and {len(info) - 1} more" if len(info) > 1 else ""
+        what = top.get("material") or top["kind"].replace("_", " ")
+        return (f"FWC lists {top['name']}{more} here ({what}), about {_ft(top.get('depth_ft'))} ft deep "
+                f"with {_ft(top.get('relief_ft'))} ft of relief.")
+    cover = layers.get("structure_cover")
+    if cover is not None and cover[i, j] > 0:
+        return f"FWRI's habitat map shows coral reef or hard bottom across about {cover[i, j]:.0%} of this area."
+    return None
+
+
+def structure_title(layers: dict, cell: tuple, members: list, lats) -> str:
+    info = layers.get("structure_info", {}).get(cell)
+    if info:
+        top = max(info, key=lambda x: float(x.get("relief_ft") or 0))
+        return top["name"] + (f" and {len(info) - 1} more" if len(info) > 1 else "")
+    cover = layers.get("structure_cover")
+    dlat = abs(float(lats[1] - lats[0]))
+    km2 = 0.0
+    if cover is not None:
+        from pipeline.grid import cell_km2
+        km2 = sum(float(cover[i, j]) * cell_km2(float(lats[i]), dlat, dlat) for i, j in members)
+    return f"Natural reef or hard bottom, about {km2:.1f} km2 mapped"
+
+
+def structure_rows(layers: dict, cell: tuple) -> list:
+    i, j = cell
+    rows = []
+    for x in (layers.get("structure_info", {}).get(cell) or [])[:3]:
+        bits = [x.get("material") or x["kind"].replace("_", " "), f"{_ft(x.get('depth_ft'))} ft deep",
+                f"{_ft(x.get('relief_ft'))} ft relief"]
+        if x.get("deployed"):
+            bits.append(f"deployed {x['deployed']}")
+        rows.append([x["name"], ", ".join(bits)])
+    cover = layers.get("structure_cover")
+    if cover is not None and cover[i, j] > 0:
+        rows.append(["Natural reef", f"{cover[i, j]:.0%} of this area mapped as coral or hard bottom (FWRI compilation, 2012; gaps exist)"])
+    return rows
+
+
 def nearest_buoy(buoys: list[dict], lat: float, lon: float, max_km: float = 60.0):
     best = None
     for b in buoys:
@@ -64,6 +112,11 @@ def build_reasons(profile, name, scored, layers, cell, buoys, reg, lat, lon):
             continue
         s = float(scored["scores"][p][i, j])
         if not np.isfinite(s):
+            continue
+        if f["kind"] == "category":
+            text = structure_reason(layers, cell) if p == "structure_type" else None
+            if s >= 0.6 and text:
+                pos.append((f["weight"] * s, "static", text))
             continue
         v = layers[p][i, j]
         tag, w = TAGS.get(p, "modeled"), f["weight"]
@@ -98,6 +151,7 @@ def build_location(layers, scored, cell, buoys, lat, lon):
     depth = layers.get("depth_m")
     if depth is not None and np.isfinite(depth[i, j]):
         rows.append(["Water depth", f"About {depth[i, j]:.0f} m"])
+    rows += structure_rows(layers, cell)
     sst_t = (layers["times"].get("sst") or "")[:10]
     rows.append(["Surface temp", f"{layers['sst_c'][i, j]:.1f} C (satellite, {sst_t})"])
     chl = layers.get("chlorophyll")
@@ -150,7 +204,9 @@ def build_fish_json(layers, buoys, profiles, registry, generated_utc):
             entry.update(status="unavailable", message=scored["message"])
             species_out.append(entry)
             continue
-        spots, best = scoring.find_spots(scored["score"], lats, lons)
+        style = profile.get("zone_style", "hull")
+        spots, best = scoring.find_spots(scored["score"], lats, lons, min_cells=profile.get("min_cells", scoring.MIN_CELLS),
+                                         max_spots=profile.get("max_spots", scoring.MAX_SPOTS), zone_style=style)
         if not spots:
             msg = "No favorable areas right now." + (f" The best score was {best:.0%}." if best is not None else "")
             entry.update(status="no_favorable_areas", message=msg + _cold_hint(profile, scored, layers))
@@ -160,14 +216,19 @@ def build_fish_json(layers, buoys, profiles, registry, generated_utc):
             i, j = sp["cell"]
             lat, lon = float(lats[i]), float(lons[j])
             cov = float(scored["coverage"][i, j])
-            spots_out.append({
-                "id": f"{sid}-{k}", "species": sid,
-                "title": f"Favorable area, about {sp['area_km2']:.0f} km2",
+            title = (structure_title(layers, (i, j), sp["members"], lats) if profile.get("title_from") == "structure"
+                     else f"Favorable area, about {sp['area_km2']:.0f} km2")
+            item = {
+                "id": f"{sid}-{k}", "species": sid, "title": title,
                 "score": round(sp["score"], 3), "confidence": "Medium" if cov >= 0.9 else "Low",
                 "data_coverage": round(cov, 2), "coords": [round(lon, 4), round(lat, 4)],
-                "ring": [[round(x, 4), round(y, 4)] for x, y in sp["ring"]],
                 "reasons": build_reasons(profile, name, scored, layers, (i, j), buoys, reg, lat, lon),
-                "location": build_location(layers, scored, (i, j), buoys, lat, lon)})
+                "location": build_location(layers, scored, (i, j), buoys, lat, lon)}
+            if "rings" in sp:
+                item["rings"] = [[[round(x, 4), round(y, 4)] for x, y in r] for r in sp["rings"]]
+            else:
+                item["ring"] = [[round(x, 4), round(y, 4)] for x, y in sp["ring"]]
+            spots_out.append(item)
         entry["spots"] = len(spots)
         species_out.append(entry)
     return {

@@ -113,7 +113,8 @@ function renderRun(fish, latest) {
         <td>${b.ok ? pill("ok", "yes") : pill("bad", "no")}</td><td>${num(b.water_temp_c)}</td><td>${num(b.water_temp_change_24h_c)}</td>
         <td>${num(b.wind_kn)}</td><td>${num(b.wave_height_m)}</td><td>${num(b.pressure_hpa)}</td><td>${esc(b.time_utc || "")}</td></tr>`).join("") + `</table></div>`;
     const g = (k, o) => o ? `<div>${k}</div><div>${esc(o.dataset)}: ${esc(o.time)} &middot; valid cells ${num((o.valid_fraction || 0) * 100, 0)}% &middot; range ${num(o.value_min, 2)} to ${num(o.value_max, 2)} &middot; strongest gradient ${num(o.gradient_max, 3)} ${esc(o.gradient_unit || "")}</div>` : `<div>${k}</div><div>${pill("warn", "none")}</div>`;
-    h += `<h2 style="margin-top:16px">Satellite summaries</h2><div class="kv">${g("Temperature", latest.sst)}${g("Chlorophyll", latest.chlorophyll)}</div>`;
+    const st = o => o ? `<div>Reef structure</div><div>${esc(o.artificial_reef_records)} artificial reef records &middot; ${esc(o.natural_reef_polygons)} natural reef polygons &middot; cells: ${esc(o.cells_wreck)} wreck, ${esc(o.cells_artificial_reef)} artificial reef, ${esc(o.cells_natural_reef)} natural reef</div>` : `<div>Reef structure</div><div>${pill("warn", "not loaded")}</div>`;
+    h += `<h2 style="margin-top:16px">Satellite summaries</h2><div class="kv">${g("Temperature", latest.sst)}${g("Chlorophyll", latest.chlorophyll)}${st(latest.structure)}</div>`;
   }
   $("run").innerHTML = h;
 }

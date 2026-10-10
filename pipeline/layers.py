@@ -3,9 +3,9 @@ from __future__ import annotations
 
 import numpy as np
 
-from pipeline import derive
+from pipeline import derive, structure
 from pipeline.grid import resample
-from pipeline.sources import erddap
+from pipeline.sources import arcgis, erddap
 
 
 EDGE_MARGIN_CELLS = 2
@@ -30,7 +30,7 @@ def _fetch_grid(cfg: dict, region: dict, fetch):
     return erddap.parse_grid_csv(fetch(url), cfg["variable"])
 
 
-def load_layers(sources: dict, errors: list[str], fetch=erddap.fetch_csv):
+def load_layers(sources: dict, errors: list[str], fetch=erddap.fetch_csv, fetch_arc=arcgis.fetch_json):
     """Return a dict of layers on the SST grid, or None if SST itself cannot be loaded.
     Chlorophyll and depth are optional; a missing one is None and the scorer copes."""
     region, cfg = sources["region"], sources["erddap"]
@@ -43,6 +43,7 @@ def load_layers(sources: dict, errors: list[str], fetch=erddap.fetch_csv):
     layers = {"lats": lats, "lons": lons, "sst_c": sst,
               "sst_gradient": derive.gradient_magnitude(sst, lats, lons),
               "chlorophyll": None, "depth_m": None, "chl_raw": None,
+              "structure_type": None, "structure_info": {}, "structure_cover": None, "structure_stats": None,
               "times": {"sst": sst_time, "chlorophyll": None},
               "datasets": {"sst": cfg["sst"]["dataset"]}}
 
@@ -68,5 +69,21 @@ def load_layers(sources: dict, errors: list[str], fetch=erddap.fetch_csv):
             layers["datasets"]["bathymetry"] = b["dataset"]
         except Exception as exc:
             errors.append(f"layers bathymetry: {exc}")
+    a = sources.get("arcgis", {})
+    art, nat = a.get("artificial_reefs", {}), a.get("natural_reef", {})
+    if art.get("enabled") and nat.get("enabled"):
+        # Both sources are required: with artificial reefs alone, natural reef would wrongly look empty.
+        try:
+            art_f = arcgis.query_all(art["url"], region, fetch=fetch_arc)
+            nat_f = arcgis.query_all(nat["url"], region, fetch=fetch_arc, return_geometry=True,
+                                     simplify=nat.get("simplify_deg", 0.0005))
+            types, info, cover = structure.build_structure_layer(art_f, nat_f, lats, lons, nat.get("min_cover", 0.01))
+            layers.update(structure_type=types, structure_info=info, structure_cover=cover, structure_stats={
+                "artificial_reef_records": len(art_f), "natural_reef_polygons": len(nat_f),
+                "cells_wreck": int((types == "wreck").sum()), "cells_artificial_reef": int((types == "artificial_reef").sum()),
+                "cells_natural_reef": int((types == "natural_reef").sum())})
+            layers["datasets"]["structure"] = "FWC artificial reefs + FWRI coral and hard bottom"
+        except Exception as exc:
+            errors.append(f"layers structure: {exc}")
     layers["sst_gradient"] = front_strength(sst, layers["depth_m"], lats, lons)
     return layers

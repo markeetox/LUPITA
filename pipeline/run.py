@@ -47,7 +47,7 @@ def main() -> None:
     live = ROOT / "data/live"
     live.mkdir(parents=True, exist_ok=True)
     latest = {"generated_utc": now, "region": sources["region"]["name"], "buoys": buoys,
-              "sst": sst, "chlorophyll": chl, "errors": errors}
+              "sst": sst, "chlorophyll": chl, "structure": (layers or {}).get("structure_stats"), "errors": errors}
     (live / "latest.json").write_text(json.dumps(latest, indent=2, allow_nan=False))
     (live / "fish.json").write_text(json.dumps(fish, indent=1, allow_nan=False))
 

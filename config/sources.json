@@ -92,5 +92,18 @@
       "parameter": "depth_m",
       "note": "NOAA ETOPO 2022, 15 arc-second (about 450 m). Negative values are depth below sea level, so depth_m = -z. Coarse near reefs and shore. Dimensions and variable name unverified."
     }
+  },
+  "arcgis": {
+    "note": "Both reef sources must load or yellowtail is reported as waiting for data. Layer 12 was checked in the browser inspector; the FWRI layer 7 URL comes from FWC's service listing and is not yet verified.",
+    "artificial_reefs": {
+      "enabled": true,
+      "url": "https://gis.myfwc.com/mapping/rest/services/Open_Data/Artificial_Reef_Locations_in_Florida/MapServer/12"
+    },
+    "natural_reef": {
+      "enabled": true,
+      "url": "https://atoll.floridamarine.org/arcgis/rest/services/FWC_GIS/OpenData_MarineEco/MapServer/7",
+      "simplify_deg": 0.0005,
+      "min_cover": 0.01
+    }
   }
 }
