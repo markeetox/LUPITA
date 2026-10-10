@@ -219,5 +219,8 @@
     "Preference for falling tide and for dawn/night is angler guidance, not a study",
     "distance_to_inlet needs an inlet dataset",
     "Image still needed"
-  ]
+  ],
+  "display": {
+    "color": "#60a5fa"
+  }
 }

@@ -149,5 +149,8 @@
     "Current speed preference has no source, so the factor is switched off",
     "Feeding time is unclear (FishBase says mainly at night, another source says diurnal)",
     "Image still needed"
-  ]
+  ],
+  "display": {
+    "color": "#fbbf24"
+  }
 }

@@ -1,15 +1,34 @@
 {
-  "note": "SST and the original chlorophyll dataset were verified with check_sources. Chlorophyll now points at the NOAA-20 near-real-time daily set (ends 2026-10-07) because the Science Quality set lags about 10 days. The gap-filled and bathymetry entries are disabled until check_sources confirms their dimensions and variable names. gradient_min values are placeholders to calibrate against real grids.",
-  "region": { "name": "south_florida", "lat": [24.5, 27.0], "lon": [-81.0, -78.5] },
-  "ndbc": { "realtime_url": "https://www.ndbc.noaa.gov/data/realtime2/{station}.txt" },
+  "note": "SST, chlorophyll (NOAA-20 near-real-time) and ETOPO bathymetry verified with check_sources. The gap-filled chlorophyll entry is verified but switched off (its filled cells are estimates). gradient_min values are placeholders to calibrate against real grids.",
+  "region": {
+    "name": "south_florida",
+    "lat": [
+      24.5,
+      27.0
+    ],
+    "lon": [
+      -81.0,
+      -78.5
+    ]
+  },
+  "ndbc": {
+    "realtime_url": "https://www.ndbc.noaa.gov/data/realtime2/{station}.txt"
+  },
   "erddap": {
     "sst": {
       "enabled": true,
       "base": "https://coastwatch.pfeg.noaa.gov/erddap",
       "dataset": "jplMURSST41",
       "variable": "analysed_sst",
-      "dims": ["time", "latitude", "longitude"],
-      "stride": { "latitude": 2, "longitude": 2 },
+      "dims": [
+        "time",
+        "latitude",
+        "longitude"
+      ],
+      "stride": {
+        "latitude": 2,
+        "longitude": 2
+      },
       "parameter": "sst_c",
       "log_scale": false,
       "gradient_unit": "degC per km",
@@ -20,8 +39,16 @@
       "base": "https://coastwatch.pfeg.noaa.gov/erddap",
       "dataset": "nesdisVHNnoaa20chlaDaily",
       "variable": "chlor_a",
-      "dims": ["time", "altitude", "latitude", "longitude"],
-      "stride": { "latitude": 2, "longitude": 2 },
+      "dims": [
+        "time",
+        "altitude",
+        "latitude",
+        "longitude"
+      ],
+      "stride": {
+        "latitude": 2,
+        "longitude": 2
+      },
       "parameter": "chlorophyll",
       "log_scale": true,
       "gradient_unit": "log10(mg/m3) per km",
@@ -33,8 +60,16 @@
       "base": "https://coastwatch.pfeg.noaa.gov/erddap",
       "dataset": "nesdisVHNnoaaSNPPnoaa20NRTchlaGapfilledDaily",
       "variable": "chlor_a",
-      "dims": ["time", "altitude", "latitude", "longitude"],
-      "stride": { "latitude": 2, "longitude": 2 },
+      "dims": [
+        "time",
+        "altitude",
+        "latitude",
+        "longitude"
+      ],
+      "stride": {
+        "latitude": 2,
+        "longitude": 2
+      },
       "parameter": "chlorophyll",
       "log_scale": true,
       "gradient_unit": "log10(mg/m3) per km",
@@ -42,12 +77,18 @@
       "note": "Cloud gaps are filled by a statistical method (DINEOF), so filled cells are estimates. Use as a fallback and label confidence lower. Dimensions and variable name unverified."
     },
     "bathymetry": {
-      "enabled": false,
+      "enabled": true,
       "base": "https://coastwatch.pfeg.noaa.gov/erddap",
       "dataset": "ETOPO_2022_v1_15s",
       "variable": "z",
-      "dims": ["latitude", "longitude"],
-      "stride": { "latitude": 5, "longitude": 5 },
+      "dims": [
+        "latitude",
+        "longitude"
+      ],
+      "stride": {
+        "latitude": 5,
+        "longitude": 5
+      },
       "parameter": "depth_m",
       "note": "NOAA ETOPO 2022, 15 arc-second (about 450 m). Negative values are depth below sea level, so depth_m = -z. Coarse near reefs and shore. Dimensions and variable name unverified."
     }

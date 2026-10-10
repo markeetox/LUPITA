@@ -1,35 +1,34 @@
 # Fish habitat map
 
-Standalone service that scores where fish are likely to be, from live ocean conditions plus
-per-species habitat profiles. Seabound will later fetch the output as a map filter.
+Scores where fish are likely to be from live ocean conditions plus per-species habitat profiles.
+Experimental: scores show where conditions match published habitat preferences; they have not
+been checked against catch reports. Seabound will later fetch the output as a map filter.
 
 ## Layout
 - `data/parameters.json`: registry of every factor (key, unit, source, tier, status)
-- `data/species/*.json`: one profile per fish; factors reference registry keys only
+- `data/species/*.json`: one profile per fish (factors, weights, sources, display color)
 - `config/`: buoy stations and ERDDAP dataset settings
-- `pipeline/`: Python data pulls and derived values (`run_v1.py` is the entry point)
-- `web/`: map viewer (Vercel), next step
-- `.github/workflows/pipeline.yml`: scheduled pull, publishes JSON to a `data` branch
+- `pipeline/`: data pulls (`sources/`), `layers.py` (common grid), `scoring.py`, `predict.py`, `run.py`
+- `web/index.html`: map viewer (deployed on Vercel, root directory `web`)
+- `.github/workflows/pipeline.yml`: every 3 hours, runs tests + pipeline, publishes JSON to the `data` branch
 
-## First run (needs internet)
+## Run locally
 ```
-python -m venv .venv && source .venv/bin/activate
+python3 -m venv .venv && source .venv/bin/activate
 pip install -r requirements.txt
-python -m pytest -q                  # offline unit tests
-python -m pipeline.check_sources     # confirms stations, dataset IDs, dimensions and units
-python -m pipeline.run_v1            # writes data/live/latest.json
+python -m pytest -q
+python -m pipeline.check_sources     # confirms stations, dataset IDs, dimensions, units
+python -m pipeline.run               # writes data/live/latest.json and data/live/fish.json
 ```
-Run `check_sources` before anything else. Dataset IDs and station IDs in `config/` were written
-from memory of NOAA's catalogs and have not been verified against the live servers.
+Helpers: `python -m pipeline.find_stations`, `python -m pipeline.find_datasets "search words"`.
 
-## Output so far (`data/live/latest.json`)
-- `buoys[]`: water temp, wind (kn), waves, pressure, 3 h pressure change, 24 h water-temp change
-- `sst`: grid summary and the strongest temperature-break cells (`sst_gradient`)
-- `errors[]`: any source that failed this run
+## How a score is made
+Each map cell gets 0-1 per factor from the species profile (ideal band, allowed range), weighted
+and re-normalized over the factors that have data. A `gate` factor (mahi: depth) removes cells
+outright. Temperature-break strength is judged relative to today's offshore conditions (95th percentile).
+Only the best 15% of cells scoring at least 0.55 become areas. Species whose key data is missing
+(reef map for yellowtail, tides and shoreline for snook) are reported as "waiting for" instead of guessed.
 
-## Next
-1. Verify sources and tune `SST_BREAK_MIN` against real grids
-2. Enable chlorophyll once its dataset is verified
-3. Add bathymetry and structure layers
-4. Scoring engine: read species profiles, score a grid, write per-species GeoJSON with reasons
-5. `web/` viewer with popups
+## Output
+- `fish.json`: species status, areas (point, polygon, score, reasons, location facts); read by `web/`
+- `latest.json`: buoy readings and satellite scene summaries

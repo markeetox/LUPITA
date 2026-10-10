@@ -18,7 +18,7 @@ jobs:
           python-version: "3.12"
       - run: pip install -r requirements.txt
       - run: python -m pytest -q
-      - run: python -m pipeline.run_v1
+      - run: python -m pipeline.run
       # Publishes data/live (plus the species files and parameter registry) to a "data" branch,
       # so Vercel does not redeploy on every pull and Seabound can fetch the JSON from there.
       - run: |
