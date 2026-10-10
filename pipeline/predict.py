@@ -59,7 +59,7 @@ def structure_reason(layers: dict, cell: tuple):
                 f"with {_ft(top.get('relief_ft'))} ft of relief.")
     cover = layers.get("structure_cover")
     if cover is not None and cover[i, j] > 0:
-        return f"FWRI's habitat map shows coral reef or hard bottom across about {cover[i, j]:.0%} of this area."
+        return f"FWC's Unified Reef Map shows reef or hard bottom across about {cover[i, j]:.0%} of this area."
     return None
 
 
@@ -88,7 +88,7 @@ def structure_rows(layers: dict, cell: tuple) -> list:
         rows.append([x["name"], ", ".join(bits)])
     cover = layers.get("structure_cover")
     if cover is not None and cover[i, j] > 0:
-        rows.append(["Natural reef", f"{cover[i, j]:.0%} of this area mapped as coral or hard bottom (FWRI compilation, 2012; gaps exist)"])
+        rows.append(["Natural reef", f"{cover[i, j]:.0%} of this area mapped as coral or hard bottom (FWC Unified Reef Map v2.2, 2025)"])
     return rows
 
 

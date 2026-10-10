@@ -7,9 +7,9 @@ USER_AGENT = "fish-habitat-map/0.1"
 
 
 def query_params(region: dict, out_fields: str = "*", return_geometry: bool = False,
-                 simplify: float | None = None, offset: int = 0, page_size: int = 1000) -> dict:
+                 simplify: float | None = None, offset: int = 0, page_size: int = 1000, where: str = "1=1") -> dict:
     (lat0, lat1), (lon0, lon1) = region["lat"], region["lon"]
-    p = {"where": "1=1", "geometry": f"{lon0},{lat0},{lon1},{lat1}", "geometryType": "esriGeometryEnvelope",
+    p = {"where": where, "geometry": f"{lon0},{lat0},{lon1},{lat1}", "geometryType": "esriGeometryEnvelope",
          "inSR": 4326, "spatialRel": "esriSpatialRelIntersects", "outFields": out_fields,
          "returnGeometry": "true" if return_geometry else "false", "outSR": 4326, "f": "json",
          "resultOffset": offset, "resultRecordCount": page_size}

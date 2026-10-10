@@ -76,12 +76,16 @@ def fake_erddap(url):
     raise RuntimeError(url)
 
 
+SEEN = []
+
+
 def fake_arcgis(url, params):
+    SEEN.append((url, params))
     if "/12/" in url:
         return {"features": [{"attributes": {"Name": "Miss Dania Beach", "MatCat": "Vessel", "MatDescrip": "Freighter 126'",
                                               "Depth": 71, "Relief": 27, "DeployDate": "04/29/2004", "Lat_DD": 26.01, "Long_DD": -80.0917}}]}
-    if "/7/" in url:
-        return {"features": [{"attributes": {"DESCRIPT": "Coral"}, "geometry": {"rings": [_square(-80.06, 25.60, -80.04, 25.64)]}}]}
+    if "/16/" in url:
+        return {"features": [{"attributes": {"ClassLv1": "Aggregate Reef"}, "geometry": {"rings": [_square(-80.06, 25.60, -80.04, 25.64)]}}]}
     raise RuntimeError("FWRI server unreachable")
 
 
@@ -115,8 +119,8 @@ def test_yellowtail_waits_if_the_natural_reef_server_is_down():
     errs = []
 
     def half_down(url, params):
-        if "/7/" in url:
-            raise RuntimeError("FWRI server unreachable")
+        if "/16/" in url:
+            raise RuntimeError("reef server unreachable")
         return fake_arcgis(url, params)
     lay = L.load_layers(_sources(), errs, fetch=fake_erddap, fetch_arc=half_down)
     assert lay["structure_type"] is None and any("structure" in e for e in errs)
@@ -124,3 +128,12 @@ def test_yellowtail_waits_if_the_natural_reef_server_is_down():
     out = build_fish_json(lay, [], _profiles(), registry, "2026-10-10T00:00:00+00:00")
     yt = [s for s in out["species"] if s["id"] == "yellowtail-snapper"][0]
     assert yt["status"] == "unavailable" and "reef" in yt["message"]
+
+
+def test_natural_reef_query_filters_to_reef_classes_only():
+    SEEN.clear()
+    L.load_layers(_sources(), [], fetch=fake_erddap, fetch_arc=fake_arcgis)
+    nat = [p for u, p in SEEN if "/16/" in u][0]
+    assert "ClassLv1 IN" in nat["where"] and "Aggregate Reef" in nat["where"]
+    assert "Seagrass" not in nat["where"] and "Unconsolidated" not in nat["where"]
+    assert nat["returnGeometry"] == "true" and nat["resultRecordCount"] == 2000

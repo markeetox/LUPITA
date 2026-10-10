@@ -8,7 +8,7 @@
     "yellowtail"
   ],
   "habitat_zone": "reef",
-  "review_status": "draft v3 - reef and wreck data wired in (FWC artificial reefs + FWRI coral and hard bottom); verify against live data",
+  "review_status": "draft v3 - reef and wreck data wired in (FWC artificial reefs + FWC Unified Reef Map v2.2); verify against live data",
   "image": {
     "status": "candidate",
     "plan": "NOAA Fisheries lists a yellowtail snapper photo credited to NOAA Fisheries/Dr. Dwayne Meadows. Confirm the usage terms and get the direct image URL before using it. Do not use the FWC illustration (copyrighted).",
@@ -48,7 +48,7 @@
       "weight": 0.5,
       "active": true,
       "value_status": "sourced",
-      "value_notes": "FWC and angling sources tie yellowtail to coral reefs, patch reefs and artificial wrecks. Structure comes from FWC's artificial reef list (current) and FWRI's coral and hard bottom compilation (2012, with known gaps). Juveniles use seagrass and mangroves (add a life_stage factor in v2).",
+      "value_notes": "FWC and angling sources tie yellowtail to coral reefs, patch reefs and artificial wrecks. Structure comes from FWC's artificial reef list and the Unified Reef Map v2.2 (Jan 2025), limited to patch reef, aggregate reef, ridge and pavement. Rubble, scattered coral in sediment and seagrass are not counted. Juveniles use seagrass and mangroves (add a life_stage factor in v2).",
       "reason_template": "This spot is a {value}, the kind of reef structure yellowtail hold on.",
       "sources": [
         "https://myfwc.com/wildlifehabitats/profiles/saltwater/snapper/yellowtail-snapper",

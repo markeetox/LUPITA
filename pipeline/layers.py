@@ -76,13 +76,14 @@ def load_layers(sources: dict, errors: list[str], fetch=erddap.fetch_csv, fetch_
         try:
             art_f = arcgis.query_all(art["url"], region, fetch=fetch_arc)
             nat_f = arcgis.query_all(nat["url"], region, fetch=fetch_arc, return_geometry=True,
-                                     simplify=nat.get("simplify_deg", 0.0005))
+                                     simplify=nat.get("simplify_deg", 0.0005), where=nat.get("where", "1=1"),
+                                     page_size=nat.get("page_size", 1000))
             types, info, cover = structure.build_structure_layer(art_f, nat_f, lats, lons, nat.get("min_cover", 0.01))
             layers.update(structure_type=types, structure_info=info, structure_cover=cover, structure_stats={
                 "artificial_reef_records": len(art_f), "natural_reef_polygons": len(nat_f),
                 "cells_wreck": int((types == "wreck").sum()), "cells_artificial_reef": int((types == "artificial_reef").sum()),
                 "cells_natural_reef": int((types == "natural_reef").sum())})
-            layers["datasets"]["structure"] = "FWC artificial reefs + FWRI coral and hard bottom"
+            layers["datasets"]["structure"] = "FWC artificial reefs + FWC Unified Reef Map v2.2"
         except Exception as exc:
             errors.append(f"layers structure: {exc}")
     layers["sst_gradient"] = front_strength(sst, layers["depth_m"], lats, lons)
