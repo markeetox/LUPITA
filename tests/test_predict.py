@@ -14,13 +14,13 @@ LONS = np.round(np.arange(-80.6, -79.79, 0.02), 4)
 BUOYS = [{"station": "T1", "name": "Test buoy", "ok": True, "lat": 25.4, "lon": -79.9, "water_temp_c": 27.2}]
 
 
-def make_layers(base_sst=29.8, with_depth=True, chl_nan_in_pocket=False, pockets=True):
+def make_layers(base_sst=29.8, with_depth=True, chl_nan_in_pocket=False, pockets=True, pocket_sst=27.0):
     lon, lat = np.meshgrid(LONS, LATS)
     sst = np.full(lon.shape, base_sst)
     deep_pocket = (lon >= -80.0) & (lat >= 25.3) & (lat <= 25.5)
     shallow_pocket = (lon <= -80.3) & (lat >= 25.3) & (lat <= 25.5)
     if pockets:
-        sst[deep_pocket | shallow_pocket] = 27.0
+        sst[deep_pocket | shallow_pocket] = pocket_sst
     depth = np.where(lon < -80.2, 8.0, 600.0)
     chl = np.full(lon.shape, 0.12)
     if chl_nan_in_pocket:
@@ -80,3 +80,11 @@ def test_cloud_gap_lowers_confidence_and_says_so():
     mahi = [s for s in out["spots"] if s["species"] == "mahi-mahi"]
     assert mahi and mahi[0]["confidence"] == "Low"
     assert any("No chlorophyll" in r[1] for r in mahi[0]["reasons"])
+
+
+def test_value_just_outside_ideal_is_described_honestly():
+    out, _ = run(make_layers(pocket_sst=29.2))
+    mahi = [s for s in out["spots"] if s["species"] == "mahi-mahi"]
+    assert mahi
+    texts = " ".join(r[1] for r in mahi[0]["reasons"])
+    assert "just above" in texts and "inside the 25-29" not in texts

@@ -35,6 +35,14 @@ def _caveat(name: str, param: str, value: float, f: dict, reg: dict) -> str:
     return f"{label} is {_fmt(param, value)} {unit}, outside the {lo}-{hi} {unit} range {name} prefer."
 
 
+def _near_edge(name: str, param: str, value: float, f: dict, reg: dict) -> str:
+    label = reg.get(param, {}).get("label", param)
+    unit = UNIT_TEXT.get(reg.get(param, {}).get("unit"), reg.get(param, {}).get("unit") or "")
+    lo, hi = f["ideal"]
+    side = "above" if value > hi else "below"
+    return f"{label} is {_fmt(param, value)} {unit}, just {side} the {lo}-{hi} {unit} sweet spot for {name}, so it still scores well."
+
+
 def nearest_buoy(buoys: list[dict], lat: float, lon: float, max_km: float = 60.0):
     best = None
     for b in buoys:
@@ -58,7 +66,12 @@ def build_reasons(profile, name, scored, layers, cell, buoys, reg, lat, lon):
             continue
         v = layers[p][i, j]
         tag, w = TAGS.get(p, "modeled"), f["weight"]
-        if s >= 0.6 and f.get("reason_template"):
+        ideal = f.get("ideal")
+        outside = (f["kind"] == "range" and ideal is not None and ideal[0] is not None and ideal[1] is not None
+                   and (v < ideal[0] or v > ideal[1]))
+        if s >= 0.6 and outside:
+            pos.append((w * s, tag, _near_edge(name, p, v, f, reg)))
+        elif s >= 0.6 and f.get("reason_template"):
             pos.append((w * s, tag, _fill(f["reason_template"], p, v, f)))
         elif s < 0.35:
             neg.append((w * (1 - s), tag, _caveat(name, p, v, f, reg)))

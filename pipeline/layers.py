@@ -8,6 +8,18 @@ from pipeline.grid import resample
 from pipeline.sources import erddap
 
 
+FRONT_MIN_DEPTH_M = 30.0   # shallow banks and shelves heat up faster; their edges are not ocean fronts
+
+
+def front_strength(sst, depth, lats, lons, min_depth: float = FRONT_MIN_DEPTH_M):
+    """Temperature-break strength that ignores shallow water. Cells next to shallow or missing
+    depth are NaN, so bank and shelf edges never count as fronts."""
+    if depth is None:
+        return derive.gradient_magnitude(sst, lats, lons)
+    deep_sst = np.where(np.isfinite(depth) & (depth >= min_depth), sst, np.nan)
+    return derive.gradient_magnitude(deep_sst, lats, lons)
+
+
 def _fetch_grid(cfg: dict, region: dict, fetch):
     url = erddap.build_griddap_url(cfg, region)
     return erddap.parse_grid_csv(fetch(url), cfg["variable"])
@@ -51,4 +63,5 @@ def load_layers(sources: dict, errors: list[str], fetch=erddap.fetch_csv):
             layers["datasets"]["bathymetry"] = b["dataset"]
         except Exception as exc:
             errors.append(f"layers bathymetry: {exc}")
+    layers["sst_gradient"] = front_strength(sst, layers["depth_m"], lats, lons)
     return layers
