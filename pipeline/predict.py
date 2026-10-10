@@ -21,7 +21,8 @@ def _fmt(param: str, v: float) -> str:
 def _fill(template: str, param: str, value: float, f: dict) -> str:
     ideal = f.get("ideal") or [None, None]
     try:
-        return template.format(value=_fmt(param, value), ideal_min=ideal[0], ideal_max=ideal[1])
+        return template.format(value=_fmt(param, value), per10km=f"{float(value) * 10:.1f}",
+                               ideal_min=ideal[0], ideal_max=ideal[1])
     except (KeyError, IndexError):
         return template
 

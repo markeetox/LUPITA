@@ -8,6 +8,7 @@ from pipeline.grid import resample
 from pipeline.sources import erddap
 
 
+EDGE_MARGIN_CELLS = 2
 FRONT_MIN_DEPTH_M = 30.0   # shallow banks and shelves heat up faster; their edges are not ocean fronts
 
 
@@ -15,9 +16,13 @@ def front_strength(sst, depth, lats, lons, min_depth: float = FRONT_MIN_DEPTH_M)
     """Temperature-break strength that ignores shallow water. Cells next to shallow or missing
     depth are NaN, so bank and shelf edges never count as fronts."""
     if depth is None:
-        return derive.gradient_magnitude(sst, lats, lons)
-    deep_sst = np.where(np.isfinite(depth) & (depth >= min_depth), sst, np.nan)
-    return derive.gradient_magnitude(deep_sst, lats, lons)
+        g = derive.gradient_magnitude(sst, lats, lons)
+    else:
+        deep_sst = np.where(np.isfinite(depth) & (depth >= min_depth), sst, np.nan)
+        g = derive.gradient_magnitude(deep_sst, lats, lons)
+    m = EDGE_MARGIN_CELLS                      # gradients at the grid border are one-sided and areas there get clipped
+    g[:m, :] = np.nan; g[-m:, :] = np.nan; g[:, :m] = np.nan; g[:, -m:] = np.nan
+    return g
 
 
 def _fetch_grid(cfg: dict, region: dict, fetch):

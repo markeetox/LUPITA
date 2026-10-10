@@ -88,3 +88,11 @@ def test_value_just_outside_ideal_is_described_honestly():
     assert mahi
     texts = " ".join(r[1] for r in mahi[0]["reasons"])
     assert "just above" in texts and "inside the 25-29" not in texts
+
+
+def test_gradient_reason_states_real_size_per_10km():
+    from pipeline.predict import _fill
+    mahi = [p for p in PROFILES if p["id"] == "mahi-mahi"][0]
+    f = [x for x in mahi["factors"] if x["param"] == "sst_gradient"][0]
+    text = _fill(f["reason_template"], "sst_gradient", 0.049, f)
+    assert "0.5 C every 10 km" in text

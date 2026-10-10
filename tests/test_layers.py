@@ -23,4 +23,13 @@ def test_shallow_bank_edge_is_not_a_front_but_deep_front_is():
 
 def test_no_depth_falls_back_to_plain_gradient():
     sst = np.tile(np.linspace(27, 30, len(LONS)), (len(LATS), 1))
-    assert np.allclose(front_strength(sst, None, LATS, LONS), derive.gradient_magnitude(sst, LATS, LONS), equal_nan=True)
+    inner = (slice(2, -2), slice(2, -2))                      # the outer border is deliberately blanked
+    assert np.allclose(front_strength(sst, None, LATS, LONS)[inner], derive.gradient_magnitude(sst, LATS, LONS)[inner])
+
+
+def test_border_cells_have_no_front_value():
+    sst = np.tile(np.linspace(27, 30, len(LONS)), (len(LATS), 1))
+    g = front_strength(sst, None, LATS, LONS)
+    assert np.all(np.isnan(g[:2, :])) and np.all(np.isnan(g[-2:, :]))
+    assert np.all(np.isnan(g[:, :2])) and np.all(np.isnan(g[:, -2:]))
+    assert np.isfinite(g[5, 5])

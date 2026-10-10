@@ -63,8 +63,8 @@
       "weight": 0.25,
       "active": true,
       "value_status": "provisional",
-      "value_notes": "Multiple sources say mahi concentrate along temperature and color breaks and current convergences. Threshold for what counts as a strong break must be calibrated on real SST grids.",
-      "reason_template": "A temperature break of {value} C/km runs through this area. Mahi gather where warm and cooler water meet.",
+      "value_notes": "Multiple sources say mahi concentrate along temperature and color breaks and current convergences. Threshold for what counts as a strong break must be calibrated on real SST grids. Scored relative to today's sharpest offshore breaks, so on a day with nearly uniform water even a mild break ranks high; the popup shows the real size. Needs calibration against catch reports.",
+      "reason_template": "Water temperature changes about {per10km} C every 10 km here, one of the sharper breaks in the area today. Mahi gather where warm and cooler water meet.",
       "sources": [
         "https://www.satfish.com/how-to-catch-dolphin-using-satfish-charts"
       ]
