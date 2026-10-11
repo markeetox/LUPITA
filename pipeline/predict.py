@@ -141,6 +141,10 @@ def build_reasons(profile, name, scored, layers, cell, buoys, reg, lat, lon, mem
     neg.sort(reverse=True)
     reasons = [[t, x] for _, t, x in pos[:4]]
 
+    names = closure_names(layers, members or [cell])
+    if names:
+        reasons.insert(0, ["static", f"Part of this area overlaps {', '.join(names[:2])}, where recreational fishing is prohibited. Stay outside the marked zone."])
+
     near = nearest_buoy(buoys, lat, lon)
     if near:
         km, b = near
@@ -151,6 +155,28 @@ def build_reasons(profile, name, scored, layers, cell, buoys, reg, lat, lon, mem
     if chl is None or not np.isfinite(chl[i, j]):
         reasons.append(["modeled", "No chlorophyll reading here today (cloud cover or missing scene), so this score leans on temperature and depth."])
     return reasons
+
+
+CLOSED_CELL_COVER = 0.5   # cells at least this much inside a no-fishing zone are never recommended
+
+
+def closure_names(layers: dict, members: list) -> list:
+    seen = []
+    for c in members:
+        for x in layers.get("closure_info", {}).get(c, []):
+            if x["name"] not in seen:
+                seen.append(x["name"])
+    return seen
+
+
+def closure_rows(layers: dict, members: list) -> list:
+    if not layers.get("closure_checked"):
+        return [["No-fishing check", "Could not be checked in this update. Confirm closed areas before you fish."]]
+    names = closure_names(layers, members)
+    if names:
+        more = f" and {len(names) - 3} more" if len(names) > 3 else ""
+        return [["No-fishing zone", "Overlaps or borders " + ", ".join(names[:3]) + more + ". Stay outside the marked zone."]]
+    return [["No-fishing zones", "None mapped here (NOAA MPA Inventory, 2023 edition)"]]
 
 
 def place_row(places, lat, lon):
@@ -170,6 +196,7 @@ def build_location(layers, scored, cell, buoys, lat, lon, members=None, places=N
     depth = layers.get("depth_m")
     if depth is not None and np.isfinite(depth[i, j]):
         rows.append(["Water depth", f"About {depth[i, j]:.0f} m"])
+    rows += closure_rows(layers, members or [cell])
     rows += structure_rows(layers, members or [cell], layers["lats"])
     sst_t = (layers["times"].get("sst") or "")[:10]
     rows.append(["Surface temp", f"{layers['sst_c'][i, j]:.1f} C (satellite, {sst_t})"])
@@ -223,6 +250,9 @@ def build_fish_json(layers, buoys, profiles, registry, generated_utc, places=Non
             entry.update(status="unavailable", message=scored["message"])
             species_out.append(entry)
             continue
+        cc = layers.get("closure_cover")
+        if cc is not None:                                   # never recommend cells that are mostly inside a no-fishing zone
+            scored["score"] = np.where(cc >= CLOSED_CELL_COVER, np.nan, scored["score"])
         style = profile.get("zone_style", "hull")
         spots, best = scoring.find_spots(scored["score"], lats, lons, min_cells=profile.get("min_cells", scoring.MIN_CELLS),
                                          max_spots=profile.get("max_spots", scoring.MAX_SPOTS), zone_style=style,

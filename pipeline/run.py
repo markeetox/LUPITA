@@ -6,6 +6,7 @@ import logging
 from datetime import datetime, timezone
 from pathlib import Path
 
+from pipeline import closures as closures_mod
 from pipeline.layers import load_layers
 from pipeline.predict import build_fish_json
 from pipeline.run_v1 import pull_buoys, summarize_grid
@@ -46,12 +47,18 @@ def main() -> None:
             chl = _grid_report(cfg["chlorophyll"], layers["times"]["chlorophyll"], clats, clons, cgrid)
         fish = build_fish_json(layers, buoys, profiles, registry, now, places)
 
+    cl_cfg = sources.get("closures", {})
+    cl_loaded = bool(layers and layers.get("closure_checked"))
+    cl_json = closures_mod.to_geojson((layers or {}).get("closure_areas", []), cl_cfg.get("source_label", "NOAA MPA Inventory"), cl_loaded, now)
+
     live = ROOT / "data/live"
     live.mkdir(parents=True, exist_ok=True)
     latest = {"generated_utc": now, "region": sources["region"]["name"], "buoys": buoys,
-              "sst": sst, "chlorophyll": chl, "structure": (layers or {}).get("structure_stats"), "errors": errors}
+              "sst": sst, "chlorophyll": chl, "structure": (layers or {}).get("structure_stats"),
+              "closures": {"loaded": cl_loaded, "areas": len(cl_json["features"])}, "errors": errors}
     (live / "latest.json").write_text(json.dumps(latest, indent=2, allow_nan=False))
     (live / "fish.json").write_text(json.dumps(fish, indent=1, allow_nan=False))
+    (live / "closures.json").write_text(json.dumps(cl_json, allow_nan=False, separators=(",", ":")))
 
     for s in fish["species"]:
         log.info("%-20s %-20s %s", s["name"], s["status"], s["message"] or f"{s['spots']} area(s)")

@@ -3,7 +3,7 @@ from __future__ import annotations
 
 import numpy as np
 
-from pipeline import derive, structure
+from pipeline import closures, derive, structure
 from pipeline.grid import resample
 from pipeline.sources import arcgis, erddap
 
@@ -43,6 +43,7 @@ def load_layers(sources: dict, errors: list[str], fetch=erddap.fetch_csv, fetch_
     layers = {"lats": lats, "lons": lons, "sst_c": sst,
               "sst_gradient": derive.gradient_magnitude(sst, lats, lons),
               "chlorophyll": None, "depth_m": None, "chl_raw": None,
+              "closure_areas": [], "closure_cover": None, "closure_info": {}, "closure_checked": False,
               "structure_type": None, "structure_info": {}, "structure_cover": None, "structure_stats": None,
               "times": {"sst": sst_time, "chlorophyll": None},
               "datasets": {"sst": cfg["sst"]["dataset"]}}
@@ -86,5 +87,25 @@ def load_layers(sources: dict, errors: list[str], fetch=erddap.fetch_csv, fetch_
             layers["datasets"]["structure"] = "FWC artificial reefs + FWC Unified Reef Map v2.2"
         except Exception as exc:
             errors.append(f"layers structure: {exc}")
+    cl = sources.get("closures", {})
+    if cl.get("enabled"):
+        try:
+            feats = arcgis.query_all(cl["url"], region, fetch=fetch_arc, return_geometry=True,
+                                     simplify=cl.get("simplify_deg", 0.0005), where=cl.get("where", "1=1"),
+                                     page_size=cl.get("page_size", 1000))
+            areas = closures.parse_closures(feats)
+            if len(areas) < cl.get("min_expected", 0):
+                # South Florida certainly has some. Zero usually means the filter no longer matches the data.
+                raise RuntimeError(f"only {len(areas)} no-fishing areas returned; the filter may not match the data")
+            cover, info = np.zeros(sst.shape), {}
+            for a in areas:
+                c = structure.rasterize_cover([{"geometry": {"rings": a["rings"]}}], lats, lons)
+                cover = np.minimum(1.0, cover + c)
+                for i, j in zip(*np.nonzero(c >= 0.01)):
+                    info.setdefault((int(i), int(j)), []).append({"name": a["name"], "cover": float(c[i, j])})
+            layers.update(closure_areas=areas, closure_cover=cover, closure_info=info, closure_checked=True)
+            layers["datasets"]["closures"] = cl.get("source_label", "NOAA MPA Inventory")
+        except Exception as exc:
+            errors.append(f"layers closures: {exc}")
     layers["sst_gradient"] = front_strength(sst, layers["depth_m"], lats, lons)
     return layers

@@ -54,6 +54,7 @@
   <div class="row">
     <button data-url="https://gis.myfwc.com/mapping/rest/services/Open_Data/Artificial_Reef_Locations_in_Florida/MapServer">FWC artificial reefs</button>
     <button data-url="https://gis.myfwc.com/hosting/rest/services/Open_Data/Unified_Florida_Reef_Tract_Benthic_Habitat/MapServer">FWC Unified Reef Map (natural reef)</button>
+    <button data-url="https://services2.arcgis.com/C8EMgrsFcRFL6LrL/arcgis/rest/services/NOAA_MPA_Inventory_2023/FeatureServer">NOAA MPA Inventory (no-fishing areas)</button>
   </div>
   <div class="row"><input id="svcUrl" type="text" placeholder="https://.../MapServer"><button id="inspect">Inspect</button></div>
   <div id="inspectOut"></div>
@@ -113,8 +114,9 @@ function renderRun(fish, latest) {
         <td>${b.ok ? pill("ok", "yes") : pill("bad", "no")}</td><td>${num(b.water_temp_c)}</td><td>${num(b.water_temp_change_24h_c)}</td>
         <td>${num(b.wind_kn)}</td><td>${num(b.wave_height_m)}</td><td>${num(b.pressure_hpa)}</td><td>${esc(b.time_utc || "")}</td></tr>`).join("") + `</table></div>`;
     const g = (k, o) => o ? `<div>${k}</div><div>${esc(o.dataset)}: ${esc(o.time)} &middot; valid cells ${num((o.valid_fraction || 0) * 100, 0)}% &middot; range ${num(o.value_min, 2)} to ${num(o.value_max, 2)} &middot; strongest gradient ${num(o.gradient_max, 3)} ${esc(o.gradient_unit || "")}</div>` : `<div>${k}</div><div>${pill("warn", "none")}</div>`;
+    const cl = o => o ? `<div>No-fishing areas</div><div>${o.loaded ? pill("ok", "checked") : pill("bad", "NOT checked")} ${esc(o.areas)} areas mapped in our box</div>` : `<div>No-fishing areas</div><div>${pill("warn", "not in this run")}</div>`;
     const st = o => o ? `<div>Reef structure</div><div>${esc(o.artificial_reef_records)} artificial reef records &middot; ${esc(o.natural_reef_polygons)} natural reef polygons &middot; cells: ${esc(o.cells_wreck)} wreck, ${esc(o.cells_artificial_reef)} artificial reef, ${esc(o.cells_natural_reef)} natural reef</div>` : `<div>Reef structure</div><div>${pill("warn", "not loaded")}</div>`;
-    h += `<h2 style="margin-top:16px">Satellite summaries</h2><div class="kv">${g("Temperature", latest.sst)}${g("Chlorophyll", latest.chlorophyll)}${st(latest.structure)}</div>`;
+    h += `<h2 style="margin-top:16px">Satellite summaries</h2><div class="kv">${g("Temperature", latest.sst)}${g("Chlorophyll", latest.chlorophyll)}${st(latest.structure)}${cl(latest.closures)}</div>`;
   }
   $("run").innerHTML = h;
 }
@@ -177,13 +179,24 @@ async function inspect(base) {
   } catch (e) { $("inspectOut").innerHTML = pill("bad", "Could not read the service") + `<p>${corsHint(e)}</p>`; }
 }
 
+async function distinct(id, field) {
+  $("distOut").innerHTML = `<span class="muted">Looking up values...</span>`;
+  try {
+    const j = await arc(`${currentBase}/${id}/query`, Object.assign({ where: "1=1", outFields: field, returnGeometry: "false", returnDistinctValues: "true", resultRecordCount: 200 }, BBOX));
+    const vals = (j.features || []).map(f => f.attributes[field]);
+    $("distOut").innerHTML = vals.length ? `<ul>${vals.map(v => `<li>${esc(v === null ? "(empty)" : v)}</li>`).join("")}</ul>` : `<div class="muted">No values inside our box.</div>`;
+  } catch (e) { $("distOut").innerHTML = pill("bad", "Lookup failed") + `<p>${corsHint(e)}</p>`; }
+}
+
 async function sample(id) {
   $("sampleOut").innerHTML = `<span class="muted">Loading sample records from layer ${esc(id)}...</span>`;
   try {
     const j = await arc(`${currentBase}/${id}/query`, Object.assign({ where: "1=1", outFields: "*", returnGeometry: "false", resultRecordCount: 5 }, BBOX));
     const recs = (j.features || []).map(f => f.attributes);
     $("sampleOut").innerHTML = `<h2 style="margin-top:14px">Layer ${esc(id)}: sample records (up to 5)</h2>` +
-      (recs.length ? `<pre>${esc(JSON.stringify(recs, null, 2))}</pre>` : `<div class="muted">No records inside our box for this layer.</div>`);
+      (recs.length ? `<pre>${esc(JSON.stringify(recs, null, 2))}</pre>` : `<div class="muted">No records inside our box for this layer.</div>`) +
+      `<div class="row"><input id="distField" type="text" placeholder="Field name, e.g. Fish_Rstr"><button id="distBtn">Show distinct values</button></div><div id="distOut"></div>`;
+    $("distBtn").addEventListener("click", () => distinct(id, $("distField").value.trim()));
   } catch (e) { $("sampleOut").innerHTML = pill("bad", "Sample query failed") + `<p>${corsHint(e)}</p>`; }
 }
 

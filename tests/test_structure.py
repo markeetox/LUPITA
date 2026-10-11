@@ -76,11 +76,24 @@ def fake_erddap(url):
     raise RuntimeError(url)
 
 
+def _cw_square(lon0, lat0, lon1, lat1):
+    """Clockwise ring: how ArcGIS stores an outer boundary."""
+    return [[lon0, lat0], [lon0, lat1], [lon1, lat1], [lon1, lat0], [lon0, lat0]]
+
+
+def _zone(name, ring, rule="Recreational Fishing Prohibited"):
+    return {"attributes": {"Site_Name": name, "Mgmt_Agen": "Test Agency", "Fish_Rstr": rule, "URL": "https://example.org",
+                           "Estab_Yr": 2001, "Prot_Lvl": "No Take", "Gov_Level": "Federal"}, "geometry": {"rings": [ring]}}
+
+
+FAR_ZONE = _zone("Far Zone", _cw_square(-80.9, 26.8, -80.8, 26.9))
 SEEN = []
 
 
 def fake_arcgis(url, params):
     SEEN.append((url, params))
+    if "NOAA_MPA_Inventory" in url:
+        return {"features": [FAR_ZONE]}
     if "/12/" in url:
         return {"features": [{"attributes": {"Name": "Miss Dania Beach", "MatCat": "Vessel", "MatDescrip": "Freighter 126'",
                                               "Depth": 71, "Relief": 27, "DeployDate": "04/29/2004", "Lat_DD": 26.01, "Long_DD": -80.0917}}]}
@@ -141,6 +154,8 @@ def test_natural_reef_query_filters_to_reef_classes_only():
 
 # ---- patches and the reef depth gate ----
 def fake_arcgis_big(url, params):
+    if "NOAA_MPA_Inventory" in url:
+        return {"features": [FAR_ZONE]}
     if "/12/" in url:
         return {"features": [
             {"attributes": {"Name": "Bay Reef", "MatCat": "Module", "Depth": 15, "Relief": 3, "Lat_DD": 25.5, "Long_DD": -80.5}},   # shallow bay (5 m)
@@ -186,3 +201,54 @@ def test_position_and_nearest_inlet_rows():
     row = {r[0]: r[1] for r in out["spots"][0]["location"]}
     assert "N," in row["Position"] and "W" in row["Position"]
     assert "nm" in row["Nearest inlet"] and "approximate" in row["Nearest inlet"]
+
+
+# ---- no-fishing areas ----
+def _with_zones(zones, fail=False):
+    def fetch(url, params):
+        if "NOAA_MPA_Inventory" in url:
+            if fail:
+                raise RuntimeError("MPA server unreachable")
+            return {"features": zones}
+        return fake_arcgis(url, params)
+    return fetch
+
+
+def _run_with(fetch_arc):
+    errs = []
+    lay = L.load_layers(_sources(), errs, fetch=fake_erddap, fetch_arc=fetch_arc)
+    registry = json.loads((ROOT / "data/parameters.json").read_text())
+    out = build_fish_json(lay, [], _profiles(), registry, "2026-10-10T00:00:00+00:00")
+    json.dumps(out, allow_nan=False)
+    return lay, out, errs
+
+
+def test_wreck_inside_a_no_fishing_zone_is_never_recommended():
+    zone = _zone("Test Sanctuary Zone", _cw_square(-80.11, 25.99, -80.07, 26.03))   # covers the wreck's cell
+    lay, out, errs = _run_with(_with_zones([FAR_ZONE, zone]))
+    assert errs == [] and lay["closure_checked"]
+    titles = " | ".join(s["title"] for s in out["spots"] if s["species"] == "yellowtail-snapper")
+    assert "Miss Dania Beach" not in titles and "Natural reef" in titles          # the other reef is still offered
+
+
+def test_areas_clear_of_zones_say_so_and_borderline_areas_warn():
+    # the zone swallows the reef cells at lon -80.06 (excluded) and covers about 40% of those at -80.04 (kept, flagged)
+    zone = _zone("Edge Zone", _cw_square(-80.075, 25.55, -80.042, 25.70))
+    lay, out, _ = _run_with(_with_zones([FAR_ZONE, zone]))
+    rows = {s["title"]: {r[0]: r[1] for r in s["location"]} for s in out["spots"] if s["species"] == "yellowtail-snapper"}
+    wreck = [v for k, v in rows.items() if "Miss Dania" in k][0]
+    assert wreck["No-fishing zones"].startswith("None mapped")
+    flagged = [s for s in out["spots"] if any(r[0] == "No-fishing zone" for r in s["location"])]
+    assert flagged and any("Edge Zone" in r[1] and "prohibited" in r[1] for r in flagged[0]["reasons"])
+
+
+def test_if_the_closure_source_is_down_the_popups_say_it_was_not_checked():
+    lay, out, errs = _run_with(_with_zones([], fail=True))
+    assert any("closures" in e for e in errs) and not lay["closure_checked"]
+    spot = out["spots"][0]
+    assert any(r[0] == "No-fishing check" and "Could not be checked" in r[1] for r in spot["location"])
+
+
+def test_zero_zones_is_treated_as_a_broken_filter_not_as_all_clear():
+    lay, out, errs = _run_with(_with_zones([]))
+    assert any("filter may not match" in e for e in errs) and not lay["closure_checked"]

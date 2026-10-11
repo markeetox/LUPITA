@@ -29,6 +29,14 @@ outright. Temperature-break strength is judged relative to today's offshore cond
 Only the best 15% of cells scoring at least 0.55 become areas. Species whose key data is missing
 (reef map for yellowtail, tides and shoreline for snook) are reported as "waiting for" instead of guessed.
 
+## No-fishing areas
+Boundaries come from NOAA's National MPA Center MPA Inventory (2023 edition), filtered to sites whose Fishing
+Restrictions text says recreational fishing is prohibited. Fish areas that are at least half inside one are never
+recommended; areas that overlap one are flagged; every popup says whether the check ran. Not covered: fishery
+management areas, seasonal closures, port and security zones, and anything newer than the 2023 edition.
+Always confirm with FWC, NOAA Sanctuaries or the National Park Service.
+
 ## Output
 - `fish.json`: species status, areas (point, polygon, score, reasons, location facts); read by `web/`
+- `closures.json`: no-fishing area outlines and details, drawn in red on the map
 - `latest.json`: buoy readings and satellite scene summaries

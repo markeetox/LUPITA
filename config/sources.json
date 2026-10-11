@@ -107,5 +107,15 @@
       "simplify_deg": 0.0005,
       "min_cover": 0.01
     }
+  },
+  "closures": {
+    "enabled": true,
+    "note": "No-fishing areas from NOAA's National MPA Center MPA Inventory (2023 edition, service data last edited Jan 2025). Only areas whose Fishing Restrictions text says recreational fishing is prohibited are used. Fishery management areas, security zones and seasonal closures are not in this inventory.",
+    "source_label": "NOAA National MPA Center, MPA Inventory (2023 edition)",
+    "url": "https://services2.arcgis.com/C8EMgrsFcRFL6LrL/arcgis/rest/services/NOAA_MPA_Inventory_2023/FeatureServer/0",
+    "where": "Fish_Rstr LIKE '%Recreational Fishing Prohibited%'",
+    "page_size": 1000,
+    "simplify_deg": 0.0005,
+    "min_expected": 1
   }
 }

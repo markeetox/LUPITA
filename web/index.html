@@ -43,6 +43,10 @@
   .chip.warn { color: #fbbf24; border-color: #5b4a1a; }
   .chip.ok { color: #34d399; border-color: #1c5a47; }
   .hint { margin: 10px 0 0; font-size: 13px; color: var(--muted); line-height: 1.35; }
+  .toggle { display: flex; align-items: center; gap: 9px; margin-top: 10px; font-size: 15px; cursor: pointer; }
+  .toggle input { width: 20px; height: 20px; accent-color: #ef4444; }
+  .toggle .sw { width: 22px; height: 14px; border-radius: 3px; background: rgba(239,68,68,.35); border: 2px solid #ef4444; }
+  .banner.closed { background: #3a1414; color: #fca5a5; }
   .tab { position: absolute; top: 100%; left: 50%; width: 76px; height: 30px; margin-left: -38px; padding: 0;
     display: flex; align-items: center; justify-content: center; cursor: pointer; color: var(--text);
     background: rgba(15,27,45,.96); border: 1px solid var(--line); border-top: none; border-radius: 0 0 16px 16px; }
@@ -105,7 +109,8 @@
     <label for="fishSelect" class="lbl">Show fish</label>
     <select id="fishSelect" class="select"><option value="all">All fish</option></select>
     <div id="fishNote" class="note"></div>
-    <div class="chips"><span id="status" class="chip">Loading...</span><span id="buoyStatus" class="chip">Buoys: loading...</span></div>
+    <label class="toggle"><input type="checkbox" id="closuresToggle" checked><i class="sw"></i><span>Show no-fishing areas</span></label>
+    <div class="chips"><span id="status" class="chip">Loading...</span><span id="buoyStatus" class="chip">Buoys: loading...</span><span id="closuresStatus" class="chip">No-fishing areas: loading...</span></div>
     <p class="hint">Tap a marker or zone to see why a fish may be there. Experimental.</p>
   </div>
   <button id="topTab" class="tab" type="button" aria-expanded="true" aria-label="Hide panel">
@@ -170,7 +175,7 @@ const store = {
   get(k) { try { return localStorage.getItem(k); } catch (e) { return null; } },
   set(k, v) { try { localStorage.setItem(k, v); } catch (e) { /* private mode: ignore */ } }
 };
-let FISH = null, BUOYS = null, FILTER = store.get("fhm.fish") || "all";
+let FISH = null, BUOYS = null, CLOSURES = null, FILTER = store.get("fhm.fish") || "all";
 const SPECIES = {}, SPOTS = {};
 function setFish(data) {
   FISH = data;
@@ -208,8 +213,25 @@ function spotHTML(id) {
       <dl>${sp.specs.map(x => `<dt>${esc(x[0])}</dt><dd>${esc(x[1])}</dd>`).join("")}</dl>
     </div>
     <div class="foot">Confidence shows how complete today's data was, not verified accuracy.
-      Check current size and bag limits before keeping any fish:
+      Check current size and bag limits, and that you are outside any closed area, before you fish:
       <a href="https://myfwc.com/fishing/saltwater/" target="_blank" rel="noopener">FWC saltwater fishing</a></div>`;
+}
+
+function closureHTML(p) {
+  const link = /^https?:\/\//i.test(p.url || "") ? `<dt>More info</dt><dd><a href="${esc(p.url)}" target="_blank" rel="noopener">Managing agency page</a></dd>` : "";
+  return `
+    <div class="hero" style="--c:#ef4444">
+      <div><h2>${esc(p.name)}</h2><small>No recreational fishing</small></div>
+    </div>
+    <div class="banner closed">Boundaries here come from NOAA's MPA Inventory and may be simplified or out of date. Always confirm with the managing agency before you fish.</div>
+    <div class="sec"><h3>About this area</h3><dl>
+      <dt>Rule</dt><dd>${esc(p.rule || "Recreational fishing prohibited")}</dd>
+      ${p.agency ? `<dt>Managed by</dt><dd>${esc(p.agency)}</dd>` : ""}
+      ${p.protection ? `<dt>Protection</dt><dd>${esc(p.protection)}</dd>` : ""}
+      ${p.year && p.year !== "null" ? `<dt>Established</dt><dd>${esc(p.year)}</dd>` : ""}
+      ${link}
+    </dl></div>
+    <div class="foot">Source: NOAA National MPA Center, MPA Inventory (2023 edition). Fishery management areas, security zones and seasonal closures are not included.</div>`;
 }
 
 function fmt(v, unit, digits) {
@@ -304,6 +326,7 @@ function spotFeatures() {
 function addData() {
   if (map.getSource("spots")) return;
   const f = spotFeatures();
+  addClosures();
   map.addSource("zones", { type: "geojson", data: f.zones });
   map.addSource("spots", { type: "geojson", data: f.points });
   const col = ["get", "color"];
@@ -333,6 +356,21 @@ function refreshSpots() {
   fitToSpots();
 }
 
+function closuresOn() { return document.getElementById("closuresToggle").checked; }
+function addClosures() {
+  if (!CLOSURES || map.getSource("closures") || !CLOSURES.features.length) return;
+  const vis = closuresOn() ? "visible" : "none";
+  const before = map.getLayer("zones-fill") ? "zones-fill" : undefined;       // keep fish markers and zones on top
+  map.addSource("closures", { type: "geojson", data: CLOSURES });
+  map.addLayer({ id: "closures-fill", type: "fill", source: "closures", layout: { visibility: vis },
+    paint: { "fill-color": "#ef4444", "fill-opacity": 0.28 } }, before);
+  map.addLayer({ id: "closures-line", type: "line", source: "closures", layout: { visibility: vis },
+    paint: { "line-color": "#ef4444", "line-width": 2 } }, before);
+}
+function setClosuresVisible(on) {
+  ["closures-fill", "closures-line"].forEach(id => { if (map.getLayer(id)) map.setLayoutProperty(id, "visibility", on ? "visible" : "none"); });
+}
+
 function addBuoys() {
   if (!BUOYS || map.getSource("buoys")) return;
   const feats = BUOYS.filter(b => b.ok && b.lat != null && b.lon != null).map(b => ({
@@ -345,7 +383,7 @@ function addBuoys() {
 function bindHandlers() {
   if (handlersBound) return;
   handlersBound = true;
-  const tappable = ["spots", "buoys", "zones-fill"];
+  const tappable = ["spots", "buoys", "zones-fill", "closures-fill"];
   tappable.forEach(layer => {
     map.on("mouseenter", layer, () => { map.getCanvas().style.cursor = "pointer"; });
     map.on("mouseleave", layer, () => { map.getCanvas().style.cursor = ""; });
@@ -357,6 +395,7 @@ function bindHandlers() {
     if (!hits.length) { closeSheet(); return; }
     const f = hits[0];
     if (f.layer.id === "buoys") openSheet(buoyHTML(BUOYS[f.properties.idx]), f.geometry.coordinates);
+    else if (f.layer.id === "closures-fill") openSheet(closureHTML(f.properties), e.lngLat);
     else if (f.layer.id === "spots") openSheet(spotHTML(f.properties.spotId), f.geometry.coordinates);
     else openSheet(spotHTML(f.properties.spotId), e.lngLat);
   });
@@ -389,6 +428,18 @@ topSheet.addEventListener("touchend", e => {
   if (dy < -50) setTop(false);
 });
 setTop(store.get("fhm.panel") !== "closed", false);
+
+document.getElementById("closuresToggle").checked = store.get("fhm.closures") !== "off";
+document.getElementById("closuresToggle").addEventListener("change", e => {
+  store.set("fhm.closures", e.target.checked ? "on" : "off");
+  setClosuresVisible(e.target.checked);
+});
+function renderClosuresChip() {
+  const chip = document.getElementById("closuresStatus");
+  if (!CLOSURES) { chip.textContent = "No-fishing areas: could not load"; chip.className = "chip warn"; return; }
+  if (!CLOSURES.loaded) { chip.textContent = "No-fishing areas: not checked in this update"; chip.className = "chip warn"; return; }
+  chip.textContent = `No-fishing areas: ${CLOSURES.features.length} mapped`; chip.className = "chip ok";
+}
 
 function speciesLabel(s) {
   if (s.status === "ok") return `${s.spots} area${s.spots === 1 ? "" : "s"}`;
@@ -432,6 +483,10 @@ async function load() {
   catch (err) { console.warn("fish.json failed, using sample:", err); setFish(SAMPLE); }
   renderPanel();
   refreshSpots();
+
+  try { CLOSURES = await getJSON("closures.json"); } catch (err) { console.warn("closures.json failed:", err); CLOSURES = null; }
+  renderClosuresChip();
+  if (map.getSource("spots")) addClosures();
 
   const chip = document.getElementById("buoyStatus");
   try {
