@@ -26,6 +26,8 @@ def main() -> None:
     stations = json.loads((ROOT / "config/stations.json").read_text())["stations"]
     sources = json.loads((ROOT / "config/sources.json").read_text())
     registry = json.loads((ROOT / "data/parameters.json").read_text())
+    places_file = ROOT / "config/places.json"
+    places = json.loads(places_file.read_text())["places"] if places_file.exists() else []
     profiles = [json.loads(p.read_text()) for p in sorted((ROOT / "data/species").glob("*.json"))]
     errors: list[str] = []
     now = datetime.now(timezone.utc).isoformat()
@@ -42,7 +44,7 @@ def main() -> None:
         if layers["chl_raw"] is not None:
             clats, clons, cgrid = layers["chl_raw"]
             chl = _grid_report(cfg["chlorophyll"], layers["times"]["chlorophyll"], clats, clons, cgrid)
-        fish = build_fish_json(layers, buoys, profiles, registry, now)
+        fish = build_fish_json(layers, buoys, profiles, registry, now, places)
 
     live = ROOT / "data/live"
     live.mkdir(parents=True, exist_ok=True)

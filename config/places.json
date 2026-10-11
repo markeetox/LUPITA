@@ -1,0 +1,13 @@
+{
+  "note": "Approximate inlet positions for orientation only (to about 1 km). Not for navigation. Used to describe each area as 'about N nm from <inlet>'.",
+  "places": [
+    { "name": "Government Cut",      "lat": 25.767, "lon": -80.135 },
+    { "name": "Haulover Inlet",      "lat": 25.903, "lon": -80.123 },
+    { "name": "Port Everglades",     "lat": 26.092, "lon": -80.107 },
+    { "name": "Hillsboro Inlet",     "lat": 26.259, "lon": -80.083 },
+    { "name": "Boca Raton Inlet",    "lat": 26.336, "lon": -80.068 },
+    { "name": "Boynton Inlet",       "lat": 26.546, "lon": -80.047 },
+    { "name": "Lake Worth Inlet",    "lat": 26.773, "lon": -80.033 },
+    { "name": "Bear Cut",            "lat": 25.738, "lon": -80.156 }
+  ]
+}

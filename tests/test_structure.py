@@ -137,3 +137,52 @@ def test_natural_reef_query_filters_to_reef_classes_only():
     assert "ClassLv1 IN" in nat["where"] and "Aggregate Reef" in nat["where"]
     assert "Seagrass" not in nat["where"] and "Unconsolidated" not in nat["where"]
     assert nat["returnGeometry"] == "true" and nat["resultRecordCount"] == 2000
+
+
+# ---- patches and the reef depth gate ----
+def fake_arcgis_big(url, params):
+    if "/12/" in url:
+        return {"features": [
+            {"attributes": {"Name": "Bay Reef", "MatCat": "Module", "Depth": 15, "Relief": 3, "Lat_DD": 25.5, "Long_DD": -80.5}},   # shallow bay (5 m)
+            {"attributes": {"Name": "Reef A", "MatCat": "Module", "Depth": 60, "Relief": 4, "Lat_DD": 25.02, "Long_DD": -79.9}},
+            {"attributes": {"Name": "Reef B", "MatCat": "Module", "Depth": 60, "Relief": 9, "Lat_DD": 25.02, "Long_DD": -79.88}}]}
+    if "/16/" in url:   # a reef tract about 15 x 15 cells in size
+        return {"features": [{"attributes": {"ClassLv1": "Aggregate Reef"}, "geometry": {"rings": [_square(-80.1, 25.0, -79.8, 25.3)]}}]}
+    raise RuntimeError(url)
+
+
+def test_split_component_caps_patch_size():
+    from pipeline.scoring import split_component
+    comp = [(i, j) for i in range(10) for j in range(10)]
+    parts = split_component(comp, 6)
+    assert len(parts) == 4 and sum(len(p) for p in parts) == 100 and max(len(p) for p in parts) <= 36
+    assert split_component(comp[:20], 6) == [comp[:20]]          # small areas stay whole
+    assert split_component(comp, None) == [comp]
+
+
+def test_big_reef_tract_becomes_patches_and_shallow_bay_reef_is_excluded():
+    lay = L.load_layers(_sources(), [], fetch=fake_erddap, fetch_arc=fake_arcgis_big)
+    registry = json.loads((ROOT / "data/parameters.json").read_text())
+    out = build_fish_json(lay, [], _profiles(), registry, "2026-10-10T00:00:00+00:00")
+    json.dump(out, open("/dev/null", "w"), allow_nan=False)
+    yt = [s for s in out["spots"] if s["species"] == "yellowtail-snapper"]
+    assert len(yt) > 1                                              # not one giant area
+    assert max(len(s["rings"]) for s in yt) <= 36                   # every patch is at most 6 x 6 cells
+    assert not any("Bay Reef" in s["title"] for s in yt)            # 5 m deep: gated out
+    assert any(s["title"].startswith("Reef") for s in yt)           # a patch is named for the structure in it
+    patch = [s for s in yt if s["title"].startswith("Reef B")]
+    if patch:                                                       # tallest structure wins the name, the other is counted
+        assert "and 1 more" in patch[0]["title"]
+
+
+def test_position_and_nearest_inlet_rows():
+    from pipeline.grid import bearing_deg, compass
+    assert compass(bearing_deg(25.0, -80.0, 25.0, -79.9)) == "E"          # due east
+    assert compass(bearing_deg(25.0, -80.0, 25.1, -80.0)) == "N"
+    places = json.loads((ROOT / "config/places.json").read_text())["places"]
+    lay = L.load_layers(_sources(), [], fetch=fake_erddap, fetch_arc=fake_arcgis)
+    registry = json.loads((ROOT / "data/parameters.json").read_text())
+    out = build_fish_json(lay, [], _profiles(), registry, "t", places)
+    row = {r[0]: r[1] for r in out["spots"][0]["location"]}
+    assert "N," in row["Position"] and "W" in row["Position"]
+    assert "nm" in row["Nearest inlet"] and "approximate" in row["Nearest inlet"]

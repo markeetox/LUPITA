@@ -4,7 +4,7 @@ from __future__ import annotations
 import numpy as np
 
 from pipeline import scoring
-from pipeline.grid import haversine_km
+from pipeline.grid import bearing_deg, compass, haversine_km
 
 TAGS = {"sst_c": "modeled", "sst_gradient": "modeled", "chlorophyll": "modeled", "depth_m": "static"}
 SPEC_ROWS = [("size", "Typical size"), ("diet", "Diet"), ("swimming_depth", "Swimming depth"),
@@ -48,47 +48,55 @@ def _ft(v) -> str:
     return "unknown" if v is None else f"{float(v):.0f}"
 
 
-def structure_reason(layers: dict, cell: tuple):
-    i, j = cell
-    info = layers.get("structure_info", {}).get(cell)
-    if info:
-        top = max(info, key=lambda x: float(x.get("relief_ft") or 0))
-        more = f" and {len(info) - 1} more" if len(info) > 1 else ""
-        what = top.get("material") or top["kind"].replace("_", " ")
-        return (f"FWC lists {top['name']}{more} here ({what}), about {_ft(top.get('depth_ft'))} ft deep "
-                f"with {_ft(top.get('relief_ft'))} ft of relief.")
-    cover = layers.get("structure_cover")
-    if cover is not None and cover[i, j] > 0:
-        return f"FWC's Unified Reef Map shows reef or hard bottom across about {cover[i, j]:.0%} of this area."
-    return None
+def _structures(layers: dict, members: list) -> list:
+    out = []
+    for c in members:
+        out += layers.get("structure_info", {}).get(c, [])
+    return sorted(out, key=lambda x: -float(x.get("relief_ft") or 0))
 
 
-def structure_title(layers: dict, cell: tuple, members: list, lats) -> str:
-    info = layers.get("structure_info", {}).get(cell)
-    if info:
-        top = max(info, key=lambda x: float(x.get("relief_ft") or 0))
-        return top["name"] + (f" and {len(info) - 1} more" if len(info) > 1 else "")
+def _natural_km2(layers: dict, members: list, lats) -> float:
     cover = layers.get("structure_cover")
+    if cover is None:
+        return 0.0
+    from pipeline.grid import cell_km2
     dlat = abs(float(lats[1] - lats[0]))
-    km2 = 0.0
-    if cover is not None:
-        from pipeline.grid import cell_km2
-        km2 = sum(float(cover[i, j]) * cell_km2(float(lats[i]), dlat, dlat) for i, j in members)
-    return f"Natural reef or hard bottom, about {km2:.1f} km2 mapped"
+    return sum(float(cover[i, j]) * cell_km2(float(lats[i]), dlat, dlat) for i, j in members)
 
 
-def structure_rows(layers: dict, cell: tuple) -> list:
-    i, j = cell
+def structure_reasons(layers: dict, members: list, lats) -> list:
+    out = []
+    items = _structures(layers, members)
+    if items:
+        top = items[0]
+        more = f" and {len(items) - 1} more nearby" if len(items) > 1 else ""
+        what = top.get("material") or top["kind"].replace("_", " ")
+        out.append(f"FWC lists {top['name']}{more} here ({what}), about {_ft(top.get('depth_ft'))} ft deep "
+                   f"with {_ft(top.get('relief_ft'))} ft of relief.")
+    km2 = _natural_km2(layers, members, lats)
+    if km2 >= 0.05:
+        out.append(f"FWC's Unified Reef Map shows about {km2:.1f} km2 of reef or hard bottom in this patch.")
+    return out
+
+
+def structure_title(layers: dict, members: list, lats) -> str:
+    items = _structures(layers, members)
+    if items:
+        return items[0]["name"] + (f" and {len(items) - 1} more" if len(items) > 1 else "")
+    return f"Natural reef or hard bottom, about {_natural_km2(layers, members, lats):.1f} km2 mapped"
+
+
+def structure_rows(layers: dict, members: list, lats) -> list:
     rows = []
-    for x in (layers.get("structure_info", {}).get(cell) or [])[:3]:
+    for x in _structures(layers, members)[:3]:
         bits = [x.get("material") or x["kind"].replace("_", " "), f"{_ft(x.get('depth_ft'))} ft deep",
                 f"{_ft(x.get('relief_ft'))} ft relief"]
         if x.get("deployed"):
             bits.append(f"deployed {x['deployed']}")
         rows.append([x["name"], ", ".join(bits)])
-    cover = layers.get("structure_cover")
-    if cover is not None and cover[i, j] > 0:
-        rows.append(["Natural reef", f"{cover[i, j]:.0%} of this area mapped as coral or hard bottom (FWC Unified Reef Map v2.2, 2025)"])
+    km2 = _natural_km2(layers, members, lats)
+    if km2 >= 0.05:
+        rows.append(["Natural reef", f"About {km2:.1f} km2 mapped as reef or hard bottom (FWC Unified Reef Map v2.2, 2025)"])
     return rows
 
 
@@ -103,7 +111,7 @@ def nearest_buoy(buoys: list[dict], lat: float, lon: float, max_km: float = 60.0
     return best
 
 
-def build_reasons(profile, name, scored, layers, cell, buoys, reg, lat, lon):
+def build_reasons(profile, name, scored, layers, cell, buoys, reg, lat, lon, members=None):
     i, j = cell
     pos, neg = [], []
     for f in profile["factors"]:
@@ -114,9 +122,9 @@ def build_reasons(profile, name, scored, layers, cell, buoys, reg, lat, lon):
         if not np.isfinite(s):
             continue
         if f["kind"] == "category":
-            text = structure_reason(layers, cell) if p == "structure_type" else None
-            if s >= 0.6 and text:
-                pos.append((f["weight"] * s, "static", text))
+            if s >= 0.6 and p == "structure_type":
+                for k, text in enumerate(structure_reasons(layers, members or [cell], layers["lats"])):
+                    pos.append((f["weight"] * s - k * 1e-6, "static", text))
             continue
         v = layers[p][i, j]
         tag, w = TAGS.get(p, "modeled"), f["weight"]
@@ -145,13 +153,24 @@ def build_reasons(profile, name, scored, layers, cell, buoys, reg, lat, lon):
     return reasons
 
 
-def build_location(layers, scored, cell, buoys, lat, lon):
+def place_row(places, lat, lon):
+    """'About 8.2 nm ESE of Government Cut' for the nearest reference place, or None."""
+    if not places:
+        return None
+    km, p = min(((haversine_km(lat, lon, q["lat"], q["lon"]), q) for q in places), key=lambda t: t[0])
+    return ["Nearest inlet", f"About {km / 1.852:.1f} nm {compass(bearing_deg(p['lat'], p['lon'], lat, lon))} of {p['name']} (approximate)"]
+
+
+def build_location(layers, scored, cell, buoys, lat, lon, members=None, places=None):
     i, j = cell
-    rows = []
+    rows = [["Position", f"{lat:.3f} N, {abs(lon):.3f} W"]]
+    pr = place_row(places, lat, lon)
+    if pr:
+        rows.append(pr)
     depth = layers.get("depth_m")
     if depth is not None and np.isfinite(depth[i, j]):
         rows.append(["Water depth", f"About {depth[i, j]:.0f} m"])
-    rows += structure_rows(layers, cell)
+    rows += structure_rows(layers, members or [cell], layers["lats"])
     sst_t = (layers["times"].get("sst") or "")[:10]
     rows.append(["Surface temp", f"{layers['sst_c'][i, j]:.1f} C (satellite, {sst_t})"])
     chl = layers.get("chlorophyll")
@@ -190,7 +209,7 @@ def _cold_hint(profile, scored, layers) -> str:
     return ""
 
 
-def build_fish_json(layers, buoys, profiles, registry, generated_utc):
+def build_fish_json(layers, buoys, profiles, registry, generated_utc, places=None):
     reg = {p["key"]: p for p in registry["parameters"]}
     lats, lons = layers["lats"], layers["lons"]
     species_out, spots_out = [], []
@@ -206,7 +225,8 @@ def build_fish_json(layers, buoys, profiles, registry, generated_utc):
             continue
         style = profile.get("zone_style", "hull")
         spots, best = scoring.find_spots(scored["score"], lats, lons, min_cells=profile.get("min_cells", scoring.MIN_CELLS),
-                                         max_spots=profile.get("max_spots", scoring.MAX_SPOTS), zone_style=style)
+                                         max_spots=profile.get("max_spots", scoring.MAX_SPOTS), zone_style=style,
+                                         block_cells=profile.get("patch_block_cells"))
         if not spots:
             msg = "No favorable areas right now." + (f" The best score was {best:.0%}." if best is not None else "")
             entry.update(status="no_favorable_areas", message=msg + _cold_hint(profile, scored, layers))
@@ -216,14 +236,14 @@ def build_fish_json(layers, buoys, profiles, registry, generated_utc):
             i, j = sp["cell"]
             lat, lon = float(lats[i]), float(lons[j])
             cov = float(scored["coverage"][i, j])
-            title = (structure_title(layers, (i, j), sp["members"], lats) if profile.get("title_from") == "structure"
+            title = (structure_title(layers, sp["members"], lats) if profile.get("title_from") == "structure"
                      else f"Favorable area, about {sp['area_km2']:.0f} km2")
             item = {
                 "id": f"{sid}-{k}", "species": sid, "title": title,
                 "score": round(sp["score"], 3), "confidence": "Medium" if cov >= 0.9 else "Low",
                 "data_coverage": round(cov, 2), "coords": [round(lon, 4), round(lat, 4)],
-                "reasons": build_reasons(profile, name, scored, layers, (i, j), buoys, reg, lat, lon),
-                "location": build_location(layers, scored, (i, j), buoys, lat, lon)}
+                "reasons": build_reasons(profile, name, scored, layers, (i, j), buoys, reg, lat, lon, sp["members"]),
+                "location": build_location(layers, scored, (i, j), buoys, lat, lon, sp["members"], places)}
             if "rings" in sp:
                 item["rings"] = [[[round(x, 4), round(y, 4)] for x, y in r] for r in sp["rings"]]
             else:

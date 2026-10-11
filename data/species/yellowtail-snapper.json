@@ -8,7 +8,7 @@
     "yellowtail"
   ],
   "habitat_zone": "reef",
-  "review_status": "draft v3 - reef and wreck data wired in (FWC artificial reefs + FWC Unified Reef Map v2.2); verify against live data",
+  "review_status": "draft v4 - reef areas split into patches; shallow bay bottom excluded by a depth gate",
   "image": {
     "status": "candidate",
     "plan": "NOAA Fisheries lists a yellowtail snapper photo credited to NOAA Fisheries/Dr. Dwayne Meadows. Confirm the usage terms and get the direct image URL before using it. Do not use the FWC illustration (copyrighted).",
@@ -59,7 +59,7 @@
       "param": "depth_m",
       "kind": "range",
       "range": [
-        3,
+        5,
         180
       ],
       "ideal": [
@@ -69,13 +69,14 @@
       "weight": 0.3,
       "active": true,
       "value_status": "sourced",
-      "value_notes": "NOAA Fisheries: adults at 10-70 m near offshore reefs. SEDAR 8: commercial handline catch mainly 20-60 m. FishBase: 0-180 m overall. Divers commonly see them on shallow reefs (about 3-18 m).",
+      "value_notes": "NOAA Fisheries: adults at 10-70 m near offshore reefs. SEDAR 8: commercial handline catch mainly 20-60 m. FishBase: 0-180 m overall. Cells shallower than 5 m are excluded (gate): that is bay and flat bottom, where juveniles live, not the reef water adults use. The 5 m cutoff is a judgment call, not a published figure.",
       "reason_template": "Depth is {value} m, within the range yellowtail use on reefs.",
       "sources": [
         "https://www.fisheries.noaa.gov/species/yellowtail-snapper/science",
         "https://www.fishbase.org/summary/188",
         "https://sedarweb.org/documents/s8dw04-the-biology-of-yellowtail-snapper-ocyurus-chrysurus-with-emphasis-on-populations-in-the-caribbean/"
-      ]
+      ],
+      "gate": true
     },
     {
       "param": "sst_c",
@@ -154,6 +155,7 @@
   },
   "zone_style": "cells",
   "min_cells": 1,
-  "max_spots": 15,
-  "title_from": "structure"
+  "max_spots": 25,
+  "title_from": "structure",
+  "patch_block_cells": 6
 }

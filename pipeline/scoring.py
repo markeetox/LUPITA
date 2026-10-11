@@ -140,8 +140,19 @@ def _cell_ring(lat: float, lon: float, dlat: float, dlon: float) -> list[list[fl
     return [[a, b], [c, b], [c, d], [a, d], [a, b]]
 
 
+def split_component(comp: list, block: int | None) -> list:
+    """Split a large connected area into patches of at most block x block cells, so one long reef
+    tract is not reported as a single area."""
+    if not block or len(comp) <= block * block:
+        return [comp]
+    groups: dict = {}
+    for i, j in comp:
+        groups.setdefault((i // block, j // block), []).append((i, j))
+    return list(groups.values())
+
+
 def find_spots(score: np.ndarray, lats: np.ndarray, lons: np.ndarray, min_cells: int = MIN_CELLS,
-               max_spots: int = MAX_SPOTS, zone_style: str = "hull"):
+               max_spots: int = MAX_SPOTS, zone_style: str = "hull", block_cells: int | None = None):
     """Best connected areas. Returns (spots, best_score).
     zone_style 'hull' outlines each area; 'cells' keeps the exact cells (for reefs and other thin features)."""
     ok = np.isfinite(score)
@@ -151,7 +162,8 @@ def find_spots(score: np.ndarray, lats: np.ndarray, lons: np.ndarray, min_cells:
     cutoff = max(MIN_SCORE_REPORT, float(np.nanpercentile(score[ok], 100 * (1 - TOP_FRACTION))))
     dlat, dlon = abs(float(lats[1] - lats[0])), abs(float(lons[1] - lons[0]))
     spots = []
-    for comp in components(ok & (score >= cutoff)):
+    patches = [c for comp in components(ok & (score >= cutoff)) for c in split_component(comp, block_cells)]
+    for comp in patches:
         if len(comp) < min_cells:
             continue
         vals = [score[i, j] for i, j in comp]

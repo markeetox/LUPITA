@@ -91,3 +91,18 @@ def haversine_km(lat1, lon1, lat2, lon2) -> float:
     p1, p2 = math.radians(lat1), math.radians(lat2)
     a = math.sin((p2 - p1) / 2) ** 2 + math.cos(p1) * math.cos(p2) * math.sin(math.radians(lon2 - lon1) / 2) ** 2
     return 2 * 6371.0 * math.asin(math.sqrt(a))
+
+
+COMPASS = ["N", "NNE", "NE", "ENE", "E", "ESE", "SE", "SSE", "S", "SSW", "SW", "WSW", "W", "WNW", "NW", "NNW"]
+
+
+def bearing_deg(lat1, lon1, lat2, lon2) -> float:
+    """Initial compass bearing from point 1 to point 2, 0-360 degrees."""
+    p1, p2, dl = math.radians(lat1), math.radians(lat2), math.radians(lon2 - lon1)
+    y = math.sin(dl) * math.cos(p2)
+    x = math.cos(p1) * math.sin(p2) - math.sin(p1) * math.cos(p2) * math.cos(dl)
+    return (math.degrees(math.atan2(y, x)) + 360) % 360
+
+
+def compass(deg: float) -> str:
+    return COMPASS[int((deg + 11.25) % 360 // 22.5)]
