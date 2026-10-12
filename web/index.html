@@ -47,6 +47,8 @@
   .toggle input { width: 20px; height: 20px; accent-color: #ef4444; }
   .toggle .sw { width: 22px; height: 14px; border-radius: 3px; background: rgba(239,68,68,.35); border: 2px solid #ef4444; }
   .banner.closed { background: #3a1414; color: #fca5a5; }
+  .legend { display: flex; align-items: center; gap: 8px; margin-top: 12px; font-size: 13px; color: var(--muted); }
+  .legend i { flex: 1; height: 10px; border-radius: 6px; background: linear-gradient(90deg, rgba(148,163,184,.14), #94a3b8, #ffffff); }
   .tab { position: absolute; top: 100%; left: 50%; width: 76px; height: 30px; margin-left: -38px; padding: 0;
     display: flex; align-items: center; justify-content: center; cursor: pointer; color: var(--text);
     background: rgba(15,27,45,.96); border: 1px solid var(--line); border-top: none; border-radius: 0 0 16px 16px; }
@@ -109,6 +111,7 @@
     <label for="fishSelect" class="lbl">Show fish</label>
     <select id="fishSelect" class="select"><option value="all">All fish</option></select>
     <div id="fishNote" class="note"></div>
+    <div class="legend" aria-hidden="true"><span>Lower</span><i id="legendBar"></i><span>Better match</span></div>
     <label class="toggle"><input type="checkbox" id="closuresToggle" checked><i class="sw"></i><span>Show no-fishing areas</span></label>
     <div class="chips"><span id="status" class="chip">Loading...</span><span id="buoyStatus" class="chip">Buoys: loading...</span><span id="closuresStatus" class="chip">No-fishing areas: loading...</span></div>
     <p class="hint">Tap a marker or zone to see why a fish may be there. Experimental.</p>
@@ -134,7 +137,12 @@
 const DATA_BASE_DEFAULT = "https://raw.githubusercontent.com/markeetox/here-fishy-fishy/data/";
 const DATA_BASE = (new URLSearchParams(location.search).get("data") || DATA_BASE_DEFAULT).replace(/\/?$/, "/");
 
-const BASE_STYLE = "https://tiles.openfreemap.org/styles/liberty";
+// Dark map so the heat layer glows. Open the page with ?map=liberty for the light street map.
+const DARK_STYLE = { version: 8, sources: { carto: { type: "raster", tileSize: 256,
+    tiles: ["a", "b", "c", "d"].map(x => `https://${x}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}.png`),
+    attribution: "&copy; OpenStreetMap contributors &copy; CARTO" } }, layers: [{ id: "carto", type: "raster", source: "carto" }] };
+const BASE_STYLE = new URLSearchParams(location.search).get("map") === "liberty" ? "https://tiles.openfreemap.org/styles/liberty" : DARK_STYLE;
+const EMPTY = { type: "FeatureCollection", features: [] };
 const FALLBACK_STYLE = {
   version: 8,
   sources: { osm: { type: "raster", tileSize: 256, tiles: ["https://tile.openstreetmap.org/{z}/{x}/{y}.png"],
@@ -271,6 +279,7 @@ function closeSheet() {
   if (!sheet.classList.contains("open")) return;
   sheet.classList.remove("open");
   sheet.setAttribute("aria-hidden", "true");
+  setSelected(null);
   map.easeTo({ padding: { bottom: 0 }, duration: 350 });
 }
 closeBtn.addEventListener("click", closeSheet);
@@ -289,6 +298,59 @@ grab.addEventListener("touchend", e => {
   sheet.style.transition = ""; sheet.style.transform = "";
   if (dy > 80) closeSheet();
 });
+
+/* ---------------- heat layer ---------------- */
+let HEAT = null;
+const HEAT_MIN = 0.45;                                  // cells scoring below this are not drawn
+function b64ToBytes(b64) {
+  const bin = atob(b64), out = new Uint8Array(bin.length);
+  for (let i = 0; i < bin.length; i++) out[i] = bin.charCodeAt(i);
+  return out;
+}
+function hexToRgb(h) { const n = parseInt(String(h).slice(1), 16); return [(n >> 16) & 255, (n >> 8) & 255, n & 255]; }
+// One RGBA pixel per grid cell. For "all fish" each cell takes the colour of the fish that scores best there.
+function heatPixels(heat, filter, species) {
+  const n = heat.width * heat.height, px = new Uint8ClampedArray(n * 4);
+  const ids = Object.keys(heat.species).filter(id => filter === "all" || id === filter);
+  const grids = ids.map(id => b64ToBytes(heat.species[id])), cols = ids.map(id => hexToRgb((species[id] || {}).color || "#ffffff"));
+  for (let i = 0; i < n; i++) {
+    let best = 0, who = -1;
+    for (let k = 0; k < grids.length; k++) if (grids[k][i] > best) { best = grids[k][i]; who = k; }
+    const v = best / 100;
+    if (who < 0 || v < HEAT_MIN) continue;
+    const t = Math.min(1, (v - HEAT_MIN) / (1 - HEAT_MIN)), glow = 0.35 * t * t, c = cols[who];
+    px[i * 4] = c[0] + (255 - c[0]) * glow;
+    px[i * 4 + 1] = c[1] + (255 - c[1]) * glow;
+    px[i * 4 + 2] = c[2] + (255 - c[2]) * glow;
+    px[i * 4 + 3] = 255 * (0.12 + 0.70 * Math.pow(t, 0.9));      // faint at the threshold, strong where the match is best
+  }
+  return px;
+}
+function heatURL(px, w, h, scale) {
+  const small = document.createElement("canvas"); small.width = w; small.height = h;
+  small.getContext("2d").putImageData(new ImageData(px, w, h), 0, 0);
+  const big = document.createElement("canvas"); big.width = w * scale; big.height = h * scale;
+  const g = big.getContext("2d"); g.imageSmoothingEnabled = true; g.imageSmoothingQuality = "high";
+  g.drawImage(small, 0, 0, big.width, big.height);        // smooth upscaling turns the grid into a soft surface
+  return big.toDataURL("image/png");
+}
+function renderHeat() {                                  // call only when the map style is ready
+  if (!HEAT) return;
+  const [w, s, e, n] = HEAT.bounds, coordinates = [[w, n], [e, n], [e, s], [w, s]];
+  const url = heatURL(heatPixels(HEAT, FILTER, SPECIES), HEAT.width, HEAT.height, 6);
+  if (map.getSource("heat")) { map.getSource("heat").updateImage({ url, coordinates }); return; }
+  map.addSource("heat", { type: "image", url, coordinates });
+  const before = ["closures-fill", "zones-fill", "spots-halo"].find(id => map.getLayer(id));
+  map.addLayer({ id: "heat", type: "raster", source: "heat",
+    paint: { "raster-opacity": 1, "raster-resampling": "linear", "raster-fade-duration": 0 } }, before);
+}
+function setSelected(spotId) {                           // white outline around the area that is open in the sheet
+  const src = map.getSource("selected");
+  if (!src) return;
+  const s = spotId && SPOTS[spotId], z = s && spotZone(s);
+  src.setData(z ? { type: "FeatureCollection", features: [{ type: "Feature",
+    properties: { color: (SPECIES[s.species] || {}).color || "#ffffff" }, geometry: z }] } : EMPTY);
+}
 
 /* ---------------- map ---------------- */
 const map = new maplibregl.Map({
@@ -315,7 +377,7 @@ function spotFeatures() {
   const color = s => (SPECIES[s.species] || {}).color || "#ffffff";
   return {
     points: { type: "FeatureCollection", features: spots.map(s => ({ type: "Feature",
-      properties: { spotId: s.id, species: s.species, color: color(s) },
+      properties: { spotId: s.id, species: s.species, color: color(s), score: s.score },
       geometry: { type: "Point", coordinates: s.coords } })) },
     zones: { type: "FeatureCollection", features: spots.filter(s => spotZone(s)).map(s => ({ type: "Feature",
       properties: { spotId: s.id, species: s.species, color: color(s), outline: !s.rings },
@@ -326,15 +388,20 @@ function spotFeatures() {
 function addData() {
   if (map.getSource("spots")) return;
   const f = spotFeatures();
+  renderHeat();
   addClosures();
   map.addSource("zones", { type: "geojson", data: f.zones });
   map.addSource("spots", { type: "geojson", data: f.points });
+  map.addSource("selected", { type: "geojson", data: EMPTY });
   const col = ["get", "color"];
-  map.addLayer({ id: "zones-fill", type: "fill", source: "zones", paint: { "fill-color": col, "fill-opacity": 0.2 } });
-  map.addLayer({ id: "zones-line", type: "line", source: "zones", filter: ["==", ["get", "outline"], true], paint: { "line-color": col, "line-width": 2, "line-dasharray": [2, 2] } });
-  map.addLayer({ id: "spots-halo", type: "circle", source: "spots", paint: { "circle-radius": 17, "circle-color": col, "circle-opacity": 0.28 } });
+  map.addLayer({ id: "zones-fill", type: "fill", source: "zones", paint: { "fill-color": col, "fill-opacity": 0.01 } });   // invisible tap area
+  map.addLayer({ id: "selected-fill", type: "fill", source: "selected", paint: { "fill-color": col, "fill-opacity": 0.16 } });
+  map.addLayer({ id: "selected-line", type: "line", source: "selected", paint: { "line-color": "#ffffff", "line-width": 2.5, "line-opacity": 0.95 } });
+  map.addLayer({ id: "spots-halo", type: "circle", source: "spots",
+    paint: { "circle-radius": 24, "circle-color": col, "circle-opacity": 0.38, "circle-blur": 0.9 } });
   map.addLayer({ id: "spots", type: "circle", source: "spots",
-    paint: { "circle-radius": 9, "circle-color": col, "circle-stroke-color": "#ffffff", "circle-stroke-width": 2.5 } });
+    paint: { "circle-radius": ["interpolate", ["linear"], ["coalesce", ["get", "score"], 0.6], 0.4, 6, 1, 11],
+             "circle-color": col, "circle-stroke-color": "#ffffff", "circle-stroke-width": 2 } });
   addBuoys();
   bindHandlers();
   if (FISH) fitToSpots();
@@ -353,6 +420,8 @@ function refreshSpots() {
   const f = spotFeatures();
   map.getSource("zones").setData(f.zones);
   map.getSource("spots").setData(f.points);
+  setSelected(null);
+  renderHeat();
   fitToSpots();
 }
 
@@ -363,9 +432,9 @@ function addClosures() {
   const before = map.getLayer("zones-fill") ? "zones-fill" : undefined;       // keep fish markers and zones on top
   map.addSource("closures", { type: "geojson", data: CLOSURES });
   map.addLayer({ id: "closures-fill", type: "fill", source: "closures", layout: { visibility: vis },
-    paint: { "fill-color": "#ef4444", "fill-opacity": 0.28 } }, before);
+    paint: { "fill-color": "#ef4444", "fill-opacity": 0.22 } }, before);
   map.addLayer({ id: "closures-line", type: "line", source: "closures", layout: { visibility: vis },
-    paint: { "line-color": "#ef4444", "line-width": 2 } }, before);
+    paint: { "line-color": "#ef4444", "line-width": 1.5 } }, before);
 }
 function setClosuresVisible(on) {
   ["closures-fill", "closures-line"].forEach(id => { if (map.getLayer(id)) map.setLayoutProperty(id, "visibility", on ? "visible" : "none"); });
@@ -394,10 +463,10 @@ function bindHandlers() {
     const hits = map.queryRenderedFeatures(box, { layers });
     if (!hits.length) { closeSheet(); return; }
     const f = hits[0];
-    if (f.layer.id === "buoys") openSheet(buoyHTML(BUOYS[f.properties.idx]), f.geometry.coordinates);
-    else if (f.layer.id === "closures-fill") openSheet(closureHTML(f.properties), e.lngLat);
-    else if (f.layer.id === "spots") openSheet(spotHTML(f.properties.spotId), f.geometry.coordinates);
-    else openSheet(spotHTML(f.properties.spotId), e.lngLat);
+    if (f.layer.id === "buoys") { openSheet(buoyHTML(BUOYS[f.properties.idx]), f.geometry.coordinates); setSelected(null); }
+    else if (f.layer.id === "closures-fill") { openSheet(closureHTML(f.properties), e.lngLat); setSelected(null); }
+    else if (f.layer.id === "spots") { openSheet(spotHTML(f.properties.spotId), f.geometry.coordinates); setSelected(f.properties.spotId); }
+    else { openSheet(spotHTML(f.properties.spotId), e.lngLat); setSelected(f.properties.spotId); }
   });
 }
 map.on("style.load", addData);
@@ -441,6 +510,13 @@ function renderClosuresChip() {
   chip.textContent = `No-fishing areas: ${CLOSURES.features.length} mapped`; chip.className = "chip ok";
 }
 
+function renderLegend() {
+  const bar = document.getElementById("legendBar"), sp = SPECIES[FILTER];
+  if (!sp) { bar.style.background = ""; return; }                     // "all fish": keep the neutral ramp
+  const [r, g, b] = hexToRgb(sp.color);
+  bar.style.background = `linear-gradient(90deg, rgba(${r},${g},${b},.14), ${sp.color}, #ffffff)`;
+}
+
 function speciesLabel(s) {
   if (s.status === "ok") return `${s.spots} area${s.spots === 1 ? "" : "s"}`;
   return s.status === "unavailable" ? "no data yet" : "none today";
@@ -462,6 +538,7 @@ fishSelect.addEventListener("change", () => {
   FILTER = fishSelect.value;
   store.set("fhm.fish", FILTER);
   renderNote();
+  renderLegend();
   closeSheet();
   refreshSpots();
 });
@@ -481,6 +558,7 @@ function renderPanel() {
     (FISH.species || []).map(s => `<option value="${esc(s.id)}">${esc(s.name)} (${esc(speciesLabel(s))})</option>`).join("");
   fishSelect.value = FILTER;
   renderNote();
+  renderLegend();
 }
 
 /* ---------------- load data ---------------- */
@@ -494,6 +572,8 @@ async function load() {
   catch (err) { console.warn("fish.json failed, using sample:", err); setFish(SAMPLE); }
   renderPanel();
   refreshSpots();
+  try { HEAT = await getJSON("heat.json"); } catch (err) { console.warn("heat.json failed:", err); HEAT = null; }
+  if (HEAT && map.getSource("spots")) renderHeat();
 
   try { CLOSURES = await getJSON("closures.json"); } catch (err) { console.warn("closures.json failed:", err); CLOSURES = null; }
   renderClosuresChip();

@@ -145,3 +145,22 @@ def test_tarpon_in_the_spring_run_and_not_in_cold_water():
 def test_species_names_are_not_capitalised_mid_sentence():
     from pipeline.predict import _fish
     assert _fish("Mutton snapper") == "mutton snapper" and _fish("Atlantic tarpon") == "Atlantic tarpon" and _fish("Mahi-mahi") == "mahi-mahi"
+
+
+# ---------- heat grid ----------
+def test_heat_grid_is_published_north_first_with_scores_only_where_a_fish_could_be():
+    import base64
+    from pipeline.predict import quantize_scores
+    heat = {}
+    L = make_layers()
+    build_fish_json(L, [], PROFILES, REGISTRY, "t", PLACES, when(2027, 1, 15, 17), heat)
+    raw = np.frombuffer(base64.b64decode(heat["mahi-mahi"]), dtype=np.uint8).reshape(len(LATS), len(LONS))
+    grid = raw[::-1]                                                  # back to south-first like the layers
+    lon, lat = np.meshgrid(LONS, LATS)
+    pocket = (lon >= -80.0) & (lat >= 25.3) & (lat <= 25.5)
+    shallow = lon < -80.2
+    assert grid[pocket].min() > 0 and grid[pocket].max() <= 100       # scored in the cool, deep pocket
+    assert (grid[shallow] == 0).all()                                 # gated: shallow water never gets a score
+    s = np.full((2, 2), np.nan); s[0, 0] = 0.456; s[1, 1] = 1.7       # south row first in, north row first out
+    out = np.frombuffer(base64.b64decode(quantize_scores(s)), dtype=np.uint8).reshape(2, 2)
+    assert out.tolist() == [[0, 100], [46, 0]]

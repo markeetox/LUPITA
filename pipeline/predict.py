@@ -1,6 +1,8 @@
 """Turn species scores into fish.json: the file the map reads."""
 from __future__ import annotations
 
+import base64
+
 import numpy as np
 
 from pipeline import scoring, sites as sites_mod
@@ -17,6 +19,13 @@ UNIT_TEXT = {"degC": "C", "mg/m3": "mg/m3", "m": "m"}
 def _fish(name: str) -> str:
     """Species name for the middle of a sentence: 'Mutton snapper' -> 'mutton snapper', 'Atlantic tarpon' stays capitalised."""
     return (name[:1].lower() + name[1:]).replace("atlantic", "Atlantic")
+
+
+def quantize_scores(score: np.ndarray) -> str:
+    """Score grid -> base64 of one byte per cell (1-100 = score in percent, 0 = no score), north row first,
+    which is the order an image is drawn in."""
+    q = np.where(np.isfinite(score), np.clip(np.round(score * 100), 1, 100), 0).astype(np.uint8)
+    return base64.b64encode(q[::-1].tobytes()).decode("ascii")
 
 
 def _fmt(param: str, v: float) -> str:
@@ -249,7 +258,7 @@ def _cold_hint(profile, scored, layers) -> str:
     return ""
 
 
-def build_fish_json(layers, buoys, profiles, registry, generated_utc, places=None, conditions=None):
+def build_fish_json(layers, buoys, profiles, registry, generated_utc, places=None, conditions=None, heat=None):
     reg = {p["key"]: p for p in registry["parameters"]}
     if conditions:
         layers = {**layers, "month": conditions["now"].astimezone(sites_mod.LOCAL).month}   # for seasonal factors
@@ -287,6 +296,8 @@ def build_fish_json(layers, buoys, profiles, registry, generated_utc, places=Non
         cc = layers.get("closure_cover")
         if cc is not None:                                   # never recommend cells that are mostly inside a no-fishing zone
             scored["score"] = np.where(cc >= CLOSED_CELL_COVER, np.nan, scored["score"])
+        if heat is not None:                                   # the full score surface, for the map's heat layer
+            heat[sid] = quantize_scores(scored["score"])
         style = profile.get("zone_style", "hull")
         spots, best = scoring.find_spots(scored["score"], lats, lons, min_cells=profile.get("min_cells", scoring.MIN_CELLS),
                                          max_spots=profile.get("max_spots", scoring.MAX_SPOTS), zone_style=style,

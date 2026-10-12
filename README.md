@@ -51,5 +51,6 @@ Always confirm with FWC, NOAA Sanctuaries or the National Park Service.
 
 ## Output
 - `fish.json`: species status, areas (point, polygon, score, reasons, location facts); read by `web/`
+- `heat.json`: each map-based fish's full score grid (one byte per cell), painted by the map as a smooth heat layer
 - `closures.json`: no-fishing area outlines and details, drawn in red on the map
 - `latest.json`: buoy readings and satellite scene summaries

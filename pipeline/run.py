@@ -43,6 +43,7 @@ def main() -> None:
 
     sst = chl = None
     fish = None
+    heat_json = None
     if layers is None:
         errors.append("kept the last published predictions: satellite temperature could not be loaded")
     else:
@@ -51,7 +52,14 @@ def main() -> None:
         if layers["chl_raw"] is not None:
             clats, clons, cgrid = layers["chl_raw"]
             chl = _grid_report(cfg["chlorophyll"], layers["times"]["chlorophyll"], clats, clons, cgrid)
-        fish = build_fish_json(layers, buoys, profiles, registry, now, places, conditions)
+        heat: dict = {}
+        fish = build_fish_json(layers, buoys, profiles, registry, now, places, conditions, heat)
+        la, lo = layers["lats"], layers["lons"]
+        dlat, dlon = float(la[1] - la[0]), float(lo[1] - lo[0])
+        heat_json = {"version": 1, "generated_utc": now, "width": int(len(lo)), "height": int(len(la)),
+                     "bounds": [round(float(lo[0]) - dlon / 2, 4), round(float(la[0]) - dlat / 2, 4),
+                                round(float(lo[-1]) + dlon / 2, 4), round(float(la[-1]) + dlat / 2, 4)],
+                     "note": "One byte per cell, north row first: 0 = no score, 1-100 = score in percent.", "species": heat}
 
     cl_cfg = sources.get("closures", {})
     cl_loaded = bool(layers and layers.get("closure_checked"))
@@ -67,6 +75,7 @@ def main() -> None:
     if fish is not None:      # on a failed run these are not written, so the last good copies stay published
         (live / "fish.json").write_text(json.dumps(fish, indent=1, allow_nan=False))
         (live / "closures.json").write_text(json.dumps(cl_json, allow_nan=False, separators=(",", ":")))
+        (live / "heat.json").write_text(json.dumps(heat_json, allow_nan=False, separators=(",", ":")))
 
     for sp in (fish or {}).get("species", []):
         log.info("%-20s %-20s %s", sp["name"], sp["status"], sp["message"] or f"{sp['spots']} area(s)")
