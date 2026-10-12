@@ -3,17 +3,14 @@ from __future__ import annotations
 
 from datetime import datetime, timedelta, timezone
 
-import requests
+from pipeline import http
 
 MS_TO_KN = 1.943844
 USER_AGENT = "fish-habitat-map/0.1"
 
 
 def fetch_realtime(station: str, url_template: str, timeout: int = 30) -> str:
-    resp = requests.get(url_template.format(station=station), timeout=timeout,
-                        headers={"User-Agent": USER_AGENT})
-    resp.raise_for_status()
-    return resp.text
+    return http.get(url_template.format(station=station), timeout=timeout, attempts=2, base_delay=5).text
 
 
 def parse_realtime2(text: str) -> list[dict]:

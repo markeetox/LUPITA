@@ -73,7 +73,7 @@ function ago(iso) {
   const m = Math.round((Date.now() - new Date(iso).getTime()) / 60000);
   if (!isFinite(m)) return { text: "unknown", cls: "warn" };
   const text = m < 90 ? `${Math.max(m, 1)} min ago` : m < 2880 ? `${Math.round(m / 60)} h ago` : `${Math.round(m / 1440)} days ago`;
-  return { text, cls: m > 400 ? "warn" : "ok" };       // the workflow runs every 3 hours
+  return { text, cls: m > 150 ? "warn" : "ok" };       // the workflow runs every hour
 }
 function pill(cls, text) { return `<span class="pill ${cls}">${esc(text)}</span>`; }
 

@@ -470,7 +470,12 @@ function renderPanel() {
   if (!FISH) return;
   if (FISH.sample) { chip.textContent = "Sample data (live data not found)"; chip.className = "chip warn"; }
   else if (FISH.error) { chip.textContent = FISH.error; chip.className = "chip warn"; }
-  else { chip.textContent = "Live, experimental" + (FISH.generated_utc ? " · " + ago(FISH.generated_utc) : ""); chip.className = "chip ok"; }
+  else {
+    const mins = FISH.generated_utc ? Math.round((Date.now() - new Date(FISH.generated_utc).getTime()) / 60000) : null;
+    const stale = mins !== null && mins > 240;                  // the pipeline normally runs every hour
+    chip.textContent = (stale ? "Stale: last updated " : "Live, experimental") + (FISH.generated_utc ? (stale ? "" : " · ") + ago(FISH.generated_utc) : "");
+    chip.className = "chip " + (stale ? "warn" : "ok");
+  }
   if (FILTER !== "all" && !SPECIES[FILTER]) FILTER = "all";    // saved choice no longer exists
   fishSelect.innerHTML = `<option value="all">All fish</option>` +
     (FISH.species || []).map(s => `<option value="${esc(s.id)}">${esc(s.name)} (${esc(speciesLabel(s))})</option>`).join("");

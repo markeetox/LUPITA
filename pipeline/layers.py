@@ -36,8 +36,15 @@ def slope_layer(depth, lats, lons):
 
 
 def _fetch_grid(cfg: dict, region: dict, fetch):
-    url = erddap.build_griddap_url(cfg, region)
-    return erddap.parse_grid_csv(fetch(url), cfg["variable"])
+    """Try the main ERDDAP server, then any fallback_bases from the config."""
+    last = None
+    for base in [cfg["base"]] + list(cfg.get("fallback_bases", [])):
+        try:
+            url = erddap.build_griddap_url({**cfg, "base": base}, region)
+            return erddap.parse_grid_csv(fetch(url), cfg["variable"])
+        except Exception as exc:
+            last = exc
+    raise last
 
 
 def load_layers(sources: dict, errors: list[str], fetch=erddap.fetch_csv, fetch_arc=arcgis.fetch_json):

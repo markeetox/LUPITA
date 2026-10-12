@@ -1,7 +1,7 @@
 """ArcGIS REST feature queries (FWC reef and habitat layers)."""
 from __future__ import annotations
 
-import requests
+from pipeline import http
 
 USER_AGENT = "fish-habitat-map/0.1"
 
@@ -20,9 +20,7 @@ def query_params(region: dict, out_fields: str = "*", return_geometry: bool = Fa
 
 
 def fetch_json(url: str, params: dict, timeout: int = 120) -> dict:
-    r = requests.get(url, params=params, timeout=timeout, headers={"User-Agent": USER_AGENT})
-    r.raise_for_status()
-    j = r.json()
+    j = http.get(url, params=params, timeout=timeout).json()
     if "error" in j:
         raise RuntimeError(j["error"].get("message", "ArcGIS error"))
     return j

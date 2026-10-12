@@ -3,7 +3,7 @@ from __future__ import annotations
 
 from datetime import datetime, timedelta, timezone
 
-import requests
+from pipeline import http
 
 API = "https://api.tidesandcurrents.noaa.gov/api/prod/datagetter"
 USER_AGENT = "fish-habitat-map/0.1"
@@ -12,11 +12,9 @@ SLACK = timedelta(minutes=30)     # within this of a high or low tide counts as 
 
 def fetch_hilo(station: str, now: datetime, timeout: int = 40) -> dict:
     begin, end = (now - timedelta(days=1)).strftime("%Y%m%d"), (now + timedelta(days=2)).strftime("%Y%m%d")
-    r = requests.get(API, timeout=timeout, headers={"User-Agent": USER_AGENT}, params={
+    return http.get(API, timeout=timeout, attempts=3, base_delay=10, params={
         "product": "predictions", "application": "fish-habitat-map", "begin_date": begin, "end_date": end,
-        "datum": "MLLW", "station": station, "time_zone": "gmt", "units": "metric", "interval": "hilo", "format": "json"})
-    r.raise_for_status()
-    return r.json()
+        "datum": "MLLW", "station": station, "time_zone": "gmt", "units": "metric", "interval": "hilo", "format": "json"}).json()
 
 
 def parse_hilo(payload: dict) -> list[dict]:

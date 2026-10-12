@@ -42,9 +42,10 @@ def main() -> None:
     conditions = load_conditions(tide_stations, now_dt, errors)
 
     sst = chl = None
-    fish = {"version": 1, "generated_utc": now, "experimental": True, "species": [], "spots": [],
-            "error": "Satellite temperature could not be loaded."}
-    if layers is not None:
+    fish = None
+    if layers is None:
+        errors.append("kept the last published predictions: satellite temperature could not be loaded")
+    else:
         cfg = sources["erddap"]
         sst = _grid_report(cfg["sst"], layers["times"]["sst"], layers["lats"], layers["lons"], layers["sst_c"])
         if layers["chl_raw"] is not None:
@@ -60,14 +61,16 @@ def main() -> None:
     live.mkdir(parents=True, exist_ok=True)
     latest = {"generated_utc": now, "region": sources["region"]["name"], "buoys": buoys,
               "sst": sst, "chlorophyll": chl, "structure": (layers or {}).get("structure_stats"),
-              "closures": {"loaded": cl_loaded, "areas": len(cl_json["features"])}, "errors": errors}
+              "closures": {"loaded": cl_loaded, "areas": len(cl_json["features"])},
+              "fish_updated": fish is not None, "errors": errors}
     (live / "latest.json").write_text(json.dumps(latest, indent=2, allow_nan=False))
-    (live / "fish.json").write_text(json.dumps(fish, indent=1, allow_nan=False))
-    (live / "closures.json").write_text(json.dumps(cl_json, allow_nan=False, separators=(",", ":")))
+    if fish is not None:      # on a failed run these are not written, so the last good copies stay published
+        (live / "fish.json").write_text(json.dumps(fish, indent=1, allow_nan=False))
+        (live / "closures.json").write_text(json.dumps(cl_json, allow_nan=False, separators=(",", ":")))
 
-    for s in fish["species"]:
-        log.info("%-20s %-20s %s", s["name"], s["status"], s["message"] or f"{s['spots']} area(s)")
-    log.info("wrote latest.json and fish.json (%d errors)", len(errors))
+    for sp in (fish or {}).get("species", []):
+        log.info("%-20s %-20s %s", sp["name"], sp["status"], sp["message"] or f"{sp['spots']} area(s)")
+    log.info("wrote latest.json%s (%d errors)", " and fish.json" if fish is not None else "; fish.json left as it was", len(errors))
 
 
 if __name__ == "__main__":

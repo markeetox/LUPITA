@@ -5,7 +5,8 @@ import csv
 import io
 
 import numpy as np
-import requests
+
+from pipeline import http
 
 USER_AGENT = "fish-habitat-map/0.1"
 
@@ -29,9 +30,7 @@ def build_griddap_url(cfg: dict, region: dict) -> str:
 
 
 def fetch_csv(url: str, timeout: int = 120) -> str:
-    resp = requests.get(url, timeout=timeout, headers={"User-Agent": USER_AGENT})
-    resp.raise_for_status()
-    return resp.text
+    return http.get(url, timeout=timeout).text
 
 
 def parse_grid_csv(text: str, variable: str):
