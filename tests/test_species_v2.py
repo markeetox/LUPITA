@@ -1,0 +1,147 @@
+import json
+import re
+from datetime import datetime, timezone
+from pathlib import Path
+
+import numpy as np
+
+from pipeline import scoring
+from pipeline.layers import slope_layer
+from pipeline.predict import build_fish_json
+from tests import test_structure as TS
+from tests.test_predict import LATS, LONS, make_layers
+from tests.test_snook import BUOYS, PLACES, REGISTRY, conditions
+
+ROOT = Path(__file__).resolve().parent.parent
+FILES = sorted((ROOT / "data/species").glob("*.json"))
+PROFILES = [json.loads(p.read_text()) for p in FILES]
+REG = {p["key"]: p for p in REGISTRY["parameters"]}
+KINDS = {"range", "higher_is_better", "category", "season", "flag", "flag_penalty", "presence", "proximity", "closer_is_better"}
+UTC = timezone.utc
+
+
+def when(*a):
+    return {"now": datetime(*a, tzinfo=UTC), "tides": []}
+
+
+# ---------- every species file ----------
+def test_every_species_file_is_consistent():
+    colors, ids = set(), set()
+    assert len(FILES) >= 8
+    for path, d in zip(FILES, PROFILES):
+        assert d["id"] == path.stem and d["id"] not in ids and d["common_name"] and d["scientific_name"]
+        ids.add(d["id"])
+        assert re.fullmatch(r"#[0-9a-f]{6}", d["display"]["color"]) and d["display"]["color"] not in colors, d["id"]
+        colors.add(d["display"]["color"])
+        active = [f for f in d["factors"] if f.get("active")]
+        assert active and sum(f["weight"] for f in active) <= 1.0 + 1e-9, d["id"]
+        for f in d["factors"]:
+            assert f["param"] in REG and f["kind"] in KINDS, (d["id"], f["param"])
+            if not f.get("active"):
+                continue
+            assert f["weight"] > 0
+            if f["kind"] == "range":
+                lo, hi = f["range"]; a, b = f["ideal"]
+                assert lo <= a <= b <= hi, (d["id"], f["param"])
+            if f["kind"] == "season":
+                assert f["months"] and set(f["peak_months"]) <= set(f["months"]) and {"peak", "in_season", "off"} <= set(f["value_text"])
+            if f.get("value_status") in ("sourced", "partly_sourced"):
+                assert f["sources"], (d["id"], f["param"], "claims a source but lists none")
+
+
+def test_season_score_rule():
+    f = {"months": [11, 12, 1], "peak_months": [12], "in_score": 0.7, "off_score": 0.3}
+    assert [scoring.season_score(m, f) for m in (12, 11, 6)] == [1.0, 0.7, 0.3]
+
+
+# ---------- sailfish: winter beats summer ----------
+def _offshore(depth=100.0):
+    L = make_layers()
+    lon, _ = np.meshgrid(LONS, LATS)
+    L["depth_m"] = np.where(lon < -80.2, 8.0, depth)
+    return L
+
+
+def _top(out, species):
+    s = [x for x in out["spots"] if x["species"] == species]
+    return max(s, key=lambda x: x["score"]) if s else None
+
+
+def test_sailfish_scores_higher_and_says_why_in_winter():
+    jan = build_fish_json(_offshore(), [], PROFILES, REGISTRY, "t", PLACES, when(2027, 1, 15, 17))
+    jul = build_fish_json(_offshore(), [], PROFILES, REGISTRY, "t", PLACES, when(2026, 7, 15, 17))
+    a, b = _top(jan, "sailfish"), _top(jul, "sailfish")
+    assert a and b and a["score"] > b["score"] + 0.1
+    assert any("peak sailfish season" in r[1] for r in a["reasons"])
+    assert any("outside the main sailfish season" in r[1] for r in b["reasons"])
+    json.dumps(jan, allow_nan=False)
+
+
+def test_seasonal_species_say_when_the_month_is_unknown():
+    out = build_fish_json(_offshore(), [], PROFILES, REGISTRY, "t")          # no clock supplied
+    sf = {s["id"]: s for s in out["species"]}["sailfish"]
+    assert sf["status"] in ("ok", "no_favorable_areas", "unavailable")      # never a crash; season is simply left out
+
+
+# ---------- wahoo: follows the ledge ----------
+def test_slope_layer_measures_a_ledge_and_blanks_the_border():
+    lon, _ = np.meshgrid(LONS, LATS)
+    depth = np.where(lon < -80.0, 80.0, 700.0)
+    s = slope_layer(depth, LATS, LONS)
+    j = int(np.argmin(abs(LONS - -80.0)))
+    assert np.nanmax(s[:, j - 1: j + 2]) > 100 and np.nanmax(s[:, 4]) == 0 and np.all(np.isnan(s[:2, :]))
+
+
+def test_wahoo_areas_sit_on_the_drop_off():
+    L = make_layers(pockets=False, base_sst=27.0)
+    lon, _ = np.meshgrid(LONS, LATS)
+    L["depth_m"] = np.where(lon < -80.0, 80.0, 700.0)
+    L["bottom_slope"] = slope_layer(L["depth_m"], LATS, LONS)
+    out = build_fish_json(L, [], PROFILES, REGISTRY, "t", PLACES, when(2027, 1, 15, 17))
+    w = [s for s in out["spots"] if s["species"] == "wahoo"]
+    assert w and all(abs(s["coords"][0] - -80.0) <= 0.1 for s in w)
+    assert any("seafloor drops steeply" in r[1] for r in w[0]["reasons"])
+
+
+# ---------- mutton snapper and cobia reuse the reef layer ----------
+def _reef_out(now):
+    lay = TS.L.load_layers(TS._sources(), [], fetch=TS.fake_erddap, fetch_arc=TS.fake_arcgis)
+    return build_fish_json(lay, [], PROFILES, REGISTRY, "t", PLACES, now)
+
+
+def test_mutton_snapper_and_cobia_find_the_wreck_and_name_it():
+    out = _reef_out(when(2026, 6, 20, 17))
+    for sid in ("mutton-snapper", "cobia"):
+        spots = [s for s in out["spots"] if s["species"] == sid]
+        assert any("Miss Dania Beach" in s["title"] for s in spots), sid
+    assert any("spawning-aggregation season" in r[1] or "peak mutton snapper" in r[1]
+               for r in [s for s in out["spots"] if s["species"] == "mutton-snapper"][0]["reasons"])
+
+
+def test_cobia_is_out_of_season_in_summer_and_the_popup_says_so():
+    out = _reef_out(when(2026, 7, 15, 17))
+    cobia = [s for s in out["spots"] if s["species"] == "cobia"]
+    assert cobia and any("outside the winter and spring cobia window" in r[1] for r in cobia[0]["reasons"])
+
+
+# ---------- tarpon: the sites model, spring run ----------
+def _tarpon(now, temp):
+    ctx = {"layers": make_layers(), "buoys": [dict(BUOYS[0], water_temp_c=temp)], "conditions": conditions(now)}
+    L = ctx["layers"]; L["sst_c"][:] = np.nan
+    from pipeline import sites
+    return sites.score_sites([p for p in PROFILES if p["id"] == "tarpon"][0], PLACES, ctx, REG_BY_KEY, __import__("pipeline.predict", fromlist=["closure_rows"]).closure_rows)
+
+
+REG_BY_KEY = {p["key"]: p for p in REGISTRY["parameters"]}
+
+
+def test_tarpon_in_the_spring_run_and_not_in_cold_water():
+    spring = _tarpon(datetime(2026, 5, 16, 0, 0, tzinfo=UTC), 28.0)
+    assert spring["items"] and any("tarpon" in r[1] and "May and June" in r[1] for r in spring["items"][0]["reasons"])
+    cold = _tarpon(datetime(2027, 1, 16, 0, 0, tzinfo=UTC), 17.0)
+    assert cold["items"] == [] and "tolerates" in cold["note"]
+
+
+def test_species_names_are_not_capitalised_mid_sentence():
+    from pipeline.predict import _fish
+    assert _fish("Mutton snapper") == "mutton snapper" and _fish("Atlantic tarpon") == "Atlantic tarpon" and _fish("Mahi-mahi") == "mahi-mahi"

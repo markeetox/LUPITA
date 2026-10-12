@@ -7,6 +7,7 @@ from datetime import datetime, timezone
 from pathlib import Path
 
 from pipeline import closures as closures_mod
+from pipeline.conditions import load_conditions
 from pipeline.layers import load_layers
 from pipeline.predict import build_fish_json
 from pipeline.run_v1 import pull_buoys, summarize_grid
@@ -31,10 +32,14 @@ def main() -> None:
     places = json.loads(places_file.read_text())["places"] if places_file.exists() else []
     profiles = [json.loads(p.read_text()) for p in sorted((ROOT / "data/species").glob("*.json"))]
     errors: list[str] = []
-    now = datetime.now(timezone.utc).isoformat()
+    now_dt = datetime.now(timezone.utc)
+    now = now_dt.isoformat()
+    tides_file = ROOT / "config/tides.json"
+    tide_stations = json.loads(tides_file.read_text())["stations"] if tides_file.exists() else []
 
     buoys = pull_buoys(stations, sources["ndbc"]["realtime_url"], errors)
     layers = load_layers(sources, errors)
+    conditions = load_conditions(tide_stations, now_dt, errors)
 
     sst = chl = None
     fish = {"version": 1, "generated_utc": now, "experimental": True, "species": [], "spots": [],
@@ -45,7 +50,7 @@ def main() -> None:
         if layers["chl_raw"] is not None:
             clats, clons, cgrid = layers["chl_raw"]
             chl = _grid_report(cfg["chlorophyll"], layers["times"]["chlorophyll"], clats, clons, cgrid)
-        fish = build_fish_json(layers, buoys, profiles, registry, now, places)
+        fish = build_fish_json(layers, buoys, profiles, registry, now, places, conditions)
 
     cl_cfg = sources.get("closures", {})
     cl_loaded = bool(layers and layers.get("closure_checked"))

@@ -29,6 +29,19 @@ outright. Temperature-break strength is judged relative to today's offshore cond
 Only the best 15% of cells scoring at least 0.55 become areas. Species whose key data is missing
 (reef map for yellowtail, tides and shoreline for snook) are reported as "waiting for" instead of guessed.
 
+## Species
+Map-based (scored on the grid): mahi-mahi, sailfish, wahoo, yellowtail snapper, mutton snapper, cobia.
+Site-based (scored at named inlets): snook, tarpon. Each species file lists every factor with its source and a
+`value_status` (sourced, partly_sourced, provisional, needs_source). Seasonal fish (sailfish, wahoo, cobia, mutton snapper,
+tarpon) use a calendar-month factor. Wahoo uses seafloor slope from the ETOPO depth grid. The workflow runs hourly.
+
+## Snook (site model)
+Snook live along inlets, passes and shorelines, which a 2 km grid cannot show. Snook is therefore scored by
+site: the inlets in `config/places.json`. Each site is scored from the nearest buoy's water temperature (a hard
+stop below the cold limit), NOAA CO-OPS tide predictions (`config/tides.json`), computed sunrise/sunset, and
+spawning season. Tide and light weights are angler guidance, so confidence is capped at Low. Not yet included:
+mangrove shorelines, bridges, docks, salinity, cold-front detection.
+
 ## No-fishing areas
 Boundaries come from NOAA's National MPA Center MPA Inventory (2023 edition), filtered to sites whose Fishing
 Restrictions text says recreational fishing is prohibited. Fish areas that are at least half inside one are never

@@ -9,7 +9,7 @@
     "robalo"
   ],
   "habitat_zone": "inshore",
-  "review_status": "draft v2 - spawning, salinity and depth now sourced; remaining gaps listed in open_items",
+  "review_status": "draft v2 - inlet sites scored from buoy temperature, tide predictions, light and season; weights for tide and light are angler guidance, not studies",
   "image": {
     "status": "needed",
     "plan": "Use a NOAA Fisheries image (public domain) or a Wikimedia Commons image with a verified license. The FWC species page illustration is credited to Diane Rome Peebles and is copyrighted, so do not reuse it without permission.",
@@ -55,12 +55,15 @@
       "sources": [
         "https://myfwc.com/wildlifehabitats/profiles/saltwater/snook/snook/",
         "https://scholarscommons.fgcu.edu/esploro/outputs/journalArticle/Increased-Cold-Tolerance-of-a-Tropical/99384113521706570"
-      ]
+      ],
+      "gate": true,
+      "required": true
     },
     {
       "param": "structure_type",
       "kind": "category",
       "preferred": [
+        "inlet",
         "mangrove_edge",
         "seagrass",
         "artificial_reef",
@@ -74,7 +77,13 @@
       "sources": [
         "https://myfwc.com/wildlifehabitats/profiles/saltwater/snook/snook/",
         "https://www.yellowdogflyfishing.com/blogs/back-stage-pass/fly-fishing-snook"
-      ]
+      ],
+      "map": {
+        "inlet": 1.0
+      },
+      "value_text": {
+        "inlet": "This is an inlet. Snook gather in inlets and passes to ambush bait on the tide, and to spawn in summer."
+      }
     },
     {
       "param": "tide_stage",
@@ -85,12 +94,24 @@
       "weight": 0.2,
       "active": true,
       "value_status": "provisional",
-      "value_notes": "Angler guidance says outgoing tides concentrate action around mangrove shorelines, creek mouths and docks, because snook face the current and wait for bait to be flushed to them. Not from a scientific study; verify.",
+      "value_notes": "Angler guidance (outgoing tide is best around inlets and mangroves), not a study. The mapping from tide stage to score is a judgment call.",
       "reason_template": "The tide is {value}, flushing bait past the spots where snook wait.",
       "sources": [
         "https://www.westmarine.com/west-advisor/florida-guide-to-catching-snook.html",
         "https://myfwc.com/wildlifehabitats/profiles/saltwater/snook/snook/"
-      ]
+      ],
+      "map": {
+        "falling": 1.0,
+        "slack_low": 0.6,
+        "rising": 0.5,
+        "slack_high": 0.4
+      },
+      "value_text": {
+        "falling": "The tide is falling ({station}), flushing bait out past the spots where snook wait.",
+        "slack_low": "The tide is near low ({station}), a quieter but workable time.",
+        "rising": "The tide is rising ({station}), which snook anglers rate below an outgoing tide.",
+        "slack_high": "The tide is near high ({station}), a slow time when little water is moving."
+      }
     },
     {
       "param": "depth_m",
@@ -104,9 +125,9 @@
         4
       ],
       "weight": 0.1,
-      "active": true,
+      "active": false,
       "value_status": "partly_sourced",
-      "value_notes": "Animal Diversity Web lists a maximum depth of about 22 m. Adults also use offshore reefs and nearshore structure. The ideal shallow band is an estimate for inshore areas.",
+      "value_notes": "Not used for inlet sites (no reliable depth at inlet scale). Animal Diversity Web lists a maximum depth of about 22 m. Adults also use offshore reefs and nearshore structure. The ideal shallow band is an estimate for inshore areas.",
       "reason_template": "Depth is {value} m, in the shallow inshore water snook use.",
       "sources": [
         "https://myfwc.com/wildlifehabitats/profiles/saltwater/snook/snook/"
@@ -127,7 +148,19 @@
       "reason_template": "It is {value}, a low-light period when snook feed actively.",
       "sources": [
         "https://www.yellowdogflyfishing.com/blogs/back-stage-pass/fly-fishing-snook"
-      ]
+      ],
+      "map": {
+        "dusk": 1.0,
+        "night": 0.9,
+        "dawn": 0.9,
+        "day": 0.5
+      },
+      "value_text": {
+        "dusk": "It is dusk, when snook feed actively around inlets.",
+        "night": "It is night, when snook feed around inlet lights and channels.",
+        "dawn": "It is dawn, a low-light time when snook feed actively.",
+        "day": "It is full daylight, when snook are usually less active."
+      }
     },
     {
       "param": "salinity",
@@ -192,14 +225,19 @@
         9
       ],
       "weight": 0.15,
-      "active": false,
+      "active": true,
       "value_status": "sourced",
       "value_notes": "FWC: spawning runs April through September or October depending on climate and temperature. Activate in v2 together with distance_to_inlet.",
       "reason_template": "It is spawning season, when snook gather at inlets and passes.",
       "sources": [
         "https://myfwc.com/research/saltwater/fish/snook/sketch-common-snook/",
         "https://animaldiversity.org/accounts/Centropomus_undecimalis/"
-      ]
+      ],
+      "value_text": {
+        "peak": "It is peak snook spawning season (June to September), when fish gather at inlets and passes.",
+        "in_season": "It is snook spawning season (April to October), when fish gather at inlets and passes.",
+        "off": "It is outside the usual spawning season, so fewer snook gather at inlets."
+      }
     },
     {
       "param": "distance_to_inlet",
@@ -222,5 +260,12 @@
   ],
   "display": {
     "color": "#60a5fa"
-  }
+  },
+  "model": "sites",
+  "site_kinds": [
+    "inlet"
+  ],
+  "min_score_report": 0.4,
+  "max_spots": 12,
+  "confidence_cap": "Low"
 }

@@ -707,6 +707,45 @@
       ],
       "update_rate": "Static",
       "notes": "Snook spawn at inlets, passes and river mouths, and baitfish flush through them on tides."
+    },
+    {
+      "key": "bottom_slope",
+      "label": "Seafloor slope (ledges and drop-offs)",
+      "unit": "m per km",
+      "type": "number",
+      "tier": "v1",
+      "status": "active",
+      "dynamic": false,
+      "confidence": "derived",
+      "derived_from": [
+        "depth_m"
+      ],
+      "sources": [
+        {
+          "name": "Calculated from the ETOPO depth grid",
+          "host": "internal"
+        }
+      ],
+      "update_rate": "Static",
+      "notes": "Steep slopes mark ledges and drop-offs that pelagic fish such as wahoo patrol. Coarse (about 2 km cells), so small ledges are smoothed away."
+    },
+    {
+      "key": "season_presence",
+      "label": "Seasonal presence (migration or abundance window)",
+      "unit": null,
+      "type": "category",
+      "tier": "v1",
+      "status": "active",
+      "dynamic": false,
+      "confidence": "seasonal",
+      "sources": [
+        {
+          "name": "Published species accounts and angler records; see each species file",
+          "host": "internal"
+        }
+      ],
+      "update_rate": "By calendar month",
+      "notes": "How strongly a fish is present in South Florida this month. Calendar-based, not measured."
     }
   ]
 }

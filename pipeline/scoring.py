@@ -15,7 +15,7 @@ DEFAULT_MIN_COVERAGE = 0.7    # share of the profile's weight that must have dat
 FRIENDLY = {
     "structure_type": "reef and wreck map", "tide_stage": "tide predictions",
     "current_speed": "ocean current data", "time_of_day": "sunrise and sunset times",
-    "salinity": "salinity data", "depth_m": "depth data", "chlorophyll": "chlorophyll data",
+    "salinity": "salinity data", "depth_m": "depth data", "bottom_slope": "seafloor depth data", "chlorophyll": "chlorophyll data",
     "sst_c": "sea surface temperature", "sst_gradient": "sea surface temperature",
 }
 
@@ -47,6 +47,15 @@ def trapezoid(values, rng, ideal) -> np.ndarray:
     return out
 
 
+def season_score(month, f: dict) -> float:
+    """1.0 in the peak months, in_score (default 0.7) in the season, off_score (default 0.2) otherwise."""
+    if month in f.get("peak_months", []):
+        return 1.0
+    if month in f.get("months", []):
+        return float(f.get("in_score", 0.7))
+    return float(f.get("off_score", 0.2))
+
+
 def offshore_reference(grid: np.ndarray, depth) -> float | None:
     """95th percentile of a layer over offshore cells (a 'strong' value for today's conditions)."""
     ok = np.isfinite(grid)
@@ -60,6 +69,9 @@ def offshore_reference(grid: np.ndarray, depth) -> float | None:
 def factor_score(f: dict, layers: dict, ref_cache: dict):
     """Score array for one profile factor, or None if there is no layer or no usable settings."""
     p = f["param"]
+    if f["kind"] == "season":                      # one value for the whole map, from the calendar month
+        month = layers.get("month")
+        return None if month is None else np.full(layers["sst_c"].shape, season_score(month, f))
     grid = layers.get(p)
     if grid is None:
         return None
@@ -77,13 +89,15 @@ def factor_score(f: dict, layers: dict, ref_cache: dict):
         preferred = set(f.get("preferred") or [])
         if not preferred:
             return None
-        return np.vectorize(lambda x: 1.0 if x in preferred else (np.nan if x is None else 0.0), otypes=[float])(grid)
+        weights = f.get("map") or {}
+        return np.vectorize(lambda x: float(weights.get(x, 1.0 if x in preferred else 0.0)) if x is not None else np.nan, otypes=[float])(grid)
     if f["kind"] == "higher_is_better":
         if p not in ref_cache:
             ref_cache[p] = offshore_reference(grid, layers.get("depth_m"))
         ref = ref_cache[p]
         if ref is None:
             return None                      # too few offshore cells to judge what 'strong' means
+        ref = max(ref, float(f.get("reference_floor", 0.0)))
         if ref <= 0:                         # flat field: no breaks anywhere today, which is a real result
             return np.where(np.isfinite(grid), 0.0, np.nan)
         return np.clip(grid / ref, 0.0, 1.0)

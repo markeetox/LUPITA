@@ -3,7 +3,7 @@ from __future__ import annotations
 
 import numpy as np
 
-from pipeline import scoring
+from pipeline import scoring, sites as sites_mod
 from pipeline.grid import bearing_deg, compass, haversine_km
 
 TAGS = {"sst_c": "modeled", "sst_gradient": "modeled", "chlorophyll": "modeled", "depth_m": "static"}
@@ -12,6 +12,11 @@ SPEC_ROWS = [("size", "Typical size"), ("diet", "Diet"), ("swimming_depth", "Swi
              ("lifespan", "Lifespan")]
 DIGITS = {"sst_c": 1, "chlorophyll": 2, "sst_gradient": 3, "depth_m": 0}
 UNIT_TEXT = {"degC": "C", "mg/m3": "mg/m3", "m": "m"}
+
+
+def _fish(name: str) -> str:
+    """Species name for the middle of a sentence: 'Mutton snapper' -> 'mutton snapper', 'Atlantic tarpon' stays capitalised."""
+    return (name[:1].lower() + name[1:]).replace("atlantic", "Atlantic")
 
 
 def _fmt(param: str, v: float) -> str:
@@ -30,7 +35,8 @@ def _fill(template: str, param: str, value: float, f: dict) -> str:
 def _caveat(name: str, param: str, value: float, f: dict, reg: dict) -> str:
     label = reg.get(param, {}).get("label", param)
     if f["kind"] == "higher_is_better":
-        return f"{label} here is weak compared with the rest of the area today."
+        when = "today" if reg.get(param, {}).get("dynamic", True) else "in this area"
+        return f"{label} here is weak compared with the rest of the area {when}." if when == "today" else f"{label} here is weak compared with the rest of the area."
     unit = UNIT_TEXT.get(reg.get(param, {}).get("unit"), reg.get(param, {}).get("unit") or "")
     lo, hi = f["ideal"]
     return f"{label} is {_fmt(param, value)} {unit}, outside the {lo}-{hi} {unit} range {name} prefer."
@@ -112,6 +118,7 @@ def nearest_buoy(buoys: list[dict], lat: float, lon: float, max_km: float = 60.0
 
 
 def build_reasons(profile, name, scored, layers, cell, buoys, reg, lat, lon, members=None):
+    name = _fish(name)
     i, j = cell
     pos, neg = [], []
     for f in profile["factors"]:
@@ -120,6 +127,12 @@ def build_reasons(profile, name, scored, layers, cell, buoys, reg, lat, lon, mem
             continue
         s = float(scored["scores"][p][i, j])
         if not np.isfinite(s):
+            continue
+        if f["kind"] == "season":
+            vt, month = f.get("value_text") or {}, layers.get("month")
+            key = "peak" if month in f.get("peak_months", []) else "in_season" if month in f.get("months", []) else "off"
+            if key in vt and (s >= 0.6 or s < 0.35):
+                (pos if s >= 0.6 else neg).append((f["weight"] * (s if s >= 0.6 else 1 - s), "seasonal", vt[key]))
             continue
         if f["kind"] == "category":
             if s >= 0.6 and p == "structure_type":
@@ -236,8 +249,10 @@ def _cold_hint(profile, scored, layers) -> str:
     return ""
 
 
-def build_fish_json(layers, buoys, profiles, registry, generated_utc, places=None):
+def build_fish_json(layers, buoys, profiles, registry, generated_utc, places=None, conditions=None):
     reg = {p["key"]: p for p in registry["parameters"]}
+    if conditions:
+        layers = {**layers, "month": conditions["now"].astimezone(sites_mod.LOCAL).month}   # for seasonal factors
     lats, lons = layers["lats"], layers["lons"]
     species_out, spots_out = [], []
     for profile in profiles:
@@ -245,6 +260,25 @@ def build_fish_json(layers, buoys, profiles, registry, generated_utc, places=Non
         entry = {"id": sid, "name": name, "sci": profile["scientific_name"],
                  "color": profile.get("display", {}).get("color", "#ffffff"),
                  "specs": _specs(profile), "status": "ok", "message": "", "spots": 0}
+        if profile.get("model") == "sites":
+            ctx = {"layers": layers, "buoys": buoys, "conditions": conditions}
+            res = sites_mod.score_sites(profile, places or [], ctx, reg, closure_rows)
+            if res["unavailable"]:
+                entry.update(status="unavailable", message=res["unavailable"])
+            elif not res["items"]:
+                msg = "No favorable inlets right now."
+                if res["note"]:
+                    msg += " " + res["note"]
+                elif res["best"] is not None:
+                    msg += f" The best score was {res['best']:.0%}."
+                entry.update(status="no_favorable_areas", message=msg)
+            else:
+                for k, it in enumerate(res["items"], 1):
+                    it.update(id=f"{sid}-{k}", species=sid)
+                    spots_out.append(it)
+                entry["spots"] = len(res["items"])
+            species_out.append(entry)
+            continue
         scored = scoring.score_species(profile, layers)
         if scored["status"] != "ok":
             entry.update(status="unavailable", message=scored["message"])
@@ -270,7 +304,8 @@ def build_fish_json(layers, buoys, profiles, registry, generated_utc, places=Non
                      else f"Favorable area, about {sp['area_km2']:.0f} km2")
             item = {
                 "id": f"{sid}-{k}", "species": sid, "title": title,
-                "score": round(sp["score"], 3), "confidence": "Medium" if cov >= 0.9 else "Low",
+                "score": round(sp["score"], 3),
+                "confidence": "Low" if (cov < 0.9 or profile.get("confidence_cap") == "Low") else "Medium",
                 "data_coverage": round(cov, 2), "coords": [round(lon, 4), round(lat, 4)],
                 "reasons": build_reasons(profile, name, scored, layers, (i, j), buoys, reg, lat, lon, sp["members"]),
                 "location": build_location(layers, scored, (i, j), buoys, lat, lon, sp["members"], places)}

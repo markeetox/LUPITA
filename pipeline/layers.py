@@ -25,6 +25,16 @@ def front_strength(sst, depth, lats, lons, min_depth: float = FRONT_MIN_DEPTH_M)
     return g
 
 
+def slope_layer(depth, lats, lons):
+    """Seafloor slope in metres of depth change per km. None if there is no depth grid."""
+    if depth is None:
+        return None
+    g = derive.gradient_magnitude(depth, lats, lons)
+    m = EDGE_MARGIN_CELLS
+    g[:m, :] = np.nan; g[-m:, :] = np.nan; g[:, :m] = np.nan; g[:, -m:] = np.nan
+    return g
+
+
 def _fetch_grid(cfg: dict, region: dict, fetch):
     url = erddap.build_griddap_url(cfg, region)
     return erddap.parse_grid_csv(fetch(url), cfg["variable"])
@@ -43,7 +53,7 @@ def load_layers(sources: dict, errors: list[str], fetch=erddap.fetch_csv, fetch_
     layers = {"lats": lats, "lons": lons, "sst_c": sst,
               "sst_gradient": derive.gradient_magnitude(sst, lats, lons),
               "chlorophyll": None, "depth_m": None, "chl_raw": None,
-              "closure_areas": [], "closure_cover": None, "closure_info": {}, "closure_checked": False,
+              "bottom_slope": None, "closure_areas": [], "closure_cover": None, "closure_info": {}, "closure_checked": False,
               "structure_type": None, "structure_info": {}, "structure_cover": None, "structure_stats": None,
               "times": {"sst": sst_time, "chlorophyll": None},
               "datasets": {"sst": cfg["sst"]["dataset"]}}
@@ -108,4 +118,5 @@ def load_layers(sources: dict, errors: list[str], fetch=erddap.fetch_csv, fetch_
         except Exception as exc:
             errors.append(f"layers closures: {exc}")
     layers["sst_gradient"] = front_strength(sst, layers["depth_m"], lats, lons)
+    layers["bottom_slope"] = slope_layer(layers["depth_m"], lats, lons)
     return layers

@@ -446,11 +446,17 @@ function speciesLabel(s) {
   return s.status === "unavailable" ? "no data yet" : "none today";
 }
 function renderNote() {
-  const list = (FISH.species || []).filter(s => FILTER === "all" || s.id === FILTER);
-  fishNote.innerHTML = list.map(s => {
+  const dot = c => `<i style="background:${esc(c)}"></i>`;
+  const line = s => {
     const note = s.status === "ok" ? `${s.spots} area${s.spots === 1 ? "" : "s"} today` : (s.message || s.status);
-    return `<div><i style="background:${esc(s.color)}"></i><span><b>${esc(s.name)}</b>: ${esc(note)}</span></div>`;
-  }).join("");
+    return `<div>${dot(s.color)}<span><b>${esc(s.name)}</b>: ${esc(note)}</span></div>`;
+  };
+  const all = FISH.species || [];
+  if (FILTER !== "all") { fishNote.innerHTML = all.filter(s => s.id === FILTER).map(line).join(""); return; }
+  // all fish: one summary line, then only the fish that have nothing to show (keeps the panel short on a phone)
+  const withAreas = all.filter(s => s.status === "ok"), total = withAreas.reduce((n, s) => n + s.spots, 0);
+  const summary = `<div><span><b>${total}</b> area${total === 1 ? "" : "s"} across <b>${withAreas.length}</b> of ${all.length} fish today</span></div>`;
+  fishNote.innerHTML = summary + all.filter(s => s.status !== "ok").map(line).join("");
 }
 fishSelect.addEventListener("change", () => {
   FILTER = fishSelect.value;
