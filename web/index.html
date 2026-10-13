@@ -137,11 +137,11 @@
 const DATA_BASE_DEFAULT = "https://raw.githubusercontent.com/markeetox/here-fishy-fishy/data/";
 const DATA_BASE = (new URLSearchParams(location.search).get("data") || DATA_BASE_DEFAULT).replace(/\/?$/, "/");
 
-// Dark map so the heat layer glows. Open the page with ?map=liberty for the light street map.
-const DARK_STYLE = { version: 8, sources: { carto: { type: "raster", tileSize: 256,
-    tiles: ["a", "b", "c", "d"].map(x => `https://${x}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}.png`),
-    attribution: "&copy; OpenStreetMap contributors &copy; CARTO" } }, layers: [{ id: "carto", type: "raster", source: "carto" }] };
-const BASE_STYLE = new URLSearchParams(location.search).get("map") === "liberty" ? "https://tiles.openfreemap.org/styles/liberty" : DARK_STYLE;
+// Free vector map styles from OpenFreeMap: no account and no key. Dark by default so the heat layer glows.
+// Choose another with ?map=fiord (dark blue), ?map=liberty (light street map) or ?map=positron (light, minimal).
+const STYLES = { dark: "https://tiles.openfreemap.org/styles/dark", fiord: "https://tiles.openfreemap.org/styles/fiord",
+  liberty: "https://tiles.openfreemap.org/styles/liberty", positron: "https://tiles.openfreemap.org/styles/positron" };
+const BASE_STYLE = STYLES[new URLSearchParams(location.search).get("map")] || STYLES.dark;
 const EMPTY = { type: "FeatureCollection", features: [] };
 const FALLBACK_STYLE = {
   version: 8,
