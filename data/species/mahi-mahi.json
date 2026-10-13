@@ -11,11 +11,12 @@
   "habitat_zone": "offshore",
   "review_status": "draft v2 - temperature and depth now sourced; remaining gaps listed in open_items",
   "image": {
-    "status": "needed",
-    "plan": "Use a NOAA Fisheries image (public domain) or a Wikimedia Commons image with a verified license. Record credit and license here.",
+    "status": "illustration",
+    "kind": "illustration",
     "url": null,
-    "credit": null,
-    "license": null
+    "credit": "Original illustration",
+    "license": "",
+    "plan": "Shown now: an original illustration (web/fish/mahi-mahi.svg). To use a real photo instead: put a transparent PNG at web/fish/mahi-mahi.png, then set url to \"fish/mahi-mahi.png\", kind to \"photo\", and fill in credit and license (public domain or a license you can show). Sources to check: NOAA Fisheries species pages and Wikimedia Commons."
   },
   "profile": {
     "size": "Common up to about 50 lb; can reach about 100 lb",

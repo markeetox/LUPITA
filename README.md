@@ -35,6 +35,14 @@ Site-based (scored at named inlets): snook, tarpon. Each species file lists ever
 `value_status` (sourced, partly_sourced, provisional, needs_source). Seasonal fish (sailfish, wahoo, cobia, mutton snapper,
 tarpon) use a calendar-month factor. Wahoo uses seafloor slope from the ETOPO depth grid. The workflow runs hourly.
 
+## Fish pictures
+Each popup shows a transparent picture above the fish name. By default it is an original illustration from
+`web/fish/<species id>.svg` (drawn by `python tools/make_fish_art.py`; edit the colors and proportions there).
+To use a real photo instead: put a transparent PNG at `web/fish/<id>.png`, then in `data/species/<id>.json` set
+`image.url` to `"fish/<id>.png"`, `image.kind` to `"photo"`, and fill in `image.credit` and `image.license`.
+Only use images you have the right to show (public domain, or a license you can credit). NOAA Fisheries species
+pages and Wikimedia Commons are good places to look; FWC species illustrations are copyrighted.
+
 ## Snook (site model)
 Snook live along inlets, passes and shorelines, which a 2 km grid cannot show. Snook is therefore scored by
 site: the inlets in `config/places.json`. Each site is scored from the nearest buoy's water temperature (a hard

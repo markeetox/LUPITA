@@ -18,11 +18,12 @@
   "title_from": "structure",
   "review_status": "draft - depth and temperature from FishBase and agency summaries; season from angler records",
   "image": {
-    "status": "needed",
-    "plan": "Use a NOAA Fisheries image (public domain) or a Wikimedia Commons image with a verified license. Do not reuse FWC illustrations (copyrighted). Record credit and license here.",
+    "status": "illustration",
+    "kind": "illustration",
     "url": null,
-    "credit": null,
-    "license": null
+    "credit": "Original illustration",
+    "license": "",
+    "plan": "Shown now: an original illustration (web/fish/mutton-snapper.svg). To use a real photo instead: put a transparent PNG at web/fish/mutton-snapper.png, then set url to \"fish/mutton-snapper.png\", kind to \"photo\", and fill in credit and license (public domain or a license you can show). Sources to check: NOAA Fisheries species pages and Wikimedia Commons."
   },
   "profile": {
     "size": "Common at about 5-15 lb; can reach about 37 in and 30 lb",

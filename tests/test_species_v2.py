@@ -164,3 +164,23 @@ def test_heat_grid_is_published_north_first_with_scores_only_where_a_fish_could_
     s = np.full((2, 2), np.nan); s[0, 0] = 0.456; s[1, 1] = 1.7       # south row first in, north row first out
     out = np.frombuffer(base64.b64decode(quantize_scores(s)), dtype=np.uint8).reshape(2, 2)
     assert out.tolist() == [[0, 100], [46, 0]]
+
+
+# ---------- fish pictures ----------
+def test_every_species_has_a_valid_transparent_illustration_and_it_reaches_fish_json():
+    import xml.etree.ElementTree as ET
+    out = build_fish_json(make_layers(), [], PROFILES, REGISTRY, "t", PLACES, when(2027, 1, 15, 17))
+    for sp in out["species"]:
+        svg = ROOT / "web" / sp["image"]["url"]
+        assert svg.exists(), f"missing picture for {sp['id']}: {svg}"
+        root = ET.parse(svg).getroot()
+        assert root.tag.endswith("svg") and "viewBox" in root.attrib
+        assert "<rect" not in svg.read_text()                      # no background box: the fish sit on whatever is behind them
+        assert sp["image"]["kind"] == "illustration" and sp["image"]["credit"]
+
+
+def test_a_configured_photo_replaces_the_illustration_and_carries_its_credit():
+    from pipeline.predict import species_image
+    p = dict(PROFILES[0], image={"url": "fish/x.png", "kind": "photo", "credit": "NOAA Fisheries", "license": "Public domain"})
+    assert species_image(p) == {"url": "fish/x.png", "kind": "photo", "credit": "NOAA Fisheries", "license": "Public domain"}
+    assert species_image(dict(PROFILES[0], image={"url": None}))["url"] == f"fish/{PROFILES[0]['id']}.svg"

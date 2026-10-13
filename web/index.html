@@ -69,10 +69,19 @@
     border-radius: 50%; background: rgba(0,0,0,.35); color: #fff; font-size: 24px; line-height: 1; cursor: pointer; }
   .scroll { overflow-y: auto; overscroll-behavior: contain; flex: 1; }
 
-  .hero { position: relative; height: 132px; display: flex; align-items: flex-end; padding: 12px 16px;
-    background: linear-gradient(135deg, var(--c) 0%, #0b1626 125%); }
+  .hero { position: relative; min-height: 196px; display: flex; flex-direction: column; justify-content: flex-end; align-items: flex-start;
+    padding: 12px 16px; overflow: hidden; background: linear-gradient(135deg, var(--c) 0%, #0b1626 125%); }
+  .hero::before { content: ""; position: absolute; inset: 0; pointer-events: none;
+    background: radial-gradient(ellipse 60% 55% at 50% 38%, rgba(255,255,255,.30), rgba(255,255,255,0) 70%); }
+  .hero.compact { min-height: 112px; }
+  .hero.compact::before { display: none; }
+  .fish-img { position: absolute; top: 18px; left: 50%; transform: translateX(-50%); height: 112px; max-width: 78%; object-fit: contain;
+    filter: drop-shadow(0 8px 10px rgba(0,0,0,.45)); pointer-events: none; }
   .hero .photo { position: absolute; top: 10px; left: 16px; font-size: 12px; padding: 3px 8px; border-radius: 6px;
-    background: rgba(0,0,0,.35); color: #dbe7f5; }
+    background: rgba(0,0,0,.35); color: #dbe7f5; z-index: 1; }
+  .hero .credit { position: absolute; top: 10px; right: 54px; font-size: 11px; padding: 2px 7px; border-radius: 6px;
+    background: rgba(0,0,0,.30); color: #dbe7f5; z-index: 1; max-width: 55%; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .hero > div:not(.score) { position: relative; z-index: 1; }
   .hero h2 { margin: 0; font-size: 28px; line-height: 1.05; text-shadow: 0 1px 8px rgba(0,0,0,.45); }
   .hero small { display: block; opacity: .9; font-size: 14px; margin-top: 3px; }
   .score { position: absolute; right: 16px; bottom: 12px; text-align: center; background: rgba(11,22,38,.8);
@@ -199,6 +208,14 @@ function esc(v) {
 }
 const TAG_LABEL = { measured: "Measured", modeled: "Modeled", seasonal: "Seasonal", static: "Mapped" };
 
+function safeImageUrl(u) { return typeof u === "string" && /^(https:\/\/|fish\/|\/fish\/)[^"'<>\s]+$/.test(u) ? u : ""; }
+function heroPicture(sp) {
+  const img = sp.image || {}, url = safeImageUrl(img.url) || `fish/${encodeURIComponent(sp.id)}.svg`;
+  const tag = img.kind === "photo" ? `Photo${img.credit ? ": " + img.credit : ""}` : "Illustration";
+  return `<img class="fish-img" src="${esc(url)}" alt="${esc(sp.name)}" onerror="this.style.display='none';this.nextElementSibling.style.display=''">` +
+         `<span class="photo" style="display:none">Picture coming soon</span><span class="credit">${esc(tag)}</span>`;
+}
+
 function spotHTML(id) {
   const s = SPOTS[id], sp = SPECIES[s.species];
   const banner = FISH.sample
@@ -206,7 +223,7 @@ function spotHTML(id) {
     : `<div class="banner live">Experimental: shows where conditions match published habitat preferences. Not yet checked against catch reports.</div>`;
   return `
     <div class="hero" style="--c:${esc(sp.color)}">
-      <span class="photo">Photo coming soon</span>
+      ${heroPicture(sp)}
       <div><h2>${esc(sp.name)}</h2><small>${esc(sp.sci)}</small></div>
       <div class="score"><b>${Math.round(s.score * 100)}%</b><span>${esc(s.confidence)} confidence</span></div>
     </div>
@@ -228,7 +245,7 @@ function spotHTML(id) {
 function closureHTML(p) {
   const link = /^https?:\/\//i.test(p.url || "") ? `<dt>More info</dt><dd><a href="${esc(p.url)}" target="_blank" rel="noopener">Managing agency page</a></dd>` : "";
   return `
-    <div class="hero" style="--c:#ef4444">
+    <div class="hero compact" style="--c:#ef4444">
       <div><h2>${esc(p.name)}</h2><small>No recreational fishing</small></div>
     </div>
     <div class="banner closed">Boundaries here come from NOAA's MPA Inventory and may be simplified or out of date. Always confirm with the managing agency before you fish.</div>
@@ -301,7 +318,8 @@ grab.addEventListener("touchend", e => {
 
 /* ---------------- heat layer ---------------- */
 let HEAT = null;
-const HEAT_MIN = 0.45;                                  // cells scoring below this are not drawn
+const HEAT_MIN = 0.45;
+const EDGE_CELLS = 6;                                   // the glow fades to nothing over this many cells at the data edge                                  // cells scoring below this are not drawn
 function b64ToBytes(b64) {
   const bin = atob(b64), out = new Uint8Array(bin.length);
   for (let i = 0; i < bin.length; i++) out[i] = bin.charCodeAt(i);
@@ -322,7 +340,9 @@ function heatPixels(heat, filter, species) {
     px[i * 4] = c[0] + (255 - c[0]) * glow;
     px[i * 4 + 1] = c[1] + (255 - c[1]) * glow;
     px[i * 4 + 2] = c[2] + (255 - c[2]) * glow;
-    px[i * 4 + 3] = 255 * (0.12 + 0.70 * Math.pow(t, 0.9));      // faint at the threshold, strong where the match is best
+    const x = i % heat.width, y = (i - x) / heat.width, d = Math.min(x, y, heat.width - 1 - x, heat.height - 1 - y);
+    const e = Math.min(1, d / EDGE_CELLS), edge = e * e * (3 - 2 * e);           // smooth fade at the edge of the data
+    px[i * 4 + 3] = 255 * edge * (0.12 + 0.70 * Math.pow(t, 0.9));   // faint at the threshold, strong where the match is best
   }
   return px;
 }
@@ -337,6 +357,7 @@ function heatURL(px, w, h, scale) {
 function renderHeat() {                                  // call only when the map style is ready
   if (!HEAT) return;
   const [w, s, e, n] = HEAT.bounds, coordinates = [[w, n], [e, n], [e, s], [w, s]];
+  map.setMaxBounds([[w - 1.2, s - 1.0], [e + 1.2, n + 1.0]]);   // no scrolling off into empty ocean far from the data
   const url = heatURL(heatPixels(HEAT, FILTER, SPECIES), HEAT.width, HEAT.height, 6);
   if (map.getSource("heat")) { map.getSource("heat").updateImage({ url, coordinates }); return; }
   map.addSource("heat", { type: "image", url, coordinates });

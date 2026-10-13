@@ -10,11 +10,12 @@
   "habitat_zone": "reef",
   "review_status": "draft v4 - reef areas split into patches; shallow bay bottom excluded by a depth gate",
   "image": {
-    "status": "candidate",
-    "plan": "NOAA Fisheries lists a yellowtail snapper photo credited to NOAA Fisheries/Dr. Dwayne Meadows. Confirm the usage terms and get the direct image URL before using it. Do not use the FWC illustration (copyrighted).",
+    "status": "illustration",
+    "kind": "illustration",
     "url": null,
     "credit": "NOAA Fisheries/Dr. Dwayne Meadows (to confirm)",
-    "license": null
+    "license": "",
+    "plan": "Shown now: an original illustration (web/fish/yellowtail-snapper.svg). To use a real photo instead: put a transparent PNG at web/fish/yellowtail-snapper.png, then set url to \"fish/yellowtail-snapper.png\", kind to \"photo\", and fill in credit and license (public domain or a license you can show). Sources to check: NOAA Fisheries species pages and Wikimedia Commons."
   },
   "profile": {
     "size": "Typically 2 to 5 lb and 8 to 14 in; up to about 34 in and 11 lb (NOAA Fisheries). Florida state record 8 lb 9 oz.",

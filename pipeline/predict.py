@@ -239,6 +239,14 @@ def build_location(layers, scored, cell, buoys, lat, lon, members=None, places=N
     return rows
 
 
+def species_image(profile: dict) -> dict:
+    """The picture for a species popup: its photo if one is configured, otherwise the built-in illustration."""
+    img = profile.get("image") or {}
+    if img.get("url"):
+        return {"url": img["url"], "kind": img.get("kind", "photo"), "credit": img.get("credit") or "", "license": img.get("license") or ""}
+    return {"url": f"fish/{profile['id']}.svg", "kind": "illustration", "credit": "Original illustration", "license": ""}
+
+
 def _specs(profile: dict) -> list[list[str]]:
     p = profile.get("profile", {})
     return [[label, p[key]] for key, label in SPEC_ROWS if p.get(key)]
@@ -268,7 +276,7 @@ def build_fish_json(layers, buoys, profiles, registry, generated_utc, places=Non
         sid, name = profile["id"], profile["common_name"]
         entry = {"id": sid, "name": name, "sci": profile["scientific_name"],
                  "color": profile.get("display", {}).get("color", "#ffffff"),
-                 "specs": _specs(profile), "status": "ok", "message": "", "spots": 0}
+                 "specs": _specs(profile), "image": species_image(profile), "status": "ok", "message": "", "spots": 0}
         if profile.get("model") == "sites":
             ctx = {"layers": layers, "buoys": buoys, "conditions": conditions}
             res = sites_mod.score_sites(profile, places or [], ctx, reg, closure_rows)
