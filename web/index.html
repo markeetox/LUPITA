@@ -69,13 +69,13 @@
     border-radius: 50%; background: rgba(0,0,0,.35); color: #fff; font-size: 24px; line-height: 1; cursor: pointer; }
   .scroll { overflow-y: auto; overscroll-behavior: contain; flex: 1; }
 
-  .hero { position: relative; min-height: 196px; display: flex; flex-direction: column; justify-content: flex-end; align-items: flex-start;
+  .hero { position: relative; min-height: 228px; display: flex; flex-direction: column; justify-content: flex-end; align-items: flex-start;
     padding: 12px 16px; overflow: hidden; background: linear-gradient(135deg, var(--c) 0%, #0b1626 125%); }
   .hero::before { content: ""; position: absolute; inset: 0; pointer-events: none;
     background: radial-gradient(ellipse 60% 55% at 50% 38%, rgba(255,255,255,.30), rgba(255,255,255,0) 70%); }
   .hero.compact { min-height: 112px; }
   .hero.compact::before { display: none; }
-  .fish-img { position: absolute; top: 18px; left: 50%; transform: translateX(-50%); height: 112px; max-width: 78%; object-fit: contain;
+  .fish-img { position: absolute; top: 16px; left: 50%; transform: translateX(-50%); height: 134px; max-width: 88%; object-fit: contain;
     filter: drop-shadow(0 8px 10px rgba(0,0,0,.45)); pointer-events: none; }
   .hero .photo { position: absolute; top: 10px; left: 16px; font-size: 12px; padding: 3px 8px; border-radius: 6px;
     background: rgba(0,0,0,.35); color: #dbe7f5; z-index: 1; }
@@ -211,9 +211,9 @@ const TAG_LABEL = { measured: "Measured", modeled: "Modeled", seasonal: "Seasona
 function safeImageUrl(u) { return typeof u === "string" && /^(https:\/\/|fish\/|\/fish\/)[^"'<>\s]+$/.test(u) ? u : ""; }
 function heroPicture(sp) {
   const img = sp.image || {}, url = safeImageUrl(img.url) || `fish/${encodeURIComponent(sp.id)}.png`;
-  const tag = img.kind === "photo" ? `Photo${img.credit ? ": " + img.credit : ""}` : "Illustration";
+  const credit = img.kind === "photo" && img.credit ? `<span class="credit">Photo: ${esc(img.credit)}</span>` : "";   // keep credits for real photos
   return `<img class="fish-img" src="${esc(url)}" alt="${esc(sp.name)}" onerror="this.style.display='none';this.nextElementSibling.style.display=''">` +
-         `<span class="photo" style="display:none">Picture coming soon</span><span class="credit">${esc(tag)}</span>`;
+         `<span class="photo" style="display:none">Picture coming soon</span>${credit}`;
 }
 
 function spotHTML(id) {
