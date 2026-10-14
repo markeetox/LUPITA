@@ -244,7 +244,7 @@ def species_image(profile: dict) -> dict:
     img = profile.get("image") or {}
     if img.get("url"):
         return {"url": img["url"], "kind": img.get("kind", "photo"), "credit": img.get("credit") or "", "license": img.get("license") or ""}
-    return {"url": f"fish/{profile['id']}.svg", "kind": "illustration", "credit": "Original illustration", "license": ""}
+    return {"url": f"fish/{profile['id']}.png", "kind": "illustration", "credit": "Original illustration", "license": ""}
 
 
 def _specs(profile: dict) -> list[list[str]]:

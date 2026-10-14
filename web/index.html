@@ -210,7 +210,7 @@ const TAG_LABEL = { measured: "Measured", modeled: "Modeled", seasonal: "Seasona
 
 function safeImageUrl(u) { return typeof u === "string" && /^(https:\/\/|fish\/|\/fish\/)[^"'<>\s]+$/.test(u) ? u : ""; }
 function heroPicture(sp) {
-  const img = sp.image || {}, url = safeImageUrl(img.url) || `fish/${encodeURIComponent(sp.id)}.svg`;
+  const img = sp.image || {}, url = safeImageUrl(img.url) || `fish/${encodeURIComponent(sp.id)}.png`;
   const tag = img.kind === "photo" ? `Photo${img.credit ? ": " + img.credit : ""}` : "Illustration";
   return `<img class="fish-img" src="${esc(url)}" alt="${esc(sp.name)}" onerror="this.style.display='none';this.nextElementSibling.style.display=''">` +
          `<span class="photo" style="display:none">Picture coming soon</span><span class="credit">${esc(tag)}</span>`;

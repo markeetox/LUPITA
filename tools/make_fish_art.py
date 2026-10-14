@@ -1,11 +1,14 @@
-"""Draws the eight fish illustrations (transparent SVG, facing left) into web/fish/.
-Run:  python tools/make_fish_art.py        Edit the SPECS below to change colours or proportions."""
+"""Draws the eight fish illustrations (facing left). SVG sources go to tools/fish-svg/, transparent PNGs to web/fish/.
+Run:  pip install cairosvg && python tools/make_fish_art.py        Edit the SPECS below to change colours or proportions.
+The PNGs are placeholders: replace web/fish/<id>.png with a real transparent photo of the same name any time."""
 from __future__ import annotations
 
 import math
 from pathlib import Path
 
 OUT = Path(__file__).resolve().parent.parent / "web" / "fish"
+SVG_OUT = Path(__file__).resolve().parent / "fish-svg"
+PNG_SIZE = (1260, 600)                    # 3x of the 420 x 200 drawing: sharp on phones
 X0, X1, CY = 30.0, 318.0, 100.0          # nose, end of the tail stalk, centre line
 L = X1 - X0
 
@@ -234,7 +237,11 @@ SPECS = {
 }
 
 if __name__ == "__main__":
+    import cairosvg
     OUT.mkdir(parents=True, exist_ok=True)
+    SVG_OUT.mkdir(parents=True, exist_ok=True)
     for sid, spec in SPECS.items():
-        (OUT / f"{sid}.svg").write_text(render(spec), encoding="utf-8")
-        print("wrote", OUT / f"{sid}.svg")
+        svg = render(spec)
+        (SVG_OUT / f"{sid}.svg").write_text(svg, encoding="utf-8")
+        cairosvg.svg2png(bytestring=svg.encode("utf-8"), write_to=str(OUT / f"{sid}.png"), output_width=PNG_SIZE[0], output_height=PNG_SIZE[1])
+        print("wrote", OUT / f"{sid}.png")

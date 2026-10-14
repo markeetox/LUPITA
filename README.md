@@ -36,12 +36,13 @@ Site-based (scored at named inlets): snook, tarpon. Each species file lists ever
 tarpon) use a calendar-month factor. Wahoo uses seafloor slope from the ETOPO depth grid. The workflow runs hourly.
 
 ## Fish pictures
-Each popup shows a transparent picture above the fish name. By default it is an original illustration from
-`web/fish/<species id>.svg` (drawn by `python tools/make_fish_art.py`; edit the colors and proportions there).
-To use a real photo instead: put a transparent PNG at `web/fish/<id>.png`, then in `data/species/<id>.json` set
-`image.url` to `"fish/<id>.png"`, `image.kind` to `"photo"`, and fill in `image.credit` and `image.license`.
-Only use images you have the right to show (public domain, or a license you can credit). NOAA Fisheries species
-pages and Wikimedia Commons are good places to look; FWC species illustrations are copyrighted.
+Each popup shows a transparent picture above the fish name, read from `web/fish/<species id>.png`. These are
+placeholder illustrations (drawn by `tools/make_fish_art.py`, sources in `tools/fish-svg/`). To use a real photo,
+replace the PNG with one of the same name (transparent background, cropped tight to the fish, facing left looks
+best), then in `data/species/<id>.json` set `image.kind` to `"photo"` and fill in `image.credit` and `image.license`
+so the popup credits it. Only use images you have the right to show (public domain, or a license you can credit).
+NOAA Fisheries species pages and Wikimedia Commons are good places to look; FWC species illustrations are copyrighted.
+A bad or missing picture never stops the data run; the popup just shows a short note instead.
 
 ## Snook (site model)
 Snook live along inlets, passes and shorelines, which a 2 km grid cannot show. Snook is therefore scored by

@@ -14,12 +14,12 @@
   "review_status": "draft - mostly angler and habitat-description sources; temperature band and season are provisional",
   "confidence_cap": "Low",
   "image": {
-    "status": "illustration",
+    "status": "placeholder",
     "kind": "illustration",
-    "url": null,
+    "url": "fish/wahoo.png",
     "credit": "Original illustration",
     "license": "",
-    "plan": "Shown now: an original illustration (web/fish/wahoo.svg). To use a real photo instead: put a transparent PNG at web/fish/wahoo.png, then set url to \"fish/wahoo.png\", kind to \"photo\", and fill in credit and license (public domain or a license you can show). Sources to check: NOAA Fisheries species pages and Wikimedia Commons."
+    "plan": "web/fish/wahoo.png is a transparent placeholder illustration. To use a real photo: replace that file with a transparent PNG of the same name (cropped tight to the fish, facing left looks best), then set kind to \"photo\" and fill in credit and license here. Only use images you have the right to show: NOAA Fisheries species pages and Wikimedia Commons are good places to look; FWC illustrations are copyrighted."
   },
   "profile": {
     "size": "Relatively common at 50-75 lb and can exceed 100 lb",

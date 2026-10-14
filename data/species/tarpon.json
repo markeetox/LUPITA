@@ -20,12 +20,12 @@
   "confidence_cap": "Low",
   "review_status": "draft - season and temperature from tagging studies; tide and light weights are angler guidance",
   "image": {
-    "status": "illustration",
+    "status": "placeholder",
     "kind": "illustration",
-    "url": null,
+    "url": "fish/tarpon.png",
     "credit": "Original illustration",
     "license": "",
-    "plan": "Shown now: an original illustration (web/fish/tarpon.svg). To use a real photo instead: put a transparent PNG at web/fish/tarpon.png, then set url to \"fish/tarpon.png\", kind to \"photo\", and fill in credit and license (public domain or a license you can show). Sources to check: NOAA Fisheries species pages and Wikimedia Commons."
+    "plan": "web/fish/tarpon.png is a transparent placeholder illustration. To use a real photo: replace that file with a transparent PNG of the same name (cropped tight to the fish, facing left looks best), then set kind to \"photo\" and fill in credit and license here. Only use images you have the right to show: NOAA Fisheries species pages and Wikimedia Commons are good places to look; FWC illustrations are copyrighted."
   },
   "profile": {
     "diet": "Adults eat mostly mid-water prey: mullets, pinfish, marine catfishes; crabs are a spring favorite at inlets",
