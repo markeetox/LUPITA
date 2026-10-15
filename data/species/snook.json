@@ -268,5 +268,58 @@
   ],
   "min_score_report": 0.4,
   "max_spots": 12,
-  "confidence_cap": "Low"
+  "confidence_cap": "Low",
+  "timing": {
+    "status": "angler_lore",
+    "note": "Angler lore: patterns reported by local captains and fishing writers, not tested by studies. Numbers are judgment calls to be calibrated against trip logs.",
+    "sources": [
+      "https://www.yellowdogflyfishing.com/blogs/back-stage-pass/fly-fishing-snook",
+      "https://scholarscommons.fgcu.edu/esploro/outputs/journalArticle/Increased-Cold-Tolerance-of-a-Tropical/99384113521706570"
+    ],
+    "weights": {
+      "light": 0.45,
+      "tide": 0.35,
+      "front": 0.2
+    },
+    "light": {
+      "map": {
+        "dusk": 1.0,
+        "night": 0.9,
+        "dawn": 0.9,
+        "day": 0.5
+      },
+      "text": {
+        "dusk": "It is dusk, when snook feed actively around inlets.",
+        "night": "It is night, when snook feed around inlet lights and channels.",
+        "dawn": "It is dawn, a low-light time when snook feed actively.",
+        "day": "It is full daylight, when snook are usually less active."
+      }
+    },
+    "tide": {
+      "map": {
+        "falling": 1.0,
+        "slack_low": 0.6,
+        "rising": 0.5,
+        "slack_high": 0.4
+      },
+      "text": {
+        "falling": "The tide is falling ({station}), flushing bait out past the spots where snook wait.",
+        "slack_low": "The tide is near low ({station}), a quieter but workable time.",
+        "rising": "The tide is rising ({station}), which snook anglers rate below an outgoing tide.",
+        "slack_high": "The tide is near high ({station}), a slow time when little water is moving."
+      }
+    },
+    "front": {
+      "map": {
+        "approaching": 0.75,
+        "just_passed": 0.3,
+        "lull": 0.4
+      },
+      "text": {
+        "approaching": "A cold front is on the way. Snook are cold-sensitive and start moving toward warmer, deeper water.",
+        "just_passed": "A cold front just passed. Snook feed less and retreat to warmer, deeper water.",
+        "lull": "Cooler water after a front keeps snook less active for a day or two."
+      }
+    }
+  }
 }

@@ -149,5 +149,39 @@
       "value_notes": "Wahoo patrol current edges. Planned with current data.",
       "sources": []
     }
-  ]
+  ],
+  "timing": {
+    "status": "angler_lore",
+    "note": "Angler lore: patterns reported by local captains and fishing writers, not tested by studies. Numbers are judgment calls to be calibrated against trip logs.",
+    "sources": [
+      "https://www.royalgazette.com/?p=235183",
+      "https://www.visitlauderdale.com/blog/stories/author/steve-waters/624709b374c75321496f44b5/",
+      "https://www.fishheadquarters.com/?p=1534"
+    ],
+    "light": {
+      "map": {
+        "dawn": 1.0,
+        "dusk": 1.0,
+        "day": 0.6,
+        "night": 0.6
+      },
+      "text": {
+        "dawn": "It is dawn, the low-light time when wahoo are reported to bite best.",
+        "dusk": "It is dusk, the low-light time when wahoo are reported to bite best."
+      }
+    },
+    "moon": {
+      "months": [
+        8,
+        9,
+        10,
+        11
+      ],
+      "from_days": -3,
+      "to_days": 3,
+      "in_score": 1.0,
+      "out_score": 0.6,
+      "text": "It is the week around the full moon, when local charters report the year's best wahoo fishing with the king tides."
+    }
+  }
 }

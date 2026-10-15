@@ -7,6 +7,7 @@ from datetime import datetime, timezone
 from pathlib import Path
 
 from pipeline import closures as closures_mod
+from pipeline import timing, weather
 from pipeline.conditions import load_conditions
 from pipeline.layers import load_layers
 from pipeline.predict import build_fish_json
@@ -14,6 +15,18 @@ from pipeline.run_v1 import pull_buoys, summarize_grid
 
 ROOT = Path(__file__).resolve().parent.parent
 log = logging.getLogger("run")
+
+
+FORECAST_POINT = (25.76, -80.19)      # Miami: one point is enough to see a front coming across South Florida
+
+
+def load_forecast(errors: list[str]):
+    """NWS hourly forecast as observations, or None if it could not be fetched."""
+    try:
+        return weather.parse_nws_hourly(weather.fetch_forecast(*FORECAST_POINT))
+    except Exception as exc:
+        errors.append(f"weather forecast: {exc}")
+        return None
 
 
 def _grid_report(cfg: dict, when, lats, lons, grid) -> dict:
@@ -37,9 +50,11 @@ def main() -> None:
     tides_file = ROOT / "config/tides.json"
     tide_stations = json.loads(tides_file.read_text())["stations"] if tides_file.exists() else []
 
-    buoys = pull_buoys(stations, sources["ndbc"]["realtime_url"], errors)
+    history: dict = {}
+    buoys = pull_buoys(stations, sources["ndbc"]["realtime_url"], errors, history)
     layers = load_layers(sources, errors)
     conditions = load_conditions(tide_stations, now_dt, errors)
+    conditions["front"] = weather.assess(history, load_forecast(errors), now_dt)
 
     sst = chl = None
     fish = None
@@ -70,7 +85,7 @@ def main() -> None:
     latest = {"generated_utc": now, "region": sources["region"]["name"], "buoys": buoys,
               "sst": sst, "chlorophyll": chl, "structure": (layers or {}).get("structure_stats"),
               "closures": {"loaded": cl_loaded, "areas": len(cl_json["features"])},
-              "fish_updated": fish is not None, "errors": errors}
+              "conditions": timing.summary(conditions), "fish_updated": fish is not None, "errors": errors}
     (live / "latest.json").write_text(json.dumps(latest, indent=2, allow_nan=False))
     if fish is not None:      # on a failed run these are not written, so the last good copies stay published
         (live / "fish.json").write_text(json.dumps(fish, indent=1, allow_nan=False))

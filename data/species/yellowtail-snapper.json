@@ -158,5 +158,28 @@
   "min_cells": 1,
   "max_spots": 25,
   "title_from": "structure",
-  "patch_block_cells": 6
+  "patch_block_cells": 6,
+  "timing": {
+    "status": "angler_lore",
+    "note": "Angler lore: patterns reported by local captains and fishing writers, not tested by studies. Numbers are judgment calls to be calibrated against trip logs.",
+    "sources": [
+      "https://www.fishheadquarters.com/?p=1534",
+      "https://www.fishheadquarters.com/?p=98",
+      "https://fishingbooker.com/reports/view/12675",
+      "https://fishingbooker.com/it/reports/view/30777",
+      "https://podimo.com/no/shows/florida-keys-miami-daily-fishing-report/episode/91438d72-4ea0-5168-832f-c357df411692"
+    ],
+    "light": {
+      "map": {
+        "night": 1.0,
+        "dusk": 1.0,
+        "dawn": 0.75,
+        "day": 0.7
+      },
+      "text": {
+        "night": "It is night, when charter captains report yellowtail bite best on chummed anchor trips.",
+        "dusk": "It is dusk, when yellowtail are reported to bite better as light fades."
+      }
+    }
+  }
 }

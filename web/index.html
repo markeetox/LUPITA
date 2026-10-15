@@ -49,6 +49,13 @@
   .banner.closed { background: #3a1414; color: #fca5a5; }
   .legend { display: flex; align-items: center; gap: 8px; margin-top: 12px; font-size: 13px; color: var(--muted); }
   .legend i { flex: 1; height: 10px; border-radius: 6px; background: linear-gradient(90deg, rgba(148,163,184,.14), #94a3b8, #ffffff); }
+  .tag.lore { background: #35264a; color: #d8b4fe; }
+  .win { font-size: 22px; line-height: 1.15; margin: 2px 0 8px; }
+  .win small { font-size: 14px; color: var(--muted); }
+  .bars { width: 100%; height: auto; display: block; margin: 4px 0 8px; }
+  .bars text { font-size: 9px; fill: #8fa3bd; }
+  .why { display: flex; gap: 9px; align-items: flex-start; font-size: 15px; line-height: 1.35; margin-bottom: 7px; }
+  .note { }
   .tab { position: absolute; top: 100%; left: 50%; width: 76px; height: 30px; margin-left: -38px; padding: 0;
     display: flex; align-items: center; justify-content: center; cursor: pointer; color: var(--text);
     background: rgba(15,27,45,.96); border: 1px solid var(--line); border-top: none; border-radius: 0 0 16px 16px; }
@@ -206,7 +213,31 @@ function setFish(data) {
 function esc(v) {
   return String(v == null ? "" : v).replace(/[&<>"']/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
 }
-const TAG_LABEL = { measured: "Measured", modeled: "Modeled", seasonal: "Seasonal", static: "Mapped" };
+const TAG_LABEL = { measured: "Measured", modeled: "Modeled", seasonal: "Seasonal", static: "Mapped", lore: "Angler lore" };
+
+function clock(iso, hourOnly) {
+  return new Date(iso).toLocaleTimeString([], hourOnly ? { hour: "numeric" } : { hour: "numeric", minute: "2-digit" });
+}
+function timingHTML(s, color) {
+  const head = "<h3>Best bite window, next 24 hours</h3>", t = s.timing;
+  if (!t || !t.scores || !t.scores.length) {
+    return `<div class="sec">${head}<div class="muted" style="font-size:15px">No reliable time-of-day information for this fish yet.</div></div>`;
+  }
+  const n = t.scores.length, W = 288, bw = W / n, start = new Date(t.start).getTime(), HR = 3600000;
+  const win = t.window ? [new Date(t.window.start).getTime(), new Date(t.window.end).getTime()] : null;
+  const bars = t.scores.map((v, i) => {
+    const h = Math.max(3, Math.min(100, v) / 100 * 46), a = start + i * HR, on = win && a + HR > win[0] && a < win[1];
+    const label = i === 0 ? "Now" : i % 6 === 0 ? clock(a, true) : "";
+    return `<rect x="${(i * bw + 1).toFixed(1)}" y="${(50 - h).toFixed(1)}" width="${(bw - 2).toFixed(1)}" height="${h.toFixed(1)}" rx="2" fill="${esc(color)}" opacity="${on ? 1 : 0.28}"/>` +
+           (label ? `<text x="${(i * bw + bw / 2).toFixed(1)}" y="61" text-anchor="middle">${esc(label)}</text>` : "");
+  }).join("");
+  const chart = `<svg class="bars" viewBox="0 0 ${W} 64" role="img" aria-label="Bite timing over the next 24 hours">${bars}</svg>`;
+  const tag = t.evidence === "angler_lore" ? "lore" : "modeled";
+  const lead = win ? `<div class="win">${esc(clock(t.window.start))} to ${esc(clock(t.window.end))}</div>` : `<div class="muted" style="font-size:15px;margin-bottom:6px">${esc(t.note || "No single time stands out.")}</div>`;
+  const why = (t.why || []).map(x => `<div class="why"><span class="tag ${tag}">${esc(TAG_LABEL[tag])}</span><span>${esc(x)}</span></div>`).join("");
+  return `<div class="sec">${head}${lead}${chart}${why}` +
+         (t.evidence === "angler_lore" ? `<div class="muted" style="font-size:13px;margin-top:6px">Based on local captains' reports, not studies.</div>` : "") + `</div>`;
+}
 
 function safeImageUrl(u) { return typeof u === "string" && /^(https:\/\/|fish\/|\/fish\/)[^"'<>\s]+$/.test(u) ? u : ""; }
 function heroPicture(sp) {
@@ -231,6 +262,7 @@ function spotHTML(id) {
     <div class="sec"><h3>Why it may be here</h3>
       ${s.reasons.map(r => `<div class="reason"><span class="tag ${esc(r[0])}">${esc(TAG_LABEL[r[0]] || r[0])}</span><span>${esc(r[1])}</span></div>`).join("")}
     </div>
+    ${timingHTML(s, sp.color)}
     <div class="sec"><h3>About this spot: ${esc(s.title)}</h3>
       <dl>${s.location.map(x => `<dt>${esc(x[0])}</dt><dd>${esc(x[1])}</dd>`).join("")}</dl>
     </div>

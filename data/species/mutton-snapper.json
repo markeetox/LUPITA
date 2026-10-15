@@ -137,5 +137,39 @@
         "off": "It is outside the main spawning season, though mutton snapper are caught year-round."
       }
     }
-  ]
+  ],
+  "timing": {
+    "status": "angler_lore",
+    "note": "Angler lore: patterns reported by local captains and fishing writers, not tested by studies. Numbers are judgment calls to be calibrated against trip logs. Reports disagree on mutton snapper: some captains say day trips, others night.",
+    "sources": [
+      "https://geo.gcoos.org/restore/species_profiles/Mutton%20Snapper/",
+      "https://www.fishheadquarters.com/?p=1534",
+      "https://www.fishheadquarters.com/?p=98"
+    ],
+    "light": {
+      "map": {
+        "dusk": 1.0,
+        "night": 0.95,
+        "dawn": 0.75,
+        "day": 0.75
+      },
+      "text": {
+        "dusk": "It is dusk, when snappers are reported to bite better and keep biting into the night.",
+        "night": "It is night, when charter captains report their best snapper action."
+      }
+    },
+    "moon": {
+      "months": [
+        5,
+        6,
+        7,
+        8
+      ],
+      "from_days": -7,
+      "to_days": 5,
+      "in_score": 1.0,
+      "out_score": 0.6,
+      "text": "It is the week around the full moon in spawning season, when mutton snapper gather on reef edges to spawn."
+    }
+  }
 }

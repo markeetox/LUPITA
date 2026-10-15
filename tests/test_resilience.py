@@ -83,6 +83,7 @@ def test_a_failed_run_leaves_the_last_good_predictions_alone(tmp_path, monkeypat
     (tmp_path / "data/live/closures.json").write_text(json.dumps({"sentinel": "closures"}))
     monkeypatch.setattr(run, "ROOT", tmp_path)
     monkeypatch.setattr(run, "pull_buoys", lambda *a, **k: [])
+    monkeypatch.setattr(run, "load_forecast", lambda errors: None)
     monkeypatch.setattr(run, "load_layers", lambda *a, **k: None)             # NOAA refused everything
     monkeypatch.setattr(run, "load_conditions", lambda *a, **k: {"now": datetime.now(timezone.utc), "tides": []})
     run.main()

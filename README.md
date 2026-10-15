@@ -35,6 +35,18 @@ Site-based (scored at named inlets): snook, tarpon. Each species file lists ever
 `value_status` (sourced, partly_sourced, provisional, needs_source). Seasonal fish (sailfish, wahoo, cobia, mutton snapper,
 tarpon) use a calendar-month factor. Wahoo uses seafloor slope from the ETOPO depth grid. The workflow runs hourly.
 
+## Bite timing (when, not where)
+Habitat match says where a fish lives. Bite timing says whether it is likely feeding at each moment over the next
+24 hours, and picks a best window of up to 3 hours. Each species file can carry a `timing` block with light
+(dawn/day/dusk/night), tide stage, moon (a window around the full moon, in certain months) and cold-front parts.
+A fish with no `timing` block shows "No reliable time-of-day information" instead of a guess. Every block is tagged
+`angler_lore`: patterns reported by local captains and fishing writers, not tested by studies, with sources listed.
+- Light: computed sunrise and sunset (`pipeline/astro.py`). Moon: true new/full moon times (`pipeline/moon.py`, within minutes).
+- Tide: NOAA CO-OPS predictions. Cold front: seen in the last 48 hours in buoy wind, air temperature and pressure,
+  or forecast in the next 36 hours from the National Weather Service hourly forecast (`pipeline/weather.py`).
+  A front is a wind shift from the south/west side to a firm northerly, plus an air-temperature fall or pressure rise.
+- Barometric pressure is used only as a sign of a front, not as a direct fish factor: studies have not shown a direct effect.
+
 ## Fish pictures
 Each popup shows a transparent picture above the fish name, read from `web/fish/<species id>.png`. These are
 placeholder illustrations (drawn by `tools/make_fish_art.py`, sources in `tools/fish-svg/`). To use a real photo,

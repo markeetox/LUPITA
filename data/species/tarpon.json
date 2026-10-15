@@ -189,5 +189,58 @@
       "value_notes": "Bridges and lit docks are key tarpon spots. Needs a bridge dataset (planned).",
       "sources": []
     }
-  ]
+  ],
+  "timing": {
+    "status": "angler_lore",
+    "note": "Angler lore: patterns reported by local captains and fishing writers, not tested by studies. Numbers are judgment calls to be calibrated against trip logs.",
+    "sources": [
+      "https://www.thefisherman.com/article/head-south-silver-kings-in-the-spring/",
+      "https://www.floridamuseum.ufl.edu/discover-fish/species-profiles/tarpon"
+    ],
+    "weights": {
+      "light": 0.35,
+      "tide": 0.4,
+      "front": 0.25
+    },
+    "light": {
+      "map": {
+        "night": 1.0,
+        "dusk": 0.9,
+        "dawn": 0.9,
+        "day": 0.6
+      },
+      "text": {
+        "night": "It is night, a favored time for tarpon around passes and bridges.",
+        "dusk": "It is dusk, a low-light time tarpon feed actively.",
+        "dawn": "It is dawn, a low-light time tarpon feed actively.",
+        "day": "It is daylight, when tarpon fishing is usually slower."
+      }
+    },
+    "tide": {
+      "map": {
+        "falling": 1.0,
+        "rising": 1.0,
+        "slack_low": 0.5,
+        "slack_high": 0.4
+      },
+      "text": {
+        "falling": "The tide is falling ({station}); moving water through passes is when tarpon feed.",
+        "rising": "The tide is rising ({station}); moving water through passes is when tarpon feed.",
+        "slack_low": "The tide is near low ({station}), so little water is moving and tarpon feed less.",
+        "slack_high": "The tide is near high ({station}), so little water is moving and tarpon feed less."
+      }
+    },
+    "front": {
+      "map": {
+        "approaching": 0.75,
+        "just_passed": 0.25,
+        "lull": 0.35
+      },
+      "text": {
+        "approaching": "A cold front is on the way. Tarpon head for warmer, deeper water when a front arrives.",
+        "just_passed": "A cold front just passed. Tarpon pull back to warmer, deeper water and feed less.",
+        "lull": "Cooler water after a front keeps tarpon off the passes for a day or two."
+      }
+    }
+  }
 }

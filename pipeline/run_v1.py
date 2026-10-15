@@ -5,7 +5,7 @@ from __future__ import annotations
 import json
 import logging
 import math
-from datetime import datetime, timezone
+from datetime import datetime, timedelta, timezone
 from pathlib import Path
 
 import numpy as np
@@ -41,13 +41,16 @@ def summarize_grid(grid: np.ndarray, lats: np.ndarray, lons: np.ndarray,
     return out
 
 
-def pull_buoys(stations: list[dict], url_template: str, errors: list[str]) -> list[dict]:
+def pull_buoys(stations: list[dict], url_template: str, errors: list[str], history: dict | None = None) -> list[dict]:
     results = []
     for st in stations:
         try:
             rows = ndbc.parse_realtime2(ndbc.fetch_realtime(st["id"], url_template))
             summary = ndbc.summarize(st, rows)
             summary["zone"] = st.get("zone")
+            if history is not None and rows:                    # last 3 days of readings, for cold-front detection
+                cutoff = rows[0]["time"] - timedelta(days=3)
+                history[st["id"]] = [r for r in rows if r["time"] >= cutoff]
             results.append(summary)
         except Exception as exc:  # one dead station must not stop the run
             errors.append(f"ndbc {st['id']}: {exc}")

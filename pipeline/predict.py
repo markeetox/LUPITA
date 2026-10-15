@@ -5,7 +5,7 @@ import base64
 
 import numpy as np
 
-from pipeline import scoring, sites as sites_mod
+from pipeline import scoring, sites as sites_mod, timing as timing_mod
 from pipeline.grid import bearing_deg, compass, haversine_km
 
 TAGS = {"sst_c": "modeled", "sst_gradient": "modeled", "chlorophyll": "modeled", "depth_m": "static"}
@@ -335,8 +335,15 @@ def build_fish_json(layers, buoys, profiles, registry, generated_utc, places=Non
             spots_out.append(item)
         entry["spots"] = len(spots)
         species_out.append(entry)
-    return {
+    result = {
         "version": 1, "generated_utc": generated_utc, "experimental": True,
         "disclaimer": "Scores show where conditions match published habitat preferences. They have not yet been checked against catch reports.",
         "layers": {"times": layers["times"], "datasets": layers["datasets"]},
         "species": species_out, "spots": spots_out}
+    if conditions and conditions.get("now"):                    # bite timing for the next 24 hours, plus moon and front context
+        by_id = {p["id"]: p for p in profiles}
+        for it in spots_out:
+            it["timing"] = timing_mod.for_spot(by_id[it["species"]], it["coords"][1], it["coords"][0], conditions)
+            it["location"] = it["location"] + timing_mod.context_rows(conditions)
+        result["conditions"] = timing_mod.summary(conditions)
+    return result

@@ -167,5 +167,25 @@
       "value_notes": "The western edge of the Gulf Stream is where many winter sailfish are found. Planned with current data.",
       "sources": []
     }
-  ]
+  ],
+  "timing": {
+    "status": "angler_lore",
+    "note": "Angler lore: patterns reported by local captains and fishing writers, not tested by studies. Numbers are judgment calls to be calibrated against trip logs.",
+    "sources": [
+      "https://www.gameandfishmag.com/editorial/sailfish-season-less-than-stellar/348168",
+      "https://www.fishheadquarters.com/?p=1534"
+    ],
+    "front": {
+      "map": {
+        "approaching": 0.85,
+        "just_passed": 1.0,
+        "lull": 0.9
+      },
+      "text": {
+        "approaching": "A front is on the way. Local charters say sailfish bite better on windier, cooler days.",
+        "just_passed": "A front just passed. Windier, cooler days are when local charters report the best sailfish bites.",
+        "lull": "Cooler, breezier weather after a front still favors sailfish, per local charters."
+      }
+    }
+  }
 }
