@@ -93,6 +93,7 @@ function renderRun(fish, latest) {
     <div>Chlorophyll scene</div><div>${esc(t.chlorophyll || "none")} <span class="muted">(${esc(ds.chlorophyll || "")})</span></div>
     <div>Depth dataset</div><div>${esc(ds.bathymetry || "none")}</div>
     <div>Moon</div><div>${esc(((fish.conditions || {}).moon || {}).text || "not in this run")}</div>
+    <div>Sea state</div><div>${esc((((fish.conditions || {}).sea || {}).now || {}).text || "no recent buoy reading")}${(((fish.conditions || {}).sea || {}).outlook) ? "<br>" + esc(fish.conditions.sea.outlook.text) : ""}</div>
     <div>Cold front</div><div>${(fish.conditions && fish.conditions.front && fish.conditions.front.text) ? esc(fish.conditions.front.text) : pill("ok", "none detected or forecast")}</div>
     <div>Pipeline errors</div><div>${errs.length ? errs.map(e => pill("bad", e)).join("<br>") : pill("ok", "none")}</div>
     ${fish.error ? `<div>Fish error</div><div>${pill("bad", fish.error)}</div>` : ""}

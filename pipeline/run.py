@@ -7,7 +7,7 @@ from datetime import datetime, timezone
 from pathlib import Path
 
 from pipeline import closures as closures_mod
-from pipeline import timing, weather
+from pipeline import seastate, timing, weather
 from pipeline.conditions import load_conditions
 from pipeline.layers import load_layers
 from pipeline.predict import build_fish_json
@@ -54,7 +54,9 @@ def main() -> None:
     buoys = pull_buoys(stations, sources["ndbc"]["realtime_url"], errors, history)
     layers = load_layers(sources, errors)
     conditions = load_conditions(tide_stations, now_dt, errors)
-    conditions["front"] = weather.assess(history, load_forecast(errors), now_dt)
+    forecast = load_forecast(errors)
+    conditions["forecast"] = forecast
+    conditions["front"] = weather.assess(history, forecast, now_dt)
 
     sst = chl = None
     fish = None
@@ -85,7 +87,7 @@ def main() -> None:
     latest = {"generated_utc": now, "region": sources["region"]["name"], "buoys": buoys,
               "sst": sst, "chlorophyll": chl, "structure": (layers or {}).get("structure_stats"),
               "closures": {"loaded": cl_loaded, "areas": len(cl_json["features"])},
-              "conditions": timing.summary(conditions), "fish_updated": fish is not None, "errors": errors}
+              "conditions": {**timing.summary(conditions), "sea": seastate.summary(buoys, conditions)}, "fish_updated": fish is not None, "errors": errors}
     (live / "latest.json").write_text(json.dumps(latest, indent=2, allow_nan=False))
     if fish is not None:      # on a failed run these are not written, so the last good copies stay published
         (live / "fish.json").write_text(json.dumps(fish, indent=1, allow_nan=False))

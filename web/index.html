@@ -56,6 +56,11 @@
   .bars text { font-size: 9px; fill: #8fa3bd; }
   .why { display: flex; gap: 9px; align-items: flex-start; font-size: 15px; line-height: 1.35; margin-bottom: 7px; }
   .note { }
+  .sea { margin-top: 12px; font-size: 14px; line-height: 1.35; display: flex; gap: 9px; align-items: flex-start; }
+  .lvl { flex: none; font-size: 12px; padding: 1px 9px; border-radius: 999px; margin-top: 2px; border: 1px solid; white-space: nowrap; }
+  .lvl.good { color: #34d399; border-color: #1c5a47; } .lvl.fair { color: #fbbf24; border-color: #5b4a1a; }
+  .lvl.rough { color: #fb923c; border-color: #6b3a14; } .lvl.dangerous { color: #f87171; border-color: #6b2a2a; }
+  .banner.rough { background: #3b2310; color: #fdba74; } .banner.dangerous { background: #3a1414; color: #fca5a5; }
   .tab { position: absolute; top: 100%; left: 50%; width: 76px; height: 30px; margin-left: -38px; padding: 0;
     display: flex; align-items: center; justify-content: center; cursor: pointer; color: var(--text);
     background: rgba(15,27,45,.96); border: 1px solid var(--line); border-top: none; border-radius: 0 0 16px 16px; }
@@ -127,6 +132,7 @@
     <label for="fishSelect" class="lbl">Show fish</label>
     <select id="fishSelect" class="select"><option value="all">All fish</option></select>
     <div id="fishNote" class="note"></div>
+    <div id="seaRow" class="sea" hidden></div>
     <div class="legend" aria-hidden="true"><span>Lower</span><i id="legendBar"></i><span>Better match</span></div>
     <label class="toggle"><input type="checkbox" id="closuresToggle" checked><i class="sw"></i><span>Show no-fishing areas</span></label>
     <div class="chips"><span id="status" class="chip">Loading...</span><span id="buoyStatus" class="chip">Buoys: loading...</span><span id="closuresStatus" class="chip">No-fishing areas: loading...</span></div>
@@ -215,6 +221,22 @@ function esc(v) {
 }
 const TAG_LABEL = { measured: "Measured", modeled: "Modeled", seasonal: "Seasonal", static: "Mapped", lore: "Angler lore" };
 
+const SEA_LABEL = { good: "Good", fair: "Fair", rough: "Rough", dangerous: "Dangerous" };
+function seaBanner(s) {
+  if (!s.sea || (s.sea.level !== "rough" && s.sea.level !== "dangerous")) return "";
+  const lead = s.sea.level === "dangerous" ? "Dangerous seas" : "Rough seas";
+  return `<div class="banner ${esc(s.sea.level)}">${lead} near this spot right now. This is only a rough guide, so check the National Weather Service marine forecast before going out.</div>`;
+}
+function renderSea() {
+  const row = document.getElementById("seaRow"), sea = (FISH && FISH.conditions && FISH.conditions.sea) || {};
+  const now = sea.now, out = sea.outlook;
+  if (!now && !out) { row.hidden = true; return; }
+  const lvl = now ? now.level : out.level;
+  row.hidden = false;
+  row.innerHTML = `<span class="lvl ${esc(lvl)}">${esc(SEA_LABEL[lvl] || lvl)}</span><span>` +
+    (now ? esc(now.text.replace(/^[^:]+: /, "")) : "") + (now && out ? "<br>" : "") + (out ? esc(out.text) : "") + "</span>";
+}
+
 function clock(iso, hourOnly) {
   return new Date(iso).toLocaleTimeString([], hourOnly ? { hour: "numeric" } : { hour: "numeric", minute: "2-digit" });
 }
@@ -259,6 +281,7 @@ function spotHTML(id) {
       <div class="score"><b>${Math.round(s.score * 100)}%</b><span>${esc(s.confidence)} confidence</span></div>
     </div>
     ${banner}
+    ${seaBanner(s)}
     <div class="sec"><h3>Why it may be here</h3>
       ${s.reasons.map(r => `<div class="reason"><span class="tag ${esc(r[0])}">${esc(TAG_LABEL[r[0]] || r[0])}</span><span>${esc(r[1])}</span></div>`).join("")}
     </div>
@@ -270,7 +293,7 @@ function spotHTML(id) {
       <dl>${sp.specs.map(x => `<dt>${esc(x[0])}</dt><dd>${esc(x[1])}</dd>`).join("")}</dl>
     </div>
     <div class="foot">Confidence shows how complete today's data was, not verified accuracy.
-      Check current size and bag limits, and that you are outside any closed area, before you fish:
+      Sea conditions are a rough guide only. Check current size and bag limits, and that you are outside any closed area, before you fish:
       <a href="https://myfwc.com/fishing/saltwater/" target="_blank" rel="noopener">FWC saltwater fishing</a></div>`;
 }
 
@@ -606,6 +629,7 @@ function renderPanel() {
     chip.textContent = (stale ? "Stale: last updated " : "Live, experimental") + (FISH.generated_utc ? (stale ? "" : " · ") + ago(FISH.generated_utc) : "");
     chip.className = "chip " + (stale ? "warn" : "ok");
   }
+  renderSea();
   if (FILTER !== "all" && !SPECIES[FILTER]) FILTER = "all";    // saved choice no longer exists
   fishSelect.innerHTML = `<option value="all">All fish</option>` +
     (FISH.species || []).map(s => `<option value="${esc(s.id)}">${esc(s.name)} (${esc(speciesLabel(s))})</option>`).join("");

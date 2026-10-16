@@ -5,7 +5,7 @@ import base64
 
 import numpy as np
 
-from pipeline import scoring, sites as sites_mod, timing as timing_mod
+from pipeline import scoring, seastate, sites as sites_mod, timing as timing_mod
 from pipeline.grid import bearing_deg, compass, haversine_km
 
 TAGS = {"sst_c": "modeled", "sst_gradient": "modeled", "chlorophyll": "modeled", "depth_m": "static"}
@@ -344,6 +344,8 @@ def build_fish_json(layers, buoys, profiles, registry, generated_utc, places=Non
         by_id = {p["id"]: p for p in profiles}
         for it in spots_out:
             it["timing"] = timing_mod.for_spot(by_id[it["species"]], it["coords"][1], it["coords"][0], conditions)
-            it["location"] = it["location"] + timing_mod.context_rows(conditions)
-        result["conditions"] = timing_mod.summary(conditions)
+            sea = seastate.from_buoys(buoys, it["coords"][1], it["coords"][0], conditions["now"])
+            it["sea"] = {"level": sea["level"], "text": sea["text"]} if sea else None
+            it["location"] = it["location"] + seastate.rows(buoys, it["coords"][1], it["coords"][0], conditions) + timing_mod.context_rows(conditions)
+        result["conditions"] = {**timing_mod.summary(conditions), "sea": seastate.summary(buoys, conditions)}
     return result

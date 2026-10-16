@@ -47,6 +47,14 @@ A fish with no `timing` block shows "No reliable time-of-day information" instea
   A front is a wind shift from the south/west side to a firm northerly, plus an air-temperature fall or pressure rise.
 - Barometric pressure is used only as a sign of a front, not as a direct fish factor: studies have not shown a direct effect.
 
+## Boat conditions
+A separate sea-state indicator, not part of any fish score. From the nearest fresh buoy readings (within 80 km, under
+3 hours old) it rates wind and waves as Good, Fair, Rough or Dangerous (wind limits 12, 18 and 25 kn; wave limits
+about 2, 4 and 6.5 ft; short steep waves count one step rougher; the worse of wind and waves wins). The forecast adds the
+strongest wind expected in the next 24 hours. The limits are a rough guide for a typical 20-30 ft boat, not official
+advisory levels (`pipeline/seastate.py`). Spots in Rough or Dangerous water get a warning banner. Always check the
+National Weather Service marine forecast.
+
 ## Fish pictures
 Each popup shows a transparent picture above the fish name, read from `web/fish/<species id>.png`. These are
 placeholder illustrations (drawn by `tools/make_fish_art.py`, sources in `tools/fish-svg/`). To use a real photo,
