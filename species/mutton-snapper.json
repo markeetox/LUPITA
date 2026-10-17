@@ -1,0 +1,175 @@
+{
+  "schema_version": 1,
+  "id": "mutton-snapper",
+  "common_name": "Mutton snapper",
+  "scientific_name": "Lutjanus analis",
+  "aliases": [
+    "muttonfish",
+    "king snapper"
+  ],
+  "habitat_zone": "reef",
+  "display": {
+    "color": "#fb923c"
+  },
+  "zone_style": "cells",
+  "min_cells": 1,
+  "max_spots": 25,
+  "patch_block_cells": 6,
+  "title_from": "structure",
+  "review_status": "draft - depth and temperature from FishBase and agency summaries; season from angler records",
+  "image": {
+    "status": "placeholder",
+    "kind": "illustration",
+    "url": "fish/mutton-snapper.png",
+    "credit": "Original illustration",
+    "license": "",
+    "plan": "web/fish/mutton-snapper.png is a transparent placeholder illustration. To use a real photo: replace that file with a transparent PNG of the same name (cropped tight to the fish, facing left looks best), then set kind to \"photo\" and fill in credit and license here. Only use images you have the right to show: NOAA Fisheries species pages and Wikimedia Commons are good places to look; FWC illustrations are copyrighted."
+  },
+  "profile": {
+    "size": "Common at about 5-15 lb; can reach about 37 in and 30 lb",
+    "diet": "Fish and invertebrates",
+    "depth": "25-95 m, usually 40-70 m (FishBase); adults deeper than juveniles",
+    "behavior": "Adults live on reefs, ledges and around wrecks and artificial reefs, often patrolling the edge between reef and sand. Juveniles use seagrass and mangroves.",
+    "spawning": "Forms large spawning aggregations on reef promontories along the shelf edge, building the week before the full moon, with spawning 2-5 days after it in the late afternoon. Season is roughly May to August in Florida.",
+    "lifespan": "Up to about 29 years",
+    "regulations_note": "Mutton snapper have size limits, and some areas protect spawning aggregations. Check FWC rules.",
+    "regulations_link": "https://myfwc.com/fishing/saltwater/",
+    "sources": [
+      "https://fishbase.net.br/summary/1403",
+      "https://geo.gcoos.org/restore/species_profiles/Mutton%20Snapper/",
+      "https://flylifemagazine.com/?p=20596",
+      "https://inthespread.com/blog/mutton-snapper-fishing-tips-techniques-and-strategies-336",
+      "https://www.scrfa.org/?p=176123"
+    ]
+  },
+  "factors": [
+    {
+      "param": "structure_type",
+      "kind": "category",
+      "weight": 0.4,
+      "active": true,
+      "value_status": "partly_sourced",
+      "value_notes": "Adults are tied to reefs, wrecks and artificial reefs, especially where reef meets sand. Structure comes from FWC's artificial reef list and the Unified Reef Map. Open sand is not counted even though mutton also use sand near reefs.",
+      "sources": [
+        "https://inthespread.com/blog/mutton-snapper-fishing-tips-techniques-and-strategies-336",
+        "https://www.scrfa.org/?p=176123"
+      ],
+      "preferred": [
+        "wreck",
+        "artificial_reef",
+        "natural_reef"
+      ],
+      "map": {
+        "wreck": 1.0,
+        "artificial_reef": 1.0,
+        "natural_reef": 0.9
+      }
+    },
+    {
+      "param": "depth_m",
+      "kind": "range",
+      "weight": 0.3,
+      "active": true,
+      "value_status": "partly_sourced",
+      "value_notes": "FishBase: 25-95 m, usually 40-70 m. Reef anglers fish aggregation edges in roughly 60-120 ft (18-37 m). Cells shallower than 15 m are excluded (mostly juvenile habitat). The ideal band blends these.",
+      "sources": [
+        "https://fishbase.net.br/summary/1403",
+        "https://inthespread.com/blog/mutton-snapper-fishing-tips-techniques-and-strategies-336"
+      ],
+      "reason_template": "Depth is {value} m, in the reef water adult mutton snapper use.",
+      "range": [
+        15,
+        120
+      ],
+      "ideal": [
+        25,
+        70
+      ],
+      "gate": true
+    },
+    {
+      "param": "sst_c",
+      "kind": "range",
+      "weight": 0.15,
+      "active": true,
+      "value_status": "partly_sourced",
+      "value_notes": "FishBase gives 20-28 C and a species guide gives 66-82 F (19-28 C), mean about 25 C. South Florida reef water runs up to about 30 C in summer and mutton snapper are caught there, so the range is widened above the published 28 C. That widening is a judgment call.",
+      "sources": [
+        "https://fishbase.net.br/summary/1403",
+        "https://flylifemagazine.com/?p=20596"
+      ],
+      "reason_template": "Water is {value} C, inside the {ideal_min}-{ideal_max} C range mutton snapper tolerate.",
+      "range": [
+        19,
+        31
+      ],
+      "ideal": [
+        22,
+        29.5
+      ]
+    },
+    {
+      "param": "season_presence",
+      "kind": "season",
+      "weight": 0.1,
+      "active": true,
+      "value_status": "provisional",
+      "value_notes": "Aggregations form in the warm months, and reef anglers rate May to August best, tied to the spawning cycle. Mutton snapper are caught year-round, so the off-season score is only mildly lower.",
+      "sources": [
+        "https://inthespread.com/blog/mutton-snapper-fishing-tips-techniques-and-strategies-336",
+        "https://geo.gcoos.org/restore/species_profiles/Mutton%20Snapper/"
+      ],
+      "months": [
+        5,
+        6,
+        7,
+        8
+      ],
+      "peak_months": [
+        6,
+        7
+      ],
+      "in_score": 0.85,
+      "off_score": 0.6,
+      "value_text": {
+        "peak": "It is peak mutton snapper season (about June and July), when fish gather to spawn.",
+        "in_season": "It is mutton snapper spawning-aggregation season (about May to August).",
+        "off": "It is outside the main spawning season, though mutton snapper are caught year-round."
+      }
+    }
+  ],
+  "timing": {
+    "status": "angler_lore",
+    "note": "Angler lore: patterns reported by local captains and fishing writers, not tested by studies. Numbers are judgment calls to be calibrated against trip logs. Reports disagree on mutton snapper: some captains say day trips, others night.",
+    "sources": [
+      "https://geo.gcoos.org/restore/species_profiles/Mutton%20Snapper/",
+      "https://www.fishheadquarters.com/?p=1534",
+      "https://www.fishheadquarters.com/?p=98"
+    ],
+    "light": {
+      "map": {
+        "dusk": 1.0,
+        "night": 0.95,
+        "dawn": 0.75,
+        "day": 0.75
+      },
+      "text": {
+        "dusk": "It is dusk, when snappers are reported to bite better and keep biting into the night.",
+        "night": "It is night, when charter captains report their best snapper action."
+      }
+    },
+    "moon": {
+      "months": [
+        5,
+        6,
+        7,
+        8
+      ],
+      "from_days": -7,
+      "to_days": 5,
+      "in_score": 1.0,
+      "out_score": 0.6,
+      "text": "It is the week around the full moon in spawning season, when mutton snapper gather on reef edges to spawn."
+    }
+  }
+}

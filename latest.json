@@ -1,0 +1,482 @@
+{
+  "generated_utc": "2026-10-17T18:24:52.915501+00:00",
+  "region": "south_florida",
+  "buoys": [
+    {
+      "station": "41122",
+      "name": "Hollywood Beach, FL",
+      "lat": 26.0,
+      "lon": -80.1,
+      "ok": true,
+      "time_utc": "2026-10-17T18:00:00+00:00",
+      "water_temp_c": 29.6,
+      "air_temp_c": 24.4,
+      "wind_kn": null,
+      "gust_kn": null,
+      "wind_dir_deg": null,
+      "wave_height_m": 0.3,
+      "wave_period_s": 3.0,
+      "pressure_hpa": null,
+      "pressure_change_3h_hpa": null,
+      "water_temp_change_24h_c": -0.2,
+      "zone": "ocean"
+    },
+    {
+      "station": "VAKF1",
+      "name": "Virginia Key, FL",
+      "lat": 25.73,
+      "lon": -80.16,
+      "ok": true,
+      "time_utc": "2026-10-17T17:48:00+00:00",
+      "water_temp_c": 30.3,
+      "air_temp_c": 29.2,
+      "wind_kn": 4.1,
+      "gust_kn": 5.1,
+      "wind_dir_deg": 70.0,
+      "wave_height_m": null,
+      "wave_period_s": null,
+      "pressure_hpa": 1014.3,
+      "pressure_change_3h_hpa": -1.2,
+      "water_temp_change_24h_c": 0.4,
+      "zone": "coastal"
+    },
+    {
+      "station": "PEGF1",
+      "name": "Port Everglades, FL",
+      "lat": 26.09,
+      "lon": -80.12,
+      "ok": true,
+      "time_utc": "2026-10-17T17:48:00+00:00",
+      "water_temp_c": null,
+      "air_temp_c": 27.3,
+      "wind_kn": 7.0,
+      "gust_kn": 8.9,
+      "wind_dir_deg": 170.0,
+      "wave_height_m": null,
+      "wave_period_s": null,
+      "pressure_hpa": 1013.9,
+      "pressure_change_3h_hpa": -1.4,
+      "water_temp_change_24h_c": null,
+      "zone": "coastal"
+    },
+    {
+      "station": "LKWF1",
+      "name": "Lake Worth Pier, FL",
+      "lat": 26.61,
+      "lon": -80.03,
+      "ok": true,
+      "time_utc": "2026-10-17T17:48:00+00:00",
+      "water_temp_c": 30.1,
+      "air_temp_c": 29.3,
+      "wind_kn": 5.1,
+      "gust_kn": 8.0,
+      "wind_dir_deg": 100.0,
+      "wave_height_m": null,
+      "wave_period_s": null,
+      "pressure_hpa": 1014.1,
+      "pressure_change_3h_hpa": -1.8,
+      "water_temp_change_24h_c": 0.3,
+      "zone": "coastal"
+    },
+    {
+      "station": "THRF1",
+      "name": "Thursday Point, FL",
+      "lat": 25.2,
+      "lon": -80.37,
+      "ok": true,
+      "time_utc": "2026-10-17T17:00:00+00:00",
+      "water_temp_c": 29.8,
+      "air_temp_c": null,
+      "wind_kn": null,
+      "gust_kn": null,
+      "wind_dir_deg": null,
+      "wave_height_m": null,
+      "wave_period_s": null,
+      "pressure_hpa": null,
+      "pressure_change_3h_hpa": null,
+      "water_temp_change_24h_c": 0.2,
+      "zone": "inshore"
+    },
+    {
+      "station": "MNBF1",
+      "name": "Manatee Bay, FL",
+      "lat": 25.24,
+      "lon": -80.42,
+      "ok": true,
+      "time_utc": "2026-10-17T17:00:00+00:00",
+      "water_temp_c": 31.1,
+      "air_temp_c": null,
+      "wind_kn": null,
+      "gust_kn": null,
+      "wind_dir_deg": null,
+      "wave_height_m": null,
+      "wave_period_s": null,
+      "pressure_hpa": null,
+      "pressure_change_3h_hpa": null,
+      "water_temp_change_24h_c": 1.0,
+      "zone": "inshore"
+    },
+    {
+      "station": "41068",
+      "name": "Fort Pierce, FL (FTP)",
+      "lat": 27.59,
+      "lon": -80.19,
+      "ok": true,
+      "time_utc": "2026-10-17T17:08:00+00:00",
+      "water_temp_c": 29.0,
+      "air_temp_c": 27.3,
+      "wind_kn": 9.7,
+      "gust_kn": 13.6,
+      "wind_dir_deg": 330.0,
+      "wave_height_m": null,
+      "wave_period_s": null,
+      "pressure_hpa": 1014.4,
+      "pressure_change_3h_hpa": -0.9,
+      "water_temp_change_24h_c": -0.1,
+      "zone": "ocean"
+    },
+    {
+      "station": "41114",
+      "name": "Fort Pierce, FL (134)",
+      "lat": 27.56,
+      "lon": -80.22,
+      "ok": true,
+      "time_utc": "2026-10-17T17:56:00+00:00",
+      "water_temp_c": 29.1,
+      "air_temp_c": null,
+      "wind_kn": null,
+      "gust_kn": null,
+      "wind_dir_deg": null,
+      "wave_height_m": 0.6,
+      "wave_period_s": 13.0,
+      "pressure_hpa": null,
+      "pressure_change_3h_hpa": null,
+      "water_temp_change_24h_c": -0.5,
+      "zone": "ocean"
+    }
+  ],
+  "sst": {
+    "parameter": "sst_c",
+    "dataset": "jplMURSST41",
+    "time": "2026-10-16T09:00:00Z",
+    "gradient_unit": "degC per km",
+    "shape": [
+      126,
+      126
+    ],
+    "valid_fraction": 0.769,
+    "value_min": 28.197,
+    "value_max": 30.509,
+    "gradient_max": 0.1391,
+    "strongest_gradient_cells": [
+      {
+        "lat": 24.86,
+        "lon": -80.16,
+        "value": 0.1391
+      },
+      {
+        "lat": 25.48,
+        "lon": -80.16,
+        "value": 0.1391
+      },
+      {
+        "lat": 24.8,
+        "lon": -80.26,
+        "value": 0.1389
+      },
+      {
+        "lat": 25.46,
+        "lon": -80.16,
+        "value": 0.138
+      },
+      {
+        "lat": 25.06,
+        "lon": -79.68,
+        "value": 0.1377
+      },
+      {
+        "lat": 24.82,
+        "lon": -80.26,
+        "value": 0.1366
+      },
+      {
+        "lat": 24.98,
+        "lon": -79.86,
+        "value": 0.1354
+      },
+      {
+        "lat": 25.04,
+        "lon": -79.68,
+        "value": 0.1352
+      },
+      {
+        "lat": 25.44,
+        "lon": -80.16,
+        "value": 0.1304
+      },
+      {
+        "lat": 25.38,
+        "lon": -80.18,
+        "value": 0.1288
+      },
+      {
+        "lat": 24.78,
+        "lon": -80.26,
+        "value": 0.128
+      },
+      {
+        "lat": 25.44,
+        "lon": -80.18,
+        "value": 0.1277
+      },
+      {
+        "lat": 25.48,
+        "lon": -80.14,
+        "value": 0.1268
+      },
+      {
+        "lat": 25.76,
+        "lon": -80.16,
+        "value": 0.1267
+      },
+      {
+        "lat": 25.52,
+        "lon": -80.12,
+        "value": 0.1257
+      },
+      {
+        "lat": 25.0,
+        "lon": -79.88,
+        "value": 0.1257
+      },
+      {
+        "lat": 24.82,
+        "lon": -80.14,
+        "value": 0.1251
+      },
+      {
+        "lat": 25.34,
+        "lon": -80.26,
+        "value": 0.1251
+      },
+      {
+        "lat": 24.84,
+        "lon": -80.14,
+        "value": 0.124
+      },
+      {
+        "lat": 25.28,
+        "lon": -81.0,
+        "value": 0.1232
+      },
+      {
+        "lat": 25.42,
+        "lon": -80.18,
+        "value": 0.1231
+      },
+      {
+        "lat": 24.96,
+        "lon": -79.86,
+        "value": 0.1227
+      },
+      {
+        "lat": 24.96,
+        "lon": -79.84,
+        "value": 0.1226
+      },
+      {
+        "lat": 24.76,
+        "lon": -79.16,
+        "value": 0.1225
+      },
+      {
+        "lat": 24.84,
+        "lon": -80.16,
+        "value": 0.1219
+      }
+    ]
+  },
+  "chlorophyll": {
+    "parameter": "chlorophyll",
+    "dataset": "nesdisVHNnoaa20chlaDaily",
+    "time": "2026-10-14T12:00:00Z",
+    "gradient_unit": "log10(mg/m3) per km",
+    "shape": [
+      34,
+      34
+    ],
+    "valid_fraction": 0.535,
+    "value_min": 0.079,
+    "value_max": 105.394,
+    "gradient_max": 0.1673,
+    "strongest_gradient_cells": [
+      {
+        "lat": 26.5687,
+        "lon": -78.8813,
+        "value": 0.1673
+      },
+      {
+        "lat": 26.6438,
+        "lon": -78.9563,
+        "value": 0.1415
+      },
+      {
+        "lat": 26.5687,
+        "lon": -78.8063,
+        "value": 0.1233
+      },
+      {
+        "lat": 26.5687,
+        "lon": -78.5813,
+        "value": 0.1137
+      },
+      {
+        "lat": 26.6438,
+        "lon": -78.8813,
+        "value": 0.111
+      },
+      {
+        "lat": 26.7188,
+        "lon": -79.0313,
+        "value": 0.1083
+      },
+      {
+        "lat": 27.0188,
+        "lon": -80.0063,
+        "value": 0.1011
+      },
+      {
+        "lat": 26.7937,
+        "lon": -79.0313,
+        "value": 0.0973
+      },
+      {
+        "lat": 26.4937,
+        "lon": -78.7313,
+        "value": 0.097
+      },
+      {
+        "lat": 26.8687,
+        "lon": -79.1063,
+        "value": 0.0964
+      },
+      {
+        "lat": 26.9437,
+        "lon": -79.1063,
+        "value": 0.0949
+      },
+      {
+        "lat": 26.7188,
+        "lon": -78.9563,
+        "value": 0.0939
+      },
+      {
+        "lat": 24.6937,
+        "lon": -80.9063,
+        "value": 0.0914
+      },
+      {
+        "lat": 24.7687,
+        "lon": -80.7563,
+        "value": 0.0873
+      },
+      {
+        "lat": 24.6937,
+        "lon": -80.9813,
+        "value": 0.0867
+      },
+      {
+        "lat": 26.7937,
+        "lon": -79.1063,
+        "value": 0.0813
+      },
+      {
+        "lat": 25.8938,
+        "lon": -78.5813,
+        "value": 0.0784
+      },
+      {
+        "lat": 27.0188,
+        "lon": -79.1813,
+        "value": 0.0774
+      },
+      {
+        "lat": 24.8438,
+        "lon": -80.6813,
+        "value": 0.0758
+      },
+      {
+        "lat": 24.6937,
+        "lon": -80.8313,
+        "value": 0.0757
+      },
+      {
+        "lat": 27.0188,
+        "lon": -79.1063,
+        "value": 0.0731
+      },
+      {
+        "lat": 24.7687,
+        "lon": -80.6813,
+        "value": 0.0722
+      },
+      {
+        "lat": 24.8438,
+        "lon": -80.6063,
+        "value": 0.0721
+      },
+      {
+        "lat": 26.9437,
+        "lon": -80.0063,
+        "value": 0.0718
+      },
+      {
+        "lat": 25.0687,
+        "lon": -79.1063,
+        "value": 0.0711
+      }
+    ]
+  },
+  "structure": {
+    "artificial_reef_records": 587,
+    "natural_reef_polygons": 13648,
+    "cells_wreck": 76,
+    "cells_artificial_reef": 62,
+    "cells_natural_reef": 541
+  },
+  "closures": {
+    "loaded": true,
+    "areas": 16
+  },
+  "conditions": {
+    "moon": {
+      "illumination": 0.468,
+      "phase": "first quarter",
+      "text": "47% lit, first quarter; full moon in 8 days"
+    },
+    "front": {
+      "state": "approaching",
+      "source": "forecast",
+      "time": "2026-10-17T21:00:00+00:00",
+      "text": "A cold front is forecast in about 3 h"
+    },
+    "sea": {
+      "now": {
+        "level": "good",
+        "label": "Good",
+        "wind_kn": 4.1,
+        "wave_ft": 1.0,
+        "text": "Good: ENE wind 4 kn, waves 1 ft at 3 s (Virginia Key, FL, 4 km away; waves: Hollywood Beach, FL, 28 km away)",
+        "missing": []
+      },
+      "outlook": {
+        "level": "rough",
+        "max_wind_kn": 21,
+        "at": "2026-10-18T17:00:00+00:00",
+        "text": "Forecast: winds up to 21 kn from the NE around 1:00 PM (rough for most boats)"
+      }
+    }
+  },
+  "fish_updated": true,
+  "errors": []
+}

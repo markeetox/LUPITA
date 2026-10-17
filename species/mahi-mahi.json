@@ -1,0 +1,168 @@
+{
+  "schema_version": 1,
+  "id": "mahi-mahi",
+  "common_name": "Mahi-mahi",
+  "scientific_name": "Coryphaena hippurus",
+  "aliases": [
+    "dolphinfish",
+    "dolphin",
+    "dorado"
+  ],
+  "habitat_zone": "offshore",
+  "review_status": "draft v2 - temperature and depth now sourced; remaining gaps listed in open_items",
+  "image": {
+    "status": "placeholder",
+    "kind": "illustration",
+    "url": "fish/mahi-mahi.png",
+    "credit": "Original illustration",
+    "license": "",
+    "plan": "web/fish/mahi-mahi.png is a transparent placeholder illustration. To use a real photo: replace that file with a transparent PNG of the same name (cropped tight to the fish, facing left looks best), then set kind to \"photo\" and fill in credit and license here. Only use images you have the right to show: NOAA Fisheries species pages and Wikimedia Commons are good places to look; FWC illustrations are copyrighted."
+  },
+  "profile": {
+    "size": "Common up to about 50 lb; can reach about 100 lb",
+    "diet": "Small fish, crabs and shrimp living in sargassum; also flying fish and mackerels",
+    "lifespan": "About 6 years; fast growing, matures very young",
+    "behavior": "Offshore, drawn to floating structure (sargassum weedlines, flotsam, floating debris). Moves closer to shore in summer as shelf waters warm.",
+    "regulations_link": "https://myfwc.com/",
+    "sources": [
+      "https://www.deq.nc.gov/about/divisions/marine-fisheries/species/dolphinfish",
+      "https://www.fisheries.noaa.gov/species/atlantic-mahi-mahi/seafood",
+      "https://flylifemagazine.com/tips-tactics-mahi-on-the-fly/",
+      "https://ncseagrant.ncsu.edu/hooklinescience/what-depth-and-water-temperature-do-mahi-mahi-prefer/",
+      "https://fishbase.se/summary/SpeciesSummary.php?id=6",
+      "https://europeantrackingnetwork.org/en/dolphinfish"
+    ],
+    "swimming_depth": "Epipelagic: surface to about 85 m. Satellite-tagged fish spent about 40% of their time within about 1 m of the surface and made occasional dives to about 250 m."
+  },
+  "factors": [
+    {
+      "param": "sst_c",
+      "kind": "range",
+      "range": [
+        20,
+        30
+      ],
+      "ideal": [
+        25,
+        29
+      ],
+      "weight": 0.35,
+      "active": true,
+      "value_status": "sourced",
+      "value_notes": "Tagging study: satellite-tagged mahi spent 95% of their time in 25-29 C surface water (77-84 F), preferring about 26.7-27.8 C while migrating north. FishBase model: preferred 18.1-29.1 C, mean 27.4. Tracking-network summary: below 20 C limits metabolism, above about 28 C tends to be suboptimal. The angler site SatFish suggests 21-26 C ideal; we follow the tagging data instead.",
+      "reason_template": "Water is {value} C, inside the {ideal_min}-{ideal_max} C range where mahi are most active.",
+      "sources": [
+        "https://ncseagrant.ncsu.edu/hooklinescience/what-depth-and-water-temperature-do-mahi-mahi-prefer/",
+        "https://fishbase.se/summary/SpeciesSummary.php?id=6",
+        "https://europeantrackingnetwork.org/en/dolphinfish",
+        "https://www.frontiersin.org/articles/10.3389/fmars.2021.654276/pdf"
+      ]
+    },
+    {
+      "param": "sst_gradient",
+      "kind": "higher_is_better",
+      "weight": 0.25,
+      "active": true,
+      "value_status": "provisional",
+      "value_notes": "Multiple sources say mahi concentrate along temperature and color breaks and current convergences. Threshold for what counts as a strong break must be calibrated on real SST grids. Scored relative to today's sharpest offshore breaks, so on a day with nearly uniform water even a mild break ranks high; the popup shows the real size. Needs calibration against catch reports.",
+      "reason_template": "Water temperature changes about {per10km} C every 10 km here, one of the sharper breaks in the area today. Mahi gather where warm and cooler water meet.",
+      "sources": [
+        "https://www.satfish.com/how-to-catch-dolphin-using-satfish-charts"
+      ]
+    },
+    {
+      "param": "chlorophyll",
+      "kind": "range",
+      "range": [
+        0.01,
+        5.0
+      ],
+      "ideal": [
+        0.05,
+        0.5
+      ],
+      "weight": 0.2,
+      "active": true,
+      "value_status": "provisional",
+      "value_notes": "Outer range from SatFish (clean blue to slightly green water). The ideal band is an estimate; the best spots are at color changes, which is better captured by chl_gradient (planned v2).",
+      "reason_template": "Chlorophyll is {value} mg/m3, in the clean blue-water range mahi favor.",
+      "sources": [
+        "https://www.satfish.com/how-to-catch-dolphin-using-satfish-charts"
+      ],
+      "scale": "log"
+    },
+    {
+      "param": "depth_m",
+      "kind": "range",
+      "range": [
+        20,
+        3000
+      ],
+      "ideal": [
+        50,
+        1000
+      ],
+      "weight": 0.05,
+      "active": true,
+      "value_status": "weak_factor",
+      "value_notes": "This parameter is bottom (water) depth. Mahi live in the upper water column, so bottom depth only separates offshore from nearshore water. Keep the weight low. Numeric limits are placeholders.",
+      "reason_template": "Depth is {value} m, in the offshore waters mahi use.",
+      "sources": [
+        "https://www.deq.nc.gov/about/divisions/marine-fisheries/species/dolphinfish"
+      ],
+      "gate": true
+    },
+    {
+      "param": "current_speed",
+      "kind": "range",
+      "range": [
+        0,
+        5
+      ],
+      "ideal": [
+        0.5,
+        3
+      ],
+      "weight": 0.05,
+      "active": true,
+      "value_status": "needs_source",
+      "value_notes": "Sources point to current edges, eddies and convergence zones that gather floating debris. Speed alone is a weak signal; current edges matter more (gulf_stream_edge, v3).",
+      "reason_template": "Current is {value} kn, moving enough to concentrate drifting weed and bait.",
+      "sources": [
+        "https://www.satfish.com/how-to-catch-dolphin-using-satfish-charts"
+      ]
+    },
+    {
+      "param": "sargassum",
+      "kind": "presence",
+      "weight": 0.2,
+      "active": false,
+      "value_status": "sourced",
+      "value_notes": "Strongest known habitat association (sargassum and flotsam shelter and feed mahi). Activate when sargassum data is added (v3).",
+      "reason_template": "A sargassum mat is nearby. Mahi use it for shelter and food.",
+      "sources": [
+        "https://www.deq.nc.gov/about/divisions/marine-fisheries/species/dolphinfish"
+      ]
+    },
+    {
+      "param": "gulf_stream_edge",
+      "kind": "proximity",
+      "weight": 0.15,
+      "active": false,
+      "value_status": "provisional",
+      "value_notes": "Planned v3. Warm Gulf Stream water carries mahi north in summer.",
+      "reason_template": "The Gulf Stream edge is {value} nm away, where warm water and bait concentrate.",
+      "sources": [
+        "https://www.satfish.com/mahi-mahi-species-profile/"
+      ]
+    }
+  ],
+  "open_items": [
+    "Bottom-depth preference is weak; fish depth (surface to about 85 m) is not the same as bottom depth",
+    "Current speed range needs a source",
+    "Image still needed"
+  ],
+  "display": {
+    "color": "#34d399"
+  }
+}

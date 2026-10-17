@@ -1,0 +1,751 @@
+{
+  "schema_version": 1,
+  "notes": "Registry of every factor the project can use. Species files may only reference keys defined here. Sources are listed at host level; exact dataset IDs, endpoints and update rates must be confirmed when each pull is built. Add a factor by adding one entry; activate it by changing status to 'active'.",
+  "confidence_types": {
+    "measured": "Direct sensor reading (buoy, tide gauge, stream gauge)",
+    "modeled": "Satellite product or ocean/weather model output",
+    "derived": "Calculated by this project from other parameters",
+    "seasonal": "Calendar or pattern-based knowledge, not a live measurement",
+    "static": "Mapped feature that does not change day to day"
+  },
+  "tiers": {
+    "v1": "Build first. Most reliable data, covers all starter species.",
+    "v2": "Add after v1 scoring works.",
+    "v3": "Needs extra data sources or more complex processing.",
+    "later": "Hard to measure; revisit once core system is proven."
+  },
+  "parameters": [
+    {
+      "key": "sst_c",
+      "label": "Sea surface temperature",
+      "unit": "degC",
+      "type": "number",
+      "tier": "v1",
+      "status": "active",
+      "dynamic": true,
+      "confidence": "measured",
+      "sources": [
+        {
+          "name": "NOAA NDBC buoys (water temp)",
+          "host": "https://www.ndbc.noaa.gov/"
+        },
+        {
+          "name": "NOAA CoastWatch ERDDAP (satellite SST grids)",
+          "host": "https://coastwatch.pfeg.noaa.gov/erddap/"
+        }
+      ],
+      "update_rate": "Buoys about hourly; satellite grids daily",
+      "notes": "Buoys give exact point values; satellite grids fill the spaces between buoys."
+    },
+    {
+      "key": "sst_gradient",
+      "label": "Temperature break strength",
+      "unit": "degC per km",
+      "type": "number",
+      "tier": "v1",
+      "status": "active",
+      "dynamic": true,
+      "confidence": "derived",
+      "derived_from": [
+        "sst_c"
+      ],
+      "sources": [
+        {
+          "name": "Calculated from SST grid",
+          "host": "internal"
+        }
+      ],
+      "update_rate": "Daily, with the SST grid",
+      "notes": "Fronts concentrate baitfish and pelagics such as mahi."
+    },
+    {
+      "key": "chlorophyll",
+      "label": "Chlorophyll-a concentration",
+      "unit": "mg/m3",
+      "type": "number",
+      "tier": "v1",
+      "status": "active",
+      "dynamic": true,
+      "confidence": "modeled",
+      "sources": [
+        {
+          "name": "NOAA CoastWatch ERDDAP (VIIRS chlorophyll)",
+          "host": "https://coastwatch.pfeg.noaa.gov/erddap/"
+        },
+        {
+          "name": "NASA Ocean Color",
+          "host": "https://oceancolor.gsfc.nasa.gov/"
+        }
+      ],
+      "update_rate": "Daily or multi-day composites; gaps under cloud cover",
+      "notes": "Missing data is normal. Scoring must tolerate gaps."
+    },
+    {
+      "key": "depth_m",
+      "label": "Water depth",
+      "unit": "m",
+      "type": "number",
+      "tier": "v1",
+      "status": "active",
+      "dynamic": false,
+      "confidence": "static",
+      "sources": [
+        {
+          "name": "NOAA NCEI Coastal Relief Model / bathymetry",
+          "host": "https://www.ncei.noaa.gov/"
+        },
+        {
+          "name": "GEBCO",
+          "host": "https://www.gebco.net/"
+        }
+      ],
+      "update_rate": "Static; refresh only when new survey data is released"
+    },
+    {
+      "key": "structure_type",
+      "label": "Bottom structure",
+      "unit": null,
+      "type": "category",
+      "values": [
+        "natural_reef",
+        "artificial_reef",
+        "wreck",
+        "ledge",
+        "hardbottom",
+        "seagrass",
+        "mangrove_edge",
+        "open_sand"
+      ],
+      "tier": "v1",
+      "status": "active",
+      "dynamic": false,
+      "confidence": "static",
+      "sources": [
+        {
+          "name": "FWC artificial reef and reef habitat data",
+          "host": "https://myfwc.com/"
+        },
+        {
+          "name": "NOAA habitat and benthic maps",
+          "host": "https://www.ncei.noaa.gov/"
+        }
+      ],
+      "update_rate": "Static; refresh when agencies publish updates"
+    },
+    {
+      "key": "current_speed",
+      "label": "Surface current speed",
+      "unit": "knots",
+      "type": "number",
+      "tier": "v1",
+      "status": "active",
+      "dynamic": true,
+      "confidence": "modeled",
+      "sources": [
+        {
+          "name": "NOAA RTOFS",
+          "host": "https://polar.ncep.noaa.gov/"
+        },
+        {
+          "name": "HYCOM",
+          "host": "https://www.hycom.org/"
+        },
+        {
+          "name": "NOAA CO-OPS tidal currents (nearshore)",
+          "host": "https://tidesandcurrents.noaa.gov/"
+        }
+      ],
+      "update_rate": "Model forecasts daily or better",
+      "notes": "Matters a lot near the Gulf Stream edge off Miami."
+    },
+    {
+      "key": "tide_stage",
+      "label": "Tide stage",
+      "unit": null,
+      "type": "category",
+      "values": [
+        "rising",
+        "falling",
+        "slack_high",
+        "slack_low"
+      ],
+      "tier": "v1",
+      "status": "active",
+      "dynamic": true,
+      "confidence": "modeled",
+      "sources": [
+        {
+          "name": "NOAA CO-OPS tide predictions",
+          "host": "https://tidesandcurrents.noaa.gov/"
+        }
+      ],
+      "update_rate": "Predictions are fixed in advance; observations about every 6 minutes",
+      "notes": "Very important for inshore fish such as snook."
+    },
+    {
+      "key": "time_of_day",
+      "label": "Time of day",
+      "unit": null,
+      "type": "category",
+      "values": [
+        "dawn",
+        "day",
+        "dusk",
+        "night"
+      ],
+      "tier": "v1",
+      "status": "active",
+      "dynamic": true,
+      "confidence": "derived",
+      "sources": [
+        {
+          "name": "Calculated from sunrise and sunset at the location",
+          "host": "internal"
+        }
+      ],
+      "update_rate": "Computed at run time"
+    },
+    {
+      "key": "wind_speed",
+      "label": "Wind speed",
+      "unit": "knots",
+      "type": "number",
+      "tier": "v1",
+      "status": "active",
+      "dynamic": true,
+      "confidence": "measured",
+      "sources": [
+        {
+          "name": "NOAA NDBC buoys",
+          "host": "https://www.ndbc.noaa.gov/"
+        },
+        {
+          "name": "NWS API forecasts",
+          "host": "https://api.weather.gov/"
+        }
+      ],
+      "update_rate": "Buoys about hourly; forecasts hourly"
+    },
+    {
+      "key": "wave_height",
+      "label": "Significant wave height",
+      "unit": "m",
+      "type": "number",
+      "tier": "v1",
+      "status": "active",
+      "dynamic": true,
+      "confidence": "modeled",
+      "sources": [
+        {
+          "name": "NOAA NDBC buoys",
+          "host": "https://www.ndbc.noaa.gov/"
+        },
+        {
+          "name": "NOAA WaveWatch III",
+          "host": "https://polar.ncep.noaa.gov/waves/"
+        }
+      ],
+      "update_rate": "Buoys about hourly; model forecasts several times daily"
+    },
+    {
+      "key": "sst_trend",
+      "label": "Water temperature change (24-72 h)",
+      "unit": "degC per day",
+      "type": "number",
+      "tier": "v2",
+      "status": "planned",
+      "dynamic": true,
+      "confidence": "derived",
+      "derived_from": [
+        "sst_c"
+      ],
+      "sources": [
+        {
+          "name": "Calculated from stored SST history",
+          "host": "internal"
+        }
+      ],
+      "update_rate": "With each SST update",
+      "notes": "Requires keeping a history of past readings."
+    },
+    {
+      "key": "pressure_trend",
+      "label": "Barometric pressure trend",
+      "unit": "hPa per 3 h",
+      "type": "number",
+      "tier": "v2",
+      "status": "planned",
+      "dynamic": true,
+      "confidence": "derived",
+      "derived_from": [
+        "pressure"
+      ],
+      "sources": [
+        {
+          "name": "NOAA NDBC buoys (pressure history)",
+          "host": "https://www.ndbc.noaa.gov/"
+        }
+      ],
+      "update_rate": "Hourly"
+    },
+    {
+      "key": "habitat_zone",
+      "label": "Official habitat zone / essential fish habitat",
+      "unit": null,
+      "type": "category",
+      "tier": "v2",
+      "status": "planned",
+      "dynamic": false,
+      "confidence": "static",
+      "sources": [
+        {
+          "name": "NOAA Essential Fish Habitat Mapper",
+          "host": "https://www.fisheries.noaa.gov/"
+        },
+        {
+          "name": "FWC habitat data",
+          "host": "https://myfwc.com/"
+        }
+      ],
+      "update_rate": "Static"
+    },
+    {
+      "key": "chl_gradient",
+      "label": "Chlorophyll / water color edge strength",
+      "unit": "relative",
+      "type": "number",
+      "tier": "v2",
+      "status": "planned",
+      "dynamic": true,
+      "confidence": "derived",
+      "derived_from": [
+        "chlorophyll"
+      ],
+      "sources": [
+        {
+          "name": "Calculated from chlorophyll grid",
+          "host": "internal"
+        }
+      ],
+      "update_rate": "Daily"
+    },
+    {
+      "key": "current_dir",
+      "label": "Surface current direction",
+      "unit": "degrees",
+      "type": "number",
+      "tier": "v2",
+      "status": "planned",
+      "dynamic": true,
+      "confidence": "modeled",
+      "sources": [
+        {
+          "name": "NOAA RTOFS",
+          "host": "https://polar.ncep.noaa.gov/"
+        },
+        {
+          "name": "HYCOM",
+          "host": "https://www.hycom.org/"
+        }
+      ],
+      "update_rate": "Daily or better"
+    },
+    {
+      "key": "moon_phase",
+      "label": "Moon phase and illumination",
+      "unit": "fraction",
+      "type": "number",
+      "tier": "v2",
+      "status": "planned",
+      "dynamic": true,
+      "confidence": "derived",
+      "sources": [
+        {
+          "name": "Astronomical calculation",
+          "host": "internal"
+        }
+      ],
+      "update_rate": "Computed at run time",
+      "notes": "Used for light levels at night and tidal range. Solunar feeding-time tables are intentionally not used."
+    },
+    {
+      "key": "salinity",
+      "label": "Salinity",
+      "unit": "PSU",
+      "type": "number",
+      "tier": "v2",
+      "status": "planned",
+      "dynamic": true,
+      "confidence": "measured",
+      "sources": [
+        {
+          "name": "NOAA CO-OPS and regional stations",
+          "host": "https://tidesandcurrents.noaa.gov/"
+        },
+        {
+          "name": "USGS tidal stations",
+          "host": "https://waterservices.usgs.gov/"
+        }
+      ],
+      "update_rate": "Varies by station",
+      "notes": "Sparse coverage; mainly relevant for inshore species like snook."
+    },
+    {
+      "key": "spawning_season",
+      "label": "Spawning season / aggregation window",
+      "unit": null,
+      "type": "category",
+      "tier": "v2",
+      "status": "planned",
+      "dynamic": false,
+      "confidence": "seasonal",
+      "sources": [
+        {
+          "name": "FWC and NOAA species biology pages",
+          "host": "https://myfwc.com/"
+        }
+      ],
+      "update_rate": "Defined per species"
+    },
+    {
+      "key": "life_stage",
+      "label": "Life stage habitat use (juvenile / adult)",
+      "unit": null,
+      "type": "category",
+      "values": [
+        "juvenile",
+        "adult"
+      ],
+      "tier": "v2",
+      "status": "planned",
+      "dynamic": false,
+      "confidence": "static",
+      "sources": [
+        {
+          "name": "NOAA EFH data (split by life stage)",
+          "host": "https://www.fisheries.noaa.gov/"
+        }
+      ],
+      "update_rate": "Static"
+    },
+    {
+      "key": "cold_front",
+      "label": "Cold front / cold snap flag",
+      "unit": null,
+      "type": "boolean",
+      "tier": "v2",
+      "status": "planned",
+      "dynamic": true,
+      "confidence": "derived",
+      "derived_from": [
+        "sst_trend",
+        "pressure_trend",
+        "wind_speed"
+      ],
+      "sources": [
+        {
+          "name": "NWS API forecasts plus derived trends",
+          "host": "https://api.weather.gov/"
+        }
+      ],
+      "update_rate": "Hourly"
+    },
+    {
+      "key": "red_tide",
+      "label": "Red tide / harmful algal bloom status",
+      "unit": "category",
+      "type": "category",
+      "tier": "v3",
+      "status": "planned",
+      "dynamic": true,
+      "confidence": "measured",
+      "sources": [
+        {
+          "name": "FWC red tide status",
+          "host": "https://myfwc.com/"
+        },
+        {
+          "name": "NOAA HAB forecasts",
+          "host": "https://coastalscience.noaa.gov/"
+        }
+      ],
+      "update_rate": "Roughly weekly; confirm"
+    },
+    {
+      "key": "gulf_stream_edge",
+      "label": "Gulf Stream edge and eddies",
+      "unit": null,
+      "type": "geometry",
+      "tier": "v3",
+      "status": "planned",
+      "dynamic": true,
+      "confidence": "modeled",
+      "sources": [
+        {
+          "name": "Satellite sea surface height and ocean model data",
+          "host": "https://marine.copernicus.eu/"
+        },
+        {
+          "name": "NOAA RTOFS / HYCOM",
+          "host": "https://polar.ncep.noaa.gov/"
+        }
+      ],
+      "update_rate": "Daily"
+    },
+    {
+      "key": "thermocline_depth",
+      "label": "Thermocline depth",
+      "unit": "m",
+      "type": "number",
+      "tier": "v3",
+      "status": "planned",
+      "dynamic": true,
+      "confidence": "modeled",
+      "sources": [
+        {
+          "name": "HYCOM / RTOFS subsurface temperature",
+          "host": "https://www.hycom.org/"
+        },
+        {
+          "name": "Copernicus Marine",
+          "host": "https://marine.copernicus.eu/"
+        }
+      ],
+      "update_rate": "Daily"
+    },
+    {
+      "key": "turbidity",
+      "label": "Water clarity / turbidity",
+      "unit": "1/m (Kd490)",
+      "type": "number",
+      "tier": "v3",
+      "status": "planned",
+      "dynamic": true,
+      "confidence": "modeled",
+      "sources": [
+        {
+          "name": "NOAA CoastWatch ERDDAP (VIIRS Kd490)",
+          "host": "https://coastwatch.pfeg.noaa.gov/erddap/"
+        }
+      ],
+      "update_rate": "Daily or composites; gaps under cloud cover"
+    },
+    {
+      "key": "sargassum",
+      "label": "Sargassum mats",
+      "unit": null,
+      "type": "geometry",
+      "tier": "v3",
+      "status": "planned",
+      "dynamic": true,
+      "confidence": "modeled",
+      "sources": [
+        {
+          "name": "USF Optical Oceanography Lab",
+          "host": "https://optics.marine.usf.edu/"
+        },
+        {
+          "name": "NOAA satellite sargassum products",
+          "host": "https://www.noaa.gov/"
+        }
+      ],
+      "update_rate": "Roughly weekly; confirm"
+    },
+    {
+      "key": "freshwater_runoff",
+      "label": "Freshwater flow / runoff",
+      "unit": "cfs",
+      "type": "number",
+      "tier": "v3",
+      "status": "planned",
+      "dynamic": true,
+      "confidence": "measured",
+      "sources": [
+        {
+          "name": "USGS stream gauges",
+          "host": "https://waterservices.usgs.gov/"
+        }
+      ],
+      "update_rate": "About every 15 minutes"
+    },
+    {
+      "key": "tropical_systems",
+      "label": "Tropical systems nearby",
+      "unit": null,
+      "type": "geometry",
+      "tier": "v3",
+      "status": "planned",
+      "dynamic": true,
+      "confidence": "modeled",
+      "sources": [
+        {
+          "name": "NOAA National Hurricane Center",
+          "host": "https://www.nhc.noaa.gov/"
+        }
+      ],
+      "update_rate": "Every few hours during active systems"
+    },
+    {
+      "key": "bridges_lights",
+      "label": "Bridges, piers and dock lights",
+      "unit": null,
+      "type": "category",
+      "tier": "v3",
+      "status": "planned",
+      "dynamic": false,
+      "confidence": "static",
+      "sources": [
+        {
+          "name": "Public map data (to be chosen)",
+          "host": "TBD"
+        }
+      ],
+      "update_rate": "Static",
+      "notes": "Relevant for snook feeding under lights at night."
+    },
+    {
+      "key": "baitfish_runs",
+      "label": "Baitfish runs",
+      "unit": null,
+      "type": "category",
+      "tier": "later",
+      "status": "planned",
+      "dynamic": true,
+      "confidence": "seasonal",
+      "sources": [
+        {
+          "name": "Seasonal calendars plus chlorophyll and front proxies",
+          "host": "internal"
+        }
+      ],
+      "update_rate": "Seasonal",
+      "notes": "Cannot be measured directly."
+    },
+    {
+      "key": "boat_traffic",
+      "label": "Boat traffic / fishing pressure",
+      "unit": null,
+      "type": "number",
+      "tier": "later",
+      "status": "planned",
+      "dynamic": true,
+      "confidence": "modeled",
+      "sources": [
+        {
+          "name": "TBD",
+          "host": "TBD"
+        }
+      ],
+      "update_rate": "TBD"
+    },
+    {
+      "key": "closures_mpa",
+      "label": "Marine protected areas and closures",
+      "unit": null,
+      "type": "geometry",
+      "tier": "later",
+      "status": "planned",
+      "dynamic": false,
+      "confidence": "static",
+      "sources": [
+        {
+          "name": "FWC and NOAA closure and sanctuary data",
+          "host": "https://myfwc.com/"
+        }
+      ],
+      "update_rate": "Check regularly; rules change"
+    },
+    {
+      "key": "vertical_relief",
+      "label": "Vertical relief / bottom complexity detail",
+      "unit": "m",
+      "type": "number",
+      "tier": "later",
+      "status": "planned",
+      "dynamic": false,
+      "confidence": "static",
+      "sources": [
+        {
+          "name": "High-resolution bathymetry / seafloor mapping",
+          "host": "https://www.ncei.noaa.gov/"
+        }
+      ],
+      "update_rate": "Static"
+    },
+    {
+      "key": "pressure",
+      "label": "Barometric pressure (raw)",
+      "unit": "hPa",
+      "type": "number",
+      "tier": "v2",
+      "status": "planned",
+      "dynamic": true,
+      "confidence": "measured",
+      "sources": [
+        {
+          "name": "NOAA NDBC buoys",
+          "host": "https://www.ndbc.noaa.gov/"
+        }
+      ],
+      "update_rate": "About hourly",
+      "notes": "Input for pressure_trend; may not be used directly by species."
+    },
+    {
+      "key": "distance_to_inlet",
+      "label": "Distance to nearest inlet or pass",
+      "unit": "km",
+      "type": "number",
+      "tier": "v2",
+      "status": "planned",
+      "dynamic": false,
+      "confidence": "static",
+      "sources": [
+        {
+          "name": "Inlet locations from NOAA nautical charts / shoreline data (exact dataset to be chosen)",
+          "host": "https://nauticalcharts.noaa.gov/"
+        }
+      ],
+      "update_rate": "Static",
+      "notes": "Snook spawn at inlets, passes and river mouths, and baitfish flush through them on tides."
+    },
+    {
+      "key": "bottom_slope",
+      "label": "Seafloor slope (ledges and drop-offs)",
+      "unit": "m per km",
+      "type": "number",
+      "tier": "v1",
+      "status": "active",
+      "dynamic": false,
+      "confidence": "derived",
+      "derived_from": [
+        "depth_m"
+      ],
+      "sources": [
+        {
+          "name": "Calculated from the ETOPO depth grid",
+          "host": "internal"
+        }
+      ],
+      "update_rate": "Static",
+      "notes": "Steep slopes mark ledges and drop-offs that pelagic fish such as wahoo patrol. Coarse (about 2 km cells), so small ledges are smoothed away."
+    },
+    {
+      "key": "season_presence",
+      "label": "Seasonal presence (migration or abundance window)",
+      "unit": null,
+      "type": "category",
+      "tier": "v1",
+      "status": "active",
+      "dynamic": false,
+      "confidence": "seasonal",
+      "sources": [
+        {
+          "name": "Published species accounts and angler records; see each species file",
+          "host": "internal"
+        }
+      ],
+      "update_rate": "By calendar month",
+      "notes": "How strongly a fish is present in South Florida this month. Calendar-based, not measured."
+    }
+  ]
+}
