@@ -42,7 +42,7 @@
     {
       "param": "sst_c",
       "kind": "range",
-      "weight": 0.3,
+      "weight": 0.26,
       "active": true,
       "value_status": "partly_sourced",
       "value_notes": "Tagging records off Florida's east coast (2003-2018): sailfish were caught at 26.2 C on average (SD 1.7), most often at 25.2-25.5 C, with catches rising from 26 to 29 C and no change near 25 or 30 C. Satellite tags in the SW Atlantic put fish in 26-28 C most of the time. Florida Museum: usually above the thermocline in 70-83 F (21-28 C). The ideal band is an interpretation of these.",
@@ -64,7 +64,7 @@
     {
       "param": "sst_gradient",
       "kind": "higher_is_better",
-      "weight": 0.2,
+      "weight": 0.16,
       "active": true,
       "value_status": "provisional",
       "value_notes": "South Florida angling accounts put winter sailfish on the green-to-blue color change and temperature edges just outside the reef line, and cold fronts concentrate them. Scored relative to today's sharpest offshore breaks. Needs calibration against catch reports.",
@@ -77,7 +77,7 @@
     {
       "param": "chlorophyll",
       "kind": "range",
-      "weight": 0.15,
+      "weight": 0.12,
       "active": true,
       "value_status": "provisional",
       "value_notes": "Only a rough guide: a SW Atlantic study found adult sailfish most frequent at 0.3-0.8 mg/m3 chlorophyll, and Florida anglers look for the blue side of the green-to-blue edge. Different ocean and method, so the band is a placeholder.",
@@ -99,7 +99,7 @@
     {
       "param": "depth_m",
       "kind": "range",
-      "weight": 0.1,
+      "weight": 0.08,
       "active": true,
       "value_status": "provisional",
       "value_notes": "Florida accounts describe winter sailfish along the outer reef line in about 100-300 ft (30-90 m), with a late-season color change in 70-250 ft. Cells shallower than 20 m are excluded (inshore of the reef line). Numbers are provisional.",
@@ -121,7 +121,7 @@
     {
       "param": "season_presence",
       "kind": "season",
-      "weight": 0.25,
+      "weight": 0.22,
       "active": true,
       "value_status": "partly_sourced",
       "value_notes": "South Florida's sailfish season runs about November to March. Peak is usually after the first of the year (January is cited as the peak), when cold fronts arrive every 5-7 days. Sailfish can be caught year-round in smaller numbers. Mild winters with few cold fronts spread the fish out.",
@@ -160,12 +160,24 @@
     },
     {
       "param": "gulf_stream_edge",
-      "kind": "proximity",
-      "weight": 0.0,
-      "active": false,
-      "value_status": "needs_source",
-      "value_notes": "The western edge of the Gulf Stream is where many winter sailfish are found. Planned with current data.",
-      "sources": []
+      "kind": "range",
+      "range": [
+        -35,
+        40
+      ],
+      "ideal": [
+        -8,
+        12
+      ],
+      "weight": 0.16,
+      "active": true,
+      "value_status": "provisional",
+      "value_notes": "Florida accounts put winter sailfish along the western (inshore) edge of the Gulf Stream, where green water meets blue. The edge is estimated from 25 km satellite altimetry, so it is good to roughly 20 km. The band is an estimate.",
+      "reason_template": "The Gulf Stream's inshore edge is close ({abs_value} km {side}). Sailfish travel along it.",
+      "sources": [
+        "https://fishingbooker.de/reports/view/2300",
+        "https://floridasportsman.com/editorial/features_florida_sailfish_fishing_basics/397320"
+      ]
     }
   ],
   "timing": {

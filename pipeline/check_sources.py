@@ -42,8 +42,8 @@ def main() -> None:
             print(f"  {name} ({cfg['dataset']})")
             print(f"    dimensions in config : {cfg['dims']}")
             print(f"    dimensions on server : {dims}   {'OK' if dims == cfg['dims'] else '<-- MISMATCH, fix config'}")
-            print(f"    variable {cfg['variable']!r}: {'found' if cfg['variable'] in variables else 'NOT FOUND'}"
-                  f" (units: {units.get(cfg['variable'])})")
+            for var in (cfg.get("variables") or [cfg["variable"]]):
+                print(f"    variable {var!r}: {'found' if var in variables else 'NOT FOUND'} (units: {units.get(var)})")
         except Exception as exc:
             print(f"  {name} ({cfg['dataset']}) FAILED: {exc}")
 

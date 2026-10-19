@@ -41,7 +41,7 @@
     {
       "param": "bottom_slope",
       "kind": "higher_is_better",
-      "weight": 0.3,
+      "weight": 0.26,
       "active": true,
       "value_status": "provisional",
       "value_notes": "Louisiana Sea Grant: wahoo are more common near banks (lumps), drop-offs and weed lines. Angler accounts focus on steep ledges where depth contours stack close together. Scored relative to the steepest offshore slopes in the area; the 2 km grid smooths small ledges away.",
@@ -54,7 +54,7 @@
     {
       "param": "sst_c",
       "kind": "range",
-      "weight": 0.25,
+      "weight": 0.22,
       "active": true,
       "value_status": "provisional",
       "value_notes": "Tagging of four wahoo in the Florida Straits (FAU) found the optimal swimming temperature started near 23.1 C. Angler sources give about 22-27 C as the best band. Sources disagree on the upper edge, so the ideal band is an estimate.",
@@ -75,7 +75,7 @@
     {
       "param": "sst_gradient",
       "kind": "higher_is_better",
-      "weight": 0.15,
+      "weight": 0.13,
       "active": true,
       "value_status": "provisional",
       "value_notes": "Anglers fish wahoo along temperature breaks and current edges, especially where they meet a steep ledge. Scored relative to today's sharpest offshore breaks.",
@@ -88,7 +88,7 @@
     {
       "param": "depth_m",
       "kind": "range",
-      "weight": 0.05,
+      "weight": 0.04,
       "active": true,
       "value_status": "provisional",
       "value_notes": "Wahoo are blue-water fish that do not live near shore. Cells shallower than 30 m are excluded. Bottom depth is a weak guide because the fish swim in the upper water column.",
@@ -110,7 +110,7 @@
     {
       "param": "season_presence",
       "kind": "season",
-      "weight": 0.2,
+      "weight": 0.18,
       "active": true,
       "value_status": "provisional",
       "value_notes": "Angler sources call November to February prime wahoo season off the Keys and Miami. Other sources say wahoo are caught year-round with a late-summer to early-fall peak in some regions. The window here is a judgment call.",
@@ -142,12 +142,24 @@
     },
     {
       "param": "gulf_stream_edge",
-      "kind": "proximity",
-      "weight": 0.0,
-      "active": false,
-      "value_status": "needs_source",
-      "value_notes": "Wahoo patrol current edges. Planned with current data.",
-      "sources": []
+      "kind": "range",
+      "range": [
+        -35,
+        40
+      ],
+      "ideal": [
+        -6,
+        15
+      ],
+      "weight": 0.15,
+      "active": true,
+      "value_status": "provisional",
+      "value_notes": "Wahoo anglers fish current edges, often where the edge meets a steep ledge. The edge is estimated from 25 km satellite altimetry, so it is good to roughly 20 km. The band is an estimate.",
+      "reason_template": "The Gulf Stream's inshore edge is close ({abs_value} km {side}). Wahoo patrol current edges.",
+      "sources": [
+        "https://www.satfish.com/wahoo-species-profile/",
+        "https://inthespread.com/blog/wahoo-fishing-in-florida-expert-regional-tactics-376"
+      ]
     }
   ],
   "timing": {

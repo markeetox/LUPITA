@@ -66,7 +66,24 @@ def _csv(lats, lons, name, fn, unit="degree_C", time=True, alt=False):
     return "\n".join(rows)
 
 
+def _multi_csv(lats, lons, names, fn):
+    rows = ["time,latitude,longitude," + ",".join(names), "UTC,degrees_north,degrees_east," + ",".join("m s-1" for _ in names)]
+    for la in lats:
+        for lo in lons:
+            rows.append(f"2026-10-11T00:00:00Z,{la},{lo}," + ",".join(str(x) for x in fn(la, lo)))
+    return "\n".join(rows)
+
+
+def QUIET_CURRENTS(la, lo):
+    return (0.0, 0.05)                 # (east, north) in m/s: no real stream
+
+
+CURRENT_FN = QUIET_CURRENTS
+
+
 def fake_erddap(url):
+    if "nesdisSSH1day" in url:
+        return _multi_csv(np.round(np.arange(24.5, 27.001, 0.25), 3), np.round(np.arange(-81.0, -78.499, 0.25), 3), ["ugos", "vgos"], CURRENT_FN)
     if "jplMURSST41" in url:
         return _csv(np.round(np.arange(24.5, 27.001, 0.02), 4), np.round(np.arange(-81.0, -78.499, 0.02), 4), "analysed_sst", lambda la, lo: 28.0)
     if "nesdisVHNnoaa20chlaDaily" in url:

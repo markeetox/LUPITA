@@ -3,7 +3,7 @@ from __future__ import annotations
 
 import numpy as np
 
-from pipeline import closures, derive, structure
+from pipeline import closures, currents, derive, structure
 from pipeline.grid import resample
 from pipeline.sources import arcgis, erddap
 
@@ -47,6 +47,18 @@ def _fetch_grid(cfg: dict, region: dict, fetch):
     raise last
 
 
+def _fetch_multi(cfg: dict, region: dict, fetch):
+    """Several variables from one dataset, trying the main server then any fallback_bases."""
+    last = None
+    for base in [cfg["base"]] + list(cfg.get("fallback_bases", [])):
+        try:
+            url = erddap.build_griddap_url({**cfg, "base": base}, region)
+            return erddap.parse_multi_csv(fetch(url), cfg["variables"])
+        except Exception as exc:
+            last = exc
+    raise last
+
+
 def load_layers(sources: dict, errors: list[str], fetch=erddap.fetch_csv, fetch_arc=arcgis.fetch_json):
     """Return a dict of layers on the SST grid, or None if SST itself cannot be loaded.
     Chlorophyll and depth are optional; a missing one is None and the scorer copes."""
@@ -60,7 +72,8 @@ def load_layers(sources: dict, errors: list[str], fetch=erddap.fetch_csv, fetch_
     layers = {"lats": lats, "lons": lons, "sst_c": sst,
               "sst_gradient": derive.gradient_magnitude(sst, lats, lons),
               "chlorophyll": None, "depth_m": None, "chl_raw": None,
-              "bottom_slope": None, "closure_areas": [], "closure_cover": None, "closure_info": {}, "closure_checked": False,
+              "bottom_slope": None, "current_speed": None, "current_dir": None, "gulf_stream_edge": None, "stream_edge_lon": None,
+              "closure_areas": [], "closure_cover": None, "closure_info": {}, "closure_checked": False,
               "structure_type": None, "structure_info": {}, "structure_cover": None, "structure_stats": None,
               "times": {"sst": sst_time, "chlorophyll": None},
               "datasets": {"sst": cfg["sst"]["dataset"]}}
@@ -87,6 +100,23 @@ def load_layers(sources: dict, errors: list[str], fetch=erddap.fetch_csv, fetch_
             layers["datasets"]["bathymetry"] = b["dataset"]
         except Exception as exc:
             errors.append(f"layers bathymetry: {exc}")
+    cu = cfg.get("currents", {})
+    if cu.get("enabled"):
+        try:
+            clats, clons, g, ctime = _fetch_multi(cu, region, fetch)
+            u_name, v_name = cu["variables"]
+            u = resample(g[u_name], clats, clons, lats, lons, min_weight=0.5)
+            v = resample(g[v_name], clats, clons, lats, lons, min_weight=0.5)
+            layers["current_speed"], layers["current_dir"] = currents.speed_dir(u, v)
+            edge = currents.edge_on_grid(clats, currents.smooth(currents.edge_longitudes(clats, clons, g[v_name])), lats)
+            if edge is not None:
+                layers["stream_edge_lon"] = edge
+                layers["gulf_stream_edge"] = currents.signed_km(edge, lats, lons)
+            layers["times"]["currents"] = ctime
+            layers["datasets"]["currents"] = cu["dataset"]
+        except Exception as exc:
+            errors.append(f"layers currents: {exc}")
+
     a = sources.get("arcgis", {})
     art, nat = a.get("artificial_reefs", {}), a.get("natural_reef", {})
     if art.get("enabled") and nat.get("enabled"):

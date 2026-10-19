@@ -7,7 +7,7 @@ from datetime import datetime, timezone
 from pathlib import Path
 
 from pipeline import closures as closures_mod
-from pipeline import seastate, timing, weather
+from pipeline import currents, seastate, timing, weather
 from pipeline.conditions import load_conditions
 from pipeline.layers import load_layers
 from pipeline.predict import build_fish_json
@@ -92,6 +92,9 @@ def main() -> None:
     if fish is not None:      # on a failed run these are not written, so the last good copies stay published
         (live / "fish.json").write_text(json.dumps(fish, indent=1, allow_nan=False))
         (live / "closures.json").write_text(json.dumps(cl_json, allow_nan=False, separators=(",", ":")))
+        stream = currents.stream_geojson(layers.get("stream_edge_lon"), layers["lats"], "NOAA CoastWatch nesdisSSH1day (satellite altimetry)",
+                                         layers["times"].get("currents"), layers.get("current_speed") is not None, now)
+        (live / "stream.json").write_text(json.dumps(stream, allow_nan=False, separators=(",", ":")))
         (live / "heat.json").write_text(json.dumps(heat_json, allow_nan=False, separators=(",", ":")))
 
     for sp in (fish or {}).get("species", []):

@@ -143,20 +143,12 @@
       "confidence": "modeled",
       "sources": [
         {
-          "name": "NOAA RTOFS",
-          "host": "https://polar.ncep.noaa.gov/"
-        },
-        {
-          "name": "HYCOM",
-          "host": "https://www.hycom.org/"
-        },
-        {
-          "name": "NOAA CO-OPS tidal currents (nearshore)",
-          "host": "https://tidesandcurrents.noaa.gov/"
+          "name": "NOAA CoastWatch geostrophic currents from satellite altimetry (nesdisSSH1day)",
+          "host": "https://coastwatch.pfeg.noaa.gov/erddap/"
         }
       ],
-      "update_rate": "Model forecasts daily or better",
-      "notes": "Matters a lot near the Gulf Stream edge off Miami."
+      "update_rate": "Daily",
+      "notes": "Experimental 25 km product: shows the Gulf Stream well offshore but is unreliable close to shore. Geostrophic currents leave out wind-driven and tidal flow."
     },
     {
       "key": "tide_stage",
@@ -332,23 +324,19 @@
     {
       "key": "current_dir",
       "label": "Surface current direction",
-      "unit": "degrees",
+      "unit": "degrees toward",
       "type": "number",
-      "tier": "v2",
-      "status": "planned",
+      "tier": "v1",
+      "status": "active",
       "dynamic": true,
       "confidence": "modeled",
       "sources": [
         {
-          "name": "NOAA RTOFS",
-          "host": "https://polar.ncep.noaa.gov/"
-        },
-        {
-          "name": "HYCOM",
-          "host": "https://www.hycom.org/"
+          "name": "Same altimetry product as current_speed",
+          "host": "https://coastwatch.pfeg.noaa.gov/erddap/"
         }
       ],
-      "update_rate": "Daily or better"
+      "update_rate": "Daily"
     },
     {
       "key": "moon_phase",
@@ -473,24 +461,24 @@
     },
     {
       "key": "gulf_stream_edge",
-      "label": "Gulf Stream edge and eddies",
-      "unit": null,
-      "type": "geometry",
-      "tier": "v3",
-      "status": "planned",
+      "label": "Gulf Stream inshore edge (km east of the edge is positive)",
+      "unit": "km",
+      "type": "number",
+      "tier": "v1",
+      "status": "active",
       "dynamic": true,
       "confidence": "modeled",
       "sources": [
         {
-          "name": "Satellite sea surface height and ocean model data",
-          "host": "https://marine.copernicus.eu/"
-        },
-        {
-          "name": "NOAA RTOFS / HYCOM",
-          "host": "https://polar.ncep.noaa.gov/"
+          "name": "Derived from the satellite altimetry currents (nesdisSSH1day)",
+          "host": "https://coastwatch.pfeg.noaa.gov/erddap/"
         }
       ],
-      "update_rate": "Daily"
+      "update_rate": "Daily",
+      "derived_from": [
+        "current_speed"
+      ],
+      "notes": "Where northward flow reaches half the row's maximum (and at least about 0.8 kn). Approximate: good to roughly 20 km, weaker near shore. Eddies are not modeled."
     },
     {
       "key": "thermocline_depth",

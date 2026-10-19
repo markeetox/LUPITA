@@ -35,7 +35,8 @@ def _fmt(param: str, v: float) -> str:
 def _fill(template: str, param: str, value: float, f: dict) -> str:
     ideal = f.get("ideal") or [None, None]
     try:
-        return template.format(value=_fmt(param, value), per10km=f"{float(value) * 10:.1f}",
+        return template.format(value=_fmt(param, value), per10km=f"{float(value) * 10:.1f}", abs_value=f"{abs(float(value)):.0f}",
+                               side="east of it, inside the stream" if float(value) > 0 else "inshore of it",
                                ideal_min=ideal[0], ideal_max=ideal[1])
     except (KeyError, IndexError):
         return template
@@ -43,6 +44,9 @@ def _fill(template: str, param: str, value: float, f: dict) -> str:
 
 def _caveat(name: str, param: str, value: float, f: dict, reg: dict) -> str:
     label = reg.get(param, {}).get("label", param)
+    if param == "gulf_stream_edge":
+        return (f"The Gulf Stream's inshore edge is about {abs(float(value)):.0f} km to the {'west' if float(value) > 0 else 'east'} of here, "
+                f"away from where {name} usually travel.")
     if f["kind"] == "higher_is_better":
         when = "today" if reg.get(param, {}).get("dynamic", True) else "in this area"
         return f"{label} here is weak compared with the rest of the area {when}." if when == "today" else f"{label} here is weak compared with the rest of the area."
@@ -151,7 +155,7 @@ def build_reasons(profile, name, scored, layers, cell, buoys, reg, lat, lon, mem
         v = layers[p][i, j]
         tag, w = TAGS.get(p, "modeled"), f["weight"]
         ideal = f.get("ideal")
-        outside = (f["kind"] == "range" and ideal is not None and ideal[0] is not None and ideal[1] is not None
+        outside = (f["kind"] == "range" and p != "gulf_stream_edge" and ideal is not None and ideal[0] is not None and ideal[1] is not None
                    and (v < ideal[0] or v > ideal[1]))
         if s >= 0.6 and outside:
             pos.append((w * s, tag, _near_edge(name, p, v, f, reg)))
@@ -218,6 +222,12 @@ def build_location(layers, scored, cell, buoys, lat, lon, members=None, places=N
     depth = layers.get("depth_m")
     if depth is not None and np.isfinite(depth[i, j]):
         rows.append(["Water depth", f"About {depth[i, j]:.0f} m"])
+    cs, ed = layers.get("current_speed"), layers.get("gulf_stream_edge")
+    if cs is not None and np.isfinite(cs[i, j]):
+        rows.append(["Current", f"About {cs[i, j]:.1f} kn toward the {seastate.compass(float(layers['current_dir'][i, j]))} (satellite, approximate)"])
+    if ed is not None and np.isfinite(ed[i, j]):
+        v = float(ed[i, j])
+        rows.append(["Gulf Stream", f"About {abs(v):.0f} km {'inside' if v > 0 else 'inshore of'} the stream's inshore edge (approximate, 25 km satellite data)"])
     rows += closure_rows(layers, members or [cell])
     rows += structure_rows(layers, members or [cell], layers["lats"])
     sst_t = (layers["times"].get("sst") or "")[:10]

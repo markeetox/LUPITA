@@ -61,6 +61,16 @@
   .lvl.good { color: #34d399; border-color: #1c5a47; } .lvl.fair { color: #fbbf24; border-color: #5b4a1a; }
   .lvl.rough { color: #fb923c; border-color: #6b3a14; } .lvl.dangerous { color: #f87171; border-color: #6b2a2a; }
   .banner.rough { background: #3b2310; color: #fdba74; } .banner.dangerous { background: #3a1414; color: #fca5a5; }
+  .ic { width: 18px; height: 18px; flex: none; color: #8fa3bd; vertical-align: -3px; margin-right: 6px; }
+  dt { display: flex; align-items: flex-start; }
+  dt .ic { margin-top: 1px; }
+  .sec h3 { display: flex; align-items: center; }
+  .sec h3 .ic { margin-right: 7px; }
+  .reason .ic { margin: 2px 0 0; color: #9fb3cc; }
+  .sea .ic { margin: 2px 0 0; }
+  .toggle .ic { margin: 0; }
+  .sw.blue { background: rgba(125,211,252,.30); border-color: #7dd3fc; }
+  .chip .ic { width: 14px; height: 14px; margin-right: 4px; vertical-align: -2px; }
   .tab { position: absolute; top: 100%; left: 50%; width: 76px; height: 30px; margin-left: -38px; padding: 0;
     display: flex; align-items: center; justify-content: center; cursor: pointer; color: var(--text);
     background: rgba(15,27,45,.96); border: 1px solid var(--line); border-top: none; border-radius: 0 0 16px 16px; }
@@ -113,7 +123,7 @@
   .tag.modeled  { background: #14304f; color: #60a5fa; }
   .tag.seasonal { background: #3b2d12; color: #fbbf24; }
   .tag.static   { background: #2a2a3d; color: #b4b4e8; }
-  dl { display: grid; grid-template-columns: 112px 1fr; gap: 7px 10px; margin: 0; font-size: 16px; line-height: 1.3; }
+  dl { display: grid; grid-template-columns: 138px 1fr; gap: 7px 10px; margin: 0; font-size: 16px; line-height: 1.3; }
   dt { color: var(--muted); }
   dd { margin: 0; }
   a { color: #7cc0ff; }
@@ -135,6 +145,7 @@
     <div id="seaRow" class="sea" hidden></div>
     <div class="legend" aria-hidden="true"><span>Lower</span><i id="legendBar"></i><span>Better match</span></div>
     <label class="toggle"><input type="checkbox" id="closuresToggle" checked><i class="sw"></i><span>Show no-fishing areas</span></label>
+    <label class="toggle"><input type="checkbox" id="streamToggle" checked><i class="sw blue"></i><span>Show Gulf Stream edge</span></label>
     <div class="chips"><span id="status" class="chip">Loading...</span><span id="buoyStatus" class="chip">Buoys: loading...</span><span id="closuresStatus" class="chip">No-fishing areas: loading...</span></div>
     <p class="hint">Tap a marker or zone to see why a fish may be there. Experimental.</p>
   </div>
@@ -221,6 +232,28 @@ function esc(v) {
 }
 const TAG_LABEL = { measured: "Measured", modeled: "Modeled", seasonal: "Seasonal", static: "Mapped", lore: "Angler lore" };
 
+const ICONS = {"pin":"<path d=\"M12 21s-6.5-5.6-6.5-11a6.5 6.5 0 0 1 13 0c0 5.4-6.5 11-6.5 11z\"/><circle cx=\"12\" cy=\"10\" r=\"2.3\"/>","depth":"<path d=\"M12 3v14\"/><path d=\"M7 12l5 5 5-5\"/><path d=\"M5 21h14\"/>","thermo":"<path d=\"M10 14.5V5a2 2 0 0 1 4 0v9.5a4 4 0 1 1-4 0z\"/><path d=\"M12 9v7\"/>","leaf":"<path d=\"M5 19C5 10 10 5 20 4c0 10-5 15-14 15\"/><path d=\"M5 19l9-9\"/>","current":"<path d=\"M3 12h15\"/><path d=\"M13 6l6 6-6 6\"/>","tide":"<path d=\"M8 20V5\"/><path d=\"M4 9l4-4 4 4\"/><path d=\"M16 4v15\"/><path d=\"M12 15l4 4 4-4\"/>","sun":"<circle cx=\"12\" cy=\"12\" r=\"4\"/><path d=\"M12 2v2M12 20v2M2 12h2M20 12h2M5 5l1.5 1.5M17.5 17.5L19 19M19 5l-1.5 1.5M6.5 17.5L5 19\"/>","moon":"<path d=\"M20 14.5A8.5 8.5 0 1 1 9.5 4a7 7 0 0 0 10.5 10.5z\"/>","clock":"<circle cx=\"12\" cy=\"12\" r=\"9\"/><path d=\"M12 7v5l3 2\"/>","wind":"<path d=\"M3 8h10a3 3 0 1 0-3-3\"/><path d=\"M3 12h15a3 3 0 1 1-3 3\"/><path d=\"M3 16h7\"/>","waves":"<path d=\"M3 9c2-2 3.5-2 5.5 0s3.5 2 5.5 0 3.5-2 6 0\"/><path d=\"M3 15c2-2 3.5-2 5.5 0s3.5 2 5.5 0 3.5-2 6 0\"/>","cloud":"<path d=\"M7 18a4 4 0 0 1-.6-7.95A5.5 5.5 0 0 1 17 9.5 4.3 4.3 0 0 1 17 18z\"/>","ban":"<circle cx=\"12\" cy=\"12\" r=\"9\"/><path d=\"M5.6 5.6l12.8 12.8\"/>","anchor":"<circle cx=\"12\" cy=\"5\" r=\"2\"/><path d=\"M12 7v14\"/><path d=\"M5 13a7 7 0 0 0 14 0\"/><path d=\"M8 11h8\"/>","buoy":"<path d=\"M12 2v5\"/><path d=\"M7 21h10\"/><path d=\"M8 18l1.5-9h5L16 18z\"/><path d=\"M9 13h6\"/>","ruler":"<path d=\"M3.5 16.5L16.5 3.5l4 4-13 13z\"/><path d=\"M8 12l2 2M11 9l2 2M14 6l2 2\"/>","diet":"<path d=\"M7 3v8\"/><path d=\"M4 3v5a3 3 0 0 0 6 0V3\"/><path d=\"M7 11v10\"/><path d=\"M17 3c-2.2 1.6-3 4-3 7h3v11\"/>","hourglass":"<path d=\"M6 3h12M6 21h12\"/><path d=\"M7 3c0 5 5 6 5 9s-5 4-5 9\"/><path d=\"M17 3c0 5-5 6-5 9s5 4 5 9\"/>","heart":"<path d=\"M12 20S4 15 4 9.5A4.5 4.5 0 0 1 12 7a4.5 4.5 0 0 1 8 2.5C20 15 12 20 12 20z\"/>","eye":"<path d=\"M2 12s4-7 10-7 10 7 10 7-4 7-10 7S2 12 2 12z\"/><circle cx=\"12\" cy=\"12\" r=\"3\"/>","shield":"<path d=\"M12 3l8 3v6c0 5-3.5 8-8 9-4.5-1-8-4-8-9V6z\"/>","calendar":"<rect x=\"4\" y=\"5\" width=\"16\" height=\"15\" rx=\"2\"/><path d=\"M4 10h16M8 3v4M16 3v4\"/>","fish":"<path d=\"M3 12c3-5 8-6 12-3l5-3v12l-5-3c-4 3-9 2-12-3z\"/><circle cx=\"8.5\" cy=\"11\" r=\".8\"/>","info":"<circle cx=\"12\" cy=\"12\" r=\"9\"/><path d=\"M12 11v5\"/><path d=\"M12 7.6v.01\"/>"};
+function icon(name) {
+  return ICONS[name] ? `<svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${ICONS[name]}</svg>` : "";
+}
+const ROW_ICON = { "Position": "pin", "Nearest inlet": "pin", "Water depth": "depth", "Surface temp": "thermo", "Water temp": "thermo", "Temp. break": "thermo",
+  "Chlorophyll": "leaf", "Current": "current", "Gulf Stream": "current", "Tide": "tide", "Light": "sun", "As of": "clock", "Boat conditions": "wind",
+  "Wind outlook": "wind", "Moon": "moon", "Weather": "cloud", "No-fishing check": "ban", "No-fishing zone": "ban", "No-fishing zones": "ban",
+  "Natural reef": "anchor", "Nearest buoy": "buoy",
+  "Typical size": "ruler", "Diet": "diet", "Swimming depth": "depth", "Adult depth": "depth", "Depth": "depth", "Behavior": "eye", "Spawning": "heart", "Lifespan": "hourglass" };
+function dlRows(rows) {                                   // structure and wreck rows carry the structure's own name: anchor icon
+  return rows.map(x => `<dt>${icon(ROW_ICON[x[0]] || "anchor")}${esc(x[0])}</dt><dd>${esc(x[1])}</dd>`).join("");
+}
+const REASON_ICONS = [[/gulf stream|current/, "current"], [/tide/, "tide"], [/\bnight\b/, "moon"], [/\bmoon\b/, "moon"], [/dusk|dawn|daylight|sunrise|sunset/, "sun"],
+  [/spawning|season|window|run\b/, "calendar"], [/front/, "cloud"], [/wind|seas\b/, "wind"], [/chlorophyll|blue water|green water/, "leaf"],
+  [/seafloor|ledge|depth/, "depth"], [/inlet|pass(es)?\b/, "pin"], [/buoy/, "buoy"], [/no-fishing|prohibited/, "ban"],
+  [/reef|wreck|fwc lists|structure|hard bottom/, "anchor"], [/water is|temperature|warm|cold|break|\bc\b/, "thermo"]];
+function reasonIcon(text) {
+  const t = String(text).toLowerCase();
+  for (const [re, name] of REASON_ICONS) if (re.test(t)) return icon(name);
+  return "";
+}
+
 const SEA_LABEL = { good: "Good", fair: "Fair", rough: "Rough", dangerous: "Dangerous" };
 function seaBanner(s) {
   if (!s.sea || (s.sea.level !== "rough" && s.sea.level !== "dangerous")) return "";
@@ -233,7 +266,7 @@ function renderSea() {
   if (!now && !out) { row.hidden = true; return; }
   const lvl = now ? now.level : out.level;
   row.hidden = false;
-  row.innerHTML = `<span class="lvl ${esc(lvl)}">${esc(SEA_LABEL[lvl] || lvl)}</span><span>` +
+  row.innerHTML = `${icon("wind")}<span class="lvl ${esc(lvl)}">${esc(SEA_LABEL[lvl] || lvl)}</span><span>` +
     (now ? esc(now.text.replace(/^[^:]+: /, "")) : "") + (now && out ? "<br>" : "") + (out ? esc(out.text) : "") + "</span>";
 }
 
@@ -241,7 +274,7 @@ function clock(iso, hourOnly) {
   return new Date(iso).toLocaleTimeString([], hourOnly ? { hour: "numeric" } : { hour: "numeric", minute: "2-digit" });
 }
 function timingHTML(s, color) {
-  const head = "<h3>Best bite window, next 24 hours</h3>", t = s.timing;
+  const head = `<h3>${icon("clock")}Best bite window, next 24 hours</h3>`, t = s.timing;
   if (!t || !t.scores || !t.scores.length) {
     return `<div class="sec">${head}<div class="muted" style="font-size:15px">No reliable time-of-day information for this fish yet.</div></div>`;
   }
@@ -256,7 +289,7 @@ function timingHTML(s, color) {
   const chart = `<svg class="bars" viewBox="0 0 ${W} 64" role="img" aria-label="Bite timing over the next 24 hours">${bars}</svg>`;
   const tag = t.evidence === "angler_lore" ? "lore" : "modeled";
   const lead = win ? `<div class="win">${esc(clock(t.window.start))} to ${esc(clock(t.window.end))}</div>` : `<div class="muted" style="font-size:15px;margin-bottom:6px">${esc(t.note || "No single time stands out.")}</div>`;
-  const why = (t.why || []).map(x => `<div class="why"><span class="tag ${tag}">${esc(TAG_LABEL[tag])}</span><span>${esc(x)}</span></div>`).join("");
+  const why = (t.why || []).map(x => `<div class="why">${reasonIcon(x)}<span class="tag ${tag}">${esc(TAG_LABEL[tag])}</span><span>${esc(x)}</span></div>`).join("");
   return `<div class="sec">${head}${lead}${chart}${why}` +
          (t.evidence === "angler_lore" ? `<div class="muted" style="font-size:13px;margin-top:6px">Based on local captains' reports, not studies.</div>` : "") + `</div>`;
 }
@@ -282,15 +315,15 @@ function spotHTML(id) {
     </div>
     ${banner}
     ${seaBanner(s)}
-    <div class="sec"><h3>Why it may be here</h3>
-      ${s.reasons.map(r => `<div class="reason"><span class="tag ${esc(r[0])}">${esc(TAG_LABEL[r[0]] || r[0])}</span><span>${esc(r[1])}</span></div>`).join("")}
+    <div class="sec"><h3>${icon("info")}Why it may be here</h3>
+      ${s.reasons.map(r => `<div class="reason">${reasonIcon(r[1])}<span class="tag ${esc(r[0])}">${esc(TAG_LABEL[r[0]] || r[0])}</span><span>${esc(r[1])}</span></div>`).join("")}
     </div>
     ${timingHTML(s, sp.color)}
-    <div class="sec"><h3>About this spot: ${esc(s.title)}</h3>
-      <dl>${s.location.map(x => `<dt>${esc(x[0])}</dt><dd>${esc(x[1])}</dd>`).join("")}</dl>
+    <div class="sec"><h3>${icon("pin")}About this spot: ${esc(s.title)}</h3>
+      <dl>${dlRows(s.location)}</dl>
     </div>
-    <div class="sec"><h3>About the fish</h3>
-      <dl>${sp.specs.map(x => `<dt>${esc(x[0])}</dt><dd>${esc(x[1])}</dd>`).join("")}</dl>
+    <div class="sec"><h3>${icon("fish")}About the fish</h3>
+      <dl>${dlRows(sp.specs)}</dl>
     </div>
     <div class="foot">Confidence shows how complete today's data was, not verified accuracy.
       Sea conditions are a rough guide only. Check current size and bag limits, and that you are outside any closed area, before you fish:
@@ -298,17 +331,17 @@ function spotHTML(id) {
 }
 
 function closureHTML(p) {
-  const link = /^https?:\/\//i.test(p.url || "") ? `<dt>More info</dt><dd><a href="${esc(p.url)}" target="_blank" rel="noopener">Managing agency page</a></dd>` : "";
+  const link = /^https?:\/\//i.test(p.url || "") ? `<dt>${icon("info")}More info</dt><dd><a href="${esc(p.url)}" target="_blank" rel="noopener">Managing agency page</a></dd>` : "";
   return `
     <div class="hero compact" style="--c:#ef4444">
       <div><h2>${esc(p.name)}</h2><small>No recreational fishing</small></div>
     </div>
     <div class="banner closed">Boundaries here come from NOAA's MPA Inventory and may be simplified or out of date. Always confirm with the managing agency before you fish.</div>
-    <div class="sec"><h3>About this area</h3><dl>
-      <dt>Rule</dt><dd>${esc(p.rule || "Recreational fishing prohibited")}</dd>
-      ${p.agency ? `<dt>Managed by</dt><dd>${esc(p.agency)}</dd>` : ""}
-      ${p.protection ? `<dt>Protection</dt><dd>${esc(p.protection)}</dd>` : ""}
-      ${p.year && p.year !== "null" ? `<dt>Established</dt><dd>${esc(p.year)}</dd>` : ""}
+    <div class="sec"><h3>${icon("shield")}About this area</h3><dl>
+      <dt>${icon("ban")}Rule</dt><dd>${esc(p.rule || "Recreational fishing prohibited")}</dd>
+      ${p.agency ? `<dt>${icon("shield")}Managed by</dt><dd>${esc(p.agency)}</dd>` : ""}
+      ${p.protection ? `<dt>${icon("shield")}Protection</dt><dd>${esc(p.protection)}</dd>` : ""}
+      ${p.year && p.year !== "null" ? `<dt>${icon("calendar")}Established</dt><dd>${esc(p.year)}</dd>` : ""}
       ${link}
     </dl></div>
     <div class="foot">Source: NOAA National MPA Center, MPA Inventory (2023 edition). Fishery management areas, security zones and seasonal closures are not included.</div>`;
@@ -320,12 +353,12 @@ function fmt(v, unit, digits) {
 function buoyHTML(b) {
   return `
     <div class="buoy-head"><h2>${esc(b.name || b.station)}</h2><small>Station ${esc(b.station)} &middot; ${esc(b.time_utc || "")}</small></div>
-    <div class="sec"><h3>Latest readings</h3><dl>
-      <dt>Water temp</dt><dd>${esc(fmt(b.water_temp_c, "C"))}</dd>
-      <dt>24 h change</dt><dd>${esc(fmt(b.water_temp_change_24h_c, "C"))}</dd>
-      <dt>Wind</dt><dd>${esc(fmt(b.wind_kn, "kn"))}${b.wind_dir_deg != null ? " from " + esc(Math.round(b.wind_dir_deg)) + "&deg;" : ""}</dd>
-      <dt>Waves</dt><dd>${esc(fmt(b.wave_height_m, "m"))}</dd>
-      <dt>Pressure</dt><dd>${esc(fmt(b.pressure_hpa, "hPa"))} (${esc(fmt(b.pressure_change_3h_hpa, "hPa", 1))} over 3 h)</dd>
+    <div class="sec"><h3>${icon("buoy")}Latest readings</h3><dl>
+      <dt>${icon("thermo")}Water temp</dt><dd>${esc(fmt(b.water_temp_c, "C"))}</dd>
+      <dt>${icon("thermo")}24 h change</dt><dd>${esc(fmt(b.water_temp_change_24h_c, "C"))}</dd>
+      <dt>${icon("wind")}Wind</dt><dd>${esc(fmt(b.wind_kn, "kn"))}${b.wind_dir_deg != null ? " from " + esc(Math.round(b.wind_dir_deg)) + "&deg;" : ""}</dd>
+      <dt>${icon("waves")}Waves</dt><dd>${esc(fmt(b.wave_height_m, "m"))}</dd>
+      <dt>${icon("cloud")}Pressure</dt><dd>${esc(fmt(b.pressure_hpa, "hPa"))} (${esc(fmt(b.pressure_change_3h_hpa, "hPa", 1))} over 3 h)</dd>
     </dl></div>`;
 }
 
@@ -466,6 +499,7 @@ function addData() {
   const f = spotFeatures();
   renderHeat();
   addClosures();
+  addStream();
   map.addSource("zones", { type: "geojson", data: f.zones });
   map.addSource("spots", { type: "geojson", data: f.points });
   map.addSource("selected", { type: "geojson", data: EMPTY });
@@ -516,6 +550,28 @@ function setClosuresVisible(on) {
   ["closures-fill", "closures-line"].forEach(id => { if (map.getLayer(id)) map.setLayoutProperty(id, "visibility", on ? "visible" : "none"); });
 }
 
+let STREAM = null;
+function streamOn() { return document.getElementById("streamToggle").checked; }
+function addStream() {
+  if (!STREAM || map.getSource("stream") || !STREAM.features.length) return;
+  const before = map.getLayer("zones-fill") ? "zones-fill" : undefined;
+  map.addSource("stream", { type: "geojson", data: STREAM });
+  map.addLayer({ id: "stream-line", type: "line", source: "stream", layout: { visibility: streamOn() ? "visible" : "none", "line-cap": "round", "line-join": "round" },
+    paint: { "line-color": "#7dd3fc", "line-width": 2.6, "line-opacity": 0.8, "line-blur": 0.7 } }, before);
+}
+function streamHTML(p) {
+  return `
+    <div class="hero compact" style="--c:#38bdf8"><div><h2>Gulf Stream inshore edge</h2><small>Approximate</small></div></div>
+    <div class="banner live">Drawn from satellite altimetry on a coarse 25 km grid. It is good to roughly 20 km, and less reliable close to shore.</div>
+    <div class="sec"><h3>${icon("current")}About this line</h3><dl>
+      <dt>${icon("info")}What it is</dt><dd>Where northward flow reaches about half the strength of the stream's core.</dd>
+      <dt>${icon("fish")}Why it matters</dt><dd>Sailfish, wahoo and mahi often travel along current edges.</dd>
+      <dt>${icon("clock")}Data date</dt><dd>${esc(String(p.time || "unknown").slice(0, 10))}</dd>
+      <dt>${icon("info")}Source</dt><dd>${esc(p.source || "NOAA CoastWatch")}</dd>
+    </dl></div>
+    <div class="foot">Currents change daily and eddies are not shown. Check current charts and the marine forecast before you go.</div>`;
+}
+
 function addBuoys() {
   if (!BUOYS || map.getSource("buoys")) return;
   const feats = BUOYS.filter(b => b.ok && b.lat != null && b.lon != null).map(b => ({
@@ -528,7 +584,7 @@ function addBuoys() {
 function bindHandlers() {
   if (handlersBound) return;
   handlersBound = true;
-  const tappable = ["spots", "buoys", "zones-fill", "closures-fill"];
+  const tappable = ["spots", "buoys", "zones-fill", "closures-fill", "stream-line"];
   tappable.forEach(layer => {
     map.on("mouseenter", layer, () => { map.getCanvas().style.cursor = "pointer"; });
     map.on("mouseleave", layer, () => { map.getCanvas().style.cursor = ""; });
@@ -540,6 +596,7 @@ function bindHandlers() {
     if (!hits.length) { closeSheet(); return; }
     const f = hits[0];
     if (f.layer.id === "buoys") { openSheet(buoyHTML(BUOYS[f.properties.idx]), f.geometry.coordinates); setSelected(null); }
+    else if (f.layer.id === "stream-line") { openSheet(streamHTML(f.properties), e.lngLat); setSelected(null); }
     else if (f.layer.id === "closures-fill") { openSheet(closureHTML(f.properties), e.lngLat); setSelected(null); }
     else if (f.layer.id === "spots") { openSheet(spotHTML(f.properties.spotId), f.geometry.coordinates); setSelected(f.properties.spotId); }
     else { openSheet(spotHTML(f.properties.spotId), e.lngLat); setSelected(f.properties.spotId); }
@@ -574,6 +631,11 @@ topSheet.addEventListener("touchend", e => {
 });
 setTop(store.get("fhm.panel") !== "closed", false);
 
+document.getElementById("streamToggle").checked = store.get("fhm.stream") !== "off";
+document.getElementById("streamToggle").addEventListener("change", e => {
+  store.set("fhm.stream", e.target.checked ? "on" : "off");
+  if (map.getLayer("stream-line")) map.setLayoutProperty("stream-line", "visibility", e.target.checked ? "visible" : "none");
+});
 document.getElementById("closuresToggle").checked = store.get("fhm.closures") !== "off";
 document.getElementById("closuresToggle").addEventListener("change", e => {
   store.set("fhm.closures", e.target.checked ? "on" : "off");
@@ -655,6 +717,8 @@ async function load() {
   try { CLOSURES = await getJSON("closures.json"); } catch (err) { console.warn("closures.json failed:", err); CLOSURES = null; }
   renderClosuresChip();
   if (map.getSource("spots")) addClosures();
+  try { STREAM = await getJSON("stream.json"); } catch (err) { console.warn("stream.json failed:", err); STREAM = null; }
+  if (map.getSource("spots")) addStream();
 
   const chip = document.getElementById("buoyStatus");
   try {

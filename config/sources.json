@@ -103,6 +103,29 @@
       "fallback_bases": [
         "https://upwell.pfeg.noaa.gov/erddap"
       ]
+    },
+    "currents": {
+      "enabled": true,
+      "base": "https://coastwatch.pfeg.noaa.gov/erddap",
+      "fallback_bases": [
+        "https://upwell.pfeg.noaa.gov/erddap"
+      ],
+      "dataset": "nesdisSSH1day",
+      "variables": [
+        "ugos",
+        "vgos"
+      ],
+      "dims": [
+        "time",
+        "latitude",
+        "longitude"
+      ],
+      "stride": {
+        "latitude": 1,
+        "longitude": 1
+      },
+      "parameter": "current_speed",
+      "note": "NOAA CoastWatch geostrophic currents from satellite altimetry, daily, 25 km grid, listed as experimental. u = east, v = north, in m/s. Dimensions and variable names are from the ERDDAP listing and not yet verified here: run check_sources."
     }
   },
   "arcgis": {

@@ -46,7 +46,7 @@
         25,
         29
       ],
-      "weight": 0.35,
+      "weight": 0.32,
       "active": true,
       "value_status": "sourced",
       "value_notes": "Tagging study: satellite-tagged mahi spent 95% of their time in 25-29 C surface water (77-84 F), preferring about 26.7-27.8 C while migrating north. FishBase model: preferred 18.1-29.1 C, mean 27.4. Tracking-network summary: below 20 C limits metabolism, above about 28 C tends to be suboptimal. The angler site SatFish suggests 21-26 C ideal; we follow the tagging data instead.",
@@ -61,7 +61,7 @@
     {
       "param": "sst_gradient",
       "kind": "higher_is_better",
-      "weight": 0.25,
+      "weight": 0.22,
       "active": true,
       "value_status": "provisional",
       "value_notes": "Multiple sources say mahi concentrate along temperature and color breaks and current convergences. Threshold for what counts as a strong break must be calibrated on real SST grids. Scored relative to today's sharpest offshore breaks, so on a day with nearly uniform water even a mild break ranks high; the popup shows the real size. Needs calibration against catch reports.",
@@ -81,7 +81,7 @@
         0.05,
         0.5
       ],
-      "weight": 0.2,
+      "weight": 0.18,
       "active": true,
       "value_status": "provisional",
       "value_notes": "Outer range from SatFish (clean blue to slightly green water). The ideal band is an estimate; the best spots are at color changes, which is better captured by chl_gradient (planned v2).",
@@ -123,10 +123,10 @@
         0.5,
         3
       ],
-      "weight": 0.05,
-      "active": true,
+      "weight": 0.0,
+      "active": false,
       "value_status": "needs_source",
-      "value_notes": "Sources point to current edges, eddies and convergence zones that gather floating debris. Speed alone is a weak signal; current edges matter more (gulf_stream_edge, v3).",
+      "value_notes": "Replaced by the Gulf Stream edge factor: current speed alone is a weak signal and had no numeric source.",
       "reason_template": "Current is {value} kn, moving enough to concentrate drifting weed and bait.",
       "sources": [
         "https://www.satfish.com/how-to-catch-dolphin-using-satfish-charts"
@@ -146,13 +146,22 @@
     },
     {
       "param": "gulf_stream_edge",
-      "kind": "proximity",
+      "kind": "range",
+      "range": [
+        -35,
+        40
+      ],
+      "ideal": [
+        -10,
+        12
+      ],
       "weight": 0.15,
-      "active": false,
+      "active": true,
       "value_status": "provisional",
-      "value_notes": "Planned v3. Warm Gulf Stream water carries mahi north in summer.",
-      "reason_template": "The Gulf Stream edge is {value} nm away, where warm water and bait concentrate.",
+      "value_notes": "SatFish: mahi gather along current edges, eddies and convergence zones. The edge is estimated from 25 km satellite altimetry, so it is good to roughly 20 km. The band is an estimate.",
+      "reason_template": "The Gulf Stream's inshore edge is close ({abs_value} km {side}). Mahi gather along current edges.",
       "sources": [
+        "https://www.satfish.com/how-to-catch-dolphin-using-satfish-charts",
         "https://www.satfish.com/mahi-mahi-species-profile/"
       ]
     }
@@ -164,5 +173,7 @@
   ],
   "display": {
     "color": "#34d399"
-  }
+  },
+  "min_coverage": 0.6,
+  "min_coverage_note": "Chlorophyll (cloud) and the Gulf Stream edge (currents) can both be missing on a given day. Temperature, temperature breaks and depth alone give 64% of the weight, so the usual 70% minimum is relaxed to 60% for this fish; confidence then shows as Low."
 }

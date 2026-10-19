@@ -47,6 +47,15 @@ A fish with no `timing` block shows "No reliable time-of-day information" instea
   A front is a wind shift from the south/west side to a firm northerly, plus an air-temperature fall or pressure rise.
 - Barometric pressure is used only as a sign of a front, not as a direct fish factor: studies have not shown a direct effect.
 
+## Currents and the Gulf Stream edge
+Surface currents come from NOAA CoastWatch geostrophic currents (satellite altimetry, daily, 25 km grid, listed as
+experimental; variables `ugos` east and `vgos` north in m/s). The stream's inshore edge is the westernmost point in each
+latitude row where northward flow reaches half the row's maximum (and at least about 0.8 kn); eddies are not modeled
+(`pipeline/currents.py`). It is approximate: good to roughly 20 km, weaker near shore, and geostrophic flow leaves out
+wind-driven and tidal currents. Sailfish, wahoo and mahi score a band around the edge (provisional); the map draws the
+edge as a thin line you can toggle and tap (`stream.json`). If the dataset's dimensions or names differ from the config,
+run `python -m pipeline.check_sources` and fix `config/sources.json`.
+
 ## Boat conditions
 A separate sea-state indicator, not part of any fish score. From the nearest fresh buoy readings (within 80 km, under
 3 hours old) it rates wind and waves as Good, Fair, Rough or Dangerous (wind limits 12, 18 and 25 kn; wave limits
@@ -54,6 +63,11 @@ about 2, 4 and 6.5 ft; short steep waves count one step rougher; the worse of wi
 strongest wind expected in the next 24 hours. The limits are a rough guide for a typical 20-30 ft boat, not official
 advisory levels (`pipeline/seastate.py`). Spots in Rough or Dangerous water get a warning banner. Always check the
 National Weather Service marine forecast.
+
+## Icons
+Rows, headings and reasons in the popups carry small line icons (wind, tide, depth, size, diet and so on), defined inline
+in `web/index.html` (`ICONS`, `ROW_ICON`, `REASON_ICONS`). Reasons get their icon from keywords in the text; a row with an
+unknown label (such as a reef's name) gets the anchor.
 
 ## Fish pictures
 Each popup shows a transparent picture above the fish name, read from `web/fish/<species id>.png`. These are

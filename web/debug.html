@@ -91,6 +91,7 @@ function renderRun(fish, latest) {
     <div>Generated</div><div>${esc(fish.generated_utc)} ${pill(a.cls, a.text)}</div>
     <div>Temperature scene</div><div>${esc(t.sst || "-")} <span class="muted">(${esc(ds.sst || "")})</span></div>
     <div>Chlorophyll scene</div><div>${esc(t.chlorophyll || "none")} <span class="muted">(${esc(ds.chlorophyll || "")})</span></div>
+    <div>Currents scene</div><div>${esc(t.currents || "none (Gulf Stream edge not available)")} <span class="muted">(${esc(ds.currents || "")})</span></div>
     <div>Depth dataset</div><div>${esc(ds.bathymetry || "none")}</div>
     <div>Moon</div><div>${esc(((fish.conditions || {}).moon || {}).text || "not in this run")}</div>
     <div>Sea state</div><div>${esc((((fish.conditions || {}).sea || {}).now || {}).text || "no recent buoy reading")}${(((fish.conditions || {}).sea || {}).outlook) ? "<br>" + esc(fish.conditions.sea.outlook.text) : ""}</div>

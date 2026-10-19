@@ -26,7 +26,8 @@ def build_griddap_url(cfg: dict, region: dict) -> str:
             slices.append(f"[({lo}):{stride}:({hi})]")
         else:
             raise ValueError(f"Unknown dimension {dim!r}")
-    return f"{cfg['base']}/griddap/{cfg['dataset']}.csv?{cfg['variable']}{''.join(slices)}"
+    variables = cfg.get("variables") or [cfg["variable"]]
+    return f"{cfg['base']}/griddap/{cfg['dataset']}.csv?" + ",".join(f"{v}{''.join(slices)}" for v in variables)
 
 
 def fetch_csv(url: str, timeout: int = 120) -> str:
@@ -68,3 +69,37 @@ def parse_grid_csv(text: str, variable: str):
         grid = grid - 273.15
         unit = "degree_C"
     return lats, lons, grid, (sorted(times)[-1] if times else None), unit
+
+
+def parse_multi_csv(text: str, variables: list[str]):
+    """Like parse_grid_csv for several variables at once: (lats, lons, {variable: grid}, time)."""
+    reader = csv.reader(io.StringIO(text))
+    header = next(reader)
+    next(reader)                                            # units row
+    idx = {name: i for i, name in enumerate(header)}
+    for needed in ["latitude", "longitude", *variables]:
+        if needed not in idx:
+            raise ValueError(f"Column {needed!r} missing; got {header}")
+    rows, times = [], set()
+    for row in reader:
+        if not row:
+            continue
+        vals = []
+        for v in variables:
+            try:
+                vals.append(float(row[idx[v]]))
+            except ValueError:
+                vals.append(float("nan"))
+        rows.append((float(row[idx["latitude"]]), float(row[idx["longitude"]]), vals))
+        if "time" in idx:
+            times.add(row[idx["time"]])
+    if not rows:
+        raise ValueError("No data rows returned")
+    lats = np.array(sorted({r[0] for r in rows}))
+    lons = np.array(sorted({r[1] for r in rows}))
+    grids = {v: np.full((len(lats), len(lons)), np.nan) for v in variables}
+    li, oi = {v: i for i, v in enumerate(lats)}, {v: i for i, v in enumerate(lons)}
+    for la, lo, vals in rows:
+        for v, x in zip(variables, vals):
+            grids[v][li[la], oi[lo]] = x
+    return lats, lons, grids, (sorted(times)[-1] if times else None)
