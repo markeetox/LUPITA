@@ -37,11 +37,14 @@ jobs:
           cp data/live/*.json publish/ || true
           cp data/parameters.json publish/
           cp -r data/species publish/species
+          # The app-facing API (api/v1/...) written by the pipeline.
+          if [ -d data/live/api ]; then cp -r data/live/api publish/api; fi
           # Keep the last good copy of anything this run did not produce (for example when NOAA refused a request).
           if [ -d previous ]; then
             for f in previous/*.json; do
               [ -e "publish/$(basename "$f")" ] || cp "$f" publish/
             done
+            if [ ! -d publish/api ] && [ -d previous/api ]; then cp -r previous/api publish/api; fi
           fi
       - uses: peaceiris/actions-gh-pages@v4
         with:
