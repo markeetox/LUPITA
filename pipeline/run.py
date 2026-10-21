@@ -7,7 +7,7 @@ from datetime import datetime, timezone
 from pathlib import Path
 
 from pipeline import closures as closures_mod
-from pipeline import currents, seastate, timing, weather
+from pipeline import api as api_mod, currents, seastate, timing, weather
 from pipeline.conditions import load_conditions
 from pipeline.layers import load_layers
 from pipeline.predict import build_fish_json
@@ -95,6 +95,11 @@ def main() -> None:
         stream = currents.stream_geojson(layers.get("stream_edge_lon"), layers["lats"], "NOAA CoastWatch nesdisSSH1day (satellite altimetry)",
                                          layers["times"].get("currents"), layers.get("current_speed") is not None, now)
         (live / "stream.json").write_text(json.dumps(stream, allow_nan=False, separators=(",", ":")))
+        images = {f.name: f.read_bytes() for f in sorted((ROOT / "web/fish").glob("*.png"))}
+        for rel, data in api_mod.build(fish, heat_json, cl_json, stream, profiles, images).items():
+            dest = live / "api" / "v1" / rel                     # the app-facing copy: see docs/seabound-api.md
+            dest.parent.mkdir(parents=True, exist_ok=True)
+            dest.write_bytes(data)
         (live / "heat.json").write_text(json.dumps(heat_json, allow_nan=False, separators=(",", ":")))
 
     for sp in (fish or {}).get("species", []):

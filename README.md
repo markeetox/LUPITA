@@ -47,6 +47,12 @@ A fish with no `timing` block shows "No reliable time-of-day information" instea
   A front is a wind shift from the south/west side to a firm northerly, plus an air-temperature fall or pressure rise.
 - Barometric pressure is used only as a sign of a front, not as a direct fish factor: studies have not shown a direct effect.
 
+## App API (for Seabound)
+The pipeline also writes a small versioned API under `api/v1/` (published on the `data` branch): `index.json`, one JSON file per
+fish, ready-to-draw heat overlay PNGs, the fish pictures, no-fishing areas and the Gulf Stream edge. See `docs/seabound-api.md`
+for the contract, hosting advice and what is deliberately left out (legal sizes and bag limits), and `docs/seabound_client.dart`
+for an untested Flutter starting point (`pipeline/api.py` builds the files; `tests/test_api.py` checks the contract).
+
 ## Currents and the Gulf Stream edge
 Surface currents come from NOAA CoastWatch geostrophic currents (satellite altimetry, daily, 25 km grid, listed as
 experimental; variables `ugos` east and `vgos` north in m/s). The stream's inshore edge is the westernmost point in each
