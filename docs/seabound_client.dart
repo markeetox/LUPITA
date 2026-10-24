@@ -10,7 +10,7 @@ import 'package:http/http.dart' as http;
 import 'package:latlong2/latlong.dart';
 
 /// Use the GitHub Pages address (see seabound-api.md) once you switch it on.
-const fishApiBase = 'https://raw.githubusercontent.com/markeetox/here-fishy-fishy/data/api/v1/';
+const fishApiBase = 'https://raw.githubusercontent.com/markeetox/lupita/data/api/v1/';
 
 Color colorFromHex(String hex) => Color(int.parse(hex.substring(1), radix: 16) | 0xFF000000);
 

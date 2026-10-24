@@ -167,7 +167,7 @@
    The pipeline publishes fish.json and latest.json to the "data" branch.
    Override with ?data=<folder url ending in />  to test another source.
 ------------------------------------------------------------------- */
-const DATA_BASE_DEFAULT = "https://raw.githubusercontent.com/markeetox/here-fishy-fishy/data/";
+const DATA_BASE_DEFAULT = "https://raw.githubusercontent.com/markeetox/lupita/data/";
 const DATA_BASE = (new URLSearchParams(location.search).get("data") || DATA_BASE_DEFAULT).replace(/\/?$/, "/");
 
 // Free vector map styles from OpenFreeMap: no account and no key. Dark by default so the heat layer glows.

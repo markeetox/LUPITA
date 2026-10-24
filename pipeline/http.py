@@ -8,7 +8,7 @@ import requests
 
 # 403 is included: ERDDAP servers answer 403 when they rate-limit or briefly block a busy address.
 RETRY_STATUS = {403, 408, 425, 429, 500, 502, 503, 504}
-USER_AGENT = "fish-habitat-map/0.2 (+https://github.com/markeetox/here-fishy-fishy)"
+USER_AGENT = "fish-habitat-map/0.2 (+https://github.com/markeetox/lupita)"
 
 
 def get(url, params=None, headers=None, timeout=120, attempts=4, base_delay=20.0, sleep=time.sleep, getter=requests.get):

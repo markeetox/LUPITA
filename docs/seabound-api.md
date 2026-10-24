@@ -3,9 +3,9 @@
 A small, read-only set of static files. No server, no key, no account. Files are plain JSON and PNG.
 Paths below are relative to the base URL.
 
-**Base URL (testing):** `https://raw.githubusercontent.com/markeetox/here-fishy-fishy/data/api/v1/`
+**Base URL (testing):** `https://raw.githubusercontent.com/markeetox/lupita/data/api/v1/`
 **Base URL (recommended for the app):** turn on GitHub Pages for the `data` branch (repo Settings -> Pages -> Branch: `data`, folder `/ (root)`),
-then use `https://markeetox.github.io/here-fishy-fishy/api/v1/`. Pages is a proper CDN with CORS enabled; `raw.githubusercontent.com` is
+then use `https://markeetox.github.io/lupita/api/v1/`. Pages is a proper CDN with CORS enabled; `raw.githubusercontent.com` is
 fine while you build but is not meant for production traffic. Later you can copy the same files to Firebase Hosting or Cloud Storage: only
 the base URL changes, because every link inside the files is relative.
 

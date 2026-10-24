@@ -63,7 +63,7 @@
 
 <script>
 const DATA_BASE = (new URLSearchParams(location.search).get("data") ||
-  "https://raw.githubusercontent.com/markeetox/here-fishy-fishy/data/").replace(/\/?$/, "/");
+  "https://raw.githubusercontent.com/markeetox/lupita/data/").replace(/\/?$/, "/");
 const REGION = { lat: [24.5, 27.0], lon: [-81.0, -78.5] };
 const $ = id => document.getElementById(id);
 const esc = v => String(v == null ? "" : v).replace(/[&<>"']/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
