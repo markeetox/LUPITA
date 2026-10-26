@@ -53,3 +53,21 @@ def test_top_cells_orders_and_filters():
     vals = np.array([[0.01, 0.2], [np.nan, 0.1]])
     cells = derive.top_cells(vals, lats, lons, n=5, min_value=0.05)
     assert [c["value"] for c in cells] == [0.2, 0.1]
+
+
+def test_distance_to_inlet_grid():
+    lats = np.array([25.0, 26.0])
+    lons = np.array([-80.0, -79.0])
+    inlets = [{"lat": 25.0, "lon": -80.0}]
+    dist = derive.distance_to_inlet_grid(lats, lons, inlets)
+    assert dist.shape == (2, 2)
+    assert dist[0, 0] == 0.0
+    assert dist[1, 0] > 100.0  # ~111 km north
+
+
+def test_temperature_trend():
+    curr = np.array([[25.0, 26.0]])
+    prev = np.array([[24.0, 26.0]])
+    trend = derive.temperature_trend(curr, prev, hours_diff=24.0)
+    assert trend[0, 0] == 1.0
+    assert trend[0, 1] == 0.0

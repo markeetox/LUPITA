@@ -87,8 +87,13 @@ def structure_value(site, ctx):
     return site["kind"], "static", {}
 
 
+def distance_to_inlet_value(site, ctx):
+    return 0.0, "static", {}
+
+
 VALUE_FUNCS = {"sst_c": sst_value, "tide_stage": tide_value, "time_of_day": light_value,
-               "spawning_season": season_value, "season_presence": season_value, "structure_type": structure_value}
+               "spawning_season": season_value, "season_presence": season_value, "structure_type": structure_value,
+               "distance_to_inlet": distance_to_inlet_value}
 
 
 def score_value(f: dict, v):

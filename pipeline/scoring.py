@@ -15,7 +15,9 @@ DEFAULT_MIN_COVERAGE = 0.7    # share of the profile's weight that must have dat
 FRIENDLY = {
     "structure_type": "reef and wreck map", "tide_stage": "tide predictions",
     "current_speed": "ocean current data", "time_of_day": "sunrise and sunset times",
-    "salinity": "salinity data", "depth_m": "depth data", "bottom_slope": "seafloor depth data", "chlorophyll": "chlorophyll data",
+    "salinity": "salinity data", "depth_m": "depth data", "bottom_slope": "seafloor depth data",
+    "chlorophyll": "chlorophyll data", "chl_gradient": "water color edge data",
+    "distance_to_inlet": "inlet proximity data", "sst_trend": "temperature trend data",
     "sst_c": "sea surface temperature", "sst_gradient": "sea surface temperature",
 }
 
