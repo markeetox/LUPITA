@@ -307,7 +307,7 @@
       "unit": "relative",
       "type": "number",
       "tier": "v2",
-      "status": "planned",
+      "status": "active",
       "dynamic": true,
       "confidence": "derived",
       "derived_from": [
@@ -684,12 +684,12 @@
       "unit": "km",
       "type": "number",
       "tier": "v2",
-      "status": "planned",
+      "status": "active",
       "dynamic": false,
       "confidence": "static",
       "sources": [
         {
-          "name": "Inlet locations from NOAA nautical charts / shoreline data (exact dataset to be chosen)",
+          "name": "Inlet locations from config/places.json and NOAA nautical chart data",
           "host": "https://nauticalcharts.noaa.gov/"
         }
       ],

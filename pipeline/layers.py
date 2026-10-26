@@ -59,7 +59,7 @@ def _fetch_multi(cfg: dict, region: dict, fetch):
     raise last
 
 
-def load_layers(sources: dict, errors: list[str], fetch=erddap.fetch_csv, fetch_arc=arcgis.fetch_json):
+def load_layers(sources: dict, errors: list[str], fetch=erddap.fetch_csv, fetch_arc=arcgis.fetch_json, places: dict | None = None):
     """Return a dict of layers on the SST grid, or None if SST itself cannot be loaded.
     Chlorophyll and depth are optional; a missing one is None and the scorer copes."""
     region, cfg = sources["region"], sources["erddap"]
@@ -71,19 +71,26 @@ def load_layers(sources: dict, errors: list[str], fetch=erddap.fetch_csv, fetch_
 
     layers = {"lats": lats, "lons": lons, "sst_c": sst,
               "sst_gradient": derive.gradient_magnitude(sst, lats, lons),
-              "chlorophyll": None, "depth_m": None, "chl_raw": None,
-              "bottom_slope": None, "current_speed": None, "current_dir": None, "gulf_stream_edge": None, "stream_edge_lon": None,
+              "chlorophyll": None, "chl_gradient": None, "depth_m": None, "chl_raw": None,
+              "distance_to_inlet": None, "bottom_slope": None, "current_speed": None, "current_dir": None, "gulf_stream_edge": None, "stream_edge_lon": None,
               "closure_areas": [], "closure_cover": None, "closure_info": {}, "closure_checked": False,
               "structure_type": None, "structure_info": {}, "structure_cover": None, "structure_stats": None,
               "times": {"sst": sst_time, "chlorophyll": None},
               "datasets": {"sst": cfg["sst"]["dataset"]}}
+
+    if places and places.get("places"):
+        inlets = [p for p in places["places"] if p.get("type") in ("inlet", "pass")]
+        if inlets:
+            layers["distance_to_inlet"] = derive.distance_to_inlet_grid(lats, lons, inlets)
 
     c = cfg.get("chlorophyll", {})
     if c.get("enabled"):
         try:
             clats, clons, chl, chl_time, _ = _fetch_grid(c, region, fetch)
             layers["chl_raw"] = (clats, clons, chl)
-            layers["chlorophyll"] = resample(chl, clats, clons, lats, lons, min_weight=0.5)
+            resampled_chl = resample(chl, clats, clons, lats, lons, min_weight=0.5)
+            layers["chlorophyll"] = resampled_chl
+            layers["chl_gradient"] = derive.chlorophyll_gradient(resampled_chl, lats, lons)
             layers["times"]["chlorophyll"] = chl_time
             layers["datasets"]["chlorophyll"] = c["dataset"]
         except Exception as exc:

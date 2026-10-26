@@ -242,11 +242,19 @@
     },
     {
       "param": "distance_to_inlet",
-      "kind": "closer_is_better",
+      "kind": "range",
+      "range": [
+        0,
+        25
+      ],
+      "ideal": [
+        0,
+        5
+      ],
       "weight": 0.15,
       "active": false,
       "value_status": "sourced",
-      "value_notes": "Spawning aggregations form at inlets, passes and river mouths. Combine with spawning_season. Needs an inlet dataset.",
+      "value_notes": "Spawning aggregations form at inlets, passes and river mouths. Snook congregate near inlet structures.",
       "reason_template": "This spot is {value} km from an inlet, where snook gather to spawn and bait flushes through.",
       "sources": [
         "https://myfwc.com/research/saltwater/fish/snook/sketch-common-snook/"

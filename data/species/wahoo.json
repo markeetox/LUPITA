@@ -41,7 +41,7 @@
     {
       "param": "bottom_slope",
       "kind": "higher_is_better",
-      "weight": 0.26,
+      "weight": 0.23,
       "active": true,
       "value_status": "provisional",
       "value_notes": "Louisiana Sea Grant: wahoo are more common near banks (lumps), drop-offs and weed lines. Angler accounts focus on steep ledges where depth contours stack close together. Scored relative to the steepest offshore slopes in the area; the 2 km grid smooths small ledges away.",
@@ -75,7 +75,7 @@
     {
       "param": "sst_gradient",
       "kind": "higher_is_better",
-      "weight": 0.13,
+      "weight": 0.10,
       "active": true,
       "value_status": "provisional",
       "value_notes": "Anglers fish wahoo along temperature breaks and current edges, especially where they meet a steep ledge. Scored relative to today's sharpest offshore breaks.",
@@ -84,6 +84,18 @@
         "https://inthespread.com/blog/wahoo-fishing-in-florida-expert-regional-tactics-376"
       ],
       "reason_template": "Water temperature changes about {per10km} C every 10 km here, one of the sharper breaks in the area today."
+    },
+    {
+      "param": "chl_gradient",
+      "kind": "higher_is_better",
+      "weight": 0.08,
+      "active": true,
+      "value_status": "provisional",
+      "value_notes": "Color changes and chlorophyll edges concentrate baitfish and wahoo along offshore drop-offs.",
+      "sources": [
+        "https://www.satfish.com/wahoo-species-profile/"
+      ],
+      "reason_template": "A strong water color edge is present, where wahoo patrol for bait."
     },
     {
       "param": "depth_m",
