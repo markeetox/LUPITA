@@ -1,0 +1,143 @@
+{
+  "schema_version": 1,
+  "id": "cobia",
+  "common_name": "Cobia",
+  "scientific_name": "Rachycentron canadum",
+  "aliases": [
+    "ling",
+    "lemonfish",
+    "crabeater"
+  ],
+  "habitat_zone": "reef",
+  "display": {
+    "color": "#c084fc"
+  },
+  "zone_style": "cells",
+  "min_cells": 1,
+  "max_spots": 20,
+  "patch_block_cells": 6,
+  "title_from": "structure",
+  "confidence_cap": "Low",
+  "review_status": "draft - structure preference from NOAA; season and depth are angler guidance",
+  "image": {
+    "status": "placeholder",
+    "kind": "illustration",
+    "url": "fish/cobia.png",
+    "credit": "Original illustration",
+    "license": "",
+    "plan": "web/fish/cobia.png is a transparent placeholder illustration. To use a real photo: replace that file with a transparent PNG of the same name (cropped tight to the fish, facing left looks best), then set kind to \"photo\" and fill in credit and license here. Only use images you have the right to show: NOAA Fisheries species pages and Wikimedia Commons are good places to look; FWC illustrations are copyrighted."
+  },
+  "profile": {
+    "diet": "Crabs, fish and squid",
+    "behavior": "Structure-oriented: found near buoys, pilings, platforms, debris, shipwrecks and artificial reefs, and with large animals such as rays, sharks and turtles. Cruise in packs of 3 to 100 during migrations in shallow water along the shore.",
+    "depth": "During the spring migration anglers find them in roughly 30-70 ft (9-21 m)",
+    "spawning": "Spawns offshore many times through a long season",
+    "regulations_note": "Cobia have separate Gulf and Atlantic stocks with different rules, and Florida's east coast is managed with the Atlantic. Check FWC and NOAA rules before keeping any.",
+    "regulations_link": "https://myfwc.com/fishing/saltwater/",
+    "sources": [
+      "https://www.floridamuseum.ufl.edu/discover-fish/species-profiles/cobia/",
+      "https://www.fisheries.noaa.gov/species/cobia",
+      "https://sedarweb.org/documents/sedar-95-rd07-investigating-the-seasonal-migration-of-cobia-rachycentron-canadum-and-the-influence-of-temperature-on-movement-ecology",
+      "https://guidesly.com/fishing/fish-species/cobia",
+      "https://inthespread.com/blog/cobia-fishing-a-florida-guide-381"
+    ]
+  },
+  "factors": [
+    {
+      "param": "structure_type",
+      "kind": "category",
+      "weight": 0.35,
+      "active": true,
+      "value_status": "sourced",
+      "value_notes": "NOAA Fisheries: cobia are found near buoys, debris, shipwrecks and artificial reefs, or with large animals. Wrecks and artificial reefs score highest; natural reef counts for a little less. Buoys, pilings and channel markers are not in our structure data yet.",
+      "sources": [
+        "https://www.fisheries.noaa.gov/species/cobia",
+        "https://www.floridamuseum.ufl.edu/discover-fish/species-profiles/cobia/"
+      ],
+      "preferred": [
+        "wreck",
+        "artificial_reef",
+        "natural_reef"
+      ],
+      "map": {
+        "wreck": 1.0,
+        "artificial_reef": 1.0,
+        "natural_reef": 0.7
+      }
+    },
+    {
+      "param": "sst_c",
+      "kind": "range",
+      "weight": 0.2,
+      "active": true,
+      "value_status": "sourced",
+      "value_notes": "Florida Museum: cobia prefer 68-86 F (20-30 C). A SEDAR review gives an overall range of 16.8-32 C, and cobia movements follow temperature.",
+      "sources": [
+        "https://www.floridamuseum.ufl.edu/discover-fish/species-profiles/cobia/",
+        "https://sedarweb.org/documents/sedar-95-rd07-investigating-the-seasonal-migration-of-cobia-rachycentron-canadum-and-the-influence-of-temperature-on-movement-ecology"
+      ],
+      "reason_template": "Water is {value} C, inside the {ideal_min}-{ideal_max} C range cobia prefer.",
+      "range": [
+        17,
+        32
+      ],
+      "ideal": [
+        20,
+        30
+      ]
+    },
+    {
+      "param": "depth_m",
+      "kind": "range",
+      "weight": 0.2,
+      "active": true,
+      "value_status": "provisional",
+      "value_notes": "Anglers find cobia around structure in about 30-70 ft (9-21 m) during the spring migration, and cobia use a wide range of depths. The band is an estimate.",
+      "sources": [
+        "https://guidesly.com/fishing/fish-species/cobia"
+      ],
+      "reason_template": "Depth is {value} m, in the nearshore structure water where cobia are usually found.",
+      "range": [
+        3,
+        120
+      ],
+      "ideal": [
+        9,
+        45
+      ]
+    },
+    {
+      "param": "season_presence",
+      "kind": "season",
+      "weight": 0.25,
+      "active": true,
+      "value_status": "provisional",
+      "value_notes": "NOAA Fisheries: Gulf cobia move to south Florida waters in winter, and anglers rate December to April best around wrecks and reefs in the Keys. Atlantic cobia run north in spring. The window for Miami is a judgment call.",
+      "sources": [
+        "https://www.fisheries.noaa.gov/species/cobia",
+        "https://inthespread.com/blog/cobia-fishing-a-florida-guide-381"
+      ],
+      "months": [
+        11,
+        12,
+        1,
+        2,
+        3,
+        4
+      ],
+      "peak_months": [
+        12,
+        1,
+        2,
+        3
+      ],
+      "in_score": 0.7,
+      "off_score": 0.3,
+      "value_text": {
+        "peak": "It is peak cobia season in South Florida (about December to March), when fish winter around wrecks and reefs.",
+        "in_season": "It is cobia season in South Florida (about November to April).",
+        "off": "It is outside the winter and spring cobia window in South Florida."
+      }
+    }
+  ]
+}

@@ -1,0 +1,185 @@
+{
+  "schema_version": 1,
+  "id": "yellowtail-snapper",
+  "common_name": "Yellowtail snapper",
+  "scientific_name": "Ocyurus chrysurus",
+  "aliases": [
+    "flag",
+    "yellowtail"
+  ],
+  "habitat_zone": "reef",
+  "review_status": "draft v4 - reef areas split into patches; shallow bay bottom excluded by a depth gate",
+  "image": {
+    "status": "placeholder",
+    "kind": "illustration",
+    "url": "fish/yellowtail-snapper.png",
+    "credit": "Original illustration",
+    "license": "",
+    "plan": "web/fish/yellowtail-snapper.png is a transparent placeholder illustration. To use a real photo: replace that file with a transparent PNG of the same name (cropped tight to the fish, facing left looks best), then set kind to \"photo\" and fill in credit and license here. Only use images you have the right to show: NOAA Fisheries species pages and Wikimedia Commons are good places to look; FWC illustrations are copyrighted."
+  },
+  "profile": {
+    "size": "Typically 2 to 5 lb and 8 to 14 in; up to about 34 in and 11 lb (NOAA Fisheries). Florida state record 8 lb 9 oz.",
+    "diet": "Fish and invertebrates",
+    "range": "North Carolina to southeastern Brazil; most abundant around the Bahamas, south Florida and the Caribbean",
+    "behavior": "Reef fish found around coral heads, patch reefs and high-profile artificial structure. Often swarms up a steady chum slick. Juveniles use seagrass and mangrove nursery habitat.",
+    "spawning": "April through August in the southeast U.S. (SAFMC); FishBase notes spawning occurs year-round in parts of the range with different peaks by area",
+    "regulations_link": "https://myfwc.com/",
+    "sources": [
+      "https://myfwc.com/wildlifehabitats/profiles/saltwater/snapper/yellowtail-snapper",
+      "https://safmc.net/species/snapper-yellowtail/",
+      "https://www.floridasportfishing.com/offshore/never-fail-yellowtail/article_9f210b53-25ed-5d2e-bd7c-8832fccd3676.html",
+      "https://sedarweb.org/documents/sedar-64-dw-08-abundance-and-distribution-of-juvenile-yellowtail-snapper-in-nearshore-seagrass-habitat-in-the-middle-florida-keys",
+      "https://www.fisheries.noaa.gov/species/yellowtail-snapper/science",
+      "https://www.fishbase.org/summary/188",
+      "https://reeflifesurvey.com/species/ocyurus-chrysurus/",
+      "https://sedarweb.org/documents/s8dw04-the-biology-of-yellowtail-snapper-ocyurus-chrysurus-with-emphasis-on-populations-in-the-caribbean/"
+    ],
+    "lifespan": "6 to 14 years typical; up to 28 years (NOAA Fisheries)",
+    "depth": "Adults mostly 10-70 m over sandy areas near offshore reefs (NOAA Fisheries); commercial handline catch mainly 20-60 m; overall depth range 0-180 m (FishBase). Juveniles use seagrass, mangroves and back reefs."
+  },
+  "factors": [
+    {
+      "param": "structure_type",
+      "kind": "category",
+      "preferred": [
+        "wreck",
+        "artificial_reef",
+        "natural_reef"
+      ],
+      "weight": 0.5,
+      "active": true,
+      "value_status": "sourced",
+      "value_notes": "FWC and angling sources tie yellowtail to coral reefs, patch reefs and artificial wrecks. Structure comes from FWC's artificial reef list and the Unified Reef Map v2.2 (Jan 2025), limited to patch reef, aggregate reef, ridge and pavement. Rubble, scattered coral in sediment and seagrass are not counted. Juveniles use seagrass and mangroves (add a life_stage factor in v2).",
+      "reason_template": "This spot is a {value}, the kind of reef structure yellowtail hold on.",
+      "sources": [
+        "https://myfwc.com/wildlifehabitats/profiles/saltwater/snapper/yellowtail-snapper",
+        "https://www.floridasportfishing.com/offshore/never-fail-yellowtail/article_9f210b53-25ed-5d2e-bd7c-8832fccd3676.html"
+      ]
+    },
+    {
+      "param": "depth_m",
+      "kind": "range",
+      "range": [
+        5,
+        180
+      ],
+      "ideal": [
+        10,
+        70
+      ],
+      "weight": 0.3,
+      "active": true,
+      "value_status": "sourced",
+      "value_notes": "NOAA Fisheries: adults at 10-70 m near offshore reefs. SEDAR 8: commercial handline catch mainly 20-60 m. FishBase: 0-180 m overall. Cells shallower than 5 m are excluded (gate): that is bay and flat bottom, where juveniles live, not the reef water adults use. The 5 m cutoff is a judgment call, not a published figure.",
+      "reason_template": "Depth is {value} m, within the range yellowtail use on reefs.",
+      "sources": [
+        "https://www.fisheries.noaa.gov/species/yellowtail-snapper/science",
+        "https://www.fishbase.org/summary/188",
+        "https://sedarweb.org/documents/s8dw04-the-biology-of-yellowtail-snapper-ocyurus-chrysurus-with-emphasis-on-populations-in-the-caribbean/"
+      ],
+      "gate": true
+    },
+    {
+      "param": "sst_c",
+      "kind": "range",
+      "range": [
+        21.7,
+        31.1
+      ],
+      "ideal": [
+        22,
+        28
+      ],
+      "weight": 0.2,
+      "active": true,
+      "value_status": "sourced",
+      "value_notes": "FishBase model gives a preferred range of 21.7-27.9 C (mean 25.9). Reef Life Survey observations span 22.1-31.1 C.",
+      "reason_template": "Water is {value} C, within yellowtail's comfortable range.",
+      "sources": [
+        "https://www.fishbase.org/summary/188",
+        "https://reeflifesurvey.com/species/ocyurus-chrysurus/"
+      ]
+    },
+    {
+      "param": "current_speed",
+      "kind": "range",
+      "range": null,
+      "ideal": null,
+      "weight": 0.0,
+      "active": false,
+      "value_status": "needs_source",
+      "value_notes": "Anglers fish a steady-flowing chum slick, but no numeric current preference was found. Switched off until a source is found.",
+      "reason_template": "A steady current of {value} kn carries bait past the reef.",
+      "sources": [
+        "https://www.floridasportfishing.com/offshore/never-fail-yellowtail/article_9f210b53-25ed-5d2e-bd7c-8832fccd3676.html"
+      ]
+    },
+    {
+      "param": "spawning_season",
+      "kind": "season",
+      "months": [
+        4,
+        5,
+        6,
+        7,
+        8
+      ],
+      "weight": 0.1,
+      "active": false,
+      "value_status": "sourced",
+      "value_notes": "SAFMC lists spawning April through August. Activate in v2.",
+      "reason_template": "It is spawning season (April to August), when yellowtail gather in larger numbers.",
+      "sources": [
+        "https://safmc.net/species/snapper-yellowtail/"
+      ]
+    },
+    {
+      "param": "life_stage",
+      "kind": "category",
+      "weight": 0.0,
+      "active": false,
+      "value_status": "sourced",
+      "value_notes": "Juveniles use seagrass and mangroves as nurseries; adults use reefs. Needed so nursery habitat is not scored as adult fishing habitat.",
+      "reason_template": "This is nursery habitat for juvenile yellowtail.",
+      "sources": [
+        "https://sedarweb.org/documents/sedar-64-dw-03-juvenile-yellowtail-snapper-ocyurus-chrysurus-collected-from-short-term-fisheries-independent-surveys-in-florida-bay-and-the-florida-keys-from-1994-2003"
+      ]
+    }
+  ],
+  "open_items": [
+    "Current speed preference has no source, so the factor is switched off",
+    "Feeding time is unclear (FishBase says mainly at night, another source says diurnal)",
+    "Image still needed"
+  ],
+  "display": {
+    "color": "#fbbf24"
+  },
+  "zone_style": "cells",
+  "min_cells": 1,
+  "max_spots": 25,
+  "title_from": "structure",
+  "patch_block_cells": 6,
+  "timing": {
+    "status": "angler_lore",
+    "note": "Angler lore: patterns reported by local captains and fishing writers, not tested by studies. Numbers are judgment calls to be calibrated against trip logs.",
+    "sources": [
+      "https://www.fishheadquarters.com/?p=1534",
+      "https://www.fishheadquarters.com/?p=98",
+      "https://fishingbooker.com/reports/view/12675",
+      "https://fishingbooker.com/it/reports/view/30777",
+      "https://podimo.com/no/shows/florida-keys-miami-daily-fishing-report/episode/91438d72-4ea0-5168-832f-c357df411692"
+    ],
+    "light": {
+      "map": {
+        "night": 1.0,
+        "dusk": 1.0,
+        "dawn": 0.75,
+        "day": 0.7
+      },
+      "text": {
+        "night": "It is night, when charter captains report yellowtail bite best on chummed anchor trips.",
+        "dusk": "It is dusk, when yellowtail are reported to bite better as light fades."
+      }
+    }
+  }
+}

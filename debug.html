@@ -1,0 +1,214 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex">
+<title>Pipeline check</title>
+<style>
+  :root { --bg:#0b1626; --card:#0f1b2d; --line:#22344f; --text:#e6edf6; --muted:#8fa3bd; --ok:#34d399; --warn:#fbbf24; --bad:#f87171; }
+  * { box-sizing: border-box; }
+  body { margin: 0; padding: 16px; background: var(--bg); color: var(--text);
+    font: 15px/1.4 -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; }
+  h1 { font-size: 20px; margin: 0 0 4px; }
+  h2 { font-size: 16px; margin: 0 0 10px; }
+  a { color: #7cc0ff; }
+  .muted { color: var(--muted); }
+  section { max-width: 980px; margin: 14px auto; background: var(--card); border: 1px solid var(--line); border-radius: 14px; padding: 14px 16px; }
+  .top { max-width: 980px; margin: 0 auto; }
+  button { background: #1a2d49; color: var(--text); border: 1px solid var(--line); border-radius: 8px; padding: 7px 12px; font: inherit; cursor: pointer; }
+  button:hover { background: #23406a; }
+  input[type=text] { width: 100%; background: #0b1626; color: var(--text); border: 1px solid var(--line); border-radius: 8px; padding: 8px 10px; font: inherit; }
+  .row { display: flex; gap: 8px; flex-wrap: wrap; margin: 8px 0; }
+  .pill { display: inline-block; padding: 1px 8px; border-radius: 999px; font-size: 12px; border: 1px solid var(--line); }
+  .pill.ok { color: var(--ok); border-color: #1c5a47; } .pill.warn { color: var(--warn); border-color: #5b4a1a; } .pill.bad { color: var(--bad); border-color: #6b2a2a; }
+  .scroll { overflow-x: auto; }
+  table { border-collapse: collapse; width: 100%; font-size: 13px; }
+  th, td { text-align: left; padding: 5px 8px; border-bottom: 1px solid var(--line); vertical-align: top; white-space: nowrap; }
+  td.wrap { white-space: normal; min-width: 220px; }
+  th { color: var(--muted); font-weight: 600; }
+  tr.click { cursor: pointer; } tr.click:hover td { background: #13243b; }
+  pre { background: #08111f; border: 1px solid var(--line); border-radius: 8px; padding: 10px; overflow: auto; max-height: 340px; font-size: 12px; }
+  details { margin: 6px 0; } summary { cursor: pointer; }
+  ul { margin: 6px 0; padding-left: 20px; }
+  .kv { display: grid; grid-template-columns: 150px 1fr; gap: 4px 12px; font-size: 14px; }
+  .kv div:nth-child(odd) { color: var(--muted); }
+</style>
+</head>
+<body>
+<div class="top">
+  <h1>Pipeline check</h1>
+  <div class="muted">Diagnostics for the fish habitat map. <a href="./">Back to the map</a></div>
+</div>
+
+<section>
+  <h2>1. Latest pipeline run</h2>
+  <div class="row"><button id="refresh">Refresh</button><span id="runStatus" class="muted">Loading...</span></div>
+  <div id="run"></div>
+</section>
+
+<section>
+  <h2>2. FWC layer inspector</h2>
+  <div class="muted">Lists the layers in an ArcGIS map service and counts the features inside our South Florida box
+    (lat 24.5-27.0, lon -81.0 to -78.5). Click a layer row to see sample records.</div>
+  <div class="row">
+    <button data-url="https://gis.myfwc.com/mapping/rest/services/Open_Data/Artificial_Reef_Locations_in_Florida/MapServer">FWC artificial reefs</button>
+    <button data-url="https://gis.myfwc.com/hosting/rest/services/Open_Data/Unified_Florida_Reef_Tract_Benthic_Habitat/MapServer">FWC Unified Reef Map (natural reef)</button>
+    <button data-url="https://services2.arcgis.com/C8EMgrsFcRFL6LrL/arcgis/rest/services/NOAA_MPA_Inventory_2023/FeatureServer">NOAA MPA Inventory (no-fishing areas)</button>
+  </div>
+  <div class="row"><input id="svcUrl" type="text" placeholder="https://.../MapServer"><button id="inspect">Inspect</button></div>
+  <div id="inspectOut"></div>
+  <div id="sampleOut"></div>
+</section>
+
+<script>
+const DATA_BASE = (new URLSearchParams(location.search).get("data") ||
+  "https://raw.githubusercontent.com/markeetox/lupita/data/").replace(/\/?$/, "/");
+const REGION = { lat: [24.5, 27.0], lon: [-81.0, -78.5] };
+const $ = id => document.getElementById(id);
+const esc = v => String(v == null ? "" : v).replace(/[&<>"']/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
+const num = (v, d) => (typeof v === "number" ? v.toFixed(d == null ? 1 : d) : "-");
+
+function ago(iso) {
+  const m = Math.round((Date.now() - new Date(iso).getTime()) / 60000);
+  if (!isFinite(m)) return { text: "unknown", cls: "warn" };
+  const text = m < 90 ? `${Math.max(m, 1)} min ago` : m < 2880 ? `${Math.round(m / 60)} h ago` : `${Math.round(m / 1440)} days ago`;
+  return { text, cls: m > 150 ? "warn" : "ok" };       // the workflow runs every hour
+}
+function pill(cls, text) { return `<span class="pill ${cls}">${esc(text)}</span>`; }
+
+/* ---------- 1. latest run ---------- */
+async function getJSON(name) {
+  const r = await fetch(DATA_BASE + name, { cache: "no-store" });
+  if (!r.ok) throw new Error(`${name}: HTTP ${r.status}`);
+  return r.json();
+}
+
+function renderRun(fish, latest) {
+  const a = ago(fish.generated_utc), t = (fish.layers && fish.layers.times) || {}, ds = (fish.layers && fish.layers.datasets) || {};
+  const errs = (latest && latest.errors) || [];
+  let h = `<div class="kv">
+    <div>Generated</div><div>${esc(fish.generated_utc)} ${pill(a.cls, a.text)}</div>
+    <div>Temperature scene</div><div>${esc(t.sst || "-")} <span class="muted">(${esc(ds.sst || "")})</span></div>
+    <div>Chlorophyll scene</div><div>${esc(t.chlorophyll || "none")} <span class="muted">(${esc(ds.chlorophyll || "")})</span></div>
+    <div>Currents scene</div><div>${esc(t.currents || "none (Gulf Stream edge not available)")} <span class="muted">(${esc(ds.currents || "")})</span></div>
+    <div>Depth dataset</div><div>${esc(ds.bathymetry || "none")}</div>
+    <div>Moon</div><div>${esc(((fish.conditions || {}).moon || {}).text || "not in this run")}</div>
+    <div>Sea state</div><div>${esc((((fish.conditions || {}).sea || {}).now || {}).text || "no recent buoy reading")}${(((fish.conditions || {}).sea || {}).outlook) ? "<br>" + esc(fish.conditions.sea.outlook.text) : ""}</div>
+    <div>Cold front</div><div>${(fish.conditions && fish.conditions.front && fish.conditions.front.text) ? esc(fish.conditions.front.text) : pill("ok", "none detected or forecast")}</div>
+    <div>Pipeline errors</div><div>${errs.length ? errs.map(e => pill("bad", e)).join("<br>") : pill("ok", "none")}</div>
+    ${fish.error ? `<div>Fish error</div><div>${pill("bad", fish.error)}</div>` : ""}
+  </div>`;
+
+  h += `<h2 style="margin-top:16px">Species</h2><div class="scroll"><table><tr><th>Species</th><th>Status</th><th>Areas</th><th>Message</th></tr>` +
+    (fish.species || []).map(s => `<tr><td>${esc(s.name)}</td><td>${pill(s.status === "ok" ? "ok" : s.status === "unavailable" ? "warn" : "", s.status)}</td><td>${esc(s.spots)}</td><td class="wrap">${esc(s.message)}</td></tr>`).join("") +
+    `</table></div>`;
+
+  h += `<h2 style="margin-top:16px">Areas (${(fish.spots || []).length})</h2>` + ((fish.spots || []).map(s => `
+    <details><summary><b>${esc(s.id)}</b> &middot; score ${num(s.score * 100, 0)}% &middot; ${esc(s.confidence)} &middot; ${esc(s.title)}
+      <span class="muted">at ${esc(s.coords[1])}, ${esc(s.coords[0])}</span></summary>
+      <ul>${(s.reasons || []).map(r => `<li>${pill("", r[0])} ${esc(r[1])}</li>`).join("")}</ul>
+      <div class="kv">${(s.location || []).map(x => `<div>${esc(x[0])}</div><div>${esc(x[1])}</div>`).join("")}
+        <div>Data coverage</div><div>${esc(s.data_coverage)}</div></div>
+    </details>`).join("") || `<div class="muted">No areas right now.</div>`);
+
+  if (latest) {
+    h += `<h2 style="margin-top:16px">Buoys</h2><div class="scroll"><table><tr><th>Station</th><th>Zone</th><th>OK</th><th>Water C</th><th>24 h</th><th>Wind kn</th><th>Waves m</th><th>Pressure</th><th>Time (UTC)</th></tr>` +
+      (latest.buoys || []).map(b => `<tr><td>${esc(b.station)} <span class="muted">${esc(b.name || "")}</span></td><td>${esc(b.zone || "")}</td>
+        <td>${b.ok ? pill("ok", "yes") : pill("bad", "no")}</td><td>${num(b.water_temp_c)}</td><td>${num(b.water_temp_change_24h_c)}</td>
+        <td>${num(b.wind_kn)}</td><td>${num(b.wave_height_m)}</td><td>${num(b.pressure_hpa)}</td><td>${esc(b.time_utc || "")}</td></tr>`).join("") + `</table></div>`;
+    const g = (k, o) => o ? `<div>${k}</div><div>${esc(o.dataset)}: ${esc(o.time)} &middot; valid cells ${num((o.valid_fraction || 0) * 100, 0)}% &middot; range ${num(o.value_min, 2)} to ${num(o.value_max, 2)} &middot; strongest gradient ${num(o.gradient_max, 3)} ${esc(o.gradient_unit || "")}</div>` : `<div>${k}</div><div>${pill("warn", "none")}</div>`;
+    const cl = o => o ? `<div>No-fishing areas</div><div>${o.loaded ? pill("ok", "checked") : pill("bad", "NOT checked")} ${esc(o.areas)} areas mapped in our box</div>` : `<div>No-fishing areas</div><div>${pill("warn", "not in this run")}</div>`;
+    const st = o => o ? `<div>Reef structure</div><div>${esc(o.artificial_reef_records)} artificial reef records &middot; ${esc(o.natural_reef_polygons)} natural reef polygons &middot; cells: ${esc(o.cells_wreck)} wreck, ${esc(o.cells_artificial_reef)} artificial reef, ${esc(o.cells_natural_reef)} natural reef</div>` : `<div>Reef structure</div><div>${pill("warn", "not loaded")}</div>`;
+    h += `<h2 style="margin-top:16px">Satellite summaries</h2><div class="kv">${g("Temperature", latest.sst)}${g("Chlorophyll", latest.chlorophyll)}${st(latest.structure)}${cl(latest.closures)}</div>`;
+  }
+  $("run").innerHTML = h;
+}
+
+async function loadRun() {
+  $("runStatus").textContent = "Loading...";
+  const out = { fish: null, latest: null }, problems = [];
+  try { out.fish = await getJSON("fish.json"); } catch (e) { problems.push(String(e.message || e)); }
+  try { out.latest = await getJSON("latest.json"); } catch (e) { problems.push(String(e.message || e)); }
+  if (!out.fish) {
+    $("run").innerHTML = pill("bad", "fish.json could not be loaded") + `<p class="muted">${problems.map(esc).join("<br>")}</p><p>Has the "Pull ocean data" workflow run? It publishes to the <code>data</code> branch.</p>`;
+    $("runStatus").textContent = "";
+    return;
+  }
+  renderRun(out.fish, out.latest);
+  $("runStatus").textContent = problems.length ? "Loaded with problems: " + problems.join("; ") : "Loaded.";
+}
+
+/* ---------- 2. ArcGIS inspector ---------- */
+async function arc(url, params) {
+  const q = new URLSearchParams(Object.assign({ f: "json" }, params || {}));
+  const r = await fetch(url + (url.includes("?") ? "&" : "?") + q.toString());
+  if (!r.ok) throw new Error("HTTP " + r.status);
+  const j = await r.json();
+  if (j.error) throw new Error(j.error.message || "service error");
+  return j;
+}
+const BBOX = { geometry: `${REGION.lon[0]},${REGION.lat[0]},${REGION.lon[1]},${REGION.lat[1]}`, geometryType: "esriGeometryEnvelope", inSR: 4326, spatialRel: "esriSpatialRelIntersects" };
+let currentBase = "";
+
+function corsHint(err) {
+  const msg = String((err && err.message) || err);
+  return /Failed to fetch|NetworkError|Load failed/i.test(msg)
+    ? "The browser could not reach this service (it may block cross-site requests, or it is down). The terminal command <code>python -m pipeline.find_layers URL</code> does the same check without that limit."
+    : esc(msg);
+}
+
+async function inspect(base) {
+  base = base.trim().replace(/\/+$/, "");
+  currentBase = base;
+  $("sampleOut").innerHTML = "";
+  if (!/^https:\/\//.test(base)) { $("inspectOut").innerHTML = pill("warn", "Enter a full https:// service URL"); return; }
+  $("inspectOut").innerHTML = `<span class="muted">Reading layers...</span>`;
+  try {
+    const info = await arc(base);
+    const layers = (info.layers || []).filter(l => l.id != null);
+    const rows = await Promise.all(layers.map(async l => {
+      try {
+        const [meta, cnt] = await Promise.all([
+          arc(`${base}/${l.id}`),
+          arc(`${base}/${l.id}/query`, Object.assign({ where: "1=1", returnCountOnly: "true" }, BBOX))]);
+        return { id: l.id, name: l.name, geom: (meta.geometryType || "?").replace("esriGeometry", ""),
+          count: cnt.count, fields: (meta.fields || []).map(f => f.name).slice(0, 10).join(", ") };
+      } catch (e) { return { id: l.id, name: l.name, geom: "?", count: null, fields: "", err: String(e.message || e) }; }
+    }));
+    $("inspectOut").innerHTML = `<div class="muted">${rows.length} layers. Click a row for sample records.</div><div class="scroll"><table>
+      <tr><th>ID</th><th>Name</th><th>Type</th><th>In our box</th><th>Fields</th></tr>` +
+      rows.map(r => `<tr class="click" data-id="${esc(r.id)}"><td>${esc(r.id)}</td><td class="wrap">${esc(r.name)}</td><td>${esc(r.geom)}</td>
+        <td>${r.count == null ? pill("warn", r.err ? "error" : "n/a") : r.count > 0 ? pill("ok", r.count) : esc(r.count)}</td><td class="wrap">${esc(r.fields)}</td></tr>`).join("") + `</table></div>`;
+  } catch (e) { $("inspectOut").innerHTML = pill("bad", "Could not read the service") + `<p>${corsHint(e)}</p>`; }
+}
+
+async function distinct(id, field) {
+  $("distOut").innerHTML = `<span class="muted">Looking up values...</span>`;
+  try {
+    const j = await arc(`${currentBase}/${id}/query`, Object.assign({ where: "1=1", outFields: field, returnGeometry: "false", returnDistinctValues: "true", resultRecordCount: 200 }, BBOX));
+    const vals = (j.features || []).map(f => f.attributes[field]);
+    $("distOut").innerHTML = vals.length ? `<ul>${vals.map(v => `<li>${esc(v === null ? "(empty)" : v)}</li>`).join("")}</ul>` : `<div class="muted">No values inside our box.</div>`;
+  } catch (e) { $("distOut").innerHTML = pill("bad", "Lookup failed") + `<p>${corsHint(e)}</p>`; }
+}
+
+async function sample(id) {
+  $("sampleOut").innerHTML = `<span class="muted">Loading sample records from layer ${esc(id)}...</span>`;
+  try {
+    const j = await arc(`${currentBase}/${id}/query`, Object.assign({ where: "1=1", outFields: "*", returnGeometry: "false", resultRecordCount: 5 }, BBOX));
+    const recs = (j.features || []).map(f => f.attributes);
+    $("sampleOut").innerHTML = `<h2 style="margin-top:14px">Layer ${esc(id)}: sample records (up to 5)</h2>` +
+      (recs.length ? `<pre>${esc(JSON.stringify(recs, null, 2))}</pre>` : `<div class="muted">No records inside our box for this layer.</div>`) +
+      `<div class="row"><input id="distField" type="text" placeholder="Field name, e.g. Fish_Rstr"><button id="distBtn">Show distinct values</button></div><div id="distOut"></div>`;
+    $("distBtn").addEventListener("click", () => distinct(id, $("distField").value.trim()));
+  } catch (e) { $("sampleOut").innerHTML = pill("bad", "Sample query failed") + `<p>${corsHint(e)}</p>`; }
+}
+
+$("refresh").addEventListener("click", loadRun);
+$("inspect").addEventListener("click", () => inspect($("svcUrl").value));
+document.querySelectorAll("button[data-url]").forEach(b => b.addEventListener("click", () => { $("svcUrl").value = b.dataset.url; inspect(b.dataset.url); }));
+$("inspectOut").addEventListener("click", e => { const tr = e.target.closest && e.target.closest("tr.click"); if (tr) sample(tr.dataset.id); });
+loadRun();
+</script>
+</body>
+</html>

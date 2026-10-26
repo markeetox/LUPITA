@@ -1,0 +1,9 @@
+{
+  "note": "NOAA CO-OPS tide prediction stations. Positions are the coordinates NOAA's active-station list gives for the matching buoy/pier sites (checked earlier); station IDs came from the same list.",
+  "stations": [
+    { "id": "8723214", "name": "Virginia Key",     "lat": 25.731, "lon": -80.162 },
+    { "id": "8722956", "name": "Port Everglades",  "lat": 26.092, "lon": -80.117 },
+    { "id": "8722670", "name": "Lake Worth Pier",  "lat": 26.612, "lon": -80.034 },
+    { "id": "8723970", "name": "Vaca Key",         "lat": 24.711, "lon": -81.105 }
+  ]
+}

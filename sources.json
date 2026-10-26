@@ -1,0 +1,156 @@
+{
+  "note": "SST, chlorophyll (NOAA-20 near-real-time) and ETOPO bathymetry verified with check_sources. The gap-filled chlorophyll entry is verified but switched off (its filled cells are estimates). gradient_min values are placeholders to calibrate against real grids. fallback_bases: a second NOAA CoastWatch address tried only if the main one refuses (not yet verified).",
+  "region": {
+    "name": "south_florida",
+    "lat": [
+      24.5,
+      27.0
+    ],
+    "lon": [
+      -81.0,
+      -78.5
+    ]
+  },
+  "ndbc": {
+    "realtime_url": "https://www.ndbc.noaa.gov/data/realtime2/{station}.txt"
+  },
+  "erddap": {
+    "sst": {
+      "enabled": true,
+      "base": "https://coastwatch.pfeg.noaa.gov/erddap",
+      "dataset": "jplMURSST41",
+      "variable": "analysed_sst",
+      "dims": [
+        "time",
+        "latitude",
+        "longitude"
+      ],
+      "stride": {
+        "latitude": 2,
+        "longitude": 2
+      },
+      "parameter": "sst_c",
+      "log_scale": false,
+      "gradient_unit": "degC per km",
+      "gradient_min": 0.05,
+      "fallback_bases": [
+        "https://upwell.pfeg.noaa.gov/erddap"
+      ]
+    },
+    "chlorophyll": {
+      "enabled": true,
+      "base": "https://coastwatch.pfeg.noaa.gov/erddap",
+      "dataset": "nesdisVHNnoaa20chlaDaily",
+      "variable": "chlor_a",
+      "dims": [
+        "time",
+        "altitude",
+        "latitude",
+        "longitude"
+      ],
+      "stride": {
+        "latitude": 2,
+        "longitude": 2
+      },
+      "parameter": "chlorophyll",
+      "log_scale": true,
+      "gradient_unit": "log10(mg/m3) per km",
+      "gradient_min": 0.02,
+      "note": "Near-real-time NOAA-20 VIIRS, 4 km. Daily scenes have gaps under cloud; see valid_fraction in the output.",
+      "fallback_bases": [
+        "https://upwell.pfeg.noaa.gov/erddap"
+      ]
+    },
+    "chlorophyll_gapfilled": {
+      "enabled": false,
+      "base": "https://coastwatch.pfeg.noaa.gov/erddap",
+      "dataset": "nesdisVHNnoaaSNPPnoaa20NRTchlaGapfilledDaily",
+      "variable": "chlor_a",
+      "dims": [
+        "time",
+        "altitude",
+        "latitude",
+        "longitude"
+      ],
+      "stride": {
+        "latitude": 2,
+        "longitude": 2
+      },
+      "parameter": "chlorophyll",
+      "log_scale": true,
+      "gradient_unit": "log10(mg/m3) per km",
+      "gradient_min": 0.02,
+      "note": "Cloud gaps are filled by a statistical method (DINEOF), so filled cells are estimates. Use as a fallback and label confidence lower. Dimensions and variable name unverified.",
+      "fallback_bases": [
+        "https://upwell.pfeg.noaa.gov/erddap"
+      ]
+    },
+    "bathymetry": {
+      "enabled": true,
+      "base": "https://coastwatch.pfeg.noaa.gov/erddap",
+      "dataset": "ETOPO_2022_v1_15s",
+      "variable": "z",
+      "dims": [
+        "latitude",
+        "longitude"
+      ],
+      "stride": {
+        "latitude": 5,
+        "longitude": 5
+      },
+      "parameter": "depth_m",
+      "note": "NOAA ETOPO 2022, 15 arc-second (about 450 m). Negative values are depth below sea level, so depth_m = -z. Coarse near reefs and shore. Dimensions and variable name unverified.",
+      "fallback_bases": [
+        "https://upwell.pfeg.noaa.gov/erddap"
+      ]
+    },
+    "currents": {
+      "enabled": true,
+      "base": "https://coastwatch.pfeg.noaa.gov/erddap",
+      "fallback_bases": [
+        "https://upwell.pfeg.noaa.gov/erddap"
+      ],
+      "dataset": "nesdisSSH1day",
+      "variables": [
+        "ugos",
+        "vgos"
+      ],
+      "dims": [
+        "time",
+        "latitude",
+        "longitude"
+      ],
+      "stride": {
+        "latitude": 1,
+        "longitude": 1
+      },
+      "parameter": "current_speed",
+      "note": "NOAA CoastWatch geostrophic currents from satellite altimetry, daily, 25 km grid, listed as experimental. u = east, v = north, in m/s. Dimensions and variable names are from the ERDDAP listing and not yet verified here: run check_sources."
+    }
+  },
+  "arcgis": {
+    "note": "Both reef sources must load or yellowtail is reported as waiting for data. Artificial reefs: FWC layer 12 (checked in the browser inspector). Natural reef: FWC Unified Reef Map v2.2 (Jan 2025), layer 16, filtered on ClassLv1 to reef and hard bottom only.",
+    "artificial_reefs": {
+      "enabled": true,
+      "url": "https://gis.myfwc.com/mapping/rest/services/Open_Data/Artificial_Reef_Locations_in_Florida/MapServer/12"
+    },
+    "natural_reef": {
+      "enabled": true,
+      "url": "https://gis.myfwc.com/hosting/rest/services/Open_Data/Unified_Florida_Reef_Tract_Benthic_Habitat/MapServer/16",
+      "where": "ClassLv1 IN ('Individual or Aggregated Patch Reef','Aggregate Reef','Ridge','Pavement')",
+      "page_size": 2000,
+      "simplify_deg": 0.0005,
+      "min_cover": 0.01
+    }
+  },
+  "closures": {
+    "enabled": true,
+    "note": "No-fishing areas from NOAA's National MPA Center MPA Inventory (2023 edition, service data last edited Jan 2025). Only areas whose Fishing Restrictions text says recreational fishing is prohibited are used. Fishery management areas, security zones and seasonal closures are not in this inventory.",
+    "source_label": "NOAA National MPA Center, MPA Inventory (2023 edition)",
+    "url": "https://services2.arcgis.com/C8EMgrsFcRFL6LrL/arcgis/rest/services/NOAA_MPA_Inventory_2023/FeatureServer/0",
+    "where": "Fish_Rstr LIKE '%Recreational Fishing Prohibited%'",
+    "page_size": 1000,
+    "simplify_deg": 0.0005,
+    "min_expected": 1
+  }
+}

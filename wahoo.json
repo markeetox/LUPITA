@@ -1,0 +1,199 @@
+{
+  "schema_version": 1,
+  "id": "wahoo",
+  "common_name": "Wahoo",
+  "scientific_name": "Acanthocybium solandri",
+  "aliases": [
+    "ono",
+    "peto"
+  ],
+  "habitat_zone": "offshore",
+  "display": {
+    "color": "#f472b6"
+  },
+  "review_status": "draft - mostly angler and habitat-description sources; temperature band and season are provisional",
+  "confidence_cap": "Low",
+  "image": {
+    "status": "placeholder",
+    "kind": "illustration",
+    "url": "fish/wahoo.png",
+    "credit": "Original illustration",
+    "license": "",
+    "plan": "web/fish/wahoo.png is a transparent placeholder illustration. To use a real photo: replace that file with a transparent PNG of the same name (cropped tight to the fish, facing left looks best), then set kind to \"photo\" and fill in credit and license here. Only use images you have the right to show: NOAA Fisheries species pages and Wikimedia Commons are good places to look; FWC illustrations are copyrighted."
+  },
+  "profile": {
+    "size": "Relatively common at 50-75 lb and can exceed 100 lb",
+    "diet": "Almost totally fish: mackerels, butterfishes, scads, jacks, flying fish; a little squid",
+    "swimming_depth": "Mostly in the upper mixed layer. Tagging off Baja California found an average depth of about 18 m, with 99% of daytime above the thermocline.",
+    "behavior": "Solitary or in very small loose groups. More common near banks (lumps), drop-offs or weed lines in blue water, along current edges and temperature breaks. Not warm-blooded.",
+    "lifespan": "At least 5 years",
+    "regulations_link": "https://myfwc.com/fishing/saltwater/",
+    "sources": [
+      "https://www.laseagrant.org/fisheries/wahoo/",
+      "https://www.iccat.int/Documents/SCRS/Manual/CH2/2_1_10_10_WAH_ENG.pdf",
+      "https://ncseagrant.ncsu.edu/hooklinescience/wp-json/wp/v2/posts/667",
+      "https://marineinfo.org/id/publication/256034",
+      "https://inthespread.com/blog/wahoo-fishing-in-florida-expert-regional-tactics-376",
+      "https://www.satfish.com/wahoo-species-profile/"
+    ]
+  },
+  "factors": [
+    {
+      "param": "bottom_slope",
+      "kind": "higher_is_better",
+      "weight": 0.26,
+      "active": true,
+      "value_status": "provisional",
+      "value_notes": "Louisiana Sea Grant: wahoo are more common near banks (lumps), drop-offs and weed lines. Angler accounts focus on steep ledges where depth contours stack close together. Scored relative to the steepest offshore slopes in the area; the 2 km grid smooths small ledges away.",
+      "sources": [
+        "https://www.laseagrant.org/fisheries/wahoo/",
+        "https://www.satfish.com/wahoo-species-profile/"
+      ],
+      "reason_template": "The seafloor drops steeply here ({value} m of depth change per km), one of the sharper ledges in the area."
+    },
+    {
+      "param": "sst_c",
+      "kind": "range",
+      "weight": 0.22,
+      "active": true,
+      "value_status": "provisional",
+      "value_notes": "Tagging of four wahoo in the Florida Straits (FAU) found the optimal swimming temperature started near 23.1 C. Angler sources give about 22-27 C as the best band. Sources disagree on the upper edge, so the ideal band is an estimate.",
+      "sources": [
+        "https://www.iccat.int/Documents/SCRS/Manual/CH2/2_1_10_10_WAH_ENG.pdf",
+        "https://ncseagrant.ncsu.edu/hooklinescience/wp-json/wp/v2/posts/667"
+      ],
+      "reason_template": "Water is {value} C, inside the {ideal_min}-{ideal_max} C range where wahoo are most active.",
+      "range": [
+        21,
+        30
+      ],
+      "ideal": [
+        23,
+        28
+      ]
+    },
+    {
+      "param": "sst_gradient",
+      "kind": "higher_is_better",
+      "weight": 0.13,
+      "active": true,
+      "value_status": "provisional",
+      "value_notes": "Anglers fish wahoo along temperature breaks and current edges, especially where they meet a steep ledge. Scored relative to today's sharpest offshore breaks.",
+      "sources": [
+        "https://www.satfish.com/wahoo-species-profile/",
+        "https://inthespread.com/blog/wahoo-fishing-in-florida-expert-regional-tactics-376"
+      ],
+      "reason_template": "Water temperature changes about {per10km} C every 10 km here, one of the sharper breaks in the area today."
+    },
+    {
+      "param": "depth_m",
+      "kind": "range",
+      "weight": 0.04,
+      "active": true,
+      "value_status": "provisional",
+      "value_notes": "Wahoo are blue-water fish that do not live near shore. Cells shallower than 30 m are excluded. Bottom depth is a weak guide because the fish swim in the upper water column.",
+      "sources": [
+        "https://www.laseagrant.org/fisheries/wahoo/",
+        "https://ncseagrant.ncsu.edu/hooklinescience/wp-json/wp/v2/posts/667"
+      ],
+      "reason_template": "Depth is {value} m, in the blue water wahoo use.",
+      "range": [
+        30,
+        2000
+      ],
+      "ideal": [
+        60,
+        800
+      ],
+      "gate": true
+    },
+    {
+      "param": "season_presence",
+      "kind": "season",
+      "weight": 0.18,
+      "active": true,
+      "value_status": "provisional",
+      "value_notes": "Angler sources call November to February prime wahoo season off the Keys and Miami. Other sources say wahoo are caught year-round with a late-summer to early-fall peak in some regions. The window here is a judgment call.",
+      "sources": [
+        "https://inthespread.com/blog/wahoo-fishing-in-florida-expert-regional-tactics-376",
+        "https://inthespread.com/blog/the-best-depth-for-wahoo-fishing-366"
+      ],
+      "months": [
+        10,
+        11,
+        12,
+        1,
+        2,
+        3
+      ],
+      "peak_months": [
+        11,
+        12,
+        1,
+        2
+      ],
+      "in_score": 0.7,
+      "off_score": 0.4,
+      "value_text": {
+        "peak": "It is prime wahoo season (about November to February) off South Florida.",
+        "in_season": "It is wahoo season off South Florida (about October to March).",
+        "off": "It is outside the usual wahoo peak, though wahoo are caught year-round."
+      }
+    },
+    {
+      "param": "gulf_stream_edge",
+      "kind": "range",
+      "range": [
+        -35,
+        40
+      ],
+      "ideal": [
+        -6,
+        15
+      ],
+      "weight": 0.15,
+      "active": true,
+      "value_status": "provisional",
+      "value_notes": "Wahoo anglers fish current edges, often where the edge meets a steep ledge. The edge is estimated from 25 km satellite altimetry, so it is good to roughly 20 km. The band is an estimate.",
+      "reason_template": "The Gulf Stream's inshore edge is close ({abs_value} km {side}). Wahoo patrol current edges.",
+      "sources": [
+        "https://www.satfish.com/wahoo-species-profile/",
+        "https://inthespread.com/blog/wahoo-fishing-in-florida-expert-regional-tactics-376"
+      ]
+    }
+  ],
+  "timing": {
+    "status": "angler_lore",
+    "note": "Angler lore: patterns reported by local captains and fishing writers, not tested by studies. Numbers are judgment calls to be calibrated against trip logs.",
+    "sources": [
+      "https://www.royalgazette.com/?p=235183",
+      "https://www.visitlauderdale.com/blog/stories/author/steve-waters/624709b374c75321496f44b5/",
+      "https://www.fishheadquarters.com/?p=1534"
+    ],
+    "light": {
+      "map": {
+        "dawn": 1.0,
+        "dusk": 1.0,
+        "day": 0.6,
+        "night": 0.6
+      },
+      "text": {
+        "dawn": "It is dawn, the low-light time when wahoo are reported to bite best.",
+        "dusk": "It is dusk, the low-light time when wahoo are reported to bite best."
+      }
+    },
+    "moon": {
+      "months": [
+        8,
+        9,
+        10,
+        11
+      ],
+      "from_days": -3,
+      "to_days": 3,
+      "in_score": 1.0,
+      "out_score": 0.6,
+      "text": "It is the week around the full moon, when local charters report the year's best wahoo fishing with the king tides."
+    }
+  }
+}

@@ -1,0 +1,61 @@
+{
+  "note": "Approximate inlet positions (about 1 km) for orientation and as snook sites. Not for navigation. Each site is drawn as a circle of radius_km around its position.",
+  "places": [
+    {
+      "name": "Government Cut",
+      "lat": 25.767,
+      "lon": -80.135,
+      "kind": "inlet",
+      "radius_km": 1.5
+    },
+    {
+      "name": "Haulover Inlet",
+      "lat": 25.903,
+      "lon": -80.123,
+      "kind": "inlet",
+      "radius_km": 1.5
+    },
+    {
+      "name": "Port Everglades",
+      "lat": 26.092,
+      "lon": -80.107,
+      "kind": "inlet",
+      "radius_km": 1.5
+    },
+    {
+      "name": "Hillsboro Inlet",
+      "lat": 26.259,
+      "lon": -80.083,
+      "kind": "inlet",
+      "radius_km": 1.5
+    },
+    {
+      "name": "Boca Raton Inlet",
+      "lat": 26.336,
+      "lon": -80.068,
+      "kind": "inlet",
+      "radius_km": 1.5
+    },
+    {
+      "name": "Boynton Inlet",
+      "lat": 26.546,
+      "lon": -80.047,
+      "kind": "inlet",
+      "radius_km": 1.5
+    },
+    {
+      "name": "Lake Worth Inlet",
+      "lat": 26.773,
+      "lon": -80.033,
+      "kind": "inlet",
+      "radius_km": 1.5
+    },
+    {
+      "name": "Bear Cut",
+      "lat": 25.738,
+      "lon": -80.156,
+      "kind": "inlet",
+      "radius_km": 1.5
+    }
+  ]
+}
