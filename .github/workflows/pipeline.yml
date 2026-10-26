@@ -1,0 +1,54 @@
+name: Pull ocean data
+
+on:
+  schedule:
+    - cron: "10 * * * *"   # every hour, at 10 minutes past (UTC)
+  workflow_dispatch: {}
+
+permissions:
+  contents: write
+
+# Never let two runs overlap (a manual run plus the hourly one, for example).
+concurrency:
+  group: pull-ocean-data
+  cancel-in-progress: false
+
+jobs:
+  pull:
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    steps:
+      - uses: actions/checkout@v4
+      # The last published data, so a failed run never wipes out good predictions.
+      - uses: actions/checkout@v4
+        continue-on-error: true      # the data branch does not exist on a very first run
+        with:
+          ref: data
+          path: previous
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: pip install -r requirements.txt
+      - run: python -m pytest -q
+      - run: python -m pipeline.run
+      # Publishes to a "data" branch, so Vercel does not redeploy on every pull and Seabound can fetch the JSON from there.
+      - run: |
+          mkdir -p publish
+          cp data/live/*.json publish/ || true
+          cp data/parameters.json publish/
+          cp -r data/species publish/species
+          # The app-facing API (api/v1/...) written by the pipeline.
+          if [ -d data/live/api ]; then cp -r data/live/api publish/api; fi
+          # Keep the last good copy of anything this run did not produce (for example when NOAA refused a request).
+          if [ -d previous ]; then
+            for f in previous/*.json; do
+              [ -e "publish/$(basename "$f")" ] || cp "$f" publish/
+            done
+            if [ ! -d publish/api ] && [ -d previous/api ]; then cp -r previous/api publish/api; fi
+          fi
+      - uses: peaceiris/actions-gh-pages@v4
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./publish
+          publish_branch: data
+          force_orphan: true
