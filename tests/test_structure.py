@@ -215,7 +215,8 @@ def test_position_and_nearest_inlet_rows():
     lay = L.load_layers(_sources(), [], fetch=fake_erddap, fetch_arc=fake_arcgis)
     registry = json.loads((ROOT / "data/parameters.json").read_text())
     out = build_fish_json(lay, [], _profiles(), registry, "t", places)
-    row = {r[0]: r[1] for r in out["spots"][0]["location"]}
+    spot = next(s for s in out["spots"] if any(r[0] == "Nearest inlet" for r in s["location"]))
+    row = {r[0]: r[1] for r in spot["location"]}
     assert "N," in row["Position"] and "W" in row["Position"]
     assert "nm" in row["Nearest inlet"] and "approximate" in row["Nearest inlet"]
 
