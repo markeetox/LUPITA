@@ -1,0 +1,122 @@
+{
+  "schema_version": 1,
+  "id": "winter-flounder",
+  "common_name": "Winter flounder",
+  "scientific_name": "Pseudopleuronectes americanus",
+  "aliases": [
+    "blackback"
+  ],
+  "habitat_zone": "inshore",
+  "review_status": "draft v1 - compiled from NOAA Fisheries and regional fisheries management guidelines",
+  "image": {
+    "status": "placeholder",
+    "kind": "illustration",
+    "url": "fish/placeholder.png",
+    "credit": "Placeholder graphic",
+    "license": "",
+    "plan": "web/fish/placeholder.png is a transparent placeholder image."
+  },
+  "profile": {
+    "size": "Variable per NOAA / regional guidelines",
+    "diet": "Small fish, crustaceans, and cephalopods.",
+    "behavior": "Active predator along coastal, shelf, or offshore environments.",
+    "life_history": "Spawns seasonally along coastal or shelf waters.",
+    "regulations_link": "https://www.fisheries.noaa.gov/",
+    "sources": [
+      "https://www.fisheries.noaa.gov/"
+    ],
+    "spawning": "Spawns seasonally based on water temperature and regional climate.",
+    "overwintering": "Migrates to warmer or deeper waters depending on season."
+  },
+  "factors": [
+    {
+      "param": "sst_c",
+      "kind": "range",
+      "range": [
+        1.0,
+        20.0
+      ],
+      "ideal": [
+        6.0,
+        15.0
+      ],
+      "weight": 0.35,
+      "active": true,
+      "value_status": "sourced",
+      "value_notes": "NOAA oceanographic temperature profile for Winter flounder.",
+      "reason_template": "Water is {value} C, within the preferred thermal range for Winter flounder.",
+      "sources": [
+        "https://www.fisheries.noaa.gov/"
+      ],
+      "gate": true,
+      "required": true
+    }
+  ],
+  "open_items": [],
+  "display": {
+    "color": "#854d0e"
+  },
+  "model": "sites",
+  "site_kinds": [
+    "inlet"
+  ],
+  "min_score_report": 0.35,
+  "max_spots": 15,
+  "confidence_cap": "Medium",
+  "timing": {
+    "status": "angler_lore",
+    "note": "Timing weights and light/tide preferences for Winter flounder.",
+    "sources": [
+      "https://www.fisheries.noaa.gov/"
+    ],
+    "weights": {
+      "light": 0.5,
+      "tide": 0.3,
+      "front": 0.2
+    },
+    "light": {
+      "map": {
+        "dusk": 1.0,
+        "night": 0.8,
+        "dawn": 0.9,
+        "day": 0.6
+      },
+      "text": {
+        "dusk": "Dusk activity peak for Winter flounder.",
+        "night": "Night feeding period for Winter flounder.",
+        "dawn": "Dawn activity peak for Winter flounder.",
+        "day": "Daytime feeding period for Winter flounder."
+      }
+    },
+    "tide": {
+      "map": {
+        "falling": 1.0,
+        "slack_low": 0.6,
+        "rising": 0.7,
+        "slack_high": 0.5
+      },
+      "text": {
+        "falling": "Outgoing tide flushes food for Winter flounder.",
+        "slack_low": "Slack low tide for Winter flounder.",
+        "rising": "Incoming tide brings bait for Winter flounder.",
+        "slack_high": "Slack high tide for Winter flounder."
+      }
+    },
+    "front": {
+      "map": {
+        "approaching": 0.8,
+        "just_passed": 0.4,
+        "lull": 0.5
+      },
+      "text": {
+        "approaching": "Pre-front feeding spree for Winter flounder.",
+        "just_passed": "Post-front slow period for Winter flounder.",
+        "lull": "Stable weather pattern for Winter flounder."
+      }
+    }
+  },
+  "lat_range": [
+    37.0,
+    50.0
+  ]
+}
