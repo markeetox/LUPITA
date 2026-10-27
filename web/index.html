@@ -3,186 +3,237 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>Fish habitat map</title>
+<title>L.U.P.I.T.A.</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Mansalva&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Genos:ital,wght@0,300..900;1,300..900&display=swap" rel="stylesheet">
 <link href="https://cdn.jsdelivr.net/npm/maplibre-gl@4.7.1/dist/maplibre-gl.css" rel="stylesheet">
 <style>
   :root {
-    --bg: #121316; --card: #1a1a1e; --line: #2e2e34; --text: #e6edf6; --muted: #94a3b8;
-    --font: "Mansalva", "Segoe Print", "Bradley Hand", cursive;
+    --bg: #0c0d10; --card: #14161b; --line: #262933; --text: #f0f4f8; --muted: #94a3b8;
+    --accent: #38bdf8; --font: "Genos", sans-serif;
   }
-  * { box-sizing: border-box; font-family: var(--font); font-weight: 400; font-synthesis: none; }
+  * { box-sizing: border-box; font-family: var(--font); font-weight: 500; font-synthesis: none; }
   html, body { height: 100%; margin: 0; background: var(--bg); color: var(--text); }
   #map { position: absolute; inset: 0; }
   .maplibregl-map, .maplibregl-ctrl, .maplibregl-ctrl-attrib { font-family: var(--font); }
-  .maplibregl-ctrl-attrib { font-size: 11px; }
+  .maplibregl-ctrl-attrib { font-size: 13px; }
 
-  /* top panel: slides down from the top, hides back up, leaving only an arrow tab */
-  .topsheet { position: fixed; top: 0; left: 0; right: 0; margin: 0 auto; width: 100%; max-width: 560px; z-index: 15;
-    background: rgba(26,26,30,.96); border: 1px solid var(--line); border-top: none; border-radius: 0 0 20px 20px;
-    box-shadow: 0 14px 40px rgba(0,0,0,.5); backdrop-filter: blur(8px);
-    padding: calc(env(safe-area-inset-top, 0px) + 12px) 16px 16px;
+  /* 100% full-width responsive top panel with glassmorphism */
+  .topsheet { position: fixed; top: 0; left: 0; right: 0; width: 100%; max-width: 100%; z-index: 15;
+    background: rgba(18, 20, 26, 0.94); border-bottom: 1px solid var(--line);
+    box-shadow: 0 16px 48px rgba(0,0,0,0.65); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
+    padding: calc(env(safe-area-inset-top, 0px) + 14px) 24px 18px;
     transition: transform .34s cubic-bezier(.2,.8,.2,1); }
   .topsheet.closed { transform: translateY(-100%); box-shadow: none; }
-  .topsheet h1 { font-size: 22px; margin: 0 0 8px; }
-  .lbl { display: block; font-size: 13px; color: var(--muted); margin-bottom: 4px; }
-  .select { width: 100%; font-size: 17px; color: var(--text); background-color: #121316; border: 1px solid var(--line);
-    border-radius: 12px; padding: 11px 40px 11px 12px; appearance: none; -webkit-appearance: none;
-    background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='14' height='9' viewBox='0 0 14 9'><path d='M1 1l6 6 6-6' fill='none' stroke='%238fa3bd' stroke-width='2' stroke-linecap='round'/></svg>");
-    background-repeat: no-repeat; background-position: right 14px center; }
-  .select:focus { outline: 2px solid #3b82f6; outline-offset: 1px; }
+
+  .top-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; }
+  .topsheet h1 { font-size: 32px; font-weight: 700; letter-spacing: 2px; margin: 0; color: #ffffff; text-transform: uppercase;
+    background: linear-gradient(90deg, #ffffff 0%, #38bdf8 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+  .top-subtitle { font-size: 16px; color: var(--muted); text-transform: uppercase; letter-spacing: 1px; }
+
+  /* Grid layout for responsive controls */
+  .panel-grid { display: grid; grid-template-columns: 1fr; gap: 14px 20px; align-items: start; }
+  @media (min-width: 768px) {
+    .panel-grid { grid-template-columns: repeat(2, 1fr); }
+  }
+  @media (min-width: 1100px) {
+    .panel-grid { grid-template-columns: 1fr 1fr 1.2fr 1fr; }
+  }
+
+  .ctrl-group { display: flex; flex-direction: column; }
+  .lbl { display: block; font-size: 15px; font-weight: 600; text-transform: uppercase; letter-spacing: 1px; color: var(--muted); margin-bottom: 5px; }
+
+  .select { width: 100%; font-size: 19px; color: var(--text); background-color: #0d0f13; border: 1px solid var(--line);
+    border-radius: 10px; padding: 8px 36px 8px 14px; appearance: none; -webkit-appearance: none;
+    background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='14' height='9' viewBox='0 0 14 9'><path d='M1 1l6 6 6-6' fill='none' stroke='%2338bdf8' stroke-width='2' stroke-linecap='round'/></svg>");
+    background-repeat: no-repeat; background-position: right 14px center; transition: border-color 0.2s, box-shadow 0.2s; }
+  .select:focus { outline: none; border-color: var(--accent); box-shadow: 0 0 0 2px rgba(56,189,248,0.25); }
 
   .multi-select { position: relative; width: 100%; }
-  .select-btn { width: 100%; text-align: left; font-size: 16px; color: var(--text); background-color: #121316; border: 1px solid var(--line);
-    border-radius: 12px; padding: 11px 40px 11px 12px; cursor: pointer; appearance: none; -webkit-appearance: none;
-    background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='14' height='9' viewBox='0 0 14 9'><path d='M1 1l6 6 6-6' fill='none' stroke='%238fa3bd' stroke-width='2' stroke-linecap='round'/></svg>");
+  .select-btn { width: 100%; text-align: left; font-size: 19px; color: var(--text); background-color: #0d0f13; border: 1px solid var(--line);
+    border-radius: 10px; padding: 8px 36px 8px 14px; cursor: pointer; appearance: none; -webkit-appearance: none;
+    background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='14' height='9' viewBox='0 0 14 9'><path d='M1 1l6 6 6-6' fill='none' stroke='%2338bdf8' stroke-width='2' stroke-linecap='round'/></svg>");
     background-repeat: no-repeat; background-position: right 14px center; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-  .dropdown-menu { position: absolute; top: calc(100% + 4px); left: 0; right: 0; background: #18191e; border: 1px solid var(--line);
-    border-radius: 12px; box-shadow: 0 12px 36px rgba(0,0,0,.7); z-index: 50; max-height: 280px; display: flex; flex-direction: column; }
+
+  .dropdown-menu { position: absolute; top: calc(100% + 6px); left: 0; right: 0; background: #121419; border: 1px solid var(--line);
+    border-radius: 12px; box-shadow: 0 16px 40px rgba(0,0,0,.85); z-index: 50; max-height: 320px; display: flex; flex-direction: column; }
   .dropdown-menu[hidden] { display: none; }
-  .dropdown-header { display: flex; justify-content: space-between; align-items: center; padding: 8px 12px; border-bottom: 1px solid var(--line); font-size: 13px; color: var(--muted); }
-  .clear-btn { background: none; border: none; color: #60a5fa; cursor: pointer; font-size: 13px; padding: 0; }
+  .dropdown-header { display: flex; justify-content: space-between; align-items: center; padding: 10px 14px; border-bottom: 1px solid var(--line); font-size: 15px; color: var(--muted); }
+  .clear-btn { background: none; border: none; color: #38bdf8; cursor: pointer; font-size: 15px; font-weight: 600; padding: 0; }
   .clear-btn:hover { text-decoration: underline; }
-  .checklist { overflow-y: auto; padding: 4px 0; }
-  .check-item { display: flex; align-items: center; gap: 10px; padding: 8px 12px; cursor: pointer; font-size: 15px; color: var(--text); }
+  .checklist { overflow-y: auto; padding: 6px 0; }
+  .check-item { display: flex; align-items: center; gap: 10px; padding: 8px 14px; cursor: pointer; font-size: 18px; color: var(--text); }
   .check-item:hover { background: rgba(255,255,255,.06); }
-  .check-item input { width: 18px; height: 18px; accent-color: #3b82f6; cursor: pointer; }
-  .check-item .swatch { width: 10px; height: 10px; border-radius: 50%; flex: none; }
+  .check-item input { width: 18px; height: 18px; accent-color: #38bdf8; cursor: pointer; }
+  .check-item .swatch { width: 12px; height: 12px; border-radius: 50%; flex: none; }
   .check-item.disabled { opacity: .45; cursor: not-allowed; }
-  .note { margin: 10px 0 0; font-size: 14px; line-height: 1.35; }
+
+  .note { font-size: 17px; line-height: 1.4; }
   .note div { display: flex; gap: 8px; margin-bottom: 5px; color: var(--muted); }
-  .note i { flex: none; width: 10px; height: 10px; border-radius: 50%; margin-top: 5px; }
-  .note b { color: var(--text); }
-  .chips { margin-top: 4px; }
-  .chip { display: inline-block; margin: 6px 6px 0 0; font-size: 13px; padding: 3px 9px; border-radius: 999px;
-    border: 1px solid var(--line); color: var(--muted); }
-  .chip.warn { color: #fbbf24; border-color: #5b4a1a; }
-  .chip.ok { color: #34d399; border-color: #1c5a47; }
-  .hint { margin: 10px 0 0; font-size: 13px; color: var(--muted); line-height: 1.35; }
-  .toggle { display: flex; align-items: center; gap: 9px; margin-top: 10px; font-size: 15px; cursor: pointer; }
-  .toggle input { width: 20px; height: 20px; accent-color: #ef4444; }
+  .note i { flex: none; width: 10px; height: 10px; border-radius: 50%; margin-top: 7px; }
+  .note b { color: var(--text); font-weight: 600; }
+
+  .toggles-group { display: flex; flex-direction: column; gap: 8px; }
+  .toggle { display: flex; align-items: center; gap: 10px; font-size: 17px; cursor: pointer; }
+  .toggle input { width: 18px; height: 18px; accent-color: #ef4444; }
   .toggle .sw { width: 22px; height: 14px; border-radius: 3px; background: rgba(239,68,68,.35); border: 2px solid #ef4444; }
-  .banner.closed { background: #3a1414; color: #fca5a5; }
-  .legend { display: flex; align-items: center; gap: 8px; margin-top: 12px; font-size: 13px; color: var(--muted); }
-  .legend i { flex: 1; height: 10px; border-radius: 6px; background: linear-gradient(90deg, rgba(148,163,184,.14), #94a3b8, #ffffff); }
-  .tag.lore { background: #35264a; color: #d8b4fe; }
-  .win { font-size: 22px; line-height: 1.15; margin: 2px 0 8px; }
-  .win small { font-size: 14px; color: var(--muted); }
-  .bars { width: 100%; height: auto; display: block; margin: 4px 0 8px; }
-  .bars text { font-size: 9px; fill: #8fa3bd; }
-  .why { display: flex; gap: 9px; align-items: flex-start; font-size: 15px; line-height: 1.35; margin-bottom: 7px; }
-  .note { }
-  .sea { margin-top: 12px; font-size: 14px; line-height: 1.35; display: flex; gap: 9px; align-items: flex-start; }
-  .lvl { flex: none; font-size: 12px; padding: 1px 9px; border-radius: 999px; margin-top: 2px; border: 1px solid; white-space: nowrap; }
-  .lvl.good { color: #34d399; border-color: #1c5a47; } .lvl.fair { color: #fbbf24; border-color: #5b4a1a; }
-  .lvl.rough { color: #fb923c; border-color: #6b3a14; } .lvl.dangerous { color: #f87171; border-color: #6b2a2a; }
-  .banner.rough { background: #3b2310; color: #fdba74; } .banner.dangerous { background: #3a1414; color: #fca5a5; }
-  .ic { width: 18px; height: 18px; flex: none; color: #8fa3bd; vertical-align: -3px; margin-right: 6px; }
-  dt { display: flex; align-items: flex-start; }
-  dt .ic { margin-top: 1px; }
-  .sec h3 { display: flex; align-items: center; }
-  .sec h3 .ic { margin-right: 7px; }
-  .reason .ic { margin: 2px 0 0; color: #9fb3cc; }
-  .sea .ic { margin: 2px 0 0; }
-  .toggle .ic { margin: 0; }
-  .sw.blue { background: rgba(125,211,252,.30); border-color: #7dd3fc; }
-  .chip .ic { width: 14px; height: 14px; margin-right: 4px; vertical-align: -2px; }
-  .tab { position: absolute; top: 100%; left: 50%; width: 76px; height: 30px; margin-left: -38px; padding: 0;
+  .sw.blue { background: rgba(56,189,248,.30); border-color: #38bdf8; }
+
+  .status-bar { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 10px; margin-top: 14px; padding-top: 10px; border-top: 1px dashed var(--line); }
+  .chips { display: flex; flex-wrap: wrap; gap: 8px; }
+  .chip { font-size: 15px; padding: 3px 12px; border-radius: 999px; border: 1px solid var(--line); color: var(--muted); background: rgba(255,255,255,0.02); }
+  .chip.warn { color: #fbbf24; border-color: #5b4a1a; background: rgba(251,191,36,0.05); }
+  .chip.ok { color: #34d399; border-color: #1c5a47; background: rgba(52,211,153,0.05); }
+  .legend { display: flex; align-items: center; gap: 10px; font-size: 15px; color: var(--muted); min-width: 220px; }
+  .legend i { flex: 1; height: 8px; border-radius: 6px; background: linear-gradient(90deg, rgba(148,163,184,.14), #94a3b8, #ffffff); }
+
+  .tab { position: absolute; top: 100%; left: 50%; width: 90px; height: 28px; margin-left: -45px; padding: 0;
     display: flex; align-items: center; justify-content: center; cursor: pointer; color: var(--text);
-    background: rgba(26,26,30,.96); border: 1px solid var(--line); border-top: none; border-radius: 0 0 16px 16px; }
+    background: rgba(18, 20, 26, 0.94); border: 1px solid var(--line); border-top: none; border-radius: 0 0 16px 16px;
+    box-shadow: 0 8px 16px rgba(0,0,0,0.4); }
   .tab svg { transition: transform .3s; }
   .topsheet:not(.closed) .tab svg { transform: rotate(180deg); }
   .topsheet.closed .tab { margin-top: env(safe-area-inset-top, 0px); }
 
-  .sheet { position: fixed; left: 0; right: 0; bottom: 0; margin: 0 auto; width: 100%; max-width: 560px;
-    max-height: 72vh; display: flex; flex-direction: column; z-index: 20;
-    background: var(--card); border: 1px solid var(--line); border-bottom: none; border-radius: 22px 22px 0 0;
-    box-shadow: 0 -14px 44px rgba(0,0,0,.55); padding-bottom: env(safe-area-inset-bottom, 0px);
+  /* 100% full-width responsive detail sheet */
+  .sheet { position: fixed; left: 0; right: 0; bottom: 0; width: 100%; max-width: 100%;
+    max-height: 80vh; display: flex; flex-direction: column; z-index: 20;
+    background: rgba(20, 22, 27, 0.96); border-top: 1px solid var(--line); border-radius: 20px 20px 0 0;
+    box-shadow: 0 -16px 48px rgba(0,0,0,.75); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
+    padding-bottom: env(safe-area-inset-bottom, 0px);
     transform: translateY(105%); transition: transform .34s cubic-bezier(.2,.8,.2,1); visibility: hidden; }
   .sheet.open { transform: translateY(0); visibility: visible; }
-  .grab { flex: none; height: 28px; display: flex; align-items: center; justify-content: center;
-    touch-action: none; cursor: grab; }
-  .grab::before { content: ""; width: 46px; height: 5px; border-radius: 3px; background: #3a4f6e; }
-  .sheet-close { position: absolute; top: 6px; right: 8px; z-index: 3; width: 36px; height: 36px; border: 0;
-    border-radius: 50%; background: rgba(0,0,0,.35); color: #fff; font-size: 24px; line-height: 1; cursor: pointer; }
-  .scroll { overflow-y: auto; overscroll-behavior: contain; flex: 1; }
+  .grab { flex: none; height: 26px; display: flex; align-items: center; justify-content: center; touch-action: none; cursor: grab; }
+  .grab::before { content: ""; width: 50px; height: 5px; border-radius: 3px; background: var(--line); }
+  .sheet-close { position: absolute; top: 12px; right: 16px; z-index: 5; width: 36px; height: 36px; border: 1px solid var(--line);
+    border-radius: 50%; background: rgba(0,0,0,.5); color: #fff; font-size: 24px; line-height: 1; cursor: pointer; display: flex; align-items: center; justify-content: center; }
+  .scroll { overflow-y: auto; overscroll-behavior: contain; flex: 1; padding-bottom: 24px; }
 
-  .hero { position: relative; min-height: 228px; display: flex; flex-direction: column; justify-content: flex-end; align-items: flex-start;
-    padding: 12px 16px; overflow: hidden; background: linear-gradient(135deg, var(--c) 0%, #121316 125%); }
+  /* Multi-column responsive layout for details on wide viewports */
+  .sheet-content-grid { display: grid; grid-template-columns: 1fr; }
+  @media (min-width: 900px) {
+    .sheet-content-grid { grid-template-columns: 360px 1fr; align-items: start; }
+    .sheet-sidebar { border-right: 1px solid var(--line); }
+  }
+
+  .hero { position: relative; min-height: 220px; display: flex; flex-direction: column; justify-content: flex-end; align-items: flex-start;
+    padding: 20px 24px; overflow: hidden; background: linear-gradient(135deg, var(--c) 0%, #0c0d10 130%); }
   .hero::before { content: ""; position: absolute; inset: 0; pointer-events: none;
-    background: radial-gradient(ellipse 60% 55% at 50% 38%, rgba(255,255,255,.30), rgba(255,255,255,0) 70%); }
-  .hero.compact { min-height: 112px; }
+    background: radial-gradient(ellipse 60% 55% at 50% 38%, rgba(255,255,255,.25), rgba(255,255,255,0) 70%); }
+  .hero.compact { min-height: 120px; }
   .hero.compact::before { display: none; }
-  .fish-img { position: absolute; top: 16px; left: 50%; transform: translateX(-50%); height: 134px; max-width: 88%; object-fit: contain;
-    filter: drop-shadow(0 8px 10px rgba(0,0,0,.45)); pointer-events: none; }
-  .hero .photo { position: absolute; top: 10px; left: 16px; font-size: 12px; padding: 3px 8px; border-radius: 6px;
-    background: rgba(0,0,0,.35); color: #dbe7f5; z-index: 1; }
-  .hero .credit { position: absolute; top: 10px; right: 54px; font-size: 11px; padding: 2px 7px; border-radius: 6px;
-    background: rgba(0,0,0,.30); color: #dbe7f5; z-index: 1; max-width: 55%; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .fish-img { position: absolute; top: 16px; left: 50%; transform: translateX(-50%); height: 130px; max-width: 88%; object-fit: contain;
+    filter: drop-shadow(0 8px 12px rgba(0,0,0,.6)); pointer-events: none; }
+  .hero .photo { position: absolute; top: 14px; left: 20px; font-size: 14px; padding: 3px 10px; border-radius: 6px;
+    background: rgba(0,0,0,.45); color: #dbe7f5; z-index: 1; }
+  .hero .credit { position: absolute; top: 14px; right: 60px; font-size: 13px; padding: 3px 9px; border-radius: 6px;
+    background: rgba(0,0,0,.4); color: #dbe7f5; z-index: 1; max-width: 55%; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
   .hero > div:not(.score) { position: relative; z-index: 1; }
-  .hero h2 { margin: 0; font-size: 28px; line-height: 1.05; text-shadow: 0 1px 8px rgba(0,0,0,.45); }
-  .hero small { display: block; opacity: .9; font-size: 14px; margin-top: 3px; }
-  .score { position: absolute; right: 16px; bottom: 12px; text-align: center; background: rgba(18,18,22,.85);
-    border-radius: 12px; padding: 6px 12px; }
-  .score b { display: block; font-size: 24px; }
-  .score span { font-size: 12px; color: var(--muted); }
-  .banner { font-size: 13px; padding: 7px 16px; line-height: 1.3; }
+  .hero h2 { margin: 0; font-size: 36px; font-weight: 700; line-height: 1.05; text-shadow: 0 2px 10px rgba(0,0,0,.6); }
+  .hero small { display: block; opacity: .9; font-size: 18px; font-style: italic; margin-top: 2px; }
+  .score { position: absolute; right: 20px; bottom: 16px; text-align: center; background: rgba(12,13,16,.88);
+    border: 1px solid var(--line); border-radius: 12px; padding: 8px 14px; }
+  .score b { display: block; font-size: 28px; font-weight: 700; color: #38bdf8; }
+  .score span { font-size: 14px; color: var(--muted); }
+  .banner { font-size: 15px; padding: 8px 24px; line-height: 1.35; }
   .banner.sample { background: #3a2f10; color: #fbbf24; }
   .banner.live { background: #14304f; color: #9fcbff; }
+  .banner.closed { background: #3a1414; color: #fca5a5; }
 
-  .sec { padding: 14px 16px; border-top: 1px solid var(--line); }
-  .sec h3 { margin: 0 0 9px; font-size: 14px; color: var(--muted); }
-  .reason { display: flex; gap: 9px; align-items: flex-start; font-size: 16px; line-height: 1.35; margin-bottom: 10px; }
+  .sec { padding: 18px 24px; border-top: 1px solid var(--line); }
+  .sec h3 { margin: 0 0 12px; font-size: 18px; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; color: var(--muted); }
+  .reason { display: flex; gap: 10px; align-items: flex-start; font-size: 18px; line-height: 1.35; margin-bottom: 12px; }
   .reason:last-child { margin-bottom: 0; }
-  .tag { flex: none; margin-top: 2px; font-size: 12px; padding: 1px 7px; border-radius: 6px; }
+  .tag { flex: none; margin-top: 2px; font-size: 14px; font-weight: 600; padding: 2px 8px; border-radius: 6px; }
   .tag.measured { background: #12392f; color: #34d399; }
   .tag.modeled  { background: #14304f; color: #60a5fa; }
   .tag.seasonal { background: #3b2d12; color: #fbbf24; }
   .tag.static   { background: #2a2a3d; color: #b4b4e8; }
-  dl { display: grid; grid-template-columns: 138px 1fr; gap: 7px 10px; margin: 0; font-size: 16px; line-height: 1.3; }
-  dt { color: var(--muted); }
+  .tag.lore     { background: #35264a; color: #d8b4fe; }
+
+  dl { display: grid; grid-template-columns: 160px 1fr; gap: 8px 14px; margin: 0; font-size: 18px; line-height: 1.35; }
+  dt { color: var(--muted); font-weight: 600; }
   dd { margin: 0; }
-  a { color: #7cc0ff; }
-  .foot { font-size: 14px; color: var(--muted); padding: 12px 16px 18px; border-top: 1px solid var(--line); line-height: 1.4; }
-  .buoy-head { padding: 4px 16px 12px; }
-  .buoy-head h2 { margin: 0 0 2px; font-size: 24px; }
-  .buoy-head small { color: var(--muted); font-size: 14px; }
+  a { color: #38bdf8; text-decoration: none; }
+  a:hover { text-decoration: underline; }
+  .foot { font-size: 15px; color: var(--muted); padding: 16px 24px; border-top: 1px solid var(--line); line-height: 1.45; }
+
+  .sea { margin-top: 10px; font-size: 16px; line-height: 1.35; display: flex; gap: 10px; align-items: flex-start; }
+  .lvl { flex: none; font-size: 14px; font-weight: 600; padding: 2px 10px; border-radius: 999px; border: 1px solid; white-space: nowrap; }
+  .lvl.good { color: #34d399; border-color: #1c5a47; } .lvl.fair { color: #fbbf24; border-color: #5b4a1a; }
+  .lvl.rough { color: #fb923c; border-color: #6b3a14; } .lvl.dangerous { color: #f87171; border-color: #6b2a2a; }
+
+  .win { font-size: 26px; font-weight: 700; line-height: 1.15; margin: 4px 0 10px; color: #38bdf8; }
+  .bars { width: 100%; height: auto; display: block; margin: 6px 0 10px; }
+  .bars text { font-size: 11px; fill: #94a3b8; font-weight: 600; }
+  .why { display: flex; gap: 10px; align-items: flex-start; font-size: 17px; line-height: 1.35; margin-bottom: 8px; }
+
+  .ic { width: 20px; height: 20px; flex: none; color: #38bdf8; vertical-align: -3px; margin-right: 6px; }
+  dt { display: flex; align-items: flex-start; }
+  dt .ic { margin-top: 2px; }
+  .sec h3 { display: flex; align-items: center; }
+  .sec h3 .ic { margin-right: 8px; }
 </style>
 </head>
 <body>
 <div id="map"></div>
 
-<section id="topsheet" class="topsheet" aria-label="Fish and map controls">
+<section id="topsheet" class="topsheet" aria-label="L.U.P.I.T.A. habitat controls">
   <div id="topBody">
-    <h1>Fish habitat map</h1>
-    <label for="regionSelect" class="lbl">Region</label>
-    <select id="regionSelect" class="select">
-      <option value="all">All East Coast Regions</option>
-      <option value="fl_se">US Southeast & Florida</option>
-      <option value="mid_ne">US Mid-Atlantic & Northeast</option>
-      <option value="canada">Atlantic Canada & North</option>
-      <option value="gulf_mex">Gulf of Mexico & Mexico</option>
-    </select>
-    <label class="lbl" style="margin-top: 8px;">Select fish (up to 5)</label>
-    <div class="multi-select" id="fishMultiSelect">
-      <button id="selectBtn" type="button" class="select-btn">Select species...</button>
-      <div id="dropdownMenu" class="dropdown-menu" hidden>
-        <div class="dropdown-header">
-          <span id="selectedCount">0 of 5 selected</span>
-          <button id="clearBtn" type="button" class="clear-btn">Clear all</button>
-        </div>
-        <div id="checklist" class="checklist"></div>
+    <div class="top-header">
+      <div>
+        <h1>L.U.P.I.T.A.</h1>
+        <div class="top-subtitle">Oceanographic & Biological Fish Habitat Model</div>
       </div>
     </div>
-    <div id="fishNote" class="note"></div>
-    <div id="seaRow" class="sea" hidden></div>
-    <div class="legend" aria-hidden="true"><span>Lower</span><i id="legendBar"></i><span>Better match</span></div>
-    <label class="toggle"><input type="checkbox" id="closuresToggle" checked><i class="sw"></i><span>Show no-fishing areas</span></label>
-    <label class="toggle"><input type="checkbox" id="streamToggle" checked><i class="sw blue"></i><span>Show Gulf Stream edge</span></label>
-    <div class="chips"><span id="status" class="chip">Loading...</span><span id="buoyStatus" class="chip">Buoys: loading...</span><span id="closuresStatus" class="chip">No-fishing areas: loading...</span></div>
-    <p class="hint">Tap a marker or zone to see why a fish may be there. Experimental.</p>
+
+    <div class="panel-grid">
+      <div class="ctrl-group">
+        <label for="regionSelect" class="lbl">Region</label>
+        <select id="regionSelect" class="select">
+          <option value="all">All East Coast Regions</option>
+          <option value="fl_se">US Southeast & Florida</option>
+          <option value="mid_ne">US Mid-Atlantic & Northeast</option>
+          <option value="canada">Atlantic Canada & North</option>
+          <option value="gulf_mex">Gulf of Mexico & Mexico</option>
+        </select>
+      </div>
+
+      <div class="ctrl-group">
+        <label class="lbl">Select fish (up to 5)</label>
+        <div class="multi-select" id="fishMultiSelect">
+          <button id="selectBtn" type="button" class="select-btn">Select species...</button>
+          <div id="dropdownMenu" class="dropdown-menu" hidden>
+            <div class="dropdown-header">
+              <span id="selectedCount">0 of 5 selected</span>
+              <button id="clearBtn" type="button" class="clear-btn">Clear all</button>
+            </div>
+            <div id="checklist" class="checklist"></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="ctrl-group">
+        <label class="lbl">Target Predictions</label>
+        <div id="fishNote" class="note"></div>
+        <div id="seaRow" class="sea" hidden></div>
+      </div>
+
+      <div class="ctrl-group toggles-group">
+        <label class="toggle"><input type="checkbox" id="closuresToggle" checked><i class="sw"></i><span>Show no-fishing areas</span></label>
+        <label class="toggle"><input type="checkbox" id="streamToggle" checked><i class="sw blue"></i><span>Show Gulf Stream edge</span></label>
+      </div>
+    </div>
+
+    <div class="status-bar">
+      <div class="chips">
+        <span id="status" class="chip">Loading...</span>
+        <span id="buoyStatus" class="chip">Buoys: loading...</span>
+        <span id="closuresStatus" class="chip">No-fishing areas: loading...</span>
+      </div>
+      <div class="legend" aria-hidden="true"><span>Lower match</span><i id="legendBar"></i><span>Higher match</span></div>
+    </div>
   </div>
   <button id="topTab" class="tab" type="button" aria-expanded="true" aria-label="Hide panel">
     <svg width="18" height="11" viewBox="0 0 18 11" aria-hidden="true"><path d="M2 2l7 7 7-7" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
@@ -199,14 +250,10 @@
 <script>
 /* ------------------------------------------------------------------
    CONFIG
-   The pipeline publishes fish.json and latest.json to the "data" branch.
-   Override with ?data=<folder url ending in />  to test another source.
 ------------------------------------------------------------------- */
 const DATA_BASE_DEFAULT = "https://raw.githubusercontent.com/markeetox/lupita/data/";
 const DATA_BASE = (new URLSearchParams(location.search).get("data") || DATA_BASE_DEFAULT).replace(/\/?$/, "/");
 
-// Free vector map styles from OpenFreeMap: no account and no key. Dark by default so the heat layer glows.
-// Choose another with ?map=fiord (dark blue), ?map=liberty (light street map) or ?map=positron (light, minimal).
 const STYLES = { dark: "https://tiles.openfreemap.org/styles/dark", fiord: "https://tiles.openfreemap.org/styles/fiord",
   liberty: "https://tiles.openfreemap.org/styles/liberty", positron: "https://tiles.openfreemap.org/styles/positron" };
 const BASE_STYLE = STYLES[new URLSearchParams(location.search).get("map")] || STYLES.dark;
@@ -218,8 +265,6 @@ const FALLBACK_STYLE = {
   layers: [{ id: "osm", type: "raster", source: "osm" }]
 };
 
-/* Sample data (placeholder values) shown only if fish.json cannot be loaded.
-   Same shape as the real fish.json. */
 const SAMPLE = {
   sample: true,
   species: [
@@ -249,7 +294,7 @@ const SAMPLE = {
 /* ---------------- state ---------------- */
 const store = {
   get(k) { try { return localStorage.getItem(k); } catch (e) { return null; } },
-  set(k, v) { try { localStorage.setItem(k, v); } catch (e) { /* private mode: ignore */ } }
+  set(k, v) { try { localStorage.setItem(k, v); } catch (e) { /* ignore */ } }
 };
 const REGIONS = {
   all: { name: "All East Coast Regions", bounds: [[-98.0, 15.0], [-50.0, 52.0]], filter: () => true },
@@ -283,7 +328,7 @@ const ROW_ICON = { "Position": "pin", "Nearest inlet": "pin", "Water depth": "de
   "Wind outlook": "wind", "Moon": "moon", "Weather": "cloud", "No-fishing check": "ban", "No-fishing zone": "ban", "No-fishing zones": "ban",
   "Natural reef": "anchor", "Nearest buoy": "buoy",
   "Typical size": "ruler", "Diet": "diet", "Swimming depth": "depth", "Adult depth": "depth", "Depth": "depth", "Behavior": "eye", "Spawning": "heart", "Lifespan": "hourglass" };
-function dlRows(rows) {                                   // structure and wreck rows carry the structure's own name: anchor icon
+function dlRows(rows) {
   return rows.map(x => `<dt>${icon(ROW_ICON[x[0]] || "anchor")}${esc(x[0])}</dt><dd>${esc(x[1])}</dd>`).join("");
 }
 const REASON_ICONS = [[/gulf stream|current/, "current"], [/tide/, "tide"], [/\bnight\b/, "moon"], [/\bmoon\b/, "moon"], [/dusk|dawn|daylight|sunrise|sunset/, "sun"],
@@ -300,7 +345,7 @@ const SEA_LABEL = { good: "Good", fair: "Fair", rough: "Rough", dangerous: "Dang
 function seaBanner(s) {
   if (!s.sea || (s.sea.level !== "rough" && s.sea.level !== "dangerous")) return "";
   const lead = s.sea.level === "dangerous" ? "Dangerous seas" : "Rough seas";
-  return `<div class="banner ${esc(s.sea.level)}">${lead} near this spot right now. This is only a rough guide, so check the National Weather Service marine forecast before going out.</div>`;
+  return `<div class="banner ${esc(s.sea.level)}">${lead} near this spot right now. This is only a rough guide, so check marine forecasts before going out.</div>`;
 }
 function renderSea() {
   const row = document.getElementById("seaRow"), sea = (FISH && FISH.conditions && FISH.conditions.sea) || {};
@@ -318,7 +363,7 @@ function clock(iso, hourOnly) {
 function timingHTML(s, color) {
   const head = `<h3>${icon("clock")}Best bite window, next 24 hours</h3>`, t = s.timing;
   if (!t || !t.scores || !t.scores.length) {
-    return `<div class="sec">${head}<div class="muted" style="font-size:15px">No reliable time-of-day information for this fish yet.</div></div>`;
+    return `<div class="sec">${head}<div class="muted" style="font-size:16px">No reliable time-of-day information for this fish yet.</div></div>`;
   }
   const n = t.scores.length, W = 288, bw = W / n, start = new Date(t.start).getTime(), HR = 3600000;
   const win = t.window ? [new Date(t.window.start).getTime(), new Date(t.window.end).getTime()] : null;
@@ -330,16 +375,16 @@ function timingHTML(s, color) {
   }).join("");
   const chart = `<svg class="bars" viewBox="0 0 ${W} 64" role="img" aria-label="Bite timing over the next 24 hours">${bars}</svg>`;
   const tag = t.evidence === "angler_lore" ? "lore" : "modeled";
-  const lead = win ? `<div class="win">${esc(clock(t.window.start))} to ${esc(clock(t.window.end))}</div>` : `<div class="muted" style="font-size:15px;margin-bottom:6px">${esc(t.note || "No single time stands out.")}</div>`;
+  const lead = win ? `<div class="win">${esc(clock(t.window.start))} to ${esc(clock(t.window.end))}</div>` : `<div class="muted" style="font-size:16px;margin-bottom:6px">${esc(t.note || "No single time stands out.")}</div>`;
   const why = (t.why || []).map(x => `<div class="why">${reasonIcon(x)}<span class="tag ${tag}">${esc(TAG_LABEL[tag])}</span><span>${esc(x)}</span></div>`).join("");
   return `<div class="sec">${head}${lead}${chart}${why}` +
-         (t.evidence === "angler_lore" ? `<div class="muted" style="font-size:13px;margin-top:6px">Based on local captains' reports, not studies.</div>` : "") + `</div>`;
+         (t.evidence === "angler_lore" ? `<div class="muted" style="font-size:15px;margin-top:6px">Based on local captains' reports.</div>` : "") + `</div>`;
 }
 
 function safeImageUrl(u) { return typeof u === "string" && /^(https:\/\/|fish\/|\/fish\/)[^"'<>\s]+$/.test(u) ? u : ""; }
 function heroPicture(sp) {
   const img = sp.image || {}, url = safeImageUrl(img.url) || `fish/${encodeURIComponent(sp.id)}.png`;
-  const credit = img.kind === "photo" && img.credit ? `<span class="credit">Photo: ${esc(img.credit)}</span>` : "";   // keep credits for real photos
+  const credit = img.kind === "photo" && img.credit ? `<span class="credit">Photo: ${esc(img.credit)}</span>` : "";
   return `<img class="fish-img" src="${esc(url)}" alt="${esc(sp.name)}" onerror="this.style.display='none';this.nextElementSibling.style.display=''">` +
          `<span class="photo" style="display:none">Picture coming soon</span>${credit}`;
 }
@@ -348,28 +393,32 @@ function spotHTML(id) {
   const s = SPOTS[id], sp = SPECIES[s.species];
   const banner = FISH.sample
     ? `<div class="banner sample">Sample data: placeholder values, not a real prediction.</div>`
-    : `<div class="banner live">Experimental: shows where conditions match published habitat preferences. Not yet checked against catch reports.</div>`;
+    : `<div class="banner live">L.U.P.I.T.A. Habitat Prediction Model &middot; Conditions match habitat preferences.</div>`;
   return `
-    <div class="hero" style="--c:${esc(sp.color)}">
-      ${heroPicture(sp)}
-      <div><h2>${esc(sp.name)}</h2><small>${esc(sp.sci)}</small></div>
-      <div class="score"><b>${Math.round(s.score * 100)}%</b><span>${esc(s.confidence)} confidence</span></div>
-    </div>
-    ${banner}
-    ${seaBanner(s)}
-    <div class="sec"><h3>${icon("info")}Why it may be here</h3>
-      ${s.reasons.map(r => `<div class="reason">${reasonIcon(r[1])}<span class="tag ${esc(r[0])}">${esc(TAG_LABEL[r[0]] || r[0])}</span><span>${esc(r[1])}</span></div>`).join("")}
-    </div>
-    ${timingHTML(s, sp.color)}
-    <div class="sec"><h3>${icon("pin")}About this spot: ${esc(s.title)}</h3>
-      <dl>${dlRows(s.location)}</dl>
-    </div>
-    <div class="sec"><h3>${icon("fish")}About the fish</h3>
-      <dl>${dlRows(sp.specs)}</dl>
-    </div>
-    <div class="foot">Confidence shows how complete today's data was, not verified accuracy.
-      Sea conditions are a rough guide only. Check current size and bag limits, and that you are outside any closed area, before you fish:
-      <a href="https://myfwc.com/fishing/saltwater/" target="_blank" rel="noopener">FWC saltwater fishing</a></div>`;
+    <div class="sheet-content-grid">
+      <div class="sheet-sidebar">
+        <div class="hero" style="--c:${esc(sp.color)}">
+          ${heroPicture(sp)}
+          <div><h2>${esc(sp.name)}</h2><small>${esc(sp.sci)}</small></div>
+          <div class="score"><b>${Math.round(s.score * 100)}%</b><span>${esc(s.confidence)} confidence</span></div>
+        </div>
+        ${banner}
+        ${seaBanner(s)}
+        <div class="sec"><h3>${icon("fish")}About the fish</h3>
+          <dl>${dlRows(sp.specs)}</dl>
+        </div>
+      </div>
+      <div>
+        <div class="sec"><h3>${icon("info")}Why it may be here</h3>
+          ${s.reasons.map(r => `<div class="reason">${reasonIcon(r[1])}<span class="tag ${esc(r[0])}">${esc(TAG_LABEL[r[0]] || r[0])}</span><span>${esc(r[1])}</span></div>`).join("")}
+        </div>
+        ${timingHTML(s, sp.color)}
+        <div class="sec"><h3>${icon("pin")}About this spot: ${esc(s.title)}</h3>
+          <dl>${dlRows(s.location)}</dl>
+        </div>
+        <div class="foot">L.U.P.I.T.A. Habitat Engine &middot; Model predictions based on NOAA & NASA ERDDAP oceanographic data. Always check current local regulations before fishing.</div>
+      </div>
+    </div>`;
 }
 
 function closureHTML(p) {
@@ -378,15 +427,14 @@ function closureHTML(p) {
     <div class="hero compact" style="--c:#ef4444">
       <div><h2>${esc(p.name)}</h2><small>No recreational fishing</small></div>
     </div>
-    <div class="banner closed">Boundaries here come from NOAA's MPA Inventory and may be simplified or out of date. Always confirm with the managing agency before you fish.</div>
+    <div class="banner closed">Boundaries from NOAA MPA Inventory. Always confirm with managing agency.</div>
     <div class="sec"><h3>${icon("shield")}About this area</h3><dl>
       <dt>${icon("ban")}Rule</dt><dd>${esc(p.rule || "Recreational fishing prohibited")}</dd>
       ${p.agency ? `<dt>${icon("shield")}Managed by</dt><dd>${esc(p.agency)}</dd>` : ""}
       ${p.protection ? `<dt>${icon("shield")}Protection</dt><dd>${esc(p.protection)}</dd>` : ""}
       ${p.year && p.year !== "null" ? `<dt>${icon("calendar")}Established</dt><dd>${esc(p.year)}</dd>` : ""}
       ${link}
-    </dl></div>
-    <div class="foot">Source: NOAA National MPA Center, MPA Inventory (2023 edition). Fishery management areas, security zones and seasonal closures are not included.</div>`;
+    </dl></div>`;
 }
 
 function fmt(v, unit, digits) {
@@ -394,7 +442,7 @@ function fmt(v, unit, digits) {
 }
 function buoyHTML(b) {
   return `
-    <div class="buoy-head"><h2>${esc(b.name || b.station)}</h2><small>Station ${esc(b.station)} &middot; ${esc(b.time_utc || "")}</small></div>
+    <div class="sec" style="border-top:none"><h2>${esc(b.name || b.station)}</h2><div style="color:var(--muted);font-size:16px">Station ${esc(b.station)} &middot; ${esc(b.time_utc || "")}</div></div>
     <div class="sec"><h3>${icon("buoy")}Latest readings</h3><dl>
       <dt>${icon("thermo")}Water temp</dt><dd>${esc(fmt(b.water_temp_c, "C"))}</dd>
       <dt>${icon("thermo")}24 h change</dt><dd>${esc(fmt(b.water_temp_change_24h_c, "C"))}</dd>
@@ -411,13 +459,12 @@ const closeBtn = document.getElementById("sheetClose");
 const grab = document.getElementById("grab");
 
 function openSheet(html, lngLat) {
-  if (window.innerWidth < 700) setTop(false, false);       // keep the small screen free for the details
   sheetBody.innerHTML = html;
   sheetBody.scrollTop = 0;
   sheet.classList.add("open");
   sheet.setAttribute("aria-hidden", "false");
   requestAnimationFrame(() => {
-    const h = Math.min(sheet.offsetHeight, window.innerHeight * 0.72);
+    const h = Math.min(sheet.offsetHeight, window.innerHeight * 0.75);
     map.easeTo({ center: lngLat, padding: { bottom: h }, duration: 450 });
   });
   closeBtn.focus({ preventScroll: true });
@@ -449,14 +496,13 @@ grab.addEventListener("touchend", e => {
 /* ---------------- heat layer ---------------- */
 let HEAT = null;
 const HEAT_MIN = 0.45;
-const EDGE_CELLS = 6;                                   // the glow fades to nothing over this many cells at the data edge                                  // cells scoring below this are not drawn
+const EDGE_CELLS = 6;
 function b64ToBytes(b64) {
   const bin = atob(b64), out = new Uint8Array(bin.length);
   for (let i = 0; i < bin.length; i++) out[i] = bin.charCodeAt(i);
   return out;
 }
 function hexToRgb(h) { const n = parseInt(String(h).slice(1), 16); return [(n >> 16) & 255, (n >> 8) & 255, n & 255]; }
-// One RGBA pixel per grid cell. Overlays selected species scores.
 function heatPixels(heat, selectedIds, species) {
   const n = heat.width * heat.height, px = new Uint8ClampedArray(n * 4);
   if (!selectedIds || !selectedIds.length) return px;
@@ -473,8 +519,8 @@ function heatPixels(heat, selectedIds, species) {
     px[i * 4 + 1] = c[1] + (255 - c[1]) * glow;
     px[i * 4 + 2] = c[2] + (255 - c[2]) * glow;
     const x = i % heat.width, y = (i - x) / heat.width, d = Math.min(x, y, heat.width - 1 - x, heat.height - 1 - y);
-    const e = Math.min(1, d / EDGE_CELLS), edge = e * e * (3 - 2 * e);           // smooth fade at the edge of the data
-    px[i * 4 + 3] = 255 * edge * (0.12 + 0.70 * Math.pow(t, 0.9));   // faint at the threshold, strong where the match is best
+    const e = Math.min(1, d / EDGE_CELLS), edge = e * e * (3 - 2 * e);
+    px[i * 4 + 3] = 255 * edge * (0.12 + 0.70 * Math.pow(t, 0.9));
   }
   return px;
 }
@@ -483,13 +529,13 @@ function heatURL(px, w, h, scale) {
   small.getContext("2d").putImageData(new ImageData(px, w, h), 0, 0);
   const big = document.createElement("canvas"); big.width = w * scale; big.height = h * scale;
   const g = big.getContext("2d"); g.imageSmoothingEnabled = true; g.imageSmoothingQuality = "high";
-  g.drawImage(small, 0, 0, big.width, big.height);        // smooth upscaling turns the grid into a soft surface
+  g.drawImage(small, 0, 0, big.width, big.height);
   return big.toDataURL("image/png");
 }
-function renderHeat() {                                  // call only when the map style is ready
+function renderHeat() {
   if (!HEAT) return;
   const [w, s, e, n] = HEAT.bounds, coordinates = [[w, n], [e, n], [e, s], [w, s]];
-  map.setMaxBounds([[w - 1.2, s - 1.0], [e + 1.2, n + 1.0]]);   // no scrolling off into empty ocean far from the data
+  map.setMaxBounds([[w - 1.2, s - 1.0], [e + 1.2, n + 1.0]]);
   const url = heatURL(heatPixels(HEAT, SELECTED_SPECIES, SPECIES), HEAT.width, HEAT.height, 6);
   if (map.getSource("heat")) { map.getSource("heat").updateImage({ url, coordinates }); return; }
   map.addSource("heat", { type: "image", url, coordinates });
@@ -497,7 +543,7 @@ function renderHeat() {                                  // call only when the m
   map.addLayer({ id: "heat", type: "raster", source: "heat",
     paint: { "raster-opacity": 1, "raster-resampling": "linear", "raster-fade-duration": 0 } }, before);
 }
-function setSelected(spotId) {                           // white outline around the area that is open in the sheet
+function setSelected(spotId) {
   const src = map.getSource("selected");
   if (!src) return;
   const s = spotId && SPOTS[spotId], z = s && spotZone(s);
@@ -550,7 +596,7 @@ function addData() {
   map.addSource("spots", { type: "geojson", data: f.points });
   map.addSource("selected", { type: "geojson", data: EMPTY });
   const col = ["get", "color"];
-  map.addLayer({ id: "zones-fill", type: "fill", source: "zones", paint: { "fill-color": col, "fill-opacity": 0.01 } });   // invisible tap area
+  map.addLayer({ id: "zones-fill", type: "fill", source: "zones", paint: { "fill-color": col, "fill-opacity": 0.01 } });
   map.addLayer({ id: "selected-fill", type: "fill", source: "selected", paint: { "fill-color": col, "fill-opacity": 0.16 } });
   map.addLayer({ id: "selected-line", type: "line", source: "selected", paint: { "line-color": "#ffffff", "line-width": 2.5, "line-opacity": 0.95 } });
   map.addLayer({ id: "spots-halo", type: "circle", source: "spots",
@@ -572,7 +618,7 @@ function fitToSpots() {
 }
 
 function refreshSpots() {
-  if (!map.getSource("spots")) return;          // style not ready yet: addData() will use the data
+  if (!map.getSource("spots")) return;
   const f = spotFeatures();
   map.getSource("zones").setData(f.zones);
   map.getSource("spots").setData(f.points);
@@ -585,7 +631,7 @@ function closuresOn() { return document.getElementById("closuresToggle").checked
 function addClosures() {
   if (!CLOSURES || map.getSource("closures") || !CLOSURES.features.length) return;
   const vis = closuresOn() ? "visible" : "none";
-  const before = map.getLayer("zones-fill") ? "zones-fill" : undefined;       // keep fish markers and zones on top
+  const before = map.getLayer("zones-fill") ? "zones-fill" : undefined;
   map.addSource("closures", { type: "geojson", data: CLOSURES });
   map.addLayer({ id: "closures-fill", type: "fill", source: "closures", layout: { visibility: vis },
     paint: { "fill-color": "#ef4444", "fill-opacity": 0.22 } }, before);
@@ -603,19 +649,18 @@ function addStream() {
   const before = map.getLayer("zones-fill") ? "zones-fill" : undefined;
   map.addSource("stream", { type: "geojson", data: STREAM });
   map.addLayer({ id: "stream-line", type: "line", source: "stream", layout: { visibility: streamOn() ? "visible" : "none", "line-cap": "round", "line-join": "round" },
-    paint: { "line-color": "#7dd3fc", "line-width": 2.6, "line-opacity": 0.8, "line-blur": 0.7 } }, before);
+    paint: { "line-color": "#38bdf8", "line-width": 2.6, "line-opacity": 0.8, "line-blur": 0.7 } }, before);
 }
 function streamHTML(p) {
   return `
-    <div class="hero compact" style="--c:#38bdf8"><div><h2>Gulf Stream inshore edge</h2><small>Approximate</small></div></div>
-    <div class="banner live">Drawn from satellite altimetry on a coarse 25 km grid. It is good to roughly 20 km, and less reliable close to shore.</div>
+    <div class="hero compact" style="--c:#38bdf8"><div><h2>Gulf Stream inshore edge</h2><small>Approximate satellite boundary</small></div></div>
+    <div class="banner live">Drawn from satellite altimetry on a 25 km grid.</div>
     <div class="sec"><h3>${icon("current")}About this line</h3><dl>
-      <dt>${icon("info")}What it is</dt><dd>Where northward flow reaches about half the strength of the stream's core.</dd>
-      <dt>${icon("fish")}Why it matters</dt><dd>Sailfish, wahoo and mahi often travel along current edges.</dd>
+      <dt>${icon("info")}What it is</dt><dd>Where northward flow reaches half the strength of the stream core.</dd>
+      <dt>${icon("fish")}Why it matters</dt><dd>Pelagic fish like sailfish and mahi often travel along current edges.</dd>
       <dt>${icon("clock")}Data date</dt><dd>${esc(String(p.time || "unknown").slice(0, 10))}</dd>
       <dt>${icon("info")}Source</dt><dd>${esc(p.source || "NOAA CoastWatch")}</dd>
-    </dl></div>
-    <div class="foot">Currents change daily and eddies are not shown. Check current charts and the marine forecast before you go.</div>`;
+    </dl></div>`;
 }
 
 function addBuoys() {
@@ -656,7 +701,7 @@ function ago(iso) {
   if (!isFinite(m)) return "";
   return m < 90 ? `${Math.max(m, 1)} min ago` : m < 2880 ? `${Math.round(m / 60)} h ago` : `${Math.round(m / 1440)} days ago`;
 }
-/* top panel: slide up/down, remembered between visits */
+
 const topSheet = document.getElementById("topsheet"), topTab = document.getElementById("topTab");
 const regionSelect = document.getElementById("regionSelect"), selectBtn = document.getElementById("selectBtn");
 const dropdownMenu = document.getElementById("dropdownMenu"), checklist = document.getElementById("checklist");
@@ -711,7 +756,7 @@ function setTop(open, save) {
   if (save !== false) store.set("fhm.panel", open ? "open" : "closed");
 }
 topTab.addEventListener("click", () => setTop(topSheet.classList.contains("closed")));
-let tStart = null;                                           // swipe up on the panel to hide it
+let tStart = null;
 topSheet.addEventListener("touchstart", e => { tStart = (e.target.closest && e.target.closest("select")) ? null : e.touches[0].clientY; }, { passive: true });
 topSheet.addEventListener("touchend", e => {
   if (tStart == null) return;
@@ -759,7 +804,7 @@ function renderNote() {
   };
   const all = FISH ? (FISH.species || []) : [];
   if (!SELECTED_SPECIES.length) {
-    fishNote.innerHTML = `<div style="color:var(--muted);">Select up to 5 species from the checklist to view predictions on the map.</div>`;
+    fishNote.innerHTML = `<div style="color:var(--muted);">Select species to display predicted areas.</div>`;
     return;
   }
   fishNote.innerHTML = all.filter(s => SELECTED_SPECIES.includes(s.id)).map(line).join("");
@@ -783,8 +828,8 @@ function renderPanel() {
   else if (FISH.error) { chip.textContent = FISH.error; chip.className = "chip warn"; }
   else {
     const mins = FISH.generated_utc ? Math.round((Date.now() - new Date(FISH.generated_utc).getTime()) / 60000) : null;
-    const stale = mins !== null && mins > 240;                  // the pipeline normally runs every hour
-    chip.textContent = (stale ? "Stale: last updated " : "Live, experimental") + (FISH.generated_utc ? (stale ? "" : " · ") + ago(FISH.generated_utc) : "");
+    const stale = mins !== null && mins > 240;
+    chip.textContent = (stale ? "Stale: last updated " : "Live L.U.P.I.T.A. Model") + (FISH.generated_utc ? (stale ? "" : " · ") + ago(FISH.generated_utc) : "");
     chip.className = "chip " + (stale ? "warn" : "ok");
   }
   renderSea();
@@ -797,7 +842,7 @@ function renderPanel() {
       <input type="checkbox" value="${esc(s.id)}" ${SELECTED_SPECIES.includes(s.id) ? "checked" : ""}>
       <span class="swatch" style="background:${esc(s.color)}"></span>
       <span style="flex:1">${esc(s.name)}</span>
-      <small style="color:var(--muted);font-size:12px">${esc(speciesLabel(s))}</small>
+      <small style="color:var(--muted);font-size:14px">${esc(speciesLabel(s))}</small>
     </label>
   `).join("");
 
