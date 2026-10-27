@@ -178,7 +178,8 @@ def score_site(profile, site, ctx, reg):
 def score_sites(profile, sites, ctx, reg, closure_rows_fn=None) -> dict:
     """{'items': finished spot dicts, 'best': best score or None, 'unavailable': message or '', 'note': why nothing qualified}."""
     kinds = profile.get("site_kinds", ["inlet"])
-    sites = [s for s in sites if s.get("kind") in kinds]
+    lat_range = profile.get("lat_range")
+    sites = [s for s in sites if s.get("kind") in kinds and (not lat_range or (lat_range[0] <= s["lat"] <= lat_range[1]))]
     if not sites:
         return {"items": [], "best": None, "unavailable": "Waiting for: site locations", "note": ""}
     min_cov = profile.get("min_coverage", DEFAULT_MIN_COVERAGE)

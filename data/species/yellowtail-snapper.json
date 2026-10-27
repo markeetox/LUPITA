@@ -181,5 +181,9 @@
         "dusk": "It is dusk, when yellowtail are reported to bite better as light fades."
       }
     }
-  }
+  },
+  "lat_range": [
+    15.0,
+    35.0
+  ]
 }

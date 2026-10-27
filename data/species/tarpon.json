@@ -242,5 +242,9 @@
         "lull": "Cooler water after a front keeps tarpon off the passes for a day or two."
       }
     }
-  }
+  },
+  "lat_range": [
+    15.0,
+    36.0
+  ]
 }

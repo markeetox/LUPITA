@@ -3,7 +3,7 @@ from __future__ import annotations
 
 import numpy as np
 
-from pipeline import closures, currents, derive, structure
+from pipeline import closures, currents, derive, grid, structure
 from pipeline.grid import resample
 from pipeline.sources import arcgis, erddap
 
@@ -163,4 +163,5 @@ def load_layers(sources: dict, errors: list[str], fetch=erddap.fetch_csv, fetch_
             errors.append(f"layers closures: {exc}")
     layers["sst_gradient"] = front_strength(sst, layers["depth_m"], lats, lons)
     layers["bottom_slope"] = slope_layer(layers["depth_m"], lats, lons)
+    layers["marine_mask"] = grid.build_marine_mask(layers["depth_m"])
     return layers

@@ -329,5 +329,9 @@
         "lull": "Cooler water after a front keeps snook less active for a day or two."
       }
     }
-  }
+  },
+  "lat_range": [
+    15.0,
+    31.0
+  ]
 }

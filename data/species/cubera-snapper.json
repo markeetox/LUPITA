@@ -113,5 +113,9 @@
     "sources": [
       "https://myfwc.com/"
     ]
-  }
+  },
+  "lat_range": [
+    15.0,
+    35.0
+  ]
 }

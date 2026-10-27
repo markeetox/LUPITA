@@ -146,6 +146,18 @@ def score_species(profile: dict, layers: dict) -> dict:
     with np.errstate(invalid="ignore", divide="ignore"):
         score = np.where(avail > 0, num / avail, np.nan)
     eligible = ~gate_fail & (coverage >= min_cov) & np.isfinite(layers["sst_c"])
+
+    # Marine mask filter: saltwater species require ocean waters
+    if layers.get("marine_mask") is not None and profile.get("environment", "saltwater") != "freshwater":
+        eligible &= layers["marine_mask"]
+
+    # Latitude range filter (e.g. lat_range: [15.0, 31.0])
+    lat_range = profile.get("lat_range")
+    if lat_range and len(lat_range) == 2 and layers.get("lats") is not None:
+        lats = layers["lats"]
+        lat_grid = lats[:, None] if lats.ndim == 1 else lats
+        eligible &= (lat_grid >= lat_range[0]) & (lat_grid <= lat_range[1])
+
     score = np.where(eligible, score, np.nan)
     return {"status": "ok", "score": score, "coverage": coverage, "scores": scores,
             "ref": ref_cache, "missing": missing}
