@@ -139,7 +139,15 @@
 <section id="topsheet" class="topsheet" aria-label="Fish and map controls">
   <div id="topBody">
     <h1>Fish habitat map</h1>
-    <label for="fishSelect" class="lbl">Show fish</label>
+    <label for="regionSelect" class="lbl">Region</label>
+    <select id="regionSelect" class="select">
+      <option value="all">All East Coast Regions</option>
+      <option value="fl_se">US Southeast & Florida</option>
+      <option value="mid_ne">US Mid-Atlantic & Northeast</option>
+      <option value="canada">Atlantic Canada & North</option>
+      <option value="gulf_mex">Gulf of Mexico & Mexico</option>
+    </select>
+    <label for="fishSelect" class="lbl" style="margin-top: 8px;">Show fish</label>
     <select id="fishSelect" class="select"><option value="all">All fish</option></select>
     <div id="fishNote" class="note"></div>
     <div id="seaRow" class="sea" hidden></div>
@@ -216,7 +224,14 @@ const store = {
   get(k) { try { return localStorage.getItem(k); } catch (e) { return null; } },
   set(k, v) { try { localStorage.setItem(k, v); } catch (e) { /* private mode: ignore */ } }
 };
-let FISH = null, BUOYS = null, CLOSURES = null, FILTER = store.get("fhm.fish") || "all";
+const REGIONS = {
+  all: { name: "All East Coast Regions", bounds: [[-98.0, 15.0], [-50.0, 52.0]], filter: () => true },
+  fl_se: { name: "US Southeast & Florida", bounds: [[-83.5, 24.0], [-74.0, 35.0]], filter: s => s.coords[1] >= 24.0 && s.coords[1] <= 35.0 && s.coords[0] >= -83.5 && s.coords[0] <= -74.0 },
+  mid_ne: { name: "US Mid-Atlantic & Northeast", bounds: [[-77.5, 35.0], [-66.0, 45.0]], filter: s => s.coords[1] >= 35.0 && s.coords[1] <= 45.0 && s.coords[0] >= -77.5 && s.coords[0] <= -66.0 },
+  canada: { name: "Atlantic Canada & North", bounds: [[-70.0, 42.0], [-50.0, 52.0]], filter: s => s.coords[1] >= 42.0 && s.coords[1] <= 52.0 && s.coords[0] >= -70.0 && s.coords[0] <= -50.0 },
+  gulf_mex: { name: "Gulf of Mexico & Mexico", bounds: [[-98.0, 15.0], [-81.0, 30.0]], filter: s => s.coords[1] >= 15.0 && s.coords[1] <= 30.0 && s.coords[0] >= -98.0 && s.coords[0] <= -81.0 }
+};
+let FISH = null, BUOYS = null, CLOSURES = null, FILTER = store.get("fhm.fish") || "all", REGION_FILTER = store.get("fhm.region") || "all";
 const SPECIES = {}, SPOTS = {};
 function setFish(data) {
   FISH = data;
@@ -479,7 +494,8 @@ function spotZone(s) {
   return null;
 }
 function visibleSpots() {
-  return Object.values(SPOTS).filter(s => FILTER === "all" || s.species === FILTER);
+  const reg = REGIONS[REGION_FILTER] || REGIONS.all;
+  return Object.values(SPOTS).filter(s => (FILTER === "all" || s.species === FILTER) && reg.filter(s));
 }
 function spotFeatures() {
   const spots = visibleSpots();
@@ -612,7 +628,7 @@ function ago(iso) {
 }
 /* top panel: slide up/down, remembered between visits */
 const topSheet = document.getElementById("topsheet"), topTab = document.getElementById("topTab");
-const fishSelect = document.getElementById("fishSelect"), fishNote = document.getElementById("fishNote");
+const regionSelect = document.getElementById("regionSelect"), fishSelect = document.getElementById("fishSelect"), fishNote = document.getElementById("fishNote");
 function setTop(open, save) {
   topSheet.classList.toggle("closed", !open);
   topTab.setAttribute("aria-expanded", String(open));
@@ -672,6 +688,17 @@ function renderNote() {
   const summary = `<div><span><b>${total}</b> area${total === 1 ? "" : "s"} across <b>${withAreas.length}</b> of ${all.length} fish today</span></div>`;
   fishNote.innerHTML = summary + all.filter(s => s.status !== "ok").map(line).join("");
 }
+regionSelect.addEventListener("change", () => {
+  REGION_FILTER = regionSelect.value;
+  store.set("fhm.region", REGION_FILTER);
+  renderNote();
+  closeSheet();
+  refreshSpots();
+  if (REGIONS[REGION_FILTER]) {
+    const b = REGIONS[REGION_FILTER].bounds;
+    map.fitBounds(b, { padding: { top: 120, left: 40, right: 40, bottom: 60 }, duration: 800 });
+  }
+});
 fishSelect.addEventListener("change", () => {
   FILTER = fishSelect.value;
   store.set("fhm.fish", FILTER);
@@ -693,6 +720,8 @@ function renderPanel() {
   }
   renderSea();
   if (FILTER !== "all" && !SPECIES[FILTER]) FILTER = "all";    // saved choice no longer exists
+  if (!REGIONS[REGION_FILTER]) REGION_FILTER = "all";
+  regionSelect.value = REGION_FILTER;
   const sortedSpecies = [...(FISH.species || [])].sort((a, b) => a.name.localeCompare(b.name));
   fishSelect.innerHTML = `<option value="all">All fish</option>` +
     sortedSpecies.map(s => `<option value="${esc(s.id)}">${esc(s.name)} (${esc(speciesLabel(s))})</option>`).join("");
