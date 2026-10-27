@@ -42,6 +42,38 @@ def resample(grid, src_lats, src_lons, dst_lats, dst_lons, min_weight: float = 0
     return out
 
 
+def build_marine_mask(depth: np.ndarray | None) -> np.ndarray | None:
+    """True for ocean/sea cells connected to grid boundaries, False for inland lakes or land."""
+    if depth is None:
+        return None
+    valid_water = np.isfinite(depth) & (depth > 0)
+    mask = np.zeros(depth.shape, bool)
+    queue = deque()
+    rows, cols = depth.shape
+
+    for r in range(rows):
+        for c in (0, cols - 1):
+            if valid_water[r, c] and not mask[r, c]:
+                mask[r, c] = True
+                queue.append((r, c))
+    for c in range(cols):
+        for r in (0, rows - 1):
+            if valid_water[r, c] and not mask[r, c]:
+                mask[r, c] = True
+                queue.append((r, c))
+
+    while queue:
+        r, c = queue.popleft()
+        for dr, dc in ((-1, 0), (1, 0), (0, -1), (0, 1)):
+            nr, nc = r + dr, c + dc
+            if 0 <= nr < rows and 0 <= nc < cols:
+                if valid_water[nr, nc] and not mask[nr, nc]:
+                    mask[nr, nc] = True
+                    queue.append((nr, nc))
+
+    return mask
+
+
 def components(mask: np.ndarray) -> list[list[tuple[int, int]]]:
     """4-connected groups of True cells."""
     seen = np.zeros(mask.shape, bool)

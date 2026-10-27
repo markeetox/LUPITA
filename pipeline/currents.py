@@ -18,10 +18,19 @@ def speed_dir(u: np.ndarray, v: np.ndarray):
 
 
 def edge_longitudes(lats, lons, v) -> np.ndarray:
-    """For each latitude row, the westernmost longitude where northward flow v (m/s) is strong enough: the stream's inshore edge."""
+    """For each latitude row, the westernmost longitude where northward flow v (m/s) is strong enough: the stream's inshore edge.
+    Restricted to Atlantic waters (lon >= -82.0°W, lat >= 23.0°N) to prevent false positives in Gulf of Mexico or inland."""
     edge = np.full(len(lats), np.nan)
     for i in range(len(lats)):
-        row = np.nan_to_num(np.asarray(v[i], float), nan=-9.0)
+        lat = float(lats[i])
+        if lat < 23.0:
+            continue
+        row_v = np.asarray(v[i], float)
+        # Filter row cells to Atlantic region (lon >= -82.0)
+        atlantic_mask = np.asarray(lons) >= -82.0
+        if not np.any(atlantic_mask):
+            continue
+        row = np.where(atlantic_mask, np.nan_to_num(row_v, nan=-9.0), -9.0)
         mx = row.max() if row.size else -9.0
         if mx < MIN_STREAM_MS:
             continue
