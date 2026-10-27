@@ -345,6 +345,7 @@ def build_fish_json(layers, buoys, profiles, registry, generated_utc, places=Non
             spots_out.append(item)
         entry["spots"] = len(spots)
         species_out.append(entry)
+    species_out.sort(key=lambda s: s["name"].lower())
     result = {
         "version": 1, "generated_utc": generated_utc, "experimental": True,
         "disclaimer": "Scores show where conditions match published habitat preferences. They have not yet been checked against catch reports.",

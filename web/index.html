@@ -10,7 +10,7 @@
 <link href="https://cdn.jsdelivr.net/npm/maplibre-gl@4.7.1/dist/maplibre-gl.css" rel="stylesheet">
 <style>
   :root {
-    --bg: #0b1626; --card: #0f1b2d; --line: #22344f; --text: #e6edf6; --muted: #8fa3bd;
+    --bg: #121316; --card: #1a1a1e; --line: #2e2e34; --text: #e6edf6; --muted: #94a3b8;
     --font: "Mansalva", "Segoe Print", "Bradley Hand", cursive;
   }
   * { box-sizing: border-box; font-family: var(--font); font-weight: 400; font-synthesis: none; }
@@ -21,14 +21,14 @@
 
   /* top panel: slides down from the top, hides back up, leaving only an arrow tab */
   .topsheet { position: fixed; top: 0; left: 0; right: 0; margin: 0 auto; width: 100%; max-width: 560px; z-index: 15;
-    background: rgba(15,27,45,.96); border: 1px solid var(--line); border-top: none; border-radius: 0 0 20px 20px;
+    background: rgba(26,26,30,.96); border: 1px solid var(--line); border-top: none; border-radius: 0 0 20px 20px;
     box-shadow: 0 14px 40px rgba(0,0,0,.5); backdrop-filter: blur(8px);
     padding: calc(env(safe-area-inset-top, 0px) + 12px) 16px 16px;
     transition: transform .34s cubic-bezier(.2,.8,.2,1); }
   .topsheet.closed { transform: translateY(-100%); box-shadow: none; }
   .topsheet h1 { font-size: 22px; margin: 0 0 8px; }
   .lbl { display: block; font-size: 13px; color: var(--muted); margin-bottom: 4px; }
-  .select { width: 100%; font-size: 17px; color: var(--text); background-color: #0b1626; border: 1px solid var(--line);
+  .select { width: 100%; font-size: 17px; color: var(--text); background-color: #121316; border: 1px solid var(--line);
     border-radius: 12px; padding: 11px 40px 11px 12px; appearance: none; -webkit-appearance: none;
     background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='14' height='9' viewBox='0 0 14 9'><path d='M1 1l6 6 6-6' fill='none' stroke='%238fa3bd' stroke-width='2' stroke-linecap='round'/></svg>");
     background-repeat: no-repeat; background-position: right 14px center; }
@@ -73,7 +73,7 @@
   .chip .ic { width: 14px; height: 14px; margin-right: 4px; vertical-align: -2px; }
   .tab { position: absolute; top: 100%; left: 50%; width: 76px; height: 30px; margin-left: -38px; padding: 0;
     display: flex; align-items: center; justify-content: center; cursor: pointer; color: var(--text);
-    background: rgba(15,27,45,.96); border: 1px solid var(--line); border-top: none; border-radius: 0 0 16px 16px; }
+    background: rgba(26,26,30,.96); border: 1px solid var(--line); border-top: none; border-radius: 0 0 16px 16px; }
   .tab svg { transition: transform .3s; }
   .topsheet:not(.closed) .tab svg { transform: rotate(180deg); }
   .topsheet.closed .tab { margin-top: env(safe-area-inset-top, 0px); }
@@ -92,7 +92,7 @@
   .scroll { overflow-y: auto; overscroll-behavior: contain; flex: 1; }
 
   .hero { position: relative; min-height: 228px; display: flex; flex-direction: column; justify-content: flex-end; align-items: flex-start;
-    padding: 12px 16px; overflow: hidden; background: linear-gradient(135deg, var(--c) 0%, #0b1626 125%); }
+    padding: 12px 16px; overflow: hidden; background: linear-gradient(135deg, var(--c) 0%, #121316 125%); }
   .hero::before { content: ""; position: absolute; inset: 0; pointer-events: none;
     background: radial-gradient(ellipse 60% 55% at 50% 38%, rgba(255,255,255,.30), rgba(255,255,255,0) 70%); }
   .hero.compact { min-height: 112px; }
@@ -106,7 +106,7 @@
   .hero > div:not(.score) { position: relative; z-index: 1; }
   .hero h2 { margin: 0; font-size: 28px; line-height: 1.05; text-shadow: 0 1px 8px rgba(0,0,0,.45); }
   .hero small { display: block; opacity: .9; font-size: 14px; margin-top: 3px; }
-  .score { position: absolute; right: 16px; bottom: 12px; text-align: center; background: rgba(11,22,38,.8);
+  .score { position: absolute; right: 16px; bottom: 12px; text-align: center; background: rgba(18,18,22,.85);
     border-radius: 12px; padding: 6px 12px; }
   .score b { display: block; font-size: 24px; }
   .score span { font-size: 12px; color: var(--muted); }
@@ -693,8 +693,9 @@ function renderPanel() {
   }
   renderSea();
   if (FILTER !== "all" && !SPECIES[FILTER]) FILTER = "all";    // saved choice no longer exists
+  const sortedSpecies = [...(FISH.species || [])].sort((a, b) => a.name.localeCompare(b.name));
   fishSelect.innerHTML = `<option value="all">All fish</option>` +
-    (FISH.species || []).map(s => `<option value="${esc(s.id)}">${esc(s.name)} (${esc(speciesLabel(s))})</option>`).join("");
+    sortedSpecies.map(s => `<option value="${esc(s.id)}">${esc(s.name)} (${esc(speciesLabel(s))})</option>`).join("");
   fishSelect.value = FILTER;
   renderNote();
   renderLegend();
