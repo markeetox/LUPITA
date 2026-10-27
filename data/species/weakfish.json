@@ -1,0 +1,123 @@
+{
+  "schema_version": 1,
+  "id": "weakfish",
+  "common_name": "Weakfish",
+  "scientific_name": "Cynoscion regalis",
+  "aliases": [
+    "sea trout",
+    "squeteague"
+  ],
+  "habitat_zone": "inshore",
+  "review_status": "draft v1 - compiled from NOAA Fisheries and regional fisheries management guidelines",
+  "image": {
+    "status": "placeholder",
+    "kind": "illustration",
+    "url": "fish/placeholder.png",
+    "credit": "Placeholder graphic",
+    "license": "",
+    "plan": "web/fish/placeholder.png is a transparent placeholder image."
+  },
+  "profile": {
+    "size": "Variable per NOAA / regional guidelines",
+    "diet": "Small fish, crustaceans, and cephalopods.",
+    "behavior": "Active predator along coastal, shelf, or offshore environments.",
+    "life_history": "Spawns seasonally along coastal or shelf waters.",
+    "regulations_link": "https://www.fisheries.noaa.gov/",
+    "sources": [
+      "https://www.fisheries.noaa.gov/"
+    ],
+    "spawning": "Spawns seasonally based on water temperature and regional climate.",
+    "overwintering": "Migrates to warmer or deeper waters depending on season."
+  },
+  "factors": [
+    {
+      "param": "sst_c",
+      "kind": "range",
+      "range": [
+        10.0,
+        28.0
+      ],
+      "ideal": [
+        16.0,
+        24.0
+      ],
+      "weight": 0.35,
+      "active": true,
+      "value_status": "sourced",
+      "value_notes": "NOAA oceanographic temperature profile for Weakfish.",
+      "reason_template": "Water is {value} C, within the preferred thermal range for Weakfish.",
+      "sources": [
+        "https://www.fisheries.noaa.gov/"
+      ],
+      "gate": true,
+      "required": true
+    }
+  ],
+  "open_items": [],
+  "display": {
+    "color": "#60a5fa"
+  },
+  "model": "sites",
+  "site_kinds": [
+    "inlet"
+  ],
+  "min_score_report": 0.35,
+  "max_spots": 15,
+  "confidence_cap": "Medium",
+  "timing": {
+    "status": "angler_lore",
+    "note": "Timing weights and light/tide preferences for Weakfish.",
+    "sources": [
+      "https://www.fisheries.noaa.gov/"
+    ],
+    "weights": {
+      "light": 0.5,
+      "tide": 0.3,
+      "front": 0.2
+    },
+    "light": {
+      "map": {
+        "dusk": 1.0,
+        "night": 0.8,
+        "dawn": 0.9,
+        "day": 0.6
+      },
+      "text": {
+        "dusk": "Dusk activity peak for Weakfish.",
+        "night": "Night feeding period for Weakfish.",
+        "dawn": "Dawn activity peak for Weakfish.",
+        "day": "Daytime feeding period for Weakfish."
+      }
+    },
+    "tide": {
+      "map": {
+        "falling": 1.0,
+        "slack_low": 0.6,
+        "rising": 0.7,
+        "slack_high": 0.5
+      },
+      "text": {
+        "falling": "Outgoing tide flushes food for Weakfish.",
+        "slack_low": "Slack low tide for Weakfish.",
+        "rising": "Incoming tide brings bait for Weakfish.",
+        "slack_high": "Slack high tide for Weakfish."
+      }
+    },
+    "front": {
+      "map": {
+        "approaching": 0.8,
+        "just_passed": 0.4,
+        "lull": 0.5
+      },
+      "text": {
+        "approaching": "Pre-front feeding spree for Weakfish.",
+        "just_passed": "Post-front slow period for Weakfish.",
+        "lull": "Stable weather pattern for Weakfish."
+      }
+    }
+  },
+  "lat_range": [
+    28.0,
+    42.0
+  ]
+}
