@@ -21,9 +21,32 @@ def _fish(name: str) -> str:
     return (name[:1].lower() + name[1:]).replace("atlantic", "Atlantic")
 
 
-def quantize_scores(score: np.ndarray) -> str:
-    """Score grid -> base64 of one byte per cell (1-100 = score in percent, 0 = no score), north row first,
-    which is the order an image is drawn in."""
+def quantize_scores(score: np.ndarray, lats: np.ndarray | None = None) -> str:
+    """Score grid -> base64 of one byte per cell (1-100 = score in percent, 0 = no score), north row first.
+    Re-maps latitude rows from equirectangular spacing to Web Mercator projection so the raster image
+    overlay aligns precisely with MapLibre vector layers."""
+    H, W = score.shape
+    if lats is not None and len(lats) == H and H > 1:
+        lat_min, lat_max = float(lats[0]), float(lats[-1])
+        if lat_max > lat_min:
+            import math
+            y_max = math.log(math.tan(math.pi / 4 + math.radians(lat_max) / 2))
+            y_min = math.log(math.tan(math.pi / 4 + math.radians(lat_min) / 2))
+
+            r_indices = np.arange(H)
+            fracs = r_indices / (H - 1)
+            y_targets = y_max - fracs * (y_max - y_min)
+            lat_targets = np.degrees(2 * (np.arctan(np.exp(y_targets)) - math.pi / 4))
+
+            src_rows = (lat_targets - lat_min) / (lat_max - lat_min) * (H - 1)
+            r0 = np.clip(np.floor(src_rows).astype(int), 0, H - 1)
+            r1 = np.clip(np.ceil(src_rows).astype(int), 0, H - 1)
+            t = (src_rows - r0)[:, None]
+
+            score_merc = (1.0 - t) * score[r0, :] + t * score[r1, :]
+            q = np.where(np.isfinite(score_merc), np.clip(np.round(score_merc * 100), 1, 100), 0).astype(np.uint8)
+            return base64.b64encode(q.tobytes()).decode("ascii")
+
     q = np.where(np.isfinite(score), np.clip(np.round(score * 100), 1, 100), 0).astype(np.uint8)
     return base64.b64encode(q[::-1].tobytes()).decode("ascii")
 
@@ -315,7 +338,7 @@ def build_fish_json(layers, buoys, profiles, registry, generated_utc, places=Non
         if cc is not None:                                   # never recommend cells that are mostly inside a no-fishing zone
             scored["score"] = np.where(cc >= CLOSED_CELL_COVER, np.nan, scored["score"])
         if heat is not None:                                   # the full score surface, for the map's heat layer
-            heat[sid] = quantize_scores(scored["score"])
+            heat[sid] = quantize_scores(scored["score"], lats)
         style = profile.get("zone_style", "hull")
         spots, best = scoring.find_spots(scored["score"], lats, lons, min_cells=profile.get("min_cells", scoring.MIN_CELLS),
                                          max_spots=profile.get("max_spots", scoring.MAX_SPOTS), zone_style=style,

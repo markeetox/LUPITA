@@ -1,1 +1,6 @@
-127.0.0.1 - - [27/Oct/2026 14:34:50] "GET /index.html HTTP/1.1" 200 -
+127.0.0.1 - - [27/Oct/2026 15:14:35] "GET /web/index.html?data=http://localhost:8080/data/live/ HTTP/1.1" 200 -
+127.0.0.1 - - [27/Oct/2026 15:14:35] "GET /data/live/fish.json?_t=1793114075524 HTTP/1.1" 200 -
+127.0.0.1 - - [27/Oct/2026 15:14:35] "GET /data/live/heat.json?_t=1793114075749 HTTP/1.1" 200 -
+127.0.0.1 - - [27/Oct/2026 15:14:40] "GET /data/live/closures.json?_t=1793114080852 HTTP/1.1" 200 -
+127.0.0.1 - - [27/Oct/2026 15:14:41] "GET /data/live/stream.json?_t=1793114081794 HTTP/1.1" 200 -
+127.0.0.1 - - [27/Oct/2026 15:14:42] "GET /data/live/latest.json?_t=1793114082151 HTTP/1.1" 200 -
