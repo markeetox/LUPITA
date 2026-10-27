@@ -79,7 +79,7 @@ def load_layers(sources: dict, errors: list[str], fetch=erddap.fetch_csv, fetch_
               "datasets": {"sst": cfg["sst"]["dataset"]}}
 
     if places and places.get("places"):
-        inlets = [p for p in places["places"] if p.get("type") in ("inlet", "pass")]
+        inlets = [p for p in places["places"] if p.get("kind") in ("inlet", "pass") or p.get("type") in ("inlet", "pass")]
         if inlets:
             layers["distance_to_inlet"] = derive.distance_to_inlet_grid(lats, lons, inlets)
 

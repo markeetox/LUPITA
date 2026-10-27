@@ -56,6 +56,34 @@
       "lon": -80.156,
       "kind": "inlet",
       "radius_km": 1.5
+    },
+    {
+      "name": "Halifax Harbor",
+      "lat": 44.600,
+      "lon": -63.560,
+      "kind": "inlet",
+      "radius_km": 3.0
+    },
+    {
+      "name": "Chesapeake Bay Inlet",
+      "lat": 36.980,
+      "lon": -76.020,
+      "kind": "inlet",
+      "radius_km": 4.0
+    },
+    {
+      "name": "Oregon Inlet",
+      "lat": 35.770,
+      "lon": -75.540,
+      "kind": "inlet",
+      "radius_km": 2.0
+    },
+    {
+      "name": "Tampico Pass",
+      "lat": 22.260,
+      "lon": -97.780,
+      "kind": "inlet",
+      "radius_km": 2.5
     }
   ]
 }

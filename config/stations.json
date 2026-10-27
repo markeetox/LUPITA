@@ -8,6 +8,11 @@
     { "id": "THRF1", "name": "Thursday Point, FL",     "lat": 25.20, "lon": -80.37, "zone": "inshore" },
     { "id": "MNBF1", "name": "Manatee Bay, FL",        "lat": 25.24, "lon": -80.42, "zone": "inshore" },
     { "id": "41068", "name": "Fort Pierce, FL (FTP)",  "lat": 27.59, "lon": -80.19, "zone": "ocean" },
-    { "id": "41114", "name": "Fort Pierce, FL (134)",  "lat": 27.56, "lon": -80.22, "zone": "ocean" }
+    { "id": "41114", "name": "Fort Pierce, FL (134)",  "lat": 27.56, "lon": -80.22, "zone": "ocean" },
+    { "id": "44139", "name": "Halifax / Offshore, NS", "lat": 44.24, "lon": -62.75, "zone": "ocean" },
+    { "id": "44009", "name": "Delaware Bay, DE/NJ",    "lat": 38.46, "lon": -74.70, "zone": "ocean" },
+    { "id": "41013", "name": "Frying Pan Shoals, NC", "lat": 33.44, "lon": -77.74, "zone": "ocean" },
+    { "id": "42001", "name": "Mid Gulf of Mexico",     "lat": 25.89, "lon": -89.65, "zone": "ocean" },
+    { "id": "42055", "name": "Bay of Campeche, MX",    "lat": 22.14, "lon": -94.11, "zone": "ocean" }
   ]
 }

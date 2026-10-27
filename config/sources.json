@@ -1,14 +1,14 @@
 {
   "note": "SST, chlorophyll (NOAA-20 near-real-time) and ETOPO bathymetry verified with check_sources. The gap-filled chlorophyll entry is verified but switched off (its filled cells are estimates). gradient_min values are placeholders to calibrate against real grids. fallback_bases: a second NOAA CoastWatch address tried only if the main one refuses (not yet verified).",
   "region": {
-    "name": "south_florida",
+    "name": "north_america_east_coast",
     "lat": [
-      24.5,
-      27.0
+      15.0,
+      52.0
     ],
     "lon": [
-      -81.0,
-      -78.5
+      -98.0,
+      -50.0
     ]
   },
   "ndbc": {
@@ -26,8 +26,8 @@
         "longitude"
       ],
       "stride": {
-        "latitude": 2,
-        "longitude": 2
+        "latitude": 5,
+        "longitude": 5
       },
       "parameter": "sst_c",
       "log_scale": false,
@@ -49,8 +49,8 @@
         "longitude"
       ],
       "stride": {
-        "latitude": 2,
-        "longitude": 2
+        "latitude": 5,
+        "longitude": 5
       },
       "parameter": "chlorophyll",
       "log_scale": true,

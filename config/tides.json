@@ -4,6 +4,9 @@
     { "id": "8723214", "name": "Virginia Key",     "lat": 25.731, "lon": -80.162 },
     { "id": "8722956", "name": "Port Everglades",  "lat": 26.092, "lon": -80.117 },
     { "id": "8722670", "name": "Lake Worth Pier",  "lat": 26.612, "lon": -80.034 },
-    { "id": "8723970", "name": "Vaca Key",         "lat": 24.711, "lon": -81.105 }
+    { "id": "8723970", "name": "Vaca Key",         "lat": 24.711, "lon": -81.105 },
+    { "id": "8418150", "name": "Halifax, NS",      "lat": 44.667, "lon": -63.583 },
+    { "id": "8638610", "name": "Sewells Point, VA", "lat": 36.947, "lon": -76.330 },
+    { "id": "8665530", "name": "Charleston, SC",   "lat": 32.782, "lon": -79.925 }
   ]
 }
