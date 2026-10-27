@@ -702,7 +702,7 @@ function renderPanel() {
 
 /* ---------------- load data ---------------- */
 async function getJSON(name) {
-  const res = await fetch(DATA_BASE + name, { cache: "no-store" });
+  const res = await fetch(DATA_BASE + name + "?_t=" + Date.now(), { cache: "no-store" });
   if (!res.ok) throw new Error(name + " HTTP " + res.status);
   return res.json();
 }
