@@ -33,6 +33,24 @@
     background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='14' height='9' viewBox='0 0 14 9'><path d='M1 1l6 6 6-6' fill='none' stroke='%238fa3bd' stroke-width='2' stroke-linecap='round'/></svg>");
     background-repeat: no-repeat; background-position: right 14px center; }
   .select:focus { outline: 2px solid #3b82f6; outline-offset: 1px; }
+
+  .multi-select { position: relative; width: 100%; }
+  .select-btn { width: 100%; text-align: left; font-size: 16px; color: var(--text); background-color: #121316; border: 1px solid var(--line);
+    border-radius: 12px; padding: 11px 40px 11px 12px; cursor: pointer; appearance: none; -webkit-appearance: none;
+    background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='14' height='9' viewBox='0 0 14 9'><path d='M1 1l6 6 6-6' fill='none' stroke='%238fa3bd' stroke-width='2' stroke-linecap='round'/></svg>");
+    background-repeat: no-repeat; background-position: right 14px center; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .dropdown-menu { position: absolute; top: calc(100% + 4px); left: 0; right: 0; background: #18191e; border: 1px solid var(--line);
+    border-radius: 12px; box-shadow: 0 12px 36px rgba(0,0,0,.7); z-index: 50; max-height: 280px; display: flex; flex-direction: column; }
+  .dropdown-menu[hidden] { display: none; }
+  .dropdown-header { display: flex; justify-content: space-between; align-items: center; padding: 8px 12px; border-bottom: 1px solid var(--line); font-size: 13px; color: var(--muted); }
+  .clear-btn { background: none; border: none; color: #60a5fa; cursor: pointer; font-size: 13px; padding: 0; }
+  .clear-btn:hover { text-decoration: underline; }
+  .checklist { overflow-y: auto; padding: 4px 0; }
+  .check-item { display: flex; align-items: center; gap: 10px; padding: 8px 12px; cursor: pointer; font-size: 15px; color: var(--text); }
+  .check-item:hover { background: rgba(255,255,255,.06); }
+  .check-item input { width: 18px; height: 18px; accent-color: #3b82f6; cursor: pointer; }
+  .check-item .swatch { width: 10px; height: 10px; border-radius: 50%; flex: none; }
+  .check-item.disabled { opacity: .45; cursor: not-allowed; }
   .note { margin: 10px 0 0; font-size: 14px; line-height: 1.35; }
   .note div { display: flex; gap: 8px; margin-bottom: 5px; color: var(--muted); }
   .note i { flex: none; width: 10px; height: 10px; border-radius: 50%; margin-top: 5px; }
@@ -147,8 +165,17 @@
       <option value="canada">Atlantic Canada & North</option>
       <option value="gulf_mex">Gulf of Mexico & Mexico</option>
     </select>
-    <label for="fishSelect" class="lbl" style="margin-top: 8px;">Show fish</label>
-    <select id="fishSelect" class="select"><option value="all">All fish</option></select>
+    <label class="lbl" style="margin-top: 8px;">Select fish (up to 5)</label>
+    <div class="multi-select" id="fishMultiSelect">
+      <button id="selectBtn" type="button" class="select-btn">Select species...</button>
+      <div id="dropdownMenu" class="dropdown-menu" hidden>
+        <div class="dropdown-header">
+          <span id="selectedCount">0 of 5 selected</span>
+          <button id="clearBtn" type="button" class="clear-btn">Clear all</button>
+        </div>
+        <div id="checklist" class="checklist"></div>
+      </div>
+    </div>
     <div id="fishNote" class="note"></div>
     <div id="seaRow" class="sea" hidden></div>
     <div class="legend" aria-hidden="true"><span>Lower</span><i id="legendBar"></i><span>Better match</span></div>
@@ -231,7 +258,7 @@ const REGIONS = {
   canada: { name: "Atlantic Canada & North", bounds: [[-70.0, 42.0], [-50.0, 52.0]], filter: s => s.coords[1] >= 42.0 && s.coords[1] <= 52.0 && s.coords[0] >= -70.0 && s.coords[0] <= -50.0 },
   gulf_mex: { name: "Gulf of Mexico & Mexico", bounds: [[-98.0, 15.0], [-81.0, 30.0]], filter: s => s.coords[1] >= 15.0 && s.coords[1] <= 30.0 && s.coords[0] >= -98.0 && s.coords[0] <= -81.0 }
 };
-let FISH = null, BUOYS = null, CLOSURES = null, FILTER = store.get("fhm.fish") || "all", REGION_FILTER = store.get("fhm.region") || "all";
+let FISH = null, BUOYS = null, CLOSURES = null, SELECTED_SPECIES = [], REGION_FILTER = store.get("fhm.region") || "all";
 const SPECIES = {}, SPOTS = {};
 function setFish(data) {
   FISH = data;
@@ -429,10 +456,12 @@ function b64ToBytes(b64) {
   return out;
 }
 function hexToRgb(h) { const n = parseInt(String(h).slice(1), 16); return [(n >> 16) & 255, (n >> 8) & 255, n & 255]; }
-// One RGBA pixel per grid cell. For "all fish" each cell takes the colour of the fish that scores best there.
-function heatPixels(heat, filter, species) {
+// One RGBA pixel per grid cell. Overlays selected species scores.
+function heatPixels(heat, selectedIds, species) {
   const n = heat.width * heat.height, px = new Uint8ClampedArray(n * 4);
-  const ids = Object.keys(heat.species).filter(id => filter === "all" || id === filter);
+  if (!selectedIds || !selectedIds.length) return px;
+  const ids = selectedIds.filter(id => heat.species[id]);
+  if (!ids.length) return px;
   const grids = ids.map(id => b64ToBytes(heat.species[id])), cols = ids.map(id => hexToRgb((species[id] || {}).color || "#ffffff"));
   for (let i = 0; i < n; i++) {
     let best = 0, who = -1;
@@ -461,7 +490,7 @@ function renderHeat() {                                  // call only when the m
   if (!HEAT) return;
   const [w, s, e, n] = HEAT.bounds, coordinates = [[w, n], [e, n], [e, s], [w, s]];
   map.setMaxBounds([[w - 1.2, s - 1.0], [e + 1.2, n + 1.0]]);   // no scrolling off into empty ocean far from the data
-  const url = heatURL(heatPixels(HEAT, FILTER, SPECIES), HEAT.width, HEAT.height, 6);
+  const url = heatURL(heatPixels(HEAT, SELECTED_SPECIES, SPECIES), HEAT.width, HEAT.height, 6);
   if (map.getSource("heat")) { map.getSource("heat").updateImage({ url, coordinates }); return; }
   map.addSource("heat", { type: "image", url, coordinates });
   const before = ["closures-fill", "zones-fill", "spots-halo"].find(id => map.getLayer(id));
@@ -494,8 +523,9 @@ function spotZone(s) {
   return null;
 }
 function visibleSpots() {
+  if (!SELECTED_SPECIES.length) return [];
   const reg = REGIONS[REGION_FILTER] || REGIONS.all;
-  return Object.values(SPOTS).filter(s => (FILTER === "all" || s.species === FILTER) && reg.filter(s));
+  return Object.values(SPOTS).filter(s => SELECTED_SPECIES.includes(s.species) && reg.filter(s));
 }
 function spotFeatures() {
   const spots = visibleSpots();
@@ -628,7 +658,51 @@ function ago(iso) {
 }
 /* top panel: slide up/down, remembered between visits */
 const topSheet = document.getElementById("topsheet"), topTab = document.getElementById("topTab");
-const regionSelect = document.getElementById("regionSelect"), fishSelect = document.getElementById("fishSelect"), fishNote = document.getElementById("fishNote");
+const regionSelect = document.getElementById("regionSelect"), selectBtn = document.getElementById("selectBtn");
+const dropdownMenu = document.getElementById("dropdownMenu"), checklist = document.getElementById("checklist");
+const selectedCount = document.getElementById("selectedCount"), clearBtn = document.getElementById("clearBtn");
+const fishNote = document.getElementById("fishNote");
+
+selectBtn.addEventListener("click", e => {
+  e.stopPropagation();
+  const hidden = dropdownMenu.hasAttribute("hidden");
+  if (hidden) dropdownMenu.removeAttribute("hidden");
+  else dropdownMenu.setAttribute("hidden", "");
+});
+document.addEventListener("click", e => {
+  if (!document.getElementById("fishMultiSelect").contains(e.target)) {
+    dropdownMenu.setAttribute("hidden", "");
+  }
+});
+clearBtn.addEventListener("click", e => {
+  SELECTED_SPECIES = [];
+  updateChecklistState();
+  renderNote();
+  renderLegend();
+  closeSheet();
+  refreshSpots();
+});
+
+function updateChecklistState() {
+  selectedCount.textContent = `${SELECTED_SPECIES.length} of 5 selected`;
+  if (SELECTED_SPECIES.length === 0) selectBtn.textContent = "Select species...";
+  else if (SELECTED_SPECIES.length === 1) selectBtn.textContent = (SPECIES[SELECTED_SPECIES[0]] || {}).name || SELECTED_SPECIES[0];
+  else selectBtn.textContent = `${SELECTED_SPECIES.length} species selected`;
+
+  const inputs = checklist.querySelectorAll("input[type='checkbox']");
+  inputs.forEach(input => {
+    const isChecked = SELECTED_SPECIES.includes(input.value);
+    input.checked = isChecked;
+    const item = input.closest(".check-item");
+    if (!isChecked && SELECTED_SPECIES.length >= 5) {
+      input.disabled = true;
+      item.classList.add("disabled");
+    } else {
+      input.disabled = false;
+      item.classList.remove("disabled");
+    }
+  });
+}
 function setTop(open, save) {
   topSheet.classList.toggle("closed", !open);
   topTab.setAttribute("aria-expanded", String(open));
@@ -665,10 +739,12 @@ function renderClosuresChip() {
 }
 
 function renderLegend() {
-  const bar = document.getElementById("legendBar"), sp = SPECIES[FILTER];
-  if (!sp) { bar.style.background = ""; return; }                     // "all fish": keep the neutral ramp
-  const [r, g, b] = hexToRgb(sp.color);
-  bar.style.background = `linear-gradient(90deg, rgba(${r},${g},${b},.14), ${sp.color}, #ffffff)`;
+  const bar = document.getElementById("legendBar");
+  if (!SELECTED_SPECIES.length) { bar.style.background = ""; return; }
+  const first = SPECIES[SELECTED_SPECIES[0]];
+  if (!first) { bar.style.background = ""; return; }
+  const [r, g, b] = hexToRgb(first.color);
+  bar.style.background = `linear-gradient(90deg, rgba(${r},${g},${b},.14), ${first.color}, #ffffff)`;
 }
 
 function speciesLabel(s) {
@@ -681,12 +757,12 @@ function renderNote() {
     const note = s.status === "ok" ? `${s.spots} area${s.spots === 1 ? "" : "s"} today` : (s.message || s.status);
     return `<div>${dot(s.color)}<span><b>${esc(s.name)}</b>: ${esc(note)}</span></div>`;
   };
-  const all = FISH.species || [];
-  if (FILTER !== "all") { fishNote.innerHTML = all.filter(s => s.id === FILTER).map(line).join(""); return; }
-  // all fish: one summary line, then only the fish that have nothing to show (keeps the panel short on a phone)
-  const withAreas = all.filter(s => s.status === "ok"), total = withAreas.reduce((n, s) => n + s.spots, 0);
-  const summary = `<div><span><b>${total}</b> area${total === 1 ? "" : "s"} across <b>${withAreas.length}</b> of ${all.length} fish today</span></div>`;
-  fishNote.innerHTML = summary + all.filter(s => s.status !== "ok").map(line).join("");
+  const all = FISH ? (FISH.species || []) : [];
+  if (!SELECTED_SPECIES.length) {
+    fishNote.innerHTML = `<div style="color:var(--muted);">Select up to 5 species from the checklist to view predictions on the map.</div>`;
+    return;
+  }
+  fishNote.innerHTML = all.filter(s => SELECTED_SPECIES.includes(s.id)).map(line).join("");
 }
 regionSelect.addEventListener("change", () => {
   REGION_FILTER = regionSelect.value;
@@ -699,14 +775,7 @@ regionSelect.addEventListener("change", () => {
     map.fitBounds(b, { padding: { top: 120, left: 40, right: 40, bottom: 60 }, duration: 800 });
   }
 });
-fishSelect.addEventListener("change", () => {
-  FILTER = fishSelect.value;
-  store.set("fhm.fish", FILTER);
-  renderNote();
-  renderLegend();
-  closeSheet();
-  refreshSpots();
-});
+
 function renderPanel() {
   const chip = document.getElementById("status");
   if (!FISH) return;
@@ -719,13 +788,38 @@ function renderPanel() {
     chip.className = "chip " + (stale ? "warn" : "ok");
   }
   renderSea();
-  if (FILTER !== "all" && !SPECIES[FILTER]) FILTER = "all";    // saved choice no longer exists
   if (!REGIONS[REGION_FILTER]) REGION_FILTER = "all";
   regionSelect.value = REGION_FILTER;
   const sortedSpecies = [...(FISH.species || [])].sort((a, b) => a.name.localeCompare(b.name));
-  fishSelect.innerHTML = `<option value="all">All fish</option>` +
-    sortedSpecies.map(s => `<option value="${esc(s.id)}">${esc(s.name)} (${esc(speciesLabel(s))})</option>`).join("");
-  fishSelect.value = FILTER;
+
+  checklist.innerHTML = sortedSpecies.map(s => `
+    <label class="check-item">
+      <input type="checkbox" value="${esc(s.id)}" ${SELECTED_SPECIES.includes(s.id) ? "checked" : ""}>
+      <span class="swatch" style="background:${esc(s.color)}"></span>
+      <span style="flex:1">${esc(s.name)}</span>
+      <small style="color:var(--muted);font-size:12px">${esc(speciesLabel(s))}</small>
+    </label>
+  `).join("");
+
+  checklist.querySelectorAll("input[type='checkbox']").forEach(cb => {
+    cb.addEventListener("change", e => {
+      const id = e.target.value;
+      if (e.target.checked) {
+        if (SELECTED_SPECIES.length < 5 && !SELECTED_SPECIES.includes(id)) {
+          SELECTED_SPECIES.push(id);
+        }
+      } else {
+        SELECTED_SPECIES = SELECTED_SPECIES.filter(x => x !== id);
+      }
+      updateChecklistState();
+      renderNote();
+      renderLegend();
+      closeSheet();
+      refreshSpots();
+    });
+  });
+
+  updateChecklistState();
   renderNote();
   renderLegend();
 }
