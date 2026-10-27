@@ -1,0 +1,116 @@
+{
+  "schema_version": 1,
+  "id": "gag-grouper",
+  "common_name": "Gag grouper",
+  "scientific_name": "Mycteroperca microlepis",
+  "aliases": [
+    "gag",
+    "velvet rockfish"
+  ],
+  "habitat_zone": "reef",
+  "display": {
+    "color": "#059669"
+  },
+  "review_status": "draft v1 - coastal and offshore reef grouper",
+  "image": {
+    "status": "placeholder",
+    "kind": "illustration",
+    "url": "fish/gag-grouper.png",
+    "credit": "Original illustration",
+    "license": "",
+    "plan": "web/fish/gag-grouper.png placeholder illustration."
+  },
+  "profile": {
+    "size": "Common 10-25 lb; up to 50 lb",
+    "diet": "Crabs, shrimp, and reef fishes",
+    "swimming_depth": "10 to 80 m",
+    "behavior": "Moves inshore to shallower ledges in winter and migrates offshore to deep reefs in spring.",
+    "regulations_link": "https://myfwc.com/",
+    "sources": [
+      "https://myfwc.com/"
+    ]
+  },
+  "factors": [
+    {
+      "param": "sst_c",
+      "kind": "range",
+      "range": [
+        18,
+        28
+      ],
+      "ideal": [
+        20,
+        25
+      ],
+      "weight": 0.35,
+      "active": true,
+      "value_status": "sourced",
+      "sources": [
+        "https://myfwc.com/"
+      ],
+      "reason_template": "Water is {value} C, in the comfortable thermal range for gag grouper."
+    },
+    {
+      "param": "structure_type",
+      "kind": "category",
+      "preferred": [
+        "natural_reef",
+        "hardbottom",
+        "ledge",
+        "artificial_reef"
+      ],
+      "weight": 0.35,
+      "active": true,
+      "value_status": "sourced",
+      "sources": [
+        "https://myfwc.com/"
+      ],
+      "map": {
+        "natural_reef": 1.0,
+        "ledge": 0.9,
+        "hardbottom": 0.8,
+        "artificial_reef": 0.8
+      },
+      "reason_template": "Structure is {value}, ideal for gag grouper ambush."
+    },
+    {
+      "param": "depth_m",
+      "kind": "range",
+      "range": [
+        8,
+        80
+      ],
+      "ideal": [
+        15,
+        45
+      ],
+      "weight": 0.3,
+      "active": true,
+      "value_status": "sourced",
+      "sources": [
+        "https://myfwc.com/"
+      ],
+      "gate": true,
+      "reason_template": "Depth is {value} m, in coastal reef depths."
+    }
+  ],
+  "timing": {
+    "status": "angler_lore",
+    "light": {
+      "map": {
+        "dawn": 1.0,
+        "dusk": 0.9,
+        "day": 0.7,
+        "night": 0.4
+      },
+      "text": {
+        "dawn": "It is dawn, a low-light time when fish feed actively.",
+        "dusk": "It is dusk, a low-light time when fish feed actively."
+      }
+    },
+    "note": "Patterns reported by local captains and fishing writers, not tested by studies.",
+    "sources": [
+      "https://myfwc.com/"
+    ]
+  }
+}

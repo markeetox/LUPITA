@@ -1,0 +1,154 @@
+{
+  "schema_version": 1,
+  "id": "blue-marlin",
+  "common_name": "Atlantic blue marlin",
+  "scientific_name": "Makaira nigricans",
+  "aliases": [
+    "marlin",
+    "blue marlin"
+  ],
+  "habitat_zone": "offshore",
+  "display": {
+    "color": "#0284c7"
+  },
+  "review_status": "draft v1 - apex oceanic pelagic profile",
+  "image": {
+    "status": "placeholder",
+    "kind": "illustration",
+    "url": "fish/blue-marlin.png",
+    "credit": "Original illustration",
+    "license": "",
+    "plan": "web/fish/blue-marlin.png placeholder illustration."
+  },
+  "profile": {
+    "size": "Up to 1000+ lb; apex oceanic billfish",
+    "diet": "Tunas, mackerels, squids, and dolphin",
+    "swimming_depth": "Upper mixed layer (surface to 100 m)",
+    "behavior": "Oceanic solitary billfish that favors warm blue offshore currents, thermal boundaries, and current convergences.",
+    "regulations_link": "https://myfwc.com/",
+    "sources": [
+      "https://myfwc.com/",
+      "https://www.fisheries.noaa.gov/"
+    ]
+  },
+  "factors": [
+    {
+      "param": "sst_c",
+      "kind": "range",
+      "range": [
+        23,
+        31
+      ],
+      "ideal": [
+        26,
+        29
+      ],
+      "weight": 0.35,
+      "active": true,
+      "value_status": "sourced",
+      "sources": [
+        "https://myfwc.com/"
+      ],
+      "reason_template": "Water is {value} C, in warm tropical offshore waters favored by blue marlin."
+    },
+    {
+      "param": "sst_gradient",
+      "kind": "higher_is_better",
+      "weight": 0.2,
+      "active": true,
+      "value_status": "sourced",
+      "sources": [
+        "https://myfwc.com/"
+      ],
+      "reason_template": "SST break is {per10km} C per 10 km, marking front lines where marlin hunt."
+    },
+    {
+      "param": "gulf_stream_edge",
+      "kind": "range",
+      "range": [
+        -20,
+        50
+      ],
+      "ideal": [
+        0,
+        25
+      ],
+      "weight": 0.2,
+      "active": true,
+      "value_status": "sourced",
+      "sources": [
+        "https://myfwc.com/"
+      ],
+      "reason_template": "Inshore Gulf Stream edge is {abs_value} km {side}."
+    },
+    {
+      "param": "depth_m",
+      "kind": "range",
+      "range": [
+        100,
+        4000
+      ],
+      "ideal": [
+        200,
+        2000
+      ],
+      "weight": 0.05,
+      "active": true,
+      "value_status": "sourced",
+      "sources": [
+        "https://myfwc.com/"
+      ],
+      "gate": true,
+      "reason_template": "Depth is {value} m, in deep pelagic waters."
+    },
+    {
+      "param": "season_presence",
+      "kind": "season",
+      "weight": 0.2,
+      "active": true,
+      "value_status": "sourced",
+      "sources": [
+        "https://myfwc.com/"
+      ],
+      "months": [
+        5,
+        6,
+        7,
+        8,
+        9
+      ],
+      "peak_months": [
+        6,
+        7,
+        8
+      ],
+      "in_score": 0.8,
+      "off_score": 0.2,
+      "value_text": {
+        "peak": "It is peak blue marlin season.",
+        "in_season": "It is blue marlin season.",
+        "off": "It is outside the peak blue marlin season."
+      }
+    }
+  ],
+  "timing": {
+    "status": "angler_lore",
+    "light": {
+      "map": {
+        "day": 1.0,
+        "dawn": 0.8,
+        "dusk": 0.8,
+        "night": 0.3
+      },
+      "text": {
+        "day": "It is full daylight, when fish feed actively.",
+        "dawn": "It is dawn, a low-light time when fish feed actively.",
+        "dusk": "It is dusk, a low-light time when fish feed actively."
+      }
+    },
+    "note": "Patterns reported by local captains and fishing writers, not tested by studies.",
+    "sources": [
+      "https://myfwc.com/"
+    ]
+  }
+}

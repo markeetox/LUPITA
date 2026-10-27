@@ -1,0 +1,116 @@
+{
+  "schema_version": 1,
+  "id": "black-grouper",
+  "common_name": "Black grouper",
+  "scientific_name": "Mycteroperca bonaci",
+  "aliases": [
+    "black grouper",
+    "carbo"
+  ],
+  "habitat_zone": "reef",
+  "display": {
+    "color": "#16a34a"
+  },
+  "review_status": "draft v1 - reef predator profile",
+  "image": {
+    "status": "placeholder",
+    "kind": "illustration",
+    "url": "fish/black-grouper.png",
+    "credit": "Original illustration",
+    "license": "",
+    "plan": "web/fish/black-grouper.png placeholder illustration."
+  },
+  "profile": {
+    "size": "Common 10-40 lb; up to 100+ lb",
+    "diet": "Fishes, squids, and crustaceans",
+    "swimming_depth": "Near bottom; 15 to 110 m",
+    "behavior": "Solitary apex reef predator that holds tight to high-relief coral structures, drop-offs, and deep ledges.",
+    "regulations_link": "https://myfwc.com/",
+    "sources": [
+      "https://myfwc.com/"
+    ]
+  },
+  "factors": [
+    {
+      "param": "sst_c",
+      "kind": "range",
+      "range": [
+        20,
+        29
+      ],
+      "ideal": [
+        23,
+        27
+      ],
+      "weight": 0.3,
+      "active": true,
+      "value_status": "sourced",
+      "sources": [
+        "https://myfwc.com/"
+      ],
+      "reason_template": "Water is {value} C, inside ideal bounds for black grouper."
+    },
+    {
+      "param": "structure_type",
+      "kind": "category",
+      "preferred": [
+        "natural_reef",
+        "artificial_reef",
+        "wreck",
+        "ledge"
+      ],
+      "weight": 0.4,
+      "active": true,
+      "value_status": "sourced",
+      "sources": [
+        "https://myfwc.com/"
+      ],
+      "map": {
+        "natural_reef": 1.0,
+        "artificial_reef": 0.9,
+        "wreck": 0.9,
+        "ledge": 0.8
+      },
+      "reason_template": "Structure is {value}, where black grouper hold."
+    },
+    {
+      "param": "depth_m",
+      "kind": "range",
+      "range": [
+        10,
+        110
+      ],
+      "ideal": [
+        20,
+        60
+      ],
+      "weight": 0.3,
+      "active": true,
+      "value_status": "sourced",
+      "sources": [
+        "https://myfwc.com/"
+      ],
+      "gate": true,
+      "reason_template": "Depth is {value} m, in prime reef depth zone."
+    }
+  ],
+  "timing": {
+    "status": "angler_lore",
+    "light": {
+      "map": {
+        "dawn": 1.0,
+        "dusk": 1.0,
+        "day": 0.7,
+        "night": 0.5
+      },
+      "text": {
+        "dawn": "It is dawn, a low-light time when fish feed actively.",
+        "dusk": "It is dusk, a low-light time when fish feed actively."
+      }
+    },
+    "note": "Patterns reported by local captains and fishing writers, not tested by studies.",
+    "sources": [
+      "https://myfwc.com/"
+    ]
+  }
+}

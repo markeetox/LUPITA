@@ -1,0 +1,131 @@
+{
+  "schema_version": 1,
+  "id": "mangrove-snapper",
+  "common_name": "Gray (mangrove) snapper",
+  "scientific_name": "Lutjanus griseus",
+  "aliases": [
+    "mangrove snapper",
+    "gray snapper",
+    "grover"
+  ],
+  "habitat_zone": "coastal",
+  "display": {
+    "color": "#ea580c"
+  },
+  "review_status": "draft v1 - versatile inshore and reef snapper",
+  "image": {
+    "status": "placeholder",
+    "kind": "illustration",
+    "url": "fish/mangrove-snapper.png",
+    "credit": "Original illustration",
+    "license": "",
+    "plan": "web/fish/mangrove-snapper.png placeholder illustration."
+  },
+  "profile": {
+    "size": "Inshore 1-3 lb; offshore up to 10+ lb",
+    "diet": "Shrimp, crabs, pilchards, and small reef fishes",
+    "swimming_depth": "0.5 to 50 m",
+    "behavior": "Juveniles inhabit mangrove edges and docks; adults move offshore to reef structures and spawn in summer.",
+    "regulations_link": "https://myfwc.com/",
+    "sources": [
+      "https://myfwc.com/"
+    ]
+  },
+  "factors": [
+    {
+      "param": "sst_c",
+      "kind": "range",
+      "range": [
+        20,
+        31
+      ],
+      "ideal": [
+        24,
+        29
+      ],
+      "weight": 0.35,
+      "active": true,
+      "value_status": "sourced",
+      "sources": [
+        "https://myfwc.com/"
+      ],
+      "reason_template": "Water is {value} C, ideal for mangrove snapper."
+    },
+    {
+      "param": "structure_type",
+      "kind": "category",
+      "preferred": [
+        "natural_reef",
+        "artificial_reef",
+        "wreck",
+        "hardbottom",
+        "mangrove_edge"
+      ],
+      "weight": 0.4,
+      "active": true,
+      "value_status": "sourced",
+      "sources": [
+        "https://myfwc.com/"
+      ],
+      "map": {
+        "natural_reef": 1.0,
+        "artificial_reef": 1.0,
+        "wreck": 0.9,
+        "hardbottom": 0.8,
+        "mangrove_edge": 0.8
+      },
+      "reason_template": "Structure is {value}, perfect cover for mangrove snapper."
+    },
+    {
+      "param": "depth_m",
+      "kind": "range",
+      "range": [
+        0.5,
+        50
+      ],
+      "ideal": [
+        2,
+        30
+      ],
+      "weight": 0.25,
+      "active": true,
+      "value_status": "sourced",
+      "sources": [
+        "https://myfwc.com/"
+      ],
+      "reason_template": "Depth is {value} m, inside mangrove snapper depth zone."
+    }
+  ],
+  "timing": {
+    "status": "angler_lore",
+    "light": {
+      "map": {
+        "night": 1.0,
+        "dusk": 0.9,
+        "dawn": 0.9,
+        "day": 0.5
+      },
+      "text": {
+        "night": "It is night, when nocturnal feeding is high.",
+        "dusk": "It is dusk, a low-light time when fish feed actively.",
+        "dawn": "It is dawn, a low-light time when fish feed actively."
+      }
+    },
+    "tide": {
+      "map": {
+        "rising": 1.0,
+        "falling": 0.9,
+        "slack_high": 0.5,
+        "slack_low": 0.4
+      },
+      "text": {
+        "rising": "The tide is rising, bringing in fresh water and bait.",
+        "falling": "The tide is falling, flushing bait out through structure."
+      }
+    },
+    "note": "Patterns reported by local captains and fishing writers, not tested by studies.",
+    "sources": [
+      "https://myfwc.com/"
+    ]
+  }
+}

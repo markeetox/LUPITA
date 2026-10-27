@@ -1,0 +1,117 @@
+{
+  "schema_version": 1,
+  "id": "cubera-snapper",
+  "common_name": "Cubera snapper",
+  "scientific_name": "Lutjanus cyanopterus",
+  "aliases": [
+    "cubera",
+    "cubera snapper"
+  ],
+  "habitat_zone": "reef",
+  "display": {
+    "color": "#991b1b"
+  },
+  "review_status": "draft v1 - giant reef snapper profile",
+  "image": {
+    "status": "placeholder",
+    "kind": "illustration",
+    "url": "fish/cubera-snapper.png",
+    "credit": "Original illustration",
+    "license": "",
+    "plan": "web/fish/cubera-snapper.png placeholder illustration."
+  },
+  "profile": {
+    "size": "Common 20-60 lb; up to 120+ lb",
+    "diet": "Spiny lobsters, large crabs, and reef fishes",
+    "swimming_depth": "18 to 90 m",
+    "behavior": "Largest Atlantic snapper; holds in deep reef ledges and wrecks, forming full-moon summer spawning aggregations.",
+    "regulations_link": "https://myfwc.com/",
+    "sources": [
+      "https://myfwc.com/"
+    ]
+  },
+  "factors": [
+    {
+      "param": "sst_c",
+      "kind": "range",
+      "range": [
+        22,
+        30
+      ],
+      "ideal": [
+        24,
+        28
+      ],
+      "weight": 0.35,
+      "active": true,
+      "value_status": "sourced",
+      "sources": [
+        "https://myfwc.com/"
+      ],
+      "reason_template": "Water is {value} C, ideal for cubera snapper."
+    },
+    {
+      "param": "structure_type",
+      "kind": "category",
+      "preferred": [
+        "natural_reef",
+        "wreck",
+        "artificial_reef",
+        "ledge"
+      ],
+      "weight": 0.35,
+      "active": true,
+      "value_status": "sourced",
+      "sources": [
+        "https://myfwc.com/"
+      ],
+      "map": {
+        "natural_reef": 1.0,
+        "wreck": 1.0,
+        "artificial_reef": 0.8,
+        "ledge": 0.9
+      },
+      "reason_template": "Structure is {value}, where giant cubera snapper hide."
+    },
+    {
+      "param": "depth_m",
+      "kind": "range",
+      "range": [
+        18,
+        90
+      ],
+      "ideal": [
+        30,
+        60
+      ],
+      "weight": 0.3,
+      "active": true,
+      "value_status": "sourced",
+      "sources": [
+        "https://myfwc.com/"
+      ],
+      "gate": true,
+      "reason_template": "Depth is {value} m, in deep reef habitat."
+    }
+  ],
+  "timing": {
+    "status": "angler_lore",
+    "light": {
+      "map": {
+        "night": 1.0,
+        "dusk": 0.9,
+        "dawn": 0.8,
+        "day": 0.3
+      },
+      "text": {
+        "night": "It is night, when nocturnal feeding is high.",
+        "dusk": "It is dusk, a low-light time when fish feed actively.",
+        "dawn": "It is dawn, a low-light time when fish feed actively."
+      }
+    },
+    "note": "Patterns reported by local captains and fishing writers, not tested by studies.",
+    "sources": [
+      "https://myfwc.com/"
+    ]
+  }
+}
