@@ -75,7 +75,7 @@
     {
       "param": "sst_gradient",
       "kind": "higher_is_better",
-      "weight": 0.10,
+      "weight": 0.1,
       "active": true,
       "value_status": "provisional",
       "value_notes": "Anglers fish wahoo along temperature breaks and current edges, especially where they meet a steep ledge. Scored relative to today's sharpest offshore breaks.",

@@ -1,0 +1,104 @@
+{
+  "schema_version": 1,
+  "id": "snowy-grouper",
+  "common_name": "Snowy grouper",
+  "scientific_name": "Hyporthodus niveatus",
+  "aliases": [
+    "snowy grouper"
+  ],
+  "habitat_zone": "offshore",
+  "display": {
+    "color": "#1e3a8a"
+  },
+  "review_status": "draft v1 - deepwater continental slope grouper",
+  "image": {
+    "status": "placeholder",
+    "kind": "illustration",
+    "url": "fish/snowy-grouper.png",
+    "credit": "Original illustration",
+    "license": "",
+    "plan": "web/fish/snowy-grouper.png placeholder illustration."
+  },
+  "profile": {
+    "size": "Common 10-30 lb; up to 70 lb",
+    "diet": "Deepwater crabs, squids, and fishes",
+    "swimming_depth": "100 to 400 m",
+    "behavior": "Deepwater bottom dweller that inhabits rocky drop-offs, mud-bottom mounds, and canyons along the continental slope.",
+    "regulations_link": "https://myfwc.com/",
+    "sources": [
+      "https://myfwc.com/"
+    ]
+  },
+  "factors": [
+    {
+      "param": "sst_c",
+      "kind": "range",
+      "range": [
+        12,
+        24
+      ],
+      "ideal": [
+        14,
+        20
+      ],
+      "weight": 0.3,
+      "active": true,
+      "value_status": "sourced",
+      "sources": [
+        "https://myfwc.com/"
+      ],
+      "reason_template": "Water temperature is {value} C."
+    },
+    {
+      "param": "bottom_slope",
+      "kind": "higher_is_better",
+      "weight": 0.3,
+      "active": true,
+      "value_status": "sourced",
+      "sources": [
+        "https://myfwc.com/"
+      ],
+      "reason_template": "Seafloor drops steeply ({value} m/km), forming continental slope drop-offs."
+    },
+    {
+      "param": "depth_m",
+      "kind": "range",
+      "range": [
+        100,
+        400
+      ],
+      "ideal": [
+        150,
+        280
+      ],
+      "weight": 0.4,
+      "active": true,
+      "value_status": "sourced",
+      "sources": [
+        "https://myfwc.com/"
+      ],
+      "gate": true,
+      "reason_template": "Depth is {value} m, in deep continental slope habitat."
+    }
+  ],
+  "timing": {
+    "status": "angler_lore",
+    "light": {
+      "map": {
+        "day": 1.0,
+        "dawn": 0.8,
+        "dusk": 0.8,
+        "night": 0.5
+      },
+      "text": {
+        "day": "It is full daylight, when fish feed actively.",
+        "dawn": "It is dawn, a low-light time when fish feed actively.",
+        "dusk": "It is dusk, a low-light time when fish feed actively."
+      }
+    },
+    "note": "Patterns reported by local captains and fishing writers, not tested by studies.",
+    "sources": [
+      "https://myfwc.com/"
+    ]
+  }
+}

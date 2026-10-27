@@ -1,0 +1,138 @@
+{
+  "schema_version": 1,
+  "id": "blackfin-tuna",
+  "common_name": "Blackfin tuna",
+  "scientific_name": "Thunnus atlanticus",
+  "aliases": [
+    "blackfin",
+    "tuna"
+  ],
+  "habitat_zone": "offshore",
+  "display": {
+    "color": "#38bdf8"
+  },
+  "review_status": "draft v1 - pelagic offshore migratory profile",
+  "image": {
+    "status": "placeholder",
+    "kind": "illustration",
+    "url": "fish/blackfin-tuna.png",
+    "credit": "Original illustration",
+    "license": "",
+    "plan": "web/fish/blackfin-tuna.png placeholder illustration."
+  },
+  "profile": {
+    "size": "Common up to 30 lb; Florida record 45 lb",
+    "diet": "Small fish, squids, crabs, and stomatopods",
+    "swimming_depth": "Epipelagic; surface to 50 m",
+    "behavior": "Pelagic schooling fish that feeds heavily along thermal breaks, current edges, and seamounds/humps.",
+    "regulations_link": "https://myfwc.com/",
+    "sources": [
+      "https://myfwc.com/",
+      "https://www.fisheries.noaa.gov/"
+    ]
+  },
+  "factors": [
+    {
+      "param": "sst_c",
+      "kind": "range",
+      "range": [
+        20,
+        29
+      ],
+      "ideal": [
+        22,
+        27
+      ],
+      "weight": 0.3,
+      "active": true,
+      "value_status": "sourced",
+      "sources": [
+        "https://myfwc.com/"
+      ],
+      "reason_template": "Water is {value} C, ideal for active feeding blackfin tuna."
+    },
+    {
+      "param": "sst_gradient",
+      "kind": "higher_is_better",
+      "weight": 0.2,
+      "active": true,
+      "value_status": "provisional",
+      "reason_template": "Temperature break strength is {per10km} C per 10 km, attracting baitfish and hungry tuna."
+    },
+    {
+      "param": "chl_gradient",
+      "kind": "higher_is_better",
+      "weight": 0.15,
+      "active": true,
+      "value_status": "provisional",
+      "reason_template": "Water color edge concentrates plankton and bait."
+    },
+    {
+      "param": "bottom_slope",
+      "kind": "higher_is_better",
+      "weight": 0.15,
+      "active": true,
+      "value_status": "sourced",
+      "sources": [
+        "https://myfwc.com/"
+      ],
+      "reason_template": "Seafloor drops steeply ({value} m/km), marking humps and ledges blackfin tuna patrol."
+    },
+    {
+      "param": "depth_m",
+      "kind": "range",
+      "range": [
+        30,
+        1500
+      ],
+      "ideal": [
+        60,
+        800
+      ],
+      "weight": 0.05,
+      "active": true,
+      "value_status": "sourced",
+      "sources": [
+        "https://myfwc.com/"
+      ],
+      "gate": true,
+      "reason_template": "Depth is {value} m, in deep blue offshore waters."
+    },
+    {
+      "param": "gulf_stream_edge",
+      "kind": "range",
+      "range": [
+        -30,
+        40
+      ],
+      "ideal": [
+        -10,
+        15
+      ],
+      "weight": 0.15,
+      "active": true,
+      "value_status": "provisional",
+      "reason_template": "Inshore edge of the Gulf Stream is {abs_value} km {side}."
+    }
+  ],
+  "timing": {
+    "status": "angler_lore",
+    "light": {
+      "map": {
+        "dawn": 1.0,
+        "dusk": 1.0,
+        "night": 0.8,
+        "day": 0.6
+      },
+      "text": {
+        "dawn": "It is dawn, a low-light time when fish feed actively.",
+        "dusk": "It is dusk, a low-light time when fish feed actively.",
+        "night": "It is night, when nocturnal feeding is high."
+      }
+    },
+    "note": "Patterns reported by local captains and fishing writers, not tested by studies.",
+    "sources": [
+      "https://myfwc.com/"
+    ]
+  }
+}

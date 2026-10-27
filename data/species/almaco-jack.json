@@ -1,0 +1,117 @@
+{
+  "schema_version": 1,
+  "id": "almaco-jack",
+  "common_name": "Almaco jack",
+  "scientific_name": "Seriola rivoliana",
+  "aliases": [
+    "almaco",
+    "almaco jack"
+  ],
+  "habitat_zone": "offshore",
+  "display": {
+    "color": "#854d0e"
+  },
+  "review_status": "draft v1 - deep offshore reef jack profile",
+  "image": {
+    "status": "placeholder",
+    "kind": "illustration",
+    "url": "fish/almaco-jack.png",
+    "credit": "Original illustration",
+    "license": "",
+    "plan": "web/fish/almaco-jack.png placeholder illustration."
+  },
+  "profile": {
+    "size": "Common 5-20 lb; up to 70 lb",
+    "diet": "Small fishes, squids, and crabs",
+    "swimming_depth": "40 to 200 m",
+    "behavior": "Deepwater pelagic jack that schools around deep wrecks, offshore oil platforms, and steep shelf ledges.",
+    "regulations_link": "https://myfwc.com/",
+    "sources": [
+      "https://myfwc.com/"
+    ]
+  },
+  "factors": [
+    {
+      "param": "sst_c",
+      "kind": "range",
+      "range": [
+        20,
+        28
+      ],
+      "ideal": [
+        22,
+        26
+      ],
+      "weight": 0.35,
+      "active": true,
+      "value_status": "sourced",
+      "sources": [
+        "https://myfwc.com/"
+      ],
+      "reason_template": "Water is {value} C, favorable for almaco jack."
+    },
+    {
+      "param": "structure_type",
+      "kind": "category",
+      "preferred": [
+        "wreck",
+        "artificial_reef",
+        "natural_reef",
+        "ledge"
+      ],
+      "weight": 0.35,
+      "active": true,
+      "value_status": "sourced",
+      "sources": [
+        "https://myfwc.com/"
+      ],
+      "map": {
+        "wreck": 1.0,
+        "artificial_reef": 1.0,
+        "ledge": 0.9,
+        "natural_reef": 0.8
+      },
+      "reason_template": "Structure is {value}, where almaco jacks school."
+    },
+    {
+      "param": "depth_m",
+      "kind": "range",
+      "range": [
+        30,
+        200
+      ],
+      "ideal": [
+        40,
+        120
+      ],
+      "weight": 0.3,
+      "active": true,
+      "value_status": "sourced",
+      "sources": [
+        "https://myfwc.com/"
+      ],
+      "gate": true,
+      "reason_template": "Depth is {value} m, in deep reef and wreck zone."
+    }
+  ],
+  "timing": {
+    "status": "angler_lore",
+    "light": {
+      "map": {
+        "day": 1.0,
+        "dawn": 0.9,
+        "dusk": 0.9,
+        "night": 0.4
+      },
+      "text": {
+        "day": "It is full daylight, when fish feed actively.",
+        "dawn": "It is dawn, a low-light time when fish feed actively.",
+        "dusk": "It is dusk, a low-light time when fish feed actively."
+      }
+    },
+    "note": "Patterns reported by local captains and fishing writers, not tested by studies.",
+    "sources": [
+      "https://myfwc.com/"
+    ]
+  }
+}
