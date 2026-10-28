@@ -94,8 +94,13 @@ def _image(species: dict, image_files: dict) -> dict:
     img = dict(species.get("image") or {})
     url = img.get("url") or ""
     name = url.rsplit("/", 1)[-1]
-    if url.startswith("fish/") and name in image_files:
-        url = f"img/{name}"                                       # the copy published alongside this API
+    if url.startswith("fish/"):
+        if name in image_files:
+            url = f"img/{name}"                                   # the copy published alongside this API
+        elif "placeholder.png" in image_files:
+            url = "img/placeholder.png"
+        else:
+            url = f"img/{name}"
     return {"url": url, "kind": img.get("kind", "illustration"), "credit": img.get("credit", ""), "license": img.get("license", "")}
 
 

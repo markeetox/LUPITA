@@ -184,7 +184,7 @@
     "Image still needed"
   ],
   "display": {
-    "color": "#4d24f2"
+    "color": "#34d399"
   },
   "min_coverage": 0.6,
   "min_coverage_note": "Chlorophyll (cloud) and the Gulf Stream edge (currents) can both be missing on a given day. Temperature, temperature breaks and depth alone give 64% of the weight, so the usual 70% minimum is relaxed to 60% for this fish; confidence then shows as Low.",
