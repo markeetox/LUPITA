@@ -129,5 +129,9 @@
     "jurisdiction": "Florida State Waters (FWC)",
     "source_name": "MyFWC Spotted Seatrout Regulations",
     "source_url": "https://myfwc.com/fishing/saltwater/recreational/spotted-seatrout/"
-  }
+  },
+  "lon_range": [
+    -100.0,
+    -50.0
+  ]
 }

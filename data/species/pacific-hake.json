@@ -103,5 +103,9 @@
     "jurisdiction": "NOAA Fisheries / WDFW",
     "source_name": "West Coast State Regulations (CDFW/WDFW/ODFW/NOAA)",
     "source_url": "https://wdfw.wa.gov/fishing/regulations"
-  }
+  },
+  "lon_range": [
+    -138.0,
+    -110.0
+  ]
 }

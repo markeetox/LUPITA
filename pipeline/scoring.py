@@ -158,6 +158,13 @@ def score_species(profile: dict, layers: dict) -> dict:
         lat_grid = lats[:, None] if lats.ndim == 1 else lats
         eligible &= (lat_grid >= lat_range[0]) & (lat_grid <= lat_range[1])
 
+    # Longitude range filter (e.g. lon_range: [-138.0, -110.0] for West Coast, [-100.0, -50.0] for East Coast)
+    lon_range = profile.get("lon_range")
+    if lon_range and len(lon_range) == 2 and layers.get("lons") is not None:
+        lons = layers["lons"]
+        lon_grid = lons[None, :] if lons.ndim == 1 else lons
+        eligible &= (lon_grid >= lon_range[0]) & (lon_grid <= lon_range[1])
+
     score = np.where(eligible, score, np.nan)
     return {"status": "ok", "score": score, "coverage": coverage, "scores": scores,
             "ref": ref_cache, "missing": missing}

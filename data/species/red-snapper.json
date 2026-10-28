@@ -122,5 +122,9 @@
     "jurisdiction": "Florida State & Federal SAFMC",
     "source_name": "MyFWC Red Snapper Regulations",
     "source_url": "https://myfwc.com/fishing/saltwater/recreational/snappers/"
-  }
+  },
+  "lon_range": [
+    -100.0,
+    -50.0
+  ]
 }

@@ -142,5 +142,9 @@
     "jurisdiction": "Florida State Waters (FWC)",
     "source_name": "MyFWC Red Drum Regulations",
     "source_url": "https://myfwc.com/fishing/saltwater/recreational/red-drum/"
-  }
+  },
+  "lon_range": [
+    -100.0,
+    -50.0
+  ]
 }
