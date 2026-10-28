@@ -23,32 +23,7 @@ def _fish(name: str) -> str:
 
 def quantize_scores(score: np.ndarray, lats: np.ndarray | None = None) -> str:
     """Score grid -> base64 of one byte per cell (1-100 = score in percent, 0 = no score), north row first.
-    Re-maps latitude rows from equirectangular spacing to Web Mercator projection using outer cell boundaries
-    so the raster image overlay aligns precisely with MapLibre vector layers and spot markers."""
-    H, W = score.shape
-    if lats is not None and len(lats) == H and H > 1:
-        dlat = abs(float(lats[1] - lats[0]))
-        lat_min = float(lats[0]) - dlat / 2.0
-        lat_max = float(lats[-1]) + dlat / 2.0
-        if lat_max > lat_min:
-            import math
-            y_max = math.log(math.tan(math.pi / 4 + math.radians(lat_max) / 2))
-            y_min = math.log(math.tan(math.pi / 4 + math.radians(lat_min) / 2))
-
-            r_indices = np.arange(H)
-            fracs = (r_indices + 0.5) / H
-            y_targets = y_max - fracs * (y_max - y_min)
-            lat_targets = np.degrees(2 * (np.arctan(np.exp(y_targets)) - math.pi / 4))
-
-            src_rows = (lat_targets - float(lats[0])) / dlat
-            r0 = np.clip(np.floor(src_rows).astype(int), 0, H - 1)
-            r1 = np.clip(np.ceil(src_rows).astype(int), 0, H - 1)
-            t = np.clip(src_rows - r0, 0, 1)[:, None]
-
-            score_merc = (1.0 - t) * score[r0, :] + t * score[r1, :]
-            q = np.where(np.isfinite(score_merc), np.clip(np.round(score_merc * 100), 1, 100), 0).astype(np.uint8)
-            return base64.b64encode(q.tobytes()).decode("ascii")
-
+    MapLibre GL JS natively applies GPU Web Mercator texture warping to standard equirectangular image sources."""
     q = np.where(np.isfinite(score), np.clip(np.round(score * 100), 1, 100), 0).astype(np.uint8)
     return base64.b64encode(q[::-1].tobytes()).decode("ascii")
 
