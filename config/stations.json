@@ -13,6 +13,17 @@
     { "id": "44009", "name": "Delaware Bay, DE/NJ",    "lat": 38.46, "lon": -74.70, "zone": "ocean" },
     { "id": "41013", "name": "Frying Pan Shoals, NC", "lat": 33.44, "lon": -77.74, "zone": "ocean" },
     { "id": "42001", "name": "Mid Gulf of Mexico",     "lat": 25.89, "lon": -89.65, "zone": "ocean" },
-    { "id": "42055", "name": "Bay of Campeche, MX",    "lat": 22.14, "lon": -94.11, "zone": "ocean" }
+    { "id": "42055", "name": "Bay of Campeche, MX",    "lat": 22.14, "lon": -94.11, "zone": "ocean" },
+    { "id": "46086", "name": "San Clemente Basin, CA", "lat": 32.50, "lon": -118.03, "zone": "ocean" },
+    { "id": "46025", "name": "Santa Monica Basin, CA", "lat": 33.75, "lon": -119.08, "zone": "ocean" },
+    { "id": "46011", "name": "Santa Maria, CA",        "lat": 34.95, "lon": -120.99, "zone": "ocean" },
+    { "id": "46042", "name": "Monterey Bay, CA",       "lat": 36.75, "lon": -122.42, "zone": "ocean" },
+    { "id": "46026", "name": "San Francisco, CA",      "lat": 37.75, "lon": -122.82, "zone": "ocean" },
+    { "id": "46022", "name": "Eel River, CA",          "lat": 40.75, "lon": -124.58, "zone": "ocean" },
+    { "id": "46050", "name": "Stonewall Bank, OR",     "lat": 44.64, "lon": -124.53, "zone": "ocean" },
+    { "id": "46089", "name": "Tillamook, OR",          "lat": 45.89, "lon": -125.82, "zone": "ocean" },
+    { "id": "46029", "name": "Columbia River Bar, WA", "lat": 46.16, "lon": -124.13, "zone": "ocean" },
+    { "id": "46087", "name": "Neah Bay, WA",           "lat": 48.49, "lon": -124.73, "zone": "ocean" },
+    { "id": "46206", "name": "La Perouse Bank, BC",    "lat": 48.83, "lon": -126.00, "zone": "ocean" }
   ]
 }

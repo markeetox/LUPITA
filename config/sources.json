@@ -1,13 +1,13 @@
 {
   "note": "SST, chlorophyll (NOAA-20 near-real-time) and ETOPO bathymetry verified with check_sources. The gap-filled chlorophyll entry is verified but switched off (its filled cells are estimates). gradient_min values are placeholders to calibrate against real grids. fallback_bases: a second NOAA CoastWatch address tried only if the main one refuses (not yet verified).",
   "region": {
-    "name": "north_america_east_coast",
+    "name": "north_america_coastlines",
     "lat": [
       15.0,
-      52.0
+      60.0
     ],
     "lon": [
-      -98.0,
+      -138.0,
       -50.0
     ]
   },

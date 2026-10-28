@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 200" width="400" height="200">
+  <rect width="400" height="200" fill="none"/>
+  <!-- Silhouette body for Blue rockfish -->
+  <path d="M 40,100 C 90,40 280,30 340,90 C 360,100 380,80 390,70 L 380,100 L 390,130 C 380,120 360,100 340,110 C 280,170 90,160 40,100 Z" fill="#f2670c" opacity="0.85" stroke="#ffffff" stroke-width="2"/>
+  <circle cx="90" cy="85" r="6" fill="#ffffff"/>
+  <circle cx="90" cy="85" r="3" fill="#000000"/>
+  <text x="200" y="185" font-family="sans-serif" font-size="14" font-weight="bold" fill="#ffffff" text-anchor="middle">Blue rockfish</text>
+</svg>

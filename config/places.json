@@ -84,6 +84,48 @@
       "lon": -97.780,
       "kind": "inlet",
       "radius_km": 2.5
+    },
+    {
+      "name": "San Diego Bay Entrance",
+      "lat": 32.670,
+      "lon": -117.240,
+      "kind": "inlet",
+      "radius_km": 2.5
+    },
+    {
+      "name": "San Pedro Harbor Entrance",
+      "lat": 33.715,
+      "lon": -118.210,
+      "kind": "inlet",
+      "radius_km": 2.5
+    },
+    {
+      "name": "Golden Gate Entrance",
+      "lat": 37.810,
+      "lon": -122.480,
+      "kind": "inlet",
+      "radius_km": 3.0
+    },
+    {
+      "name": "Humboldt Bay Entrance",
+      "lat": 40.760,
+      "lon": -124.220,
+      "kind": "inlet",
+      "radius_km": 2.5
+    },
+    {
+      "name": "Columbia River Entrance",
+      "lat": 46.250,
+      "lon": -124.080,
+      "kind": "inlet",
+      "radius_km": 4.0
+    },
+    {
+      "name": "Strait of Juan de Fuca",
+      "lat": 48.480,
+      "lon": -124.720,
+      "kind": "inlet",
+      "radius_km": 5.0
     }
   ]
 }
