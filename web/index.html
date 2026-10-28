@@ -279,15 +279,24 @@ const FALLBACK_STYLE = {
 const SAMPLE = {
   sample: true,
   species: [
-    { id: "mahi-mahi", name: "Mahi-mahi", sci: "Coryphaena hippurus", color: "#34d399", status: "ok", message: "", spots: 1,
+    { id: "mahi-mahi", name: "Mahi-mahi", sci: "Coryphaena hippurus", color: "#34d399", status: "ok", message: "", spots: 1, lat_range: [15, 38],
       specs: [["Typical size", "Common up to about 50 lb"], ["Diet", "Small fish, crabs, shrimp, flying fish"], ["Behavior", "Offshore, near floating weed lines"]],
       regulations: { summary: '20" min fork length; 5 per harvester / 30 per vessel', min_size: '20 inches FL', max_size: 'None', bag_limit: '5 per harvester / day', season: 'Open year-round', jurisdiction: 'FL State & Atlantic SAFMC', source_name: 'MyFWC Mahi Regulations', source_url: 'https://myfwc.com/fishing/saltwater/recreational/dolphinfish/' } },
-    { id: "yellowtail-snapper", name: "Yellowtail snapper", sci: "Ocyurus chrysurus", color: "#fbbf24", status: "ok", message: "", spots: 1,
+    { id: "yellowtail-snapper", name: "Yellowtail snapper", sci: "Ocyurus chrysurus", color: "#fbbf24", status: "ok", message: "", spots: 1, lat_range: [15, 32],
       specs: [["Typical size", "8 to 14 in; up to about 34 in"], ["Adult depth", "Mostly 10-70 m near offshore reefs"], ["Spawning", "April through August"]],
       regulations: { summary: '12" min total length; 10 per harvester', min_size: '12 inches TL', max_size: 'None', bag_limit: '10 per harvester / day', season: 'Open year-round', jurisdiction: 'Florida State Waters (FWC)', source_name: 'MyFWC Snapper Regulations', source_url: 'https://myfwc.com/fishing/saltwater/recreational/snappers/' } },
-    { id: "snook", name: "Common snook", sci: "Centropomus undecimalis", color: "#60a5fa", status: "ok", message: "", spots: 1,
+    { id: "snook", name: "Common snook", sci: "Centropomus undecimalis", color: "#60a5fa", status: "ok", message: "", spots: 1, lat_range: [15, 30],
       specs: [["Typical size", "Up to about 48 in"], ["Where", "Mangroves, inlets, docks, beaches"], ["Cold limit", "Below about 60 F"]],
-      regulations: { summary: '28" - 32" slot limit (Atlantic); 1 per harvester', min_size: '28 inches TL', max_size: '32 inches TL', bag_limit: '1 per harvester / day', season: 'Closed Dec 15 - Jan 31 & Jun 1 - Aug 31', jurisdiction: 'Florida State Waters (FWC)', source_name: 'MyFWC Snook Regulations', source_url: 'https://myfwc.com/fishing/saltwater/recreational/snook/' } }
+      regulations: { summary: '28" - 32" slot limit (Atlantic); 1 per harvester', min_size: '28 inches TL', max_size: '32 inches TL', bag_limit: '1 per harvester / day', season: 'Closed Dec 15 - Jan 31 & Jun 1 - Aug 31', jurisdiction: 'Florida State Waters (FWC)', source_name: 'MyFWC Snook Regulations', source_url: 'https://myfwc.com/fishing/saltwater/recreational/snook/' } },
+    { id: "california-yellowtail", name: "California yellowtail", sci: "Seriola lalandi", color: "#facc15", status: "ok", message: "", spots: 1, lat_range: [15, 35],
+      specs: [["Typical size", "12 to 30 lb; up to 50+ lb"], ["Diet", "Anchovies, sardines, squid, mackerel"], ["Behavior", "Offshore islands, kelp edges, structure"]],
+      regulations: { summary: '24" min FL; 5 per harvester / day', min_size: '24 inches FL', max_size: 'None', bag_limit: '5 per harvester / day', season: 'Open year-round', jurisdiction: 'California State Waters (CDFW)', source_name: 'CDFW Ocean Sport Fishing', source_url: 'https://wildlife.ca.gov/Fishing/Ocean/Regulations/Sport-Fishing' } },
+    { id: "chinook-salmon", name: "Chinook salmon", sci: "Oncorhynchus tshawytscha", color: "#f87171", status: "ok", message: "", spots: 1, lat_range: [36, 60],
+      specs: [["Typical size", "10 to 30 lb; up to 60+ lb"], ["Diet", "Herring, sand lance, squid, krill"], ["Behavior", "Coastal ocean feeding, upwelling zones"]],
+      regulations: { summary: '20"-24" min TL; 1-2 per harvester / day', min_size: '20-24 inches TL', max_size: 'None', bag_limit: '1-2 per harvester / day', season: 'Seasonal ocean openings', jurisdiction: 'CDFW / WDFW / ODFW / NOAA', source_name: 'WDFW / CDFW Salmon Rules', source_url: 'https://wdfw.wa.gov/fishing/regulations' } },
+    { id: "lingcod", name: "Lingcod", sci: "Ophiodon elongatus", color: "#a855f7", status: "ok", message: "", spots: 1, lat_range: [34, 60],
+      specs: [["Typical size", "10 to 40 lb; up to 80+ lb"], ["Diet", "Rockfish, herring, crabs, squid"], ["Behavior", "Deep rocky reefs, pinnacles, chasms"]],
+      regulations: { summary: '22" min TL; 1-2 per harvester / day', min_size: '22 inches TL', max_size: 'None', bag_limit: '1-2 per harvester / day', season: 'Seasonal groundfish window', jurisdiction: 'CDFW / ODFW / WDFW', source_name: 'Pacific Groundfish Regulations', source_url: 'https://wildlife.ca.gov/Fishing/Ocean/Regulations/Sport-Fishing' } }
   ],
   spots: [
     { id: "m1", species: "mahi-mahi", title: "Temperature break, offshore", score: 0.78, confidence: "Medium", coords: [-79.93, 25.52],
@@ -301,7 +310,19 @@ const SAMPLE = {
     { id: "s1", species: "snook", title: "Inlet and mangrove edge", score: 0.66, confidence: "Low", coords: [-80.125, 25.903],
       ring: [[-80.15, 25.88], [-80.10, 25.88], [-80.10, 25.93], [-80.15, 25.93], [-80.15, 25.88]],
       reasons: [["static", "Mangrove edge and seawalls give snook cover. (sample)"], ["modeled", "The tide is falling. (sample)"]],
-      location: [["Water depth", "1-4 m (sample)"], ["Nearest inlet", "Haulover Inlet (sample)"]] }
+      location: [["Water depth", "1-4 m (sample)"], ["Nearest inlet", "Haulover Inlet (sample)"]] },
+    { id: "cy1", species: "california-yellowtail", title: "Coronado Islands / Point Loma kelp bed", score: 0.82, confidence: "Medium", coords: [-117.28, 32.61],
+      ring: [[-117.32, 32.55], [-117.22, 32.55], [-117.22, 32.68], [-117.32, 32.68], [-117.32, 32.55]],
+      reasons: [["measured", "Water is 20.2 C, inside prime California yellowtail range. (sample)"], ["static", "High relief rocky ledge and kelp forest edge. (sample)"]],
+      location: [["Water depth", "About 35 m (sample)"], ["Surface temp", "20.2 C (sample)"]] },
+    { id: "cs1", species: "chinook-salmon", title: "Columbia River Bar & Ocean Banks", score: 0.79, confidence: "Medium", coords: [-124.18, 46.26],
+      ring: [[-124.25, 46.20], [-124.10, 46.20], [-124.10, 46.32], [-124.25, 46.32], [-124.25, 46.20]],
+      reasons: [["measured", "Water is 12.4 C, optimal temperature for feeding Chinook. (sample)"], ["modeled", "Strong tidal river plume creating bait concentration. (sample)"]],
+      location: [["Water depth", "About 45 m (sample)"], ["Nearest inlet", "Columbia River Entrance (sample)"]] },
+    { id: "lc1", species: "lingcod", title: "Neah Bay & Strait Pinnacles", score: 0.76, confidence: "Medium", coords: [-124.75, 48.48],
+      ring: [[-124.82, 48.42], [-124.68, 48.42], [-124.68, 48.54], [-124.82, 48.54], [-124.82, 48.42]],
+      reasons: [["static", "Deep rocky chasm and pinnacle structure. (sample)"], ["modeled", "Strong upwelling currents bringing baitfish. (sample)"]],
+      location: [["Water depth", "About 85 m (sample)"], ["Nearest inlet", "Strait of Juan de Fuca (sample)"]] }
   ]
 };
 
