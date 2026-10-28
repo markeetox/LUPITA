@@ -276,11 +276,14 @@ const SAMPLE = {
   sample: true,
   species: [
     { id: "mahi-mahi", name: "Mahi-mahi", sci: "Coryphaena hippurus", color: "#34d399", status: "ok", message: "", spots: 1,
-      specs: [["Typical size", "Common up to about 50 lb"], ["Diet", "Small fish, crabs, shrimp, flying fish"], ["Behavior", "Offshore, near floating weed lines"]] },
+      specs: [["Typical size", "Common up to about 50 lb"], ["Diet", "Small fish, crabs, shrimp, flying fish"], ["Behavior", "Offshore, near floating weed lines"]],
+      regulations: { summary: '20" min fork length; 5 per harvester / 30 per vessel', min_size: '20 inches FL', max_size: 'None', bag_limit: '5 per harvester / day', season: 'Open year-round', jurisdiction: 'FL State & Atlantic SAFMC', source_name: 'MyFWC Mahi Regulations', source_url: 'https://myfwc.com/fishing/saltwater/recreational/dolphinfish/' } },
     { id: "yellowtail-snapper", name: "Yellowtail snapper", sci: "Ocyurus chrysurus", color: "#fbbf24", status: "ok", message: "", spots: 1,
-      specs: [["Typical size", "8 to 14 in; up to about 34 in"], ["Adult depth", "Mostly 10-70 m near offshore reefs"], ["Spawning", "April through August"]] },
+      specs: [["Typical size", "8 to 14 in; up to about 34 in"], ["Adult depth", "Mostly 10-70 m near offshore reefs"], ["Spawning", "April through August"]],
+      regulations: { summary: '12" min total length; 10 per harvester', min_size: '12 inches TL', max_size: 'None', bag_limit: '10 per harvester / day', season: 'Open year-round', jurisdiction: 'Florida State Waters (FWC)', source_name: 'MyFWC Snapper Regulations', source_url: 'https://myfwc.com/fishing/saltwater/recreational/snappers/' } },
     { id: "snook", name: "Common snook", sci: "Centropomus undecimalis", color: "#60a5fa", status: "ok", message: "", spots: 1,
-      specs: [["Typical size", "Up to about 48 in"], ["Where", "Mangroves, inlets, docks, beaches"], ["Cold limit", "Below about 60 F"]] }
+      specs: [["Typical size", "Up to about 48 in"], ["Where", "Mangroves, inlets, docks, beaches"], ["Cold limit", "Below about 60 F"]],
+      regulations: { summary: '28" - 32" slot limit (Atlantic); 1 per harvester', min_size: '28 inches TL', max_size: '32 inches TL', bag_limit: '1 per harvester / day', season: 'Closed Dec 15 - Jan 31 & Jun 1 - Aug 31', jurisdiction: 'Florida State Waters (FWC)', source_name: 'MyFWC Snook Regulations', source_url: 'https://myfwc.com/fishing/saltwater/recreational/snook/' } }
   ],
   spots: [
     { id: "m1", species: "mahi-mahi", title: "Temperature break, offshore", score: 0.78, confidence: "Medium", coords: [-79.93, 25.52],
@@ -396,6 +399,36 @@ function heroPicture(sp) {
          `<span class="photo" style="display:none">Picture coming soon</span>${credit}`;
 }
 
+/* Regulations HUD Panel HTML Builder */
+function regulationsHTML(reg) {
+  if (!reg) return "";
+  const srcUrl = reg.source_url || "https://myfwc.com/fishing/saltwater/recreational/";
+  const srcName = reg.source_name || "MyFWC Saltwater Regulations";
+  return `
+    <div class="sec" style="background: rgba(255, 102, 0, 0.05); border-left: 3px solid var(--accent); border-top: 2px dashed var(--line); padding: 14px 20px;">
+      <h3 style="color: var(--accent); font-size: 17px; margin-bottom: 8px;">
+        ${icon("shield")}REGULATION CONTROL // SIZE & BAG LIMITS
+      </h3>
+      <div style="font-size: 18px; font-weight: 700; color: #ffffff; margin-bottom: 10px; text-transform: uppercase; letter-spacing: 0.5px;">
+        ${esc(reg.summary || "Regulated harvest rules apply")}
+      </div>
+      <div style="display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 12px;">
+        <span class="chip ok" style="font-size: 14px; background: rgba(255,102,0,0.12); border-color: var(--accent); color: var(--accent);">
+          MIN SIZE: ${esc(reg.min_size || "See regulations")}
+        </span>
+        ${reg.max_size && reg.max_size !== "None" ? `<span class="chip warn" style="font-size: 14px;">MAX SIZE: ${esc(reg.max_size)}</span>` : ""}
+        <span class="chip ok" style="font-size: 14px; background: rgba(255,102,0,0.12); border-color: var(--accent); color: var(--accent);">
+          BAG LIMIT: ${esc(reg.bag_limit || "Varies")}
+        </span>
+      </div>
+      <dl style="grid-template-columns: 130px 1fr; font-size: 16px;">
+        <dt>${icon("calendar")}Season</dt><dd>${esc(reg.season || "Open year-round")}</dd>
+        <dt>${icon("shield")}Jurisdiction</dt><dd>${esc(reg.jurisdiction || "State & Federal Waters")}</dd>
+        <dt>${icon("info")}Source</dt><dd><a href="${esc(srcUrl)}" target="_blank" rel="noopener" style="color: var(--accent); text-decoration: underline; font-weight: 700;">[OFFICIAL AGENCY SOURCE: ${esc(srcName)}]</a></dd>
+      </dl>
+    </div>`;
+}
+
 /* Spot Detail HTML layout: Title block with Score % and Confidence cleanly aligned under titles */
 function spotHTML(id) {
   const s = SPOTS[id], sp = SPECIES[s.species];
@@ -419,6 +452,7 @@ function spotHTML(id) {
           </div>
         </div>
         ${banner}
+        ${regulationsHTML(sp.regulations)}
         ${seaBanner(s)}
         <div class="sec"><h3>${icon("fish")}About the fish</h3>
           <dl>${dlRows(sp.specs)}</dl>

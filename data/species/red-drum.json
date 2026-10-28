@@ -132,5 +132,15 @@
     "sources": [
       "https://myfwc.com/"
     ]
+  },
+  "regulations": {
+    "summary": "18\" - 27\" slot limit; 1 per harvester",
+    "min_size": "18 inches total length",
+    "max_size": "27 inches total length",
+    "bag_limit": "1 per harvester / day (FL Atlantic)",
+    "season": "Open year-round",
+    "jurisdiction": "Florida State Waters (FWC)",
+    "source_name": "MyFWC Red Drum Regulations",
+    "source_url": "https://myfwc.com/fishing/saltwater/recreational/red-drum/"
   }
 }

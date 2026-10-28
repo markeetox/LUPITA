@@ -333,5 +333,15 @@
   "lat_range": [
     15.0,
     31.0
-  ]
+  ],
+  "regulations": {
+    "summary": "28\" - 32\" slot limit (Atlantic); 1 per harvester",
+    "min_size": "28 inches total length",
+    "max_size": "32 inches total length",
+    "bag_limit": "1 per harvester / day",
+    "season": "Closed Dec 15 - Jan 31 & Jun 1 - Aug 31 (Atlantic)",
+    "jurisdiction": "Florida State Waters (FWC)",
+    "source_name": "MyFWC Snook Regulations",
+    "source_url": "https://myfwc.com/fishing/saltwater/recreational/snook/"
+  }
 }
