@@ -614,7 +614,7 @@ function heatURL(px, w, h, scale) {
 function renderHeat() {
   if (!HEAT) return;
   const [w, s, e, n] = HEAT.bounds, coordinates = [[w, n], [e, n], [e, s], [w, s]];
-  map.setMaxBounds([[w - 1.2, s - 1.0], [e + 1.2, n + 1.0]]);
+  map.setMaxBounds([[-142.0, 10.0], [-45.0, 62.0]]);
   const url = heatURL(heatPixels(HEAT, SELECTED_SPECIES, SPECIES), HEAT.width, HEAT.height, 6);
   if (map.getSource("heat")) { map.getSource("heat").updateImage({ url, coordinates }); return; }
   map.addSource("heat", { type: "image", url, coordinates });
@@ -898,9 +898,16 @@ function renderNote() {
 regionSelect.addEventListener("change", () => {
   REGION_FILTER = regionSelect.value;
   store.set("fhm.region", REGION_FILTER);
+  renderPanel();
   renderNote();
   closeSheet();
-  refreshSpots();
+  if (map.getSource("spots")) {
+    const f = spotFeatures();
+    map.getSource("zones").setData(f.zones);
+    map.getSource("spots").setData(f.points);
+    setSelected(null);
+    renderHeat();
+  }
   if (REGIONS[REGION_FILTER]) {
     const b = REGIONS[REGION_FILTER].bounds;
     map.fitBounds(b, { padding: { top: 120, left: 40, right: 40, bottom: 60 }, duration: 800 });
