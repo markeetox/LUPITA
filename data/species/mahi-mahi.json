@@ -61,7 +61,7 @@
     {
       "param": "sst_gradient",
       "kind": "higher_is_better",
-      "weight": 0.20,
+      "weight": 0.2,
       "active": true,
       "value_status": "provisional",
       "value_notes": "Multiple sources say mahi concentrate along temperature and color breaks and current convergences. Threshold for what counts as a strong break must be calibrated on real SST grids. Scored relative to today's sharpest offshore breaks, so on a day with nearly uniform water even a mild break ranks high; the popup shows the real size. Needs calibration against catch reports.",
@@ -81,7 +81,7 @@
         0.05,
         0.5
       ],
-      "weight": 0.10,
+      "weight": 0.1,
       "active": true,
       "value_status": "provisional",
       "value_notes": "Outer range from SatFish (clean blue to slightly green water). The ideal band is an estimate; the best spots are at color changes, which is better captured by chl_gradient.",
@@ -94,7 +94,7 @@
     {
       "param": "chl_gradient",
       "kind": "higher_is_better",
-      "weight": 0.10,
+      "weight": 0.1,
       "active": true,
       "value_status": "provisional",
       "value_notes": "Water color edges and chlorophyll boundaries concentrate baitfish and mahi along oceanic fronts.",
@@ -187,5 +187,15 @@
     "color": "#34d399"
   },
   "min_coverage": 0.6,
-  "min_coverage_note": "Chlorophyll (cloud) and the Gulf Stream edge (currents) can both be missing on a given day. Temperature, temperature breaks and depth alone give 64% of the weight, so the usual 70% minimum is relaxed to 60% for this fish; confidence then shows as Low."
+  "min_coverage_note": "Chlorophyll (cloud) and the Gulf Stream edge (currents) can both be missing on a given day. Temperature, temperature breaks and depth alone give 64% of the weight, so the usual 70% minimum is relaxed to 60% for this fish; confidence then shows as Low.",
+  "regulations": {
+    "summary": "20\" min fork length; 5 per harvester / 30 per vessel",
+    "min_size": "20 inches fork length (Atlantic state waters)",
+    "max_size": "None",
+    "bag_limit": "5 per harvester / day (max 30 per vessel)",
+    "season": "Open year-round",
+    "jurisdiction": "Florida & Atlantic Federal Waters (SAFMC)",
+    "source_name": "MyFWC Mahi-Mahi Regulations",
+    "source_url": "https://myfwc.com/fishing/saltwater/recreational/dolphinfish/"
+  }
 }

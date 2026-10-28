@@ -112,5 +112,15 @@
     "sources": [
       "https://myfwc.com/"
     ]
+  },
+  "regulations": {
+    "summary": "16\" min total length; 2 per harvester / day",
+    "min_size": "16 inches total length",
+    "max_size": "None",
+    "bag_limit": "2 per harvester / day (Atlantic state waters)",
+    "season": "Open during state/federal designated harvest days",
+    "jurisdiction": "Florida State & Federal SAFMC",
+    "source_name": "MyFWC Red Snapper Regulations",
+    "source_url": "https://myfwc.com/fishing/saltwater/recreational/snappers/"
   }
 }

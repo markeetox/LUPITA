@@ -309,7 +309,9 @@ def build_fish_json(layers, buoys, profiles, registry, generated_utc, places=Non
         sid, name = profile["id"], profile["common_name"]
         entry = {"id": sid, "name": name, "sci": profile["scientific_name"],
                  "color": profile.get("display", {}).get("color", "#ffffff"),
-                 "specs": _specs(profile), "image": species_image(profile), "status": "ok", "message": "", "spots": 0}
+                 "specs": _specs(profile), "image": species_image(profile),
+                 "regulations": profile.get("regulations"),
+                 "status": "ok", "message": "", "spots": 0}
         if profile.get("model") == "sites":
             ctx = {"layers": layers, "buoys": buoys, "conditions": conditions}
             res = sites_mod.score_sites(profile, places or [], ctx, reg, closure_rows)

@@ -207,5 +207,15 @@
       "out_score": 0.6,
       "text": "It is the week around the full moon, when local charters report the year's best wahoo fishing with the king tides."
     }
+  },
+  "regulations": {
+    "summary": "Regulated species - See MyFWC/NOAA guidelines",
+    "min_size": "Check MyFWC/NOAA rules",
+    "max_size": "None",
+    "bag_limit": "Varies by region / state",
+    "season": "Open year-round (subject to local quota/closures)",
+    "jurisdiction": "Atlantic & Gulf State/Federal Waters",
+    "source_name": "MyFWC Saltwater Regulations",
+    "source_url": "https://myfwc.com/fishing/saltwater/recreational/"
   }
 }
