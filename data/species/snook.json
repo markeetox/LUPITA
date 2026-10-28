@@ -343,5 +343,9 @@
     "jurisdiction": "Florida State Waters (FWC)",
     "source_name": "MyFWC Snook Regulations",
     "source_url": "https://myfwc.com/fishing/saltwater/recreational/snook/"
-  }
+  },
+  "lon_range": [
+    -100.0,
+    -50.0
+  ]
 }

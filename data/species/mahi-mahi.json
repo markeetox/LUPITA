@@ -197,5 +197,9 @@
     "jurisdiction": "Florida & Atlantic Federal Waters (SAFMC)",
     "source_name": "MyFWC Mahi-Mahi Regulations",
     "source_url": "https://myfwc.com/fishing/saltwater/recreational/dolphinfish/"
-  }
+  },
+  "lon_range": [
+    -100.0,
+    -50.0
+  ]
 }

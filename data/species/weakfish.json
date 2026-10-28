@@ -129,5 +129,9 @@
     "jurisdiction": "Atlantic & Gulf State/Federal Waters",
     "source_name": "MyFWC Saltwater Regulations",
     "source_url": "https://myfwc.com/fishing/saltwater/recreational/"
-  }
+  },
+  "lon_range": [
+    -100.0,
+    -50.0
+  ]
 }

@@ -103,5 +103,9 @@
     "jurisdiction": "CDFW / WDFW / ODFW / NOAA",
     "source_name": "West Coast State Regulations (CDFW/WDFW/ODFW/NOAA)",
     "source_url": "https://wildlife.ca.gov/Fishing/Ocean/Regulations/Sport-Fishing"
-  }
+  },
+  "lon_range": [
+    -138.0,
+    -110.0
+  ]
 }
