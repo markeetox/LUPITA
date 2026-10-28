@@ -685,7 +685,14 @@ function addData() {
              "circle-color": col, "circle-stroke-color": "#ffffff", "circle-stroke-width": 2 } });
   addBuoys();
   bindHandlers();
-  if (FISH) fitToSpots();
+  if (FISH) {
+    if (REGION_FILTER && REGION_FILTER !== "all" && REGIONS[REGION_FILTER]) {
+      const b = REGIONS[REGION_FILTER].bounds;
+      map.fitBounds(b, { padding: { top: 120, left: 40, right: 40, bottom: 60 }, duration: 800 });
+    } else {
+      fitToSpots();
+    }
+  }
 }
 
 function fitToSpots() {
