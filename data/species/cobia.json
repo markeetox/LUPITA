@@ -10,7 +10,7 @@
   ],
   "habitat_zone": "reef",
   "display": {
-    "color": "#c084fc"
+    "color": "#f2e824"
   },
   "zone_style": "cells",
   "min_cells": 1,

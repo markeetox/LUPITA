@@ -1,0 +1,107 @@
+{
+  "schema_version": 1,
+  "id": "white-seabass",
+  "common_name": "White seabass",
+  "scientific_name": "Atractoscion nobilis",
+  "aliases": [
+    "white seabass"
+  ],
+  "habitat_zone": "inshore",
+  "display": {
+    "color": "#f2503c"
+  },
+  "review_status": "v1 - West Coast Pacific habitat profile",
+  "image": {
+    "status": "placeholder",
+    "kind": "illustration",
+    "url": "fish/white-seabass.png",
+    "credit": "Original illustration",
+    "license": "",
+    "plan": "web/fish/white-seabass.png placeholder illustration."
+  },
+  "profile": {
+    "size": "Min limit 28 inches TL / Bag limit 1 per day (Mar 15-Jun 15); 3 per day otherwise",
+    "diet": "Small fish, crustaceans, squids, and pelagic prey",
+    "swimming_depth": "2 to 40 m",
+    "behavior": "Navigates West Coast kelp forests, rocky reefs, and coastal upwelling zones.",
+    "regulations_link": "https://wildlife.ca.gov/Fishing/Ocean/Regulations/Sport-Fishing",
+    "sources": [
+      "https://wildlife.ca.gov/Fishing/Ocean/Regulations/Sport-Fishing"
+    ]
+  },
+  "lat_range": [
+    24.0,
+    38.0
+  ],
+  "factors": [
+    {
+      "param": "sst_c",
+      "kind": "range",
+      "range": [
+        14,
+        22
+      ],
+      "ideal": [
+        16,
+        20
+      ],
+      "weight": 0.5,
+      "active": true,
+      "value_status": "sourced",
+      "sources": [
+        "https://wildlife.ca.gov/Fishing/Ocean/Regulations/Sport-Fishing"
+      ],
+      "reason_template": "Water is {value} C, inside preferred Pacific temperature range for white seabass."
+    },
+    {
+      "param": "depth_m",
+      "kind": "range",
+      "range": [
+        2,
+        40
+      ],
+      "ideal": [
+        4,
+        35
+      ],
+      "weight": 0.5,
+      "active": true,
+      "value_status": "sourced",
+      "sources": [
+        "https://wildlife.ca.gov/Fishing/Ocean/Regulations/Sport-Fishing"
+      ],
+      "gate": true,
+      "reason_template": "Depth is {value} m, within prime Pacific depth zone for white seabass."
+    }
+  ],
+  "timing": {
+    "status": "angler_lore",
+    "light": {
+      "map": {
+        "day": 1.0,
+        "dawn": 0.9,
+        "dusk": 0.9,
+        "night": 0.5
+      },
+      "text": {
+        "day": "Full daylight when Pacific gamefish actively hunt.",
+        "dawn": "Dawn low-light feeding window.",
+        "dusk": "Dusk feeding window."
+      }
+    },
+    "note": "West Coast captain reports and biological upwelling patterns.",
+    "sources": [
+      "https://wildlife.ca.gov/Fishing/Ocean/Regulations/Sport-Fishing"
+    ]
+  },
+  "regulations": {
+    "summary": "CDFW: 28\" min TL; 1-3 per day",
+    "min_size": "28 inches TL",
+    "max_size": "None",
+    "bag_limit": "1 per day (Mar 15-Jun 15); 3 per day otherwise",
+    "season": "Open year-round",
+    "jurisdiction": "California State Waters (CDFW)",
+    "source_name": "West Coast State Regulations (CDFW/WDFW/ODFW/NOAA)",
+    "source_url": "https://wildlife.ca.gov/Fishing/Ocean/Regulations/Sport-Fishing"
+  }
+}

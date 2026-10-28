@@ -1,0 +1,107 @@
+{
+  "schema_version": 1,
+  "id": "steelhead-trout",
+  "common_name": "Steelhead",
+  "scientific_name": "Oncorhynchus mykiss",
+  "aliases": [
+    "steelhead"
+  ],
+  "habitat_zone": "inshore",
+  "display": {
+    "color": "#20cbd8"
+  },
+  "review_status": "v1 - West Coast Pacific habitat profile",
+  "image": {
+    "status": "placeholder",
+    "kind": "illustration",
+    "url": "fish/steelhead-trout.png",
+    "credit": "Original illustration",
+    "license": "",
+    "plan": "web/fish/steelhead-trout.png placeholder illustration."
+  },
+  "profile": {
+    "size": "Min limit Varies by river/zone / Bag limit 1-2 per harvester / day",
+    "diet": "Small fish, crustaceans, squids, and pelagic prey",
+    "swimming_depth": "0 to 40 m",
+    "behavior": "Navigates West Coast kelp forests, rocky reefs, and coastal upwelling zones.",
+    "regulations_link": "https://wdfw.wa.gov/fishing/regulations",
+    "sources": [
+      "https://wdfw.wa.gov/fishing/regulations"
+    ]
+  },
+  "lat_range": [
+    36.0,
+    60.0
+  ],
+  "factors": [
+    {
+      "param": "sst_c",
+      "kind": "range",
+      "range": [
+        8,
+        16
+      ],
+      "ideal": [
+        10,
+        14
+      ],
+      "weight": 0.5,
+      "active": true,
+      "value_status": "sourced",
+      "sources": [
+        "https://wdfw.wa.gov/fishing/regulations"
+      ],
+      "reason_template": "Water is {value} C, inside preferred Pacific temperature range for steelhead."
+    },
+    {
+      "param": "depth_m",
+      "kind": "range",
+      "range": [
+        0,
+        40
+      ],
+      "ideal": [
+        2,
+        35
+      ],
+      "weight": 0.5,
+      "active": true,
+      "value_status": "sourced",
+      "sources": [
+        "https://wdfw.wa.gov/fishing/regulations"
+      ],
+      "gate": true,
+      "reason_template": "Depth is {value} m, within prime Pacific depth zone for steelhead."
+    }
+  ],
+  "timing": {
+    "status": "angler_lore",
+    "light": {
+      "map": {
+        "day": 1.0,
+        "dawn": 0.9,
+        "dusk": 0.9,
+        "night": 0.5
+      },
+      "text": {
+        "day": "Full daylight when Pacific gamefish actively hunt.",
+        "dawn": "Dawn low-light feeding window.",
+        "dusk": "Dusk feeding window."
+      }
+    },
+    "note": "West Coast captain reports and biological upwelling patterns.",
+    "sources": [
+      "https://wdfw.wa.gov/fishing/regulations"
+    ]
+  },
+  "regulations": {
+    "summary": "WDFW/ODFW: Hatchery clipped only",
+    "min_size": "Varies by river/zone",
+    "max_size": "None",
+    "bag_limit": "1-2 per harvester / day",
+    "season": "Seasonal openings",
+    "jurisdiction": "CDFW / ODFW / WDFW",
+    "source_name": "West Coast State Regulations (CDFW/WDFW/ODFW/NOAA)",
+    "source_url": "https://wdfw.wa.gov/fishing/regulations"
+  }
+}

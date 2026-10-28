@@ -1,0 +1,107 @@
+{
+  "schema_version": 1,
+  "id": "coho-salmon",
+  "common_name": "Coho salmon",
+  "scientific_name": "Oncorhynchus kisutch",
+  "aliases": [
+    "coho salmon"
+  ],
+  "habitat_zone": "pelagic",
+  "display": {
+    "color": "#930ad8"
+  },
+  "review_status": "v1 - West Coast Pacific habitat profile",
+  "image": {
+    "status": "placeholder",
+    "kind": "illustration",
+    "url": "fish/coho-salmon.png",
+    "credit": "Original illustration",
+    "license": "",
+    "plan": "web/fish/coho-salmon.png placeholder illustration."
+  },
+  "profile": {
+    "size": "Min limit 16-20 inches TL / Bag limit 2 per harvester / day (hatchery)",
+    "diet": "Small fish, crustaceans, squids, and pelagic prey",
+    "swimming_depth": "0 to 60 m",
+    "behavior": "Navigates West Coast kelp forests, rocky reefs, and coastal upwelling zones.",
+    "regulations_link": "https://wdfw.wa.gov/fishing/regulations",
+    "sources": [
+      "https://wdfw.wa.gov/fishing/regulations"
+    ]
+  },
+  "lat_range": [
+    38.0,
+    60.0
+  ],
+  "factors": [
+    {
+      "param": "sst_c",
+      "kind": "range",
+      "range": [
+        7,
+        15
+      ],
+      "ideal": [
+        9,
+        13
+      ],
+      "weight": 0.5,
+      "active": true,
+      "value_status": "sourced",
+      "sources": [
+        "https://wdfw.wa.gov/fishing/regulations"
+      ],
+      "reason_template": "Water is {value} C, inside preferred Pacific temperature range for coho salmon."
+    },
+    {
+      "param": "depth_m",
+      "kind": "range",
+      "range": [
+        0,
+        60
+      ],
+      "ideal": [
+        2,
+        55
+      ],
+      "weight": 0.5,
+      "active": true,
+      "value_status": "sourced",
+      "sources": [
+        "https://wdfw.wa.gov/fishing/regulations"
+      ],
+      "gate": true,
+      "reason_template": "Depth is {value} m, within prime Pacific depth zone for coho salmon."
+    }
+  ],
+  "timing": {
+    "status": "angler_lore",
+    "light": {
+      "map": {
+        "day": 1.0,
+        "dawn": 0.9,
+        "dusk": 0.9,
+        "night": 0.5
+      },
+      "text": {
+        "day": "Full daylight when Pacific gamefish actively hunt.",
+        "dawn": "Dawn low-light feeding window.",
+        "dusk": "Dusk feeding window."
+      }
+    },
+    "note": "West Coast captain reports and biological upwelling patterns.",
+    "sources": [
+      "https://wdfw.wa.gov/fishing/regulations"
+    ]
+  },
+  "regulations": {
+    "summary": "WDFW/ODFW: 16-20\" min TL; hatchery only",
+    "min_size": "16-20 inches TL",
+    "max_size": "None",
+    "bag_limit": "2 per harvester / day (hatchery)",
+    "season": "Seasonal state openings",
+    "jurisdiction": "WDFW / ODFW / DFO",
+    "source_name": "West Coast State Regulations (CDFW/WDFW/ODFW/NOAA)",
+    "source_url": "https://wdfw.wa.gov/fishing/regulations"
+  }
+}

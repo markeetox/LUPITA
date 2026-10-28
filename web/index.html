@@ -199,7 +199,11 @@
       <div class="ctrl-group">
         <label for="regionSelect" class="lbl">Region</label>
         <select id="regionSelect" class="select">
-          <option value="all">All East Coast Regions</option>
+          <option value="all">All Regions (East & West Coasts)</option>
+          <option value="pacific_west">Pacific Coast (Mexico to Canada)</option>
+          <option value="socal_baja">Southern California & Baja</option>
+          <option value="norcal_or">NorCal & Oregon</option>
+          <option value="pnw_canada">Pacific NW & Canada</option>
           <option value="fl_se">US Southeast & Florida</option>
           <option value="mid_ne">US Mid-Atlantic & Northeast</option>
           <option value="canada">Atlantic Canada & North</option>
@@ -307,7 +311,11 @@ const store = {
   set(k, v) { try { localStorage.setItem(k, v); } catch (e) { /* ignore */ } }
 };
 const REGIONS = {
-  all: { name: "All East Coast Regions", bounds: [[-98.0, 15.0], [-50.0, 52.0]], filter: () => true },
+  all: { name: "All Regions (East & West Coasts)", bounds: [[-138.0, 15.0], [-50.0, 60.0]], filter: () => true },
+  pacific_west: { name: "Pacific Coast (Mexico to Canada)", bounds: [[-135.0, 20.0], [-115.0, 58.0]], filter: s => s.coords[0] <= -115.0 },
+  socal_baja: { name: "Southern California & Baja", bounds: [[-121.0, 22.0], [-114.0, 35.0]], filter: s => s.coords[1] >= 22.0 && s.coords[1] <= 35.0 && s.coords[0] <= -114.0 && s.coords[0] >= -122.0 },
+  norcal_or: { name: "NorCal & Oregon", bounds: [[-126.0, 35.0], [-120.0, 46.0]], filter: s => s.coords[1] >= 35.0 && s.coords[1] <= 46.0 && s.coords[0] <= -120.0 && s.coords[0] >= -126.0 },
+  pnw_canada: { name: "Pacific NW & Canada", bounds: [[-135.0, 45.0], [-122.0, 58.0]], filter: s => s.coords[1] >= 45.0 && s.coords[1] <= 58.0 && s.coords[0] <= -122.0 && s.coords[0] >= -136.0 },
   fl_se: { name: "US Southeast & Florida", bounds: [[-83.5, 24.0], [-74.0, 35.0]], filter: s => s.coords[1] >= 24.0 && s.coords[1] <= 35.0 && s.coords[0] >= -83.5 && s.coords[0] <= -74.0 },
   mid_ne: { name: "US Mid-Atlantic & Northeast", bounds: [[-77.5, 35.0], [-66.0, 45.0]], filter: s => s.coords[1] >= 35.0 && s.coords[1] <= 45.0 && s.coords[0] >= -77.5 && s.coords[0] <= -66.0 },
   canada: { name: "Atlantic Canada & North", bounds: [[-70.0, 42.0], [-50.0, 52.0]], filter: s => s.coords[1] >= 42.0 && s.coords[1] <= 52.0 && s.coords[0] >= -70.0 && s.coords[0] <= -50.0 },

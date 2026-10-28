@@ -1,0 +1,107 @@
+{
+  "schema_version": 1,
+  "id": "spotted-sand-bass",
+  "common_name": "Spotted sand bass",
+  "scientific_name": "Paralabrax maculatofasciatus",
+  "aliases": [
+    "spotted sand bass"
+  ],
+  "habitat_zone": "inshore",
+  "display": {
+    "color": "#242ff2"
+  },
+  "review_status": "v1 - West Coast Pacific habitat profile",
+  "image": {
+    "status": "placeholder",
+    "kind": "illustration",
+    "url": "fish/spotted-sand-bass.png",
+    "credit": "Original illustration",
+    "license": "",
+    "plan": "web/fish/spotted-sand-bass.png placeholder illustration."
+  },
+  "profile": {
+    "size": "Min limit 14 inches TL / Bag limit 5 per harvester / day",
+    "diet": "Small fish, crustaceans, squids, and pelagic prey",
+    "swimming_depth": "1 to 20 m",
+    "behavior": "Navigates West Coast kelp forests, rocky reefs, and coastal upwelling zones.",
+    "regulations_link": "https://wildlife.ca.gov/Fishing/Ocean/Regulations/Sport-Fishing",
+    "sources": [
+      "https://wildlife.ca.gov/Fishing/Ocean/Regulations/Sport-Fishing"
+    ]
+  },
+  "lat_range": [
+    24.0,
+    34.0
+  ],
+  "factors": [
+    {
+      "param": "sst_c",
+      "kind": "range",
+      "range": [
+        15,
+        24
+      ],
+      "ideal": [
+        17,
+        22
+      ],
+      "weight": 0.5,
+      "active": true,
+      "value_status": "sourced",
+      "sources": [
+        "https://wildlife.ca.gov/Fishing/Ocean/Regulations/Sport-Fishing"
+      ],
+      "reason_template": "Water is {value} C, inside preferred Pacific temperature range for spotted sand bass."
+    },
+    {
+      "param": "depth_m",
+      "kind": "range",
+      "range": [
+        1,
+        20
+      ],
+      "ideal": [
+        3,
+        15
+      ],
+      "weight": 0.5,
+      "active": true,
+      "value_status": "sourced",
+      "sources": [
+        "https://wildlife.ca.gov/Fishing/Ocean/Regulations/Sport-Fishing"
+      ],
+      "gate": true,
+      "reason_template": "Depth is {value} m, within prime Pacific depth zone for spotted sand bass."
+    }
+  ],
+  "timing": {
+    "status": "angler_lore",
+    "light": {
+      "map": {
+        "day": 1.0,
+        "dawn": 0.9,
+        "dusk": 0.9,
+        "night": 0.5
+      },
+      "text": {
+        "day": "Full daylight when Pacific gamefish actively hunt.",
+        "dawn": "Dawn low-light feeding window.",
+        "dusk": "Dusk feeding window."
+      }
+    },
+    "note": "West Coast captain reports and biological upwelling patterns.",
+    "sources": [
+      "https://wildlife.ca.gov/Fishing/Ocean/Regulations/Sport-Fishing"
+    ]
+  },
+  "regulations": {
+    "summary": "CDFW: 14\" min TL; 5 per day combined",
+    "min_size": "14 inches TL",
+    "max_size": "None",
+    "bag_limit": "5 per harvester / day",
+    "season": "Open year-round",
+    "jurisdiction": "CDFW",
+    "source_name": "West Coast State Regulations (CDFW/WDFW/ODFW/NOAA)",
+    "source_url": "https://wildlife.ca.gov/Fishing/Ocean/Regulations/Sport-Fishing"
+  }
+}

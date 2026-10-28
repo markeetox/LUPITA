@@ -9,7 +9,7 @@
   ],
   "habitat_zone": "offshore",
   "display": {
-    "color": "#818cf8"
+    "color": "#20d85b"
   },
   "review_status": "draft - temperature and season sourced from tagging and angler records; chlorophyll, depth and front weights are provisional",
   "confidence_cap": "Low",
