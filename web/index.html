@@ -342,7 +342,7 @@ const REGIONS = {
   canada: { name: "Atlantic Canada & North", bounds: [[-70.0, 42.0], [-50.0, 52.0]], filter: s => s.coords[1] >= 42.0 && s.coords[1] <= 52.0 && s.coords[0] >= -70.0 && s.coords[0] <= -50.0 },
   gulf_mex: { name: "Gulf of Mexico & Mexico", bounds: [[-98.0, 15.0], [-81.0, 30.0]], filter: s => s.coords[1] >= 15.0 && s.coords[1] <= 30.0 && s.coords[0] >= -98.0 && s.coords[0] <= -81.0 }
 };
-let FISH = null, CATALOG = null, BUOYS = null, CLOSURES = null, SELECTED_SPECIES = [], REGION_FILTER = store.get("fhm.region") || "all";
+let FISH = null, CATALOG = null, BUOYS = null, CLOSURES = null, LATEST = null, SELECTED_SPECIES = [], REGION_FILTER = store.get("fhm.region") || "all";
 const SPECIES = {}, SPOTS = {};
 
 function setCatalog(data) {
@@ -949,6 +949,7 @@ regionSelect.addEventListener("change", () => {
 
 function renderPanel() {
   const chip = document.getElementById("status");
+  const isFresh = LATEST ? LATEST.fish_updated !== false : true;
   if (!CATALOG && !FISH) {
     chip.textContent = "Error: Species catalog could not be loaded";
     chip.className = "chip warn";
@@ -962,6 +963,10 @@ function renderPanel() {
     chip.className = "chip warn";
   } else if (!FISH) {
     chip.textContent = "Species catalog loaded · Predictions unavailable";
+    chip.className = "chip warn";
+  } else if (!isFresh) {
+    const predAge = FISH.generated_utc ? ago(FISH.generated_utc) : "previous run";
+    chip.textContent = `Previous predictions (${predAge}) · Ocean satellite unavailable`;
     chip.className = "chip warn";
   } else {
     const mins = FISH.generated_utc ? Math.round((Date.now() - new Date(FISH.generated_utc).getTime()) / 60000) : null;
@@ -1048,11 +1053,13 @@ async function load() {
 
   const chip = document.getElementById("buoyStatus");
   try {
-    BUOYS = (await getJSON("latest.json")).buoys || [];
+    LATEST = await getJSON("latest.json");
+    BUOYS = LATEST.buoys || [];
     const ok = BUOYS.filter(b => b.ok).length;
     chip.textContent = `Live buoys: ${ok} of ${BUOYS.length}`;
     chip.className = "chip " + (ok ? "ok" : "warn");
     if (map.getSource("spots")) addBuoys();
+    renderPanel();
   } catch (err) {
     chip.textContent = "Buoys: could not load";
     chip.className = "chip warn";

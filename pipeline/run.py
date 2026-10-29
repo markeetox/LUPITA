@@ -116,10 +116,13 @@ def main() -> None:
                 shutil.rmtree(stage)
             stage.mkdir(parents=True, exist_ok=True)
 
+            stream = currents.stream_geojson((layers or {}).get("stream_edge_lon"), (layers or {}).get("lats"),
+                                             "NOAA CoastWatch nesdisSSH1day (satellite altimetry)",
+                                             (layers or {}).get("times", {}).get("currents"),
+                                             (layers or {}).get("current_speed") is not None, now)
+
             (stage / "fish.json").write_text(json.dumps(fish, indent=1, allow_nan=False), encoding="utf-8")
             (stage / "closures.json").write_text(json.dumps(cl_json, allow_nan=False, separators=(",", ":")), encoding="utf-8")
-            stream = currents.stream_geojson(layers.get("stream_edge_lon"), layers["lats"], "NOAA CoastWatch nesdisSSH1day (satellite altimetry)",
-                                             layers["times"].get("currents"), layers.get("current_speed") is not None, now)
             (stage / "stream.json").write_text(json.dumps(stream, allow_nan=False, separators=(",", ":")), encoding="utf-8")
             images = {f.name: f.read_bytes() for f in sorted((ROOT / "web/fish").glob("*.png"))}
             for rel, data in api_mod.build(fish, heat_json, cl_json, stream, profiles, images).items():
