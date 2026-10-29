@@ -6,6 +6,7 @@ import logging
 from datetime import datetime, timezone
 from pathlib import Path
 
+from pipeline import catalog
 from pipeline import closures as closures_mod
 from pipeline import api as api_mod, currents, seastate, timing, weather
 from pipeline.conditions import load_conditions
@@ -84,6 +85,10 @@ def main() -> None:
 
     live = ROOT / "data/live"
     live.mkdir(parents=True, exist_ok=True)
+
+    cat_data = catalog.build_catalog(ROOT / "data/species", now)
+    (live / "species_catalog.json").write_text(json.dumps(cat_data, indent=2, allow_nan=False))
+
     latest = {"generated_utc": now, "region": sources["region"]["name"], "buoys": buoys,
               "sst": sst, "chlorophyll": chl, "structure": (layers or {}).get("structure_stats"),
               "closures": {"loaded": cl_loaded, "areas": len(cl_json["features"])},

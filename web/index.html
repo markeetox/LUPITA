@@ -342,13 +342,22 @@ const REGIONS = {
   canada: { name: "Atlantic Canada & North", bounds: [[-70.0, 42.0], [-50.0, 52.0]], filter: s => s.coords[1] >= 42.0 && s.coords[1] <= 52.0 && s.coords[0] >= -70.0 && s.coords[0] <= -50.0 },
   gulf_mex: { name: "Gulf of Mexico & Mexico", bounds: [[-98.0, 15.0], [-81.0, 30.0]], filter: s => s.coords[1] >= 15.0 && s.coords[1] <= 30.0 && s.coords[0] >= -98.0 && s.coords[0] <= -81.0 }
 };
-let FISH = null, BUOYS = null, CLOSURES = null, SELECTED_SPECIES = [], REGION_FILTER = store.get("fhm.region") || "all";
+let FISH = null, CATALOG = null, BUOYS = null, CLOSURES = null, SELECTED_SPECIES = [], REGION_FILTER = store.get("fhm.region") || "all";
 const SPECIES = {}, SPOTS = {};
+
+function setCatalog(data) {
+  CATALOG = data;
+  (data.species || []).forEach(s => {
+    SPECIES[s.id] = { ...(SPECIES[s.id] || {}), ...s };
+  });
+}
+
 function setFish(data) {
   FISH = data;
-  for (const k in SPECIES) delete SPECIES[k];
   for (const k in SPOTS) delete SPOTS[k];
-  (data.species || []).forEach(s => { SPECIES[s.id] = s; });
+  (data.species || []).forEach(s => {
+    SPECIES[s.id] = { ...(SPECIES[s.id] || {}), ...s };
+  });
   (data.spots || []).forEach(s => { SPOTS[s.id] = s; });
 }
 
@@ -879,21 +888,30 @@ function renderLegend() {
 }
 
 function speciesLabel(s) {
-  if (s.status === "ok") return `${s.spots} area${s.spots === 1 ? "" : "s"}`;
-  return s.status === "unavailable" ? "no data yet" : "none today";
+  const sp = SPECIES[s.id] || s;
+  if (sp.status === "ok") return `${sp.spots} area${sp.spots === 1 ? "" : "s"}`;
+  if (sp.status === "unavailable") return "no data yet";
+  if (sp.status === "no_favorable_areas") return "none today";
+  return "No current prediction";
 }
 function renderNote() {
   const dot = c => `<i style="background:${esc(c)}"></i>`;
-  const line = s => {
-    const note = s.status === "ok" ? `${s.spots} area${s.spots === 1 ? "" : "s"} today` : (s.message || s.status);
-    return `<div>${dot(s.color)}<span><b>${esc(s.name)}</b>: ${esc(note)}</span></div>`;
+  const line = sid => {
+    const s = SPECIES[sid] || {};
+    const name = s.name || sid;
+    const color = s.color || "#ffffff";
+    let note = "No current prediction";
+    if (s.status === "ok") note = `${s.spots} area${s.spots === 1 ? "" : "s"} today`;
+    else if (s.message) note = s.message;
+    else if (s.status === "unavailable") note = "no data yet";
+    else if (s.status === "no_favorable_areas") note = "no favorable areas today";
+    return `<div>${dot(color)}<span><b>${esc(name)}</b>: ${esc(note)}</span></div>`;
   };
-  const all = FISH ? (FISH.species || []) : [];
   if (!SELECTED_SPECIES.length) {
     fishNote.innerHTML = `<div style="color:var(--muted);">Select species to display predicted areas.</div>`;
     return;
   }
-  fishNote.innerHTML = all.filter(s => SELECTED_SPECIES.includes(s.id)).map(line).join("");
+  fishNote.innerHTML = SELECTED_SPECIES.map(line).join("");
 }
 regionSelect.addEventListener("change", () => {
   REGION_FILTER = regionSelect.value;
@@ -916,10 +934,21 @@ regionSelect.addEventListener("change", () => {
 
 function renderPanel() {
   const chip = document.getElementById("status");
-  if (!FISH) return;
-  if (FISH.sample) { chip.textContent = "Sample data (live data not found)"; chip.className = "chip warn"; }
-  else if (FISH.error) { chip.textContent = FISH.error; chip.className = "chip warn"; }
-  else {
+  if (!CATALOG && !FISH) {
+    chip.textContent = "Error: Species catalog could not be loaded";
+    chip.className = "chip warn";
+    return;
+  }
+  if (FISH && FISH.sample) {
+    chip.textContent = "Sample data (live data not found)";
+    chip.className = "chip warn";
+  } else if (FISH && FISH.error) {
+    chip.textContent = FISH.error;
+    chip.className = "chip warn";
+  } else if (!FISH) {
+    chip.textContent = "Species catalog loaded · Predictions unavailable";
+    chip.className = "chip warn";
+  } else {
     const mins = FISH.generated_utc ? Math.round((Date.now() - new Date(FISH.generated_utc).getTime()) / 60000) : null;
     const stale = mins !== null && mins > 240;
     chip.textContent = (stale ? "Stale: last updated " : "Live L.U.P.I.T.A. Model") + (FISH.generated_utc ? (stale ? "" : " · ") + ago(FISH.generated_utc) : "");
@@ -928,7 +957,11 @@ function renderPanel() {
   renderSea();
   if (!REGIONS[REGION_FILTER]) REGION_FILTER = "all";
   regionSelect.value = REGION_FILTER;
-  const sortedSpecies = [...(FISH.species || [])].sort((a, b) => a.name.localeCompare(b.name));
+
+  const catList = (CATALOG && CATALOG.species && CATALOG.species.length)
+    ? CATALOG.species
+    : (FISH && FISH.species) ? FISH.species : [];
+  const sortedSpecies = [...catList].sort((a, b) => a.name.localeCompare(b.name));
 
   checklist.innerHTML = sortedSpecies.map(s => `
     <label class="check-item">
@@ -969,8 +1002,24 @@ async function getJSON(name) {
   return res.json();
 }
 async function load() {
-  try { setFish(await getJSON("fish.json")); }
-  catch (err) { console.warn("fish.json failed, using sample:", err); setFish(SAMPLE); }
+  try {
+    const catData = await getJSON("species_catalog.json");
+    setCatalog(catData);
+  } catch (err) {
+    console.warn("species_catalog.json failed:", err);
+  }
+
+  try {
+    setFish(await getJSON("fish.json"));
+  } catch (err) {
+    console.warn("fish.json failed:", err);
+    if (!CATALOG) setFish(SAMPLE);
+  }
+
+  if (!CATALOG && FISH) {
+    setCatalog({ species: FISH.species });
+  }
+
   renderPanel();
   refreshSpots();
   try { HEAT = await getJSON("heat.json"); } catch (err) { console.warn("heat.json failed:", err); HEAT = null; }
