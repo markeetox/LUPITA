@@ -21,11 +21,56 @@ def _fish(name: str) -> str:
     return (name[:1].lower() + name[1:]).replace("atlantic", "Atlantic")
 
 
+def resample_latitude_web_mercator(score: np.ndarray, lats: np.ndarray) -> np.ndarray:
+    """Resample equirectangular score grid rows onto rows uniformly spaced in Web Mercator Y.
+    Input score array is indexed by equirectangular lats (lats[0] = southmost, lats[-1] = northmost).
+    Output array has same shape (H, W), with row 0 = northmost Mercator row, row H-1 = southmost Mercator row."""
+    if lats is None or len(lats) < 2 or score.shape[0] != len(lats):
+        return score[::-1]
+
+    H = score.shape[0]
+    dlat = float(lats[1] - lats[0])
+    s_lat = float(lats[0]) - dlat / 2.0
+    n_lat = float(lats[-1]) + dlat / 2.0
+
+    rad_s = np.radians(s_lat)
+    rad_n = np.radians(n_lat)
+    y_s = np.log(np.tan(np.pi / 4.0 + rad_s / 2.0))
+    y_n = np.log(np.tan(np.pi / 4.0 + rad_n / 2.0))
+
+    k = np.arange(H)
+    y_k = y_n - (k + 0.5) * (y_n - y_s) / H
+    target_lats = np.degrees(2.0 * np.arctan(np.exp(y_k)) - np.pi / 2.0)
+
+    orig_idx = (target_lats - lats[0]) / dlat
+    i0 = np.floor(orig_idx).astype(int)
+    i1 = i0 + 1
+    t = (orig_idx - i0)[:, None]
+
+    i0_c = np.clip(i0, 0, H - 1)
+    i1_c = np.clip(i1, 0, H - 1)
+
+    s0 = score[i0_c]
+    s1 = score[i1_c]
+
+    out = (1.0 - t) * s0 + t * s1
+    nan_mask = np.isnan(out)
+    if nan_mask.any():
+        nearest = np.where(t < 0.5, s0, s1)
+        out = np.where(nan_mask, nearest, out)
+    return out
+
+
 def quantize_scores(score: np.ndarray, lats: np.ndarray | None = None) -> str:
     """Score grid -> base64 of one byte per cell (1-100 = score in percent, 0 = no score), north row first.
-    MapLibre GL JS natively applies GPU Web Mercator texture warping to standard equirectangular image sources."""
-    q = np.where(np.isfinite(score), np.clip(np.round(score * 100), 1, 100), 0).astype(np.uint8)
-    return base64.b64encode(q[::-1].tobytes()).decode("ascii")
+    Resamples equirectangular latitude rows to uniform Web Mercator Y spacing so MapLibre GL JS GPU
+    rendering perfectly aligns with geography."""
+    if lats is not None:
+        score_merc = resample_latitude_web_mercator(score, lats)
+    else:
+        score_merc = score[::-1]
+    q = np.where(np.isfinite(score_merc), np.clip(np.round(score_merc * 100), 1, 100), 0).astype(np.uint8)
+    return base64.b64encode(q.tobytes()).decode("ascii")
 
 
 def _fmt(param: str, v: float) -> str:
