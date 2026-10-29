@@ -91,3 +91,48 @@ def test_a_failed_run_leaves_the_last_good_predictions_alone(tmp_path, monkeypat
     assert json.loads((tmp_path / "data/live/closures.json").read_text()) == {"sentinel": "closures"}
     latest = json.loads((tmp_path / "data/live/latest.json").read_text())
     assert latest["fish_updated"] is False and any("kept the last published predictions" in e for e in latest["errors"])
+
+
+def test_failed_run_without_previous_predictions_generates_catalog(tmp_path, monkeypatch):
+    for d in ("config", "data"):
+        shutil.copytree(ROOT / d, tmp_path / d, ignore=shutil.ignore_patterns("live"))
+    (tmp_path / "data/live").mkdir(parents=True, exist_ok=True)
+    monkeypatch.setattr(run, "ROOT", tmp_path)
+    monkeypatch.setattr(run, "pull_buoys", lambda *a, **k: [])
+    monkeypatch.setattr(run, "load_forecast", lambda errors: None)
+    monkeypatch.setattr(run, "load_layers", lambda *a, **k: None)             # NOAA refused everything
+    monkeypatch.setattr(run, "load_conditions", lambda *a, **k: {"now": datetime.now(timezone.utc), "tides": []})
+    run.main()
+
+    # Catalog must be published independently
+    cat_path = tmp_path / "data/live/species_catalog.json"
+    assert cat_path.exists()
+    cat_data = json.loads(cat_path.read_text(encoding="utf-8"))
+    assert cat_data["total"] == 130
+
+    latest = json.loads((tmp_path / "data/live/latest.json").read_text())
+    assert latest["fish_updated"] is False
+    assert not (tmp_path / "data/live_stage").exists(), "Staging directory must be cleaned up"
+
+
+def test_retained_predictions_preserve_original_timestamps(tmp_path, monkeypatch):
+    for d in ("config", "data"):
+        shutil.copytree(ROOT / d, tmp_path / d, ignore=shutil.ignore_patterns("live"))
+    (tmp_path / "data/live").mkdir(parents=True, exist_ok=True)
+    orig_time = "2026-01-01T00:00:00+00:00"
+    good = {"generated_utc": orig_time, "species": []}
+    (tmp_path / "data/live/fish.json").write_text(json.dumps(good))
+
+    monkeypatch.setattr(run, "ROOT", tmp_path)
+    monkeypatch.setattr(run, "pull_buoys", lambda *a, **k: [])
+    monkeypatch.setattr(run, "load_forecast", lambda errors: None)
+    monkeypatch.setattr(run, "load_layers", lambda *a, **k: None)
+    monkeypatch.setattr(run, "load_conditions", lambda *a, **k: {"now": datetime.now(timezone.utc), "tides": []})
+    run.main()
+
+    fish = json.loads((tmp_path / "data/live/fish.json").read_text())
+    assert fish["generated_utc"] == orig_time, "Retained fish.json must preserve original generation timestamp"
+
+    latest = json.loads((tmp_path / "data/live/latest.json").read_text())
+    assert latest["generated_utc"] != orig_time, "latest.json must reflect the current run timestamp"
+    assert latest["fish_updated"] is False
