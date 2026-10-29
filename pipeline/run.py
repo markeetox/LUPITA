@@ -126,7 +126,29 @@ def main() -> None:
                 dest = stage / "api" / "v1" / rel                     # the app-facing copy: see docs/seabound-api.md
                 dest.parent.mkdir(parents=True, exist_ok=True)
                 dest.write_bytes(data)
-            (stage / "heat.json").write_text(json.dumps(heat_json, allow_nan=False, separators=(",", ":")), encoding="utf-8")
+
+            # Split heat.json into a lightweight manifest and per-species heat files under heat/
+            heat_manifest = {
+                "version": 1,
+                "generated_utc": now,
+                "width": heat_json["width"],
+                "height": heat_json["height"],
+                "bounds": heat_json["bounds"],
+                "note": heat_json["note"],
+                "species": {sid: f"heat/{sid}.json" for sid in heat_json.get("species", {})}
+            }
+            (stage / "heat.json").write_text(json.dumps(heat_manifest, allow_nan=False, separators=(",", ":")), encoding="utf-8")
+
+            heat_dir = stage / "heat"
+            heat_dir.mkdir(parents=True, exist_ok=True)
+            for sid, b64_str in heat_json.get("species", {}).items():
+                sp_heat = {
+                    "width": heat_json["width"],
+                    "height": heat_json["height"],
+                    "bounds": heat_json["bounds"],
+                    "scores_base64": b64_str
+                }
+                (heat_dir / f"{sid}.json").write_text(json.dumps(sp_heat, allow_nan=False, separators=(",", ":")), encoding="utf-8")
 
             # Commit staged files atomically
             for src_file in stage.rglob("*"):

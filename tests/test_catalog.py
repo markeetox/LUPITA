@@ -103,3 +103,17 @@ def test_run_generates_catalog_on_layer_failure():
     assert latest_data["fish_updated"] is False
     assert any("satellite temperature could not be loaded" in err for err in latest_data["errors"])
     assert not (ROOT / "data/live_stage").exists(), "Temporary staging directory must be cleaned up"
+
+
+def test_heat_json_files_stay_under_100mb():
+    live = ROOT / "data/live"
+    heat_manifest = live / "heat.json"
+    assert heat_manifest.exists(), "heat.json manifest must exist"
+    manifest_size = heat_manifest.stat().st_size
+    assert manifest_size < 100 * 1024 * 1024, "heat.json must be under 100 MB"
+
+    heat_dir = live / "heat"
+    if heat_dir.exists():
+        for heat_file in heat_dir.glob("*.json"):
+            size_mb = heat_file.stat().st_size / (1024 * 1024)
+            assert size_mb < 100, f"Heat file {heat_file.name} is {size_mb:.2f} MB, which exceeds GitHub's 100 MB limit"

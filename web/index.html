@@ -594,7 +594,7 @@ function hexToRgb(h) { const n = parseInt(String(h).slice(1), 16); return [(n >>
 function heatPixels(heat, selectedIds, species) {
   const n = heat.width * heat.height, px = new Uint8ClampedArray(n * 4);
   if (!selectedIds || !selectedIds.length) return px;
-  const ids = selectedIds.filter(id => heat.species[id]);
+  const ids = selectedIds.filter(id => typeof heat.species[id] === "string" && !heat.species[id].endsWith(".json"));
   if (!ids.length) return px;
   const grids = ids.map(id => b64ToBytes(heat.species[id])), cols = ids.map(id => hexToRgb((species[id] || {}).color || "#ffffff"));
   for (let i = 0; i < n; i++) {
@@ -620,8 +620,23 @@ function heatURL(px, w, h, scale) {
   g.drawImage(small, 0, 0, big.width, big.height);
   return big.toDataURL("image/png");
 }
-function renderHeat() {
+async function ensureHeatScores(selectedIds) {
+  if (!HEAT || !HEAT.species) return;
+  for (const id of selectedIds) {
+    const val = HEAT.species[id];
+    if (typeof val === "string" && val.endsWith(".json")) {
+      try {
+        const item = await getJSON(val);
+        HEAT.species[id] = item.scores_base64 || item.scores || "";
+      } catch (e) {
+        console.warn("Failed to load heat for " + id, e);
+      }
+    }
+  }
+}
+async function renderHeat() {
   if (!HEAT) return;
+  await ensureHeatScores(SELECTED_SPECIES);
   const [w, s, e, n] = HEAT.bounds, coordinates = [[w, n], [e, n], [e, s], [w, s]];
   map.setMaxBounds([[-142.0, 10.0], [-45.0, 62.0]]);
   const url = heatURL(heatPixels(HEAT, SELECTED_SPECIES, SPECIES), HEAT.width, HEAT.height, 6);
