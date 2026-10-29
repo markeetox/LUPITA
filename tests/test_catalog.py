@@ -1,9 +1,10 @@
-"""Unit tests for standalone species catalog generation (pipeline/catalog.py)."""
+"""Unit tests for standalone species catalog generation (pipeline/catalog.py) and failure-safe staging."""
 from __future__ import annotations
 
 import json
 from pathlib import Path
 import tempfile
+from unittest.mock import patch
 
 from pipeline import catalog
 
@@ -84,3 +85,21 @@ def test_catalog_main_cli():
     assert data["version"] == 1
     assert data["total"] == 130
     assert len(data["species"]) == 130
+
+
+def test_run_generates_catalog_on_layer_failure():
+    from pipeline import run as run_mod
+    with patch("pipeline.run.load_layers", return_value=None), \
+         patch("pipeline.run.pull_buoys", return_value=[]), \
+         patch("pipeline.run.load_forecast", return_value=None):
+        run_mod.main()
+
+    live = ROOT / "data/live"
+    assert (live / "species_catalog.json").exists()
+    cat_data = json.loads((live / "species_catalog.json").read_text(encoding="utf-8"))
+    assert cat_data["total"] == 130
+
+    latest_data = json.loads((live / "latest.json").read_text(encoding="utf-8"))
+    assert latest_data["fish_updated"] is False
+    assert any("satellite temperature could not be loaded" in err for err in latest_data["errors"])
+    assert not (ROOT / "data/live_stage").exists(), "Temporary staging directory must be cleaned up"
