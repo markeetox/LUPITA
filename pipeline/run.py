@@ -59,13 +59,20 @@ def main() -> None:
     except Exception as exc:
         errors.append(f"species catalog: {exc}")
 
-    history: dict = {}
-    buoys = pull_buoys(stations, sources["ndbc"]["realtime_url"], errors, history)
-    layers = load_layers(sources, errors)
-    conditions = load_conditions(tide_stations, now_dt, errors)
-    forecast = load_forecast(errors)
-    conditions["forecast"] = forecast
-    conditions["front"] = weather.assess(history, forecast, now_dt)
+    buoys = []
+    layers = None
+    conditions = {"now": now_dt, "tides": [], "forecast": None, "front": None}
+
+    try:
+        history: dict = {}
+        buoys = pull_buoys(stations, sources["ndbc"]["realtime_url"], errors, history)
+        layers = load_layers(sources, errors)
+        conditions = load_conditions(tide_stations, now_dt, errors)
+        forecast = load_forecast(errors)
+        conditions["forecast"] = forecast
+        conditions["front"] = weather.assess(history, forecast, now_dt)
+    except Exception as exc:
+        errors.append(f"ocean data pull: {exc}")
 
     sst = chl = None
     fish = None
@@ -73,19 +80,23 @@ def main() -> None:
     if layers is None:
         errors.append("kept the last published predictions: satellite temperature could not be loaded")
     else:
-        cfg = sources["erddap"]
-        sst = _grid_report(cfg["sst"], layers["times"]["sst"], layers["lats"], layers["lons"], layers["sst_c"])
-        if layers["chl_raw"] is not None:
-            clats, clons, cgrid = layers["chl_raw"]
-            chl = _grid_report(cfg["chlorophyll"], layers["times"]["chlorophyll"], clats, clons, cgrid)
-        heat: dict = {}
-        fish = build_fish_json(layers, buoys, profiles, registry, now, places, conditions, heat)
-        la, lo = layers["lats"], layers["lons"]
-        dlat, dlon = float(la[1] - la[0]), float(lo[1] - lo[0])
-        heat_json = {"version": 1, "generated_utc": now, "width": int(len(lo)), "height": int(len(la)),
-                     "bounds": [round(float(lo[0]) - dlon / 2, 4), round(float(la[0]) - dlat / 2, 4),
-                                round(float(lo[-1]) + dlon / 2, 4), round(float(la[-1]) + dlat / 2, 4)],
-                     "note": "One byte per cell, north row first: 0 = no score, 1-100 = score in percent.", "species": heat}
+        try:
+            cfg = sources["erddap"]
+            sst = _grid_report(cfg["sst"], layers["times"]["sst"], layers["lats"], layers["lons"], layers["sst_c"])
+            if layers["chl_raw"] is not None:
+                clats, clons, cgrid = layers["chl_raw"]
+                chl = _grid_report(cfg["chlorophyll"], layers["times"]["chlorophyll"], clats, clons, cgrid)
+            heat: dict = {}
+            fish = build_fish_json(layers, buoys, profiles, registry, now, places, conditions, heat)
+            la, lo = layers["lats"], layers["lons"]
+            dlat, dlon = float(la[1] - la[0]), float(lo[1] - lo[0])
+            heat_json = {"version": 1, "generated_utc": now, "width": int(len(lo)), "height": int(len(la)),
+                         "bounds": [round(float(lo[0]) - dlon / 2, 4), round(float(la[0]) - dlat / 2, 4),
+                                    round(float(lo[-1]) + dlon / 2, 4), round(float(la[-1]) + dlat / 2, 4)],
+                         "note": "One byte per cell, north row first: 0 = no score, 1-100 = score in percent.", "species": heat}
+        except Exception as exc:
+            errors.append(f"prediction scoring: {exc}")
+            fish = None
 
     cl_cfg = sources.get("closures", {})
     cl_loaded = bool(layers and layers.get("closure_checked"))
@@ -96,18 +107,38 @@ def main() -> None:
               "closures": {"loaded": cl_loaded, "areas": len(cl_json["features"])},
               "conditions": {**timing.summary(conditions), "sea": seastate.summary(buoys, conditions)}, "fish_updated": fish is not None, "errors": errors}
     (live / "latest.json").write_text(json.dumps(latest, indent=2, allow_nan=False))
-    if fish is not None:      # on a failed run these are not written, so the last good copies stay published
-        (live / "fish.json").write_text(json.dumps(fish, indent=1, allow_nan=False))
-        (live / "closures.json").write_text(json.dumps(cl_json, allow_nan=False, separators=(",", ":")))
-        stream = currents.stream_geojson(layers.get("stream_edge_lon"), layers["lats"], "NOAA CoastWatch nesdisSSH1day (satellite altimetry)",
-                                         layers["times"].get("currents"), layers.get("current_speed") is not None, now)
-        (live / "stream.json").write_text(json.dumps(stream, allow_nan=False, separators=(",", ":")))
-        images = {f.name: f.read_bytes() for f in sorted((ROOT / "web/fish").glob("*.png"))}
-        for rel, data in api_mod.build(fish, heat_json, cl_json, stream, profiles, images).items():
-            dest = live / "api" / "v1" / rel                     # the app-facing copy: see docs/seabound-api.md
-            dest.parent.mkdir(parents=True, exist_ok=True)
-            dest.write_bytes(data)
-        (live / "heat.json").write_text(json.dumps(heat_json, allow_nan=False, separators=(",", ":")))
+
+    if fish is not None:      # Staged atomic write so partial outputs are never published
+        try:
+            import shutil
+            stage = ROOT / "data/live_stage"
+            if stage.exists():
+                shutil.rmtree(stage)
+            stage.mkdir(parents=True, exist_ok=True)
+
+            (stage / "fish.json").write_text(json.dumps(fish, indent=1, allow_nan=False), encoding="utf-8")
+            (stage / "closures.json").write_text(json.dumps(cl_json, allow_nan=False, separators=(",", ":")), encoding="utf-8")
+            stream = currents.stream_geojson(layers.get("stream_edge_lon"), layers["lats"], "NOAA CoastWatch nesdisSSH1day (satellite altimetry)",
+                                             layers["times"].get("currents"), layers.get("current_speed") is not None, now)
+            (stage / "stream.json").write_text(json.dumps(stream, allow_nan=False, separators=(",", ":")), encoding="utf-8")
+            images = {f.name: f.read_bytes() for f in sorted((ROOT / "web/fish").glob("*.png"))}
+            for rel, data in api_mod.build(fish, heat_json, cl_json, stream, profiles, images).items():
+                dest = stage / "api" / "v1" / rel                     # the app-facing copy: see docs/seabound-api.md
+                dest.parent.mkdir(parents=True, exist_ok=True)
+                dest.write_bytes(data)
+            (stage / "heat.json").write_text(json.dumps(heat_json, allow_nan=False, separators=(",", ":")), encoding="utf-8")
+
+            # Commit staged files atomically
+            for src_file in stage.rglob("*"):
+                if src_file.is_file():
+                    rel_path = src_file.relative_to(stage)
+                    dest_path = live / rel_path
+                    dest_path.parent.mkdir(parents=True, exist_ok=True)
+                    shutil.copy2(src_file, dest_path)
+            shutil.rmtree(stage)
+        except Exception as exc:
+            log.error("Failed to commit staged prediction outputs: %s", exc)
+            errors.append(f"staging predictions: {exc}")
 
     for sp in (fish or {}).get("species", []):
         log.info("%-20s %-20s %s", sp["name"], sp["status"], sp["message"] or f"{sp['spots']} area(s)")
