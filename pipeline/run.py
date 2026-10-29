@@ -51,6 +51,14 @@ def main() -> None:
     tides_file = ROOT / "config/tides.json"
     tide_stations = json.loads(tides_file.read_text())["stations"] if tides_file.exists() else []
 
+    live = ROOT / "data/live"
+    live.mkdir(parents=True, exist_ok=True)
+    try:
+        cat_data = catalog.build_catalog(ROOT / "data/species", now)
+        (live / "species_catalog.json").write_text(json.dumps(cat_data, indent=2, allow_nan=False))
+    except Exception as exc:
+        errors.append(f"species catalog: {exc}")
+
     history: dict = {}
     buoys = pull_buoys(stations, sources["ndbc"]["realtime_url"], errors, history)
     layers = load_layers(sources, errors)
@@ -82,12 +90,6 @@ def main() -> None:
     cl_cfg = sources.get("closures", {})
     cl_loaded = bool(layers and layers.get("closure_checked"))
     cl_json = closures_mod.to_geojson((layers or {}).get("closure_areas", []), cl_cfg.get("source_label", "NOAA MPA Inventory"), cl_loaded, now)
-
-    live = ROOT / "data/live"
-    live.mkdir(parents=True, exist_ok=True)
-
-    cat_data = catalog.build_catalog(ROOT / "data/species", now)
-    (live / "species_catalog.json").write_text(json.dumps(cat_data, indent=2, allow_nan=False))
 
     latest = {"generated_utc": now, "region": sources["region"]["name"], "buoys": buoys,
               "sst": sst, "chlorophyll": chl, "structure": (layers or {}).get("structure_stats"),

@@ -30,10 +30,12 @@ jobs:
           python-version: "3.12"
       - run: pip install -r requirements.txt
       - run: python -m pytest -q
+      - run: python -m pipeline.catalog
       - run: python -m pipeline.run
       # Publishes to a "data" branch, so Vercel does not redeploy on every pull and Seabound can fetch the JSON from there.
       - run: |
           mkdir -p publish
+          if [ -f data/live/species_catalog.json ]; then cp data/live/species_catalog.json publish/; fi
           cp data/live/*.json publish/ || true
           cp data/parameters.json publish/
           cp -r data/species publish/species

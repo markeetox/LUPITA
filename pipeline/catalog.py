@@ -67,3 +67,17 @@ def build_catalog(species_dir: Path | str, generated_utc: str | None = None) -> 
         "total": len(catalog_species),
         "species": catalog_species
     }
+
+
+def main() -> None:
+    root = Path(__file__).resolve().parent.parent
+    live = root / "data/live"
+    live.mkdir(parents=True, exist_ok=True)
+    cat_data = build_catalog(root / "data/species")
+    dest = live / "species_catalog.json"
+    dest.write_text(json.dumps(cat_data, indent=2, allow_nan=False), encoding="utf-8")
+    print(f"Wrote {dest} ({cat_data['total']} species)")
+
+
+if __name__ == "__main__":
+    main()
