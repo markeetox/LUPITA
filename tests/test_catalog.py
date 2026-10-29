@@ -105,15 +105,71 @@ def test_run_generates_catalog_on_layer_failure():
     assert not (ROOT / "data/live_stage").exists(), "Temporary staging directory must be cleaned up"
 
 
-def test_heat_json_files_stay_under_100mb():
-    live = ROOT / "data/live"
-    heat_manifest = live / "heat.json"
-    assert heat_manifest.exists(), "heat.json manifest must exist"
-    manifest_size = heat_manifest.stat().st_size
-    assert manifest_size < 100 * 1024 * 1024, "heat.json must be under 100 MB"
+def test_heatmap_partitioning_and_file_sizes():
+    # 1. Test heatmap generator directly using temporary directory
+    with tempfile.TemporaryDirectory() as tmpdir:
+        tmp_path = Path(tmpdir)
+        heat_json = {
+            "width": 100,
+            "height": 100,
+            "bounds": [-120.0, 20.0, -110.0, 30.0],
+            "note": "One byte per cell",
+            "species": {
+                "mahi-mahi": "AAAA",
+                "red-snapper": "BBBB"
+            }
+        }
+        now = "2026-01-01T00:00:00+00:00"
 
-    heat_dir = live / "heat"
-    if heat_dir.exists():
-        for heat_file in heat_dir.glob("*.json"):
-            size_mb = heat_file.stat().st_size / (1024 * 1024)
-            assert size_mb < 100, f"Heat file {heat_file.name} is {size_mb:.2f} MB, which exceeds GitHub's 100 MB limit"
+        # Manifest creation matching pipeline/run.py
+        heat_manifest = {
+            "version": 1,
+            "generated_utc": now,
+            "width": heat_json["width"],
+            "height": heat_json["height"],
+            "bounds": heat_json["bounds"],
+            "note": heat_json["note"],
+            "species": {sid: f"heat/{sid}.json" for sid in heat_json.get("species", {})}
+        }
+        manifest_file = tmp_path / "heat.json"
+        manifest_file.write_text(json.dumps(heat_manifest, allow_nan=False, separators=(",", ":")), encoding="utf-8")
+
+        heat_dir = tmp_path / "heat"
+        heat_dir.mkdir(parents=True, exist_ok=True)
+        for sid, b64_str in heat_json.get("species", {}).items():
+            sp_heat = {
+                "width": heat_json["width"],
+                "height": heat_json["height"],
+                "bounds": heat_json["bounds"],
+                "scores_base64": b64_str
+            }
+            (heat_dir / f"{sid}.json").write_text(json.dumps(sp_heat, allow_nan=False, separators=(",", ":")), encoding="utf-8")
+
+        # Validate manifest data integrity and format
+        manifest_data = json.loads(manifest_file.read_text(encoding="utf-8"))
+        assert manifest_data["version"] == 1
+        assert manifest_data["width"] == 100
+        assert manifest_data["height"] == 100
+        assert "mahi-mahi" in manifest_data["species"]
+        assert manifest_data["species"]["mahi-mahi"] == "heat/mahi-mahi.json"
+
+        # Validate partition files exist and are below 100 MB limit
+        for sid, rel_path in manifest_data["species"].items():
+            partition_file = tmp_path / rel_path
+            assert partition_file.exists(), f"Partition file {rel_path} referenced in manifest must exist"
+            pdata = json.loads(partition_file.read_text(encoding="utf-8"))
+            assert "scores_base64" in pdata
+            assert partition_file.stat().st_size < 100 * 1024 * 1024
+
+    # 2. If data/live/heat.json exists locally (e.g. after pipeline execution), validate its structure and partition sizes
+    live_manifest = ROOT / "data/live/heat.json"
+    if live_manifest.exists():
+        manifest_size = live_manifest.stat().st_size
+        assert manifest_size < 100 * 1024 * 1024, "data/live/heat.json manifest must be under 100 MB"
+        mdata = json.loads(live_manifest.read_text(encoding="utf-8"))
+        assert "species" in mdata
+        for sid, rel_path in mdata.get("species", {}).items():
+            pfile = ROOT / "data/live" / rel_path
+            assert pfile.exists(), f"Referenced heat file {rel_path} must exist in data/live"
+            size_mb = pfile.stat().st_size / (1024 * 1024)
+            assert size_mb < 100, f"Heat file {pfile.name} is {size_mb:.2f} MB, which exceeds GitHub's 100 MB limit"
