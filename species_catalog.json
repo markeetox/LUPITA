@@ -1,0 +1,6460 @@
+{
+  "version": 1,
+  "generated_utc": "2026-10-31T13:35:50.838220+00:00",
+  "total": 130,
+  "species": [
+    {
+      "id": "acadian-redfish",
+      "name": "Acadian redfish",
+      "sci": "Sebastes fasciatus",
+      "color": "#d83636",
+      "environment": "saltwater",
+      "model": "grid",
+      "lat_range": [
+        41.0,
+        52.0
+      ],
+      "lon_range": [
+        -100.0,
+        -50.0
+      ],
+      "regulations": {
+        "summary": "Regulated species - See MyFWC/NOAA guidelines",
+        "min_size": "Check MyFWC/NOAA rules",
+        "max_size": "None",
+        "bag_limit": "Varies by region / state",
+        "season": "Open year-round (subject to local quota/closures)",
+        "jurisdiction": "Atlantic & Gulf State/Federal Waters",
+        "source_name": "MyFWC Saltwater Regulations",
+        "source_url": "https://myfwc.com/fishing/saltwater/recreational/"
+      },
+      "specs": [
+        [
+          "Typical size",
+          "Variable per NOAA / regional guidelines"
+        ],
+        [
+          "Diet",
+          "Small fish, crustaceans, and cephalopods."
+        ],
+        [
+          "Behavior",
+          "Active predator along coastal, shelf, or offshore environments."
+        ],
+        [
+          "Spawning",
+          "Spawns seasonally based on water temperature and regional climate."
+        ]
+      ],
+      "image": {
+        "url": "fish/placeholder.png",
+        "kind": "illustration",
+        "credit": "Placeholder graphic",
+        "license": ""
+      }
+    },
+    {
+      "id": "african-pompano",
+      "name": "African pompano",
+      "sci": "Alectis ciliaris",
+      "color": "#2460f2",
+      "environment": "saltwater",
+      "model": "grid",
+      "lat_range": null,
+      "lon_range": [
+        -100.0,
+        -50.0
+      ],
+      "regulations": {
+        "summary": "Regulated species - See MyFWC/NOAA guidelines",
+        "min_size": "Check MyFWC/NOAA rules",
+        "max_size": "None",
+        "bag_limit": "Varies by region / state",
+        "season": "Open year-round (subject to local quota/closures)",
+        "jurisdiction": "Atlantic & Gulf State/Federal Waters",
+        "source_name": "MyFWC Saltwater Regulations",
+        "source_url": "https://myfwc.com/fishing/saltwater/recreational/"
+      },
+      "specs": [
+        [
+          "Typical size",
+          "Common 10-25 lb; up to 50 lb"
+        ],
+        [
+          "Diet",
+          "Crabs, squids, and small reef fishes"
+        ],
+        [
+          "Swimming depth",
+          "30 to 100+ m"
+        ],
+        [
+          "Behavior",
+          "Pelagic jack that frequents deep artificial reefs, wrecks, and high-relief drop-offs."
+        ]
+      ],
+      "image": {
+        "url": "fish/african-pompano.png",
+        "kind": "illustration",
+        "credit": "Original illustration",
+        "license": ""
+      }
+    },
+    {
+      "id": "albacore-tuna",
+      "name": "Albacore tuna",
+      "sci": "Thunnus alalunga",
+      "color": "#83d80a",
+      "environment": "saltwater",
+      "model": "grid",
+      "lat_range": [
+        32.0,
+        48.0
+      ],
+      "lon_range": [
+        -100.0,
+        -50.0
+      ],
+      "regulations": {
+        "summary": "Regulated species - See MyFWC/NOAA guidelines",
+        "min_size": "Check MyFWC/NOAA rules",
+        "max_size": "None",
+        "bag_limit": "Varies by region / state",
+        "season": "Open year-round (subject to local quota/closures)",
+        "jurisdiction": "Atlantic & Gulf State/Federal Waters",
+        "source_name": "MyFWC Saltwater Regulations",
+        "source_url": "https://myfwc.com/fishing/saltwater/recreational/"
+      },
+      "specs": [
+        [
+          "Typical size",
+          "Variable per NOAA / regional guidelines"
+        ],
+        [
+          "Diet",
+          "Small fish, crustaceans, and cephalopods."
+        ],
+        [
+          "Behavior",
+          "Active predator along coastal, shelf, or offshore environments."
+        ],
+        [
+          "Spawning",
+          "Spawns seasonally based on water temperature and regional climate."
+        ]
+      ],
+      "image": {
+        "url": "fish/placeholder.png",
+        "kind": "illustration",
+        "credit": "Placeholder graphic",
+        "license": ""
+      }
+    },
+    {
+      "id": "almaco-jack",
+      "name": "Almaco jack",
+      "sci": "Seriola rivoliana",
+      "color": "#f23cdb",
+      "environment": "saltwater",
+      "model": "grid",
+      "lat_range": null,
+      "lon_range": [
+        -100.0,
+        -50.0
+      ],
+      "regulations": {
+        "summary": "Regulated species - See MyFWC/NOAA guidelines",
+        "min_size": "Check MyFWC/NOAA rules",
+        "max_size": "None",
+        "bag_limit": "Varies by region / state",
+        "season": "Open year-round (subject to local quota/closures)",
+        "jurisdiction": "Atlantic & Gulf State/Federal Waters",
+        "source_name": "MyFWC Saltwater Regulations",
+        "source_url": "https://myfwc.com/fishing/saltwater/recreational/"
+      },
+      "specs": [
+        [
+          "Typical size",
+          "Common 5-20 lb; up to 70 lb"
+        ],
+        [
+          "Diet",
+          "Small fishes, squids, and crabs"
+        ],
+        [
+          "Swimming depth",
+          "40 to 200 m"
+        ],
+        [
+          "Behavior",
+          "Deepwater pelagic jack that schools around deep wrecks, offshore oil platforms, and steep shelf ledges."
+        ]
+      ],
+      "image": {
+        "url": "fish/almaco-jack.png",
+        "kind": "illustration",
+        "credit": "Original illustration",
+        "license": ""
+      }
+    },
+    {
+      "id": "american-shad",
+      "name": "American shad",
+      "sci": "Alosa sapidissima",
+      "color": "#20d8b9",
+      "environment": "saltwater",
+      "model": "sites",
+      "lat_range": [
+        28.0,
+        50.0
+      ],
+      "lon_range": [
+        -100.0,
+        -50.0
+      ],
+      "regulations": {
+        "summary": "Regulated species - See MyFWC/NOAA guidelines",
+        "min_size": "Check MyFWC/NOAA rules",
+        "max_size": "None",
+        "bag_limit": "Varies by region / state",
+        "season": "Open year-round (subject to local quota/closures)",
+        "jurisdiction": "Atlantic & Gulf State/Federal Waters",
+        "source_name": "MyFWC Saltwater Regulations",
+        "source_url": "https://myfwc.com/fishing/saltwater/recreational/"
+      },
+      "specs": [
+        [
+          "Typical size",
+          "Variable per NOAA / regional guidelines"
+        ],
+        [
+          "Diet",
+          "Small fish, crustaceans, and cephalopods."
+        ],
+        [
+          "Behavior",
+          "Active predator along coastal, shelf, or offshore environments."
+        ],
+        [
+          "Spawning",
+          "Spawns seasonally based on water temperature and regional climate."
+        ]
+      ],
+      "image": {
+        "url": "fish/placeholder.png",
+        "kind": "illustration",
+        "credit": "Placeholder graphic",
+        "license": ""
+      }
+    },
+    {
+      "id": "blue-marlin",
+      "name": "Atlantic blue marlin",
+      "sci": "Makaira nigricans",
+      "color": "#0ce9f2",
+      "environment": "saltwater",
+      "model": "grid",
+      "lat_range": null,
+      "lon_range": [
+        -100.0,
+        -50.0
+      ],
+      "regulations": {
+        "summary": "Regulated species - See MyFWC/NOAA guidelines",
+        "min_size": "Check MyFWC/NOAA rules",
+        "max_size": "None",
+        "bag_limit": "Varies by region / state",
+        "season": "Open year-round (subject to local quota/closures)",
+        "jurisdiction": "Atlantic & Gulf State/Federal Waters",
+        "source_name": "MyFWC Saltwater Regulations",
+        "source_url": "https://myfwc.com/fishing/saltwater/recreational/"
+      },
+      "specs": [
+        [
+          "Typical size",
+          "Up to 1000+ lb; apex oceanic billfish"
+        ],
+        [
+          "Diet",
+          "Tunas, mackerels, squids, and dolphin"
+        ],
+        [
+          "Swimming depth",
+          "Upper mixed layer (surface to 100 m)"
+        ],
+        [
+          "Behavior",
+          "Oceanic solitary billfish that favors warm blue offshore currents, thermal boundaries, and current convergences."
+        ]
+      ],
+      "image": {
+        "url": "fish/blue-marlin.png",
+        "kind": "illustration",
+        "credit": "Original illustration",
+        "license": ""
+      }
+    },
+    {
+      "id": "bluefin-tuna",
+      "name": "Atlantic bluefin tuna",
+      "sci": "Thunnus thynnus",
+      "color": "#8224f2",
+      "environment": "saltwater",
+      "model": "grid",
+      "lat_range": null,
+      "lon_range": [
+        -100.0,
+        -50.0
+      ],
+      "regulations": {
+        "summary": "Regulated species - See MyFWC/NOAA guidelines",
+        "min_size": "Check MyFWC/NOAA rules",
+        "max_size": "None",
+        "bag_limit": "Varies by region / state",
+        "season": "Open year-round (subject to local quota/closures)",
+        "jurisdiction": "Atlantic & Gulf State/Federal Waters",
+        "source_name": "MyFWC Saltwater Regulations",
+        "source_url": "https://myfwc.com/fishing/saltwater/recreational/"
+      },
+      "specs": [
+        [
+          "Typical size",
+          "Common 200-600+ lb; up to 1000+ lb"
+        ],
+        [
+          "Diet",
+          "Herring, mackerel, squids, and crustaceans"
+        ],
+        [
+          "Swimming depth",
+          "Pelagic open ocean; 10 to 500+ m"
+        ],
+        [
+          "Behavior",
+          "Massive pelagic migrator that travels along deep oceanic fronts and Gulf Stream boundaries."
+        ]
+      ],
+      "image": {
+        "url": "fish/bluefin_tuna.png",
+        "kind": "illustration",
+        "credit": "Original illustration",
+        "license": ""
+      }
+    },
+    {
+      "id": "atlantic-cod",
+      "name": "Atlantic cod",
+      "sci": "Gadus morhua",
+      "color": "#f2880c",
+      "environment": "saltwater",
+      "model": "grid",
+      "lat_range": [
+        38.0,
+        52.0
+      ],
+      "lon_range": [
+        -100.0,
+        -50.0
+      ],
+      "regulations": {
+        "summary": "Regulated species - See MyFWC/NOAA guidelines",
+        "min_size": "Check MyFWC/NOAA rules",
+        "max_size": "None",
+        "bag_limit": "Varies by region / state",
+        "season": "Open year-round (subject to local quota/closures)",
+        "jurisdiction": "Atlantic & Gulf State/Federal Waters",
+        "source_name": "MyFWC Saltwater Regulations",
+        "source_url": "https://myfwc.com/fishing/saltwater/recreational/"
+      },
+      "specs": [
+        [
+          "Typical size",
+          "Variable per NOAA / regional guidelines"
+        ],
+        [
+          "Diet",
+          "Small fish, crustaceans, and cephalopods."
+        ],
+        [
+          "Behavior",
+          "Active predator along coastal, shelf, or offshore environments."
+        ],
+        [
+          "Spawning",
+          "Spawns seasonally based on water temperature and regional climate."
+        ]
+      ],
+      "image": {
+        "url": "fish/placeholder.png",
+        "kind": "illustration",
+        "credit": "Placeholder graphic",
+        "license": ""
+      }
+    },
+    {
+      "id": "atlantic-croaker",
+      "name": "Atlantic croaker",
+      "sci": "Micropogonias undulatus",
+      "color": "#5e36d8",
+      "environment": "saltwater",
+      "model": "sites",
+      "lat_range": [
+        24.0,
+        40.0
+      ],
+      "lon_range": [
+        -100.0,
+        -50.0
+      ],
+      "regulations": {
+        "summary": "Regulated species - See MyFWC/NOAA guidelines",
+        "min_size": "Check MyFWC/NOAA rules",
+        "max_size": "None",
+        "bag_limit": "Varies by region / state",
+        "season": "Open year-round (subject to local quota/closures)",
+        "jurisdiction": "Atlantic & Gulf State/Federal Waters",
+        "source_name": "MyFWC Saltwater Regulations",
+        "source_url": "https://myfwc.com/fishing/saltwater/recreational/"
+      },
+      "specs": [
+        [
+          "Typical size",
+          "Variable per NOAA / regional guidelines"
+        ],
+        [
+          "Diet",
+          "Small fish, crustaceans, and cephalopods."
+        ],
+        [
+          "Behavior",
+          "Active predator along coastal, shelf, or offshore environments."
+        ],
+        [
+          "Spawning",
+          "Spawns seasonally based on water temperature and regional climate."
+        ]
+      ],
+      "image": {
+        "url": "fish/placeholder.png",
+        "kind": "illustration",
+        "credit": "Placeholder graphic",
+        "license": ""
+      }
+    },
+    {
+      "id": "atlantic-halibut",
+      "name": "Atlantic halibut",
+      "sci": "Hippoglossus hippoglossus",
+      "color": "#2df224",
+      "environment": "saltwater",
+      "model": "grid",
+      "lat_range": [
+        40.0,
+        52.0
+      ],
+      "lon_range": [
+        -100.0,
+        -50.0
+      ],
+      "regulations": {
+        "summary": "Regulated species - See MyFWC/NOAA guidelines",
+        "min_size": "Check MyFWC/NOAA rules",
+        "max_size": "None",
+        "bag_limit": "Varies by region / state",
+        "season": "Open year-round (subject to local quota/closures)",
+        "jurisdiction": "Atlantic & Gulf State/Federal Waters",
+        "source_name": "MyFWC Saltwater Regulations",
+        "source_url": "https://myfwc.com/fishing/saltwater/recreational/"
+      },
+      "specs": [
+        [
+          "Typical size",
+          "Variable per NOAA / regional guidelines"
+        ],
+        [
+          "Diet",
+          "Small fish, crustaceans, and cephalopods."
+        ],
+        [
+          "Behavior",
+          "Active predator along coastal, shelf, or offshore environments."
+        ],
+        [
+          "Spawning",
+          "Spawns seasonally based on water temperature and regional climate."
+        ]
+      ],
+      "image": {
+        "url": "fish/placeholder.png",
+        "kind": "illustration",
+        "credit": "Placeholder graphic",
+        "license": ""
+      }
+    },
+    {
+      "id": "sailfish",
+      "name": "Atlantic sailfish",
+      "sci": "Istiophorus platypterus",
+      "color": "#20d85b",
+      "environment": "saltwater",
+      "model": "grid",
+      "lat_range": null,
+      "lon_range": [
+        -100.0,
+        -50.0
+      ],
+      "regulations": {
+        "summary": "Regulated species - See MyFWC/NOAA guidelines",
+        "min_size": "Check MyFWC/NOAA rules",
+        "max_size": "None",
+        "bag_limit": "Varies by region / state",
+        "season": "Open year-round (subject to local quota/closures)",
+        "jurisdiction": "Atlantic & Gulf State/Federal Waters",
+        "source_name": "MyFWC Saltwater Regulations",
+        "source_url": "https://myfwc.com/fishing/saltwater/recreational/"
+      },
+      "specs": [
+        [
+          "Typical size",
+          "Large billfish; anglers target numbers on light tackle rather than size"
+        ],
+        [
+          "Diet",
+          "Squid (cephalopods) and bony fishes"
+        ],
+        [
+          "Swimming depth",
+          "Mostly the upper 20 m, with repeated short dives to 50-150 m below the thermocline (Gulf of Mexico and Florida Straits tagging)"
+        ],
+        [
+          "Behavior",
+          "Stays above the thermocline in about 21-28 C water. In winter along the Florida coast the fish travel just outside the outer reef line, often along the green-to-blue water edge; cold fronts concentrate them."
+        ],
+        [
+          "Spawning",
+          "Not scored"
+        ]
+      ],
+      "image": {
+        "url": "fish/sailfish.png",
+        "kind": "illustration",
+        "credit": "Original illustration",
+        "license": ""
+      }
+    },
+    {
+      "id": "tarpon",
+      "name": "Atlantic tarpon",
+      "sci": "Megalops atlanticus",
+      "color": "#3c83f2",
+      "environment": "saltwater",
+      "model": "sites",
+      "lat_range": [
+        15.0,
+        36.0
+      ],
+      "lon_range": [
+        -100.0,
+        -50.0
+      ],
+      "regulations": {
+        "summary": "Regulated species - See MyFWC/NOAA guidelines",
+        "min_size": "Check MyFWC/NOAA rules",
+        "max_size": "None",
+        "bag_limit": "Varies by region / state",
+        "season": "Open year-round (subject to local quota/closures)",
+        "jurisdiction": "Atlantic & Gulf State/Federal Waters",
+        "source_name": "MyFWC Saltwater Regulations",
+        "source_url": "https://myfwc.com/fishing/saltwater/recreational/"
+      },
+      "specs": [
+        [
+          "Diet",
+          "Adults eat mostly mid-water prey: mullets, pinfish, marine catfishes; crabs are a spring favorite at inlets"
+        ],
+        [
+          "Adult depth",
+          "Normal habitat to about 30 m; tolerates salinities from fresh to about 47 ppt"
+        ],
+        [
+          "Behavior",
+          "Migratory and heat-loving. Adults arrive in the Florida Keys in April once surface water reaches about 26 C, peak in May (26-28 C) and leave in June (27-29 C). Cold fronts push them to warmer, deeper water, and juveniles leave creeks below about 20 C."
+        ],
+        [
+          "Spawning",
+          "April to June in the Florida Keys"
+        ]
+      ],
+      "image": {
+        "url": "fish/tarpon.png",
+        "kind": "illustration",
+        "credit": "Original illustration",
+        "license": ""
+      }
+    },
+    {
+      "id": "barred-sand-bass",
+      "name": "Barred sand bass",
+      "sci": "Paralabrax nebulifer",
+      "color": "#d80a4f",
+      "environment": "saltwater",
+      "model": "grid",
+      "lat_range": [
+        24.0,
+        35.0
+      ],
+      "lon_range": [
+        -138.0,
+        -110.0
+      ],
+      "regulations": {
+        "summary": "CDFW: 14\" min TL; 5 per day combined",
+        "min_size": "14 inches TL",
+        "max_size": "None",
+        "bag_limit": "5 per harvester / day",
+        "season": "Open year-round",
+        "jurisdiction": "California State Waters (CDFW)",
+        "source_name": "West Coast State Regulations (CDFW/WDFW/ODFW/NOAA)",
+        "source_url": "https://wildlife.ca.gov/Fishing/Ocean/Regulations/Sport-Fishing"
+      },
+      "specs": [
+        [
+          "Typical size",
+          "Min limit 14 inches TL / Bag limit 5 per harvester / day"
+        ],
+        [
+          "Diet",
+          "Small fish, crustaceans, squids, and pelagic prey"
+        ],
+        [
+          "Swimming depth",
+          "2 to 40 m"
+        ],
+        [
+          "Behavior",
+          "Navigates West Coast kelp forests, rocky reefs, and coastal upwelling zones."
+        ]
+      ],
+      "image": {
+        "url": "fish/barred-sand-bass.png",
+        "kind": "illustration",
+        "credit": "Original illustration",
+        "license": ""
+      }
+    },
+    {
+      "id": "barred-surfperch",
+      "name": "Barred surfperch",
+      "sci": "Amphistichus argenteus",
+      "color": "#3caef2",
+      "environment": "saltwater",
+      "model": "grid",
+      "lat_range": [
+        25.0,
+        38.0
+      ],
+      "lon_range": [
+        -138.0,
+        -110.0
+      ],
+      "regulations": {
+        "summary": "CDFW: 20 per day surfperch aggregate limit",
+        "min_size": "None",
+        "max_size": "None",
+        "bag_limit": "20 per harvester / day aggregate",
+        "season": "Open year-round",
+        "jurisdiction": "CDFW",
+        "source_name": "West Coast State Regulations (CDFW/WDFW/ODFW/NOAA)",
+        "source_url": "https://wildlife.ca.gov/Fishing/Ocean/Regulations/Sport-Fishing"
+      },
+      "specs": [
+        [
+          "Typical size",
+          "Min limit None / Bag limit 20 per harvester / day aggregate"
+        ],
+        [
+          "Diet",
+          "Small fish, crustaceans, squids, and pelagic prey"
+        ],
+        [
+          "Swimming depth",
+          "1 to 15 m"
+        ],
+        [
+          "Behavior",
+          "Navigates West Coast kelp forests, rocky reefs, and coastal upwelling zones."
+        ]
+      ],
+      "image": {
+        "url": "fish/barred-surfperch.png",
+        "kind": "illustration",
+        "credit": "Original illustration",
+        "license": ""
+      }
+    },
+    {
+      "id": "bat-ray",
+      "name": "Bat ray",
+      "sci": "Myliobatis californica",
+      "color": "#c9d820",
+      "environment": "saltwater",
+      "model": "grid",
+      "lat_range": [
+        24.0,
+        38.0
+      ],
+      "lon_range": [
+        -138.0,
+        -110.0
+      ],
+      "regulations": {
+        "summary": "CDFW: Finfish aggregate limits",
+        "min_size": "None",
+        "max_size": "None",
+        "bag_limit": "10 per day",
+        "season": "Open year-round",
+        "jurisdiction": "CDFW",
+        "source_name": "West Coast State Regulations (CDFW/WDFW/ODFW/NOAA)",
+        "source_url": "https://wildlife.ca.gov/Fishing/Ocean/Regulations/Sport-Fishing"
+      },
+      "specs": [
+        [
+          "Typical size",
+          "Min limit None / Bag limit 10 per day"
+        ],
+        [
+          "Diet",
+          "Small fish, crustaceans, squids, and pelagic prey"
+        ],
+        [
+          "Swimming depth",
+          "1 to 30 m"
+        ],
+        [
+          "Behavior",
+          "Navigates West Coast kelp forests, rocky reefs, and coastal upwelling zones."
+        ]
+      ],
+      "image": {
+        "url": "fish/bat-ray.png",
+        "kind": "illustration",
+        "credit": "Original illustration",
+        "license": ""
+      }
+    },
+    {
+      "id": "bigeye-tuna",
+      "name": "Bigeye tuna",
+      "sci": "Thunnus obesus",
+      "color": "#c10cf2",
+      "environment": "saltwater",
+      "model": "grid",
+      "lat_range": [
+        15.0,
+        42.0
+      ],
+      "lon_range": [
+        -100.0,
+        -50.0
+      ],
+      "regulations": {
+        "summary": "Regulated species - See MyFWC/NOAA guidelines",
+        "min_size": "Check MyFWC/NOAA rules",
+        "max_size": "None",
+        "bag_limit": "Varies by region / state",
+        "season": "Open year-round (subject to local quota/closures)",
+        "jurisdiction": "Atlantic & Gulf State/Federal Waters",
+        "source_name": "MyFWC Saltwater Regulations",
+        "source_url": "https://myfwc.com/fishing/saltwater/recreational/"
+      },
+      "specs": [
+        [
+          "Typical size",
+          "Variable per NOAA / regional guidelines"
+        ],
+        [
+          "Diet",
+          "Small fish, crustaceans, and cephalopods."
+        ],
+        [
+          "Behavior",
+          "Active predator along coastal, shelf, or offshore environments."
+        ],
+        [
+          "Spawning",
+          "Spawns seasonally based on water temperature and regional climate."
+        ]
+      ],
+      "image": {
+        "url": "fish/placeholder.png",
+        "kind": "illustration",
+        "credit": "Placeholder graphic",
+        "license": ""
+      }
+    },
+    {
+      "id": "black-grouper",
+      "name": "Black grouper",
+      "sci": "Mycteroperca bonaci",
+      "color": "#36d887",
+      "environment": "saltwater",
+      "model": "grid",
+      "lat_range": null,
+      "lon_range": [
+        -100.0,
+        -50.0
+      ],
+      "regulations": {
+        "summary": "Regulated species - See MyFWC/NOAA guidelines",
+        "min_size": "Check MyFWC/NOAA rules",
+        "max_size": "None",
+        "bag_limit": "Varies by region / state",
+        "season": "Open year-round (subject to local quota/closures)",
+        "jurisdiction": "Atlantic & Gulf State/Federal Waters",
+        "source_name": "MyFWC Saltwater Regulations",
+        "source_url": "https://myfwc.com/fishing/saltwater/recreational/"
+      },
+      "specs": [
+        [
+          "Typical size",
+          "Common 10-40 lb; up to 100+ lb"
+        ],
+        [
+          "Diet",
+          "Fishes, squids, and crustaceans"
+        ],
+        [
+          "Swimming depth",
+          "Near bottom; 15 to 110 m"
+        ],
+        [
+          "Behavior",
+          "Solitary apex reef predator that holds tight to high-relief coral structures, drop-offs, and deep ledges."
+        ]
+      ],
+      "image": {
+        "url": "fish/black-grouper.png",
+        "kind": "illustration",
+        "credit": "Original illustration",
+        "license": ""
+      }
+    },
+    {
+      "id": "black-rockfish",
+      "name": "Black rockfish",
+      "sci": "Sebastes melanops",
+      "color": "#f24e24",
+      "environment": "saltwater",
+      "model": "grid",
+      "lat_range": [
+        34.0,
+        60.0
+      ],
+      "lon_range": [
+        -138.0,
+        -110.0
+      ],
+      "regulations": {
+        "summary": "WDFW/ODFW: 3-7 per day",
+        "min_size": "None",
+        "max_size": "None",
+        "bag_limit": "3-7 per harvester / day",
+        "season": "Open year-round (zone rules)",
+        "jurisdiction": "WDFW / ODFW / CDFW",
+        "source_name": "West Coast State Regulations (CDFW/WDFW/ODFW/NOAA)",
+        "source_url": "https://wdfw.wa.gov/fishing/regulations"
+      },
+      "specs": [
+        [
+          "Typical size",
+          "Min limit None / Bag limit 3-7 per harvester / day"
+        ],
+        [
+          "Diet",
+          "Small fish, crustaceans, squids, and pelagic prey"
+        ],
+        [
+          "Swimming depth",
+          "5 to 80 m"
+        ],
+        [
+          "Behavior",
+          "Navigates West Coast kelp forests, rocky reefs, and coastal upwelling zones."
+        ]
+      ],
+      "image": {
+        "url": "fish/black-rockfish.png",
+        "kind": "illustration",
+        "credit": "Original illustration",
+        "license": ""
+      }
+    },
+    {
+      "id": "black-seabass",
+      "name": "Black sea bass",
+      "sci": "Centropristis striata",
+      "color": "#0a1cd8",
+      "environment": "saltwater",
+      "model": "grid",
+      "lat_range": null,
+      "lon_range": [
+        -100.0,
+        -50.0
+      ],
+      "regulations": {
+        "summary": "Regulated species - See MyFWC/NOAA guidelines",
+        "min_size": "Check MyFWC/NOAA rules",
+        "max_size": "None",
+        "bag_limit": "Varies by region / state",
+        "season": "Open year-round (subject to local quota/closures)",
+        "jurisdiction": "Atlantic & Gulf State/Federal Waters",
+        "source_name": "MyFWC Saltwater Regulations",
+        "source_url": "https://myfwc.com/fishing/saltwater/recreational/"
+      },
+      "specs": [
+        [
+          "Typical size",
+          "Common 1-3 lb; up to 5 lb"
+        ],
+        [
+          "Diet",
+          "Crabs, shrimp, worms, squids, and small fishes"
+        ],
+        [
+          "Swimming depth",
+          "5 to 60 m"
+        ],
+        [
+          "Behavior",
+          "Structure-oriented coastal species found around rock piles, jetty bases, hardbottom, and artificial reefs."
+        ]
+      ],
+      "image": {
+        "url": "fish/black-seabass.png",
+        "kind": "illustration",
+        "credit": "Original illustration",
+        "license": ""
+      }
+    },
+    {
+      "id": "blackfin-tuna",
+      "name": "Blackfin tuna",
+      "sci": "Thunnus atlanticus",
+      "color": "#81f23c",
+      "environment": "saltwater",
+      "model": "grid",
+      "lat_range": null,
+      "lon_range": [
+        -100.0,
+        -50.0
+      ],
+      "regulations": {
+        "summary": "Regulated species - See MyFWC/NOAA guidelines",
+        "min_size": "Check MyFWC/NOAA rules",
+        "max_size": "None",
+        "bag_limit": "Varies by region / state",
+        "season": "Open year-round (subject to local quota/closures)",
+        "jurisdiction": "Atlantic & Gulf State/Federal Waters",
+        "source_name": "MyFWC Saltwater Regulations",
+        "source_url": "https://myfwc.com/fishing/saltwater/recreational/"
+      },
+      "specs": [
+        [
+          "Typical size",
+          "Common up to 30 lb; Florida record 45 lb"
+        ],
+        [
+          "Diet",
+          "Small fish, squids, crabs, and stomatopods"
+        ],
+        [
+          "Swimming depth",
+          "Epipelagic; surface to 50 m"
+        ],
+        [
+          "Behavior",
+          "Pelagic schooling fish that feeds heavily along thermal breaks, current edges, and seamounds/humps."
+        ]
+      ],
+      "image": {
+        "url": "fish/blackfin-tuna.png",
+        "kind": "illustration",
+        "credit": "Original illustration",
+        "license": ""
+      }
+    },
+    {
+      "id": "blacktip-shark",
+      "name": "Blacktip shark",
+      "sci": "Carcharhinus limbatus",
+      "color": "#d8209b",
+      "environment": "saltwater",
+      "model": "sites",
+      "lat_range": [
+        18.0,
+        38.0
+      ],
+      "lon_range": [
+        -100.0,
+        -50.0
+      ],
+      "regulations": {
+        "summary": "Regulated species - See MyFWC/NOAA guidelines",
+        "min_size": "Check MyFWC/NOAA rules",
+        "max_size": "None",
+        "bag_limit": "Varies by region / state",
+        "season": "Open year-round (subject to local quota/closures)",
+        "jurisdiction": "Atlantic & Gulf State/Federal Waters",
+        "source_name": "MyFWC Saltwater Regulations",
+        "source_url": "https://myfwc.com/fishing/saltwater/recreational/"
+      },
+      "specs": [
+        [
+          "Typical size",
+          "Variable per NOAA / regional guidelines"
+        ],
+        [
+          "Diet",
+          "Small fish, crustaceans, and cephalopods."
+        ],
+        [
+          "Behavior",
+          "Active predator along coastal, shelf, or offshore environments."
+        ],
+        [
+          "Spawning",
+          "Spawns seasonally based on water temperature and regional climate."
+        ]
+      ],
+      "image": {
+        "url": "fish/placeholder.png",
+        "kind": "illustration",
+        "credit": "Placeholder graphic",
+        "license": ""
+      }
+    },
+    {
+      "id": "blue-rockfish",
+      "name": "Blue rockfish",
+      "sci": "Sebastes mystinus",
+      "color": "#d8af36",
+      "environment": "saltwater",
+      "model": "grid",
+      "lat_range": [
+        30.0,
+        52.0
+      ],
+      "lon_range": [
+        -138.0,
+        -110.0
+      ],
+      "regulations": {
+        "summary": "CDFW: Part of 10-rockfish aggregate bag",
+        "min_size": "None",
+        "max_size": "None",
+        "bag_limit": "10 per harvester / day aggregate",
+        "season": "Seasonal groundfish window",
+        "jurisdiction": "CDFW",
+        "source_name": "West Coast State Regulations (CDFW/WDFW/ODFW/NOAA)",
+        "source_url": "https://wildlife.ca.gov/Fishing/Ocean/Regulations/Sport-Fishing"
+      },
+      "specs": [
+        [
+          "Typical size",
+          "Min limit None / Bag limit 10 per harvester / day aggregate"
+        ],
+        [
+          "Diet",
+          "Small fish, crustaceans, squids, and pelagic prey"
+        ],
+        [
+          "Swimming depth",
+          "5 to 90 m"
+        ],
+        [
+          "Behavior",
+          "Navigates West Coast kelp forests, rocky reefs, and coastal upwelling zones."
+        ]
+      ],
+      "image": {
+        "url": "fish/blue-rockfish.png",
+        "kind": "illustration",
+        "credit": "Original illustration",
+        "license": ""
+      }
+    },
+    {
+      "id": "bluefish",
+      "name": "Bluefish",
+      "sci": "Pomatomus saltatrix",
+      "color": "#0ad82c",
+      "environment": "saltwater",
+      "model": "sites",
+      "lat_range": [
+        24.0,
+        45.0
+      ],
+      "lon_range": [
+        -100.0,
+        -50.0
+      ],
+      "regulations": {
+        "summary": "Regulated species - See MyFWC/NOAA guidelines",
+        "min_size": "Check MyFWC/NOAA rules",
+        "max_size": "None",
+        "bag_limit": "Varies by region / state",
+        "season": "Open year-round (subject to local quota/closures)",
+        "jurisdiction": "Atlantic & Gulf State/Federal Waters",
+        "source_name": "MyFWC Saltwater Regulations",
+        "source_url": "https://myfwc.com/fishing/saltwater/recreational/"
+      },
+      "specs": [
+        [
+          "Typical size",
+          "Variable per NOAA / regional guidelines"
+        ],
+        [
+          "Diet",
+          "Small fish, crustaceans, and cephalopods."
+        ],
+        [
+          "Behavior",
+          "Active predator along coastal, shelf, or offshore environments."
+        ],
+        [
+          "Spawning",
+          "Spawns seasonally based on water temperature and regional climate."
+        ]
+      ],
+      "image": {
+        "url": "fish/placeholder.png",
+        "kind": "illustration",
+        "credit": "Placeholder graphic",
+        "license": ""
+      }
+    },
+    {
+      "id": "blueline-tilefish",
+      "name": "Blueline tilefish",
+      "sci": "Caulolatilus microps",
+      "color": "#f23c53",
+      "environment": "saltwater",
+      "model": "grid",
+      "lat_range": [
+        24.0,
+        41.0
+      ],
+      "lon_range": [
+        -100.0,
+        -50.0
+      ],
+      "regulations": {
+        "summary": "Regulated species - See MyFWC/NOAA guidelines",
+        "min_size": "Check MyFWC/NOAA rules",
+        "max_size": "None",
+        "bag_limit": "Varies by region / state",
+        "season": "Open year-round (subject to local quota/closures)",
+        "jurisdiction": "Atlantic & Gulf State/Federal Waters",
+        "source_name": "MyFWC Saltwater Regulations",
+        "source_url": "https://myfwc.com/fishing/saltwater/recreational/"
+      },
+      "specs": [
+        [
+          "Typical size",
+          "Variable per NOAA / regional guidelines"
+        ],
+        [
+          "Diet",
+          "Small fish, crustaceans, and cephalopods."
+        ],
+        [
+          "Behavior",
+          "Active predator along coastal, shelf, or offshore environments."
+        ],
+        [
+          "Spawning",
+          "Spawns seasonally based on water temperature and regional climate."
+        ]
+      ],
+      "image": {
+        "url": "fish/placeholder.png",
+        "kind": "illustration",
+        "credit": "Placeholder graphic",
+        "license": ""
+      }
+    },
+    {
+      "id": "bocaccio-rockfish",
+      "name": "Bocaccio rockfish",
+      "sci": "Sebastes paucispinis",
+      "color": "#206dd8",
+      "environment": "saltwater",
+      "model": "grid",
+      "lat_range": [
+        30.0,
+        52.0
+      ],
+      "lon_range": [
+        -138.0,
+        -110.0
+      ],
+      "regulations": {
+        "summary": "CDFW: Included in rockfish 10-bag sub-limit",
+        "min_size": "None",
+        "max_size": "None",
+        "bag_limit": "10 per day (rockfish sublimit)",
+        "season": "Seasonal groundfish window",
+        "jurisdiction": "CDFW / NOAA",
+        "source_name": "West Coast State Regulations (CDFW/WDFW/ODFW/NOAA)",
+        "source_url": "https://wildlife.ca.gov/Fishing/Ocean/Regulations/Sport-Fishing"
+      },
+      "specs": [
+        [
+          "Typical size",
+          "Min limit None / Bag limit 10 per day (rockfish sublimit)"
+        ],
+        [
+          "Diet",
+          "Small fish, crustaceans, squids, and pelagic prey"
+        ],
+        [
+          "Swimming depth",
+          "20 to 200 m"
+        ],
+        [
+          "Behavior",
+          "Navigates West Coast kelp forests, rocky reefs, and coastal upwelling zones."
+        ]
+      ],
+      "image": {
+        "url": "fish/bocaccio-rockfish.png",
+        "kind": "illustration",
+        "credit": "Original illustration",
+        "license": ""
+      }
+    },
+    {
+      "id": "bonefish",
+      "name": "Bonefish",
+      "sci": "Albula vulpes",
+      "color": "#aff20c",
+      "environment": "saltwater",
+      "model": "sites",
+      "lat_range": [
+        15.0,
+        27.0
+      ],
+      "lon_range": [
+        -100.0,
+        -50.0
+      ],
+      "regulations": {
+        "summary": "Regulated species - See MyFWC/NOAA guidelines",
+        "min_size": "Check MyFWC/NOAA rules",
+        "max_size": "None",
+        "bag_limit": "Varies by region / state",
+        "season": "Open year-round (subject to local quota/closures)",
+        "jurisdiction": "Atlantic & Gulf State/Federal Waters",
+        "source_name": "MyFWC Saltwater Regulations",
+        "source_url": "https://myfwc.com/fishing/saltwater/recreational/"
+      },
+      "specs": [
+        [
+          "Typical size",
+          "Variable per NOAA / regional guidelines"
+        ],
+        [
+          "Diet",
+          "Small fish, crustaceans, and cephalopods."
+        ],
+        [
+          "Behavior",
+          "Active predator along coastal, shelf, or offshore environments."
+        ],
+        [
+          "Spawning",
+          "Spawns seasonally based on water temperature and regional climate."
+        ]
+      ],
+      "image": {
+        "url": "fish/placeholder.png",
+        "kind": "illustration",
+        "credit": "Placeholder graphic",
+        "license": ""
+      }
+    },
+    {
+      "id": "bull-shark",
+      "name": "Bull shark",
+      "sci": "Carcharhinus leucas",
+      "color": "#d836d8",
+      "environment": "saltwater",
+      "model": "sites",
+      "lat_range": [
+        15.0,
+        38.0
+      ],
+      "lon_range": [
+        -100.0,
+        -50.0
+      ],
+      "regulations": {
+        "summary": "Regulated species - See MyFWC/NOAA guidelines",
+        "min_size": "Check MyFWC/NOAA rules",
+        "max_size": "None",
+        "bag_limit": "Varies by region / state",
+        "season": "Open year-round (subject to local quota/closures)",
+        "jurisdiction": "Atlantic & Gulf State/Federal Waters",
+        "source_name": "MyFWC Saltwater Regulations",
+        "source_url": "https://myfwc.com/fishing/saltwater/recreational/"
+      },
+      "specs": [
+        [
+          "Typical size",
+          "Variable per NOAA / regional guidelines"
+        ],
+        [
+          "Diet",
+          "Small fish, crustaceans, and cephalopods."
+        ],
+        [
+          "Behavior",
+          "Active predator along coastal, shelf, or offshore environments."
+        ],
+        [
+          "Spawning",
+          "Spawns seasonally based on water temperature and regional climate."
+        ]
+      ],
+      "image": {
+        "url": "fish/placeholder.png",
+        "kind": "illustration",
+        "credit": "Placeholder graphic",
+        "license": ""
+      }
+    },
+    {
+      "id": "cabezon",
+      "name": "Cabezon",
+      "sci": "Scorpaenichthys marmoratus",
+      "color": "#24f2b5",
+      "environment": "saltwater",
+      "model": "grid",
+      "lat_range": [
+        32.0,
+        55.0
+      ],
+      "lon_range": [
+        -138.0,
+        -110.0
+      ],
+      "regulations": {
+        "summary": "CDFW: 15\" min TL; 1-2 per day",
+        "min_size": "15 inches TL",
+        "max_size": "None",
+        "bag_limit": "1-2 per harvester / day",
+        "season": "Seasonal groundfish window",
+        "jurisdiction": "CDFW / ODFW",
+        "source_name": "West Coast State Regulations (CDFW/WDFW/ODFW/NOAA)",
+        "source_url": "https://wildlife.ca.gov/Fishing/Ocean/Regulations/Sport-Fishing"
+      },
+      "specs": [
+        [
+          "Typical size",
+          "Min limit 15 inches TL / Bag limit 1-2 per harvester / day"
+        ],
+        [
+          "Diet",
+          "Small fish, crustaceans, squids, and pelagic prey"
+        ],
+        [
+          "Swimming depth",
+          "2 to 50 m"
+        ],
+        [
+          "Behavior",
+          "Navigates West Coast kelp forests, rocky reefs, and coastal upwelling zones."
+        ]
+      ],
+      "image": {
+        "url": "fish/cabezon.png",
+        "kind": "illustration",
+        "credit": "Original illustration",
+        "license": ""
+      }
+    },
+    {
+      "id": "california-halibut",
+      "name": "California halibut",
+      "sci": "Paralichthys californicus",
+      "color": "#d85f0a",
+      "environment": "saltwater",
+      "model": "grid",
+      "lat_range": [
+        25.0,
+        40.0
+      ],
+      "lon_range": [
+        -138.0,
+        -110.0
+      ],
+      "regulations": {
+        "summary": "CDFW: 22\" min TL; 3-5 per day",
+        "min_size": "22 inches TL",
+        "max_size": "None",
+        "bag_limit": "3-5 per harvester / day",
+        "season": "Open year-round",
+        "jurisdiction": "California State Waters (CDFW)",
+        "source_name": "West Coast State Regulations (CDFW/WDFW/ODFW/NOAA)",
+        "source_url": "https://wildlife.ca.gov/Fishing/Ocean/Regulations/Sport-Fishing"
+      },
+      "specs": [
+        [
+          "Typical size",
+          "Min limit 22 inches TL / Bag limit 3-5 per harvester / day"
+        ],
+        [
+          "Diet",
+          "Small fish, crustaceans, squids, and pelagic prey"
+        ],
+        [
+          "Swimming depth",
+          "2 to 60 m"
+        ],
+        [
+          "Behavior",
+          "Navigates West Coast kelp forests, rocky reefs, and coastal upwelling zones."
+        ]
+      ],
+      "image": {
+        "url": "fish/california-halibut.png",
+        "kind": "illustration",
+        "credit": "Original illustration",
+        "license": ""
+      }
+    },
+    {
+      "id": "california-yellowtail",
+      "name": "California yellowtail",
+      "sci": "Seriola lalandi",
+      "color": "#523cf2",
+      "environment": "saltwater",
+      "model": "grid",
+      "lat_range": [
+        15.0,
+        35.0
+      ],
+      "lon_range": [
+        -138.0,
+        -110.0
+      ],
+      "regulations": {
+        "summary": "CDFW: 24\" min FL; 5 per day",
+        "min_size": "24 inches FL",
+        "max_size": "None",
+        "bag_limit": "5 per harvester / day",
+        "season": "Open year-round",
+        "jurisdiction": "California State Waters (CDFW)",
+        "source_name": "West Coast State Regulations (CDFW/WDFW/ODFW/NOAA)",
+        "source_url": "https://wildlife.ca.gov/Fishing/Ocean/Regulations/Sport-Fishing"
+      },
+      "specs": [
+        [
+          "Typical size",
+          "Min limit 24 inches FL / Bag limit 5 per harvester / day"
+        ],
+        [
+          "Diet",
+          "Small fish, crustaceans, squids, and pelagic prey"
+        ],
+        [
+          "Swimming depth",
+          "0 to 50 m"
+        ],
+        [
+          "Behavior",
+          "Navigates West Coast kelp forests, rocky reefs, and coastal upwelling zones."
+        ]
+      ],
+      "image": {
+        "url": "fish/california-yellowtail.png",
+        "kind": "illustration",
+        "credit": "Original illustration",
+        "license": ""
+      }
+    },
+    {
+      "id": "canary-rockfish",
+      "name": "Canary rockfish",
+      "sci": "Sebastes pinniger",
+      "color": "#3fd820",
+      "environment": "saltwater",
+      "model": "grid",
+      "lat_range": [
+        32.0,
+        58.0
+      ],
+      "lon_range": [
+        -138.0,
+        -110.0
+      ],
+      "regulations": {
+        "summary": "CDFW/WDFW: Sublimit within 10-rockfish bag",
+        "min_size": "None",
+        "max_size": "None",
+        "bag_limit": "2-7 per day (zone sublimit)",
+        "season": "Seasonal groundfish window",
+        "jurisdiction": "CDFW / WDFW",
+        "source_name": "West Coast State Regulations (CDFW/WDFW/ODFW/NOAA)",
+        "source_url": "https://wildlife.ca.gov/Fishing/Ocean/Regulations/Sport-Fishing"
+      },
+      "specs": [
+        [
+          "Typical size",
+          "Min limit None / Bag limit 2-7 per day (zone sublimit)"
+        ],
+        [
+          "Diet",
+          "Small fish, crustaceans, squids, and pelagic prey"
+        ],
+        [
+          "Swimming depth",
+          "20 to 150 m"
+        ],
+        [
+          "Behavior",
+          "Navigates West Coast kelp forests, rocky reefs, and coastal upwelling zones."
+        ]
+      ],
+      "image": {
+        "url": "fish/canary-rockfish.png",
+        "kind": "illustration",
+        "credit": "Original illustration",
+        "license": ""
+      }
+    },
+    {
+      "id": "chinook-salmon",
+      "name": "Chinook salmon",
+      "sci": "Oncorhynchus tshawytscha",
+      "color": "#f20c76",
+      "environment": "saltwater",
+      "model": "grid",
+      "lat_range": [
+        36.0,
+        60.0
+      ],
+      "lon_range": [
+        -138.0,
+        -110.0
+      ],
+      "regulations": {
+        "summary": "CDFW/WDFW: 20-24\" min TL; 1-2 per day",
+        "min_size": "20-24 inches TL",
+        "max_size": "None",
+        "bag_limit": "1-2 per harvester / day",
+        "season": "Seasonal state ocean openings",
+        "jurisdiction": "CDFW / WDFW / ODFW / NOAA",
+        "source_name": "West Coast State Regulations (CDFW/WDFW/ODFW/NOAA)",
+        "source_url": "https://wildlife.ca.gov/Fishing/Ocean/Regulations/Sport-Fishing"
+      },
+      "specs": [
+        [
+          "Typical size",
+          "Min limit 20-24 inches TL / Bag limit 1-2 per harvester / day"
+        ],
+        [
+          "Diet",
+          "Small fish, crustaceans, squids, and pelagic prey"
+        ],
+        [
+          "Swimming depth",
+          "0 to 100 m"
+        ],
+        [
+          "Behavior",
+          "Navigates West Coast kelp forests, rocky reefs, and coastal upwelling zones."
+        ]
+      ],
+      "image": {
+        "url": "fish/chinook-salmon.png",
+        "kind": "illustration",
+        "credit": "Original illustration",
+        "license": ""
+      }
+    },
+    {
+      "id": "chum-salmon",
+      "name": "Chum salmon",
+      "sci": "Oncorhynchus keta",
+      "color": "#36b0d8",
+      "environment": "saltwater",
+      "model": "grid",
+      "lat_range": [
+        44.0,
+        60.0
+      ],
+      "lon_range": [
+        -138.0,
+        -110.0
+      ],
+      "regulations": {
+        "summary": "WDFW/DFO: 2-4 per day",
+        "min_size": "None",
+        "max_size": "None",
+        "bag_limit": "2-4 per harvester / day",
+        "season": "Autumn seasonal openings",
+        "jurisdiction": "WDFW / DFO Canada",
+        "source_name": "West Coast State Regulations (CDFW/WDFW/ODFW/NOAA)",
+        "source_url": "https://wdfw.wa.gov/fishing/regulations"
+      },
+      "specs": [
+        [
+          "Typical size",
+          "Min limit None / Bag limit 2-4 per harvester / day"
+        ],
+        [
+          "Diet",
+          "Small fish, crustaceans, squids, and pelagic prey"
+        ],
+        [
+          "Swimming depth",
+          "0 to 60 m"
+        ],
+        [
+          "Behavior",
+          "Navigates West Coast kelp forests, rocky reefs, and coastal upwelling zones."
+        ]
+      ],
+      "image": {
+        "url": "fish/chum-salmon.png",
+        "kind": "illustration",
+        "credit": "Original illustration",
+        "license": ""
+      }
+    },
+    {
+      "id": "cobia",
+      "name": "Cobia",
+      "sci": "Rachycentron canadum",
+      "color": "#f2e824",
+      "environment": "saltwater",
+      "model": "grid",
+      "lat_range": null,
+      "lon_range": [
+        -100.0,
+        -50.0
+      ],
+      "regulations": {
+        "summary": "Regulated species - See MyFWC/NOAA guidelines",
+        "min_size": "Check MyFWC/NOAA rules",
+        "max_size": "None",
+        "bag_limit": "Varies by region / state",
+        "season": "Open year-round (subject to local quota/closures)",
+        "jurisdiction": "Atlantic & Gulf State/Federal Waters",
+        "source_name": "MyFWC Saltwater Regulations",
+        "source_url": "https://myfwc.com/fishing/saltwater/recreational/"
+      },
+      "specs": [
+        [
+          "Diet",
+          "Crabs, fish and squid"
+        ],
+        [
+          "Adult depth",
+          "During the spring migration anglers find them in roughly 30-70 ft (9-21 m)"
+        ],
+        [
+          "Behavior",
+          "Structure-oriented: found near buoys, pilings, platforms, debris, shipwrecks and artificial reefs, and with large animals such as rays, sharks and turtles. Cruise in packs of 3 to 100 during migrations in shallow water along the shore."
+        ],
+        [
+          "Spawning",
+          "Spawns offshore many times through a long season"
+        ]
+      ],
+      "image": {
+        "url": "fish/cobia.png",
+        "kind": "illustration",
+        "credit": "Original illustration",
+        "license": ""
+      }
+    },
+    {
+      "id": "coho-salmon",
+      "name": "Coho salmon",
+      "sci": "Oncorhynchus kisutch",
+      "color": "#930ad8",
+      "environment": "saltwater",
+      "model": "grid",
+      "lat_range": [
+        38.0,
+        60.0
+      ],
+      "lon_range": [
+        -138.0,
+        -110.0
+      ],
+      "regulations": {
+        "summary": "WDFW/ODFW: 16-20\" min TL; hatchery only",
+        "min_size": "16-20 inches TL",
+        "max_size": "None",
+        "bag_limit": "2 per harvester / day (hatchery)",
+        "season": "Seasonal state openings",
+        "jurisdiction": "WDFW / ODFW / DFO",
+        "source_name": "West Coast State Regulations (CDFW/WDFW/ODFW/NOAA)",
+        "source_url": "https://wdfw.wa.gov/fishing/regulations"
+      },
+      "specs": [
+        [
+          "Typical size",
+          "Min limit 16-20 inches TL / Bag limit 2 per harvester / day (hatchery)"
+        ],
+        [
+          "Diet",
+          "Small fish, crustaceans, squids, and pelagic prey"
+        ],
+        [
+          "Swimming depth",
+          "0 to 60 m"
+        ],
+        [
+          "Behavior",
+          "Navigates West Coast kelp forests, rocky reefs, and coastal upwelling zones."
+        ]
+      ],
+      "image": {
+        "url": "fish/coho-salmon.png",
+        "kind": "illustration",
+        "credit": "Original illustration",
+        "license": ""
+      }
+    },
+    {
+      "id": "snook",
+      "name": "Common snook",
+      "sci": "Centropomus undecimalis",
+      "color": "#4c0cf2",
+      "environment": "saltwater",
+      "model": "sites",
+      "lat_range": [
+        15.0,
+        31.0
+      ],
+      "lon_range": [
+        -100.0,
+        -50.0
+      ],
+      "regulations": {
+        "summary": "28\" - 32\" slot limit (Atlantic); 1 per harvester",
+        "min_size": "28 inches total length",
+        "max_size": "32 inches total length",
+        "bag_limit": "1 per harvester / day",
+        "season": "Closed Dec 15 - Jan 31 & Jun 1 - Aug 31 (Atlantic)",
+        "jurisdiction": "Florida State Waters (FWC)",
+        "source_name": "MyFWC Snook Regulations",
+        "source_url": "https://myfwc.com/fishing/saltwater/recreational/snook/"
+      },
+      "specs": [
+        [
+          "Typical size",
+          "Up to about 48 in (50 lb) per FWC; Florida state record 45 lb 12 oz"
+        ],
+        [
+          "Diet",
+          "Fish and large crustaceans; pinfish, anchovies and shrimp are major prey in one diet study"
+        ],
+        [
+          "Behavior",
+          "Ambush predator that faces moving water and waits for prey to be carried down the current. Uses mangrove shorelines, seagrass, beaches, river mouths, docks and other structure. Retreats to deeper channels, backcountry bays and rivers during cold fronts."
+        ],
+        [
+          "Spawning",
+          "April through October in Florida, with peaks around June to September. Spawning aggregations form at inlets, passes, river mouths and nearshore reefs, with eggs released in the late afternoon and early evening on all tides. Atlantic-coast examples named by FWC include Jupiter and Lake Worth inlets."
+        ]
+      ],
+      "image": {
+        "url": "fish/snook.png",
+        "kind": "illustration",
+        "credit": "Original illustration",
+        "license": ""
+      }
+    },
+    {
+      "id": "common-thresher-shark",
+      "name": "Common thresher shark",
+      "sci": "Alopias vulpinus",
+      "color": "#3cf27f",
+      "environment": "saltwater",
+      "model": "grid",
+      "lat_range": [
+        22.0,
+        42.0
+      ],
+      "lon_range": [
+        -138.0,
+        -110.0
+      ],
+      "regulations": {
+        "summary": "CDFW: 2 per day limit",
+        "min_size": "None",
+        "max_size": "None",
+        "bag_limit": "2 per harvester / day",
+        "season": "Open year-round",
+        "jurisdiction": "CDFW / NOAA",
+        "source_name": "West Coast State Regulations (CDFW/WDFW/ODFW/NOAA)",
+        "source_url": "https://wildlife.ca.gov/Fishing/Ocean/Regulations/Sport-Fishing"
+      },
+      "specs": [
+        [
+          "Typical size",
+          "Min limit None / Bag limit 2 per harvester / day"
+        ],
+        [
+          "Diet",
+          "Small fish, crustaceans, squids, and pelagic prey"
+        ],
+        [
+          "Swimming depth",
+          "0 to 150 m"
+        ],
+        [
+          "Behavior",
+          "Navigates West Coast kelp forests, rocky reefs, and coastal upwelling zones."
+        ]
+      ],
+      "image": {
+        "url": "fish/common-thresher-shark.png",
+        "kind": "illustration",
+        "credit": "Original illustration",
+        "license": ""
+      }
+    },
+    {
+      "id": "copper-rockfish",
+      "name": "Copper rockfish",
+      "sci": "Sebastes caurinus",
+      "color": "#d82f20",
+      "environment": "saltwater",
+      "model": "grid",
+      "lat_range": [
+        30.0,
+        58.0
+      ],
+      "lon_range": [
+        -138.0,
+        -110.0
+      ],
+      "regulations": {
+        "summary": "CDFW: 1 per day sublimit",
+        "min_size": "None",
+        "max_size": "None",
+        "bag_limit": "1 per harvester / day",
+        "season": "Seasonal groundfish window",
+        "jurisdiction": "CDFW / ODFW",
+        "source_name": "West Coast State Regulations (CDFW/WDFW/ODFW/NOAA)",
+        "source_url": "https://wildlife.ca.gov/Fishing/Ocean/Regulations/Sport-Fishing"
+      },
+      "specs": [
+        [
+          "Typical size",
+          "Min limit None / Bag limit 1 per harvester / day"
+        ],
+        [
+          "Diet",
+          "Small fish, crustaceans, squids, and pelagic prey"
+        ],
+        [
+          "Swimming depth",
+          "5 to 100 m"
+        ],
+        [
+          "Behavior",
+          "Navigates West Coast kelp forests, rocky reefs, and coastal upwelling zones."
+        ]
+      ],
+      "image": {
+        "url": "fish/copper-rockfish.png",
+        "kind": "illustration",
+        "credit": "Original illustration",
+        "license": ""
+      }
+    },
+    {
+      "id": "cubera-snapper",
+      "name": "Cubera snapper",
+      "sci": "Lutjanus cyanopterus",
+      "color": "#0c3df2",
+      "environment": "saltwater",
+      "model": "grid",
+      "lat_range": [
+        15.0,
+        35.0
+      ],
+      "lon_range": [
+        -100.0,
+        -50.0
+      ],
+      "regulations": {
+        "summary": "Regulated species - See MyFWC/NOAA guidelines",
+        "min_size": "Check MyFWC/NOAA rules",
+        "max_size": "None",
+        "bag_limit": "Varies by region / state",
+        "season": "Open year-round (subject to local quota/closures)",
+        "jurisdiction": "Atlantic & Gulf State/Federal Waters",
+        "source_name": "MyFWC Saltwater Regulations",
+        "source_url": "https://myfwc.com/fishing/saltwater/recreational/"
+      },
+      "specs": [
+        [
+          "Typical size",
+          "Common 20-60 lb; up to 120+ lb"
+        ],
+        [
+          "Diet",
+          "Spiny lobsters, large crabs, and reef fishes"
+        ],
+        [
+          "Swimming depth",
+          "18 to 90 m"
+        ],
+        [
+          "Behavior",
+          "Largest Atlantic snapper; holds in deep reef ledges and wrecks, forming full-moon summer spawning aggregations."
+        ]
+      ],
+      "image": {
+        "url": "fish/cubera-snapper.png",
+        "kind": "illustration",
+        "credit": "Original illustration",
+        "license": ""
+      }
+    },
+    {
+      "id": "cusk",
+      "name": "Cusk",
+      "sci": "Brosme brosme",
+      "color": "#88d836",
+      "environment": "saltwater",
+      "model": "grid",
+      "lat_range": [
+        41.0,
+        52.0
+      ],
+      "lon_range": [
+        -100.0,
+        -50.0
+      ],
+      "regulations": {
+        "summary": "Regulated species - See MyFWC/NOAA guidelines",
+        "min_size": "Check MyFWC/NOAA rules",
+        "max_size": "None",
+        "bag_limit": "Varies by region / state",
+        "season": "Open year-round (subject to local quota/closures)",
+        "jurisdiction": "Atlantic & Gulf State/Federal Waters",
+        "source_name": "MyFWC Saltwater Regulations",
+        "source_url": "https://myfwc.com/fishing/saltwater/recreational/"
+      },
+      "specs": [
+        [
+          "Typical size",
+          "Variable per NOAA / regional guidelines"
+        ],
+        [
+          "Diet",
+          "Small fish, crustaceans, and cephalopods."
+        ],
+        [
+          "Behavior",
+          "Active predator along coastal, shelf, or offshore environments."
+        ],
+        [
+          "Spawning",
+          "Spawns seasonally based on water temperature and regional climate."
+        ]
+      ],
+      "image": {
+        "url": "fish/placeholder.png",
+        "kind": "illustration",
+        "credit": "Placeholder graphic",
+        "license": ""
+      }
+    },
+    {
+      "id": "dungeness-crab-reference",
+      "name": "Dungeness crab (ref)",
+      "sci": "Cancer magister",
+      "color": "#f224c8",
+      "environment": "saltwater",
+      "model": "grid",
+      "lat_range": [
+        34.0,
+        60.0
+      ],
+      "lon_range": [
+        -138.0,
+        -110.0
+      ],
+      "regulations": {
+        "summary": "CDFW/WDFW: 5.75\"-6.25\" min shell; male only",
+        "min_size": "5.75 - 6.25 inches shell",
+        "max_size": "None",
+        "bag_limit": "6-10 per day",
+        "season": "Seasonal crab windows",
+        "jurisdiction": "CDFW / WDFW / ODFW",
+        "source_name": "West Coast State Regulations (CDFW/WDFW/ODFW/NOAA)",
+        "source_url": "https://wildlife.ca.gov/Fishing/Ocean/Regulations/Sport-Fishing"
+      },
+      "specs": [
+        [
+          "Typical size",
+          "Min limit 5.75 - 6.25 inches shell / Bag limit 6-10 per day"
+        ],
+        [
+          "Diet",
+          "Small fish, crustaceans, squids, and pelagic prey"
+        ],
+        [
+          "Swimming depth",
+          "2 to 80 m"
+        ],
+        [
+          "Behavior",
+          "Navigates West Coast kelp forests, rocky reefs, and coastal upwelling zones."
+        ]
+      ],
+      "image": {
+        "url": "fish/dungeness-crab-reference.png",
+        "kind": "illustration",
+        "credit": "Original illustration",
+        "license": ""
+      }
+    },
+    {
+      "id": "false-albacore",
+      "name": "False albacore",
+      "sci": "Euthynnus alletteratus",
+      "color": "#0ad8c6",
+      "environment": "saltwater",
+      "model": "sites",
+      "lat_range": [
+        20.0,
+        44.0
+      ],
+      "lon_range": [
+        -100.0,
+        -50.0
+      ],
+      "regulations": {
+        "summary": "Regulated species - See MyFWC/NOAA guidelines",
+        "min_size": "Check MyFWC/NOAA rules",
+        "max_size": "None",
+        "bag_limit": "Varies by region / state",
+        "season": "Open year-round (subject to local quota/closures)",
+        "jurisdiction": "Atlantic & Gulf State/Federal Waters",
+        "source_name": "MyFWC Saltwater Regulations",
+        "source_url": "https://myfwc.com/fishing/saltwater/recreational/"
+      },
+      "specs": [
+        [
+          "Typical size",
+          "Variable per NOAA / regional guidelines"
+        ],
+        [
+          "Diet",
+          "Small fish, crustaceans, and cephalopods."
+        ],
+        [
+          "Behavior",
+          "Active predator along coastal, shelf, or offshore environments."
+        ],
+        [
+          "Spawning",
+          "Spawns seasonally based on water temperature and regional climate."
+        ]
+      ],
+      "image": {
+        "url": "fish/placeholder.png",
+        "kind": "illustration",
+        "credit": "Placeholder graphic",
+        "license": ""
+      }
+    },
+    {
+      "id": "florida-pompano",
+      "name": "Florida pompano",
+      "sci": "Trachinotus carolinus",
+      "color": "#f2ad3c",
+      "environment": "saltwater",
+      "model": "grid",
+      "lat_range": null,
+      "lon_range": [
+        -100.0,
+        -50.0
+      ],
+      "regulations": {
+        "summary": "Regulated species - See MyFWC/NOAA guidelines",
+        "min_size": "Check MyFWC/NOAA rules",
+        "max_size": "None",
+        "bag_limit": "Varies by region / state",
+        "season": "Open year-round (subject to local quota/closures)",
+        "jurisdiction": "Atlantic & Gulf State/Federal Waters",
+        "source_name": "MyFWC Saltwater Regulations",
+        "source_url": "https://myfwc.com/fishing/saltwater/recreational/"
+      },
+      "specs": [
+        [
+          "Typical size",
+          "Common 1-3 lb; up to 8 lb"
+        ],
+        [
+          "Diet",
+          "Mole crabs (sand fleas), coquina clams, shrimp, and small crustaceans"
+        ],
+        [
+          "Swimming depth",
+          "Shallow surf zone; 0.5 to 10 m"
+        ],
+        [
+          "Behavior",
+          "Fast coastal swimmer that feeds in the surf break, sandy troughs, and tidal inlet currents."
+        ]
+      ],
+      "image": {
+        "url": "fish/florida-pompano.png",
+        "kind": "illustration",
+        "credit": "Original illustration",
+        "license": ""
+      }
+    },
+    {
+      "id": "gag-grouper",
+      "name": "Gag grouper",
+      "sci": "Mycteroperca microlepis",
+      "color": "#5c20d8",
+      "environment": "saltwater",
+      "model": "grid",
+      "lat_range": null,
+      "lon_range": [
+        -100.0,
+        -50.0
+      ],
+      "regulations": {
+        "summary": "Regulated species - See MyFWC/NOAA guidelines",
+        "min_size": "Check MyFWC/NOAA rules",
+        "max_size": "None",
+        "bag_limit": "Varies by region / state",
+        "season": "Open year-round (subject to local quota/closures)",
+        "jurisdiction": "Atlantic & Gulf State/Federal Waters",
+        "source_name": "MyFWC Saltwater Regulations",
+        "source_url": "https://myfwc.com/fishing/saltwater/recreational/"
+      },
+      "specs": [
+        [
+          "Typical size",
+          "Common 10-25 lb; up to 50 lb"
+        ],
+        [
+          "Diet",
+          "Crabs, shrimp, and reef fishes"
+        ],
+        [
+          "Swimming depth",
+          "10 to 80 m"
+        ],
+        [
+          "Behavior",
+          "Moves inshore to shallower ledges in winter and migrates offshore to deep reefs in spring."
+        ]
+      ],
+      "image": {
+        "url": "fish/gag-grouper.png",
+        "kind": "illustration",
+        "credit": "Original illustration",
+        "license": ""
+      }
+    },
+    {
+      "id": "giant-sea-bass",
+      "name": "Giant sea bass",
+      "sci": "Stereolepis gigas",
+      "color": "#0cf214",
+      "environment": "saltwater",
+      "model": "grid",
+      "lat_range": [
+        24.0,
+        35.0
+      ],
+      "lon_range": [
+        -138.0,
+        -110.0
+      ],
+      "regulations": {
+        "summary": "CDFW: Prohibited / mandatory release",
+        "min_size": "Prohibited",
+        "max_size": "Prohibited",
+        "bag_limit": "0 per harvester / day",
+        "season": "Protected species",
+        "jurisdiction": "CDFW / NOAA",
+        "source_name": "West Coast State Regulations (CDFW/WDFW/ODFW/NOAA)",
+        "source_url": "https://wildlife.ca.gov/Fishing/Ocean/Regulations/Sport-Fishing"
+      },
+      "specs": [
+        [
+          "Typical size",
+          "Min limit Prohibited / Bag limit 0 per harvester / day"
+        ],
+        [
+          "Diet",
+          "Small fish, crustaceans, squids, and pelagic prey"
+        ],
+        [
+          "Swimming depth",
+          "10 to 100 m"
+        ],
+        [
+          "Behavior",
+          "Navigates West Coast kelp forests, rocky reefs, and coastal upwelling zones."
+        ]
+      ],
+      "image": {
+        "url": "fish/giant-sea-bass.png",
+        "kind": "illustration",
+        "credit": "Original illustration",
+        "license": ""
+      }
+    },
+    {
+      "id": "golden-tilefish",
+      "name": "Golden tilefish",
+      "sci": "Lopholatillus chamaeleonticeps",
+      "color": "#d8365f",
+      "environment": "saltwater",
+      "model": "grid",
+      "lat_range": [
+        24.0,
+        44.0
+      ],
+      "lon_range": [
+        -100.0,
+        -50.0
+      ],
+      "regulations": {
+        "summary": "Regulated species - See MyFWC/NOAA guidelines",
+        "min_size": "Check MyFWC/NOAA rules",
+        "max_size": "None",
+        "bag_limit": "Varies by region / state",
+        "season": "Open year-round (subject to local quota/closures)",
+        "jurisdiction": "Atlantic & Gulf State/Federal Waters",
+        "source_name": "MyFWC Saltwater Regulations",
+        "source_url": "https://myfwc.com/fishing/saltwater/recreational/"
+      },
+      "specs": [
+        [
+          "Typical size",
+          "Variable per NOAA / regional guidelines"
+        ],
+        [
+          "Diet",
+          "Small fish, crustaceans, and cephalopods."
+        ],
+        [
+          "Behavior",
+          "Active predator along coastal, shelf, or offshore environments."
+        ],
+        [
+          "Spawning",
+          "Spawns seasonally based on water temperature and regional climate."
+        ]
+      ],
+      "image": {
+        "url": "fish/placeholder.png",
+        "kind": "illustration",
+        "credit": "Placeholder graphic",
+        "license": ""
+      }
+    },
+    {
+      "id": "gopher-rockfish",
+      "name": "Gopher rockfish",
+      "sci": "Sebastes carnatus",
+      "color": "#2495f2",
+      "environment": "saltwater",
+      "model": "grid",
+      "lat_range": [
+        28.0,
+        38.0
+      ],
+      "lon_range": [
+        -138.0,
+        -110.0
+      ],
+      "regulations": {
+        "summary": "CDFW: Part of 10-rockfish aggregate bag",
+        "min_size": "None",
+        "max_size": "None",
+        "bag_limit": "10 per harvester / day aggregate",
+        "season": "Seasonal groundfish window",
+        "jurisdiction": "CDFW",
+        "source_name": "West Coast State Regulations (CDFW/WDFW/ODFW/NOAA)",
+        "source_url": "https://wildlife.ca.gov/Fishing/Ocean/Regulations/Sport-Fishing"
+      },
+      "specs": [
+        [
+          "Typical size",
+          "Min limit None / Bag limit 10 per harvester / day aggregate"
+        ],
+        [
+          "Diet",
+          "Small fish, crustaceans, squids, and pelagic prey"
+        ],
+        [
+          "Swimming depth",
+          "2 to 50 m"
+        ],
+        [
+          "Behavior",
+          "Navigates West Coast kelp forests, rocky reefs, and coastal upwelling zones."
+        ]
+      ],
+      "image": {
+        "url": "fish/gopher-rockfish.png",
+        "kind": "illustration",
+        "credit": "Original illustration",
+        "license": ""
+      }
+    },
+    {
+      "id": "mangrove-snapper",
+      "name": "Gray (mangrove) snapper",
+      "sci": "Lutjanus griseus",
+      "color": "#1dd80a",
+      "environment": "saltwater",
+      "model": "grid",
+      "lat_range": null,
+      "lon_range": [
+        -100.0,
+        -50.0
+      ],
+      "regulations": {
+        "summary": "Regulated species - See MyFWC/NOAA guidelines",
+        "min_size": "Check MyFWC/NOAA rules",
+        "max_size": "None",
+        "bag_limit": "Varies by region / state",
+        "season": "Open year-round (subject to local quota/closures)",
+        "jurisdiction": "Atlantic & Gulf State/Federal Waters",
+        "source_name": "MyFWC Saltwater Regulations",
+        "source_url": "https://myfwc.com/fishing/saltwater/recreational/"
+      },
+      "specs": [
+        [
+          "Typical size",
+          "Inshore 1-3 lb; offshore up to 10+ lb"
+        ],
+        [
+          "Diet",
+          "Shrimp, crabs, pilchards, and small reef fishes"
+        ],
+        [
+          "Swimming depth",
+          "0.5 to 50 m"
+        ],
+        [
+          "Behavior",
+          "Juveniles inhabit mangrove edges and docks; adults move offshore to reef structures and spawn in summer."
+        ]
+      ],
+      "image": {
+        "url": "fish/mangrove-snapper.png",
+        "kind": "illustration",
+        "credit": "Original illustration",
+        "license": ""
+      }
+    },
+    {
+      "id": "gray-triggerfish",
+      "name": "Gray triggerfish",
+      "sci": "Balistes capriscus",
+      "color": "#b7d80a",
+      "environment": "saltwater",
+      "model": "grid",
+      "lat_range": null,
+      "lon_range": [
+        -100.0,
+        -50.0
+      ],
+      "regulations": {
+        "summary": "Regulated species - See MyFWC/NOAA guidelines",
+        "min_size": "Check MyFWC/NOAA rules",
+        "max_size": "None",
+        "bag_limit": "Varies by region / state",
+        "season": "Open year-round (subject to local quota/closures)",
+        "jurisdiction": "Atlantic & Gulf State/Federal Waters",
+        "source_name": "MyFWC Saltwater Regulations",
+        "source_url": "https://myfwc.com/fishing/saltwater/recreational/"
+      },
+      "specs": [
+        [
+          "Typical size",
+          "Common 2-5 lb; up to 13 lb"
+        ],
+        [
+          "Diet",
+          "Sea urchins, sand dollars, crabs, and mollusks"
+        ],
+        [
+          "Swimming depth",
+          "10 to 100 m"
+        ],
+        [
+          "Behavior",
+          "Strong-jawed reef fish that builds shallow nests in sand near reefs and feeds on hard-shelled invertebrates."
+        ]
+      ],
+      "image": {
+        "url": "fish/gray-tigerfish.png",
+        "kind": "illustration",
+        "credit": "Original illustration",
+        "license": ""
+      }
+    },
+    {
+      "id": "great-barracuda",
+      "name": "Great barracuda",
+      "sci": "Sphyraena barracuda",
+      "color": "#da3cf2",
+      "environment": "saltwater",
+      "model": "sites",
+      "lat_range": [
+        15.0,
+        32.0
+      ],
+      "lon_range": [
+        -100.0,
+        -50.0
+      ],
+      "regulations": {
+        "summary": "Regulated species - See MyFWC/NOAA guidelines",
+        "min_size": "Check MyFWC/NOAA rules",
+        "max_size": "None",
+        "bag_limit": "Varies by region / state",
+        "season": "Open year-round (subject to local quota/closures)",
+        "jurisdiction": "Atlantic & Gulf State/Federal Waters",
+        "source_name": "MyFWC Saltwater Regulations",
+        "source_url": "https://myfwc.com/fishing/saltwater/recreational/"
+      },
+      "specs": [
+        [
+          "Typical size",
+          "Variable per NOAA / regional guidelines"
+        ],
+        [
+          "Diet",
+          "Small fish, crustaceans, and cephalopods."
+        ],
+        [
+          "Behavior",
+          "Active predator along coastal, shelf, or offshore environments."
+        ],
+        [
+          "Spawning",
+          "Spawns seasonally based on water temperature and regional climate."
+        ]
+      ],
+      "image": {
+        "url": "fish/placeholder.png",
+        "kind": "illustration",
+        "credit": "Placeholder graphic",
+        "license": ""
+      }
+    },
+    {
+      "id": "great-hammerhead",
+      "name": "Great hammerhead shark",
+      "sci": "Sphyrna mokarran",
+      "color": "#20d88a",
+      "environment": "saltwater",
+      "model": "grid",
+      "lat_range": [
+        15.0,
+        35.0
+      ],
+      "lon_range": [
+        -100.0,
+        -50.0
+      ],
+      "regulations": {
+        "summary": "Regulated species - See MyFWC/NOAA guidelines",
+        "min_size": "Check MyFWC/NOAA rules",
+        "max_size": "None",
+        "bag_limit": "Varies by region / state",
+        "season": "Open year-round (subject to local quota/closures)",
+        "jurisdiction": "Atlantic & Gulf State/Federal Waters",
+        "source_name": "MyFWC Saltwater Regulations",
+        "source_url": "https://myfwc.com/fishing/saltwater/recreational/"
+      },
+      "specs": [
+        [
+          "Typical size",
+          "Variable per NOAA / regional guidelines"
+        ],
+        [
+          "Diet",
+          "Small fish, crustaceans, and cephalopods."
+        ],
+        [
+          "Behavior",
+          "Active predator along coastal, shelf, or offshore environments."
+        ],
+        [
+          "Spawning",
+          "Spawns seasonally based on water temperature and regional climate."
+        ]
+      ],
+      "image": {
+        "url": "fish/placeholder.png",
+        "kind": "illustration",
+        "credit": "Placeholder graphic",
+        "license": ""
+      }
+    },
+    {
+      "id": "greater-amberjack",
+      "name": "Greater amberjack",
+      "sci": "Seriola dumerili",
+      "color": "#f24d0c",
+      "environment": "saltwater",
+      "model": "grid",
+      "lat_range": [
+        18.0,
+        38.0
+      ],
+      "lon_range": [
+        -100.0,
+        -50.0
+      ],
+      "regulations": {
+        "summary": "Regulated species - See MyFWC/NOAA guidelines",
+        "min_size": "Check MyFWC/NOAA rules",
+        "max_size": "None",
+        "bag_limit": "Varies by region / state",
+        "season": "Open year-round (subject to local quota/closures)",
+        "jurisdiction": "Atlantic & Gulf State/Federal Waters",
+        "source_name": "MyFWC Saltwater Regulations",
+        "source_url": "https://myfwc.com/fishing/saltwater/recreational/"
+      },
+      "specs": [
+        [
+          "Typical size",
+          "Variable per NOAA / regional guidelines"
+        ],
+        [
+          "Diet",
+          "Small fish, crustaceans, and cephalopods."
+        ],
+        [
+          "Behavior",
+          "Active predator along coastal, shelf, or offshore environments."
+        ],
+        [
+          "Spawning",
+          "Spawns seasonally based on water temperature and regional climate."
+        ]
+      ],
+      "image": {
+        "url": "fish/placeholder.png",
+        "kind": "illustration",
+        "credit": "Placeholder graphic",
+        "license": ""
+      }
+    },
+    {
+      "id": "haddock",
+      "name": "Haddock",
+      "sci": "Melanogrammus aeglefinus",
+      "color": "#3637d8",
+      "environment": "saltwater",
+      "model": "grid",
+      "lat_range": [
+        40.0,
+        52.0
+      ],
+      "lon_range": [
+        -100.0,
+        -50.0
+      ],
+      "regulations": {
+        "summary": "Regulated species - See MyFWC/NOAA guidelines",
+        "min_size": "Check MyFWC/NOAA rules",
+        "max_size": "None",
+        "bag_limit": "Varies by region / state",
+        "season": "Open year-round (subject to local quota/closures)",
+        "jurisdiction": "Atlantic & Gulf State/Federal Waters",
+        "source_name": "MyFWC Saltwater Regulations",
+        "source_url": "https://myfwc.com/fishing/saltwater/recreational/"
+      },
+      "specs": [
+        [
+          "Typical size",
+          "Variable per NOAA / regional guidelines"
+        ],
+        [
+          "Diet",
+          "Small fish, crustaceans, and cephalopods."
+        ],
+        [
+          "Behavior",
+          "Active predator along coastal, shelf, or offshore environments."
+        ],
+        [
+          "Spawning",
+          "Spawns seasonally based on water temperature and regional climate."
+        ]
+      ],
+      "image": {
+        "url": "fish/placeholder.png",
+        "kind": "illustration",
+        "credit": "Placeholder graphic",
+        "license": ""
+      }
+    },
+    {
+      "id": "halfmoon",
+      "name": "Halfmoon",
+      "sci": "Medialuna californiensis",
+      "color": "#61f224",
+      "environment": "saltwater",
+      "model": "grid",
+      "lat_range": [
+        26.0,
+        36.0
+      ],
+      "lon_range": [
+        -138.0,
+        -110.0
+      ],
+      "regulations": {
+        "summary": "CDFW: 20 per day finfish limit",
+        "min_size": "None",
+        "max_size": "None",
+        "bag_limit": "20 per harvester / day",
+        "season": "Open year-round",
+        "jurisdiction": "CDFW",
+        "source_name": "West Coast State Regulations (CDFW/WDFW/ODFW/NOAA)",
+        "source_url": "https://wildlife.ca.gov/Fishing/Ocean/Regulations/Sport-Fishing"
+      },
+      "specs": [
+        [
+          "Typical size",
+          "Min limit None / Bag limit 20 per harvester / day"
+        ],
+        [
+          "Diet",
+          "Small fish, crustaceans, squids, and pelagic prey"
+        ],
+        [
+          "Swimming depth",
+          "1 to 30 m"
+        ],
+        [
+          "Behavior",
+          "Navigates West Coast kelp forests, rocky reefs, and coastal upwelling zones."
+        ]
+      ],
+      "image": {
+        "url": "fish/halfmoon.png",
+        "kind": "illustration",
+        "credit": "Original illustration",
+        "license": ""
+      }
+    },
+    {
+      "id": "hogfish",
+      "name": "Hogfish",
+      "sci": "Lachnolaimus maximus",
+      "color": "#d80a84",
+      "environment": "saltwater",
+      "model": "grid",
+      "lat_range": [
+        15.0,
+        36.0
+      ],
+      "lon_range": [
+        -100.0,
+        -50.0
+      ],
+      "regulations": {
+        "summary": "Regulated species - See MyFWC/NOAA guidelines",
+        "min_size": "Check MyFWC/NOAA rules",
+        "max_size": "None",
+        "bag_limit": "Varies by region / state",
+        "season": "Open year-round (subject to local quota/closures)",
+        "jurisdiction": "Atlantic & Gulf State/Federal Waters",
+        "source_name": "MyFWC Saltwater Regulations",
+        "source_url": "https://myfwc.com/fishing/saltwater/recreational/"
+      },
+      "specs": [
+        [
+          "Typical size",
+          "Common 2-8 lb; up to 20 lb"
+        ],
+        [
+          "Diet",
+          "Crabs, mollusks, sea urchins, and hermit crabs"
+        ],
+        [
+          "Swimming depth",
+          "Bottom substrate; 3 to 30 m"
+        ],
+        [
+          "Behavior",
+          "Roots through open sandy patches adjacent to coral reefs and hardbottom ledges searching for benthic invertebrates."
+        ]
+      ],
+      "image": {
+        "url": "fish/hogfish.png",
+        "kind": "illustration",
+        "credit": "Original illustration",
+        "license": ""
+      }
+    },
+    {
+      "id": "jack-crevalle",
+      "name": "Jack crevalle",
+      "sci": "Caranx hippos",
+      "color": "#3cdcf2",
+      "environment": "saltwater",
+      "model": "grid",
+      "lat_range": null,
+      "lon_range": [
+        -100.0,
+        -50.0
+      ],
+      "regulations": {
+        "summary": "Regulated species - See MyFWC/NOAA guidelines",
+        "min_size": "Check MyFWC/NOAA rules",
+        "max_size": "None",
+        "bag_limit": "Varies by region / state",
+        "season": "Open year-round (subject to local quota/closures)",
+        "jurisdiction": "Atlantic & Gulf State/Federal Waters",
+        "source_name": "MyFWC Saltwater Regulations",
+        "source_url": "https://myfwc.com/fishing/saltwater/recreational/"
+      },
+      "specs": [
+        [
+          "Typical size",
+          "Common 3-15 lb; up to 35+ lb"
+        ],
+        [
+          "Diet",
+          "Mullet, menhaden, pilchards, squids, and crabs"
+        ],
+        [
+          "Swimming depth",
+          "0.5 to 30 m"
+        ],
+        [
+          "Behavior",
+          "Aggressive, fast-swimming schooling predator that blitzes bait in inlets, bays, surf lines, and coastal beaches."
+        ]
+      ],
+      "image": {
+        "url": "fish/jack-crevalle.png",
+        "kind": "illustration",
+        "credit": "Original illustration",
+        "license": ""
+      }
+    },
+    {
+      "id": "kelp-bass",
+      "name": "Kelp bass",
+      "sci": "Paralabrax clathratus",
+      "color": "#d8b820",
+      "environment": "saltwater",
+      "model": "grid",
+      "lat_range": [
+        25.0,
+        35.0
+      ],
+      "lon_range": [
+        -138.0,
+        -110.0
+      ],
+      "regulations": {
+        "summary": "CDFW: 14\" min TL; 5 per day combined",
+        "min_size": "14 inches TL",
+        "max_size": "None",
+        "bag_limit": "5 per harvester / day",
+        "season": "Open year-round",
+        "jurisdiction": "California State Waters (CDFW)",
+        "source_name": "West Coast State Regulations (CDFW/WDFW/ODFW/NOAA)",
+        "source_url": "https://wildlife.ca.gov/Fishing/Ocean/Regulations/Sport-Fishing"
+      },
+      "specs": [
+        [
+          "Typical size",
+          "Min limit 14 inches TL / Bag limit 5 per harvester / day"
+        ],
+        [
+          "Diet",
+          "Small fish, crustaceans, squids, and pelagic prey"
+        ],
+        [
+          "Swimming depth",
+          "1 to 30 m"
+        ],
+        [
+          "Behavior",
+          "Navigates West Coast kelp forests, rocky reefs, and coastal upwelling zones."
+        ]
+      ],
+      "image": {
+        "url": "fish/kelp-bass.png",
+        "kind": "illustration",
+        "credit": "Original illustration",
+        "license": ""
+      }
+    },
+    {
+      "id": "kelp-greenling",
+      "name": "Kelp greenling",
+      "sci": "Hexagrammos decagrammus",
+      "color": "#870cf2",
+      "environment": "saltwater",
+      "model": "grid",
+      "lat_range": [
+        34.0,
+        58.0
+      ],
+      "lon_range": [
+        -138.0,
+        -110.0
+      ],
+      "regulations": {
+        "summary": "CDFW/WDFW: 12\" min TL; 2-10 per day",
+        "min_size": "12 inches TL",
+        "max_size": "None",
+        "bag_limit": "2-10 per harvester / day",
+        "season": "Seasonal groundfish rules",
+        "jurisdiction": "CDFW / ODFW / WDFW",
+        "source_name": "West Coast State Regulations (CDFW/WDFW/ODFW/NOAA)",
+        "source_url": "https://wildlife.ca.gov/Fishing/Ocean/Regulations/Sport-Fishing"
+      },
+      "specs": [
+        [
+          "Typical size",
+          "Min limit 12 inches TL / Bag limit 2-10 per harvester / day"
+        ],
+        [
+          "Diet",
+          "Small fish, crustaceans, squids, and pelagic prey"
+        ],
+        [
+          "Swimming depth",
+          "1 to 40 m"
+        ],
+        [
+          "Behavior",
+          "Navigates West Coast kelp forests, rocky reefs, and coastal upwelling zones."
+        ]
+      ],
+      "image": {
+        "url": "fish/kelp-greenling.png",
+        "kind": "illustration",
+        "credit": "Original illustration",
+        "license": ""
+      }
+    },
+    {
+      "id": "kelp-rockfish",
+      "name": "Kelp rockfish",
+      "sci": "Sebastes atrovirens",
+      "color": "#36d85d",
+      "environment": "saltwater",
+      "model": "grid",
+      "lat_range": [
+        28.0,
+        38.0
+      ],
+      "lon_range": [
+        -138.0,
+        -110.0
+      ],
+      "regulations": {
+        "summary": "CDFW: Part of 10-rockfish aggregate bag",
+        "min_size": "None",
+        "max_size": "None",
+        "bag_limit": "10 per harvester / day aggregate",
+        "season": "Seasonal groundfish window",
+        "jurisdiction": "CDFW",
+        "source_name": "West Coast State Regulations (CDFW/WDFW/ODFW/NOAA)",
+        "source_url": "https://wildlife.ca.gov/Fishing/Ocean/Regulations/Sport-Fishing"
+      },
+      "specs": [
+        [
+          "Typical size",
+          "Min limit None / Bag limit 10 per harvester / day aggregate"
+        ],
+        [
+          "Diet",
+          "Small fish, crustaceans, squids, and pelagic prey"
+        ],
+        [
+          "Swimming depth",
+          "1 to 40 m"
+        ],
+        [
+          "Behavior",
+          "Navigates West Coast kelp forests, rocky reefs, and coastal upwelling zones."
+        ]
+      ],
+      "image": {
+        "url": "fish/kelp-rockfish.png",
+        "kind": "illustration",
+        "credit": "Original illustration",
+        "license": ""
+      }
+    },
+    {
+      "id": "king-mackerel",
+      "name": "King mackerel",
+      "sci": "Scomberomorus cavalla",
+      "color": "#f2242e",
+      "environment": "saltwater",
+      "model": "grid",
+      "lat_range": null,
+      "lon_range": [
+        -100.0,
+        -50.0
+      ],
+      "regulations": {
+        "summary": "Regulated species - See MyFWC/NOAA guidelines",
+        "min_size": "Check MyFWC/NOAA rules",
+        "max_size": "None",
+        "bag_limit": "Varies by region / state",
+        "season": "Open year-round (subject to local quota/closures)",
+        "jurisdiction": "Atlantic & Gulf State/Federal Waters",
+        "source_name": "MyFWC Saltwater Regulations",
+        "source_url": "https://myfwc.com/fishing/saltwater/recreational/"
+      },
+      "specs": [
+        [
+          "Typical size",
+          "Up to 50+ lb; Florida record 90 lb"
+        ],
+        [
+          "Diet",
+          "Herrings, threadfin shad, menhaden, jack, and squid"
+        ],
+        [
+          "Swimming depth",
+          "Near surface to 45 m"
+        ],
+        [
+          "Behavior",
+          "Migratory coastal pelagic schooling predator. Moves south to Florida in winter following water temp and bait runs."
+        ]
+      ],
+      "image": {
+        "url": "fish/king-mackerel.png",
+        "kind": "illustration",
+        "credit": "Original illustration",
+        "license": ""
+      }
+    },
+    {
+      "id": "ladyfish",
+      "name": "Ladyfish",
+      "sci": "Elops saurus",
+      "color": "#0a50d8",
+      "environment": "saltwater",
+      "model": "sites",
+      "lat_range": [
+        18.0,
+        32.0
+      ],
+      "lon_range": [
+        -100.0,
+        -50.0
+      ],
+      "regulations": {
+        "summary": "Regulated species - See MyFWC/NOAA guidelines",
+        "min_size": "Check MyFWC/NOAA rules",
+        "max_size": "None",
+        "bag_limit": "Varies by region / state",
+        "season": "Open year-round (subject to local quota/closures)",
+        "jurisdiction": "Atlantic & Gulf State/Federal Waters",
+        "source_name": "MyFWC Saltwater Regulations",
+        "source_url": "https://myfwc.com/fishing/saltwater/recreational/"
+      },
+      "specs": [
+        [
+          "Typical size",
+          "Variable per NOAA / regional guidelines"
+        ],
+        [
+          "Diet",
+          "Small fish, crustaceans, and cephalopods."
+        ],
+        [
+          "Behavior",
+          "Active predator along coastal, shelf, or offshore environments."
+        ],
+        [
+          "Spawning",
+          "Spawns seasonally based on water temperature and regional climate."
+        ]
+      ],
+      "image": {
+        "url": "fish/placeholder.png",
+        "kind": "illustration",
+        "credit": "Placeholder graphic",
+        "license": ""
+      }
+    },
+    {
+      "id": "lane-snapper",
+      "name": "Lane snapper",
+      "sci": "Lutjanus synagris",
+      "color": "#aff23c",
+      "environment": "saltwater",
+      "model": "sites",
+      "lat_range": [
+        15.0,
+        32.0
+      ],
+      "lon_range": [
+        -100.0,
+        -50.0
+      ],
+      "regulations": {
+        "summary": "Regulated species - See MyFWC/NOAA guidelines",
+        "min_size": "Check MyFWC/NOAA rules",
+        "max_size": "None",
+        "bag_limit": "Varies by region / state",
+        "season": "Open year-round (subject to local quota/closures)",
+        "jurisdiction": "Atlantic & Gulf State/Federal Waters",
+        "source_name": "MyFWC Saltwater Regulations",
+        "source_url": "https://myfwc.com/fishing/saltwater/recreational/"
+      },
+      "specs": [
+        [
+          "Typical size",
+          "Variable per NOAA / regional guidelines"
+        ],
+        [
+          "Diet",
+          "Small fish, crustaceans, and cephalopods."
+        ],
+        [
+          "Behavior",
+          "Active predator along coastal, shelf, or offshore environments."
+        ],
+        [
+          "Spawning",
+          "Spawns seasonally based on water temperature and regional climate."
+        ]
+      ],
+      "image": {
+        "url": "fish/placeholder.png",
+        "kind": "illustration",
+        "credit": "Placeholder graphic",
+        "license": ""
+      }
+    },
+    {
+      "id": "leopard-shark",
+      "name": "Leopard shark",
+      "sci": "Triakis semifasciata",
+      "color": "#d820ca",
+      "environment": "saltwater",
+      "model": "grid",
+      "lat_range": [
+        25.0,
+        40.0
+      ],
+      "lon_range": [
+        -138.0,
+        -110.0
+      ],
+      "regulations": {
+        "summary": "CDFW: 36\" min TL; 3 per day",
+        "min_size": "36 inches TL",
+        "max_size": "None",
+        "bag_limit": "3 per harvester / day",
+        "season": "Open year-round",
+        "jurisdiction": "CDFW",
+        "source_name": "West Coast State Regulations (CDFW/WDFW/ODFW/NOAA)",
+        "source_url": "https://wildlife.ca.gov/Fishing/Ocean/Regulations/Sport-Fishing"
+      },
+      "specs": [
+        [
+          "Typical size",
+          "Min limit 36 inches TL / Bag limit 3 per harvester / day"
+        ],
+        [
+          "Diet",
+          "Small fish, crustaceans, squids, and pelagic prey"
+        ],
+        [
+          "Swimming depth",
+          "1 to 30 m"
+        ],
+        [
+          "Behavior",
+          "Navigates West Coast kelp forests, rocky reefs, and coastal upwelling zones."
+        ]
+      ],
+      "image": {
+        "url": "fish/leopard-shark.png",
+        "kind": "illustration",
+        "credit": "Original illustration",
+        "license": ""
+      }
+    },
+    {
+      "id": "lingcod",
+      "name": "Lingcod",
+      "sci": "Ophiodon elongatus",
+      "color": "#0cf2c0",
+      "environment": "saltwater",
+      "model": "grid",
+      "lat_range": [
+        34.0,
+        60.0
+      ],
+      "lon_range": [
+        -138.0,
+        -110.0
+      ],
+      "regulations": {
+        "summary": "CDFW/WDFW: 22\" min TL; 1-2 per day",
+        "min_size": "22 inches TL",
+        "max_size": "None",
+        "bag_limit": "1-2 per harvester / day",
+        "season": "Seasonal openings",
+        "jurisdiction": "CDFW / ODFW / WDFW",
+        "source_name": "West Coast State Regulations (CDFW/WDFW/ODFW/NOAA)",
+        "source_url": "https://wildlife.ca.gov/Fishing/Ocean/Regulations/Sport-Fishing"
+      },
+      "specs": [
+        [
+          "Typical size",
+          "Min limit 22 inches TL / Bag limit 1-2 per harvester / day"
+        ],
+        [
+          "Diet",
+          "Small fish, crustaceans, squids, and pelagic prey"
+        ],
+        [
+          "Swimming depth",
+          "10 to 150 m"
+        ],
+        [
+          "Behavior",
+          "Navigates West Coast kelp forests, rocky reefs, and coastal upwelling zones."
+        ]
+      ],
+      "image": {
+        "url": "fish/lingcod.png",
+        "kind": "illustration",
+        "credit": "Original illustration",
+        "license": ""
+      }
+    },
+    {
+      "id": "longbill-spearfish",
+      "name": "Longbill spearfish",
+      "sci": "Tetrapturus pfluegeri",
+      "color": "#d88636",
+      "environment": "saltwater",
+      "model": "grid",
+      "lat_range": [
+        15.0,
+        40.0
+      ],
+      "lon_range": [
+        -100.0,
+        -50.0
+      ],
+      "regulations": {
+        "summary": "Regulated species - See MyFWC/NOAA guidelines",
+        "min_size": "Check MyFWC/NOAA rules",
+        "max_size": "None",
+        "bag_limit": "Varies by region / state",
+        "season": "Open year-round (subject to local quota/closures)",
+        "jurisdiction": "Atlantic & Gulf State/Federal Waters",
+        "source_name": "MyFWC Saltwater Regulations",
+        "source_url": "https://myfwc.com/fishing/saltwater/recreational/"
+      },
+      "specs": [
+        [
+          "Typical size",
+          "Variable per NOAA / regional guidelines"
+        ],
+        [
+          "Diet",
+          "Small fish, crustaceans, and cephalopods."
+        ],
+        [
+          "Behavior",
+          "Active predator along coastal, shelf, or offshore environments."
+        ],
+        [
+          "Spawning",
+          "Spawns seasonally based on water temperature and regional climate."
+        ]
+      ],
+      "image": {
+        "url": "fish/placeholder.png",
+        "kind": "illustration",
+        "credit": "Placeholder graphic",
+        "license": ""
+      }
+    },
+    {
+      "id": "mahi-mahi",
+      "name": "Mahi-mahi",
+      "sci": "Coryphaena hippurus",
+      "color": "#34d399",
+      "environment": "saltwater",
+      "model": "grid",
+      "lat_range": null,
+      "lon_range": [
+        -100.0,
+        -50.0
+      ],
+      "regulations": {
+        "summary": "20\" min fork length; 5 per harvester / 30 per vessel",
+        "min_size": "20 inches fork length (Atlantic state waters)",
+        "max_size": "None",
+        "bag_limit": "5 per harvester / day (max 30 per vessel)",
+        "season": "Open year-round",
+        "jurisdiction": "Florida & Atlantic Federal Waters (SAFMC)",
+        "source_name": "MyFWC Mahi-Mahi Regulations",
+        "source_url": "https://myfwc.com/fishing/saltwater/recreational/dolphinfish/"
+      },
+      "specs": [
+        [
+          "Typical size",
+          "Common up to about 50 lb; can reach about 100 lb"
+        ],
+        [
+          "Diet",
+          "Small fish, crabs and shrimp living in sargassum; also flying fish and mackerels"
+        ],
+        [
+          "Swimming depth",
+          "Epipelagic: surface to about 85 m. Satellite-tagged fish spent about 40% of their time within about 1 m of the surface and made occasional dives to about 250 m."
+        ],
+        [
+          "Behavior",
+          "Offshore, drawn to floating structure (sargassum weedlines, flotsam, floating debris). Moves closer to shore in summer as shelf waters warm."
+        ],
+        [
+          "Lifespan",
+          "About 6 years; fast growing, matures very young"
+        ]
+      ],
+      "image": {
+        "url": "fish/mahi-mahi.png",
+        "kind": "illustration",
+        "credit": "Original illustration",
+        "license": ""
+      }
+    },
+    {
+      "id": "misty-grouper",
+      "name": "Misty grouper",
+      "sci": "Hyporthodus mystacinus",
+      "color": "#f23c82",
+      "environment": "saltwater",
+      "model": "grid",
+      "lat_range": [
+        15.0,
+        32.0
+      ],
+      "lon_range": [
+        -100.0,
+        -50.0
+      ],
+      "regulations": {
+        "summary": "Regulated species - See MyFWC/NOAA guidelines",
+        "min_size": "Check MyFWC/NOAA rules",
+        "max_size": "None",
+        "bag_limit": "Varies by region / state",
+        "season": "Open year-round (subject to local quota/closures)",
+        "jurisdiction": "Atlantic & Gulf State/Federal Waters",
+        "source_name": "MyFWC Saltwater Regulations",
+        "source_url": "https://myfwc.com/fishing/saltwater/recreational/"
+      },
+      "specs": [
+        [
+          "Typical size",
+          "Variable per NOAA / regional guidelines"
+        ],
+        [
+          "Diet",
+          "Small fish, crustaceans, and cephalopods."
+        ],
+        [
+          "Behavior",
+          "Active predator along coastal, shelf, or offshore environments."
+        ],
+        [
+          "Spawning",
+          "Spawns seasonally based on water temperature and regional climate."
+        ]
+      ],
+      "image": {
+        "url": "fish/placeholder.png",
+        "kind": "illustration",
+        "credit": "Placeholder graphic",
+        "license": ""
+      }
+    },
+    {
+      "id": "mutton-snapper",
+      "name": "Mutton snapper",
+      "sci": "Lutjanus analis",
+      "color": "#209cd8",
+      "environment": "saltwater",
+      "model": "grid",
+      "lat_range": null,
+      "lon_range": [
+        -100.0,
+        -50.0
+      ],
+      "regulations": {
+        "summary": "Regulated species - See MyFWC/NOAA guidelines",
+        "min_size": "Check MyFWC/NOAA rules",
+        "max_size": "None",
+        "bag_limit": "Varies by region / state",
+        "season": "Open year-round (subject to local quota/closures)",
+        "jurisdiction": "Atlantic & Gulf State/Federal Waters",
+        "source_name": "MyFWC Saltwater Regulations",
+        "source_url": "https://myfwc.com/fishing/saltwater/recreational/"
+      },
+      "specs": [
+        [
+          "Typical size",
+          "Common at about 5-15 lb; can reach about 37 in and 30 lb"
+        ],
+        [
+          "Diet",
+          "Fish and invertebrates"
+        ],
+        [
+          "Adult depth",
+          "25-95 m, usually 40-70 m (FishBase); adults deeper than juveniles"
+        ],
+        [
+          "Behavior",
+          "Adults live on reefs, ledges and around wrecks and artificial reefs, often patrolling the edge between reef and sand. Juveniles use seagrass and mangroves."
+        ],
+        [
+          "Spawning",
+          "Forms large spawning aggregations on reef promontories along the shelf edge, building the week before the full moon, with spawning 2-5 days after it in the late afternoon. Season is roughly May to August in Florida."
+        ],
+        [
+          "Lifespan",
+          "Up to about 29 years"
+        ]
+      ],
+      "image": {
+        "url": "fish/mutton-snapper.png",
+        "kind": "illustration",
+        "credit": "Original illustration",
+        "license": ""
+      }
+    },
+    {
+      "id": "ocean-pout",
+      "name": "Ocean pout",
+      "sci": "Zoarces americanus",
+      "color": "#eaf20c",
+      "environment": "saltwater",
+      "model": "grid",
+      "lat_range": [
+        38.0,
+        50.0
+      ],
+      "lon_range": [
+        -100.0,
+        -50.0
+      ],
+      "regulations": {
+        "summary": "Regulated species - See MyFWC/NOAA guidelines",
+        "min_size": "Check MyFWC/NOAA rules",
+        "max_size": "None",
+        "bag_limit": "Varies by region / state",
+        "season": "Open year-round (subject to local quota/closures)",
+        "jurisdiction": "Atlantic & Gulf State/Federal Waters",
+        "source_name": "MyFWC Saltwater Regulations",
+        "source_url": "https://myfwc.com/fishing/saltwater/recreational/"
+      },
+      "specs": [
+        [
+          "Typical size",
+          "Variable per NOAA / regional guidelines"
+        ],
+        [
+          "Diet",
+          "Small fish, crustaceans, and cephalopods."
+        ],
+        [
+          "Behavior",
+          "Active predator along coastal, shelf, or offshore environments."
+        ],
+        [
+          "Spawning",
+          "Spawns seasonally based on water temperature and regional climate."
+        ]
+      ],
+      "image": {
+        "url": "fish/placeholder.png",
+        "kind": "illustration",
+        "credit": "Placeholder graphic",
+        "license": ""
+      }
+    },
+    {
+      "id": "ocean-triggerfish",
+      "name": "Ocean triggerfish",
+      "sci": "Canthidermis sufflamen",
+      "color": "#ae36d8",
+      "environment": "saltwater",
+      "model": "grid",
+      "lat_range": [
+        15.0,
+        35.0
+      ],
+      "lon_range": [
+        -100.0,
+        -50.0
+      ],
+      "regulations": {
+        "summary": "Regulated species - See MyFWC/NOAA guidelines",
+        "min_size": "Check MyFWC/NOAA rules",
+        "max_size": "None",
+        "bag_limit": "Varies by region / state",
+        "season": "Open year-round (subject to local quota/closures)",
+        "jurisdiction": "Atlantic & Gulf State/Federal Waters",
+        "source_name": "MyFWC Saltwater Regulations",
+        "source_url": "https://myfwc.com/fishing/saltwater/recreational/"
+      },
+      "specs": [
+        [
+          "Typical size",
+          "Variable per NOAA / regional guidelines"
+        ],
+        [
+          "Diet",
+          "Small fish, crustaceans, and cephalopods."
+        ],
+        [
+          "Behavior",
+          "Active predator along coastal, shelf, or offshore environments."
+        ],
+        [
+          "Spawning",
+          "Spawns seasonally based on water temperature and regional climate."
+        ]
+      ],
+      "image": {
+        "url": "fish/placeholder.png",
+        "kind": "illustration",
+        "credit": "Placeholder graphic",
+        "license": ""
+      }
+    },
+    {
+      "id": "ocean-whitefish",
+      "name": "Ocean whitefish",
+      "sci": "Caulolatilus princeps",
+      "color": "#24f280",
+      "environment": "saltwater",
+      "model": "grid",
+      "lat_range": [
+        24.0,
+        38.0
+      ],
+      "lon_range": [
+        -138.0,
+        -110.0
+      ],
+      "regulations": {
+        "summary": "CDFW: 10 per day limit; no depth restrictions",
+        "min_size": "None",
+        "max_size": "None",
+        "bag_limit": "10 per harvester / day",
+        "season": "Open year-round",
+        "jurisdiction": "CDFW",
+        "source_name": "West Coast State Regulations (CDFW/WDFW/ODFW/NOAA)",
+        "source_url": "https://wildlife.ca.gov/Fishing/Ocean/Regulations/Sport-Fishing"
+      },
+      "specs": [
+        [
+          "Typical size",
+          "Min limit None / Bag limit 10 per harvester / day"
+        ],
+        [
+          "Diet",
+          "Small fish, crustaceans, squids, and pelagic prey"
+        ],
+        [
+          "Swimming depth",
+          "10 to 100 m"
+        ],
+        [
+          "Behavior",
+          "Navigates West Coast kelp forests, rocky reefs, and coastal upwelling zones."
+        ]
+      ],
+      "image": {
+        "url": "fish/ocean-whitefish.png",
+        "kind": "illustration",
+        "credit": "Original illustration",
+        "license": ""
+      }
+    },
+    {
+      "id": "olive-rockfish",
+      "name": "Olive rockfish",
+      "sci": "Sebastes serranoides",
+      "color": "#d82b0a",
+      "environment": "saltwater",
+      "model": "grid",
+      "lat_range": [
+        30.0,
+        42.0
+      ],
+      "lon_range": [
+        -138.0,
+        -110.0
+      ],
+      "regulations": {
+        "summary": "CDFW: Part of 10-rockfish aggregate bag",
+        "min_size": "None",
+        "max_size": "None",
+        "bag_limit": "10 per harvester / day aggregate",
+        "season": "Seasonal groundfish window",
+        "jurisdiction": "CDFW",
+        "source_name": "West Coast State Regulations (CDFW/WDFW/ODFW/NOAA)",
+        "source_url": "https://wildlife.ca.gov/Fishing/Ocean/Regulations/Sport-Fishing"
+      },
+      "specs": [
+        [
+          "Typical size",
+          "Min limit None / Bag limit 10 per harvester / day aggregate"
+        ],
+        [
+          "Diet",
+          "Small fish, crustaceans, squids, and pelagic prey"
+        ],
+        [
+          "Swimming depth",
+          "5 to 80 m"
+        ],
+        [
+          "Behavior",
+          "Navigates West Coast kelp forests, rocky reefs, and coastal upwelling zones."
+        ]
+      ],
+      "image": {
+        "url": "fish/olive-rockfish.png",
+        "kind": "illustration",
+        "credit": "Original illustration",
+        "license": ""
+      }
+    },
+    {
+      "id": "opah",
+      "name": "Opah",
+      "sci": "Lampris guttatus",
+      "color": "#3c54f2",
+      "environment": "saltwater",
+      "model": "grid",
+      "lat_range": [
+        20.0,
+        40.0
+      ],
+      "lon_range": [
+        -138.0,
+        -110.0
+      ],
+      "regulations": {
+        "summary": "CDFW/NOAA: Finfish limits apply",
+        "min_size": "None",
+        "max_size": "None",
+        "bag_limit": "10 per harvester / day",
+        "season": "Open year-round",
+        "jurisdiction": "CDFW / NOAA",
+        "source_name": "West Coast State Regulations (CDFW/WDFW/ODFW/NOAA)",
+        "source_url": "https://wildlife.ca.gov/Fishing/Ocean/Regulations/Sport-Fishing"
+      },
+      "specs": [
+        [
+          "Typical size",
+          "Min limit None / Bag limit 10 per harvester / day"
+        ],
+        [
+          "Diet",
+          "Small fish, crustaceans, squids, and pelagic prey"
+        ],
+        [
+          "Swimming depth",
+          "50 to 400 m"
+        ],
+        [
+          "Behavior",
+          "Navigates West Coast kelp forests, rocky reefs, and coastal upwelling zones."
+        ]
+      ],
+      "image": {
+        "url": "fish/opah.png",
+        "kind": "illustration",
+        "credit": "Original illustration",
+        "license": ""
+      }
+    },
+    {
+      "id": "opaleye",
+      "name": "Opaleye",
+      "sci": "Girella nigricans",
+      "color": "#6ed820",
+      "environment": "saltwater",
+      "model": "grid",
+      "lat_range": [
+        26.0,
+        36.0
+      ],
+      "lon_range": [
+        -138.0,
+        -110.0
+      ],
+      "regulations": {
+        "summary": "CDFW: 10 per day limit",
+        "min_size": "None",
+        "max_size": "None",
+        "bag_limit": "10 per harvester / day",
+        "season": "Open year-round",
+        "jurisdiction": "CDFW",
+        "source_name": "West Coast State Regulations (CDFW/WDFW/ODFW/NOAA)",
+        "source_url": "https://wildlife.ca.gov/Fishing/Ocean/Regulations/Sport-Fishing"
+      },
+      "specs": [
+        [
+          "Typical size",
+          "Min limit None / Bag limit 10 per harvester / day"
+        ],
+        [
+          "Diet",
+          "Small fish, crustaceans, squids, and pelagic prey"
+        ],
+        [
+          "Swimming depth",
+          "1 to 25 m"
+        ],
+        [
+          "Behavior",
+          "Navigates West Coast kelp forests, rocky reefs, and coastal upwelling zones."
+        ]
+      ],
+      "image": {
+        "url": "fish/opaleye.png",
+        "kind": "illustration",
+        "credit": "Original illustration",
+        "license": ""
+      }
+    },
+    {
+      "id": "pacific-barracuda",
+      "name": "Pacific barracuda",
+      "sci": "Sphyraena argentea",
+      "color": "#f20cb1",
+      "environment": "saltwater",
+      "model": "grid",
+      "lat_range": [
+        20.0,
+        36.0
+      ],
+      "lon_range": [
+        -138.0,
+        -110.0
+      ],
+      "regulations": {
+        "summary": "CDFW: 28\" min TL; 10 per day",
+        "min_size": "28 inches TL",
+        "max_size": "None",
+        "bag_limit": "10 per harvester / day",
+        "season": "Open year-round",
+        "jurisdiction": "CDFW",
+        "source_name": "West Coast State Regulations (CDFW/WDFW/ODFW/NOAA)",
+        "source_url": "https://wildlife.ca.gov/Fishing/Ocean/Regulations/Sport-Fishing"
+      },
+      "specs": [
+        [
+          "Typical size",
+          "Min limit 28 inches TL / Bag limit 10 per harvester / day"
+        ],
+        [
+          "Diet",
+          "Small fish, crustaceans, squids, and pelagic prey"
+        ],
+        [
+          "Swimming depth",
+          "0 to 30 m"
+        ],
+        [
+          "Behavior",
+          "Navigates West Coast kelp forests, rocky reefs, and coastal upwelling zones."
+        ]
+      ],
+      "image": {
+        "url": "fish/pacific-barracuda.png",
+        "kind": "illustration",
+        "credit": "Original illustration",
+        "license": ""
+      }
+    },
+    {
+      "id": "pacific-bluefin-tuna",
+      "name": "Pacific bluefin tuna",
+      "sci": "Thunnus orientalis",
+      "color": "#36d8d7",
+      "environment": "saltwater",
+      "model": "grid",
+      "lat_range": [
+        20.0,
+        40.0
+      ],
+      "lon_range": [
+        -138.0,
+        -110.0
+      ],
+      "regulations": {
+        "summary": "CDFW/NOAA: 2 per day limit; vessel limit 6",
+        "min_size": "None",
+        "max_size": "None",
+        "bag_limit": "2 per harvester / day",
+        "season": "Open year-round",
+        "jurisdiction": "NOAA Fisheries / CDFW",
+        "source_name": "West Coast State Regulations (CDFW/WDFW/ODFW/NOAA)",
+        "source_url": "https://wildlife.ca.gov/Fishing/Ocean/Regulations/Sport-Fishing"
+      },
+      "specs": [
+        [
+          "Typical size",
+          "Min limit None / Bag limit 2 per harvester / day"
+        ],
+        [
+          "Diet",
+          "Small fish, crustaceans, squids, and pelagic prey"
+        ],
+        [
+          "Swimming depth",
+          "0 to 200 m"
+        ],
+        [
+          "Behavior",
+          "Navigates West Coast kelp forests, rocky reefs, and coastal upwelling zones."
+        ]
+      ],
+      "image": {
+        "url": "fish/pacific-bluefin-tuna.png",
+        "kind": "illustration",
+        "credit": "Original illustration",
+        "license": ""
+      }
+    },
+    {
+      "id": "pacific-bonito",
+      "name": "Pacific bonito",
+      "sci": "Sarda lineolata",
+      "color": "#f2b424",
+      "environment": "saltwater",
+      "model": "grid",
+      "lat_range": [
+        20.0,
+        38.0
+      ],
+      "lon_range": [
+        -138.0,
+        -110.0
+      ],
+      "regulations": {
+        "summary": "CDFW: 24\" min FL or 5 lb; 10 per day",
+        "min_size": "24 inches FL",
+        "max_size": "None",
+        "bag_limit": "10 per harvester / day",
+        "season": "Open year-round",
+        "jurisdiction": "CDFW",
+        "source_name": "West Coast State Regulations (CDFW/WDFW/ODFW/NOAA)",
+        "source_url": "https://wildlife.ca.gov/Fishing/Ocean/Regulations/Sport-Fishing"
+      },
+      "specs": [
+        [
+          "Typical size",
+          "Min limit 24 inches FL / Bag limit 10 per harvester / day"
+        ],
+        [
+          "Diet",
+          "Small fish, crustaceans, squids, and pelagic prey"
+        ],
+        [
+          "Swimming depth",
+          "0 to 40 m"
+        ],
+        [
+          "Behavior",
+          "Navigates West Coast kelp forests, rocky reefs, and coastal upwelling zones."
+        ]
+      ],
+      "image": {
+        "url": "fish/pacific-bonito.png",
+        "kind": "illustration",
+        "credit": "Original illustration",
+        "license": ""
+      }
+    },
+    {
+      "id": "pacific-cod",
+      "name": "Pacific cod",
+      "sci": "Gadus macrocephalus",
+      "color": "#5e0ad8",
+      "environment": "saltwater",
+      "model": "grid",
+      "lat_range": [
+        42.0,
+        60.0
+      ],
+      "lon_range": [
+        -138.0,
+        -110.0
+      ],
+      "regulations": {
+        "summary": "WDFW/DFO: Bottomfish daily bag applies",
+        "min_size": "None",
+        "max_size": "None",
+        "bag_limit": "2-15 per day",
+        "season": "Open year-round",
+        "jurisdiction": "WDFW / DFO Canada",
+        "source_name": "West Coast State Regulations (CDFW/WDFW/ODFW/NOAA)",
+        "source_url": "https://wdfw.wa.gov/fishing/regulations"
+      },
+      "specs": [
+        [
+          "Typical size",
+          "Min limit None / Bag limit 2-15 per day"
+        ],
+        [
+          "Diet",
+          "Small fish, crustaceans, squids, and pelagic prey"
+        ],
+        [
+          "Swimming depth",
+          "20 to 200 m"
+        ],
+        [
+          "Behavior",
+          "Navigates West Coast kelp forests, rocky reefs, and coastal upwelling zones."
+        ]
+      ],
+      "image": {
+        "url": "fish/pacific-cod.png",
+        "kind": "illustration",
+        "credit": "Original illustration",
+        "license": ""
+      }
+    },
+    {
+      "id": "pacific-hake",
+      "name": "Pacific hake",
+      "sci": "Merluccius productus",
+      "color": "#3cf251",
+      "environment": "saltwater",
+      "model": "grid",
+      "lat_range": [
+        32.0,
+        60.0
+      ],
+      "lon_range": [
+        -138.0,
+        -110.0
+      ],
+      "regulations": {
+        "summary": "WDFW/NOAA: Bottomfish daily bag",
+        "min_size": "None",
+        "max_size": "None",
+        "bag_limit": "15 per harvester / day",
+        "season": "Open year-round",
+        "jurisdiction": "NOAA Fisheries / WDFW",
+        "source_name": "West Coast State Regulations (CDFW/WDFW/ODFW/NOAA)",
+        "source_url": "https://wdfw.wa.gov/fishing/regulations"
+      },
+      "specs": [
+        [
+          "Typical size",
+          "Min limit None / Bag limit 15 per harvester / day"
+        ],
+        [
+          "Diet",
+          "Small fish, crustaceans, squids, and pelagic prey"
+        ],
+        [
+          "Swimming depth",
+          "50 to 400 m"
+        ],
+        [
+          "Behavior",
+          "Navigates West Coast kelp forests, rocky reefs, and coastal upwelling zones."
+        ]
+      ],
+      "image": {
+        "url": "fish/pacific-hake.png",
+        "kind": "illustration",
+        "credit": "Original illustration",
+        "license": ""
+      }
+    },
+    {
+      "id": "pacific-halibut",
+      "name": "Pacific halibut",
+      "sci": "Hippoglossus stenolepis",
+      "color": "#d82041",
+      "environment": "saltwater",
+      "model": "grid",
+      "lat_range": [
+        40.0,
+        60.0
+      ],
+      "lon_range": [
+        -138.0,
+        -110.0
+      ],
+      "regulations": {
+        "summary": "NOAA/WDFW: 1 per day; seasonal quota",
+        "min_size": "None",
+        "max_size": "None",
+        "bag_limit": "1 per harvester / day",
+        "season": "Designated quota open days",
+        "jurisdiction": "NOAA Fisheries / IPHC / WDFW",
+        "source_name": "West Coast State Regulations (CDFW/WDFW/ODFW/NOAA)",
+        "source_url": "https://wdfw.wa.gov/fishing/regulations"
+      },
+      "specs": [
+        [
+          "Typical size",
+          "Min limit None / Bag limit 1 per harvester / day"
+        ],
+        [
+          "Diet",
+          "Small fish, crustaceans, squids, and pelagic prey"
+        ],
+        [
+          "Swimming depth",
+          "20 to 250 m"
+        ],
+        [
+          "Behavior",
+          "Navigates West Coast kelp forests, rocky reefs, and coastal upwelling zones."
+        ]
+      ],
+      "image": {
+        "url": "fish/pacific-halibut.png",
+        "kind": "illustration",
+        "credit": "Original illustration",
+        "license": ""
+      }
+    },
+    {
+      "id": "permit",
+      "name": "Permit",
+      "sci": "Trachinotus falcatus",
+      "color": "#0c77f2",
+      "environment": "saltwater",
+      "model": "sites",
+      "lat_range": [
+        15.0,
+        30.0
+      ],
+      "lon_range": [
+        -100.0,
+        -50.0
+      ],
+      "regulations": {
+        "summary": "Regulated species - See MyFWC/NOAA guidelines",
+        "min_size": "Check MyFWC/NOAA rules",
+        "max_size": "None",
+        "bag_limit": "Varies by region / state",
+        "season": "Open year-round (subject to local quota/closures)",
+        "jurisdiction": "Atlantic & Gulf State/Federal Waters",
+        "source_name": "MyFWC Saltwater Regulations",
+        "source_url": "https://myfwc.com/fishing/saltwater/recreational/"
+      },
+      "specs": [
+        [
+          "Typical size",
+          "Variable per NOAA / regional guidelines"
+        ],
+        [
+          "Diet",
+          "Small fish, crustaceans, and cephalopods."
+        ],
+        [
+          "Behavior",
+          "Active predator along coastal, shelf, or offshore environments."
+        ],
+        [
+          "Spawning",
+          "Spawns seasonally based on water temperature and regional climate."
+        ]
+      ],
+      "image": {
+        "url": "fish/placeholder.png",
+        "kind": "illustration",
+        "credit": "Placeholder graphic",
+        "license": ""
+      }
+    },
+    {
+      "id": "petrale-sole",
+      "name": "Petrale sole",
+      "sci": "Eopsetta jordani",
+      "color": "#b1d836",
+      "environment": "saltwater",
+      "model": "grid",
+      "lat_range": [
+        32.0,
+        58.0
+      ],
+      "lon_range": [
+        -138.0,
+        -110.0
+      ],
+      "regulations": {
+        "summary": "CDFW/WDFW: Flatfish aggregate limit (no depth limit)",
+        "min_size": "None",
+        "max_size": "None",
+        "bag_limit": "10-15 per day aggregate",
+        "season": "Open year-round",
+        "jurisdiction": "CDFW / WDFW",
+        "source_name": "West Coast State Regulations (CDFW/WDFW/ODFW/NOAA)",
+        "source_url": "https://wildlife.ca.gov/Fishing/Ocean/Regulations/Sport-Fishing"
+      },
+      "specs": [
+        [
+          "Typical size",
+          "Min limit None / Bag limit 10-15 per day aggregate"
+        ],
+        [
+          "Diet",
+          "Small fish, crustaceans, squids, and pelagic prey"
+        ],
+        [
+          "Swimming depth",
+          "20 to 200 m"
+        ],
+        [
+          "Behavior",
+          "Navigates West Coast kelp forests, rocky reefs, and coastal upwelling zones."
+        ]
+      ],
+      "image": {
+        "url": "fish/petrale-sole.png",
+        "kind": "illustration",
+        "credit": "Original illustration",
+        "license": ""
+      }
+    },
+    {
+      "id": "pink-salmon",
+      "name": "Pink salmon",
+      "sci": "Oncorhynchus gorbuscha",
+      "color": "#e724f2",
+      "environment": "saltwater",
+      "model": "grid",
+      "lat_range": [
+        44.0,
+        60.0
+      ],
+      "lon_range": [
+        -138.0,
+        -110.0
+      ],
+      "regulations": {
+        "summary": "WDFW/DFO: 2-4 per day (odd years)",
+        "min_size": "None",
+        "max_size": "None",
+        "bag_limit": "2-4 per harvester / day",
+        "season": "Seasonal openings",
+        "jurisdiction": "WDFW / DFO Canada",
+        "source_name": "West Coast State Regulations (CDFW/WDFW/ODFW/NOAA)",
+        "source_url": "https://wdfw.wa.gov/fishing/regulations"
+      },
+      "specs": [
+        [
+          "Typical size",
+          "Min limit None / Bag limit 2-4 per harvester / day"
+        ],
+        [
+          "Diet",
+          "Small fish, crustaceans, squids, and pelagic prey"
+        ],
+        [
+          "Swimming depth",
+          "0 to 50 m"
+        ],
+        [
+          "Behavior",
+          "Navigates West Coast kelp forests, rocky reefs, and coastal upwelling zones."
+        ]
+      ],
+      "image": {
+        "url": "fish/pink-salmon.png",
+        "kind": "illustration",
+        "credit": "Original illustration",
+        "license": ""
+      }
+    },
+    {
+      "id": "pollock",
+      "name": "Pollock",
+      "sci": "Pollachius virens",
+      "color": "#0ad891",
+      "environment": "saltwater",
+      "model": "grid",
+      "lat_range": [
+        40.0,
+        52.0
+      ],
+      "lon_range": [
+        -100.0,
+        -50.0
+      ],
+      "regulations": {
+        "summary": "Regulated species - See MyFWC/NOAA guidelines",
+        "min_size": "Check MyFWC/NOAA rules",
+        "max_size": "None",
+        "bag_limit": "Varies by region / state",
+        "season": "Open year-round (subject to local quota/closures)",
+        "jurisdiction": "Atlantic & Gulf State/Federal Waters",
+        "source_name": "MyFWC Saltwater Regulations",
+        "source_url": "https://myfwc.com/fishing/saltwater/recreational/"
+      },
+      "specs": [
+        [
+          "Typical size",
+          "Variable per NOAA / regional guidelines"
+        ],
+        [
+          "Diet",
+          "Small fish, crustaceans, and cephalopods."
+        ],
+        [
+          "Behavior",
+          "Active predator along coastal, shelf, or offshore environments."
+        ],
+        [
+          "Spawning",
+          "Spawns seasonally based on water temperature and regional climate."
+        ]
+      ],
+      "image": {
+        "url": "fish/placeholder.png",
+        "kind": "illustration",
+        "credit": "Placeholder graphic",
+        "license": ""
+      }
+    },
+    {
+      "id": "rainbow-runner",
+      "name": "Rainbow runner",
+      "sci": "Elagatis bipinnulata",
+      "color": "#f27e3c",
+      "environment": "saltwater",
+      "model": "grid",
+      "lat_range": [
+        15.0,
+        30.0
+      ],
+      "lon_range": [
+        -100.0,
+        -50.0
+      ],
+      "regulations": {
+        "summary": "Regulated species - See MyFWC/NOAA guidelines",
+        "min_size": "Check MyFWC/NOAA rules",
+        "max_size": "None",
+        "bag_limit": "Varies by region / state",
+        "season": "Open year-round (subject to local quota/closures)",
+        "jurisdiction": "Atlantic & Gulf State/Federal Waters",
+        "source_name": "MyFWC Saltwater Regulations",
+        "source_url": "https://myfwc.com/fishing/saltwater/recreational/"
+      },
+      "specs": [
+        [
+          "Typical size",
+          "Variable per NOAA / regional guidelines"
+        ],
+        [
+          "Diet",
+          "Small fish, crustaceans, and cephalopods."
+        ],
+        [
+          "Behavior",
+          "Active predator along coastal, shelf, or offshore environments."
+        ],
+        [
+          "Spawning",
+          "Spawns seasonally based on water temperature and regional climate."
+        ]
+      ],
+      "image": {
+        "url": "fish/placeholder.png",
+        "kind": "illustration",
+        "credit": "Placeholder graphic",
+        "license": ""
+      }
+    },
+    {
+      "id": "red-drum",
+      "name": "Red drum (redfish)",
+      "sci": "Sciaenops ocellatus",
+      "color": "#2d20d8",
+      "environment": "saltwater",
+      "model": "grid",
+      "lat_range": null,
+      "lon_range": [
+        -100.0,
+        -50.0
+      ],
+      "regulations": {
+        "summary": "18\" - 27\" slot limit; 1 per harvester",
+        "min_size": "18 inches total length",
+        "max_size": "27 inches total length",
+        "bag_limit": "1 per harvester / day (FL Atlantic)",
+        "season": "Open year-round",
+        "jurisdiction": "Florida State Waters (FWC)",
+        "source_name": "MyFWC Red Drum Regulations",
+        "source_url": "https://myfwc.com/fishing/saltwater/recreational/red-drum/"
+      },
+      "specs": [
+        [
+          "Typical size",
+          "Common 3-15 lb; bull reds over 30 lb"
+        ],
+        [
+          "Diet",
+          "Crabs, shrimp, mullet, and pinfish"
+        ],
+        [
+          "Swimming depth",
+          "Shallow flats and channels; 0.3 to 15 m"
+        ],
+        [
+          "Behavior",
+          "Forages over shallow oyster bars, seagrass flats, and muddy estuarine channels. Adult bull reds form fall spawning runs in inlet passes."
+        ]
+      ],
+      "image": {
+        "url": "fish/red-drum.png",
+        "kind": "illustration",
+        "credit": "Original illustration",
+        "license": ""
+      }
+    },
+    {
+      "id": "red-grouper",
+      "name": "Red grouper",
+      "sci": "Epinephelus morio",
+      "color": "#3ef20c",
+      "environment": "saltwater",
+      "model": "grid",
+      "lat_range": null,
+      "lon_range": [
+        -100.0,
+        -50.0
+      ],
+      "regulations": {
+        "summary": "Regulated species - See MyFWC/NOAA guidelines",
+        "min_size": "Check MyFWC/NOAA rules",
+        "max_size": "None",
+        "bag_limit": "Varies by region / state",
+        "season": "Open year-round (subject to local quota/closures)",
+        "jurisdiction": "Atlantic & Gulf State/Federal Waters",
+        "source_name": "MyFWC Saltwater Regulations",
+        "source_url": "https://myfwc.com/fishing/saltwater/recreational/"
+      },
+      "specs": [
+        [
+          "Typical size",
+          "Common 5-15 lb; up to 30 lb"
+        ],
+        [
+          "Diet",
+          "Crabs, lobsters, squids, and bottom fishes"
+        ],
+        [
+          "Swimming depth",
+          "10 to 120 m"
+        ],
+        [
+          "Behavior",
+          "Excavates solution holes and crevice habitats on low-relief hardbottom limestone plains."
+        ]
+      ],
+      "image": {
+        "url": "fish/red-grouper.png",
+        "kind": "illustration",
+        "credit": "Original illustration",
+        "license": ""
+      }
+    },
+    {
+      "id": "red-snapper",
+      "name": "Red snapper",
+      "sci": "Lutjanus campechanus",
+      "color": "#d83689",
+      "environment": "saltwater",
+      "model": "grid",
+      "lat_range": null,
+      "lon_range": [
+        -100.0,
+        -50.0
+      ],
+      "regulations": {
+        "summary": "16\" min total length; 2 per harvester / day",
+        "min_size": "16 inches total length",
+        "max_size": "None",
+        "bag_limit": "2 per harvester / day (Atlantic state waters)",
+        "season": "Open during state/federal designated harvest days",
+        "jurisdiction": "Florida State & Federal SAFMC",
+        "source_name": "MyFWC Red Snapper Regulations",
+        "source_url": "https://myfwc.com/fishing/saltwater/recreational/snappers/"
+      },
+      "specs": [
+        [
+          "Typical size",
+          "Common 5-15 lb; up to 35+ lb"
+        ],
+        [
+          "Diet",
+          "Fish, squids, crabs, and octopus"
+        ],
+        [
+          "Swimming depth",
+          "15 to 90 m"
+        ],
+        [
+          "Behavior",
+          "Aggregates over offshore artificial reefs, deep wrecks, rocky ledges, and hardbottom structures."
+        ]
+      ],
+      "image": {
+        "url": "fish/red-snapper.png",
+        "kind": "illustration",
+        "credit": "Original illustration",
+        "license": ""
+      }
+    },
+    {
+      "id": "redtail-surfperch",
+      "name": "Redtail surfperch",
+      "sci": "Amphistichus rhodoterus",
+      "color": "#24c9f2",
+      "environment": "saltwater",
+      "model": "grid",
+      "lat_range": [
+        38.0,
+        50.0
+      ],
+      "lon_range": [
+        -138.0,
+        -110.0
+      ],
+      "regulations": {
+        "summary": "WDFW/ODFW: 12-15 per day limit",
+        "min_size": "None",
+        "max_size": "None",
+        "bag_limit": "12-15 per harvester / day",
+        "season": "Open year-round",
+        "jurisdiction": "WDFW / ODFW",
+        "source_name": "West Coast State Regulations (CDFW/WDFW/ODFW/NOAA)",
+        "source_url": "https://wdfw.wa.gov/fishing/regulations"
+      },
+      "specs": [
+        [
+          "Typical size",
+          "Min limit None / Bag limit 12-15 per harvester / day"
+        ],
+        [
+          "Diet",
+          "Small fish, crustaceans, squids, and pelagic prey"
+        ],
+        [
+          "Swimming depth",
+          "1 to 15 m"
+        ],
+        [
+          "Behavior",
+          "Navigates West Coast kelp forests, rocky reefs, and coastal upwelling zones."
+        ]
+      ],
+      "image": {
+        "url": "fish/redtail-surfperch.png",
+        "kind": "illustration",
+        "credit": "Original illustration",
+        "license": ""
+      }
+    },
+    {
+      "id": "rock-greenling",
+      "name": "Rock greenling",
+      "sci": "Hexagrammos lagocephalus",
+      "color": "#d8c50a",
+      "environment": "saltwater",
+      "model": "grid",
+      "lat_range": [
+        38.0,
+        60.0
+      ],
+      "lon_range": [
+        -138.0,
+        -110.0
+      ],
+      "regulations": {
+        "summary": "WDFW/DFO: Greenling daily limit applies",
+        "min_size": "12 inches TL",
+        "max_size": "None",
+        "bag_limit": "2-6 per harvester / day",
+        "season": "Open year-round",
+        "jurisdiction": "WDFW / DFO Canada",
+        "source_name": "West Coast State Regulations (CDFW/WDFW/ODFW/NOAA)",
+        "source_url": "https://wdfw.wa.gov/fishing/regulations"
+      },
+      "specs": [
+        [
+          "Typical size",
+          "Min limit 12 inches TL / Bag limit 2-6 per harvester / day"
+        ],
+        [
+          "Diet",
+          "Small fish, crustaceans, squids, and pelagic prey"
+        ],
+        [
+          "Swimming depth",
+          "1 to 30 m"
+        ],
+        [
+          "Behavior",
+          "Navigates West Coast kelp forests, rocky reefs, and coastal upwelling zones."
+        ]
+      ],
+      "image": {
+        "url": "fish/rock-greenling.png",
+        "kind": "illustration",
+        "credit": "Original illustration",
+        "license": ""
+      }
+    },
+    {
+      "id": "sablefish",
+      "name": "Sablefish",
+      "sci": "Anoplopoma fimbria",
+      "color": "#ac3cf2",
+      "environment": "saltwater",
+      "model": "grid",
+      "lat_range": [
+        32.0,
+        60.0
+      ],
+      "lon_range": [
+        -138.0,
+        -110.0
+      ],
+      "regulations": {
+        "summary": "CDFW/WDFW: Deepwater groundfish limits",
+        "min_size": "None",
+        "max_size": "None",
+        "bag_limit": "2-5 per harvester / day",
+        "season": "Open year-round (depth restricted)",
+        "jurisdiction": "NOAA Fisheries / CDFW",
+        "source_name": "West Coast State Regulations (CDFW/WDFW/ODFW/NOAA)",
+        "source_url": "https://wildlife.ca.gov/Fishing/Ocean/Regulations/Sport-Fishing"
+      },
+      "specs": [
+        [
+          "Typical size",
+          "Min limit None / Bag limit 2-5 per harvester / day"
+        ],
+        [
+          "Diet",
+          "Small fish, crustaceans, squids, and pelagic prey"
+        ],
+        [
+          "Swimming depth",
+          "100 to 500 m"
+        ],
+        [
+          "Behavior",
+          "Navigates West Coast kelp forests, rocky reefs, and coastal upwelling zones."
+        ]
+      ],
+      "image": {
+        "url": "fish/sablefish.png",
+        "kind": "illustration",
+        "credit": "Original illustration",
+        "license": ""
+      }
+    },
+    {
+      "id": "scamp-grouper",
+      "name": "Scamp grouper",
+      "sci": "Mycteroperca phenax",
+      "color": "#f2130c",
+      "environment": "saltwater",
+      "model": "grid",
+      "lat_range": null,
+      "lon_range": [
+        -100.0,
+        -50.0
+      ],
+      "regulations": {
+        "summary": "Regulated species - See MyFWC/NOAA guidelines",
+        "min_size": "Check MyFWC/NOAA rules",
+        "max_size": "None",
+        "bag_limit": "Varies by region / state",
+        "season": "Open year-round (subject to local quota/closures)",
+        "jurisdiction": "Atlantic & Gulf State/Federal Waters",
+        "source_name": "MyFWC Saltwater Regulations",
+        "source_url": "https://myfwc.com/fishing/saltwater/recreational/"
+      },
+      "specs": [
+        [
+          "Typical size",
+          "Common 4-12 lb; up to 30 lb"
+        ],
+        [
+          "Diet",
+          "Fish, crabs, and squids"
+        ],
+        [
+          "Swimming depth",
+          "30 to 100 m"
+        ],
+        [
+          "Behavior",
+          "Favors deep, high-relief coral ledges and rocky drop-offs along the outer continental shelf."
+        ]
+      ],
+      "image": {
+        "url": "fish/scamp-grouper.png",
+        "kind": "illustration",
+        "credit": "Original illustration",
+        "license": ""
+      }
+    },
+    {
+      "id": "scup",
+      "name": "Scup",
+      "sci": "Stenotomus chrysops",
+      "color": "#3660d8",
+      "environment": "saltwater",
+      "model": "sites",
+      "lat_range": [
+        36.0,
+        44.0
+      ],
+      "lon_range": [
+        -100.0,
+        -50.0
+      ],
+      "regulations": {
+        "summary": "Regulated species - See MyFWC/NOAA guidelines",
+        "min_size": "Check MyFWC/NOAA rules",
+        "max_size": "None",
+        "bag_limit": "Varies by region / state",
+        "season": "Open year-round (subject to local quota/closures)",
+        "jurisdiction": "Atlantic & Gulf State/Federal Waters",
+        "source_name": "MyFWC Saltwater Regulations",
+        "source_url": "https://myfwc.com/fishing/saltwater/recreational/"
+      },
+      "specs": [
+        [
+          "Typical size",
+          "Variable per NOAA / regional guidelines"
+        ],
+        [
+          "Diet",
+          "Small fish, crustaceans, and cephalopods."
+        ],
+        [
+          "Behavior",
+          "Active predator along coastal, shelf, or offshore environments."
+        ],
+        [
+          "Spawning",
+          "Spawns seasonally based on water temperature and regional climate."
+        ]
+      ],
+      "image": {
+        "url": "fish/placeholder.png",
+        "kind": "illustration",
+        "credit": "Placeholder graphic",
+        "license": ""
+      }
+    },
+    {
+      "id": "sheepshead",
+      "name": "Sheepshead",
+      "sci": "Archosargus probatocephalus",
+      "color": "#96f224",
+      "environment": "saltwater",
+      "model": "grid",
+      "lat_range": null,
+      "lon_range": [
+        -100.0,
+        -50.0
+      ],
+      "regulations": {
+        "summary": "Regulated species - See MyFWC/NOAA guidelines",
+        "min_size": "Check MyFWC/NOAA rules",
+        "max_size": "None",
+        "bag_limit": "Varies by region / state",
+        "season": "Open year-round (subject to local quota/closures)",
+        "jurisdiction": "Atlantic & Gulf State/Federal Waters",
+        "source_name": "MyFWC Saltwater Regulations",
+        "source_url": "https://myfwc.com/fishing/saltwater/recreational/"
+      },
+      "specs": [
+        [
+          "Typical size",
+          "Common 1-4 lb; up to 12 lb"
+        ],
+        [
+          "Diet",
+          "Barnacles, oysters, crabs, and fiddler crabs"
+        ],
+        [
+          "Swimming depth",
+          "Inshore structure; 0.5 to 15 m"
+        ],
+        [
+          "Behavior",
+          "Uses human teeth to scrape barnacles and oysters off bridge pilings, seawalls, docks, and rock jetties. Spawns in late winter near inlets."
+        ]
+      ],
+      "image": {
+        "url": "fish/sheepshead.png",
+        "kind": "illustration",
+        "credit": "Original illustration",
+        "license": ""
+      }
+    },
+    {
+      "id": "shortfin-mako",
+      "name": "Shortfin mako shark",
+      "sci": "Isurus oxyrinchus",
+      "color": "#d80ab8",
+      "environment": "saltwater",
+      "model": "grid",
+      "lat_range": [
+        18.0,
+        45.0
+      ],
+      "lon_range": [
+        -100.0,
+        -50.0
+      ],
+      "regulations": {
+        "summary": "Regulated species - See MyFWC/NOAA guidelines",
+        "min_size": "Check MyFWC/NOAA rules",
+        "max_size": "None",
+        "bag_limit": "Varies by region / state",
+        "season": "Open year-round (subject to local quota/closures)",
+        "jurisdiction": "Atlantic & Gulf State/Federal Waters",
+        "source_name": "MyFWC Saltwater Regulations",
+        "source_url": "https://myfwc.com/fishing/saltwater/recreational/"
+      },
+      "specs": [
+        [
+          "Typical size",
+          "Variable per NOAA / regional guidelines"
+        ],
+        [
+          "Diet",
+          "Small fish, crustaceans, and cephalopods."
+        ],
+        [
+          "Behavior",
+          "Active predator along coastal, shelf, or offshore environments."
+        ],
+        [
+          "Spawning",
+          "Spawns seasonally based on water temperature and regional climate."
+        ]
+      ],
+      "image": {
+        "url": "fish/placeholder.png",
+        "kind": "illustration",
+        "credit": "Placeholder graphic",
+        "license": ""
+      }
+    },
+    {
+      "id": "silk-snapper",
+      "name": "Silk snapper",
+      "sci": "Lutjanus vivanus",
+      "color": "#3cf2d9",
+      "environment": "saltwater",
+      "model": "grid",
+      "lat_range": [
+        15.0,
+        32.0
+      ],
+      "lon_range": [
+        -100.0,
+        -50.0
+      ],
+      "regulations": {
+        "summary": "Regulated species - See MyFWC/NOAA guidelines",
+        "min_size": "Check MyFWC/NOAA rules",
+        "max_size": "None",
+        "bag_limit": "Varies by region / state",
+        "season": "Open year-round (subject to local quota/closures)",
+        "jurisdiction": "Atlantic & Gulf State/Federal Waters",
+        "source_name": "MyFWC Saltwater Regulations",
+        "source_url": "https://myfwc.com/fishing/saltwater/recreational/"
+      },
+      "specs": [
+        [
+          "Typical size",
+          "Variable per NOAA / regional guidelines"
+        ],
+        [
+          "Diet",
+          "Small fish, crustaceans, and cephalopods."
+        ],
+        [
+          "Behavior",
+          "Active predator along coastal, shelf, or offshore environments."
+        ],
+        [
+          "Spawning",
+          "Spawns seasonally based on water temperature and regional climate."
+        ]
+      ],
+      "image": {
+        "url": "fish/placeholder.png",
+        "kind": "illustration",
+        "credit": "Placeholder graphic",
+        "license": ""
+      }
+    },
+    {
+      "id": "skipjack-tuna",
+      "name": "Skipjack tuna",
+      "sci": "Katsuwonus pelamis",
+      "color": "#d88920",
+      "environment": "saltwater",
+      "model": "grid",
+      "lat_range": [
+        15.0,
+        42.0
+      ],
+      "lon_range": [
+        -100.0,
+        -50.0
+      ],
+      "regulations": {
+        "summary": "Regulated species - See MyFWC/NOAA guidelines",
+        "min_size": "Check MyFWC/NOAA rules",
+        "max_size": "None",
+        "bag_limit": "Varies by region / state",
+        "season": "Open year-round (subject to local quota/closures)",
+        "jurisdiction": "Atlantic & Gulf State/Federal Waters",
+        "source_name": "MyFWC Saltwater Regulations",
+        "source_url": "https://myfwc.com/fishing/saltwater/recreational/"
+      },
+      "specs": [
+        [
+          "Typical size",
+          "Variable per NOAA / regional guidelines"
+        ],
+        [
+          "Diet",
+          "Small fish, crustaceans, and cephalopods."
+        ],
+        [
+          "Behavior",
+          "Active predator along coastal, shelf, or offshore environments."
+        ],
+        [
+          "Spawning",
+          "Spawns seasonally based on water temperature and regional climate."
+        ]
+      ],
+      "image": {
+        "url": "fish/placeholder.png",
+        "kind": "illustration",
+        "credit": "Placeholder graphic",
+        "license": ""
+      }
+    },
+    {
+      "id": "snowy-grouper",
+      "name": "Snowy grouper",
+      "sci": "Hyporthodus niveatus",
+      "color": "#38d836",
+      "environment": "saltwater",
+      "model": "grid",
+      "lat_range": null,
+      "lon_range": [
+        -100.0,
+        -50.0
+      ],
+      "regulations": {
+        "summary": "Regulated species - See MyFWC/NOAA guidelines",
+        "min_size": "Check MyFWC/NOAA rules",
+        "max_size": "None",
+        "bag_limit": "Varies by region / state",
+        "season": "Open year-round (subject to local quota/closures)",
+        "jurisdiction": "Atlantic & Gulf State/Federal Waters",
+        "source_name": "MyFWC Saltwater Regulations",
+        "source_url": "https://myfwc.com/fishing/saltwater/recreational/"
+      },
+      "specs": [
+        [
+          "Typical size",
+          "Common 10-30 lb; up to 70 lb"
+        ],
+        [
+          "Diet",
+          "Deepwater crabs, squids, and fishes"
+        ],
+        [
+          "Swimming depth",
+          "100 to 400 m"
+        ],
+        [
+          "Behavior",
+          "Deepwater bottom dweller that inhabits rocky drop-offs, mud-bottom mounds, and canyons along the continental slope."
+        ]
+      ],
+      "image": {
+        "url": "fish/snowy-grouper.png",
+        "kind": "illustration",
+        "credit": "Original illustration",
+        "license": ""
+      }
+    },
+    {
+      "id": "sockeye-salmon",
+      "name": "Sockeye salmon",
+      "sci": "Oncorhynchus nerka",
+      "color": "#f22462",
+      "environment": "saltwater",
+      "model": "grid",
+      "lat_range": [
+        42.0,
+        60.0
+      ],
+      "lon_range": [
+        -138.0,
+        -110.0
+      ],
+      "regulations": {
+        "summary": "WDFW/DFO: Regional river/ocean quotas",
+        "min_size": "Varies by zone",
+        "max_size": "None",
+        "bag_limit": "2-4 per day (seasonal)",
+        "season": "Seasonal openings",
+        "jurisdiction": "WDFW / DFO Canada",
+        "source_name": "West Coast State Regulations (CDFW/WDFW/ODFW/NOAA)",
+        "source_url": "https://wdfw.wa.gov/fishing/regulations"
+      },
+      "specs": [
+        [
+          "Typical size",
+          "Min limit Varies by zone / Bag limit 2-4 per day (seasonal)"
+        ],
+        [
+          "Diet",
+          "Small fish, crustaceans, squids, and pelagic prey"
+        ],
+        [
+          "Swimming depth",
+          "0 to 80 m"
+        ],
+        [
+          "Behavior",
+          "Navigates West Coast kelp forests, rocky reefs, and coastal upwelling zones."
+        ]
+      ],
+      "image": {
+        "url": "fish/sockeye-salmon.png",
+        "kind": "illustration",
+        "credit": "Original illustration",
+        "license": ""
+      }
+    },
+    {
+      "id": "soupfin-shark",
+      "name": "Soupfin shark",
+      "sci": "Galeorhinus galeus",
+      "color": "#0a85d8",
+      "environment": "saltwater",
+      "model": "grid",
+      "lat_range": [
+        28.0,
+        48.0
+      ],
+      "lon_range": [
+        -138.0,
+        -110.0
+      ],
+      "regulations": {
+        "summary": "CDFW: Finfish aggregate bag limits",
+        "min_size": "None",
+        "max_size": "None",
+        "bag_limit": "2-10 per day",
+        "season": "Open year-round",
+        "jurisdiction": "CDFW",
+        "source_name": "West Coast State Regulations (CDFW/WDFW/ODFW/NOAA)",
+        "source_url": "https://wildlife.ca.gov/Fishing/Ocean/Regulations/Sport-Fishing"
+      },
+      "specs": [
+        [
+          "Typical size",
+          "Min limit None / Bag limit 2-10 per day"
+        ],
+        [
+          "Diet",
+          "Small fish, crustaceans, squids, and pelagic prey"
+        ],
+        [
+          "Swimming depth",
+          "5 to 100 m"
+        ],
+        [
+          "Behavior",
+          "Navigates West Coast kelp forests, rocky reefs, and coastal upwelling zones."
+        ]
+      ],
+      "image": {
+        "url": "fish/soupfin-shark.png",
+        "kind": "illustration",
+        "credit": "Original illustration",
+        "license": ""
+      }
+    },
+    {
+      "id": "southern-flounder",
+      "name": "Southern flounder",
+      "sci": "Paralichthys lethostigma",
+      "color": "#ddf23c",
+      "environment": "saltwater",
+      "model": "grid",
+      "lat_range": null,
+      "lon_range": [
+        -100.0,
+        -50.0
+      ],
+      "regulations": {
+        "summary": "Regulated species - See MyFWC/NOAA guidelines",
+        "min_size": "Check MyFWC/NOAA rules",
+        "max_size": "None",
+        "bag_limit": "Varies by region / state",
+        "season": "Open year-round (subject to local quota/closures)",
+        "jurisdiction": "Atlantic & Gulf State/Federal Waters",
+        "source_name": "MyFWC Saltwater Regulations",
+        "source_url": "https://myfwc.com/fishing/saltwater/recreational/"
+      },
+      "specs": [
+        [
+          "Typical size",
+          "Common 1-4 lb; up to 13 lb"
+        ],
+        [
+          "Diet",
+          "Small fishes (mullet, anchovies), shrimp, and crabs"
+        ],
+        [
+          "Swimming depth",
+          "Benthic bottom; 0.5 to 25 m"
+        ],
+        [
+          "Behavior",
+          "Camouflaged ambush predator that lies buried on muddy and sandy bottoms near inlet channels, docks, and drop-offs."
+        ]
+      ],
+      "image": {
+        "url": "fish/southern-flounder.png",
+        "kind": "illustration",
+        "credit": "Original illustration",
+        "license": ""
+      }
+    },
+    {
+      "id": "spanish-mackerel",
+      "name": "Spanish mackerel",
+      "sci": "Scomberomorus maculatus",
+      "color": "#b720d8",
+      "environment": "saltwater",
+      "model": "sites",
+      "lat_range": [
+        20.0,
+        41.0
+      ],
+      "lon_range": [
+        -100.0,
+        -50.0
+      ],
+      "regulations": {
+        "summary": "Regulated species - See MyFWC/NOAA guidelines",
+        "min_size": "Check MyFWC/NOAA rules",
+        "max_size": "None",
+        "bag_limit": "Varies by region / state",
+        "season": "Open year-round (subject to local quota/closures)",
+        "jurisdiction": "Atlantic & Gulf State/Federal Waters",
+        "source_name": "MyFWC Saltwater Regulations",
+        "source_url": "https://myfwc.com/fishing/saltwater/recreational/"
+      },
+      "specs": [
+        [
+          "Typical size",
+          "Variable per NOAA / regional guidelines"
+        ],
+        [
+          "Diet",
+          "Small fish, crustaceans, and cephalopods."
+        ],
+        [
+          "Behavior",
+          "Active predator along coastal, shelf, or offshore environments."
+        ],
+        [
+          "Spawning",
+          "Spawns seasonally based on water temperature and regional climate."
+        ]
+      ],
+      "image": {
+        "url": "fish/placeholder.png",
+        "kind": "illustration",
+        "credit": "Placeholder graphic",
+        "license": ""
+      }
+    },
+    {
+      "id": "spinner-shark",
+      "name": "Spinner shark",
+      "sci": "Carcharhinus brevipinna",
+      "color": "#0cf285",
+      "environment": "saltwater",
+      "model": "sites",
+      "lat_range": [
+        18.0,
+        36.0
+      ],
+      "lon_range": [
+        -100.0,
+        -50.0
+      ],
+      "regulations": {
+        "summary": "Regulated species - See MyFWC/NOAA guidelines",
+        "min_size": "Check MyFWC/NOAA rules",
+        "max_size": "None",
+        "bag_limit": "Varies by region / state",
+        "season": "Open year-round (subject to local quota/closures)",
+        "jurisdiction": "Atlantic & Gulf State/Federal Waters",
+        "source_name": "MyFWC Saltwater Regulations",
+        "source_url": "https://myfwc.com/fishing/saltwater/recreational/"
+      },
+      "specs": [
+        [
+          "Typical size",
+          "Variable per NOAA / regional guidelines"
+        ],
+        [
+          "Diet",
+          "Small fish, crustaceans, and cephalopods."
+        ],
+        [
+          "Behavior",
+          "Active predator along coastal, shelf, or offshore environments."
+        ],
+        [
+          "Spawning",
+          "Spawns seasonally based on water temperature and regional climate."
+        ]
+      ],
+      "image": {
+        "url": "fish/placeholder.png",
+        "kind": "illustration",
+        "credit": "Placeholder graphic",
+        "license": ""
+      }
+    },
+    {
+      "id": "spot",
+      "name": "Spot",
+      "sci": "Leiostomus xanthurus",
+      "color": "#d85c36",
+      "environment": "saltwater",
+      "model": "sites",
+      "lat_range": [
+        24.0,
+        40.0
+      ],
+      "lon_range": [
+        -100.0,
+        -50.0
+      ],
+      "regulations": {
+        "summary": "Regulated species - See MyFWC/NOAA guidelines",
+        "min_size": "Check MyFWC/NOAA rules",
+        "max_size": "None",
+        "bag_limit": "Varies by region / state",
+        "season": "Open year-round (subject to local quota/closures)",
+        "jurisdiction": "Atlantic & Gulf State/Federal Waters",
+        "source_name": "MyFWC Saltwater Regulations",
+        "source_url": "https://myfwc.com/fishing/saltwater/recreational/"
+      },
+      "specs": [
+        [
+          "Typical size",
+          "Variable per NOAA / regional guidelines"
+        ],
+        [
+          "Diet",
+          "Small fish, crustaceans, and cephalopods."
+        ],
+        [
+          "Behavior",
+          "Active predator along coastal, shelf, or offshore environments."
+        ],
+        [
+          "Spawning",
+          "Spawns seasonally based on water temperature and regional climate."
+        ]
+      ],
+      "image": {
+        "url": "fish/placeholder.png",
+        "kind": "illustration",
+        "credit": "Placeholder graphic",
+        "license": ""
+      }
+    },
+    {
+      "id": "spotted-sand-bass",
+      "name": "Spotted sand bass",
+      "sci": "Paralabrax maculatofasciatus",
+      "color": "#242ff2",
+      "environment": "saltwater",
+      "model": "grid",
+      "lat_range": [
+        24.0,
+        34.0
+      ],
+      "lon_range": [
+        -138.0,
+        -110.0
+      ],
+      "regulations": {
+        "summary": "CDFW: 14\" min TL; 5 per day combined",
+        "min_size": "14 inches TL",
+        "max_size": "None",
+        "bag_limit": "5 per harvester / day",
+        "season": "Open year-round",
+        "jurisdiction": "CDFW",
+        "source_name": "West Coast State Regulations (CDFW/WDFW/ODFW/NOAA)",
+        "source_url": "https://wildlife.ca.gov/Fishing/Ocean/Regulations/Sport-Fishing"
+      },
+      "specs": [
+        [
+          "Typical size",
+          "Min limit 14 inches TL / Bag limit 5 per harvester / day"
+        ],
+        [
+          "Diet",
+          "Small fish, crustaceans, squids, and pelagic prey"
+        ],
+        [
+          "Swimming depth",
+          "1 to 20 m"
+        ],
+        [
+          "Behavior",
+          "Navigates West Coast kelp forests, rocky reefs, and coastal upwelling zones."
+        ]
+      ],
+      "image": {
+        "url": "fish/spotted-sand-bass.png",
+        "kind": "illustration",
+        "credit": "Original illustration",
+        "license": ""
+      }
+    },
+    {
+      "id": "spotted-seatrout",
+      "name": "Spotted seatrout",
+      "sci": "Cynoscion nebulosus",
+      "color": "#52d80a",
+      "environment": "saltwater",
+      "model": "sites",
+      "lat_range": [
+        24.0,
+        38.0
+      ],
+      "lon_range": [
+        -100.0,
+        -50.0
+      ],
+      "regulations": {
+        "summary": "15\" - 19\" slot limit; 3 to 5 per harvester",
+        "min_size": "15 inches total length",
+        "max_size": "19 inches total length (1 over 19\" per vessel allowed)",
+        "bag_limit": "3 - 5 per harvester / day (region dependent)",
+        "season": "Open year-round",
+        "jurisdiction": "Florida State Waters (FWC)",
+        "source_name": "MyFWC Spotted Seatrout Regulations",
+        "source_url": "https://myfwc.com/fishing/saltwater/recreational/spotted-seatrout/"
+      },
+      "specs": [
+        [
+          "Typical size",
+          "Variable per NOAA / regional guidelines"
+        ],
+        [
+          "Diet",
+          "Small fish, crustaceans, and cephalopods."
+        ],
+        [
+          "Behavior",
+          "Active predator along coastal, shelf, or offshore environments."
+        ],
+        [
+          "Spawning",
+          "Spawns seasonally based on water temperature and regional climate."
+        ]
+      ],
+      "image": {
+        "url": "fish/placeholder.png",
+        "kind": "illustration",
+        "credit": "Placeholder graphic",
+        "license": ""
+      }
+    },
+    {
+      "id": "starry-flounder",
+      "name": "Starry flounder",
+      "sci": "Platichthys stellatus",
+      "color": "#f23cb0",
+      "environment": "saltwater",
+      "model": "grid",
+      "lat_range": [
+        34.0,
+        60.0
+      ],
+      "lon_range": [
+        -138.0,
+        -110.0
+      ],
+      "regulations": {
+        "summary": "CDFW/WDFW: Flatfish aggregate daily limit",
+        "min_size": "None",
+        "max_size": "None",
+        "bag_limit": "10-15 per day aggregate",
+        "season": "Open year-round",
+        "jurisdiction": "CDFW / WDFW",
+        "source_name": "West Coast State Regulations (CDFW/WDFW/ODFW/NOAA)",
+        "source_url": "https://wildlife.ca.gov/Fishing/Ocean/Regulations/Sport-Fishing"
+      },
+      "specs": [
+        [
+          "Typical size",
+          "Min limit None / Bag limit 10-15 per day aggregate"
+        ],
+        [
+          "Diet",
+          "Small fish, crustaceans, squids, and pelagic prey"
+        ],
+        [
+          "Swimming depth",
+          "1 to 50 m"
+        ],
+        [
+          "Behavior",
+          "Navigates West Coast kelp forests, rocky reefs, and coastal upwelling zones."
+        ]
+      ],
+      "image": {
+        "url": "fish/starry-flounder.png",
+        "kind": "illustration",
+        "credit": "Original illustration",
+        "license": ""
+      }
+    },
+    {
+      "id": "steelhead-trout",
+      "name": "Steelhead",
+      "sci": "Oncorhynchus mykiss",
+      "color": "#20cbd8",
+      "environment": "saltwater",
+      "model": "grid",
+      "lat_range": [
+        36.0,
+        60.0
+      ],
+      "lon_range": [
+        -138.0,
+        -110.0
+      ],
+      "regulations": {
+        "summary": "WDFW/ODFW: Hatchery clipped only",
+        "min_size": "Varies by river/zone",
+        "max_size": "None",
+        "bag_limit": "1-2 per harvester / day",
+        "season": "Seasonal openings",
+        "jurisdiction": "CDFW / ODFW / WDFW",
+        "source_name": "West Coast State Regulations (CDFW/WDFW/ODFW/NOAA)",
+        "source_url": "https://wdfw.wa.gov/fishing/regulations"
+      },
+      "specs": [
+        [
+          "Typical size",
+          "Min limit Varies by river/zone / Bag limit 1-2 per harvester / day"
+        ],
+        [
+          "Diet",
+          "Small fish, crustaceans, squids, and pelagic prey"
+        ],
+        [
+          "Swimming depth",
+          "0 to 40 m"
+        ],
+        [
+          "Behavior",
+          "Navigates West Coast kelp forests, rocky reefs, and coastal upwelling zones."
+        ]
+      ],
+      "image": {
+        "url": "fish/steelhead-trout.png",
+        "kind": "illustration",
+        "credit": "Original illustration",
+        "license": ""
+      }
+    },
+    {
+      "id": "striped-bass",
+      "name": "Striped bass",
+      "sci": "Morone saxatilis",
+      "color": "#f2bf0c",
+      "environment": "saltwater",
+      "model": "sites",
+      "lat_range": [
+        28.0,
+        48.0
+      ],
+      "lon_range": [
+        -100.0,
+        -50.0
+      ],
+      "regulations": {
+        "summary": "Regulated species - See MyFWC/NOAA guidelines",
+        "min_size": "Check MyFWC/NOAA rules",
+        "max_size": "None",
+        "bag_limit": "Varies by region / state",
+        "season": "Open year-round (subject to local quota/closures)",
+        "jurisdiction": "Atlantic & Gulf State/Federal Waters",
+        "source_name": "MyFWC Saltwater Regulations",
+        "source_url": "https://myfwc.com/fishing/saltwater/recreational/"
+      },
+      "specs": [
+        [
+          "Typical size",
+          "Variable per NOAA / regional guidelines"
+        ],
+        [
+          "Diet",
+          "Small fish, crustaceans, and cephalopods."
+        ],
+        [
+          "Behavior",
+          "Active predator along coastal, shelf, or offshore environments."
+        ],
+        [
+          "Spawning",
+          "Spawns seasonally based on water temperature and regional climate."
+        ]
+      ],
+      "image": {
+        "url": "fish/placeholder.png",
+        "kind": "illustration",
+        "credit": "Placeholder graphic",
+        "license": ""
+      }
+    },
+    {
+      "id": "striped-marlin",
+      "name": "Striped marlin",
+      "sci": "Kajikia audax",
+      "color": "#8536d8",
+      "environment": "saltwater",
+      "model": "grid",
+      "lat_range": [
+        15.0,
+        34.0
+      ],
+      "lon_range": [
+        -138.0,
+        -110.0
+      ],
+      "regulations": {
+        "summary": "CDFW/NOAA: 1 per day; catch and release encouraged",
+        "min_size": "None",
+        "max_size": "None",
+        "bag_limit": "1 per harvester / day",
+        "season": "Open year-round",
+        "jurisdiction": "CDFW / NOAA",
+        "source_name": "West Coast State Regulations (CDFW/WDFW/ODFW/NOAA)",
+        "source_url": "https://wildlife.ca.gov/Fishing/Ocean/Regulations/Sport-Fishing"
+      },
+      "specs": [
+        [
+          "Typical size",
+          "Min limit None / Bag limit 1 per harvester / day"
+        ],
+        [
+          "Diet",
+          "Small fish, crustaceans, squids, and pelagic prey"
+        ],
+        [
+          "Swimming depth",
+          "0 to 100 m"
+        ],
+        [
+          "Behavior",
+          "Navigates West Coast kelp forests, rocky reefs, and coastal upwelling zones."
+        ]
+      ],
+      "image": {
+        "url": "fish/striped-marlin.png",
+        "kind": "illustration",
+        "credit": "Original illustration",
+        "license": ""
+      }
+    },
+    {
+      "id": "summer-flounder",
+      "name": "Summer flounder",
+      "sci": "Paralichthys dentatus",
+      "color": "#24f24c",
+      "environment": "saltwater",
+      "model": "sites",
+      "lat_range": [
+        30.0,
+        44.0
+      ],
+      "lon_range": [
+        -100.0,
+        -50.0
+      ],
+      "regulations": {
+        "summary": "Regulated species - See MyFWC/NOAA guidelines",
+        "min_size": "Check MyFWC/NOAA rules",
+        "max_size": "None",
+        "bag_limit": "Varies by region / state",
+        "season": "Open year-round (subject to local quota/closures)",
+        "jurisdiction": "Atlantic & Gulf State/Federal Waters",
+        "source_name": "MyFWC Saltwater Regulations",
+        "source_url": "https://myfwc.com/fishing/saltwater/recreational/"
+      },
+      "specs": [
+        [
+          "Typical size",
+          "Variable per NOAA / regional guidelines"
+        ],
+        [
+          "Diet",
+          "Small fish, crustaceans, and cephalopods."
+        ],
+        [
+          "Behavior",
+          "Active predator along coastal, shelf, or offshore environments."
+        ],
+        [
+          "Spawning",
+          "Spawns seasonally based on water temperature and regional climate."
+        ]
+      ],
+      "image": {
+        "url": "fish/placeholder.png",
+        "kind": "illustration",
+        "credit": "Placeholder graphic",
+        "license": ""
+      }
+    },
+    {
+      "id": "swordfish",
+      "name": "Swordfish",
+      "sci": "Xiphias gladius",
+      "color": "#d80a1e",
+      "environment": "saltwater",
+      "model": "grid",
+      "lat_range": [
+        15.0,
+        46.0
+      ],
+      "lon_range": [
+        -100.0,
+        -50.0
+      ],
+      "regulations": {
+        "summary": "Regulated species - See MyFWC/NOAA guidelines",
+        "min_size": "Check MyFWC/NOAA rules",
+        "max_size": "None",
+        "bag_limit": "Varies by region / state",
+        "season": "Open year-round (subject to local quota/closures)",
+        "jurisdiction": "Atlantic & Gulf State/Federal Waters",
+        "source_name": "MyFWC Saltwater Regulations",
+        "source_url": "https://myfwc.com/fishing/saltwater/recreational/"
+      },
+      "specs": [
+        [
+          "Typical size",
+          "Variable per NOAA / regional guidelines"
+        ],
+        [
+          "Diet",
+          "Small fish, crustaceans, and cephalopods."
+        ],
+        [
+          "Behavior",
+          "Active predator along coastal, shelf, or offshore environments."
+        ],
+        [
+          "Spawning",
+          "Spawns seasonally based on water temperature and regional climate."
+        ]
+      ],
+      "image": {
+        "url": "fish/placeholder.png",
+        "kind": "illustration",
+        "credit": "Placeholder graphic",
+        "license": ""
+      }
+    },
+    {
+      "id": "tautog",
+      "name": "Tautog",
+      "sci": "Tautoga onitis",
+      "color": "#9ed820",
+      "environment": "saltwater",
+      "model": "sites",
+      "lat_range": [
+        35.0,
+        44.0
+      ],
+      "lon_range": [
+        -100.0,
+        -50.0
+      ],
+      "regulations": {
+        "summary": "Regulated species - See MyFWC/NOAA guidelines",
+        "min_size": "Check MyFWC/NOAA rules",
+        "max_size": "None",
+        "bag_limit": "Varies by region / state",
+        "season": "Open year-round (subject to local quota/closures)",
+        "jurisdiction": "Atlantic & Gulf State/Federal Waters",
+        "source_name": "MyFWC Saltwater Regulations",
+        "source_url": "https://myfwc.com/fishing/saltwater/recreational/"
+      },
+      "specs": [
+        [
+          "Typical size",
+          "Variable per NOAA / regional guidelines"
+        ],
+        [
+          "Diet",
+          "Small fish, crustaceans, and cephalopods."
+        ],
+        [
+          "Behavior",
+          "Active predator along coastal, shelf, or offshore environments."
+        ],
+        [
+          "Spawning",
+          "Spawns seasonally based on water temperature and regional climate."
+        ]
+      ],
+      "image": {
+        "url": "fish/placeholder.png",
+        "kind": "illustration",
+        "credit": "Placeholder graphic",
+        "license": ""
+      }
+    },
+    {
+      "id": "thresher-shark",
+      "name": "Thresher shark",
+      "sci": "Alopias vulpinus",
+      "color": "#f20cec",
+      "environment": "saltwater",
+      "model": "grid",
+      "lat_range": [
+        28.0,
+        45.0
+      ],
+      "lon_range": [
+        -100.0,
+        -50.0
+      ],
+      "regulations": {
+        "summary": "Regulated species - See MyFWC/NOAA guidelines",
+        "min_size": "Check MyFWC/NOAA rules",
+        "max_size": "None",
+        "bag_limit": "Varies by region / state",
+        "season": "Open year-round (subject to local quota/closures)",
+        "jurisdiction": "Atlantic & Gulf State/Federal Waters",
+        "source_name": "MyFWC Saltwater Regulations",
+        "source_url": "https://myfwc.com/fishing/saltwater/recreational/"
+      },
+      "specs": [
+        [
+          "Typical size",
+          "Variable per NOAA / regional guidelines"
+        ],
+        [
+          "Diet",
+          "Small fish, crustaceans, and cephalopods."
+        ],
+        [
+          "Behavior",
+          "Active predator along coastal, shelf, or offshore environments."
+        ],
+        [
+          "Spawning",
+          "Spawns seasonally based on water temperature and regional climate."
+        ]
+      ],
+      "image": {
+        "url": "fish/placeholder.png",
+        "kind": "illustration",
+        "credit": "Placeholder graphic",
+        "license": ""
+      }
+    },
+    {
+      "id": "treefish",
+      "name": "Treefish",
+      "sci": "Sebastes serriceps",
+      "color": "#36d8ad",
+      "environment": "saltwater",
+      "model": "grid",
+      "lat_range": [
+        26.0,
+        35.0
+      ],
+      "lon_range": [
+        -138.0,
+        -110.0
+      ],
+      "regulations": {
+        "summary": "CDFW: Part of 10-rockfish aggregate bag",
+        "min_size": "None",
+        "max_size": "None",
+        "bag_limit": "10 per harvester / day aggregate",
+        "season": "Seasonal groundfish window",
+        "jurisdiction": "CDFW",
+        "source_name": "West Coast State Regulations (CDFW/WDFW/ODFW/NOAA)",
+        "source_url": "https://wildlife.ca.gov/Fishing/Ocean/Regulations/Sport-Fishing"
+      },
+      "specs": [
+        [
+          "Typical size",
+          "Min limit None / Bag limit 10 per harvester / day aggregate"
+        ],
+        [
+          "Diet",
+          "Small fish, crustaceans, squids, and pelagic prey"
+        ],
+        [
+          "Swimming depth",
+          "2 to 45 m"
+        ],
+        [
+          "Behavior",
+          "Navigates West Coast kelp forests, rocky reefs, and coastal upwelling zones."
+        ]
+      ],
+      "image": {
+        "url": "fish/treefish.png",
+        "kind": "illustration",
+        "credit": "Original illustration",
+        "license": ""
+      }
+    },
+    {
+      "id": "tripletail",
+      "name": "Tripletail",
+      "sci": "Lobotes surinamensis",
+      "color": "#f27f24",
+      "environment": "saltwater",
+      "model": "sites",
+      "lat_range": [
+        18.0,
+        36.0
+      ],
+      "lon_range": [
+        -100.0,
+        -50.0
+      ],
+      "regulations": {
+        "summary": "Regulated species - See MyFWC/NOAA guidelines",
+        "min_size": "Check MyFWC/NOAA rules",
+        "max_size": "None",
+        "bag_limit": "Varies by region / state",
+        "season": "Open year-round (subject to local quota/closures)",
+        "jurisdiction": "Atlantic & Gulf State/Federal Waters",
+        "source_name": "MyFWC Saltwater Regulations",
+        "source_url": "https://myfwc.com/fishing/saltwater/recreational/"
+      },
+      "specs": [
+        [
+          "Typical size",
+          "Variable per NOAA / regional guidelines"
+        ],
+        [
+          "Diet",
+          "Small fish, crustaceans, and cephalopods."
+        ],
+        [
+          "Behavior",
+          "Active predator along coastal, shelf, or offshore environments."
+        ],
+        [
+          "Spawning",
+          "Spawns seasonally based on water temperature and regional climate."
+        ]
+      ],
+      "image": {
+        "url": "fish/placeholder.png",
+        "kind": "illustration",
+        "credit": "Placeholder graphic",
+        "license": ""
+      }
+    },
+    {
+      "id": "vermilion-rockfish",
+      "name": "Vermilion rockfish",
+      "sci": "Sebastes miniatus",
+      "color": "#2a0ad8",
+      "environment": "saltwater",
+      "model": "grid",
+      "lat_range": [
+        28.0,
+        50.0
+      ],
+      "lon_range": [
+        -138.0,
+        -110.0
+      ],
+      "regulations": {
+        "summary": "CDFW: 4 per day sublimit within rockfish 10",
+        "min_size": "None",
+        "max_size": "None",
+        "bag_limit": "4 per harvester / day",
+        "season": "Seasonal groundfish window",
+        "jurisdiction": "CDFW / ODFW",
+        "source_name": "West Coast State Regulations (CDFW/WDFW/ODFW/NOAA)",
+        "source_url": "https://wildlife.ca.gov/Fishing/Ocean/Regulations/Sport-Fishing"
+      },
+      "specs": [
+        [
+          "Typical size",
+          "Min limit None / Bag limit 4 per harvester / day"
+        ],
+        [
+          "Diet",
+          "Small fish, crustaceans, squids, and pelagic prey"
+        ],
+        [
+          "Swimming depth",
+          "15 to 150 m"
+        ],
+        [
+          "Behavior",
+          "Navigates West Coast kelp forests, rocky reefs, and coastal upwelling zones."
+        ]
+      ],
+      "image": {
+        "url": "fish/vermilion-rockfish.png",
+        "kind": "illustration",
+        "credit": "Original illustration",
+        "license": ""
+      }
+    },
+    {
+      "id": "vermilion-snapper",
+      "name": "Vermilion snapper",
+      "sci": "Rhomboplites aurorubens",
+      "color": "#56f23c",
+      "environment": "saltwater",
+      "model": "grid",
+      "lat_range": [
+        18.0,
+        36.0
+      ],
+      "lon_range": [
+        -100.0,
+        -50.0
+      ],
+      "regulations": {
+        "summary": "Regulated species - See MyFWC/NOAA guidelines",
+        "min_size": "Check MyFWC/NOAA rules",
+        "max_size": "None",
+        "bag_limit": "Varies by region / state",
+        "season": "Open year-round (subject to local quota/closures)",
+        "jurisdiction": "Atlantic & Gulf State/Federal Waters",
+        "source_name": "MyFWC Saltwater Regulations",
+        "source_url": "https://myfwc.com/fishing/saltwater/recreational/"
+      },
+      "specs": [
+        [
+          "Typical size",
+          "Variable per NOAA / regional guidelines"
+        ],
+        [
+          "Diet",
+          "Small fish, crustaceans, and cephalopods."
+        ],
+        [
+          "Behavior",
+          "Active predator along coastal, shelf, or offshore environments."
+        ],
+        [
+          "Spawning",
+          "Spawns seasonally based on water temperature and regional climate."
+        ]
+      ],
+      "image": {
+        "url": "fish/placeholder.png",
+        "kind": "illustration",
+        "credit": "Placeholder graphic",
+        "license": ""
+      }
+    },
+    {
+      "id": "wahoo",
+      "name": "Wahoo",
+      "sci": "Acanthocybium solandri",
+      "color": "#d82070",
+      "environment": "saltwater",
+      "model": "grid",
+      "lat_range": null,
+      "lon_range": [
+        -100.0,
+        -50.0
+      ],
+      "regulations": {
+        "summary": "Regulated species - See MyFWC/NOAA guidelines",
+        "min_size": "Check MyFWC/NOAA rules",
+        "max_size": "None",
+        "bag_limit": "Varies by region / state",
+        "season": "Open year-round (subject to local quota/closures)",
+        "jurisdiction": "Atlantic & Gulf State/Federal Waters",
+        "source_name": "MyFWC Saltwater Regulations",
+        "source_url": "https://myfwc.com/fishing/saltwater/recreational/"
+      },
+      "specs": [
+        [
+          "Typical size",
+          "Relatively common at 50-75 lb and can exceed 100 lb"
+        ],
+        [
+          "Diet",
+          "Almost totally fish: mackerels, butterfishes, scads, jacks, flying fish; a little squid"
+        ],
+        [
+          "Swimming depth",
+          "Mostly in the upper mixed layer. Tagging off Baja California found an average depth of about 18 m, with 99% of daytime above the thermocline."
+        ],
+        [
+          "Behavior",
+          "Solitary or in very small loose groups. More common near banks (lumps), drop-offs or weed lines in blue water, along current edges and temperature breaks. Not warm-blooded."
+        ],
+        [
+          "Lifespan",
+          "At least 5 years"
+        ]
+      ],
+      "image": {
+        "url": "fish/wahoo.png",
+        "kind": "illustration",
+        "credit": "Original illustration",
+        "license": ""
+      }
+    },
+    {
+      "id": "warsaw-grouper",
+      "name": "Warsaw grouper",
+      "sci": "Hyporthodus nigritus",
+      "color": "#0cb2f2",
+      "environment": "saltwater",
+      "model": "grid",
+      "lat_range": [
+        15.0,
+        36.0
+      ],
+      "lon_range": [
+        -100.0,
+        -50.0
+      ],
+      "regulations": {
+        "summary": "Regulated species - See MyFWC/NOAA guidelines",
+        "min_size": "Check MyFWC/NOAA rules",
+        "max_size": "None",
+        "bag_limit": "Varies by region / state",
+        "season": "Open year-round (subject to local quota/closures)",
+        "jurisdiction": "Atlantic & Gulf State/Federal Waters",
+        "source_name": "MyFWC Saltwater Regulations",
+        "source_url": "https://myfwc.com/fishing/saltwater/recreational/"
+      },
+      "specs": [
+        [
+          "Typical size",
+          "Variable per NOAA / regional guidelines"
+        ],
+        [
+          "Diet",
+          "Small fish, crustaceans, and cephalopods."
+        ],
+        [
+          "Behavior",
+          "Active predator along coastal, shelf, or offshore environments."
+        ],
+        [
+          "Spawning",
+          "Spawns seasonally based on water temperature and regional climate."
+        ]
+      ],
+      "image": {
+        "url": "fish/placeholder.png",
+        "kind": "illustration",
+        "credit": "Placeholder graphic",
+        "license": ""
+      }
+    },
+    {
+      "id": "weakfish",
+      "name": "Weakfish",
+      "sci": "Cynoscion regalis",
+      "color": "#d8d636",
+      "environment": "saltwater",
+      "model": "sites",
+      "lat_range": [
+        28.0,
+        42.0
+      ],
+      "lon_range": [
+        -100.0,
+        -50.0
+      ],
+      "regulations": {
+        "summary": "Regulated species - See MyFWC/NOAA guidelines",
+        "min_size": "Check MyFWC/NOAA rules",
+        "max_size": "None",
+        "bag_limit": "Varies by region / state",
+        "season": "Open year-round (subject to local quota/closures)",
+        "jurisdiction": "Atlantic & Gulf State/Federal Waters",
+        "source_name": "MyFWC Saltwater Regulations",
+        "source_url": "https://myfwc.com/fishing/saltwater/recreational/"
+      },
+      "specs": [
+        [
+          "Typical size",
+          "Variable per NOAA / regional guidelines"
+        ],
+        [
+          "Diet",
+          "Small fish, crustaceans, and cephalopods."
+        ],
+        [
+          "Behavior",
+          "Active predator along coastal, shelf, or offshore environments."
+        ],
+        [
+          "Spawning",
+          "Spawns seasonally based on water temperature and regional climate."
+        ]
+      ],
+      "image": {
+        "url": "fish/placeholder.png",
+        "kind": "illustration",
+        "credit": "Placeholder graphic",
+        "license": ""
+      }
+    },
+    {
+      "id": "white-grunt",
+      "name": "White grunt",
+      "sci": "Haemulon plumierii",
+      "color": "#b224f2",
+      "environment": "saltwater",
+      "model": "sites",
+      "lat_range": [
+        18.0,
+        33.0
+      ],
+      "lon_range": [
+        -100.0,
+        -50.0
+      ],
+      "regulations": {
+        "summary": "Regulated species - See MyFWC/NOAA guidelines",
+        "min_size": "Check MyFWC/NOAA rules",
+        "max_size": "None",
+        "bag_limit": "Varies by region / state",
+        "season": "Open year-round (subject to local quota/closures)",
+        "jurisdiction": "Atlantic & Gulf State/Federal Waters",
+        "source_name": "MyFWC Saltwater Regulations",
+        "source_url": "https://myfwc.com/fishing/saltwater/recreational/"
+      },
+      "specs": [
+        [
+          "Typical size",
+          "Variable per NOAA / regional guidelines"
+        ],
+        [
+          "Diet",
+          "Small fish, crustaceans, and cephalopods."
+        ],
+        [
+          "Behavior",
+          "Active predator along coastal, shelf, or offshore environments."
+        ],
+        [
+          "Spawning",
+          "Spawns seasonally based on water temperature and regional climate."
+        ]
+      ],
+      "image": {
+        "url": "fish/placeholder.png",
+        "kind": "illustration",
+        "credit": "Placeholder graphic",
+        "license": ""
+      }
+    },
+    {
+      "id": "white-marlin",
+      "name": "White marlin",
+      "sci": "Kajikia albida",
+      "color": "#0ad85d",
+      "environment": "saltwater",
+      "model": "grid",
+      "lat_range": [
+        18.0,
+        42.0
+      ],
+      "lon_range": [
+        -100.0,
+        -50.0
+      ],
+      "regulations": {
+        "summary": "Regulated species - See MyFWC/NOAA guidelines",
+        "min_size": "Check MyFWC/NOAA rules",
+        "max_size": "None",
+        "bag_limit": "Varies by region / state",
+        "season": "Open year-round (subject to local quota/closures)",
+        "jurisdiction": "Atlantic & Gulf State/Federal Waters",
+        "source_name": "MyFWC Saltwater Regulations",
+        "source_url": "https://myfwc.com/fishing/saltwater/recreational/"
+      },
+      "specs": [
+        [
+          "Typical size",
+          "Variable per NOAA / regional guidelines"
+        ],
+        [
+          "Diet",
+          "Small fish, crustaceans, and cephalopods."
+        ],
+        [
+          "Behavior",
+          "Active predator along coastal, shelf, or offshore environments."
+        ],
+        [
+          "Spawning",
+          "Spawns seasonally based on water temperature and regional climate."
+        ]
+      ],
+      "image": {
+        "url": "fish/placeholder.png",
+        "kind": "illustration",
+        "credit": "Placeholder graphic",
+        "license": ""
+      }
+    },
+    {
+      "id": "white-seabass",
+      "name": "White seabass",
+      "sci": "Atractoscion nobilis",
+      "color": "#f2503c",
+      "environment": "saltwater",
+      "model": "grid",
+      "lat_range": [
+        24.0,
+        38.0
+      ],
+      "lon_range": [
+        -138.0,
+        -110.0
+      ],
+      "regulations": {
+        "summary": "CDFW: 28\" min TL; 1-3 per day",
+        "min_size": "28 inches TL",
+        "max_size": "None",
+        "bag_limit": "1 per day (Mar 15-Jun 15); 3 per day otherwise",
+        "season": "Open year-round",
+        "jurisdiction": "California State Waters (CDFW)",
+        "source_name": "West Coast State Regulations (CDFW/WDFW/ODFW/NOAA)",
+        "source_url": "https://wildlife.ca.gov/Fishing/Ocean/Regulations/Sport-Fishing"
+      },
+      "specs": [
+        [
+          "Typical size",
+          "Min limit 28 inches TL / Bag limit 1 per day (Mar 15-Jun 15); 3 per day otherwise"
+        ],
+        [
+          "Diet",
+          "Small fish, crustaceans, squids, and pelagic prey"
+        ],
+        [
+          "Swimming depth",
+          "2 to 40 m"
+        ],
+        [
+          "Behavior",
+          "Navigates West Coast kelp forests, rocky reefs, and coastal upwelling zones."
+        ]
+      ],
+      "image": {
+        "url": "fish/white-seabass.png",
+        "kind": "illustration",
+        "credit": "Original illustration",
+        "license": ""
+      }
+    },
+    {
+      "id": "white-sturgeon",
+      "name": "White sturgeon",
+      "sci": "Acipenser transmontanus",
+      "color": "#2042d8",
+      "environment": "saltwater",
+      "model": "grid",
+      "lat_range": [
+        36.0,
+        54.0
+      ],
+      "lon_range": [
+        -138.0,
+        -110.0
+      ],
+      "regulations": {
+        "summary": "CDFW/WDFW: 42\"-48\" slot TL; strict tag limits",
+        "min_size": "42 inches TL",
+        "max_size": "48 inches TL",
+        "bag_limit": "1 per year / tag required",
+        "season": "Seasonal strict openings",
+        "jurisdiction": "CDFW / WDFW / ODFW",
+        "source_name": "West Coast State Regulations (CDFW/WDFW/ODFW/NOAA)",
+        "source_url": "https://wildlife.ca.gov/Fishing/Ocean/Regulations/Sport-Fishing"
+      },
+      "specs": [
+        [
+          "Typical size",
+          "Min limit 42 inches TL / Bag limit 1 per year / tag required"
+        ],
+        [
+          "Diet",
+          "Small fish, crustaceans, squids, and pelagic prey"
+        ],
+        [
+          "Swimming depth",
+          "2 to 30 m"
+        ],
+        [
+          "Behavior",
+          "Navigates West Coast kelp forests, rocky reefs, and coastal upwelling zones."
+        ]
+      ],
+      "image": {
+        "url": "fish/white-sturgeon.png",
+        "kind": "illustration",
+        "credit": "Original illustration",
+        "license": ""
+      }
+    },
+    {
+      "id": "winter-flounder",
+      "name": "Winter flounder",
+      "sci": "Pseudopleuronectes americanus",
+      "color": "#79f20c",
+      "environment": "saltwater",
+      "model": "sites",
+      "lat_range": [
+        37.0,
+        50.0
+      ],
+      "lon_range": [
+        -100.0,
+        -50.0
+      ],
+      "regulations": {
+        "summary": "Regulated species - See MyFWC/NOAA guidelines",
+        "min_size": "Check MyFWC/NOAA rules",
+        "max_size": "None",
+        "bag_limit": "Varies by region / state",
+        "season": "Open year-round (subject to local quota/closures)",
+        "jurisdiction": "Atlantic & Gulf State/Federal Waters",
+        "source_name": "MyFWC Saltwater Regulations",
+        "source_url": "https://myfwc.com/fishing/saltwater/recreational/"
+      },
+      "specs": [
+        [
+          "Typical size",
+          "Variable per NOAA / regional guidelines"
+        ],
+        [
+          "Diet",
+          "Small fish, crustaceans, and cephalopods."
+        ],
+        [
+          "Behavior",
+          "Active predator along coastal, shelf, or offshore environments."
+        ],
+        [
+          "Spawning",
+          "Spawns seasonally based on water temperature and regional climate."
+        ]
+      ],
+      "image": {
+        "url": "fish/placeholder.png",
+        "kind": "illustration",
+        "credit": "Placeholder graphic",
+        "license": ""
+      }
+    },
+    {
+      "id": "yellowedge-grouper",
+      "name": "Yellowedge grouper",
+      "sci": "Hyporthodus flavolimbatus",
+      "color": "#d836b2",
+      "environment": "saltwater",
+      "model": "grid",
+      "lat_range": [
+        15.0,
+        35.0
+      ],
+      "lon_range": [
+        -100.0,
+        -50.0
+      ],
+      "regulations": {
+        "summary": "Regulated species - See MyFWC/NOAA guidelines",
+        "min_size": "Check MyFWC/NOAA rules",
+        "max_size": "None",
+        "bag_limit": "Varies by region / state",
+        "season": "Open year-round (subject to local quota/closures)",
+        "jurisdiction": "Atlantic & Gulf State/Federal Waters",
+        "source_name": "MyFWC Saltwater Regulations",
+        "source_url": "https://myfwc.com/fishing/saltwater/recreational/"
+      },
+      "specs": [
+        [
+          "Typical size",
+          "Variable per NOAA / regional guidelines"
+        ],
+        [
+          "Diet",
+          "Small fish, crustaceans, and cephalopods."
+        ],
+        [
+          "Behavior",
+          "Active predator along coastal, shelf, or offshore environments."
+        ],
+        [
+          "Spawning",
+          "Spawns seasonally based on water temperature and regional climate."
+        ]
+      ],
+      "image": {
+        "url": "fish/placeholder.png",
+        "kind": "illustration",
+        "credit": "Placeholder graphic",
+        "license": ""
+      }
+    },
+    {
+      "id": "yelloweye-rockfish",
+      "name": "Yelloweye rockfish",
+      "sci": "Sebastes ruberrimus",
+      "color": "#24f2e6",
+      "environment": "saltwater",
+      "model": "grid",
+      "lat_range": [
+        34.0,
+        60.0
+      ],
+      "lon_range": [
+        -138.0,
+        -110.0
+      ],
+      "regulations": {
+        "summary": "CDFW/WDFW: Prohibited / mandatory release",
+        "min_size": "Prohibited",
+        "max_size": "Prohibited",
+        "bag_limit": "0 per harvester / day",
+        "season": "Closed to retention",
+        "jurisdiction": "NOAA Fisheries / CDFW / WDFW",
+        "source_name": "West Coast State Regulations (CDFW/WDFW/ODFW/NOAA)",
+        "source_url": "https://wildlife.ca.gov/Fishing/Ocean/Regulations/Sport-Fishing"
+      },
+      "specs": [
+        [
+          "Typical size",
+          "Min limit Prohibited / Bag limit 0 per harvester / day"
+        ],
+        [
+          "Diet",
+          "Small fish, crustaceans, squids, and pelagic prey"
+        ],
+        [
+          "Swimming depth",
+          "30 to 200 m"
+        ],
+        [
+          "Behavior",
+          "Navigates West Coast kelp forests, rocky reefs, and coastal upwelling zones."
+        ]
+      ],
+      "image": {
+        "url": "fish/yelloweye-rockfish.png",
+        "kind": "illustration",
+        "credit": "Original illustration",
+        "license": ""
+      }
+    },
+    {
+      "id": "yellowfin-tuna",
+      "name": "Yellowfin tuna",
+      "sci": "Thunnus albacares",
+      "color": "#d8900a",
+      "environment": "saltwater",
+      "model": "grid",
+      "lat_range": [
+        15.0,
+        42.0
+      ],
+      "lon_range": [
+        -100.0,
+        -50.0
+      ],
+      "regulations": {
+        "summary": "Regulated species - See MyFWC/NOAA guidelines",
+        "min_size": "Check MyFWC/NOAA rules",
+        "max_size": "None",
+        "bag_limit": "Varies by region / state",
+        "season": "Open year-round (subject to local quota/closures)",
+        "jurisdiction": "Atlantic & Gulf State/Federal Waters",
+        "source_name": "MyFWC Saltwater Regulations",
+        "source_url": "https://myfwc.com/fishing/saltwater/recreational/"
+      },
+      "specs": [
+        [
+          "Typical size",
+          "Variable per NOAA / regional guidelines"
+        ],
+        [
+          "Diet",
+          "Small fish, crustaceans, and cephalopods."
+        ],
+        [
+          "Behavior",
+          "Active predator along coastal, shelf, or offshore environments."
+        ],
+        [
+          "Spawning",
+          "Spawns seasonally based on water temperature and regional climate."
+        ]
+      ],
+      "image": {
+        "url": "fish/placeholder.png",
+        "kind": "illustration",
+        "credit": "Placeholder graphic",
+        "license": ""
+      }
+    },
+    {
+      "id": "yellowtail-snapper",
+      "name": "Yellowtail snapper",
+      "sci": "Ocyurus chrysurus",
+      "color": "#7d3cf2",
+      "environment": "saltwater",
+      "model": "grid",
+      "lat_range": [
+        15.0,
+        35.0
+      ],
+      "lon_range": [
+        -100.0,
+        -50.0
+      ],
+      "regulations": {
+        "summary": "Regulated species - See MyFWC/NOAA guidelines",
+        "min_size": "Check MyFWC/NOAA rules",
+        "max_size": "None",
+        "bag_limit": "Varies by region / state",
+        "season": "Open year-round (subject to local quota/closures)",
+        "jurisdiction": "Atlantic & Gulf State/Federal Waters",
+        "source_name": "MyFWC Saltwater Regulations",
+        "source_url": "https://myfwc.com/fishing/saltwater/recreational/"
+      },
+      "specs": [
+        [
+          "Typical size",
+          "Typically 2 to 5 lb and 8 to 14 in; up to about 34 in and 11 lb (NOAA Fisheries). Florida state record 8 lb 9 oz."
+        ],
+        [
+          "Diet",
+          "Fish and invertebrates"
+        ],
+        [
+          "Adult depth",
+          "Adults mostly 10-70 m over sandy areas near offshore reefs (NOAA Fisheries); commercial handline catch mainly 20-60 m; overall depth range 0-180 m (FishBase). Juveniles use seagrass, mangroves and back reefs."
+        ],
+        [
+          "Behavior",
+          "Reef fish found around coral heads, patch reefs and high-profile artificial structure. Often swarms up a steady chum slick. Juveniles use seagrass and mangrove nursery habitat."
+        ],
+        [
+          "Spawning",
+          "April through August in the southeast U.S. (SAFMC); FishBase notes spawning occurs year-round in parts of the range with different peaks by area"
+        ],
+        [
+          "Lifespan",
+          "6 to 14 years typical; up to 28 years (NOAA Fisheries)"
+        ]
+      ],
+      "image": {
+        "url": "fish/yellowtail-snapper.png",
+        "kind": "illustration",
+        "credit": "Original illustration",
+        "license": ""
+      }
+    }
+  ]
+}

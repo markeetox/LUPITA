@@ -1,0 +1,134 @@
+{
+  "schema_version": 1,
+  "id": "vermilion-snapper",
+  "common_name": "Vermilion snapper",
+  "scientific_name": "Rhomboplites aurorubens",
+  "aliases": [
+    "beeliner"
+  ],
+  "habitat_zone": "offshore",
+  "review_status": "draft v1 - compiled from NOAA Fisheries and regional fisheries management guidelines",
+  "image": {
+    "status": "placeholder",
+    "kind": "illustration",
+    "url": "fish/placeholder.png",
+    "credit": "Placeholder graphic",
+    "license": "",
+    "plan": "web/fish/placeholder.png is a transparent placeholder image."
+  },
+  "profile": {
+    "size": "Variable per NOAA / regional guidelines",
+    "diet": "Small fish, crustaceans, and cephalopods.",
+    "behavior": "Active predator along coastal, shelf, or offshore environments.",
+    "life_history": "Spawns seasonally along coastal or shelf waters.",
+    "regulations_link": "https://www.fisheries.noaa.gov/",
+    "sources": [
+      "https://www.fisheries.noaa.gov/"
+    ],
+    "spawning": "Spawns seasonally based on water temperature and regional climate.",
+    "overwintering": "Migrates to warmer or deeper waters depending on season."
+  },
+  "factors": [
+    {
+      "param": "sst_c",
+      "kind": "range",
+      "range": [
+        18.0,
+        29.0
+      ],
+      "ideal": [
+        21.0,
+        27.0
+      ],
+      "weight": 0.35,
+      "active": true,
+      "value_status": "sourced",
+      "value_notes": "NOAA oceanographic temperature profile for Vermilion snapper.",
+      "reason_template": "Water is {value} C, within the preferred thermal range for Vermilion snapper.",
+      "sources": [
+        "https://www.fisheries.noaa.gov/"
+      ],
+      "gate": true,
+      "required": true
+    }
+  ],
+  "open_items": [],
+  "display": {
+    "color": "#56f23c"
+  },
+  "model": "grid",
+  "site_kinds": [],
+  "min_score_report": 0.35,
+  "max_spots": 15,
+  "confidence_cap": "Medium",
+  "timing": {
+    "status": "angler_lore",
+    "note": "Timing weights and light/tide preferences for Vermilion snapper.",
+    "sources": [
+      "https://www.fisheries.noaa.gov/"
+    ],
+    "weights": {
+      "light": 0.5,
+      "tide": 0.3,
+      "front": 0.2
+    },
+    "light": {
+      "map": {
+        "dusk": 1.0,
+        "night": 0.8,
+        "dawn": 0.9,
+        "day": 0.6
+      },
+      "text": {
+        "dusk": "Dusk activity peak for Vermilion snapper.",
+        "night": "Night feeding period for Vermilion snapper.",
+        "dawn": "Dawn activity peak for Vermilion snapper.",
+        "day": "Daytime feeding period for Vermilion snapper."
+      }
+    },
+    "tide": {
+      "map": {
+        "falling": 1.0,
+        "slack_low": 0.6,
+        "rising": 0.7,
+        "slack_high": 0.5
+      },
+      "text": {
+        "falling": "Outgoing tide flushes food for Vermilion snapper.",
+        "slack_low": "Slack low tide for Vermilion snapper.",
+        "rising": "Incoming tide brings bait for Vermilion snapper.",
+        "slack_high": "Slack high tide for Vermilion snapper."
+      }
+    },
+    "front": {
+      "map": {
+        "approaching": 0.8,
+        "just_passed": 0.4,
+        "lull": 0.5
+      },
+      "text": {
+        "approaching": "Pre-front feeding spree for Vermilion snapper.",
+        "just_passed": "Post-front slow period for Vermilion snapper.",
+        "lull": "Stable weather pattern for Vermilion snapper."
+      }
+    }
+  },
+  "lat_range": [
+    18.0,
+    36.0
+  ],
+  "regulations": {
+    "summary": "Regulated species - See MyFWC/NOAA guidelines",
+    "min_size": "Check MyFWC/NOAA rules",
+    "max_size": "None",
+    "bag_limit": "Varies by region / state",
+    "season": "Open year-round (subject to local quota/closures)",
+    "jurisdiction": "Atlantic & Gulf State/Federal Waters",
+    "source_name": "MyFWC Saltwater Regulations",
+    "source_url": "https://myfwc.com/fishing/saltwater/recreational/"
+  },
+  "lon_range": [
+    -100.0,
+    -50.0
+  ]
+}

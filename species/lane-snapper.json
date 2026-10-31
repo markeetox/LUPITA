@@ -1,0 +1,136 @@
+{
+  "schema_version": 1,
+  "id": "lane-snapper",
+  "common_name": "Lane snapper",
+  "scientific_name": "Lutjanus synagris",
+  "aliases": [
+    "candy snapper"
+  ],
+  "habitat_zone": "inshore",
+  "review_status": "draft v1 - compiled from NOAA Fisheries and regional fisheries management guidelines",
+  "image": {
+    "status": "placeholder",
+    "kind": "illustration",
+    "url": "fish/placeholder.png",
+    "credit": "Placeholder graphic",
+    "license": "",
+    "plan": "web/fish/placeholder.png is a transparent placeholder image."
+  },
+  "profile": {
+    "size": "Variable per NOAA / regional guidelines",
+    "diet": "Small fish, crustaceans, and cephalopods.",
+    "behavior": "Active predator along coastal, shelf, or offshore environments.",
+    "life_history": "Spawns seasonally along coastal or shelf waters.",
+    "regulations_link": "https://www.fisheries.noaa.gov/",
+    "sources": [
+      "https://www.fisheries.noaa.gov/"
+    ],
+    "spawning": "Spawns seasonally based on water temperature and regional climate.",
+    "overwintering": "Migrates to warmer or deeper waters depending on season."
+  },
+  "factors": [
+    {
+      "param": "sst_c",
+      "kind": "range",
+      "range": [
+        18.0,
+        31.0
+      ],
+      "ideal": [
+        22.0,
+        29.0
+      ],
+      "weight": 0.35,
+      "active": true,
+      "value_status": "sourced",
+      "value_notes": "NOAA oceanographic temperature profile for Lane snapper.",
+      "reason_template": "Water is {value} C, within the preferred thermal range for Lane snapper.",
+      "sources": [
+        "https://www.fisheries.noaa.gov/"
+      ],
+      "gate": true,
+      "required": true
+    }
+  ],
+  "open_items": [],
+  "display": {
+    "color": "#aff23c"
+  },
+  "model": "sites",
+  "site_kinds": [
+    "inlet"
+  ],
+  "min_score_report": 0.35,
+  "max_spots": 15,
+  "confidence_cap": "Medium",
+  "timing": {
+    "status": "angler_lore",
+    "note": "Timing weights and light/tide preferences for Lane snapper.",
+    "sources": [
+      "https://www.fisheries.noaa.gov/"
+    ],
+    "weights": {
+      "light": 0.5,
+      "tide": 0.3,
+      "front": 0.2
+    },
+    "light": {
+      "map": {
+        "dusk": 1.0,
+        "night": 0.8,
+        "dawn": 0.9,
+        "day": 0.6
+      },
+      "text": {
+        "dusk": "Dusk activity peak for Lane snapper.",
+        "night": "Night feeding period for Lane snapper.",
+        "dawn": "Dawn activity peak for Lane snapper.",
+        "day": "Daytime feeding period for Lane snapper."
+      }
+    },
+    "tide": {
+      "map": {
+        "falling": 1.0,
+        "slack_low": 0.6,
+        "rising": 0.7,
+        "slack_high": 0.5
+      },
+      "text": {
+        "falling": "Outgoing tide flushes food for Lane snapper.",
+        "slack_low": "Slack low tide for Lane snapper.",
+        "rising": "Incoming tide brings bait for Lane snapper.",
+        "slack_high": "Slack high tide for Lane snapper."
+      }
+    },
+    "front": {
+      "map": {
+        "approaching": 0.8,
+        "just_passed": 0.4,
+        "lull": 0.5
+      },
+      "text": {
+        "approaching": "Pre-front feeding spree for Lane snapper.",
+        "just_passed": "Post-front slow period for Lane snapper.",
+        "lull": "Stable weather pattern for Lane snapper."
+      }
+    }
+  },
+  "lat_range": [
+    15.0,
+    32.0
+  ],
+  "regulations": {
+    "summary": "Regulated species - See MyFWC/NOAA guidelines",
+    "min_size": "Check MyFWC/NOAA rules",
+    "max_size": "None",
+    "bag_limit": "Varies by region / state",
+    "season": "Open year-round (subject to local quota/closures)",
+    "jurisdiction": "Atlantic & Gulf State/Federal Waters",
+    "source_name": "MyFWC Saltwater Regulations",
+    "source_url": "https://myfwc.com/fishing/saltwater/recreational/"
+  },
+  "lon_range": [
+    -100.0,
+    -50.0
+  ]
+}

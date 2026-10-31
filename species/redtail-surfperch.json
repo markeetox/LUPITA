@@ -1,0 +1,111 @@
+{
+  "schema_version": 1,
+  "id": "redtail-surfperch",
+  "common_name": "Redtail surfperch",
+  "scientific_name": "Amphistichus rhodoterus",
+  "aliases": [
+    "redtail surfperch"
+  ],
+  "habitat_zone": "inshore",
+  "display": {
+    "color": "#24c9f2"
+  },
+  "review_status": "v1 - West Coast Pacific habitat profile",
+  "image": {
+    "status": "placeholder",
+    "kind": "illustration",
+    "url": "fish/redtail-surfperch.png",
+    "credit": "Original illustration",
+    "license": "",
+    "plan": "web/fish/redtail-surfperch.png placeholder illustration."
+  },
+  "profile": {
+    "size": "Min limit None / Bag limit 12-15 per harvester / day",
+    "diet": "Small fish, crustaceans, squids, and pelagic prey",
+    "swimming_depth": "1 to 15 m",
+    "behavior": "Navigates West Coast kelp forests, rocky reefs, and coastal upwelling zones.",
+    "regulations_link": "https://wdfw.wa.gov/fishing/regulations",
+    "sources": [
+      "https://wdfw.wa.gov/fishing/regulations"
+    ]
+  },
+  "lat_range": [
+    38.0,
+    50.0
+  ],
+  "factors": [
+    {
+      "param": "sst_c",
+      "kind": "range",
+      "range": [
+        8,
+        16
+      ],
+      "ideal": [
+        10,
+        14
+      ],
+      "weight": 0.5,
+      "active": true,
+      "value_status": "sourced",
+      "sources": [
+        "https://wdfw.wa.gov/fishing/regulations"
+      ],
+      "reason_template": "Water is {value} C, inside preferred Pacific temperature range for redtail surfperch."
+    },
+    {
+      "param": "depth_m",
+      "kind": "range",
+      "range": [
+        1,
+        15
+      ],
+      "ideal": [
+        3,
+        10
+      ],
+      "weight": 0.5,
+      "active": true,
+      "value_status": "sourced",
+      "sources": [
+        "https://wdfw.wa.gov/fishing/regulations"
+      ],
+      "gate": true,
+      "reason_template": "Depth is {value} m, within prime Pacific depth zone for redtail surfperch."
+    }
+  ],
+  "timing": {
+    "status": "angler_lore",
+    "light": {
+      "map": {
+        "day": 1.0,
+        "dawn": 0.9,
+        "dusk": 0.9,
+        "night": 0.5
+      },
+      "text": {
+        "day": "Full daylight when Pacific gamefish actively hunt.",
+        "dawn": "Dawn low-light feeding window.",
+        "dusk": "Dusk feeding window."
+      }
+    },
+    "note": "West Coast captain reports and biological upwelling patterns.",
+    "sources": [
+      "https://wdfw.wa.gov/fishing/regulations"
+    ]
+  },
+  "regulations": {
+    "summary": "WDFW/ODFW: 12-15 per day limit",
+    "min_size": "None",
+    "max_size": "None",
+    "bag_limit": "12-15 per harvester / day",
+    "season": "Open year-round",
+    "jurisdiction": "WDFW / ODFW",
+    "source_name": "West Coast State Regulations (CDFW/WDFW/ODFW/NOAA)",
+    "source_url": "https://wdfw.wa.gov/fishing/regulations"
+  },
+  "lon_range": [
+    -138.0,
+    -110.0
+  ]
+}

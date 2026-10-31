@@ -1,0 +1,131 @@
+{
+  "schema_version": 1,
+  "id": "gray-triggerfish",
+  "common_name": "Gray triggerfish",
+  "scientific_name": "Balistes capriscus",
+  "aliases": [
+    "triggerfish",
+    "gray triggerfish"
+  ],
+  "habitat_zone": "reef",
+  "display": {
+    "color": "#b7d80a"
+  },
+  "review_status": "draft v1 - reef hardbottom species",
+  "image": {
+    "status": "placeholder",
+    "kind": "illustration",
+    "url": "fish/gray-tigerfish.png",
+    "credit": "Original illustration",
+    "license": "",
+    "plan": "web/fish/gray-tigerfish.png placeholder illustration."
+  },
+  "profile": {
+    "size": "Common 2-5 lb; up to 13 lb",
+    "diet": "Sea urchins, sand dollars, crabs, and mollusks",
+    "swimming_depth": "10 to 100 m",
+    "behavior": "Strong-jawed reef fish that builds shallow nests in sand near reefs and feeds on hard-shelled invertebrates.",
+    "regulations_link": "https://myfwc.com/",
+    "sources": [
+      "https://myfwc.com/"
+    ]
+  },
+  "factors": [
+    {
+      "param": "sst_c",
+      "kind": "range",
+      "range": [
+        18,
+        28
+      ],
+      "ideal": [
+        21,
+        26
+      ],
+      "weight": 0.35,
+      "active": true,
+      "value_status": "sourced",
+      "sources": [
+        "https://myfwc.com/"
+      ],
+      "reason_template": "Water is {value} C, favorable for triggerfish."
+    },
+    {
+      "param": "structure_type",
+      "kind": "category",
+      "preferred": [
+        "artificial_reef",
+        "natural_reef",
+        "wreck",
+        "hardbottom"
+      ],
+      "weight": 0.35,
+      "active": true,
+      "value_status": "sourced",
+      "sources": [
+        "https://myfwc.com/"
+      ],
+      "map": {
+        "artificial_reef": 1.0,
+        "natural_reef": 1.0,
+        "wreck": 0.9,
+        "hardbottom": 0.8
+      },
+      "reason_template": "Structure is {value}, where triggerfish feed."
+    },
+    {
+      "param": "depth_m",
+      "kind": "range",
+      "range": [
+        10,
+        100
+      ],
+      "ideal": [
+        15,
+        50
+      ],
+      "weight": 0.3,
+      "active": true,
+      "value_status": "sourced",
+      "sources": [
+        "https://myfwc.com/"
+      ],
+      "gate": true,
+      "reason_template": "Depth is {value} m, in reef depth zone."
+    }
+  ],
+  "timing": {
+    "status": "angler_lore",
+    "light": {
+      "map": {
+        "day": 1.0,
+        "dawn": 0.8,
+        "dusk": 0.8,
+        "night": 0.2
+      },
+      "text": {
+        "day": "It is full daylight, when fish feed actively.",
+        "dawn": "It is dawn, a low-light time when fish feed actively.",
+        "dusk": "It is dusk, a low-light time when fish feed actively."
+      }
+    },
+    "note": "Patterns reported by local captains and fishing writers, not tested by studies.",
+    "sources": [
+      "https://myfwc.com/"
+    ]
+  },
+  "regulations": {
+    "summary": "Regulated species - See MyFWC/NOAA guidelines",
+    "min_size": "Check MyFWC/NOAA rules",
+    "max_size": "None",
+    "bag_limit": "Varies by region / state",
+    "season": "Open year-round (subject to local quota/closures)",
+    "jurisdiction": "Atlantic & Gulf State/Federal Waters",
+    "source_name": "MyFWC Saltwater Regulations",
+    "source_url": "https://myfwc.com/fishing/saltwater/recreational/"
+  },
+  "lon_range": [
+    -100.0,
+    -50.0
+  ]
+}

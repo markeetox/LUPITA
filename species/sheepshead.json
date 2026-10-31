@@ -1,0 +1,149 @@
+{
+  "schema_version": 1,
+  "id": "sheepshead",
+  "common_name": "Sheepshead",
+  "scientific_name": "Archosargus probatocephalus",
+  "aliases": [
+    "sheepshead",
+    "convict fish"
+  ],
+  "habitat_zone": "inshore",
+  "display": {
+    "color": "#96f224"
+  },
+  "review_status": "draft v1 - coastal structure and piling species",
+  "image": {
+    "status": "placeholder",
+    "kind": "illustration",
+    "url": "fish/sheepshead.png",
+    "credit": "Original illustration",
+    "license": "",
+    "plan": "web/fish/sheepshead.png placeholder illustration."
+  },
+  "profile": {
+    "size": "Common 1-4 lb; up to 12 lb",
+    "diet": "Barnacles, oysters, crabs, and fiddler crabs",
+    "swimming_depth": "Inshore structure; 0.5 to 15 m",
+    "behavior": "Uses human teeth to scrape barnacles and oysters off bridge pilings, seawalls, docks, and rock jetties. Spawns in late winter near inlets.",
+    "regulations_link": "https://myfwc.com/",
+    "sources": [
+      "https://myfwc.com/"
+    ]
+  },
+  "factors": [
+    {
+      "param": "sst_c",
+      "kind": "range",
+      "range": [
+        12,
+        28
+      ],
+      "ideal": [
+        16,
+        24
+      ],
+      "weight": 0.4,
+      "active": true,
+      "value_status": "sourced",
+      "sources": [
+        "https://myfwc.com/"
+      ],
+      "reason_template": "Water is {value} C, cool-water preference ideal for sheepshead."
+    },
+    {
+      "param": "depth_m",
+      "kind": "range",
+      "range": [
+        0.5,
+        15
+      ],
+      "ideal": [
+        1,
+        8
+      ],
+      "weight": 0.3,
+      "active": true,
+      "value_status": "sourced",
+      "sources": [
+        "https://myfwc.com/"
+      ],
+      "gate": true,
+      "reason_template": "Depth is {value} m, in shallow piling and dock structure zone."
+    },
+    {
+      "param": "season_presence",
+      "kind": "season",
+      "weight": 0.3,
+      "active": true,
+      "value_status": "sourced",
+      "sources": [
+        "https://myfwc.com/"
+      ],
+      "months": [
+        12,
+        1,
+        2,
+        3,
+        4
+      ],
+      "peak_months": [
+        1,
+        2,
+        3
+      ],
+      "in_score": 0.9,
+      "off_score": 0.4,
+      "value_text": {
+        "peak": "It is peak winter sheepshead spawning season.",
+        "in_season": "It is sheepshead season.",
+        "off": "Outside peak winter run, but sheepshead are present year-round around pilings."
+      }
+    }
+  ],
+  "timing": {
+    "status": "angler_lore",
+    "light": {
+      "map": {
+        "day": 1.0,
+        "dawn": 0.8,
+        "dusk": 0.8,
+        "night": 0.3
+      },
+      "text": {
+        "day": "It is full daylight, when fish feed actively.",
+        "dawn": "It is dawn, a low-light time when fish feed actively.",
+        "dusk": "It is dusk, a low-light time when fish feed actively."
+      }
+    },
+    "tide": {
+      "map": {
+        "rising": 1.0,
+        "falling": 0.9,
+        "slack_high": 0.5,
+        "slack_low": 0.4
+      },
+      "text": {
+        "rising": "The tide is rising, bringing in fresh water and bait.",
+        "falling": "The tide is falling, flushing bait out through structure."
+      }
+    },
+    "note": "Patterns reported by local captains and fishing writers, not tested by studies.",
+    "sources": [
+      "https://myfwc.com/"
+    ]
+  },
+  "regulations": {
+    "summary": "Regulated species - See MyFWC/NOAA guidelines",
+    "min_size": "Check MyFWC/NOAA rules",
+    "max_size": "None",
+    "bag_limit": "Varies by region / state",
+    "season": "Open year-round (subject to local quota/closures)",
+    "jurisdiction": "Atlantic & Gulf State/Federal Waters",
+    "source_name": "MyFWC Saltwater Regulations",
+    "source_url": "https://myfwc.com/fishing/saltwater/recreational/"
+  },
+  "lon_range": [
+    -100.0,
+    -50.0
+  ]
+}

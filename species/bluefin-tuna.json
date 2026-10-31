@@ -1,0 +1,149 @@
+{
+  "schema_version": 1,
+  "id": "bluefin-tuna",
+  "common_name": "Atlantic bluefin tuna",
+  "scientific_name": "Thunnus thynnus",
+  "aliases": [
+    "bluefin",
+    "giant bluefin"
+  ],
+  "habitat_zone": "offshore",
+  "display": {
+    "color": "#8224f2"
+  },
+  "review_status": "draft v1 - giant oceanic pelagic profile",
+  "image": {
+    "status": "placeholder",
+    "kind": "illustration",
+    "url": "fish/bluefin_tuna.png",
+    "credit": "Original illustration",
+    "license": "",
+    "plan": "web/fish/bluefin_tuna.png placeholder illustration."
+  },
+  "profile": {
+    "size": "Common 200-600+ lb; up to 1000+ lb",
+    "diet": "Herring, mackerel, squids, and crustaceans",
+    "swimming_depth": "Pelagic open ocean; 10 to 500+ m",
+    "behavior": "Massive pelagic migrator that travels along deep oceanic fronts and Gulf Stream boundaries.",
+    "regulations_link": "https://myfwc.com/",
+    "sources": [
+      "https://myfwc.com/",
+      "https://www.fisheries.noaa.gov/"
+    ]
+  },
+  "factors": [
+    {
+      "param": "sst_c",
+      "kind": "range",
+      "range": [
+        12,
+        24
+      ],
+      "ideal": [
+        16,
+        22
+      ],
+      "weight": 0.35,
+      "active": true,
+      "value_status": "sourced",
+      "sources": [
+        "https://myfwc.com/"
+      ],
+      "reason_template": "Water is {value} C, cool oceanic water favored by bluefin tuna."
+    },
+    {
+      "param": "sst_gradient",
+      "kind": "higher_is_better",
+      "weight": 0.25,
+      "active": true,
+      "value_status": "sourced",
+      "sources": [
+        "https://myfwc.com/"
+      ],
+      "reason_template": "Thermal break strength is {per10km} C per 10 km, marking oceanic fronts."
+    },
+    {
+      "param": "depth_m",
+      "kind": "range",
+      "range": [
+        100,
+        3000
+      ],
+      "ideal": [
+        200,
+        1500
+      ],
+      "weight": 0.15,
+      "active": true,
+      "value_status": "sourced",
+      "sources": [
+        "https://myfwc.com/"
+      ],
+      "gate": true,
+      "reason_template": "Depth is {value} m, in open ocean pelagic waters."
+    },
+    {
+      "param": "season_presence",
+      "kind": "season",
+      "weight": 0.25,
+      "active": true,
+      "value_status": "sourced",
+      "sources": [
+        "https://myfwc.com/"
+      ],
+      "months": [
+        1,
+        2,
+        3,
+        4,
+        5
+      ],
+      "peak_months": [
+        2,
+        3,
+        4
+      ],
+      "in_score": 0.8,
+      "off_score": 0.2,
+      "value_text": {
+        "peak": "It is peak bluefin tuna winter/spring migration season.",
+        "in_season": "It is bluefin migration season.",
+        "off": "Outside main bluefin migration window."
+      }
+    }
+  ],
+  "timing": {
+    "status": "angler_lore",
+    "light": {
+      "map": {
+        "day": 1.0,
+        "dawn": 0.9,
+        "dusk": 0.9,
+        "night": 0.4
+      },
+      "text": {
+        "day": "It is full daylight, when fish feed actively.",
+        "dawn": "It is dawn, a low-light time when fish feed actively.",
+        "dusk": "It is dusk, a low-light time when fish feed actively."
+      }
+    },
+    "note": "Patterns reported by local captains and fishing writers, not tested by studies.",
+    "sources": [
+      "https://myfwc.com/"
+    ]
+  },
+  "regulations": {
+    "summary": "Regulated species - See MyFWC/NOAA guidelines",
+    "min_size": "Check MyFWC/NOAA rules",
+    "max_size": "None",
+    "bag_limit": "Varies by region / state",
+    "season": "Open year-round (subject to local quota/closures)",
+    "jurisdiction": "Atlantic & Gulf State/Federal Waters",
+    "source_name": "MyFWC Saltwater Regulations",
+    "source_url": "https://myfwc.com/fishing/saltwater/recreational/"
+  },
+  "lon_range": [
+    -100.0,
+    -50.0
+  ]
+}

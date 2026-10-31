@@ -1,0 +1,131 @@
+{
+  "schema_version": 1,
+  "id": "african-pompano",
+  "common_name": "African pompano",
+  "scientific_name": "Alectis ciliaris",
+  "aliases": [
+    "african pompano",
+    "pennant-fish"
+  ],
+  "habitat_zone": "reef",
+  "display": {
+    "color": "#2460f2"
+  },
+  "review_status": "draft v1 - deep wreck jack profile",
+  "image": {
+    "status": "placeholder",
+    "kind": "illustration",
+    "url": "fish/african-pompano.png",
+    "credit": "Original illustration",
+    "license": "",
+    "plan": "web/fish/african-pompano.png placeholder illustration."
+  },
+  "profile": {
+    "size": "Common 10-25 lb; up to 50 lb",
+    "diet": "Crabs, squids, and small reef fishes",
+    "swimming_depth": "30 to 100+ m",
+    "behavior": "Pelagic jack that frequents deep artificial reefs, wrecks, and high-relief drop-offs.",
+    "regulations_link": "https://myfwc.com/",
+    "sources": [
+      "https://myfwc.com/"
+    ]
+  },
+  "factors": [
+    {
+      "param": "sst_c",
+      "kind": "range",
+      "range": [
+        22,
+        29
+      ],
+      "ideal": [
+        24,
+        27
+      ],
+      "weight": 0.35,
+      "active": true,
+      "value_status": "sourced",
+      "sources": [
+        "https://myfwc.com/"
+      ],
+      "reason_template": "Water is {value} C, favorable for African pompano."
+    },
+    {
+      "param": "structure_type",
+      "kind": "category",
+      "preferred": [
+        "wreck",
+        "artificial_reef",
+        "natural_reef",
+        "ledge"
+      ],
+      "weight": 0.35,
+      "active": true,
+      "value_status": "sourced",
+      "sources": [
+        "https://myfwc.com/"
+      ],
+      "map": {
+        "wreck": 1.0,
+        "artificial_reef": 1.0,
+        "natural_reef": 0.8,
+        "ledge": 0.8
+      },
+      "reason_template": "Structure is {value}, where African pompano gather."
+    },
+    {
+      "param": "depth_m",
+      "kind": "range",
+      "range": [
+        20,
+        120
+      ],
+      "ideal": [
+        35,
+        80
+      ],
+      "weight": 0.3,
+      "active": true,
+      "value_status": "sourced",
+      "sources": [
+        "https://myfwc.com/"
+      ],
+      "gate": true,
+      "reason_template": "Depth is {value} m, in deep wreck zone."
+    }
+  ],
+  "timing": {
+    "status": "angler_lore",
+    "light": {
+      "map": {
+        "day": 1.0,
+        "dawn": 0.9,
+        "dusk": 0.9,
+        "night": 0.4
+      },
+      "text": {
+        "day": "It is full daylight, when fish feed actively.",
+        "dawn": "It is dawn, a low-light time when fish feed actively.",
+        "dusk": "It is dusk, a low-light time when fish feed actively."
+      }
+    },
+    "note": "Patterns reported by local captains and fishing writers, not tested by studies.",
+    "sources": [
+      "https://myfwc.com/"
+    ]
+  },
+  "regulations": {
+    "summary": "Regulated species - See MyFWC/NOAA guidelines",
+    "min_size": "Check MyFWC/NOAA rules",
+    "max_size": "None",
+    "bag_limit": "Varies by region / state",
+    "season": "Open year-round (subject to local quota/closures)",
+    "jurisdiction": "Atlantic & Gulf State/Federal Waters",
+    "source_name": "MyFWC Saltwater Regulations",
+    "source_url": "https://myfwc.com/fishing/saltwater/recreational/"
+  },
+  "lon_range": [
+    -100.0,
+    -50.0
+  ]
+}

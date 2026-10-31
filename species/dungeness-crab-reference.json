@@ -1,0 +1,111 @@
+{
+  "schema_version": 1,
+  "id": "dungeness-crab-reference",
+  "common_name": "Dungeness crab (ref)",
+  "scientific_name": "Cancer magister",
+  "aliases": [
+    "dungeness crab (ref)"
+  ],
+  "habitat_zone": "inshore",
+  "display": {
+    "color": "#f224c8"
+  },
+  "review_status": "v1 - West Coast Pacific habitat profile",
+  "image": {
+    "status": "placeholder",
+    "kind": "illustration",
+    "url": "fish/dungeness-crab-reference.png",
+    "credit": "Original illustration",
+    "license": "",
+    "plan": "web/fish/dungeness-crab-reference.png placeholder illustration."
+  },
+  "profile": {
+    "size": "Min limit 5.75 - 6.25 inches shell / Bag limit 6-10 per day",
+    "diet": "Small fish, crustaceans, squids, and pelagic prey",
+    "swimming_depth": "2 to 80 m",
+    "behavior": "Navigates West Coast kelp forests, rocky reefs, and coastal upwelling zones.",
+    "regulations_link": "https://wildlife.ca.gov/Fishing/Ocean/Regulations/Sport-Fishing",
+    "sources": [
+      "https://wildlife.ca.gov/Fishing/Ocean/Regulations/Sport-Fishing"
+    ]
+  },
+  "lat_range": [
+    34.0,
+    60.0
+  ],
+  "factors": [
+    {
+      "param": "sst_c",
+      "kind": "range",
+      "range": [
+        6,
+        15
+      ],
+      "ideal": [
+        8,
+        13
+      ],
+      "weight": 0.5,
+      "active": true,
+      "value_status": "sourced",
+      "sources": [
+        "https://wildlife.ca.gov/Fishing/Ocean/Regulations/Sport-Fishing"
+      ],
+      "reason_template": "Water is {value} C, inside preferred Pacific temperature range for dungeness crab (ref)."
+    },
+    {
+      "param": "depth_m",
+      "kind": "range",
+      "range": [
+        2,
+        80
+      ],
+      "ideal": [
+        4,
+        75
+      ],
+      "weight": 0.5,
+      "active": true,
+      "value_status": "sourced",
+      "sources": [
+        "https://wildlife.ca.gov/Fishing/Ocean/Regulations/Sport-Fishing"
+      ],
+      "gate": true,
+      "reason_template": "Depth is {value} m, within prime Pacific depth zone for dungeness crab (ref)."
+    }
+  ],
+  "timing": {
+    "status": "angler_lore",
+    "light": {
+      "map": {
+        "day": 1.0,
+        "dawn": 0.9,
+        "dusk": 0.9,
+        "night": 0.5
+      },
+      "text": {
+        "day": "Full daylight when Pacific gamefish actively hunt.",
+        "dawn": "Dawn low-light feeding window.",
+        "dusk": "Dusk feeding window."
+      }
+    },
+    "note": "West Coast captain reports and biological upwelling patterns.",
+    "sources": [
+      "https://wildlife.ca.gov/Fishing/Ocean/Regulations/Sport-Fishing"
+    ]
+  },
+  "regulations": {
+    "summary": "CDFW/WDFW: 5.75\"-6.25\" min shell; male only",
+    "min_size": "5.75 - 6.25 inches shell",
+    "max_size": "None",
+    "bag_limit": "6-10 per day",
+    "season": "Seasonal crab windows",
+    "jurisdiction": "CDFW / WDFW / ODFW",
+    "source_name": "West Coast State Regulations (CDFW/WDFW/ODFW/NOAA)",
+    "source_url": "https://wildlife.ca.gov/Fishing/Ocean/Regulations/Sport-Fishing"
+  },
+  "lon_range": [
+    -138.0,
+    -110.0
+  ]
+}

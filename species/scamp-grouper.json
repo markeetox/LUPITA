@@ -1,0 +1,129 @@
+{
+  "schema_version": 1,
+  "id": "scamp-grouper",
+  "common_name": "Scamp grouper",
+  "scientific_name": "Mycteroperca phenax",
+  "aliases": [
+    "scamp",
+    "broomtail"
+  ],
+  "habitat_zone": "reef",
+  "display": {
+    "color": "#f2130c"
+  },
+  "review_status": "draft v1 - deep reef grouper profile",
+  "image": {
+    "status": "placeholder",
+    "kind": "illustration",
+    "url": "fish/scamp-grouper.png",
+    "credit": "Original illustration",
+    "license": "",
+    "plan": "web/fish/scamp-grouper.png placeholder illustration."
+  },
+  "profile": {
+    "size": "Common 4-12 lb; up to 30 lb",
+    "diet": "Fish, crabs, and squids",
+    "swimming_depth": "30 to 100 m",
+    "behavior": "Favors deep, high-relief coral ledges and rocky drop-offs along the outer continental shelf.",
+    "regulations_link": "https://myfwc.com/",
+    "sources": [
+      "https://myfwc.com/"
+    ]
+  },
+  "factors": [
+    {
+      "param": "sst_c",
+      "kind": "range",
+      "range": [
+        18,
+        27
+      ],
+      "ideal": [
+        20,
+        24
+      ],
+      "weight": 0.35,
+      "active": true,
+      "value_status": "sourced",
+      "sources": [
+        "https://myfwc.com/"
+      ],
+      "reason_template": "Water is {value} C, favorable for scamp grouper."
+    },
+    {
+      "param": "structure_type",
+      "kind": "category",
+      "preferred": [
+        "natural_reef",
+        "ledge",
+        "wreck"
+      ],
+      "weight": 0.35,
+      "active": true,
+      "value_status": "sourced",
+      "sources": [
+        "https://myfwc.com/"
+      ],
+      "map": {
+        "natural_reef": 1.0,
+        "ledge": 1.0,
+        "wreck": 0.8
+      },
+      "reason_template": "Structure is {value}, preferred by scamp."
+    },
+    {
+      "param": "depth_m",
+      "kind": "range",
+      "range": [
+        25,
+        100
+      ],
+      "ideal": [
+        40,
+        80
+      ],
+      "weight": 0.3,
+      "active": true,
+      "value_status": "sourced",
+      "sources": [
+        "https://myfwc.com/"
+      ],
+      "gate": true,
+      "reason_template": "Depth is {value} m, in deep shelf edge habitat."
+    }
+  ],
+  "timing": {
+    "status": "angler_lore",
+    "light": {
+      "map": {
+        "day": 1.0,
+        "dawn": 0.8,
+        "dusk": 0.8,
+        "night": 0.3
+      },
+      "text": {
+        "day": "It is full daylight, when fish feed actively.",
+        "dawn": "It is dawn, a low-light time when fish feed actively.",
+        "dusk": "It is dusk, a low-light time when fish feed actively."
+      }
+    },
+    "note": "Patterns reported by local captains and fishing writers, not tested by studies.",
+    "sources": [
+      "https://myfwc.com/"
+    ]
+  },
+  "regulations": {
+    "summary": "Regulated species - See MyFWC/NOAA guidelines",
+    "min_size": "Check MyFWC/NOAA rules",
+    "max_size": "None",
+    "bag_limit": "Varies by region / state",
+    "season": "Open year-round (subject to local quota/closures)",
+    "jurisdiction": "Atlantic & Gulf State/Federal Waters",
+    "source_name": "MyFWC Saltwater Regulations",
+    "source_url": "https://myfwc.com/fishing/saltwater/recreational/"
+  },
+  "lon_range": [
+    -100.0,
+    -50.0
+  ]
+}
