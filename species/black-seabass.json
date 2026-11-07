@@ -1,0 +1,131 @@
+{
+  "schema_version": 1,
+  "id": "black-seabass",
+  "common_name": "Black sea bass",
+  "scientific_name": "Centropristis striata",
+  "aliases": [
+    "black sea bass",
+    "black bass"
+  ],
+  "habitat_zone": "coastal",
+  "display": {
+    "color": "#0a1cd8"
+  },
+  "review_status": "draft v1 - coastal hardbottom seabass profile",
+  "image": {
+    "status": "placeholder",
+    "kind": "illustration",
+    "url": "fish/black-seabass.png",
+    "credit": "Original illustration",
+    "license": "",
+    "plan": "web/fish/black-seabass.png placeholder illustration."
+  },
+  "profile": {
+    "size": "Common 1-3 lb; up to 5 lb",
+    "diet": "Crabs, shrimp, worms, squids, and small fishes",
+    "swimming_depth": "5 to 60 m",
+    "behavior": "Structure-oriented coastal species found around rock piles, jetty bases, hardbottom, and artificial reefs.",
+    "regulations_link": "https://myfwc.com/",
+    "sources": [
+      "https://myfwc.com/"
+    ]
+  },
+  "factors": [
+    {
+      "param": "sst_c",
+      "kind": "range",
+      "range": [
+        15,
+        24
+      ],
+      "ideal": [
+        18,
+        22
+      ],
+      "weight": 0.35,
+      "active": true,
+      "value_status": "sourced",
+      "sources": [
+        "https://myfwc.com/"
+      ],
+      "reason_template": "Water is {value} C, cool temperature range favored by black sea bass."
+    },
+    {
+      "param": "structure_type",
+      "kind": "category",
+      "preferred": [
+        "hardbottom",
+        "artificial_reef",
+        "natural_reef",
+        "wreck"
+      ],
+      "weight": 0.35,
+      "active": true,
+      "value_status": "sourced",
+      "sources": [
+        "https://myfwc.com/"
+      ],
+      "map": {
+        "hardbottom": 1.0,
+        "artificial_reef": 1.0,
+        "natural_reef": 0.8,
+        "wreck": 0.8
+      },
+      "reason_template": "Structure is {value}, where black sea bass dwell."
+    },
+    {
+      "param": "depth_m",
+      "kind": "range",
+      "range": [
+        5,
+        60
+      ],
+      "ideal": [
+        10,
+        35
+      ],
+      "weight": 0.3,
+      "active": true,
+      "value_status": "sourced",
+      "sources": [
+        "https://myfwc.com/"
+      ],
+      "gate": true,
+      "reason_template": "Depth is {value} m, in coastal hardbottom depth range."
+    }
+  ],
+  "timing": {
+    "status": "angler_lore",
+    "light": {
+      "map": {
+        "day": 1.0,
+        "dawn": 0.9,
+        "dusk": 0.9,
+        "night": 0.3
+      },
+      "text": {
+        "day": "It is full daylight, when fish feed actively.",
+        "dawn": "It is dawn, a low-light time when fish feed actively.",
+        "dusk": "It is dusk, a low-light time when fish feed actively."
+      }
+    },
+    "note": "Patterns reported by local captains and fishing writers, not tested by studies.",
+    "sources": [
+      "https://myfwc.com/"
+    ]
+  },
+  "regulations": {
+    "summary": "Regulated species - See MyFWC/NOAA guidelines",
+    "min_size": "Check MyFWC/NOAA rules",
+    "max_size": "None",
+    "bag_limit": "Varies by region / state",
+    "season": "Open year-round (subject to local quota/closures)",
+    "jurisdiction": "Atlantic & Gulf State/Federal Waters",
+    "source_name": "MyFWC Saltwater Regulations",
+    "source_url": "https://myfwc.com/fishing/saltwater/recreational/"
+  },
+  "lon_range": [
+    -100.0,
+    -50.0
+  ]
+}

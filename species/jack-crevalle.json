@@ -1,0 +1,154 @@
+{
+  "schema_version": 1,
+  "id": "jack-crevalle",
+  "common_name": "Jack crevalle",
+  "scientific_name": "Caranx hippos",
+  "aliases": [
+    "jack",
+    "crevalle jack"
+  ],
+  "habitat_zone": "coastal",
+  "display": {
+    "color": "#3cdcf2"
+  },
+  "review_status": "draft v1 - fast aggressive coastal schooling predator",
+  "image": {
+    "status": "placeholder",
+    "kind": "illustration",
+    "url": "fish/jack-crevalle.png",
+    "credit": "Original illustration",
+    "license": "",
+    "plan": "web/fish/jack-crevalle.png placeholder illustration."
+  },
+  "profile": {
+    "size": "Common 3-15 lb; up to 35+ lb",
+    "diet": "Mullet, menhaden, pilchards, squids, and crabs",
+    "swimming_depth": "0.5 to 30 m",
+    "behavior": "Aggressive, fast-swimming schooling predator that blitzes bait in inlets, bays, surf lines, and coastal beaches.",
+    "regulations_link": "https://myfwc.com/",
+    "sources": [
+      "https://myfwc.com/"
+    ]
+  },
+  "factors": [
+    {
+      "param": "sst_c",
+      "kind": "range",
+      "range": [
+        20,
+        32
+      ],
+      "ideal": [
+        24,
+        30
+      ],
+      "weight": 0.4,
+      "active": true,
+      "value_status": "sourced",
+      "sources": [
+        "https://myfwc.com/"
+      ],
+      "reason_template": "Water is {value} C, in warm tropical range favored by jack crevalle."
+    },
+    {
+      "param": "depth_m",
+      "kind": "range",
+      "range": [
+        0.5,
+        30
+      ],
+      "ideal": [
+        1,
+        15
+      ],
+      "weight": 0.35,
+      "active": true,
+      "value_status": "sourced",
+      "sources": [
+        "https://myfwc.com/"
+      ],
+      "gate": true,
+      "reason_template": "Depth is {value} m, in shallow coastal and inlet waters."
+    },
+    {
+      "param": "season_presence",
+      "kind": "season",
+      "weight": 0.25,
+      "active": true,
+      "value_status": "sourced",
+      "sources": [
+        "https://myfwc.com/"
+      ],
+      "months": [
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11
+      ],
+      "peak_months": [
+        4,
+        5,
+        9,
+        10
+      ],
+      "in_score": 0.9,
+      "off_score": 0.4,
+      "value_text": {
+        "peak": "It is peak jack crevalle run season.",
+        "in_season": "It is jack crevalle season.",
+        "off": "Outside main jack crevalle runs."
+      }
+    }
+  ],
+  "timing": {
+    "status": "angler_lore",
+    "light": {
+      "map": {
+        "day": 1.0,
+        "dawn": 0.9,
+        "dusk": 0.9,
+        "night": 0.4
+      },
+      "text": {
+        "day": "It is full daylight, when fish feed actively.",
+        "dawn": "It is dawn, a low-light time when fish feed actively.",
+        "dusk": "It is dusk, a low-light time when fish feed actively."
+      }
+    },
+    "tide": {
+      "map": {
+        "rising": 1.0,
+        "falling": 1.0,
+        "slack_high": 0.5,
+        "slack_low": 0.4
+      },
+      "text": {
+        "rising": "The tide is rising, bringing in fresh water and bait.",
+        "falling": "The tide is falling, flushing bait out through structure."
+      }
+    },
+    "note": "Patterns reported by local captains and fishing writers, not tested by studies.",
+    "sources": [
+      "https://myfwc.com/"
+    ]
+  },
+  "regulations": {
+    "summary": "Regulated species - See MyFWC/NOAA guidelines",
+    "min_size": "Check MyFWC/NOAA rules",
+    "max_size": "None",
+    "bag_limit": "Varies by region / state",
+    "season": "Open year-round (subject to local quota/closures)",
+    "jurisdiction": "Atlantic & Gulf State/Federal Waters",
+    "source_name": "MyFWC Saltwater Regulations",
+    "source_url": "https://myfwc.com/fishing/saltwater/recreational/"
+  },
+  "lon_range": [
+    -100.0,
+    -50.0
+  ]
+}

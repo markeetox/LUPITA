@@ -1,0 +1,111 @@
+{
+  "schema_version": 1,
+  "id": "cabezon",
+  "common_name": "Cabezon",
+  "scientific_name": "Scorpaenichthys marmoratus",
+  "aliases": [
+    "cabezon"
+  ],
+  "habitat_zone": "reef",
+  "display": {
+    "color": "#24f2b5"
+  },
+  "review_status": "v1 - West Coast Pacific habitat profile",
+  "image": {
+    "status": "placeholder",
+    "kind": "illustration",
+    "url": "fish/cabezon.png",
+    "credit": "Original illustration",
+    "license": "",
+    "plan": "web/fish/cabezon.png placeholder illustration."
+  },
+  "profile": {
+    "size": "Min limit 15 inches TL / Bag limit 1-2 per harvester / day",
+    "diet": "Small fish, crustaceans, squids, and pelagic prey",
+    "swimming_depth": "2 to 50 m",
+    "behavior": "Navigates West Coast kelp forests, rocky reefs, and coastal upwelling zones.",
+    "regulations_link": "https://wildlife.ca.gov/Fishing/Ocean/Regulations/Sport-Fishing",
+    "sources": [
+      "https://wildlife.ca.gov/Fishing/Ocean/Regulations/Sport-Fishing"
+    ]
+  },
+  "lat_range": [
+    32.0,
+    55.0
+  ],
+  "factors": [
+    {
+      "param": "sst_c",
+      "kind": "range",
+      "range": [
+        8,
+        16
+      ],
+      "ideal": [
+        10,
+        14
+      ],
+      "weight": 0.5,
+      "active": true,
+      "value_status": "sourced",
+      "sources": [
+        "https://wildlife.ca.gov/Fishing/Ocean/Regulations/Sport-Fishing"
+      ],
+      "reason_template": "Water is {value} C, inside preferred Pacific temperature range for cabezon."
+    },
+    {
+      "param": "depth_m",
+      "kind": "range",
+      "range": [
+        2,
+        50
+      ],
+      "ideal": [
+        4,
+        45
+      ],
+      "weight": 0.5,
+      "active": true,
+      "value_status": "sourced",
+      "sources": [
+        "https://wildlife.ca.gov/Fishing/Ocean/Regulations/Sport-Fishing"
+      ],
+      "gate": true,
+      "reason_template": "Depth is {value} m, within prime Pacific depth zone for cabezon."
+    }
+  ],
+  "timing": {
+    "status": "angler_lore",
+    "light": {
+      "map": {
+        "day": 1.0,
+        "dawn": 0.9,
+        "dusk": 0.9,
+        "night": 0.5
+      },
+      "text": {
+        "day": "Full daylight when Pacific gamefish actively hunt.",
+        "dawn": "Dawn low-light feeding window.",
+        "dusk": "Dusk feeding window."
+      }
+    },
+    "note": "West Coast captain reports and biological upwelling patterns.",
+    "sources": [
+      "https://wildlife.ca.gov/Fishing/Ocean/Regulations/Sport-Fishing"
+    ]
+  },
+  "regulations": {
+    "summary": "CDFW: 15\" min TL; 1-2 per day",
+    "min_size": "15 inches TL",
+    "max_size": "None",
+    "bag_limit": "1-2 per harvester / day",
+    "season": "Seasonal groundfish window",
+    "jurisdiction": "CDFW / ODFW",
+    "source_name": "West Coast State Regulations (CDFW/WDFW/ODFW/NOAA)",
+    "source_url": "https://wildlife.ca.gov/Fishing/Ocean/Regulations/Sport-Fishing"
+  },
+  "lon_range": [
+    -138.0,
+    -110.0
+  ]
+}

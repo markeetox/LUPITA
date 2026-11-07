@@ -1,0 +1,146 @@
+{
+  "schema_version": 1,
+  "id": "southern-flounder",
+  "common_name": "Southern flounder",
+  "scientific_name": "Paralichthys lethostigma",
+  "aliases": [
+    "flounder"
+  ],
+  "habitat_zone": "inshore",
+  "display": {
+    "color": "#ddf23c"
+  },
+  "review_status": "draft v1 - benthic estuarine flatfish profile",
+  "image": {
+    "status": "placeholder",
+    "kind": "illustration",
+    "url": "fish/southern-flounder.png",
+    "credit": "Original illustration",
+    "license": "",
+    "plan": "web/fish/southern-flounder.png placeholder illustration."
+  },
+  "profile": {
+    "size": "Common 1-4 lb; up to 13 lb",
+    "diet": "Small fishes (mullet, anchovies), shrimp, and crabs",
+    "swimming_depth": "Benthic bottom; 0.5 to 25 m",
+    "behavior": "Camouflaged ambush predator that lies buried on muddy and sandy bottoms near inlet channels, docks, and drop-offs.",
+    "regulations_link": "https://myfwc.com/",
+    "sources": [
+      "https://myfwc.com/"
+    ]
+  },
+  "factors": [
+    {
+      "param": "sst_c",
+      "kind": "range",
+      "range": [
+        14,
+        28
+      ],
+      "ideal": [
+        18,
+        25
+      ],
+      "weight": 0.4,
+      "active": true,
+      "value_status": "sourced",
+      "sources": [
+        "https://myfwc.com/"
+      ],
+      "reason_template": "Water is {value} C, favorable for southern flounder."
+    },
+    {
+      "param": "depth_m",
+      "kind": "range",
+      "range": [
+        0.5,
+        25
+      ],
+      "ideal": [
+        1,
+        10
+      ],
+      "weight": 0.3,
+      "active": true,
+      "value_status": "sourced",
+      "sources": [
+        "https://myfwc.com/"
+      ],
+      "gate": true,
+      "reason_template": "Depth is {value} m, in shallow estuarine channel and drop-off zone."
+    },
+    {
+      "param": "season_presence",
+      "kind": "season",
+      "weight": 0.3,
+      "active": true,
+      "value_status": "sourced",
+      "sources": [
+        "https://myfwc.com/"
+      ],
+      "months": [
+        10,
+        11,
+        12,
+        1
+      ],
+      "peak_months": [
+        11,
+        12
+      ],
+      "in_score": 0.9,
+      "off_score": 0.4,
+      "value_text": {
+        "peak": "It is peak fall flounder migration season.",
+        "in_season": "It is flounder season.",
+        "off": "Outside peak fall run."
+      }
+    }
+  ],
+  "timing": {
+    "status": "angler_lore",
+    "light": {
+      "map": {
+        "night": 1.0,
+        "dusk": 0.9,
+        "dawn": 0.9,
+        "day": 0.4
+      },
+      "text": {
+        "night": "It is night, when nocturnal feeding is high.",
+        "dusk": "It is dusk, a low-light time when fish feed actively.",
+        "dawn": "It is dawn, a low-light time when fish feed actively."
+      }
+    },
+    "tide": {
+      "map": {
+        "falling": 1.0,
+        "rising": 0.8,
+        "slack_low": 0.5,
+        "slack_high": 0.4
+      },
+      "text": {
+        "falling": "The tide is falling, flushing bait out through structure.",
+        "rising": "The tide is rising, bringing in fresh water and bait."
+      }
+    },
+    "note": "Patterns reported by local captains and fishing writers, not tested by studies.",
+    "sources": [
+      "https://myfwc.com/"
+    ]
+  },
+  "regulations": {
+    "summary": "Regulated species - See MyFWC/NOAA guidelines",
+    "min_size": "Check MyFWC/NOAA rules",
+    "max_size": "None",
+    "bag_limit": "Varies by region / state",
+    "season": "Open year-round (subject to local quota/closures)",
+    "jurisdiction": "Atlantic & Gulf State/Federal Waters",
+    "source_name": "MyFWC Saltwater Regulations",
+    "source_url": "https://myfwc.com/fishing/saltwater/recreational/"
+  },
+  "lon_range": [
+    -100.0,
+    -50.0
+  ]
+}

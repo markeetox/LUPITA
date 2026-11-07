@@ -1,0 +1,150 @@
+{
+  "schema_version": 1,
+  "id": "king-mackerel",
+  "common_name": "King mackerel",
+  "scientific_name": "Scomberomorus cavalla",
+  "aliases": [
+    "kingfish",
+    "king"
+  ],
+  "habitat_zone": "coastal",
+  "display": {
+    "color": "#f2242e"
+  },
+  "review_status": "draft v1 - coastal pelagic profile",
+  "image": {
+    "status": "placeholder",
+    "kind": "illustration",
+    "url": "fish/king-mackerel.png",
+    "credit": "Original illustration",
+    "license": "",
+    "plan": "web/fish/king-mackerel.png placeholder illustration."
+  },
+  "profile": {
+    "size": "Up to 50+ lb; Florida record 90 lb",
+    "diet": "Herrings, threadfin shad, menhaden, jack, and squid",
+    "swimming_depth": "Near surface to 45 m",
+    "behavior": "Migratory coastal pelagic schooling predator. Moves south to Florida in winter following water temp and bait runs.",
+    "regulations_link": "https://myfwc.com/",
+    "sources": [
+      "https://myfwc.com/",
+      "https://www.fisheries.noaa.gov/"
+    ]
+  },
+  "factors": [
+    {
+      "param": "sst_c",
+      "kind": "range",
+      "range": [
+        20,
+        29
+      ],
+      "ideal": [
+        22,
+        26
+      ],
+      "weight": 0.35,
+      "active": true,
+      "value_status": "sourced",
+      "sources": [
+        "https://myfwc.com/"
+      ],
+      "reason_template": "Water is {value} C, inside the preferred temperature range for king mackerel."
+    },
+    {
+      "param": "sst_gradient",
+      "kind": "higher_is_better",
+      "weight": 0.25,
+      "active": true,
+      "value_status": "sourced",
+      "sources": [
+        "https://myfwc.com/"
+      ],
+      "reason_template": "Thermal break strength is {per10km} C per 10 km, where bait concentrations draw kings."
+    },
+    {
+      "param": "depth_m",
+      "kind": "range",
+      "range": [
+        10,
+        100
+      ],
+      "ideal": [
+        15,
+        45
+      ],
+      "weight": 0.15,
+      "active": true,
+      "value_status": "sourced",
+      "sources": [
+        "https://myfwc.com/"
+      ],
+      "gate": true,
+      "reason_template": "Depth is {value} m, in coastal shelf waters where kings hunt."
+    },
+    {
+      "param": "season_presence",
+      "kind": "season",
+      "weight": 0.25,
+      "active": true,
+      "value_status": "sourced",
+      "sources": [
+        "https://myfwc.com/"
+      ],
+      "months": [
+        11,
+        12,
+        1,
+        2,
+        3,
+        4
+      ],
+      "peak_months": [
+        12,
+        1,
+        2,
+        3
+      ],
+      "in_score": 0.8,
+      "off_score": 0.3,
+      "value_text": {
+        "peak": "It is peak king mackerel season in South Florida.",
+        "in_season": "It is king mackerel season.",
+        "off": "It is outside the main king mackerel season."
+      }
+    }
+  ],
+  "timing": {
+    "status": "angler_lore",
+    "light": {
+      "map": {
+        "dawn": 1.0,
+        "dusk": 0.9,
+        "day": 0.7,
+        "night": 0.4
+      },
+      "text": {
+        "dawn": "It is dawn, a low-light time when fish feed actively.",
+        "dusk": "It is dusk, a low-light time when fish feed actively."
+      }
+    },
+    "note": "Patterns reported by local captains and fishing writers, not tested by studies.",
+    "sources": [
+      "https://myfwc.com/"
+    ]
+  },
+  "regulations": {
+    "summary": "Regulated species - See MyFWC/NOAA guidelines",
+    "min_size": "Check MyFWC/NOAA rules",
+    "max_size": "None",
+    "bag_limit": "Varies by region / state",
+    "season": "Open year-round (subject to local quota/closures)",
+    "jurisdiction": "Atlantic & Gulf State/Federal Waters",
+    "source_name": "MyFWC Saltwater Regulations",
+    "source_url": "https://myfwc.com/fishing/saltwater/recreational/"
+  },
+  "lon_range": [
+    -100.0,
+    -50.0
+  ]
+}
