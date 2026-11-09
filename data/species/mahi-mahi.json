@@ -94,13 +94,25 @@
     {
       "param": "chl_gradient",
       "kind": "higher_is_better",
-      "weight": 0.1,
+      "weight": 0.07,
       "active": true,
       "value_status": "provisional",
       "value_notes": "Water color edges and chlorophyll boundaries concentrate baitfish and mahi along oceanic fronts.",
       "reason_template": "Water color changes rapidly here, marking a chlorophyll front where mahi gather to feed.",
       "sources": [
         "https://www.satfish.com/how-to-catch-dolphin-using-satfish-charts"
+      ]
+    },
+    {
+      "param": "current_convergence",
+      "kind": "higher_is_better",
+      "weight": 0.08,
+      "active": true,
+      "value_status": "sourced",
+      "value_notes": "Surface current convergence accumulates floating sargassum weed lines and flotsam, the primary feeding habitat for mahi.",
+      "reason_template": "Surface currents converge here, accumulating sargassum weed lines and flotsam.",
+      "sources": [
+        "https://www.deq.nc.gov/about/divisions/marine-fisheries/species/dolphinfish"
       ]
     },
     {
@@ -167,7 +179,7 @@
         -10,
         12
       ],
-      "weight": 0.15,
+      "weight": 0.10,
       "active": true,
       "value_status": "provisional",
       "value_notes": "SatFish: mahi gather along current edges, eddies and convergence zones. The edge is estimated from 25 km satellite altimetry, so it is good to roughly 20 km. The band is an estimate.",

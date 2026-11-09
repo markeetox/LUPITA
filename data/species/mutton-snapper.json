@@ -46,7 +46,7 @@
     {
       "param": "structure_type",
       "kind": "category",
-      "weight": 0.4,
+      "weight": 0.32,
       "active": true,
       "value_status": "partly_sourced",
       "value_notes": "Adults are tied to reefs, wrecks and artificial reefs, especially where reef meets sand. Structure comes from FWC's artificial reef list and the Unified Reef Map. Open sand is not counted even though mutton also use sand near reefs.",
@@ -64,6 +64,18 @@
         "artificial_reef": 1.0,
         "natural_reef": 0.9
       }
+    },
+    {
+      "param": "bottom_curvature",
+      "kind": "higher_is_better",
+      "weight": 0.08,
+      "active": true,
+      "value_status": "sourced",
+      "value_notes": "Adult mutton snapper patrol reef breaks, terrace edges, and ridge drop-offs.",
+      "sources": [
+        "https://inthespread.com/blog/mutton-snapper-fishing-tips-techniques-and-strategies-336"
+      ],
+      "reason_template": "Sharp bottom curvature indicates a terrace edge or reef break line."
     },
     {
       "param": "depth_m",

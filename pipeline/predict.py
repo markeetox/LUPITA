@@ -208,6 +208,14 @@ def build_reasons(profile, name, scored, layers, cell, buoys, reg, lat, lon, mem
             pos.append((w * s, tag, _fill(f["reason_template"], p, v, f)))
         elif s < 0.35:
             neg.append((w * (1 - s), tag, _caveat(name, p, v, f, reg)))
+    conv = layers.get("current_convergence")
+    ref_g = scored["ref"].get("sst_gradient")
+    sst_g = layers.get("sst_gradient")
+    if conv is not None and np.isfinite(conv[i, j]) and conv[i, j] > 0 and sst_g is not None and np.isfinite(sst_g[i, j]):
+        ratio = (sst_g[i, j] / ref_g) if (ref_g and ref_g > 0) else 0.5
+        if ratio >= 0.4:
+            pos.append((0.25, "modeled", "Surface current convergence and thermal edge indicate likely weed line and bait accumulation."))
+
     pos.sort(reverse=True)
     neg.sort(reverse=True)
     reasons = [[t, x] for _, t, x in pos[:4]]
@@ -287,6 +295,9 @@ def build_location(layers, scored, cell, buoys, lat, lon, members=None, places=N
     if ref and np.isfinite(g):
         ratio = g / ref
         rows.append(["Temp. break", "Strong" if ratio >= 0.75 else "Moderate" if ratio >= 0.35 else "Weak"])
+    conv = layers.get("current_convergence")
+    if conv is not None and np.isfinite(conv[i, j]) and conv[i, j] > 0:
+        rows.append(["Convergence", f"{conv[i, j]:.2e} 1/s (converging / weed line accumulation)"])
     near = nearest_buoy(buoys, lat, lon)
     if near:
         km, b = near
@@ -380,10 +391,11 @@ def build_fish_json(layers, buoys, profiles, registry, generated_utc, places=Non
             cov = float(scored["coverage"][i, j])
             title = (structure_title(layers, sp["members"], lats) if profile.get("title_from") == "structure"
                      else f"Favorable area, about {sp['area_km2']:.0f} km2")
+            is_gapfilled = layers.get("chlorophyll_gapfilled", False)
             item = {
                 "id": f"{sid}-{k}", "species": sid, "title": title,
                 "score": round(sp["score"], 3),
-                "confidence": "Low" if (cov < 0.9 or profile.get("confidence_cap") == "Low") else "Medium",
+                "confidence": "Low" if (cov < 0.9 or profile.get("confidence_cap") == "Low" or is_gapfilled) else "Medium",
                 "data_coverage": round(cov, 2), "coords": [round(lon, 4), round(lat, 4)],
                 "reasons": build_reasons(profile, name, scored, layers, (i, j), buoys, reg, lat, lon, sp["members"]),
                 "location": build_location(layers, scored, (i, j), buoys, lat, lon, sp["members"], places)}

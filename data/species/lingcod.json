@@ -64,7 +64,7 @@
         12,
         145
       ],
-      "weight": 0.5,
+      "weight": 0.4,
       "active": true,
       "value_status": "sourced",
       "sources": [
@@ -72,6 +72,17 @@
       ],
       "gate": true,
       "reason_template": "Depth is {value} m, within prime Pacific depth zone for lingcod."
+    },
+    {
+      "param": "bottom_curvature",
+      "kind": "higher_is_better",
+      "weight": 0.1,
+      "active": true,
+      "value_status": "sourced",
+      "sources": [
+        "https://wildlife.ca.gov/Fishing/Ocean/Regulations/Sport-Fishing"
+      ],
+      "reason_template": "Seafloor curvature identifies rocky pinnacles, ledges, and break lines where lingcod ambush prey."
     }
   ],
   "timing": {

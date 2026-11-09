@@ -23,8 +23,10 @@ def _tide(lat, lon, conditions, t):
         if d <= TIDE_MAX_KM and (best is None or d < best[0]) and tides.stage_at(tt["events"], t):
             best = (d, tt)
     if not best:
-        return None, None
-    return tides.stage_at(best[1]["events"], t), best[1]["station"]["name"]
+        return None, None, None
+    stage = tides.stage_at(best[1]["events"], t)
+    v_info = tides.flow_velocity_at(best[1]["events"], t)
+    return stage, best[1]["station"]["name"], v_info
 
 
 def components(cfg: dict, t, lat: float, lon: float, conditions: dict) -> dict:
@@ -37,9 +39,19 @@ def components(cfg: dict, t, lat: float, lon: float, conditions: dict) -> dict:
             out["light"] = (c["map"][ph], (c.get("text") or {}).get(ph))
     c = cfg.get("tide")
     if c:
-        stage, station = _tide(lat, lon, conditions, t)
+        stage, station, v_info = _tide(lat, lon, conditions, t)
         if stage in c["map"]:
-            out["tide"] = (c["map"][stage], ((c.get("text") or {}).get(stage) or "").format_map({"station": station}) or None)
+            base_score = c["map"][stage]
+            if v_info and "flow" in v_info:
+                flow = v_info["flow"]
+                if stage in ("rising", "falling"):
+                    score = base_score * (0.6 + 0.4 * flow)
+                else:
+                    score = base_score * (1.0 - 0.3 * flow)
+                score = round(min(1.0, max(0.0, score)), 3)
+            else:
+                score = base_score
+            out["tide"] = (score, ((c.get("text") or {}).get(stage) or "").format_map({"station": station}) or None)
     c = cfg.get("moon")
     if c and t.astimezone(LOCAL).month in c.get("months", range(1, 13)):
         inside = c["from_days"] <= moon.days_from_full(t) <= c["to_days"]

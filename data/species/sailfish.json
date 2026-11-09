@@ -171,6 +171,18 @@
       "sources": []
     },
     {
+      "param": "current_convergence",
+      "kind": "higher_is_better",
+      "weight": 0.06,
+      "active": true,
+      "value_status": "sourced",
+      "value_notes": "Converging currents push bait and weed lines along shelf edges where sailfish hunt.",
+      "reason_template": "Converging surface currents accumulate bait and weed lines.",
+      "sources": [
+        "https://floridasportsman.com/editorial/features_florida_sailfish_fishing_basics/397320"
+      ]
+    },
+    {
       "param": "gulf_stream_edge",
       "kind": "range",
       "range": [
@@ -181,7 +193,7 @@
         -8,
         12
       ],
-      "weight": 0.16,
+      "weight": 0.10,
       "active": true,
       "value_status": "provisional",
       "value_notes": "Florida accounts put winter sailfish along the western (inshore) edge of the Gulf Stream, where green water meets blue. The edge is estimated from 25 km satellite altimetry, so it is good to roughly 20 km. The band is an estimate.",

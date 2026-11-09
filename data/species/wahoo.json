@@ -88,7 +88,7 @@
     {
       "param": "chl_gradient",
       "kind": "higher_is_better",
-      "weight": 0.08,
+      "weight": 0.05,
       "active": true,
       "value_status": "provisional",
       "value_notes": "Color changes and chlorophyll edges concentrate baitfish and wahoo along offshore drop-offs.",
@@ -96,6 +96,18 @@
         "https://www.satfish.com/wahoo-species-profile/"
       ],
       "reason_template": "A strong water color edge is present, where wahoo patrol for bait."
+    },
+    {
+      "param": "current_convergence",
+      "kind": "higher_is_better",
+      "weight": 0.08,
+      "active": true,
+      "value_status": "sourced",
+      "value_notes": "Wahoo patrol weed lines and flotsam formed by converging oceanic currents.",
+      "sources": [
+        "https://www.laseagrant.org/fisheries/wahoo/"
+      ],
+      "reason_template": "Converging currents aggregate weed lines and bait along drop-offs."
     },
     {
       "param": "depth_m",
@@ -163,7 +175,7 @@
         -6,
         15
       ],
-      "weight": 0.15,
+      "weight": 0.10,
       "active": true,
       "value_status": "provisional",
       "value_notes": "Wahoo anglers fish current edges, often where the edge meets a steep ledge. The edge is estimated from 25 km satellite altimetry, so it is good to roughly 20 km. The band is an estimate.",

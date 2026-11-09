@@ -62,7 +62,7 @@
       ]
     },
     "chlorophyll_gapfilled": {
-      "enabled": false,
+      "enabled": true,
       "base": "https://coastwatch.pfeg.noaa.gov/erddap",
       "dataset": "nesdisVHNnoaaSNPPnoaa20NRTchlaGapfilledDaily",
       "variable": "chlor_a",
