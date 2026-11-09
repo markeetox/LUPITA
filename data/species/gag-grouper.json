@@ -59,7 +59,7 @@
         "ledge",
         "artificial_reef"
       ],
-      "weight": 0.35,
+      "weight": 0.25,
       "active": true,
       "value_status": "sourced",
       "sources": [
@@ -72,6 +72,17 @@
         "artificial_reef": 0.8
       },
       "reason_template": "Structure is {value}, ideal for gag grouper ambush."
+    },
+    {
+      "param": "bottom_curvature",
+      "kind": "higher_is_better",
+      "weight": 0.1,
+      "active": true,
+      "value_status": "sourced",
+      "sources": [
+        "https://myfwc.com/"
+      ],
+      "reason_template": "Seafloor curvature indicates sharp ledge breaks and drop-offs favored by gag grouper."
     },
     {
       "param": "depth_m",

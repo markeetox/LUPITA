@@ -17,6 +17,31 @@ def fetch_hilo(station: str, now: datetime, timeout: int = 40) -> dict:
         "datum": "MLLW", "station": station, "time_zone": "gmt", "units": "metric", "interval": "hilo", "format": "json"}).json()
 
 
+import math
+
+
+def flow_velocity_at(events: list[dict], now: datetime) -> dict:
+    """Returns continuous flow velocity (0.0 to 1.0), direction ('incoming', 'outgoing'), and stage."""
+    prev = [e for e in events if e["time"] <= now]
+    nxt = [e for e in events if e["time"] > now]
+    if not prev or not nxt:
+        return {"flow": 0.5, "stage": "moving", "direction": "unknown"}
+    p, n = prev[-1], nxt[0]
+    dt_total = (n["time"] - p["time"]).total_seconds()
+    if dt_total <= 0:
+        return {"flow": 0.5, "stage": "moving", "direction": "unknown"}
+    fraction = (now - p["time"]).total_seconds() / dt_total
+    # Sinusoidal flow profile: 0 at peaks/troughs, 1.0 at mid-tide
+    flow = math.sin(math.pi * fraction)
+    range_m = abs(n["height_m"] - p["height_m"])
+    amp_factor = min(1.0, max(0.2, range_m / 1.5)) if range_m > 0 else 1.0
+    flow_strength = flow * amp_factor
+    is_slack = flow < 0.25
+    direction = "incoming" if p["type"] == "L" else "outgoing"
+    stage = ("slack_high" if p["type"] == "H" else "slack_low") if is_slack else direction
+    return {"flow": round(flow_strength, 3), "direction": direction, "stage": stage}
+
+
 def parse_hilo(payload: dict) -> list[dict]:
     """[{'time': UTC datetime, 'type': 'H'|'L', 'height_m': float}, ...] in time order."""
     if "error" in payload:

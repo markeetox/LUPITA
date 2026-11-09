@@ -64,7 +64,7 @@
         7,
         75
       ],
-      "weight": 0.5,
+      "weight": 0.4,
       "active": true,
       "value_status": "sourced",
       "sources": [
@@ -72,6 +72,17 @@
       ],
       "gate": true,
       "reason_template": "Depth is {value} m, within prime Pacific depth zone for black rockfish."
+    },
+    {
+      "param": "bottom_curvature",
+      "kind": "higher_is_better",
+      "weight": 0.1,
+      "active": true,
+      "value_status": "sourced",
+      "sources": [
+        "https://wdfw.wa.gov/fishing/regulations"
+      ],
+      "reason_template": "Seafloor curvature marks sharp reef edges and high-relief pinnacles."
     }
   ],
   "timing": {

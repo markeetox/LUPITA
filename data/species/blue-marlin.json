@@ -63,6 +63,17 @@
       "reason_template": "SST break is {per10km} C per 10 km, marking front lines where marlin hunt."
     },
     {
+      "param": "current_convergence",
+      "kind": "higher_is_better",
+      "weight": 0.08,
+      "active": true,
+      "value_status": "sourced",
+      "sources": [
+        "https://myfwc.com/"
+      ],
+      "reason_template": "Current convergence concentrates weed lines and pelagic prey."
+    },
+    {
       "param": "gulf_stream_edge",
       "kind": "range",
       "range": [
@@ -73,7 +84,7 @@
         0,
         25
       ],
-      "weight": 0.2,
+      "weight": 0.12,
       "active": true,
       "value_status": "sourced",
       "sources": [

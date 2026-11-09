@@ -35,6 +35,16 @@ def slope_layer(depth, lats, lons):
     return g
 
 
+def curvature_layer(depth, lats, lons):
+    """Seafloor curvature (second spatial derivative / Laplacian) in m / km^2. None if there is no depth grid."""
+    if depth is None:
+        return None
+    c = derive.bottom_curvature(depth, lats, lons)
+    m = EDGE_MARGIN_CELLS
+    c[:m, :] = np.nan; c[-m:, :] = np.nan; c[:, :m] = np.nan; c[:, -m:] = np.nan
+    return c
+
+
 def _fetch_grid(cfg: dict, region: dict, fetch):
     """Try the main ERDDAP server, then any fallback_bases from the config."""
     last = None
@@ -72,7 +82,10 @@ def load_layers(sources: dict, errors: list[str], fetch=erddap.fetch_csv, fetch_
     layers = {"lats": lats, "lons": lons, "sst_c": sst,
               "sst_gradient": derive.gradient_magnitude(sst, lats, lons),
               "chlorophyll": None, "chl_gradient": None, "depth_m": None, "chl_raw": None,
-              "distance_to_inlet": None, "bottom_slope": None, "current_speed": None, "current_dir": None, "gulf_stream_edge": None, "stream_edge_lon": None,
+              "chlorophyll_gapfilled": False,
+              "distance_to_inlet": None, "bottom_slope": None, "bottom_curvature": None,
+              "current_speed": None, "current_dir": None, "current_convergence": None,
+              "gulf_stream_edge": None, "stream_edge_lon": None,
               "closure_areas": [], "closure_cover": None, "closure_info": {}, "closure_checked": False,
               "structure_type": None, "structure_info": {}, "structure_cover": None, "structure_stats": None,
               "times": {"sst": sst_time, "chlorophyll": None},
@@ -84,17 +97,48 @@ def load_layers(sources: dict, errors: list[str], fetch=erddap.fetch_csv, fetch_
             layers["distance_to_inlet"] = derive.distance_to_inlet_grid(lats, lons, inlets)
 
     c = cfg.get("chlorophyll", {})
+    cg = cfg.get("chlorophyll_gapfilled", {})
+    primary_chl = None
+    primary_resampled = None
+    primary_time = None
+    primary_valid_frac = 0.0
+
     if c.get("enabled"):
         try:
             clats, clons, chl, chl_time, _ = _fetch_grid(c, region, fetch)
             layers["chl_raw"] = (clats, clons, chl)
-            resampled_chl = resample(chl, clats, clons, lats, lons, min_weight=0.5)
-            layers["chlorophyll"] = resampled_chl
-            layers["chl_gradient"] = derive.chlorophyll_gradient(resampled_chl, lats, lons)
-            layers["times"]["chlorophyll"] = chl_time
-            layers["datasets"]["chlorophyll"] = c["dataset"]
+            primary_chl = chl
+            primary_time = chl_time
+            primary_resampled = resample(chl, clats, clons, lats, lons, min_weight=0.5)
+            primary_valid_frac = float(np.isfinite(primary_resampled).sum()) / primary_resampled.size if primary_resampled.size else 0.0
         except Exception as exc:
             errors.append(f"layers chlorophyll: {exc}")
+
+    final_chl = primary_resampled
+    used_gapfilled = False
+    chl_dataset = c.get("dataset") if primary_resampled is not None else None
+    final_time = primary_time
+
+    if (final_chl is None or primary_valid_frac < 0.25) and cg.get("enabled"):
+        try:
+            glats, glons, gchl, gchl_time, _ = _fetch_grid(cg, region, fetch)
+            gapfilled_resampled = resample(gchl, glats, glons, lats, lons, min_weight=0.5)
+            if final_chl is not None:
+                final_chl = np.where(np.isfinite(final_chl), final_chl, gapfilled_resampled)
+            else:
+                final_chl = gapfilled_resampled
+            used_gapfilled = True
+            chl_dataset = f"{c.get('dataset', '')} + {cg.get('dataset', '')} (gap-filled)" if c.get("enabled") else cg.get("dataset")
+            final_time = primary_time or gchl_time
+        except Exception as exc:
+            errors.append(f"layers chlorophyll_gapfilled: {exc}")
+
+    if final_chl is not None:
+        layers["chlorophyll"] = final_chl
+        layers["chl_gradient"] = derive.chlorophyll_gradient(final_chl, lats, lons)
+        layers["times"]["chlorophyll"] = final_time
+        layers["datasets"]["chlorophyll"] = chl_dataset
+        layers["chlorophyll_gapfilled"] = used_gapfilled
 
     b = cfg.get("bathymetry", {})
     if b.get("enabled"):
@@ -115,6 +159,7 @@ def load_layers(sources: dict, errors: list[str], fetch=erddap.fetch_csv, fetch_
             u = resample(g[u_name], clats, clons, lats, lons, min_weight=0.5)
             v = resample(g[v_name], clats, clons, lats, lons, min_weight=0.5)
             layers["current_speed"], layers["current_dir"] = currents.speed_dir(u, v)
+            layers["current_convergence"] = derive.current_convergence(u, v, lats, lons)
             edge = currents.edge_on_grid(clats, currents.smooth(currents.edge_longitudes(clats, clons, g[v_name])), lats)
             if edge is not None:
                 layers["stream_edge_lon"] = edge
@@ -163,5 +208,6 @@ def load_layers(sources: dict, errors: list[str], fetch=erddap.fetch_csv, fetch_
             errors.append(f"layers closures: {exc}")
     layers["sst_gradient"] = front_strength(sst, layers["depth_m"], lats, lons)
     layers["bottom_slope"] = slope_layer(layers["depth_m"], lats, lons)
+    layers["bottom_curvature"] = curvature_layer(layers["depth_m"], lats, lons)
     layers["marine_mask"] = grid.build_marine_mask(layers["depth_m"])
     return layers

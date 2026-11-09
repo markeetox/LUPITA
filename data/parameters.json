@@ -322,6 +322,28 @@
       "update_rate": "Daily"
     },
     {
+      "key": "current_convergence",
+      "label": "Surface current convergence / weed line accumulation",
+      "unit": "1/s",
+      "type": "number",
+      "tier": "v2",
+      "status": "active",
+      "dynamic": true,
+      "confidence": "derived",
+      "derived_from": [
+        "current_speed",
+        "current_dir"
+      ],
+      "sources": [
+        {
+          "name": "Calculated from horizontal velocity divergence (-div(u, v))",
+          "host": "internal"
+        }
+      ],
+      "update_rate": "Daily",
+      "notes": "Positive values indicate converging currents where floating sargassum, flotsam and weed lines gather."
+    },
+    {
       "key": "current_dir",
       "label": "Surface current direction",
       "unit": "degrees toward",
@@ -716,6 +738,27 @@
       ],
       "update_rate": "Static",
       "notes": "Steep slopes mark ledges and drop-offs that pelagic fish such as wahoo patrol. Coarse (about 2 km cells), so small ledges are smoothed away."
+    },
+    {
+      "key": "bottom_curvature",
+      "label": "Seafloor curvature / ledge breaks and ridges",
+      "unit": "m/km2",
+      "type": "number",
+      "tier": "v2",
+      "status": "active",
+      "dynamic": false,
+      "confidence": "derived",
+      "derived_from": [
+        "depth_m"
+      ],
+      "sources": [
+        {
+          "name": "Calculated as Laplacian magnitude of ETOPO depth grid (|div(grad z)|)",
+          "host": "internal"
+        }
+      ],
+      "update_rate": "Static",
+      "notes": "High curvature identifies sharp terrace edges, break lines, and micro-ridges where demersal species hold."
     },
     {
       "key": "season_presence",

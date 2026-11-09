@@ -41,6 +41,35 @@ def chlorophyll_gradient(chl_grid: np.ndarray, lats: np.ndarray, lons: np.ndarra
     return gradient_magnitude(chl_grid, lats, lons)
 
 
+def current_convergence(u_grid: np.ndarray, v_grid: np.ndarray, lats: np.ndarray, lons: np.ndarray) -> np.ndarray:
+    """Calculate 2D surface current convergence (-div(u, v)) in s^-1.
+    Positive values indicate converging currents (weed lines / flotsam accumulation)."""
+    if u_grid.shape != (len(lats), len(lons)) or v_grid.shape != (len(lats), len(lons)):
+        raise ValueError("grid shape does not match lats/lons")
+    dlat_m = np.gradient(lats) * KM_PER_DEG * 1000.0
+    dlon_m = np.gradient(lons)[None, :] * KM_PER_DEG * 1000.0 * np.cos(np.radians(lats))[:, None]
+    du_dx = np.gradient(u_grid, axis=1) / dlon_m
+    dv_dy = np.gradient(v_grid, axis=0) / dlat_m[:, None]
+    convergence = -(du_dx + dv_dy)
+    return np.where(np.isfinite(u_grid) & np.isfinite(v_grid), convergence, np.nan)
+
+
+def bottom_curvature(depth_grid: np.ndarray, lats: np.ndarray, lons: np.ndarray) -> np.ndarray:
+    """Calculate seafloor curvature (magnitude of Laplacian of depth |div(grad z)|) in m / km^2.
+    Highlights sharp ledge breaks, ridge crests, and reef drop-offs."""
+    if depth_grid.shape != (len(lats), len(lons)):
+        raise ValueError("grid shape does not match lats/lons")
+    dlat_km = np.gradient(lats) * KM_PER_DEG
+    dlon_km = np.gradient(lons)[None, :] * KM_PER_DEG * np.cos(np.radians(lats))[:, None]
+    dz_dy = np.gradient(depth_grid, axis=0) / dlat_km[:, None]
+    dz_dx = np.gradient(depth_grid, axis=1) / dlon_km
+    d2z_dy2 = np.gradient(dz_dy, axis=0) / dlat_km[:, None]
+    d2z_dx2 = np.gradient(dz_dx, axis=1) / dlon_km
+    laplacian = d2z_dx2 + d2z_dy2
+    curvature = np.abs(laplacian)
+    return np.where(np.isfinite(depth_grid), curvature, np.nan)
+
+
 def temperature_trend(current_sst: np.ndarray, previous_sst: np.ndarray, hours_diff: float = 24.0) -> np.ndarray:
     """Water temperature change rate in degC per day (24h).
     Positive values mean warming; negative values mean cooling."""
