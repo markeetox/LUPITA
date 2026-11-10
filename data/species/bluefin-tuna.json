@@ -15,10 +15,10 @@
   "image": {
     "status": "placeholder",
     "kind": "illustration",
-    "url": "fish/bluefin_tuna.png",
+    "url": "fish/bluefin-tuna.png",
     "credit": "Original illustration",
     "license": "",
-    "plan": "web/fish/bluefin_tuna.png placeholder illustration."
+    "plan": "web/fish/bluefin-tuna.png placeholder illustration."
   },
   "profile": {
     "size": "Common 200-600+ lb; up to 1000+ lb",
