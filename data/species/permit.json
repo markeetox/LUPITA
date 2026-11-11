@@ -56,7 +56,9 @@
   },
   "model": "sites",
   "site_kinds": [
-    "inlet"
+    "inlet",
+    "flat",
+    "cut"
   ],
   "min_score_report": 0.35,
   "max_spots": 15,

@@ -272,7 +272,10 @@
   },
   "model": "sites",
   "site_kinds": [
-    "inlet"
+    "inlet",
+    "cut",
+    "channel_bridge",
+    "flat"
   ],
   "min_score_report": 0.4,
   "max_spots": 12,
