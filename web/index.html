@@ -84,6 +84,17 @@
   .toggle .sw { width: 22px; height: 14px; border-radius: 2px; background: rgba(239,68,68,.35); border: 2px solid #ef4444; }
   .sw.orange { background: rgba(255, 102, 0, 0.3); border-color: var(--accent); }
 
+  /* Nola Mode UI */
+  .nola-mode-container { margin-top: 4px; display: flex; flex-direction: column; gap: 4px; }
+  .nola-btn { display: inline-flex; align-items: center; justify-content: center; gap: 8px; font-size: 16px; font-weight: 700;
+    text-transform: uppercase; letter-spacing: 1.5px; padding: 7px 14px; background: rgba(255, 102, 0, 0.12);
+    color: var(--accent); border: 1px solid var(--accent); border-radius: 2px; cursor: pointer;
+    transition: all 0.2s ease; box-shadow: 0 0 10px rgba(255, 102, 0, 0.15); }
+  .nola-btn:hover { background: var(--accent); color: #090a0c; box-shadow: 0 0 16px rgba(255, 102, 0, 0.5); }
+  .nola-btn.active { background: var(--accent); color: #090a0c; font-weight: 800; box-shadow: 0 0 20px rgba(255, 102, 0, 0.7); }
+  .nola-warning { font-size: 13px; font-weight: 700; color: #fbbf24; text-transform: uppercase; letter-spacing: 1px;
+    display: flex; align-items: center; gap: 6px; text-shadow: 0 0 6px rgba(251, 191, 36, 0.3); }
+
   /* Marked Separators & Status Bar */
   .status-bar { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 12px; margin-top: 16px; padding-top: 12px; border-top: 2px dashed var(--line); }
   .chips { display: flex; flex-wrap: wrap; gap: 8px; }
@@ -234,6 +245,10 @@
       <div class="ctrl-group toggles-group">
         <label class="toggle"><input type="checkbox" id="closuresToggle" checked><i class="sw"></i><span>Show no-fishing areas</span></label>
         <label class="toggle"><input type="checkbox" id="streamToggle" checked><i class="sw orange"></i><span>Show Gulf Stream edge</span></label>
+        <div class="nola-mode-container">
+          <button id="nolaModeBtn" type="button" class="nola-btn" aria-pressed="false">Nola Mode</button>
+          <div class="nola-warning" id="nolaWarning" role="alert">only use this button if you are Nola</div>
+        </div>
       </div>
     </div>
 
@@ -343,6 +358,7 @@ const REGIONS = {
   gulf_mex: { name: "Gulf of Mexico & Mexico", bounds: [[-98.0, 15.0], [-81.0, 30.0]], filter: s => s.coords[1] >= 15.0 && s.coords[1] <= 30.0 && s.coords[0] >= -98.0 && s.coords[0] <= -81.0 }
 };
 let FISH = null, CATALOG = null, BUOYS = null, CLOSURES = null, LATEST = null, SELECTED_SPECIES = [], REGION_FILTER = store.get("fhm.region") || "all";
+let NOLA_MODE = false;
 const SPECIES = {}, SPOTS = {};
 
 function setCatalog(data) {
@@ -831,6 +847,7 @@ document.addEventListener("click", e => {
 });
 clearBtn.addEventListener("click", e => {
   SELECTED_SPECIES = [];
+  if (NOLA_MODE) setNolaMode(false);
   updateChecklistState();
   renderNote();
   renderLegend();
@@ -838,9 +855,21 @@ clearBtn.addEventListener("click", e => {
   refreshSpots();
 });
 
+function getAllSpeciesIds() {
+  const catList = (CATALOG && CATALOG.species && CATALOG.species.length)
+    ? CATALOG.species
+    : (FISH && FISH.species) ? FISH.species : [];
+  return catList.map(s => s.id);
+}
+
 function updateChecklistState() {
-  selectedCount.textContent = `${SELECTED_SPECIES.length} of 5 selected`;
+  const allIds = getAllSpeciesIds();
+  const maxCap = NOLA_MODE ? allIds.length : 5;
+  selectedCount.textContent = NOLA_MODE
+    ? `All ${SELECTED_SPECIES.length} selected (Nola Mode)`
+    : `${SELECTED_SPECIES.length} of 5 selected`;
   if (SELECTED_SPECIES.length === 0) selectBtn.textContent = "Select species...";
+  else if (NOLA_MODE && SELECTED_SPECIES.length === allIds.length) selectBtn.textContent = `All species (${allIds.length}) selected`;
   else if (SELECTED_SPECIES.length === 1) selectBtn.textContent = (SPECIES[SELECTED_SPECIES[0]] || {}).name || SELECTED_SPECIES[0];
   else selectBtn.textContent = `${SELECTED_SPECIES.length} species selected`;
 
@@ -849,13 +878,43 @@ function updateChecklistState() {
     const isChecked = SELECTED_SPECIES.includes(input.value);
     input.checked = isChecked;
     const item = input.closest(".check-item");
-    if (!isChecked && SELECTED_SPECIES.length >= 5) {
+    if (!isChecked && !NOLA_MODE && SELECTED_SPECIES.length >= 5) {
       input.disabled = true;
       item.classList.add("disabled");
     } else {
       input.disabled = false;
       item.classList.remove("disabled");
     }
+  });
+}
+
+function setNolaMode(enabled) {
+  NOLA_MODE = enabled;
+  const btn = document.getElementById("nolaModeBtn");
+  if (btn) {
+    btn.classList.toggle("active", NOLA_MODE);
+    btn.setAttribute("aria-pressed", String(NOLA_MODE));
+  }
+  if (NOLA_MODE) {
+    const allIds = getAllSpeciesIds();
+    SELECTED_SPECIES = [...allIds];
+  } else {
+    // Keep first 5 if more than 5 were selected, or keep selection
+    if (SELECTED_SPECIES.length > 5) {
+      SELECTED_SPECIES = SELECTED_SPECIES.slice(0, 5);
+    }
+  }
+  updateChecklistState();
+  renderNote();
+  renderLegend();
+  closeSheet();
+  refreshSpots();
+}
+
+const nolaModeBtn = document.getElementById("nolaModeBtn");
+if (nolaModeBtn) {
+  nolaModeBtn.addEventListener("click", () => {
+    setNolaMode(!NOLA_MODE);
   });
 }
 function setTop(open, save) {
@@ -996,11 +1055,18 @@ function renderPanel() {
     cb.addEventListener("change", e => {
       const id = e.target.value;
       if (e.target.checked) {
-        if (SELECTED_SPECIES.length < 5 && !SELECTED_SPECIES.includes(id)) {
+        if ((NOLA_MODE || SELECTED_SPECIES.length < 5) && !SELECTED_SPECIES.includes(id)) {
           SELECTED_SPECIES.push(id);
         }
       } else {
         SELECTED_SPECIES = SELECTED_SPECIES.filter(x => x !== id);
+        if (NOLA_MODE) {
+          NOLA_MODE = false;
+          if (nolaModeBtn) {
+            nolaModeBtn.classList.remove("active");
+            nolaModeBtn.setAttribute("aria-pressed", "false");
+          }
+        }
       }
       updateChecklistState();
       renderNote();
