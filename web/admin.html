@@ -298,6 +298,38 @@
   }
   .image-large-preview img { max-width: 100%; max-height: 100%; object-fit: contain; }
 
+  /* Login Modal */
+  .modal-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.85);
+    backdrop-filter: blur(8px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 200;
+  }
+  .modal-overlay[hidden] { display: none; }
+  .login-card {
+    background: #0e1017;
+    border: 2px solid var(--accent);
+    box-shadow: 0 16px 48px rgba(0,0,0,0.9), 0 0 20px var(--accent-glow);
+    padding: 32px;
+    width: 400px;
+    border-radius: 2px;
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+  }
+  .login-card h2 {
+    margin: 0;
+    font-size: 26px;
+    font-weight: 800;
+    color: var(--accent);
+    letter-spacing: 2px;
+    text-transform: uppercase;
+  }
+
   /* Toast Notification */
   #toast {
     position: fixed;
@@ -320,17 +352,6 @@
   #toast.success { border-color: var(--success); border-left-color: var(--success); }
 
   @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
-
-  .empty-state {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    height: 70%;
-    color: var(--muted);
-    gap: 16px;
-  }
-  .empty-state h2 { font-size: 26px; color: var(--accent); margin: 0; text-transform: uppercase; }
 </style>
 </head>
 <body>
@@ -352,6 +373,7 @@
         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
         Add Fish
       </button>
+      <button class="btn sm" id="btn-logout" title="Admin Logout">Logout</button>
     </div>
   </header>
 
@@ -592,6 +614,20 @@
   </div>
 </div>
 
+<!-- Login Modal -->
+<div class="modal-overlay" id="login-modal" hidden>
+  <div class="login-card">
+    <h2>Lupita Admin Login</h2>
+    <div style="font-size:15px; color:var(--muted);">Please enter admin password to unlock management capabilities.</div>
+    <div class="form-group">
+      <label class="form-label">Password</label>
+      <input type="password" id="login-password" class="form-input" placeholder="Admin password">
+    </div>
+    <button class="btn primary" id="btn-login" style="justify-content:center; margin-top:8px;">Authenticate</button>
+    <div id="login-error" style="color:var(--danger); font-size:14px; display:none;"></div>
+  </div>
+</div>
+
 <div id="toast"></div>
 
 <script>
@@ -601,6 +637,7 @@ let selectedSpecies = null;
 let currentProfile = null;
 let parametersRegistry = [];
 let isNewRecord = false;
+let authToken = localStorage.getItem("lupita_admin_token") || "";
 
 // DOM Elements
 const speciesListEl = document.getElementById("species-list-container");
@@ -608,12 +645,100 @@ const searchInput = document.getElementById("search-input");
 const speciesCountEl = document.getElementById("species-count");
 const toastEl = document.getElementById("toast");
 const rawJsonEl = document.getElementById("raw-json-textarea");
+const loginModal = document.getElementById("login-modal");
+const loginPasswordInput = document.getElementById("login-password");
+const loginErrorEl = document.getElementById("login-error");
 
 function showToast(msg, type = "normal") {
   toastEl.textContent = msg;
   toastEl.className = "show " + type;
   setTimeout(() => { toastEl.className = ""; }, 4000);
 }
+
+// Authentication Helpers
+function getAuthHeaders() {
+  const headers = { "Content-Type": "application/json" };
+  if (authToken) {
+    headers["Authorization"] = `Bearer ${authToken}`;
+  }
+  return headers;
+}
+
+async function checkAuthStatus() {
+  if (!authToken) {
+    showLoginModal();
+    return false;
+  }
+  try {
+    const res = await fetch("/api/admin/auth-status", {
+      headers: { "Authorization": `Bearer ${authToken}` }
+    });
+    const data = await res.json();
+    if (data.authenticated) {
+      hideLoginModal();
+      return true;
+    } else {
+      showLoginModal();
+      return false;
+    }
+  } catch (e) {
+    showLoginModal();
+    return false;
+  }
+}
+
+function showLoginModal() {
+  loginModal.removeAttribute("hidden");
+  loginPasswordInput.focus();
+}
+
+function hideLoginModal() {
+  loginModal.setAttribute("hidden", "true");
+  loginErrorEl.style.display = "none";
+  loginPasswordInput.value = "";
+}
+
+document.getElementById("btn-login").onclick = async () => {
+  const pwd = loginPasswordInput.value;
+  try {
+    const res = await fetch("/api/admin/login", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ password: pwd })
+    });
+    const data = await res.json();
+    if (res.ok && data.success) {
+      authToken = data.token;
+      localStorage.setItem("lupita_admin_token", authToken);
+      hideLoginModal();
+      showToast("Authenticated successfully as Admin", "success");
+      loadSpeciesList();
+    } else {
+      loginErrorEl.textContent = data.error || "Authentication failed";
+      loginErrorEl.style.display = "block";
+    }
+  } catch (err) {
+    loginErrorEl.textContent = "Network error: " + err;
+    loginErrorEl.style.display = "block";
+  }
+};
+
+loginPasswordInput.addEventListener("keypress", (e) => {
+  if (e.key === "Enter") document.getElementById("btn-login").click();
+});
+
+document.getElementById("btn-logout").onclick = async () => {
+  try {
+    await fetch("/api/admin/logout", {
+      method: "POST",
+      headers: getAuthHeaders()
+    });
+  } catch (_) {}
+  authToken = "";
+  localStorage.removeItem("lupita_admin_token");
+  showToast("Logged out.", "normal");
+  showLoginModal();
+};
 
 // Fetch parameters registry
 async function loadParameters() {
@@ -1057,7 +1182,9 @@ document.getElementById("btn-format-json").onclick = () => {
 
 // Save species
 document.getElementById("btn-save-species").onclick = async () => {
-  // If active tab is raw JSON, parse it first
+  const isAuthed = await checkAuthStatus();
+  if (!isAuthed) return;
+
   const activeTab = document.querySelector(".tab-btn.active").getAttribute("data-tab");
   if (activeTab === "tab-json") {
     try {
@@ -1073,16 +1200,20 @@ document.getElementById("btn-save-species").onclick = async () => {
   const sid = currentProfile.id;
   const isCreate = isNewRecord;
   const url = isCreate ? "/api/admin/species" : `/api/admin/species/${sid}`;
-  const method = isCreate ? "POST" : "POST";
 
   try {
     const res = await fetch(url, {
-      method: method,
-      headers: { "Content-Type": "application/json" },
+      method: "POST",
+      headers: getAuthHeaders(),
       body: JSON.stringify(currentProfile)
     });
     const result = await res.json();
     if (!res.ok) {
+      if (res.status === 401) {
+        showLoginModal();
+        showToast("Session expired. Please log in.", "error");
+        return;
+      }
       const errList = result.errors ? result.errors.join("; ") : (result.error || "Failed to save");
       showToast("Save Error: " + errList, "error");
       return;
@@ -1098,12 +1229,18 @@ document.getElementById("btn-save-species").onclick = async () => {
 
 // Delete species
 document.getElementById("btn-delete-species").onclick = async () => {
+  const isAuthed = await checkAuthStatus();
+  if (!isAuthed) return;
+
   if (!currentProfile || !currentProfile.id) return;
   const sid = currentProfile.id;
   if (!confirm(`Are you sure you want to permanently delete species '${sid}'?`)) return;
 
   try {
-    const res = await fetch(`/api/admin/species/${sid}`, { method: "DELETE" });
+    const res = await fetch(`/api/admin/species/${sid}`, {
+      method: "DELETE",
+      headers: getAuthHeaders()
+    });
     const result = await res.json();
     if (!res.ok) throw new Error(result.error || "Delete failed");
     showToast(`Deleted '${sid}' successfully`, "normal");
@@ -1114,7 +1251,9 @@ document.getElementById("btn-delete-species").onclick = async () => {
 };
 
 // Image selection & upload
-document.getElementById("btn-select-image").onclick = () => {
+document.getElementById("btn-select-image").onclick = async () => {
+  const isAuthed = await checkAuthStatus();
+  if (!isAuthed) return;
   document.getElementById("image-file-input").click();
 };
 
@@ -1129,7 +1268,7 @@ document.getElementById("image-file-input").onchange = async (e) => {
       const base64Data = reader.result;
       const res = await fetch(`/api/admin/species/${sid}/image`, {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
+        headers: getAuthHeaders(),
         body: JSON.stringify({ image_base64: base64Data })
       });
       const data = await res.json();
@@ -1147,9 +1286,15 @@ document.getElementById("image-file-input").onchange = async (e) => {
 
 // Database sync button
 document.getElementById("btn-sync-db").onclick = async () => {
+  const isAuthed = await checkAuthStatus();
+  if (!isAuthed) return;
+
   showToast("Rebuilding species catalog and live outputs...", "normal");
   try {
-    const res = await fetch("/api/admin/sync", { method: "POST" });
+    const res = await fetch("/api/admin/sync", {
+      method: "POST",
+      headers: getAuthHeaders()
+    });
     const data = await res.json();
     if (data.success) {
       showToast(`Database synchronized! (${data.result.species_count} species registered)`, "success");
@@ -1165,6 +1310,7 @@ document.getElementById("btn-sync-db").onclick = async () => {
 window.onload = async () => {
   await loadParameters();
   await loadSpeciesList();
+  await checkAuthStatus();
 };
 </script>
 </body>

@@ -1,4 +1,4 @@
-"""Unit tests for Lupita Admin backend API server and validation."""
+"""Unit tests for Lupita Admin backend API server, authentication, and validation."""
 from __future__ import annotations
 
 import base64
@@ -28,6 +28,57 @@ def admin_api_server():
     yield base_url
     server.shutdown()
     server.server_close()
+
+
+def get_auth_token(base_url: str) -> str:
+    req = Request(
+        f"{base_url}/api/admin/login",
+        data=json.dumps({"password": admin_server.ADMIN_PASSWORD}).encode(),
+        headers={"Content-Type": "application/json"},
+        method="POST"
+    )
+    with urlopen(req) as resp:
+        data = json.loads(resp.read().decode())
+        return data["token"]
+
+
+def test_auth_login_success_and_failure(admin_api_server):
+    # Invalid password
+    req_fail = Request(
+        f"{admin_api_server}/api/admin/login",
+        data=json.dumps({"password": "wrongpassword"}).encode(),
+        headers={"Content-Type": "application/json"},
+        method="POST"
+    )
+    with pytest.raises(HTTPError) as exc:
+        urlopen(req_fail)
+    assert exc.value.code == HTTPStatus.UNAUTHORIZED
+
+    # Valid password
+    token = get_auth_token(admin_api_server)
+    assert isinstance(token, str) and len(token) > 0
+
+    # Verify auth status
+    req_status = Request(
+        f"{admin_api_server}/api/admin/auth-status",
+        headers={"Authorization": f"Bearer {token}"}
+    )
+    with urlopen(req_status) as resp:
+        status_data = json.loads(resp.read().decode())
+        assert status_data["authenticated"] is True
+
+
+def test_unauthenticated_requests_are_rejected(admin_api_server):
+    # Unauthenticated create should fail with 401
+    req = Request(
+        f"{admin_api_server}/api/admin/species",
+        data=json.dumps({"id": "unauth-test"}).encode(),
+        headers={"Content-Type": "application/json"},
+        method="POST"
+    )
+    with pytest.raises(HTTPError) as exc:
+        urlopen(req)
+    assert exc.value.code == HTTPStatus.UNAUTHORIZED
 
 
 def test_validation_accepts_valid_profile():
@@ -145,6 +196,9 @@ def test_get_species_endpoint(admin_api_server):
 
 
 def test_create_update_delete_species_flow(admin_api_server):
+    token = get_auth_token(admin_api_server)
+    auth_headers = {"Authorization": f"Bearer {token}", "Content-Type": "application/json"}
+
     test_id = "test-crud-amberjack"
     test_file = SPECIES_DIR / f"{test_id}.json"
     if test_file.exists():
@@ -181,7 +235,7 @@ def test_create_update_delete_species_flow(admin_api_server):
     req = Request(
         f"{admin_api_server}/api/admin/species",
         data=json.dumps(new_sp).encode(),
-        headers={"Content-Type": "application/json"},
+        headers=auth_headers,
         method="POST"
     )
     with urlopen(req) as resp:
@@ -196,7 +250,7 @@ def test_create_update_delete_species_flow(admin_api_server):
     req_update = Request(
         f"{admin_api_server}/api/admin/species/{test_id}",
         data=json.dumps(new_sp).encode(),
-        headers={"Content-Type": "application/json"},
+        headers=auth_headers,
         method="POST"
     )
     with urlopen(req_update) as resp:
@@ -208,7 +262,6 @@ def test_create_update_delete_species_flow(admin_api_server):
     assert updated_on_disk["profile"]["size"] == "Up to 55 lb"
 
     # 3. Image upload test (valid 1x1 transparent PNG)
-    # Minimal 1x1 transparent PNG bytes
     png_bytes = (
         b"\x89PNG\r\n\x1a\n\x00\x00\x00\rIHDR\x00\x00\x00\x01\x00\x00\x00\x01\x08\x06"
         b"\x00\x00\x00\x1f\x15c4\x00\x00\x00\rIDATx\x9cc`\x00\x00\x00\x02\x00\x01H\xaf"
@@ -217,7 +270,7 @@ def test_create_update_delete_species_flow(admin_api_server):
     req_img = Request(
         f"{admin_api_server}/api/admin/species/{test_id}/image",
         data=json.dumps({"image_base64": base64.b64encode(png_bytes).decode()}).encode(),
-        headers={"Content-Type": "application/json"},
+        headers=auth_headers,
         method="POST"
     )
     with urlopen(req_img) as resp:
@@ -232,7 +285,7 @@ def test_create_update_delete_species_flow(admin_api_server):
     req_sync = Request(
         f"{admin_api_server}/api/admin/sync",
         data=b"{}",
-        headers={"Content-Type": "application/json"},
+        headers=auth_headers,
         method="POST"
     )
     with urlopen(req_sync) as resp:
@@ -243,6 +296,7 @@ def test_create_update_delete_species_flow(admin_api_server):
     # 5. Delete species
     req_del = Request(
         f"{admin_api_server}/api/admin/species/{test_id}",
+        headers={"Authorization": f"Bearer {token}"},
         method="DELETE"
     )
     with urlopen(req_del) as resp:
