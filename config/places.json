@@ -58,6 +58,62 @@
       "radius_km": 1.5
     },
     {
+      "name": "Norris Cut",
+      "lat": 25.753,
+      "lon": -80.146,
+      "kind": "cut",
+      "radius_km": 1.2
+    },
+    {
+      "name": "Biscayne Channel (Stiltsville)",
+      "lat": 25.688,
+      "lon": -80.170,
+      "kind": "cut",
+      "radius_km": 2.0
+    },
+    {
+      "name": "Safety Valve Flats",
+      "lat": 25.670,
+      "lon": -80.165,
+      "kind": "flat",
+      "radius_km": 2.5
+    },
+    {
+      "name": "Soldier Key Flats",
+      "lat": 25.590,
+      "lon": -80.175,
+      "kind": "flat",
+      "radius_km": 2.0
+    },
+    {
+      "name": "Featherbed Bank",
+      "lat": 25.515,
+      "lon": -80.250,
+      "kind": "flat",
+      "radius_km": 2.0
+    },
+    {
+      "name": "Caesar Creek",
+      "lat": 25.390,
+      "lon": -80.240,
+      "kind": "cut",
+      "radius_km": 1.5
+    },
+    {
+      "name": "Broad Creek",
+      "lat": 25.324,
+      "lon": -80.288,
+      "kind": "cut",
+      "radius_km": 1.5
+    },
+    {
+      "name": "Rickenbacker Causeway Bridge",
+      "lat": 25.747,
+      "lon": -80.190,
+      "kind": "channel_bridge",
+      "radius_km": 1.5
+    },
+    {
       "name": "Halifax Harbor",
       "lat": 44.600,
       "lon": -63.560,
