@@ -1,0 +1,1171 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>LUPITA // ADMIN COMMAND CENTER</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Genos:ital,wght@0,300..900;1,300..900&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #090a0c;
+    --card: #111318;
+    --panel-bg: #0f1117;
+    --line: #422d1d;
+    --line-active: #ff6600;
+    --text: #f3f4f6;
+    --muted: #a3a3a3;
+    --accent: #ff6600;
+    --accent-glow: rgba(255, 102, 0, 0.25);
+    --warn: #eab308;
+    --danger: #ef4444;
+    --success: #22c55e;
+    --font: "Genos", sans-serif;
+  }
+  * { box-sizing: border-box; font-family: var(--font); font-weight: 500; }
+  html, body { height: 100%; margin: 0; background: var(--bg); color: var(--text); overflow: hidden; }
+
+  /* App Shell */
+  #app { display: flex; height: 100vh; width: 100vw; flex-direction: column; }
+
+  /* Header */
+  header {
+    height: 60px;
+    background: #0e0f14;
+    border-bottom: 2px solid var(--accent);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 24px;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.8);
+    z-index: 10;
+  }
+  .brand { display: flex; align-items: center; gap: 14px; }
+  .brand-badge { width: 10px; height: 26px; background: var(--accent); clip-path: polygon(0 0, 100% 0, 100% 70%, 0 100%); }
+  .brand h1 { margin: 0; font-size: 28px; font-weight: 800; letter-spacing: 2.5px; color: var(--accent); text-transform: uppercase; }
+  .brand span { font-size: 15px; color: var(--muted); letter-spacing: 1.5px; text-transform: uppercase; margin-left: 6px; }
+
+  .header-actions { display: flex; align-items: center; gap: 14px; }
+  .btn {
+    background: #171922;
+    color: var(--text);
+    border: 1px solid var(--line);
+    border-left: 3px solid var(--accent);
+    padding: 7px 16px;
+    font-size: 17px;
+    font-weight: 700;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    cursor: pointer;
+    border-radius: 2px;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    transition: background 0.2s, box-shadow 0.2s, border-color 0.2s;
+  }
+  .btn:hover { background: #222634; border-color: var(--accent); }
+  .btn.primary { background: var(--accent); color: #000; border-color: var(--accent); }
+  .btn.primary:hover { background: #ff771a; }
+  .btn.danger { border-left-color: var(--danger); }
+  .btn.danger:hover { background: rgba(239, 68, 68, 0.2); border-color: var(--danger); }
+  .btn.sm { padding: 4px 10px; font-size: 14px; }
+
+  /* Main workspace layout */
+  .workspace { display: flex; flex: 1; height: calc(100vh - 60px); overflow: hidden; }
+
+  /* Left Sidebar: Species List */
+  .sidebar {
+    width: 340px;
+    background: #0d0f15;
+    border-right: 1px solid var(--line);
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+  }
+  .sidebar-header {
+    padding: 14px;
+    border-bottom: 1px solid var(--line);
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+  .search-box {
+    width: 100%;
+    background: #090a0d;
+    border: 1px solid var(--line);
+    border-left: 3px solid var(--accent);
+    color: var(--text);
+    padding: 7px 12px;
+    font-size: 17px;
+    outline: none;
+    border-radius: 2px;
+  }
+  .search-box:focus { border-color: var(--accent); box-shadow: 0 0 0 2px var(--accent-glow); }
+  .sidebar-meta { display: flex; justify-content: space-between; align-items: center; font-size: 14px; color: var(--muted); text-transform: uppercase; }
+
+  .species-list {
+    flex: 1;
+    overflow-y: auto;
+    padding: 8px 0;
+  }
+  .species-card {
+    display: flex;
+    align-items: center;
+    padding: 10px 14px;
+    border-bottom: 1px dashed rgba(66, 45, 29, 0.4);
+    cursor: pointer;
+    gap: 12px;
+    transition: background 0.15s;
+  }
+  .species-card:hover { background: rgba(255, 102, 0, 0.08); }
+  .species-card.active { background: rgba(255, 102, 0, 0.18); border-left: 3px solid var(--accent); }
+  .species-thumb {
+    width: 44px;
+    height: 44px;
+    background: #06070a;
+    border: 1px solid var(--line);
+    border-radius: 2px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex: none;
+    overflow: hidden;
+  }
+  .species-thumb img { width: 100%; height: 100%; object-fit: contain; }
+  .species-thumb-placeholder { font-size: 20px; color: var(--muted); }
+  .species-info { flex: 1; min-width: 0; }
+  .species-name { font-size: 18px; font-weight: 700; color: var(--text); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .species-sci { font-size: 14px; color: var(--muted); font-style: italic; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .species-badges { display: flex; gap: 6px; margin-top: 4px; align-items: center; }
+  .badge {
+    font-size: 12px;
+    padding: 1px 6px;
+    border-radius: 2px;
+    text-transform: uppercase;
+    font-weight: 700;
+    border: 1px solid var(--line);
+  }
+  .badge.grid { background: rgba(59, 130, 246, 0.15); border-color: #3b82f6; color: #60a5fa; }
+  .badge.sites { background: rgba(168, 85, 247, 0.15); border-color: #a855f7; color: #c084fc; }
+  .species-color-dot { width: 10px; height: 10px; border-radius: 2px; }
+
+  /* Right Editor Panel */
+  .editor-panel {
+    flex: 1;
+    background: #0b0d12;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+  }
+  .editor-header {
+    height: 56px;
+    padding: 0 24px;
+    border-bottom: 1px solid var(--line);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: #0e1017;
+  }
+  .editor-tabs { display: flex; gap: 8px; height: 100%; align-items: flex-end; }
+  .tab-btn {
+    padding: 12px 18px;
+    font-size: 16px;
+    font-weight: 700;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    color: var(--muted);
+    background: none;
+    border: none;
+    border-bottom: 3px solid transparent;
+    cursor: pointer;
+    transition: color 0.2s, border-color 0.2s;
+  }
+  .tab-btn:hover { color: var(--text); }
+  .tab-btn.active { color: var(--accent); border-bottom-color: var(--accent); }
+
+  .editor-content {
+    flex: 1;
+    overflow-y: auto;
+    padding: 24px 32px;
+  }
+
+  /* Form Controls */
+  .section-card {
+    background: #11131a;
+    border: 1px solid var(--line);
+    border-top: 2px solid var(--accent);
+    padding: 20px;
+    margin-bottom: 24px;
+    border-radius: 2px;
+  }
+  .section-title {
+    font-size: 20px;
+    font-weight: 700;
+    letter-spacing: 1.5px;
+    color: var(--accent);
+    text-transform: uppercase;
+    margin: 0 0 16px 0;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .form-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 16px;
+  }
+  .form-group { display: flex; flex-direction: column; gap: 6px; }
+  .form-group.full { grid-column: 1 / -1; }
+  .form-label {
+    font-size: 14px;
+    font-weight: 700;
+    color: var(--muted);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+  }
+  .form-input, .form-select, .form-textarea {
+    background: #07080b;
+    border: 1px solid var(--line);
+    border-left: 3px solid var(--accent);
+    color: var(--text);
+    padding: 8px 12px;
+    font-size: 16px;
+    border-radius: 2px;
+    outline: none;
+  }
+  .form-input:focus, .form-select:focus, .form-textarea:focus {
+    border-color: var(--accent);
+    box-shadow: 0 0 0 2px var(--accent-glow);
+  }
+  .form-textarea { min-height: 80px; resize: vertical; }
+
+  /* Factors Table / List */
+  .factor-item {
+    background: #090b10;
+    border: 1px solid var(--line);
+    padding: 14px;
+    margin-bottom: 12px;
+    border-radius: 2px;
+    position: relative;
+    border-left: 3px solid #60a5fa;
+  }
+  .factor-item.inactive { opacity: 0.6; border-left-color: var(--muted); }
+  .factor-item-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+  }
+  .factor-title { font-size: 18px; font-weight: 700; color: var(--text); display: flex; align-items: center; gap: 8px; }
+
+  /* Raw JSON editor */
+  #raw-json-textarea {
+    width: 100%;
+    height: 600px;
+    background: #06070a;
+    color: #38bdf8;
+    font-family: monospace;
+    font-size: 14px;
+    padding: 16px;
+    border: 1px solid var(--line);
+    border-left: 3px solid var(--accent);
+    border-radius: 2px;
+    outline: none;
+    resize: vertical;
+  }
+
+  /* Image preview card */
+  .image-management-box {
+    display: flex;
+    gap: 24px;
+    align-items: center;
+    background: #090a0f;
+    border: 1px dashed var(--line);
+    padding: 16px;
+    border-radius: 2px;
+  }
+  .image-large-preview {
+    width: 160px;
+    height: 100px;
+    background: #050608;
+    border: 1px solid var(--line);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 2px;
+    overflow: hidden;
+  }
+  .image-large-preview img { max-width: 100%; max-height: 100%; object-fit: contain; }
+
+  /* Toast Notification */
+  #toast {
+    position: fixed;
+    bottom: 24px;
+    right: 24px;
+    background: #11141c;
+    border: 1px solid var(--accent);
+    border-left: 4px solid var(--accent);
+    color: var(--text);
+    padding: 14px 20px;
+    border-radius: 2px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.85);
+    font-size: 16px;
+    letter-spacing: 0.5px;
+    z-index: 100;
+    display: none;
+  }
+  #toast.show { display: block; animation: fadeIn 0.3s ease; }
+  #toast.error { border-color: var(--danger); border-left-color: var(--danger); }
+  #toast.success { border-color: var(--success); border-left-color: var(--success); }
+
+  @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+
+  .empty-state {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 70%;
+    color: var(--muted);
+    gap: 16px;
+  }
+  .empty-state h2 { font-size: 26px; color: var(--accent); margin: 0; text-transform: uppercase; }
+</style>
+</head>
+<body>
+
+<div id="app">
+  <!-- Top Bar -->
+  <header>
+    <div class="brand">
+      <div class="brand-badge"></div>
+      <h1>L.U.P.I.T.A.</h1>
+      <span>// Species Habitat & Ocean Database Admin</span>
+    </div>
+    <div class="header-actions">
+      <button class="btn" id="btn-sync-db" title="Sync live database catalog and exports">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21.5 2v6h-6M21.34 15.57a10 10 0 1 1-.57-8.38l5.67-5.67"/></svg>
+        Sync Database
+      </button>
+      <button class="btn primary" id="btn-new-species">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+        Add Fish
+      </button>
+    </div>
+  </header>
+
+  <!-- Main Workspace -->
+  <div class="workspace">
+    <!-- Sidebar -->
+    <aside class="sidebar">
+      <div class="sidebar-header">
+        <input type="text" id="search-input" class="search-box" placeholder="Search species or sci name...">
+        <div class="sidebar-meta">
+          <span id="species-count">Loading...</span>
+          <span>Database v1</span>
+        </div>
+      </div>
+      <div class="species-list" id="species-list-container">
+        <!-- Rendered dynamically -->
+      </div>
+    </aside>
+
+    <!-- Editor Panel -->
+    <main class="editor-panel" id="editor-panel">
+      <!-- Tabs Header -->
+      <div class="editor-header">
+        <div class="editor-tabs">
+          <button class="tab-btn active" data-tab="tab-overview">Overview & Specs</button>
+          <button class="tab-btn" data-tab="tab-factors">Factors & Weights</button>
+          <button class="tab-btn" data-tab="tab-timing">Bite Timing Lore</button>
+          <button class="tab-btn" data-tab="tab-image">Fish Image</button>
+          <button class="tab-btn" data-tab="tab-json">Raw JSON</button>
+        </div>
+        <div class="editor-actions" style="display:flex; gap:10px;">
+          <button class="btn danger sm" id="btn-delete-species">Delete</button>
+          <button class="btn primary sm" id="btn-save-species">Save Changes</button>
+        </div>
+      </div>
+
+      <!-- Tab Content Area -->
+      <div class="editor-content" id="editor-content-body">
+
+        <!-- Tab 1: Overview & Specs -->
+        <div class="tab-pane" id="tab-overview">
+          <div class="section-card">
+            <div class="section-title">Identity & Taxonomy</div>
+            <div class="form-grid">
+              <div class="form-group">
+                <label class="form-label">Species ID (slug)</label>
+                <input type="text" id="field-id" class="form-input" placeholder="e.g. mutton-snapper">
+              </div>
+              <div class="form-group">
+                <label class="form-label">Common Name</label>
+                <input type="text" id="field-common-name" class="form-input" placeholder="e.g. Mutton snapper">
+              </div>
+              <div class="form-group">
+                <label class="form-label">Scientific Name</label>
+                <input type="text" id="field-scientific-name" class="form-input" placeholder="e.g. Lutjanus analis">
+              </div>
+              <div class="form-group">
+                <label class="form-label">Aliases (comma-separated)</label>
+                <input type="text" id="field-aliases" class="form-input" placeholder="e.g. muttonfish, snapper">
+              </div>
+              <div class="form-group">
+                <label class="form-label">Display Color</label>
+                <div style="display:flex; gap:8px;">
+                  <input type="color" id="field-color-picker" style="height:38px; width:46px; background:#07080b; border:1px solid var(--line); border-radius:2px; cursor:pointer;">
+                  <input type="text" id="field-color-text" class="form-input" style="flex:1;" placeholder="#ff6600">
+                </div>
+              </div>
+              <div class="form-group">
+                <label class="form-label">Habitat Zone</label>
+                <select id="field-habitat-zone" class="form-select">
+                  <option value="offshore">offshore</option>
+                  <option value="inshore">inshore</option>
+                  <option value="nearshore">nearshore</option>
+                  <option value="reef">reef</option>
+                  <option value="pelagic">pelagic</option>
+                  <option value="benthic">benthic</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label class="form-label">Prediction Model</label>
+                <select id="field-model" class="form-select">
+                  <option value="grid">Grid (Continuous Ocean Data Scoring)</option>
+                  <option value="sites">Sites (Inlets, Passes, Fixed Locations)</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label class="form-label">Site Kinds (if sites model)</label>
+                <input type="text" id="field-site-kinds" class="form-input" placeholder="e.g. inlet, pass">
+              </div>
+            </div>
+          </div>
+
+          <div class="section-card">
+            <div class="section-title">Biology & Profile Specs</div>
+            <div class="form-grid">
+              <div class="form-group">
+                <label class="form-label">Typical Size</label>
+                <input type="text" id="field-size" class="form-input" placeholder="e.g. Common up to 15 lb; can reach 30 lb">
+              </div>
+              <div class="form-group">
+                <label class="form-label">Adult Depth</label>
+                <input type="text" id="field-depth" class="form-input" placeholder="e.g. 25 to 90 m (80 to 300 ft)">
+              </div>
+              <div class="form-group">
+                <label class="form-label">Swimming Depth</label>
+                <input type="text" id="field-swimming-depth" class="form-input" placeholder="e.g. Near-bottom on reefs; feeds higher at dusk">
+              </div>
+              <div class="form-group">
+                <label class="form-label">Lifespan</label>
+                <input type="text" id="field-lifespan" class="form-input" placeholder="e.g. Up to 40 years; slow-growing">
+              </div>
+              <div class="form-group full">
+                <label class="form-label">Diet</label>
+                <textarea id="field-diet" class="form-textarea" placeholder="Major prey items..."></textarea>
+              </div>
+              <div class="form-group full">
+                <label class="form-label">Behavior & Movements</label>
+                <textarea id="field-behavior" class="form-textarea" placeholder="Habitat preferences, current aggregation, seasonal movements..."></textarea>
+              </div>
+              <div class="form-group full">
+                <label class="form-label">Spawning Patterns</label>
+                <textarea id="field-spawning" class="form-textarea" placeholder="Spawning aggregation months, moon phases, reef locations..."></textarea>
+              </div>
+              <div class="form-group">
+                <label class="form-label">Regulations Link</label>
+                <input type="text" id="field-regulations-link" class="form-input" placeholder="https://myfwc.com/fishing/saltwater/recreational/...">
+              </div>
+              <div class="form-group">
+                <label class="form-label">Regulations Note</label>
+                <input type="text" id="field-regulations-note" class="form-input" placeholder="Always check latest seasonal limits with state authorities.">
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Tab 2: Factors & Weights -->
+        <div class="tab-pane" id="tab-factors" style="display:none;">
+          <div class="section-card">
+            <div class="section-title">
+              <span>Habitat Environmental Factors</span>
+              <div style="display:flex; align-items:center; gap:16px;">
+                <span id="weight-sum-indicator" style="font-size:15px; font-weight:700;">Total Weight: 0.00 / 1.00</span>
+                <button class="btn sm" id="btn-add-factor">+ Add Factor</button>
+              </div>
+            </div>
+            <div id="factors-container">
+              <!-- Rendered factors -->
+            </div>
+          </div>
+        </div>
+
+        <!-- Tab 3: Bite Timing Lore -->
+        <div class="tab-pane" id="tab-timing" style="display:none;">
+          <div class="section-card">
+            <div class="section-title">Bite Timing Model (Angler Lore)</div>
+            <div class="form-grid">
+              <div class="form-group full">
+                <label style="display:flex; align-items:center; gap:8px; cursor:pointer;">
+                  <input type="checkbox" id="timing-enabled" style="accent-color:var(--accent); width:18px; height:18px;">
+                  <span style="font-size:17px; font-weight:700;">Enable 24h Bite Timing Model for this species</span>
+                </label>
+              </div>
+              <div class="form-group full" id="timing-fields-box" style="display:none;">
+                <label class="form-label">Evidence Tag</label>
+                <input type="text" id="timing-evidence" class="form-input" value="angler_lore" placeholder="angler_lore">
+
+                <label class="form-label" style="margin-top:14px;">Summary Note</label>
+                <input type="text" id="timing-note" class="form-input" placeholder="Captains report strongest bite on outgoing tide around full moon...">
+
+                <div style="margin-top:14px;">
+                  <label class="form-label">Detailed Timing Lore (JSON)</label>
+                  <textarea id="timing-json" class="form-textarea" style="font-family:monospace; height:180px;"></textarea>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Tab 4: Image Management -->
+        <div class="tab-pane" id="tab-image" style="display:none;">
+          <div class="section-card">
+            <div class="section-title">Species Image & Artwork</div>
+            <div class="image-management-box">
+              <div class="image-large-preview" id="image-large-preview">
+                <span class="species-thumb-placeholder">?</span>
+              </div>
+              <div style="flex:1;">
+                <div style="font-size:16px; margin-bottom:8px; font-weight:700; color:var(--text);" id="image-current-url">Current: web/fish/placeholder.png</div>
+                <div style="display:flex; gap:12px; align-items:center;">
+                  <input type="file" id="image-file-input" accept="image/png,image/svg+xml" style="display:none;">
+                  <button class="btn sm" id="btn-select-image">Select PNG File</button>
+                  <span style="font-size:14px; color:var(--muted);">Transparent PNG (facing left recommended)</span>
+                </div>
+              </div>
+            </div>
+
+            <div class="form-grid" style="margin-top:20px;">
+              <div class="form-group">
+                <label class="form-label">Image Kind</label>
+                <select id="field-image-kind" class="form-select">
+                  <option value="illustration">Illustration</option>
+                  <option value="photo">Photo</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label class="form-label">Image Status</label>
+                <select id="field-image-status" class="form-select">
+                  <option value="placeholder">Placeholder</option>
+                  <option value="sourced">Sourced / Validated</option>
+                  <option value="photo">Photo</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label class="form-label">Credit</label>
+                <input type="text" id="field-image-credit" class="form-input" placeholder="e.g. NOAA Fisheries / Original illustration">
+              </div>
+              <div class="form-group">
+                <label class="form-label">License</label>
+                <input type="text" id="field-image-license" class="form-input" placeholder="e.g. Public domain / CC-BY-SA">
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Tab 5: Raw JSON -->
+        <div class="tab-pane" id="tab-json" style="display:none;">
+          <div class="section-card">
+            <div class="section-title">
+              <span>Direct Species JSON</span>
+              <button class="btn sm" id="btn-format-json">Format JSON</button>
+            </div>
+            <textarea id="raw-json-textarea"></textarea>
+          </div>
+        </div>
+
+      </div>
+    </main>
+  </div>
+</div>
+
+<div id="toast"></div>
+
+<script>
+// State
+let allSpecies = [];
+let selectedSpecies = null;
+let currentProfile = null;
+let parametersRegistry = [];
+let isNewRecord = false;
+
+// DOM Elements
+const speciesListEl = document.getElementById("species-list-container");
+const searchInput = document.getElementById("search-input");
+const speciesCountEl = document.getElementById("species-count");
+const toastEl = document.getElementById("toast");
+const rawJsonEl = document.getElementById("raw-json-textarea");
+
+function showToast(msg, type = "normal") {
+  toastEl.textContent = msg;
+  toastEl.className = "show " + type;
+  setTimeout(() => { toastEl.className = ""; }, 4000);
+}
+
+// Fetch parameters registry
+async function loadParameters() {
+  try {
+    const res = await fetch("/api/admin/parameters");
+    const data = await res.json();
+    parametersRegistry = data.parameters || [];
+  } catch (err) {
+    console.error("Failed to load parameters:", err);
+  }
+}
+
+// Fetch species list
+async function loadSpeciesList() {
+  speciesCountEl.textContent = "Loading...";
+  try {
+    const res = await fetch("/api/admin/species");
+    const data = await res.json();
+    allSpecies = data.species || [];
+    renderSpeciesList(allSpecies);
+    speciesCountEl.textContent = `${allSpecies.length} species`;
+    if (!selectedSpecies && allSpecies.length > 0) {
+      selectSpecies(allSpecies[0].id);
+    }
+  } catch (err) {
+    showToast("Failed to load species list: " + err, "error");
+  }
+}
+
+function renderSpeciesList(list) {
+  speciesListEl.innerHTML = "";
+  const filter = (searchInput.value || "").toLowerCase().trim();
+  const filtered = list.filter(s =>
+    s.id.toLowerCase().includes(filter) ||
+    (s.common_name && s.common_name.toLowerCase().includes(filter)) ||
+    (s.scientific_name && s.scientific_name.toLowerCase().includes(filter))
+  );
+
+  filtered.forEach(s => {
+    const card = document.createElement("div");
+    card.className = "species-card" + (selectedSpecies === s.id ? " active" : "");
+    card.onclick = () => selectSpecies(s.id);
+
+    const thumb = document.createElement("div");
+    thumb.className = "species-thumb";
+    if (s.image_url) {
+      const img = document.createElement("img");
+      img.src = "/" + s.image_url;
+      img.onerror = () => { thumb.innerHTML = `<span class="species-thumb-placeholder">🐟</span>`; };
+      thumb.appendChild(img);
+    } else {
+      thumb.innerHTML = `<span class="species-thumb-placeholder">🐟</span>`;
+    }
+
+    const info = document.createElement("div");
+    info.className = "species-info";
+    info.innerHTML = `
+      <div class="species-name">${s.common_name}</div>
+      <div class="species-sci">${s.scientific_name || s.id}</div>
+      <div class="species-badges">
+        <span class="badge ${s.model || 'grid'}">${s.model || 'grid'}</span>
+        <span class="species-color-dot" style="background:${s.color || '#ff6600'};"></span>
+        <span style="font-size:12px; color:var(--muted);">${s.active_factors_count} factors</span>
+      </div>
+    `;
+
+    card.appendChild(thumb);
+    card.appendChild(info);
+    speciesListEl.appendChild(card);
+  });
+}
+
+searchInput.addEventListener("input", () => renderSpeciesList(allSpecies));
+
+async function selectSpecies(sid) {
+  selectedSpecies = sid;
+  isNewRecord = false;
+  renderSpeciesList(allSpecies);
+  try {
+    const res = await fetch(`/api/admin/species/${sid}`);
+    if (!res.ok) throw new Error("Status " + res.status);
+    currentProfile = await res.json();
+    populateForm(currentProfile);
+  } catch (err) {
+    showToast(`Error fetching ${sid}: ` + err, "error");
+  }
+}
+
+function createNewSpecies() {
+  isNewRecord = true;
+  selectedSpecies = null;
+  renderSpeciesList(allSpecies);
+
+  // Pick random unused nice color
+  const hue = Math.floor(Math.random() * 360);
+  const color = hslToHex(hue, 70, 50);
+
+  currentProfile = {
+    schema_version: 1,
+    id: "new-fish",
+    common_name: "New Fish",
+    scientific_name: "Species name",
+    aliases: [],
+    habitat_zone: "offshore",
+    model: "grid",
+    display: { color: color },
+    image: {
+      status: "placeholder",
+      kind: "illustration",
+      url: "fish/new-fish.png",
+      credit: "Original illustration",
+      license: ""
+    },
+    profile: {
+      size: "",
+      diet: "",
+      swimming_depth: "",
+      depth: "",
+      behavior: "",
+      spawning: "",
+      lifespan: "",
+      regulations_link: "",
+      regulations_note: ""
+    },
+    factors: [
+      {
+        param: "sst_c",
+        kind: "range",
+        range: [18.0, 30.0],
+        ideal: [22.0, 27.0],
+        weight: 0.50,
+        active: true,
+        value_status: "sourced",
+        sources: []
+      }
+    ]
+  };
+  populateForm(currentProfile);
+  showToast("Ready to configure new species. Fill in details and click Save.", "normal");
+}
+
+document.getElementById("btn-new-species").onclick = createNewSpecies;
+
+function hslToHex(h, s, l) {
+  l /= 100;
+  const a = s * Math.min(l, 1 - l) / 100;
+  const f = n => {
+    const k = (n + h / 30) % 12;
+    const color = l - a * Math.max(Math.min(k - 3, 9 - k, 1), -1);
+    return Math.round(255 * color).toString(16).padStart(2, '0');
+  };
+  return `#${f(0)}${f(8)}${f(4)}`;
+}
+
+// Populate UI form from currentProfile
+function populateForm(p) {
+  document.getElementById("field-id").value = p.id || "";
+  document.getElementById("field-id").disabled = !isNewRecord;
+  document.getElementById("field-common-name").value = p.common_name || "";
+  document.getElementById("field-scientific-name").value = p.scientific_name || "";
+  document.getElementById("field-aliases").value = (p.aliases || []).join(", ");
+
+  const col = (p.display && p.display.color) ? p.display.color : "#ff6600";
+  document.getElementById("field-color-picker").value = col;
+  document.getElementById("field-color-text").value = col;
+  document.getElementById("field-habitat-zone").value = p.habitat_zone || "offshore";
+  document.getElementById("field-model").value = p.model || "grid";
+  document.getElementById("field-site-kinds").value = (p.site_kinds || []).join(", ");
+
+  const prof = p.profile || {};
+  document.getElementById("field-size").value = prof.size || "";
+  document.getElementById("field-depth").value = prof.depth || "";
+  document.getElementById("field-swimming-depth").value = prof.swimming_depth || "";
+  document.getElementById("field-lifespan").value = prof.lifespan || "";
+  document.getElementById("field-diet").value = prof.diet || "";
+  document.getElementById("field-behavior").value = prof.behavior || "";
+  document.getElementById("field-spawning").value = prof.spawning || "";
+  document.getElementById("field-regulations-link").value = prof.regulations_link || "";
+  document.getElementById("field-regulations-note").value = prof.regulations_note || "";
+
+  // Image tab
+  const imgObj = p.image || {};
+  const imgUrl = imgObj.url || `fish/${p.id}.png`;
+  document.getElementById("image-current-url").textContent = `Current image: web/${imgUrl}`;
+  document.getElementById("field-image-kind").value = imgObj.kind || "illustration";
+  document.getElementById("field-image-status").value = imgObj.status || "placeholder";
+  document.getElementById("field-image-credit").value = imgObj.credit || "";
+  document.getElementById("field-image-license").value = imgObj.license || "";
+
+  const previewBox = document.getElementById("image-large-preview");
+  previewBox.innerHTML = `<img src="/${imgUrl}?t=${Date.now()}" onerror="this.src='/web/fish/placeholder.png';">`;
+
+  // Timing tab
+  if (p.timing) {
+    document.getElementById("timing-enabled").checked = true;
+    document.getElementById("timing-fields-box").style.display = "block";
+    document.getElementById("timing-evidence").value = p.timing.evidence || "angler_lore";
+    document.getElementById("timing-note").value = p.timing.note || "";
+    document.getElementById("timing-json").value = JSON.stringify(p.timing, null, 2);
+  } else {
+    document.getElementById("timing-enabled").checked = false;
+    document.getElementById("timing-fields-box").style.display = "none";
+    document.getElementById("timing-evidence").value = "angler_lore";
+    document.getElementById("timing-note").value = "";
+    document.getElementById("timing-json").value = "";
+  }
+
+  // Render factors
+  renderFactorsList(p.factors || []);
+
+  // Update raw JSON
+  rawJsonEl.value = JSON.stringify(p, null, 2);
+}
+
+// Color picker bindings
+document.getElementById("field-color-picker").oninput = (e) => {
+  document.getElementById("field-color-text").value = e.target.value;
+};
+document.getElementById("field-color-text").oninput = (e) => {
+  if (/^#[0-9a-fA-F]{6}$/.test(e.target.value)) {
+    document.getElementById("field-color-picker").value = e.target.value;
+  }
+};
+
+// Timing toggle
+document.getElementById("timing-enabled").onchange = (e) => {
+  document.getElementById("timing-fields-box").style.display = e.target.checked ? "block" : "none";
+};
+
+// Tab switching
+document.querySelectorAll(".tab-btn").forEach(btn => {
+  btn.onclick = () => {
+    document.querySelectorAll(".tab-btn").forEach(b => b.classList.remove("active"));
+    document.querySelectorAll(".tab-pane").forEach(p => p.style.display = "none");
+    btn.classList.add("active");
+    const tabId = btn.getAttribute("data-tab");
+    document.getElementById(tabId).style.display = "block";
+    if (tabId === "tab-json") {
+      updateProfileFromForm();
+      rawJsonEl.value = JSON.stringify(currentProfile, null, 2);
+    }
+  };
+});
+
+// Factors management
+function renderFactorsList(factors) {
+  const container = document.getElementById("factors-container");
+  container.innerHTML = "";
+
+  let weightSum = 0;
+  factors.forEach((f, idx) => {
+    if (f.active) weightSum += (f.weight || 0);
+
+    const item = document.createElement("div");
+    item.className = "factor-item" + (f.active ? "" : " inactive");
+
+    const paramOptions = parametersRegistry.map(pr =>
+      `<option value="${pr.key}" ${pr.key === f.param ? "selected" : ""}>${pr.key} (${pr.unit || 'unitless'})</option>`
+    ).join("");
+
+    const kindOptions = ["range", "higher_is_better", "category", "season", "flag", "flag_penalty", "presence", "proximity", "closer_is_better"].map(k =>
+      `<option value="${k}" ${k === f.kind ? "selected" : ""}>${k}</option>`
+    ).join("");
+
+    const rngStr = Array.isArray(f.range) ? f.range.join(", ") : "";
+    const idealStr = Array.isArray(f.ideal) ? f.ideal.join(", ") : "";
+
+    item.innerHTML = `
+      <div class="factor-item-header">
+        <div class="factor-title">
+          <input type="checkbox" class="factor-active" data-idx="${idx}" ${f.active ? "checked" : ""} style="accent-color:var(--accent);">
+          <span>Factor #${idx + 1}:</span>
+          <select class="form-select factor-param" data-idx="${idx}" style="padding:4px 8px; font-size:16px;">
+            ${paramOptions}
+          </select>
+        </div>
+        <div>
+          <button class="btn danger sm factor-remove-btn" data-idx="${idx}">Remove</button>
+        </div>
+      </div>
+      <div class="form-grid">
+        <div class="form-group">
+          <label class="form-label">Kind</label>
+          <select class="form-select factor-kind" data-idx="${idx}">
+            ${kindOptions}
+          </select>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Weight</label>
+          <input type="number" step="0.01" min="0" max="1" class="form-input factor-weight" data-idx="${idx}" value="${f.weight || 0}">
+        </div>
+        <div class="form-group">
+          <label class="form-label">Allowed Range [min, max]</label>
+          <input type="text" class="form-input factor-range" data-idx="${idx}" value="${rngStr}" placeholder="e.g. 18, 30">
+        </div>
+        <div class="form-group">
+          <label class="form-label">Ideal Range [ideal_min, ideal_max]</label>
+          <input type="text" class="form-input factor-ideal" data-idx="${idx}" value="${idealStr}" placeholder="e.g. 23, 28">
+        </div>
+        <div class="form-group full">
+          <label class="form-label">Reason Template</label>
+          <input type="text" class="form-input factor-reason" data-idx="${idx}" value="${f.reason_template || ''}" placeholder="Water is {value} C, inside ideal range.">
+        </div>
+      </div>
+    `;
+
+    container.appendChild(item);
+  });
+
+  const ind = document.getElementById("weight-sum-indicator");
+  ind.textContent = `Total Weight: ${weightSum.toFixed(2)} / 1.00`;
+  ind.style.color = weightSum > 1.0 ? "var(--danger)" : (weightSum > 0 ? "var(--accent)" : "var(--muted)");
+
+  // Event handlers
+  container.querySelectorAll(".factor-remove-btn").forEach(btn => {
+    btn.onclick = () => {
+      const idx = parseInt(btn.getAttribute("data-idx"));
+      factors.splice(idx, 1);
+      renderFactorsList(factors);
+    };
+  });
+
+  container.querySelectorAll(".factor-active, .factor-weight, .factor-param, .factor-kind, .factor-range, .factor-ideal, .factor-reason").forEach(input => {
+    input.onchange = () => syncFactorsFromInputs();
+  });
+}
+
+function syncFactorsFromInputs() {
+  const container = document.getElementById("factors-container");
+  const factors = currentProfile.factors || [];
+  container.querySelectorAll(".factor-item").forEach((item, idx) => {
+    if (!factors[idx]) return;
+    factors[idx].active = item.querySelector(".factor-active").checked;
+    factors[idx].param = item.querySelector(".factor-param").value;
+    factors[idx].kind = item.querySelector(".factor-kind").value;
+    factors[idx].weight = parseFloat(item.querySelector(".factor-weight").value) || 0;
+    factors[idx].reason_template = item.querySelector(".factor-reason").value;
+
+    const rVal = item.querySelector(".factor-range").value;
+    if (rVal) {
+      factors[idx].range = rVal.split(",").map(x => parseFloat(x.trim())).filter(x => !isNaN(x));
+    }
+    const iVal = item.querySelector(".factor-ideal").value;
+    if (iVal) {
+      factors[idx].ideal = iVal.split(",").map(x => parseFloat(x.trim())).filter(x => !isNaN(x));
+    }
+  });
+
+  let weightSum = factors.filter(f => f.active).reduce((sum, f) => sum + (f.weight || 0), 0);
+  const ind = document.getElementById("weight-sum-indicator");
+  ind.textContent = `Total Weight: ${weightSum.toFixed(2)} / 1.00`;
+  ind.style.color = weightSum > 1.0 ? "var(--danger)" : "var(--accent)";
+}
+
+document.getElementById("btn-add-factor").onclick = () => {
+  currentProfile.factors = currentProfile.factors || [];
+  currentProfile.factors.push({
+    param: "sst_c",
+    kind: "range",
+    range: [20.0, 30.0],
+    ideal: [24.0, 28.0],
+    weight: 0.1,
+    active: true,
+    value_status: "sourced",
+    sources: []
+  });
+  renderFactorsList(currentProfile.factors);
+};
+
+// Form -> currentProfile Object
+function updateProfileFromForm() {
+  if (!currentProfile) return;
+  syncFactorsFromInputs();
+
+  currentProfile.id = document.getElementById("field-id").value.trim();
+  currentProfile.common_name = document.getElementById("field-common-name").value.trim();
+  currentProfile.scientific_name = document.getElementById("field-scientific-name").value.trim();
+
+  const aliasStr = document.getElementById("field-aliases").value;
+  currentProfile.aliases = aliasStr ? aliasStr.split(",").map(x => x.trim()).filter(Boolean) : [];
+
+  currentProfile.display = currentProfile.display || {};
+  currentProfile.display.color = document.getElementById("field-color-text").value.trim();
+  currentProfile.habitat_zone = document.getElementById("field-habitat-zone").value;
+  currentProfile.model = document.getElementById("field-model").value;
+
+  const siteKindsStr = document.getElementById("field-site-kinds").value;
+  if (currentProfile.model === "sites" || siteKindsStr) {
+    currentProfile.site_kinds = siteKindsStr ? siteKindsStr.split(",").map(x => x.trim()).filter(Boolean) : ["inlet"];
+  }
+
+  currentProfile.profile = currentProfile.profile || {};
+  currentProfile.profile.size = document.getElementById("field-size").value;
+  currentProfile.profile.depth = document.getElementById("field-depth").value;
+  currentProfile.profile.swimming_depth = document.getElementById("field-swimming-depth").value;
+  currentProfile.profile.lifespan = document.getElementById("field-lifespan").value;
+  currentProfile.profile.diet = document.getElementById("field-diet").value;
+  currentProfile.profile.behavior = document.getElementById("field-behavior").value;
+  currentProfile.profile.spawning = document.getElementById("field-spawning").value;
+  currentProfile.profile.regulations_link = document.getElementById("field-regulations-link").value;
+  currentProfile.profile.regulations_note = document.getElementById("field-regulations-note").value;
+
+  currentProfile.image = currentProfile.image || {};
+  currentProfile.image.kind = document.getElementById("field-image-kind").value;
+  currentProfile.image.status = document.getElementById("field-image-status").value;
+  currentProfile.image.credit = document.getElementById("field-image-credit").value;
+  currentProfile.image.license = document.getElementById("field-image-license").value;
+
+  // Timing
+  if (document.getElementById("timing-enabled").checked) {
+    try {
+      const rawTiming = document.getElementById("timing-json").value.trim();
+      if (rawTiming) {
+        currentProfile.timing = JSON.parse(rawTiming);
+      } else {
+        currentProfile.timing = {
+          evidence: document.getElementById("timing-evidence").value,
+          note: document.getElementById("timing-note").value
+        };
+      }
+    } catch (e) {
+      currentProfile.timing = {
+        evidence: document.getElementById("timing-evidence").value,
+        note: document.getElementById("timing-note").value
+      };
+    }
+  } else {
+    delete currentProfile.timing;
+  }
+}
+
+// Format JSON button
+document.getElementById("btn-format-json").onclick = () => {
+  try {
+    const parsed = JSON.parse(rawJsonEl.value);
+    rawJsonEl.value = JSON.stringify(parsed, null, 2);
+  } catch (err) {
+    showToast("Invalid JSON syntax: " + err, "error");
+  }
+};
+
+// Save species
+document.getElementById("btn-save-species").onclick = async () => {
+  // If active tab is raw JSON, parse it first
+  const activeTab = document.querySelector(".tab-btn.active").getAttribute("data-tab");
+  if (activeTab === "tab-json") {
+    try {
+      currentProfile = JSON.parse(rawJsonEl.value);
+    } catch (err) {
+      showToast("Cannot save: Invalid JSON: " + err, "error");
+      return;
+    }
+  } else {
+    updateProfileFromForm();
+  }
+
+  const sid = currentProfile.id;
+  const isCreate = isNewRecord;
+  const url = isCreate ? "/api/admin/species" : `/api/admin/species/${sid}`;
+  const method = isCreate ? "POST" : "POST";
+
+  try {
+    const res = await fetch(url, {
+      method: method,
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(currentProfile)
+    });
+    const result = await res.json();
+    if (!res.ok) {
+      const errList = result.errors ? result.errors.join("; ") : (result.error || "Failed to save");
+      showToast("Save Error: " + errList, "error");
+      return;
+    }
+
+    showToast(`Saved species '${sid}' and synchronized database successfully!`, "success");
+    await loadSpeciesList();
+    selectSpecies(sid);
+  } catch (err) {
+    showToast("Network error saving species: " + err, "error");
+  }
+};
+
+// Delete species
+document.getElementById("btn-delete-species").onclick = async () => {
+  if (!currentProfile || !currentProfile.id) return;
+  const sid = currentProfile.id;
+  if (!confirm(`Are you sure you want to permanently delete species '${sid}'?`)) return;
+
+  try {
+    const res = await fetch(`/api/admin/species/${sid}`, { method: "DELETE" });
+    const result = await res.json();
+    if (!res.ok) throw new Error(result.error || "Delete failed");
+    showToast(`Deleted '${sid}' successfully`, "normal");
+    await loadSpeciesList();
+  } catch (err) {
+    showToast("Delete Error: " + err, "error");
+  }
+};
+
+// Image selection & upload
+document.getElementById("btn-select-image").onclick = () => {
+  document.getElementById("image-file-input").click();
+};
+
+document.getElementById("image-file-input").onchange = async (e) => {
+  const file = e.target.files[0];
+  if (!file || !currentProfile) return;
+  const sid = currentProfile.id;
+
+  const reader = new FileReader();
+  reader.onload = async () => {
+    try {
+      const base64Data = reader.result;
+      const res = await fetch(`/api/admin/species/${sid}/image`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ image_base64: base64Data })
+      });
+      const data = await res.json();
+      if (!res.ok) throw new Error(data.error || "Upload failed");
+
+      showToast(`Uploaded image for '${sid}'!`, "success");
+      document.getElementById("image-large-preview").innerHTML = `<img src="/fish/${sid}.png?t=${Date.now()}">`;
+      loadSpeciesList();
+    } catch (err) {
+      showToast("Image upload error: " + err, "error");
+    }
+  };
+  reader.readAsDataURL(file);
+};
+
+// Database sync button
+document.getElementById("btn-sync-db").onclick = async () => {
+  showToast("Rebuilding species catalog and live outputs...", "normal");
+  try {
+    const res = await fetch("/api/admin/sync", { method: "POST" });
+    const data = await res.json();
+    if (data.success) {
+      showToast(`Database synchronized! (${data.result.species_count} species registered)`, "success");
+    } else {
+      showToast("Sync error: " + (data.result.errors || []).join(", "), "error");
+    }
+  } catch (err) {
+    showToast("Sync failed: " + err, "error");
+  }
+};
+
+// Init
+window.onload = async () => {
+  await loadParameters();
+  await loadSpeciesList();
+};
+</script>
+</body>
+</html>
