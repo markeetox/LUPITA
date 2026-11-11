@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>L.U.P.I.T.A. // NERV HABITAT SYSTEM</title>
+<title>Lupita</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Genos:ital,wght@0,300..900;1,300..900&display=swap" rel="stylesheet">
@@ -104,13 +104,12 @@
   .legend { display: flex; align-items: center; gap: 10px; font-size: 15px; font-weight: 600; color: var(--muted); min-width: 220px; text-transform: uppercase; letter-spacing: 1px; }
   .legend i { flex: 1; height: 8px; border-radius: 2px; border: 1px solid var(--line); background: linear-gradient(90deg, rgba(163,163,163,.14), var(--accent), #ffffff); }
 
-  .tab { position: absolute; top: 100%; left: 50%; width: 100px; height: 28px; margin-left: -50px; padding: 0;
+  .tab { position: fixed; top: 14px; right: 16px; width: 44px; height: 44px; padding: 0; z-index: 30;
     display: flex; align-items: center; justify-content: center; cursor: pointer; color: var(--accent);
-    background: rgba(14, 15, 19, 0.96); border: 2px solid var(--accent); border-top: none; border-radius: 0 0 10px 10px;
-    box-shadow: 0 8px 16px rgba(0,0,0,0.6); }
+    background: rgba(14, 15, 19, 0.96); border: 2px solid var(--accent); border-radius: 4px;
+    box-shadow: 0 4px 16px rgba(0,0,0,0.7); backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px); }
   .tab svg { transition: transform .3s; }
-  .topsheet:not(.closed) .tab svg { transform: rotate(180deg); }
-  .topsheet.closed .tab { margin-top: env(safe-area-inset-top, 0px); }
+  .topsheet:not(.closed) ~ .tab svg, .topsheet:not(.closed) .tab svg { transform: rotate(180deg); }
 
   /* 100% full-width detail sheet */
   .sheet { position: fixed; left: 0; right: 0; bottom: 0; width: 100%; max-width: 100%;
@@ -122,7 +121,7 @@
   .sheet.open { transform: translateY(0); visibility: visible; }
   .grab { flex: none; height: 26px; display: flex; align-items: center; justify-content: center; touch-action: none; cursor: grab; }
   .grab::before { content: ""; width: 60px; height: 4px; border-radius: 2px; background: var(--accent); }
-  .sheet-close { position: absolute; top: 12px; right: 16px; z-index: 5; width: 36px; height: 36px; border: 1px solid var(--accent);
+  .sheet-close { position: absolute; top: 12px; left: 16px; z-index: 5; width: 36px; height: 36px; border: 1px solid var(--accent);
     border-radius: 2px; background: rgba(0,0,0,.7); color: var(--accent); font-size: 24px; font-weight: 700; cursor: pointer; display: flex; align-items: center; justify-content: center; }
   .scroll { overflow-y: auto; overscroll-behavior: contain; flex: 1; padding-bottom: 24px; }
 
@@ -197,11 +196,11 @@
 <body>
 <div id="map"></div>
 
-<section id="topsheet" class="topsheet" aria-label="L.U.P.I.T.A. habitat controls">
+<section id="topsheet" class="topsheet" aria-label="Lupita habitat controls">
   <div id="topBody">
     <div class="top-header">
       <div>
-        <h1>L.U.P.I.T.A.</h1>
+        <h1>Lupita</h1>
         <div class="top-subtitle">Oceanographic & Biological Fish Habitat Model</div>
       </div>
     </div>
