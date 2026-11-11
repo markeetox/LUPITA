@@ -1,5 +1,6 @@
 """Admin backend server for Lupita.
 Provides REST API endpoints to:
+- Authenticate admin users with login/logout and session tokens
 - List, inspect, create, update, and delete fish species profiles in data/species/<id>.json
 - Upload and manage fish illustration/photo PNGs in web/fish/<id>.png
 - Provide parameter registry definitions from data/parameters.json
@@ -14,6 +15,7 @@ import logging
 import mimetypes
 import os
 import re
+import secrets
 from datetime import datetime, timezone
 from http import HTTPStatus
 from http.server import SimpleHTTPRequestHandler, ThreadingHTTPServer
@@ -35,6 +37,9 @@ VALID_KINDS = {
     "range", "higher_is_better", "category", "season", "flag",
     "flag_penalty", "presence", "proximity", "closer_is_better"
 }
+
+ADMIN_PASSWORD = os.environ.get("ADMIN_PASSWORD", "lupita2026")
+ACTIVE_SESSIONS: set[str] = set()
 
 
 def load_parameters() -> dict:
@@ -155,7 +160,7 @@ class AdminHandler(SimpleHTTPRequestHandler):
         self.send_header("Content-Length", str(len(body)))
         self.send_header("Access-Control-Allow-Origin", "*")
         self.send_header("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS")
-        self.send_header("Access-Control-Allow-Headers", "Content-Type")
+        self.send_header("Access-Control-Allow-Headers", "Content-Type, Authorization")
         self.end_headers()
         self.wfile.write(body)
 
@@ -165,11 +170,18 @@ class AdminHandler(SimpleHTTPRequestHandler):
             payload["errors"] = errors
         self._send_json(payload, status=status)
 
+    def _is_authenticated(self) -> bool:
+        auth_header = self.headers.get("Authorization", "")
+        if auth_header.startswith("Bearer "):
+            token = auth_header[len("Bearer "):].strip()
+            return token in ACTIVE_SESSIONS
+        return False
+
     def do_OPTIONS(self):
         self.send_response(HTTPStatus.NO_CONTENT)
         self.send_header("Access-Control-Allow-Origin", "*")
         self.send_header("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS")
-        self.send_header("Access-Control-Allow-Headers", "Content-Type")
+        self.send_header("Access-Control-Allow-Headers", "Content-Type, Authorization")
         self.end_headers()
 
     def do_GET(self):
@@ -178,6 +190,10 @@ class AdminHandler(SimpleHTTPRequestHandler):
 
         if path == "/admin" or path == "/admin/":
             self._serve_file(WEB_DIR / "admin.html", "text/html")
+            return
+
+        if path == "/api/admin/auth-status":
+            self._send_json({"authenticated": self._is_authenticated()})
             return
 
         if path == "/api/admin/species":
@@ -201,6 +217,20 @@ class AdminHandler(SimpleHTTPRequestHandler):
         parsed = urlparse(self.path)
         path = parsed.path
 
+        # Public auth endpoints
+        if path == "/api/admin/login":
+            self._handle_login()
+            return
+
+        if path == "/api/admin/logout":
+            self._handle_logout()
+            return
+
+        # Protected endpoints require auth
+        if not self._is_authenticated():
+            self._send_error("Unauthorized. Please log in first.", HTTPStatus.UNAUTHORIZED)
+            return
+
         if path == "/api/admin/species":
             self._handle_create_species()
             return
@@ -223,6 +253,10 @@ class AdminHandler(SimpleHTTPRequestHandler):
         self._send_error(f"Endpoint not found: {path}", HTTPStatus.NOT_FOUND)
 
     def do_PUT(self):
+        if not self._is_authenticated():
+            self._send_error("Unauthorized. Please log in first.", HTTPStatus.UNAUTHORIZED)
+            return
+
         parsed = urlparse(self.path)
         path = parsed.path
         if path.startswith("/api/admin/species/"):
@@ -232,6 +266,10 @@ class AdminHandler(SimpleHTTPRequestHandler):
         self._send_error(f"Endpoint not found: {path}", HTTPStatus.NOT_FOUND)
 
     def do_DELETE(self):
+        if not self._is_authenticated():
+            self._send_error("Unauthorized. Please log in first.", HTTPStatus.UNAUTHORIZED)
+            return
+
         parsed = urlparse(self.path)
         path = parsed.path
         if path.startswith("/api/admin/species/"):
@@ -250,6 +288,23 @@ class AdminHandler(SimpleHTTPRequestHandler):
         except Exception as exc:
             log.warning("JSON decode error: %s", exc)
             return None
+
+    def _handle_login(self):
+        payload = self._read_json_body() or {}
+        password = payload.get("password", "")
+        if password == ADMIN_PASSWORD:
+            token = secrets.token_hex(24)
+            ACTIVE_SESSIONS.add(token)
+            self._send_json({"success": True, "token": token, "message": "Authentication successful."})
+        else:
+            self._send_error("Invalid admin credentials.", HTTPStatus.UNAUTHORIZED)
+
+    def _handle_logout(self):
+        auth_header = self.headers.get("Authorization", "")
+        if auth_header.startswith("Bearer "):
+            token = auth_header[len("Bearer "):].strip()
+            ACTIVE_SESSIONS.discard(token)
+        self._send_json({"success": True, "message": "Logged out."})
 
     def _serve_file(self, file_path: Path, content_type: str):
         if not file_path.exists():
