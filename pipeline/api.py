@@ -23,6 +23,7 @@ ATTRIBUTION = [
     "NASA JPL MUR sea surface temperature via NOAA CoastWatch", "NOAA CoastWatch (VIIRS chlorophyll, altimetry currents, ETOPO depth)",
     "NOAA National MPA Center (no-fishing areas)", "Florida Fish and Wildlife Conservation Commission (artificial reefs, Unified Reef Map)"]
 DISCLAIMER = ("Experimental. Scores show where conditions match published habitat preferences and have not been checked against catch reports. "
+              "Confidence describes model and input limitations, not the probability of catching a fish. "
               "Timing comes from angler reports. Boundaries and sea conditions are rough guides: check FWC rules, closed areas and the NWS marine forecast.")
 
 
@@ -106,6 +107,10 @@ def _image(species: dict, image_files: dict) -> dict:
 
 def _area(spot: dict) -> dict:
     return {"id": spot["id"], "title": spot["title"], "score": spot["score"], "confidence": spot["confidence"],
+            "confidence_basis": spot.get("confidence_basis", []),
+            "active_factor_count": spot.get("active_factor_count"),
+            "data_coverage": spot.get("data_coverage"),
+            "environmental_data_coverage": spot.get("environmental_data_coverage", spot.get("data_coverage")),
             "coords": spot["coords"], "zone": zone_geometry(spot),
             "reasons": [{"tag": r[0], "text": r[1]} for r in spot.get("reasons", [])],
             "details": [{"label": r[0], "value": r[1]} for r in spot.get("location", [])],
@@ -155,5 +160,12 @@ def build(fish: dict, heat: dict | None, closures: dict | None, stream: dict | N
     files["index.json"] = _dump({
         "api_version": API_VERSION, "generated_utc": fish["generated_utc"], "experimental": True, "disclaimer": DISCLAIMER,
         "region": {"name": "south_florida", "bounds": (heat or {}).get("bounds")},
-        "conditions": fish.get("conditions"), "species": index_species, "layers": layers, "attribution": ATTRIBUTION})
+        "conditions": fish.get("conditions"),
+        "data_quality": {
+            "generated_utc": fish.get("generated_utc"),
+            "input_times": fish.get("layers", {}).get("times", {}),
+            "datasets": fish.get("layers", {}).get("datasets", {}),
+            "note": "Input timestamps and dataset identifiers are provided so consumers can assess data age. No universal freshness threshold is implied."
+        },
+        "species": index_species, "layers": layers, "attribution": ATTRIBUTION})
     return files
