@@ -353,7 +353,7 @@ def build_fish_json(layers, buoys, profiles, registry, generated_utc, places=Non
             if res["unavailable"]:
                 entry.update(status="unavailable", message=res["unavailable"])
             elif not res["items"]:
-                msg = "No favorable inlets right now."
+                msg = "No favorable sites right now."
                 if res["note"]:
                     msg += " " + res["note"]
                 elif res["best"] is not None:
@@ -392,11 +392,23 @@ def build_fish_json(layers, buoys, profiles, registry, generated_utc, places=Non
             title = (structure_title(layers, sp["members"], lats) if profile.get("title_from") == "structure"
                      else f"Favorable area, about {sp['area_km2']:.0f} km2")
             is_gapfilled = layers.get("chlorophyll_gapfilled", False)
+            active_factor_count = sum(1 for f in profile["factors"] if f.get("active") and f.get("weight", 0) > 0)
+            confidence_basis = []
+            if active_factor_count < 3:
+                confidence_basis.append("limited_model_inputs")
+            if cov < 0.9:
+                confidence_basis.append("incomplete_environmental_inputs")
+            if profile.get("confidence_cap") == "Low":
+                confidence_basis.append("profile_confidence_cap")
+            if is_gapfilled:
+                confidence_basis.append("gap_filled_input")
             item = {
                 "id": f"{sid}-{k}", "species": sid, "title": title,
                 "score": round(sp["score"], 3),
-                "confidence": "Low" if (cov < 0.9 or profile.get("confidence_cap") == "Low" or is_gapfilled) else "Medium",
-                "data_coverage": round(cov, 2), "coords": [round(lon, 4), round(lat, 4)],
+                "confidence": "Low" if confidence_basis else "Medium",
+                "confidence_basis": confidence_basis, "active_factor_count": active_factor_count,
+                "data_coverage": round(cov, 2), "environmental_data_coverage": round(cov, 2),
+                "coords": [round(lon, 4), round(lat, 4)],
                 "reasons": build_reasons(profile, name, scored, layers, (i, j), buoys, reg, lat, lon, sp["members"]),
                 "location": build_location(layers, scored, (i, j), buoys, lat, lon, sp["members"], places)}
             if "rings" in sp:
