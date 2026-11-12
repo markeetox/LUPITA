@@ -1,5 +1,5 @@
 {
-  "note": "SST, chlorophyll (NOAA-20 near-real-time) and ETOPO bathymetry verified with check_sources. The gap-filled chlorophyll entry is verified but switched off (its filled cells are estimates). gradient_min values are placeholders to calibrate against real grids. fallback_bases: a second NOAA CoastWatch address tried only if the main one refuses (not yet verified).",
+  "note": "NOAA CoastWatch ERDDAP is the canonical host for the configured chlorophyll and ETOPO datasets. NOAA-20 daily chlorophyll latitude is a descending coordinate axis and must be requested north-to-south. ETOPO 15-arc-second data is sampled at stride 15 across the broad North America grid to keep requests bounded; this is regional context, not reef-scale bathymetry. The gap-filled chlorophyll product remains disabled until independently validated.",
   "region": {
     "name": "north_america_coastlines",
     "lat": [
@@ -57,8 +57,8 @@
       "gradient_unit": "log10(mg/m3) per km",
       "gradient_min": 0.02,
       "note": "Near-real-time NOAA-20 VIIRS, 4 km. Daily scenes have gaps under cloud; see valid_fraction in the output.",
-      "fallback_bases": [
-        "https://upwell.pfeg.noaa.gov/erddap"
+      "descending_dims": [
+        "latitude"
       ]
     },
     "chlorophyll_gapfilled": {
@@ -95,14 +95,11 @@
         "longitude"
       ],
       "stride": {
-        "latitude": 5,
-        "longitude": 5
+        "latitude": 15,
+        "longitude": 15
       },
       "parameter": "depth_m",
-      "note": "NOAA ETOPO 2022, 15 arc-second (about 450 m). Negative values are depth below sea level, so depth_m = -z. Coarse near reefs and shore. Dimensions and variable name unverified.",
-      "fallback_bases": [
-        "https://upwell.pfeg.noaa.gov/erddap"
-      ]
+      "note": "NOAA NCEI ETOPO 2022 15-arc-second global relief model. Sampled every 15 source cells (~3.75 arc-minutes) to bound the broad North America request; do not interpret this as reef-scale or shallow-flat bathymetry. Negative z values are below sea level, so depth_m = -z."
     },
     "currents": {
       "enabled": true,

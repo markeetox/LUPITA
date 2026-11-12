@@ -70,8 +70,9 @@ def test_second_noaa_server_is_tried_when_the_first_refuses():
         return "time,latitude,longitude,analysed_sst\nUTC,degrees_north,degrees_east,degree_C\n2026-10-12T09:00:00Z,25.0,-80.0,28.5\n"
     lats, lons, grid, when, unit = L._fetch_grid(cfg, {"lat": [24.5, 27.0], "lon": [-81.0, -78.5]}, fetch)
     assert grid[0, 0] == 28.5 and "main.example" in seen[0] and "backup.example" in seen[1]
-    with pytest.raises(requests.HTTPError):                                    # both refuse: the last error comes through
-        L._fetch_grid(cfg, {"lat": [24.5, 27.0], "lon": [-81.0, -78.5]}, lambda u: (_ for _ in ()).throw(requests.HTTPError("403")))
+    with pytest.raises(RuntimeError, match="main.example.*403.*backup.example.*403"):
+        L._fetch_grid(cfg, {"lat": [24.5, 27.0], "lon": [-81.0, -78.5]},
+                      lambda u: (_ for _ in ()).throw(requests.HTTPError("403")))
 
 
 def test_a_failed_run_leaves_the_last_good_predictions_alone(tmp_path, monkeypatch):

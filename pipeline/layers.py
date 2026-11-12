@@ -47,14 +47,15 @@ def curvature_layer(depth, lats, lons):
 
 def _fetch_grid(cfg: dict, region: dict, fetch):
     """Try the main ERDDAP server, then any fallback_bases from the config."""
-    last = None
+    failures = []
+    query_region = cfg.get("query_region", region)
     for base in [cfg["base"]] + list(cfg.get("fallback_bases", [])):
         try:
-            url = erddap.build_griddap_url({**cfg, "base": base}, region)
+            url = erddap.build_griddap_url({**cfg, "base": base}, query_region)
             return erddap.parse_grid_csv(fetch(url), cfg["variable"])
         except Exception as exc:
-            last = exc
-    raise last
+            failures.append(f"{base}: {type(exc).__name__}: {exc}")
+    raise RuntimeError("ERDDAP grid request failed: " + " | ".join(failures))
 
 
 def _fetch_multi(cfg: dict, region: dict, fetch):

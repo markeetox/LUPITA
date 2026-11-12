@@ -22,6 +22,8 @@ def build_griddap_url(cfg: dict, region: dict) -> str:
             slices.append("[(0.0)]")
         elif dim in ("latitude", "longitude"):
             lo, hi = region["lat"] if dim == "latitude" else region["lon"]
+            if dim in cfg.get("descending_dims", []):
+                lo, hi = hi, lo
             stride = cfg.get("stride", {}).get(dim, 1)
             slices.append(f"[({lo}):{stride}:({hi})]")
         else:
