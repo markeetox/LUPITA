@@ -32,10 +32,7 @@
       "parameter": "sst_c",
       "log_scale": false,
       "gradient_unit": "degC per km",
-      "gradient_min": 0.05,
-      "fallback_bases": [
-        "https://upwell.pfeg.noaa.gov/erddap"
-      ]
+      "gradient_min": 0.05
     },
     "chlorophyll": {
       "enabled": true,
