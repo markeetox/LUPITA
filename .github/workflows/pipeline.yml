@@ -89,7 +89,7 @@ jobs:
           lines.extend(f"- **Layer:** {item}" for item in optional)
           lines.extend(f"- **Error:** {item}" for item in errors)
           with open(os.environ["GITHUB_STEP_SUMMARY"], "a") as summary:
-              summary.write("\\n".join(lines) + "\\n")
+              summary.write("\n".join(lines) + "\n")
 
           if status == "failed":
               print("::error::Critical refresh failure. Diagnostics and last-known-good outputs were published.")
