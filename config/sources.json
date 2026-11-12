@@ -3,12 +3,12 @@
   "region": {
     "name": "north_america_coastlines",
     "lat": [
-      15.0,
-      60.0
+      15,
+      60
     ],
     "lon": [
-      -138.0,
-      -50.0
+      -138,
+      -50
     ]
   },
   "ndbc": {
@@ -141,6 +141,16 @@
       "page_size": 2000,
       "simplify_deg": 0.0005,
       "min_cover": 0.01
+    },
+    "unified_benthic": {
+      "enabled": true,
+      "url": "https://gis.myfwc.com/hosting/rest/services/Projects_FWC/UnifiedReefMapProject_v2_2/MapServer/10",
+      "class_field": "FIRST_ClassLv0",
+      "source_label": "FWC Unified Reef Map v2.2, Level 0 (released January 2025; component source dates vary)",
+      "version": "2.2",
+      "release_date": "2025-01",
+      "page_size": 2000,
+      "simplify_deg": 0.0005
     }
   },
   "closures": {
