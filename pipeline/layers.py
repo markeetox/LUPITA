@@ -110,6 +110,7 @@ def load_layers(sources: dict, errors: list[str], fetch=erddap.fetch_csv, fetch_
     gapfilled_loaded = False
     gapfilled_source_shape = None
     gapfilled_source_valid_frac = None
+    gapfilled_time = None
 
     if c.get("enabled"):
         try:
@@ -134,6 +135,7 @@ def load_layers(sources: dict, errors: list[str], fetch=erddap.fetch_csv, fetch_
         try:
             glats, glons, gchl, gchl_time, _ = _fetch_grid(cg, region, fetch)
             gapfilled_loaded = True
+            gapfilled_time = gchl_time
             gapfilled_source_shape = [int(len(glats)), int(len(glons))]
             gapfilled_source_valid_frac = float(np.isfinite(gchl).mean()) if gchl.size else 0.0
             gapfilled_resampled = resample(gchl, glats, glons, lats, lons, min_weight=0.5)
@@ -156,6 +158,7 @@ def load_layers(sources: dict, errors: list[str], fetch=erddap.fetch_csv, fetch_
         "gapfilled_dataset": cg.get("dataset"), "gapfilled_enabled": bool(cg.get("enabled")),
         "gapfilled_attempted": gapfilled_attempted, "gapfilled_loaded": gapfilled_loaded,
         "gapfilled_source_grid_shape": gapfilled_source_shape, "gapfilled_source_valid_fraction": gapfilled_source_valid_frac,
+        "primary_time": primary_time, "gapfilled_time": gapfilled_time,
         "gapfilled_used": used_gapfilled, "final_dataset": chl_dataset,
         "final_grid_shape": [int(len(lats)), int(len(lons))] if final_chl is not None else None,
         "final_valid_fraction": round(float(np.isfinite(final_chl).mean()), 6) if final_chl is not None and final_chl.size else None,
@@ -185,8 +188,8 @@ def load_layers(sources: dict, errors: list[str], fetch=erddap.fetch_csv, fetch_
                 "source_valid_fraction": round(float(finite_source.mean()), 6) if z.size else 0.0,
                 "aligned_grid_shape": [int(len(lats)), int(len(lons))],
                 "depth_valid_fraction": round(float(finite_depth.mean()), 6) if depth.size else 0.0,
-                "depth_min_m": round(float(np.nanmin(depth)), 3) if finite_depth.any() else None,
-                "depth_max_m": round(float(np.nanmax(depth)), 3) if finite_depth.any() else None,
+                "depth_min_m": round(float(np.nanmin(depth[finite_depth])), 6) if finite_depth.any() else None,
+                "depth_max_m": round(float(np.nanmax(depth[finite_depth])), 6) if finite_depth.any() else None,
                 "stride": b.get("stride", {}), "note": b.get("note")
             }
         except Exception as exc:
