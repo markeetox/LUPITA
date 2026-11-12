@@ -1,5 +1,5 @@
 {
-  "note": "NOAA CoastWatch ERDDAP is the canonical host for the configured chlorophyll and ETOPO datasets. NOAA-20 daily chlorophyll latitude is a descending coordinate axis and must be requested north-to-south. ETOPO 15-arc-second data is sampled at stride 15 across the broad North America grid to keep requests bounded; this is regional context, not reef-scale bathymetry. The gap-filled chlorophyll product remains disabled until independently validated.",
+  "note": "NOAA CoastWatch ERDDAP is the canonical host for the configured chlorophyll and ETOPO datasets. NOAA-20 daily chlorophyll latitude is a descending coordinate axis and must be requested north-to-south. ETOPO 15-arc-second data is sampled at stride 15 across the broad North America grid to keep requests bounded; this is regional context, not reef-scale bathymetry. The gap-filled chlorophyll product is disabled until its freshness and scientific suitability are independently validated; do not enable it merely because the primary source is unavailable.",
   "region": {
     "name": "north_america_coastlines",
     "lat": [
@@ -59,7 +59,7 @@
       ]
     },
     "chlorophyll_gapfilled": {
-      "enabled": true,
+      "enabled": false,
       "base": "https://coastwatch.pfeg.noaa.gov/erddap",
       "dataset": "nesdisVHNnoaaSNPPnoaa20NRTchlaGapfilledDaily",
       "variable": "chlor_a",
@@ -77,10 +77,7 @@
       "log_scale": true,
       "gradient_unit": "log10(mg/m3) per km",
       "gradient_min": 0.02,
-      "note": "Cloud gaps are filled by a statistical method (DINEOF), so filled cells are estimates. Use as a fallback and label confidence lower. Dimensions and variable name unverified.",
-      "fallback_bases": [
-        "https://upwell.pfeg.noaa.gov/erddap"
-      ]
+      "note": "Cloud gaps are filled by a statistical method (DINEOF), so filled cells are estimates. Use as a fallback and label confidence lower. Dimensions and variable name unverified."
     },
     "bathymetry": {
       "enabled": true,
