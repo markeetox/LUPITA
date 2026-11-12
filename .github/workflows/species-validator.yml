@@ -17,6 +17,8 @@ on:
       - "tests/test_species_validator.py"
       - "tests/test_prediction_quality.py"
       - "tests/test_habitat.py"
+      - "tests/test_structure.py"
+      - "tests/test_currents.py"
       - "docs/species-validator.md"
       - ".github/workflows/species-validator.yml"
   push:
