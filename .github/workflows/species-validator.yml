@@ -11,6 +11,7 @@ on:
       - "pipeline/predict.py"
       - "pipeline/api.py"
       - "pipeline/layers.py"
+      - "pipeline/run.py"
       - "pipeline/habitat.py"
       - "pipeline/timing.py"
       - "scripts/validate_species.py"
@@ -20,6 +21,7 @@ on:
       - "tests/test_structure.py"
       - "tests/test_currents.py"
       - "docs/species-validator.md"
+      - "docs/site-habitat-sampling.md"
       - ".github/workflows/species-validator.yml"
   push:
     branches:
@@ -34,6 +36,7 @@ on:
       - "pipeline/predict.py"
       - "pipeline/api.py"
       - "pipeline/layers.py"
+      - "pipeline/run.py"
       - "pipeline/habitat.py"
       - "pipeline/timing.py"
       - "scripts/validate_species.py"
@@ -41,6 +44,7 @@ on:
       - "tests/test_prediction_quality.py"
       - "tests/test_habitat.py"
       - "docs/species-validator.md"
+      - "docs/site-habitat-sampling.md"
       - ".github/workflows/species-validator.yml"
 
 permissions:
