@@ -3,6 +3,8 @@ from __future__ import annotations
 
 import json
 import logging
+
+import numpy as np
 from datetime import datetime, timezone
 from pathlib import Path
 
@@ -35,6 +37,80 @@ def _grid_report(cfg: dict, when, lats, lons, grid) -> dict:
            "gradient_unit": cfg.get("gradient_unit"), "shape": [int(len(lats)), int(len(lons))]}
     out.update(summarize_grid(grid, lats, lons, cfg.get("log_scale", False), cfg.get("gradient_min", 0.0)))
     return out
+
+
+
+def _layer_state(enabled: bool, present: bool, errors: list[str], prefix: str | list[str]) -> dict:
+    """Report source state without treating missing data as a measured zero."""
+    prefixes = [prefix] if isinstance(prefix, str) else prefix
+    matching = [item for item in errors if any(item.startswith(item_prefix) for item_prefix in prefixes)]
+    if not enabled:
+        status = "disabled"
+    elif present and matching:
+        status = "partial"
+    elif present:
+        status = "loaded"
+    elif matching:
+        status = "failed"
+    else:
+        status = "unavailable"
+    result = {"status": status}
+    if matching:
+        result["errors"] = matching
+    return result
+
+
+def build_data_quality(layers: dict | None, sources: dict, errors: list[str]) -> dict:
+    """Create additive, machine-readable diagnostics for each environmental input."""
+    cfg = sources.get("erddap", {})
+    arc = sources.get("arcgis", {})
+    layers = layers or {}
+    sst = layers.get("sst_c")
+    chl_info = layers.get("chlorophyll_info") or {}
+    bathy_info = layers.get("bathymetry_info") or {}
+    current_present = layers.get("current_speed") is not None
+    structure_present = layers.get("structure_stats") is not None
+    habitat_present = bool(layers.get("habitat_info"))
+    closure_present = bool(layers.get("closure_checked"))
+
+    sst_state = _layer_state(bool(cfg.get("sst", {}).get("enabled")), sst is not None, errors, "layers sst:")
+    if sst is not None:
+        sst_state.update({"dataset": cfg.get("sst", {}).get("dataset"),
+                          "grid_shape": [int(sst.shape[0]), int(sst.shape[1])],
+                          "valid_fraction": round(float(np.isfinite(sst).mean()), 6),
+                          "time": layers.get("times", {}).get("sst")})
+
+    chl_state = _layer_state(bool(cfg.get("chlorophyll", {}).get("enabled") or cfg.get("chlorophyll_gapfilled", {}).get("enabled")), bool(chl_info.get("primary_loaded") or chl_info.get("gapfilled_used")), errors, ["layers chlorophyll:", "layers chlorophyll_gapfilled:"])
+    chl_state.update(chl_info)
+
+    bathy_state = _layer_state(bool(cfg.get("bathymetry", {}).get("enabled")), layers.get("depth_m") is not None, errors, "layers bathymetry:")
+    bathy_state.update(bathy_info)
+    if layers.get("depth_m") is not None and not bathy_info:
+        depth = layers["depth_m"]
+        finite = np.isfinite(depth)
+        bathy_state.update({"grid_shape": [int(depth.shape[0]), int(depth.shape[1])],
+                            "depth_valid_fraction": round(float(finite.mean()), 6),
+                            "depth_min_m": round(float(np.nanmin(depth)), 3) if finite.any() else None,
+                            "depth_max_m": round(float(np.nanmax(depth)), 3) if finite.any() else None})
+
+    currents_state = _layer_state(bool(cfg.get("currents", {}).get("enabled")), current_present, errors, "layers currents:")
+    currents_state["dataset"] = cfg.get("currents", {}).get("dataset")
+    structure_state = _layer_state(bool(arc.get("artificial_reefs", {}).get("enabled") and arc.get("natural_reef", {}).get("enabled")), structure_present, errors, "layers structure:")
+    structure_state.update(layers.get("structure_stats") or {})
+    habitat_state = _layer_state(bool(arc.get("unified_benthic", {}).get("enabled")), habitat_present, errors, "layers benthic_habitat:")
+    habitat_state.update(layers.get("habitat_info") or {})
+    closure_state = _layer_state(bool(sources.get("closures", {}).get("enabled")), closure_present, errors, "layers closures:")
+    closure_state["area_count"] = len(layers.get("closure_areas") or [])
+
+    return {"schema_version": 1, "layers": {
+        "sst": sst_state, "chlorophyll": chl_state, "bathymetry": bathy_state,
+        "currents": currents_state, "reef_structure": structure_state,
+        "benthic_habitat": habitat_state, "closures": closure_state
+    }, "semantics": {
+        "missing_data": "Unavailable or unmapped cells are unknown, not zero or confirmed absence.",
+        "bathymetry_resolution": "ETOPO is sampled at the configured stride and is regional context, not reef-scale navigation data.",
+        "chlorophyll": "Cloud-related gaps are expected; gap-filled use is reported separately and does not imply direct observation."
+    }}
 
 
 def main() -> None:
@@ -105,6 +181,8 @@ def main() -> None:
     latest = {"generated_utc": now, "region": sources["region"]["name"], "buoys": buoys,
               "sst": sst, "chlorophyll": chl, "structure": (layers or {}).get("structure_stats"),
               "habitat": (layers or {}).get("habitat_info"),
+              "bathymetry": (layers or {}).get("bathymetry_info"),
+              "data_quality": build_data_quality(layers, sources, errors),
               "closures": {"loaded": cl_loaded, "areas": len(cl_json["features"])},
               "conditions": {**timing.summary(conditions), "sea": seastate.summary(buoys, conditions)}, "fish_updated": fish is not None, "errors": errors}
     (live / "latest.json").write_text(json.dumps(latest, indent=2, allow_nan=False))
