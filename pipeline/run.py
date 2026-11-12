@@ -104,6 +104,7 @@ def main() -> None:
 
     latest = {"generated_utc": now, "region": sources["region"]["name"], "buoys": buoys,
               "sst": sst, "chlorophyll": chl, "structure": (layers or {}).get("structure_stats"),
+              "habitat": (layers or {}).get("habitat_info"),
               "closures": {"loaded": cl_loaded, "areas": len(cl_json["features"])},
               "conditions": {**timing.summary(conditions), "sea": seastate.summary(buoys, conditions)}, "fish_updated": fish is not None, "errors": errors}
     (live / "latest.json").write_text(json.dumps(latest, indent=2, allow_nan=False))
