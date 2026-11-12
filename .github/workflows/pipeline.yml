@@ -58,3 +58,47 @@ jobs:
           publish_dir: ./publish
           publish_branch: data
           force_orphan: true
+
+      # Publish diagnostics first, then fail the run if critical data could not refresh.
+      - name: Evaluate published refresh health
+        run: |
+          python - <<'PY'
+          import json
+          import os
+          import sys
+          from pathlib import Path
+
+          latest_path = Path("publish/latest.json")
+          if not latest_path.exists():
+              print("::error::Refresh diagnostics are missing; refusing to report success.")
+              sys.exit(1)
+
+          latest = json.loads(latest_path.read_text())
+          health = latest.get("pipeline_health", {})
+          status = health.get("status", "unknown")
+          critical = health.get("critical_issues", [])
+          optional = health.get("optional_layer_issues", [])
+          errors = latest.get("errors", [])
+
+          lines = [f"## Pull Ocean Data health: {status.upper()}",
+                   f"- Predictions refreshed: {health.get('prediction_refreshed', False)}",
+                   f"- Critical issues: {len(critical)}",
+                   f"- Optional layer issues: {len(optional)}",
+                   f"- Recorded errors: {len(errors)}"]
+          lines.extend(f"- **Critical:** {item}" for item in critical)
+          lines.extend(f"- **Layer:** {item}" for item in optional)
+          lines.extend(f"- **Error:** {item}" for item in errors)
+          with open(os.environ["GITHUB_STEP_SUMMARY"], "a") as summary:
+              summary.write("\\n".join(lines) + "\\n")
+
+          if status == "failed":
+              print("::error::Critical refresh failure. Diagnostics and last-known-good outputs were published.")
+              sys.exit(1)
+          if status == "degraded":
+              print("::warning::Refresh completed with optional data-source issues. Review the job summary.")
+          elif status == "healthy":
+              print("Refresh health: healthy.")
+          else:
+              print(f"::error::Unknown refresh health status: {status}")
+              sys.exit(1)
+          PY
