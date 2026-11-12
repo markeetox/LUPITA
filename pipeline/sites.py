@@ -217,6 +217,15 @@ def score_sites(profile, sites, ctx, reg, closure_rows_fn=None) -> dict:
         rows = [["Position", f"{site['lat']:.3f} N, {abs(site['lon']):.3f} W"]] + r["rows"]
         if closure_rows_fn:
             rows += closure_rows_fn(L, [r["cell"]] if r["cell"] else [])
+        site_habitat = ctx.get("site_habitat", {}).get(str(site.get("id") or site["name"]))
+        if site_habitat:
+            if site_habitat.get("status") == "mapped":
+                top = sorted(site_habitat.get("composition", {}).items(), key=lambda item: -item[1])[:3]
+                summary = ", ".join(f"{name.replace('_', ' ')} {value:.0%}" for name, value in top) or "classified habitat not available"
+                rows.append(["Mapped habitat", summary])
+                rows.append(["Habitat map coverage", f"{site_habitat.get('mapped_coverage', 0):.0%} of the site buffer"])
+            else:
+                rows.append(["Mapped habitat", "Unknown in the FWC layer; not confirmed absent"])
         if now is not None:
             rows.append(["As of", f"{now.astimezone(LOCAL).strftime('%b %d, %I:%M %p').replace(' 0', ' ')} (tide and light change by the hour)"])
         confidence_basis = []
@@ -233,5 +242,5 @@ def score_sites(profile, sites, ctx, reg, closure_rows_fn=None) -> dict:
                       "data_coverage": round(r["coverage"], 2), "environmental_data_coverage": round(r["coverage"], 2),
                       "coords": [site["lon"], site["lat"]],
                       "ring": _ring(site["lat"], site["lon"], site.get("radius_km", 1.5)),
-                      "reasons": r["reasons"], "location": rows})
+                      "reasons": r["reasons"], "location": rows, "habitat": site_habitat})
     return {"items": items, "best": best, "unavailable": "", "note": ""}
