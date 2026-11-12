@@ -1,0 +1,50 @@
+name: Species profile validator
+
+on:
+  pull_request:
+    paths:
+      - "data/species/**"
+      - "data/parameters.json"
+      - "pipeline/species_validator.py"
+      - "pipeline/scoring.py"
+      - "pipeline/sites.py"
+      - "pipeline/layers.py"
+      - "pipeline/timing.py"
+      - "scripts/validate_species.py"
+      - "tests/test_species_validator.py"
+      - "docs/species-validator.md"
+      - ".github/workflows/species-validator.yml"
+  push:
+    branches:
+      - "feat/**"
+    paths:
+      - "data/species/**"
+      - "data/parameters.json"
+      - "pipeline/species_validator.py"
+      - "pipeline/scoring.py"
+      - "pipeline/sites.py"
+      - "pipeline/layers.py"
+      - "pipeline/timing.py"
+      - "scripts/validate_species.py"
+      - "tests/test_species_validator.py"
+      - "docs/species-validator.md"
+      - ".github/workflows/species-validator.yml"
+
+permissions:
+  contents: read
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: pip install -r requirements.txt
+      - run: python -m pytest -q
+      - run: python scripts/validate_species.py --output-dir reports
+      - uses: actions/upload-artifact@v4
+        with:
+          name: lupita-species-audit
+          path: reports/species-audit.*
