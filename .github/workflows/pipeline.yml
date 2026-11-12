@@ -16,7 +16,8 @@ concurrency:
 jobs:
   pull:
     runs-on: ubuntu-latest
-    timeout-minutes: 25
+    # Full regional data refresh plus tests and data-branch publication can exceed 25 minutes.
+    timeout-minutes: 45
     steps:
       - uses: actions/checkout@v4
       # The last published data, so a failed run never wipes out good predictions.
