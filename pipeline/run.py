@@ -81,7 +81,7 @@ def build_data_quality(layers: dict | None, sources: dict, errors: list[str]) ->
                           "time": layers.get("times", {}).get("sst")})
 
     chl_state = _layer_state(bool(cfg.get("chlorophyll", {}).get("enabled") or cfg.get("chlorophyll_gapfilled", {}).get("enabled")), bool(chl_info.get("primary_loaded") or chl_info.get("gapfilled_used")), errors, ["layers chlorophyll:", "layers chlorophyll_gapfilled:"])
-    chl_state.update(chl_info)
+    chl_state.update({key: value for key, value in chl_info.items() if key != "status"})
 
     bathy_state = _layer_state(bool(cfg.get("bathymetry", {}).get("enabled")), layers.get("depth_m") is not None, errors, "layers bathymetry:")
     bathy_state.update(bathy_info)
