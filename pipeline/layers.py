@@ -83,7 +83,7 @@ def load_layers(sources: dict, errors: list[str], fetch=erddap.fetch_csv, fetch_
     layers = {"lats": lats, "lons": lons, "sst_c": sst,
               "sst_gradient": derive.gradient_magnitude(sst, lats, lons),
               "chlorophyll": None, "chl_gradient": None, "depth_m": None, "chl_raw": None,
-              "chlorophyll_gapfilled": False,
+              "chlorophyll_gapfilled": False, "chlorophyll_info": None, "bathymetry_info": None,
               "distance_to_inlet": None, "bottom_slope": None, "bottom_curvature": None,
               "current_speed": None, "current_dir": None, "current_convergence": None,
               "gulf_stream_edge": None, "stream_edge_lon": None,
@@ -104,11 +104,19 @@ def load_layers(sources: dict, errors: list[str], fetch=erddap.fetch_csv, fetch_
     primary_resampled = None
     primary_time = None
     primary_valid_frac = 0.0
+    primary_source_shape = None
+    primary_source_valid_frac = None
+    gapfilled_attempted = False
+    gapfilled_loaded = False
+    gapfilled_source_shape = None
+    gapfilled_source_valid_frac = None
 
     if c.get("enabled"):
         try:
             clats, clons, chl, chl_time, _ = _fetch_grid(c, region, fetch)
             layers["chl_raw"] = (clats, clons, chl)
+            primary_source_shape = [int(len(clats)), int(len(clons))]
+            primary_source_valid_frac = float(np.isfinite(chl).mean()) if chl.size else 0.0
             primary_chl = chl
             primary_time = chl_time
             primary_resampled = resample(chl, clats, clons, lats, lons, min_weight=0.5)
@@ -122,8 +130,12 @@ def load_layers(sources: dict, errors: list[str], fetch=erddap.fetch_csv, fetch_
     final_time = primary_time
 
     if (final_chl is None or primary_valid_frac < 0.25) and cg.get("enabled"):
+        gapfilled_attempted = True
         try:
             glats, glons, gchl, gchl_time, _ = _fetch_grid(cg, region, fetch)
+            gapfilled_loaded = True
+            gapfilled_source_shape = [int(len(glats)), int(len(glons))]
+            gapfilled_source_valid_frac = float(np.isfinite(gchl).mean()) if gchl.size else 0.0
             gapfilled_resampled = resample(gchl, glats, glons, lats, lons, min_weight=0.5)
             if final_chl is not None:
                 final_chl = np.where(np.isfinite(final_chl), final_chl, gapfilled_resampled)
@@ -134,6 +146,21 @@ def load_layers(sources: dict, errors: list[str], fetch=erddap.fetch_csv, fetch_
             final_time = primary_time or gchl_time
         except Exception as exc:
             errors.append(f"layers chlorophyll_gapfilled: {exc}")
+
+    layers["chlorophyll_info"] = {
+        "primary_dataset": c.get("dataset"), "primary_enabled": bool(c.get("enabled")),
+        "primary_loaded": primary_resampled is not None, "primary_source_grid_shape": primary_source_shape,
+        "primary_source_valid_fraction": primary_source_valid_frac,
+        "primary_aligned_grid_shape": [int(len(lats)), int(len(lons))] if primary_resampled is not None else None,
+        "primary_aligned_valid_fraction": round(primary_valid_frac, 6) if primary_resampled is not None else None,
+        "gapfilled_dataset": cg.get("dataset"), "gapfilled_enabled": bool(cg.get("enabled")),
+        "gapfilled_attempted": gapfilled_attempted, "gapfilled_loaded": gapfilled_loaded,
+        "gapfilled_source_grid_shape": gapfilled_source_shape, "gapfilled_source_valid_fraction": gapfilled_source_valid_frac,
+        "gapfilled_used": used_gapfilled, "final_dataset": chl_dataset,
+        "final_grid_shape": [int(len(lats)), int(len(lons))] if final_chl is not None else None,
+        "final_valid_fraction": round(float(np.isfinite(final_chl).mean()), 6) if final_chl is not None and final_chl.size else None,
+        "time": final_time, "status": "loaded" if final_chl is not None else "unavailable"
+    }
 
     if final_chl is not None:
         layers["chlorophyll"] = final_chl
@@ -151,6 +178,17 @@ def load_layers(sources: dict, errors: list[str], fetch=erddap.fetch_csv, fetch_
             depth[~(depth > 0)] = np.nan            # land and zero-depth cells
             layers["depth_m"] = depth
             layers["datasets"]["bathymetry"] = b["dataset"]
+            finite_source = np.isfinite(z)
+            finite_depth = np.isfinite(depth)
+            layers["bathymetry_info"] = {
+                "dataset": b.get("dataset"), "static": True, "source_grid_shape": [int(len(blats)), int(len(blons))],
+                "source_valid_fraction": round(float(finite_source.mean()), 6) if z.size else 0.0,
+                "aligned_grid_shape": [int(len(lats)), int(len(lons))],
+                "depth_valid_fraction": round(float(finite_depth.mean()), 6) if depth.size else 0.0,
+                "depth_min_m": round(float(np.nanmin(depth)), 3) if finite_depth.any() else None,
+                "depth_max_m": round(float(np.nanmax(depth)), 3) if finite_depth.any() else None,
+                "stride": b.get("stride", {}), "note": b.get("note")
+            }
         except Exception as exc:
             errors.append(f"layers bathymetry: {exc}")
     cu = cfg.get("currents", {})
