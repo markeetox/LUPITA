@@ -111,6 +111,8 @@ def fake_arcgis(url, params):
     SEEN.append((url, params))
     if "NOAA_MPA_Inventory" in url:
         return {"features": [FAR_ZONE]}
+    if "/10/" in url:
+        return {"features": []}
     if "/12/" in url:
         return {"features": [{"attributes": {"Name": "Miss Dania Beach", "MatCat": "Vessel", "MatDescrip": "Freighter 126'",
                                               "Depth": 71, "Relief": 27, "DeployDate": "04/29/2004", "Lat_DD": 26.01, "Long_DD": -80.0917}}]}
@@ -173,6 +175,8 @@ def test_natural_reef_query_filters_to_reef_classes_only():
 def fake_arcgis_big(url, params):
     if "NOAA_MPA_Inventory" in url:
         return {"features": [FAR_ZONE]}
+    if "/10/" in url:
+        return {"features": []}
     if "/12/" in url:
         return {"features": [
             {"attributes": {"Name": "Bay Reef", "MatCat": "Module", "Depth": 15, "Relief": 3, "Lat_DD": 25.5, "Long_DD": -80.5}},   # shallow bay (5 m)
