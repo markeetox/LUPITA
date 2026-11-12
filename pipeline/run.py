@@ -113,6 +113,39 @@ def build_data_quality(layers: dict | None, sources: dict, errors: list[str]) ->
     }}
 
 
+def build_pipeline_health(data_quality: dict, fish_updated: bool, errors: list[str]) -> dict:
+    """Classify a refresh without confusing successful execution with fresh predictions."""
+    layer_states = data_quality.get("layers", {})
+    sst_status = layer_states.get("sst", {}).get("status", "unavailable")
+    critical = []
+    if sst_status != "loaded":
+        critical.append(f"Required SST layer is {sst_status}.")
+    if not fish_updated:
+        critical.append("Prediction outputs were not refreshed.")
+
+    optional_problems = []
+    for name, state in layer_states.items():
+        if name == "sst" or state.get("status") == "disabled":
+            continue
+        if state.get("status") in ("failed", "unavailable", "partial"):
+            optional_problems.append(f"{name}: {state.get('status')}")
+
+    if critical:
+        status = "failed"
+    elif errors or optional_problems:
+        status = "degraded"
+    else:
+        status = "healthy"
+
+    return {
+        "status": status,
+        "prediction_refreshed": bool(fish_updated),
+        "critical_issues": critical,
+        "optional_layer_issues": optional_problems,
+        "warnings": list(errors),
+    }
+
+
 def main() -> None:
     logging.basicConfig(level=logging.INFO, format="%(levelname)s %(message)s")
     stations = json.loads((ROOT / "config/stations.json").read_text())["stations"]
@@ -185,6 +218,7 @@ def main() -> None:
               "data_quality": build_data_quality(layers, sources, errors),
               "closures": {"loaded": cl_loaded, "areas": len(cl_json["features"])},
               "conditions": {**timing.summary(conditions), "sea": seastate.summary(buoys, conditions)}, "fish_updated": fish is not None, "errors": errors}
+    latest["pipeline_health"] = build_pipeline_health(latest["data_quality"], fish is not None, errors)
     (live / "latest.json").write_text(json.dumps(latest, indent=2, allow_nan=False))
 
     if fish is not None:      # Staged atomic write so partial outputs are never published
@@ -246,6 +280,11 @@ def main() -> None:
 
     for sp in (fish or {}).get("species", []):
         log.info("%-20s %-20s %s", sp["name"], sp["status"], sp["message"] or f"{sp['spots']} area(s)")
+    # Rewrite after staging so late preparation errors are reflected in diagnostics.
+    latest["errors"] = errors
+    latest["pipeline_health"] = build_pipeline_health(latest["data_quality"], fish is not None, errors)
+    (live / "latest.json").write_text(json.dumps(latest, indent=2, allow_nan=False))
+    log.info("pipeline health: %s", latest["pipeline_health"]["status"])
     log.info("wrote latest.json%s (%d errors)", " and fish.json" if fish is not None else "; fish.json left as it was", len(errors))
 
 
