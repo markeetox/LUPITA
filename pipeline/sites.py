@@ -172,6 +172,7 @@ def score_site(profile, site, ctx, reg):
     rows = [[{"sst_c": "Water temp", "tide_stage": "Tide", "time_of_day": "Light"}[f["param"]], info["text"]]
             for f, v, s, tag, info in got if f["param"] in ("sst_c", "tide_stage", "time_of_day") and info.get("text")]
     return {"score": sum(f["weight"] * s for f, v, s, *_ in got) / avail, "coverage": avail / total,
+            "active_factor_count": len(active), "evaluated_factor_count": len(got),
             "reasons": reasons, "rows": rows, "missing": missing}
 
 
@@ -218,9 +219,19 @@ def score_sites(profile, sites, ctx, reg, closure_rows_fn=None) -> dict:
             rows += closure_rows_fn(L, [r["cell"]] if r["cell"] else [])
         if now is not None:
             rows.append(["As of", f"{now.astimezone(LOCAL).strftime('%b %d, %I:%M %p').replace(' 0', ' ')} (tide and light change by the hour)"])
-        conf = "Low" if (cap_low or r["coverage"] < 0.9) else "Medium"
-        items.append({"title": f"{site['name']} (inlet)", "score": round(r["score"], 3), "confidence": conf,
-                      "data_coverage": round(r["coverage"], 2), "coords": [site["lon"], site["lat"]],
+        confidence_basis = []
+        if r["active_factor_count"] < 3:
+            confidence_basis.append("limited_model_inputs")
+        if r["coverage"] < 0.9:
+            confidence_basis.append("incomplete_environmental_inputs")
+        if cap_low:
+            confidence_basis.append("profile_confidence_cap")
+        conf = "Low" if confidence_basis else "Medium"
+        kind_label = str(site.get("kind") or "site").replace("_", " ")
+        items.append({"title": f"{site['name']} ({kind_label})", "score": round(r["score"], 3), "confidence": conf,
+                      "confidence_basis": confidence_basis, "active_factor_count": r["active_factor_count"],
+                      "data_coverage": round(r["coverage"], 2), "environmental_data_coverage": round(r["coverage"], 2),
+                      "coords": [site["lon"], site["lat"]],
                       "ring": _ring(site["lat"], site["lon"], site.get("radius_km", 1.5)),
                       "reasons": r["reasons"], "location": rows})
     return {"items": items, "best": best, "unavailable": "", "note": ""}
