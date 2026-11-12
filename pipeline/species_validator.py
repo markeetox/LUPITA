@@ -241,7 +241,7 @@ def validate_profile(profile: Any, registry: dict[str, dict], filename: str = ""
                     continue
                 if not isinstance(cfg, dict):
                     findings.append(finding("ERROR", "invalid_timing_component", f"Timing component '{component}' must be an object."))
-                elif component in {"light", "tide", "front"} and not isinstance(cfg.get("map"), dict):
+                elif component in {"light", "tide", "front"} and (not isinstance(cfg.get("map"), dict) or not cfg.get("map")):
                     findings.append(finding("ERROR", "missing_timing_map", f"Timing component '{component}' requires a map."))
                 elif component == "moon" and any(not is_number(cfg.get(k)) for k in ("from_days", "to_days", "in_score", "out_score")):
                     findings.append(finding("ERROR", "invalid_moon_timing", "Moon timing requires numeric day bounds and scores."))
