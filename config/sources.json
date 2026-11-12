@@ -150,7 +150,20 @@
       "version": "2.2",
       "release_date": "2025-01",
       "page_size": 2000,
-      "simplify_deg": 0.0005
+      "simplify_deg": 0.0005,
+      "query_region": {
+        "lat": [
+          24,
+          28
+        ],
+        "lon": [
+          -83,
+          -79
+        ]
+      },
+      "sample_cell_km": 0.25,
+      "sample_sub": 4,
+      "max_pages": 100
     }
   },
   "closures": {
