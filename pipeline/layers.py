@@ -3,7 +3,7 @@ from __future__ import annotations
 
 import numpy as np
 
-from pipeline import closures, currents, derive, grid, structure
+from pipeline import closures, currents, derive, grid, habitat, structure
 from pipeline.grid import resample
 from pipeline.sources import arcgis, erddap
 
@@ -88,6 +88,7 @@ def load_layers(sources: dict, errors: list[str], fetch=erddap.fetch_csv, fetch_
               "gulf_stream_edge": None, "stream_edge_lon": None,
               "closure_areas": [], "closure_cover": None, "closure_info": {}, "closure_checked": False,
               "structure_type": None, "structure_info": {}, "structure_cover": None, "structure_stats": None,
+              "habitat_features": {}, "habitat_mapped_cover": None, "habitat_info": {},
               "times": {"sst": sst_time, "chlorophyll": None},
               "datasets": {"sst": cfg["sst"]["dataset"]}}
 
@@ -186,6 +187,28 @@ def load_layers(sources: dict, errors: list[str], fetch=erddap.fetch_csv, fetch_
             layers["datasets"]["structure"] = "FWC artificial reefs + FWC Unified Reef Map v2.2"
         except Exception as exc:
             errors.append(f"layers structure: {exc}")
+    hb = a.get("unified_benthic", {})
+    if hb.get("enabled"):
+        try:
+            features = arcgis.query_all(hb["url"], region, fetch=fetch_arc, return_geometry=True,
+                                        simplify=hb.get("simplify_deg", 0.0005),
+                                        where=hb.get("where", "1=1"),
+                                        page_size=hb.get("page_size", 2000))
+            habitat_layers, habitat_stats = habitat.build_habitat_layers(
+                features, lats, lons, hb.get("class_field", "FIRST_ClassLv0"))
+            layers["habitat_features"] = habitat_layers["covers"]
+            layers["habitat_mapped_cover"] = habitat_layers["mapped_cover"]
+            layers["habitat_info"] = {
+                **habitat_stats,
+                "dataset": hb.get("source_label", "FWC Unified Reef Map"),
+                "version": hb.get("version"),
+                "release_date": hb.get("release_date"),
+                "class_field": hb.get("class_field", "FIRST_ClassLv0"),
+                "coverage_semantics": "Zero category cover outside mapped polygons means unknown, not confirmed absence."
+            }
+            layers["datasets"]["benthic_habitat"] = hb.get("source_label", "FWC Unified Reef Map")
+        except Exception as exc:
+            errors.append(f"layers benthic_habitat: {exc}")
     cl = sources.get("closures", {})
     if cl.get("enabled"):
         try:
