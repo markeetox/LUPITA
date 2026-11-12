@@ -71,3 +71,14 @@ def test_temperature_trend():
     trend = derive.temperature_trend(curr, prev, hours_diff=24.0)
     assert trend[0, 0] == 1.0
     assert trend[0, 1] == 0.0
+
+
+def test_descending_latitude_axis_requests_north_to_south():
+    cfg = dict(CFG, descending_dims=["latitude"])
+    url = erddap.build_griddap_url(cfg, REGION)
+    assert "[(27.0):2:(24.5)]" in url
+
+
+def test_ascending_latitude_axis_keeps_south_to_north_order():
+    url = erddap.build_griddap_url(CFG, REGION)
+    assert "[(24.5):2:(27.0)]" in url
