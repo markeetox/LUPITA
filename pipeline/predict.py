@@ -5,7 +5,7 @@ import base64
 
 import numpy as np
 
-from pipeline import scoring, seastate, sites as sites_mod, timing as timing_mod
+from pipeline import habitat as habitat_mod, scoring, seastate, sites as sites_mod, timing as timing_mod
 from pipeline.grid import bearing_deg, compass, haversine_km
 
 TAGS = {"sst_c": "modeled", "sst_gradient": "modeled", "chlorophyll": "modeled", "depth_m": "static"}
@@ -338,6 +338,11 @@ def build_fish_json(layers, buoys, profiles, registry, generated_utc, places=Non
         layers = {**layers, "month": conditions["now"].astimezone(sites_mod.LOCAL).month}   # for seasonal factors
     lats, lons = layers["lats"], layers["lons"]
     species_out, spots_out = [], []
+    habitat_cfg = layers.get("habitat_info") or {}
+    site_habitat = habitat_mod.sample_sites(
+        layers.get("habitat_polygons", []), places or [],
+        class_field=habitat_cfg.get("class_field", "FIRST_ClassLv0"),
+        cell_km=habitat_cfg.get("sample_cell_km", 0.25))
     for profile in profiles:
         sid, name = profile["id"], profile["common_name"]
         entry = {"id": sid, "name": name, "sci": profile["scientific_name"],
@@ -348,7 +353,7 @@ def build_fish_json(layers, buoys, profiles, registry, generated_utc, places=Non
                  "regulations": profile.get("regulations"),
                  "status": "ok", "message": "", "spots": 0}
         if profile.get("model") == "sites":
-            ctx = {"layers": layers, "buoys": buoys, "conditions": conditions}
+            ctx = {"layers": layers, "buoys": buoys, "conditions": conditions, "site_habitat": site_habitat}
             res = sites_mod.score_sites(profile, places or [], ctx, reg, closure_rows)
             if res["unavailable"]:
                 entry.update(status="unavailable", message=res["unavailable"])
