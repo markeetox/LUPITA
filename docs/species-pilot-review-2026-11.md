@@ -71,8 +71,8 @@ Build separate adult migration and juvenile nursery-habitat evidence groups. Do 
 Shallow-water flats specialist with a distinct offshore spawning migration. Tests the separation of foraging habitat, pre-spawning staging habitat, and offshore spawning habitat.
 
 ### Evidence already available
-- Acoustic telemetry in the northern Florida Keys documented bonefish movements and use of shallow foraging habitat. The study cautions against assuming that all fish roam widely or use flats in the same way.
-- NOAA-hosted peer-reviewed research describes adult use of shallow flats with sand, seagrass, mangroves, and hard bottom during the non-spawning season, followed by seasonal movements to pre-spawning aggregation sites and offshore spawning.
+- Acoustic telemetry in the northern Florida Keys documented use of shallow foraging habitat and suggested that deeper channels may provide refuge from rapid temperature changes. The study's observed site fidelity was limited, so it does not justify assigning fixed home ranges to every fish.
+- NOAA-hosted peer-reviewed research from the Bahamas linked bonefish home ranges to a pre-spawning aggregation site. This is useful Caribbean comparative evidence, not a direct Biscayne Bay calibration.
 - Florida research on juvenile Albula spp. found positive catches across a range of water-quality conditions and shallow depths. Because that study covers Albula spp. and juveniles, it should not be used as a direct adult preferred-temperature range for *A. vulpes*.
 
 ### Current model problems
@@ -86,7 +86,8 @@ Create distinct shallow-flat foraging and spawning-migration dimensions. Add hab
 
 ### Research sources
 - [Movements and site fidelity of bonefish in the northern Florida Keys](https://doi.org/10.3354/meps291237)
-- [NOAA: Bonefish home range to spawning site linkages](https://www.fisheries.noaa.gov/resource/peer-reviewed-research/bonefish-albula-vulpes-home-range-spawning-site-linkages-support)
+- [NOAA: Bonefish home range to spawning site linkages (Bahamas study)](https://www.fisheries.noaa.gov/resource/peer-reviewed-research/bonefish-albula-vulpes-home-range-spawning-site-linkages-support)
+- [FAU research on South Florida and Bahamas bonefish habitat gaps](https://digitalcommons.fau.edu/etd_general/1021/)
 - [Florida research on juvenile Albula spp. habitat preferences](https://academic.oup.com/mcf/article/17/3/vtaf003/8137700)
 
 ## 4. Permit (*Trachinotus falcatus*)
