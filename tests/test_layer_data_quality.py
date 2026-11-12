@@ -30,6 +30,8 @@ def test_data_quality_reports_loaded_layers_and_gapfilled_usage():
             "primary_aligned_grid_shape": [2, 2], "primary_aligned_valid_fraction": 0.2,
             "gapfilled_dataset": "chl-gapfilled-test", "gapfilled_attempted": True,
             "gapfilled_loaded": True, "gapfilled_used": True,
+            "primary_time": "2026-11-10T12:00:00Z",
+            "gapfilled_time": "2026-11-11T12:00:00Z",
             "final_dataset": "chl-test + chl-gapfilled-test (gap-filled)",
             "final_grid_shape": [2, 2], "final_valid_fraction": 0.9,
             "status": "loaded",
@@ -55,6 +57,8 @@ def test_data_quality_reports_loaded_layers_and_gapfilled_usage():
     assert result["sst"]["valid_fraction"] == 0.75
     assert result["chlorophyll"]["status"] == "loaded"
     assert result["chlorophyll"]["gapfilled_used"] is True
+    assert result["chlorophyll"]["primary_time"] == "2026-11-10T12:00:00Z"
+    assert result["chlorophyll"]["gapfilled_time"] == "2026-11-11T12:00:00Z"
     assert result["chlorophyll"]["final_valid_fraction"] == 0.9
     assert result["bathymetry"]["status"] == "loaded"
     assert result["bathymetry"]["depth_valid_fraction"] == 0.75
@@ -74,3 +78,11 @@ def test_missing_enabled_layer_is_unavailable_not_zero_or_loaded():
     assert result["bathymetry"]["status"] == "unavailable"
     assert result["currents"]["status"] == "unavailable"
     assert result["benthic_habitat"]["status"] == "unavailable"
+
+
+def test_bathymetry_minimum_preserves_sub_millimeter_positive_depth():
+    layers = {
+        "depth_m": np.array([[0.0004, 2.0], [np.nan, 10.0]]),
+    }
+    report = build_data_quality(layers, _sources(), [])
+    assert report["layers"]["bathymetry"]["depth_min_m"] == 0.0004

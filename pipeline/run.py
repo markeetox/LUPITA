@@ -90,8 +90,8 @@ def build_data_quality(layers: dict | None, sources: dict, errors: list[str]) ->
         finite = np.isfinite(depth)
         bathy_state.update({"grid_shape": [int(depth.shape[0]), int(depth.shape[1])],
                             "depth_valid_fraction": round(float(finite.mean()), 6),
-                            "depth_min_m": round(float(np.nanmin(depth)), 3) if finite.any() else None,
-                            "depth_max_m": round(float(np.nanmax(depth)), 3) if finite.any() else None})
+                            "depth_min_m": round(float(np.nanmin(depth[finite])), 6) if finite.any() else None,
+                            "depth_max_m": round(float(np.nanmax(depth[finite])), 6) if finite.any() else None})
 
     currents_state = _layer_state(bool(cfg.get("currents", {}).get("enabled")), current_present, errors, "layers currents:")
     currents_state["dataset"] = cfg.get("currents", {}).get("dataset")
