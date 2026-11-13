@@ -82,13 +82,14 @@ def test_extract_layer_paginates_and_summarizes():
 
 def test_extract_layer_uses_layer_specific_service_and_name_attribute():
     class Response:
+        def __init__(self, payload):
+            self.payload = payload
+
         def raise_for_status(self):
             pass
 
         def json(self):
-            feature = polygon_feature()
-            feature["properties"] = {"OBJECTID": 9, "NAME": "BISCAYNE BAY AQUATIC PRESERVE"}
-            return {"features": [feature]}
+            return self.payload
 
     class Session:
         def __init__(self):
