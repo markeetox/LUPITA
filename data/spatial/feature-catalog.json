@@ -6,7 +6,7 @@
   "default_crs": "EPSG:4326",
   "geometry_policy": {
     "allow_null_geometry": true,
-    "null_geometry_means": "Geometry has not yet been extracted or independently verified.",
+    "null_geometry_means": "A source geometry may be stored in a linked GeoJSON file; null here means no geometry has been promoted inline as a verified feature boundary.",
     "preserve_source_geometry": true,
     "do_not_infer_connectivity_from_proximity": true
   },
@@ -32,9 +32,9 @@
       "region": "south_florida",
       "parent_id": "sf-biscayne-bay-ecological-context",
       "geometry": null,
-      "geometry_status": "source_geometry_persisted_in_curated_geojson_topology_review_pending",
+      "geometry_status": "source_geometry_persisted_topology_precheck_passed_not_navigation_boundary",
       "boundary_basis": "named_navigation_feature",
-      "boundary_scope_note": "NOAA ENC names this polygon Bear Cut. It is a charted named-water area, not a surveyed channel centerline or current controlling-depth boundary. NOAA Coast Pilot 4 also describes the Rickenbacker Causeway bridge over Bear Cut. Geometry is retrieved and coordinate-validated; static geometry import and topology review remain pending. The original source polygon is now persisted in the curated GeoJSON; it remains a charted named-water area, not a surveyed centerline or depth boundary.",
+      "boundary_scope_note": "NOAA ENC names this polygon Bear Cut. It is a charted named-water area, not a surveyed channel centerline or current controlling-depth boundary. NOAA Coast Pilot 4 also describes the Rickenbacker Causeway bridge over Bear Cut. The original source polygon is persisted in the curated GeoJSON and passed geometry validation. It remains a charted named-water area, not a surveyed centerline or depth boundary.",
       "relationships": [
         {
           "type": "connects",
@@ -62,7 +62,7 @@
           "source_type": "official_hydrographic_publication"
         }
       ],
-      "validation_status": "charted_named_water_geometry_persisted_not_navigation_boundary",
+      "validation_status": "charted_named_water_geometry_persisted_topology_precheck_passed_not_navigation_boundary",
       "source_geometry_ref": {
         "index_path": "data/spatial/noaa-biscayne-hydrography-index.json",
         "source_layer_id": 237,
@@ -158,9 +158,9 @@
       "region": "south_florida",
       "parent_id": null,
       "geometry": null,
-      "geometry_status": "source_chart_fragments_persisted_individually_topology_precheck_recorded_boundary_unverified",
+      "geometry_status": "source_chart_fragments_persisted_topology_precheck_passed_complete_boundary_unverified",
       "boundary_basis": "multi_source_ecological_context",
-      "boundary_scope_note": "This is the ecological waterbody entity, distinct from the statutory aquatic preserve and the Biscayne National Park boundary. Its polygon must be assembled from authoritative shoreline, hydrographic, and tidal-connection evidence. NOAA Harbour ENC also contains 37 charted Biscayne Bay named-water polygons across 17 ENC cells. These are chart-cell fragments, not a complete ecological or statutory boundary; mosaic and topology review is pending. Original chart fragments are persisted individually with a topology precheck; no dissolved or complete boundary is promoted.",
+      "boundary_scope_note": "This is the ecological waterbody entity, distinct from the statutory aquatic preserve and the Biscayne National Park boundary. Its polygon must be assembled from authoritative shoreline, hydrographic, and tidal-connection evidence. NOAA Harbour ENC also contains 37 charted Biscayne Bay named-water polygons across 17 ENC cells. These are chart-cell fragments, not a complete ecological or statutory boundary; mosaic and topology review is pending. Original chart fragments are persisted individually with a topology precheck; no dissolved or complete boundary is promoted. A first geometric topology precheck is complete: the union has two disconnected components, one a very small isolated fragment. Original chart fragments are persisted individually; no dissolved or complete boundary is promoted. Full boundary reconciliation against shoreline, preserve, and tidal-connectivity evidence remains pending.",
       "relationships": [
         {
           "type": "has_management_boundary",
@@ -262,8 +262,8 @@
       "region": "south_florida",
       "parent_id": "sf-biscayne-bay-ecological-context",
       "geometry": null,
-      "geometry_status": "source_chart_fragments_persisted_individually_topology_precheck_recorded_boundary_unverified",
-      "boundary_scope_note": "NOAA Harbour ENC names three polygons Biscayne Flats and classifies them as mud flats. This is a charted feature classification, not evidence of current substrate condition, seagrass, fish use, or ecological suitability. The polygons span two ENC cells and require topology review before being assembled into one complex. Original chart fragments are persisted individually with a topology precheck; no dissolved or complete boundary is promoted.",
+      "geometry_status": "source_chart_fragments_persisted_topology_precheck_passed_boundary_unverified",
+      "boundary_scope_note": "NOAA Harbour ENC names three polygons Biscayne Flats and classifies them as mud flats. This is a charted feature classification, not evidence of current substrate condition, seagrass, fish use, or ecological suitability. The polygons span two ENC cells and require topology review before being assembled into one complex. Original chart fragments are persisted individually with a topology precheck; no dissolved or complete boundary is promoted. A first geometric topology precheck found one connected component and no material overlaps. Source polygons remain separate; the charted mud-flat class does not establish current substrate or habitat.",
       "source_geometry_ref": {
         "index_path": "data/spatial/noaa-biscayne-hydrography-index.json",
         "source_layer_id": 237,
@@ -312,9 +312,9 @@
       "region": "south_florida",
       "parent_id": "sf-biscayne-bay-central-southern-context",
       "geometry": null,
-      "geometry_status": "source_chart_fragments_persisted_individually_topology_precheck_recorded_boundary_unverified",
+      "geometry_status": "source_chart_fragments_persisted_topology_precheck_passed_boundary_unverified",
       "boundary_basis": "named_ecological_feature",
-      "boundary_scope_note": "NOAA describes a broad area of grass flats and tidal channels near the center of the bay that exchanges water with the Atlantic. It must not be reduced to a single point or a single flat polygon. NOAA ENC names four source polygons as Safety Valve. The source class is named water area, not flat or channel habitat. Preserve the four source features separately until multi-cell geometry reconciliation. Original chart fragments are persisted individually with a topology precheck; no dissolved or complete boundary is promoted.",
+      "boundary_scope_note": "NOAA describes a broad area of grass flats and tidal channels near the center of the bay that exchanges water with the Atlantic. It must not be reduced to a single point or a single flat polygon. NOAA ENC names four source polygons as Safety Valve. The source class is named water area, not flat or channel habitat. Preserve the four source features separately until multi-cell geometry reconciliation. Original chart fragments are persisted individually with a topology precheck; no dissolved or complete boundary is promoted. A first geometric topology precheck found one connected component and no material overlaps. Source polygons remain separate; this does not establish ecological connectivity or current habitat.",
       "relationships": [
         {
           "type": "water_exchange_area",
