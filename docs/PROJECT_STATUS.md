@@ -135,3 +135,9 @@ See [Biscayne research pipeline policy](biscayne-research-pipeline-policy-2026-1
 - NOAA's `upwell.pfeg.noaa.gov/erddap` documents access to the same `jplMURSST41` dataset and is being added as a host fallback, not a different SST product.
 - Failed refresh publication will preserve the last-known-good prediction files/API snapshot and expose current health through `latest.json` plus `api/v1/refresh.json`.
 - Validate mirror retry, diagnostic states and publication restoration with focused/full tests, then one manual production pull.
+
+
+### Validation update
+- The first test run found one compatibility regression in the new `not_attempted` state: a test fixture uses `layers=None` without an SST error to mean no layer report. The implementation was narrowed so downstream layers are marked not attempted only when an actual `layers sst:` error is present.
+- Corrected full Python suite: **262 passed, 0 failed, 115 warnings** on [run #43493987730](https://github.com/markeetox/LUPITA/actions/runs/43493987730), commit `735f888b02ab3ddb8065277c4758e00097778ce6`.
+- Code and regression coverage are validated. A manual Pull Ocean Data run is still required to verify that the live `upwell` mirror returns a current MUR scene and that the publication step preserves the previous API snapshot correctly.
