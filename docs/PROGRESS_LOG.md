@@ -383,3 +383,9 @@ Compare source age across multiple scheduled refreshes, then calibrate operation
 - Mark downstream layers `not_attempted` and freshness `not_assessed` when SST prevents their requests.
 - Add publication preparation to restore last-known-good prediction/API files after failed refreshes and publish current diagnostics at `api/v1/refresh.json`, with snapshot timestamp in `latest.json`.
 - Focused/full validation and live production confirmation remain pending. No prediction weights or biology rules changed.
+
+
+### Validation completed
+- The first full-suite run caught one regression: `build_data_quality(None, ...)` without an SST error must continue to mean `unavailable`, not `not_attempted`. The guard now requires an explicit `layers sst:` error before downstream layers receive `not_attempted`.
+- Corrected Python suite: **262 passed, 0 failed, 115 warnings** on [run #43493987730](https://github.com/markeetox/LUPITA/actions/runs/43493987730), commit `735f888b02ab3ddb8065277c4758e00097778ce6`.
+- Next validation: manually dispatch Pull Ocean Data and inspect SST source selected, timestamp, `api/v1/refresh.json`, `latest.json` snapshot metadata, and last-known-good prediction timestamps.
