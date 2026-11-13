@@ -9,7 +9,7 @@ The project has two connected workstreams:
 - **Prediction platform:** maintain the production habitat and bite-timing pipeline, environmental inputs, species profiles, API contract, and map client.
 - **Spatial intelligence research:** build a defensible South Florida geographic model from NOAA, FWC, FDEP, county, and other authoritative sources. Research geometry is not production geometry until it passes source review, topology checks, and explicit promotion.
 
-The active Biscayne Bay GIS work is tracked in [Project Status](docs/PROJECT_STATUS.md), with decisions and historical milestones in the [Progress Log](docs/PROGRESS_LOG.md). Source acquisition and validation policy is documented in [Biscayne research pipeline policy](docs/biscayne-research-pipeline-policy-2026-11.md).
+The active Biscayne Bay GIS work is tracked in [Project Status](docs/PROJECT_STATUS.md), with decisions and historical milestones in the [Progress Log](docs/PROGRESS_LOG.md). The current engineering handoff and next acceptance criteria are in [Roadmap](docs/ROADMAP.md). Source acquisition and validation policy is documented in [Biscayne research pipeline policy](docs/biscayne-research-pipeline-policy-2026-11.md).
 
 ## Repository records and change discipline
 
@@ -48,7 +48,7 @@ Keep production changes separate from research-only work. Do not promote candida
 
 1. Inspect existing source manifests and persisted artifacts before acquiring data.
 2. Reuse frozen source snapshots unless the source, extraction logic, or a documented QA condition changes.
-3. Make one coherent implementation batch on a research or feature branch. Do not work directly on `main` for experimental GIS interpretation.
+3. Keep `main` as the authoritative application branch. Make production implementation changes directly on `main` in coherent, tested batches; keep unapproved GIS interpretations and candidate geometry in research-only artifacts.
 4. Run targeted syntax checks and unit tests before expensive extraction or spatial audits.
 5. Run only the workflows affected by the change. Use the full Python suite for broad integration milestones or pre-merge validation, not every research iteration.
    - The focused Biscayne landmark workflow is `.github/workflows/biscayne-landmark-evidence.yml`; it compiles its extraction/reconciliation scripts and tests before tests or network extraction.
@@ -111,13 +111,19 @@ for the contract, hosting advice and what is deliberately left out (legal sizes 
 for an untested Flutter starting point (`pipeline/api.py` builds the files; `tests/test_api.py` checks the contract).
 
 ## Currents and the Gulf Stream edge
-Surface currents come from NOAA CoastWatch geostrophic currents (satellite altimetry, daily, 25 km grid, listed as
-experimental; variables `ugos` east and `vgos` north in m/s). The stream's inshore edge is the westernmost point in each
-latitude row where northward flow reaches half the row's maximum (and at least about 0.8 kn); eddies are not modeled
-(`pipeline/currents.py`). It is approximate: good to roughly 20 km, weaker near shore, and geostrophic flow leaves out
-wind-driven and tidal currents. Sailfish, wahoo and mahi score a band around the edge (provisional); the map draws the
-edge as a thin line you can toggle and tap (`stream.json`). If the dataset's dimensions or names differ from the config,
-run `python -m pipeline.check_sources` and fix `config/sources.json`.
+Near-surface coastal currents now use NOAA/NESDIS HF Radar's near-real-time hourly 2 km product (`ucsdHfrE2`), requested
+only over the configured South Florida window. Eastward and northward velocity components are `water_u` and `water_v`
+in m/s. The pipeline overlays valid HF Radar vectors on the broader NOAA CoastWatch satellite-altimetry product
+(`nesdisSSH1day`, daily, 25 km, `ugos`/`vgos`) and uses altimetry wherever HF Radar has no valid vector. This is a
+spatial fallback, not a claim that the two products measure identical depths or physics. HF Radar represents near-surface
+coastal flow and has variable coverage; its `hdop`, contributing-radar and radial-count fields are reported as diagnostics
+but are not yet hard quality gates. The satellite-altimetry feed remains the source for the approximate Gulf Stream
+inshore-edge line. The edge is the westernmost point in each latitude row where northward flow reaches half the row's
+maximum (and at least about 0.8 kn); eddies are not modeled (`pipeline/currents.py`). It is approximate: roughly 20 km,
+weaker near shore, and geostrophic flow leaves out wind-driven and tidal currents. Sailfish, wahoo and mahi score a
+provisional band around the edge. Each feed's timestamp, freshness, grid coverage and selected/blended source are exposed
+in `latest.json` and the app-facing API. Freshness limits are provisional monitoring thresholds, not biological validity
+limits. If dataset dimensions or variables differ, run `python -m pipeline.check_sources` and update `config/sources.json`.
 
 ## Boat conditions
 A separate sea-state indicator, not part of any fish score. From the nearest fresh buoy readings (within 80 km, under
@@ -164,4 +170,4 @@ Always confirm with FWC, NOAA Sanctuaries or the National Park Service.
 
 ## Source freshness and prediction diagnostics
 
-Dynamic ERDDAP inputs (sea-surface temperature, chlorophyll and satellite-altimetry currents) publish their observation timestamp, calculated age, and a source-specific freshness status in `latest.json` and the app-facing API index. Statuses are `fresh`, `delayed`, `stale`, `unknown`, or `future`; a missing or unparseable timestamp is never treated as fresh. The chlorophyll summary freshness uses the primary scene timestamp when no aggregate timestamp is supplied; primary and gap-filled scene ages remain separately available when reported. The initial warning/stale thresholds in `config/sources.json` are provisional operational monitoring limits for daily products, not scientific validity limits or fish-presence probabilities. They should be tuned from recorded source latency before being used to exclude data from scoring. A delayed or stale input degrades pipeline health but does not silently erase a completed prediction refresh.
+Dynamic ERDDAP inputs (sea-surface temperature, chlorophyll, NOAA HF Radar currents and satellite-altimetry fallback currents) publish their observation timestamps, calculated ages, and source-specific freshness statuses in `latest.json` and the app-facing API index. Statuses are `fresh`, `delayed`, `stale`, `unknown`, or `future`; a missing or unparseable timestamp is never treated as fresh. The chlorophyll summary freshness uses the primary scene timestamp when no aggregate timestamp is supplied; primary and gap-filled scene ages remain separately available when reported. The initial warning/stale thresholds in `config/sources.json` are provisional operational monitoring limits for daily products, not scientific validity limits or fish-presence probabilities. They should be tuned from recorded source latency before being used to exclude data from scoring. A delayed or stale input degrades pipeline health but does not silently erase a completed prediction refresh.

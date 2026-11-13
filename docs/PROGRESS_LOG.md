@@ -271,3 +271,21 @@ Compare source age across multiple scheduled refreshes, then calibrate operation
 ### Next action
 
 - Confirm the Python suite passes, then inspect the next scheduled production export for the freshness fields.
+
+
+## 2026-11-13 | Add NOAA HF Radar coastal currents with altimetry spatial fallback
+
+**Branch:** `main`  
+**Configuration/loader commit:** `a4e7bcf633a84238723dd250df9f5a1e3f87e159`
+
+- Production refresh #202 exposed currents about 1,121 hours old despite a successful pipeline run.
+- NOAA ERDDAP metadata confirms `ucsdHfrE2` is the near-real-time hourly 2 km HF Radar product with `water_u`, `water_v`, `hdop`, `number_of_sites`, and `number_of_radials`.
+- Configured HF Radar as primary over 24.0-28.5°N, 83.5-78.0°W. Retained `nesdisSSH1day` altimetry as spatial fallback and the Gulf Stream-edge source.
+- Current vectors use HF Radar where valid and altimetry elsewhere. Fill values are masked. Source timestamps, valid coverage, blend mode and available quality metrics are recorded independently. Quality metrics are diagnostic only; no unvalidated cutoff was introduced.
+- Pipeline health checks both the selected HF Radar freshness and fallback altimetry freshness. Predictions continue when one usable source remains.
+- Updated README, Project Status, API attribution/index, tests and roadmap. Species scoring and weights remain unchanged.
+- The SoFlo Fish Finder Render page could not be inspected; no assumptions about its implementation were imported.
+
+**Validation:** NOAA metadata confirms dataset dimensions, variable names and units. Mocked tests cover blend/fallback behavior and stale fallback health. Live CSV retrieval and South Florida coverage remain unverified until the next production refresh.
+
+**Next:** inspect the first post-change Pull Ocean Data run. Confirm HFR timestamp, source and aligned valid fractions, quality diagnostics, altimetry timestamp, blend mode, and stream-edge provenance before treating the new feed as production-validated.

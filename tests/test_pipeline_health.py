@@ -53,6 +53,18 @@ def test_delayed_or_stale_dynamic_inputs_degrade_health_without_hiding_predictio
     assert result["freshness_issues"] == ["chlorophyll: stale (130.0 hours old)"]
 
 
+def test_stale_altimetry_fallback_is_reported_even_when_hf_radar_is_fresh():
+    quality = _quality()
+    quality["layers"]["currents"] = {
+        "status": "loaded",
+        "freshness": {"status": "fresh", "age_hours": 4},
+        "fallback_freshness": {"status": "stale", "age_hours": 1100},
+    }
+    result = build_pipeline_health(quality, True, [])
+    assert result["status"] == "degraded"
+    assert "currents [satellite-altimetry fallback]: stale (1100.0 hours old)" in result["freshness_issues"]
+
+
 def test_missing_timestamp_for_loaded_critical_input_is_reported():
     quality = _quality()
     quality["layers"]["sst"]["freshness"] = {"status": "unknown", "age_hours": None}

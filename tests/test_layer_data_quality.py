@@ -11,7 +11,8 @@ def _sources():
             "sst": {"enabled": True, "dataset": "sst-test", "freshness": {"warning_age_hours": 36, "stale_age_hours": 72}},
             "chlorophyll": {"enabled": True, "dataset": "chl-test", "freshness": {"warning_age_hours": 72, "stale_age_hours": 120}},
             "bathymetry": {"enabled": True, "dataset": "etopo-test", "stride": {"latitude": 15, "longitude": 15}},
-            "currents": {"enabled": True, "dataset": "currents-test", "freshness": {"warning_age_hours": 36, "stale_age_hours": 72}},
+            "currents": {"enabled": True, "dataset": "hfr-test", "freshness": {"warning_age_hours": 36, "stale_age_hours": 72}},
+            "currents_fallback": {"enabled": True, "dataset": "alt-test", "freshness": {"warning_age_hours": 36, "stale_age_hours": 72}},
         },
         "arcgis": {
             "artificial_reefs": {"enabled": True},

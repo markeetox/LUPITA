@@ -20,7 +20,8 @@ SCALE = 5                  # overlay pixels per grid cell: smooth on a phone wit
 ABOUT_KEYS = ["size", "diet", "swimming_depth", "depth", "behavior", "spawning", "lifespan", "regulations_note", "regulations_link", "sources"]
 ATTRIBUTION = [
     "NOAA National Data Buoy Center (buoy readings)", "NOAA CO-OPS (tide predictions)", "NOAA National Weather Service (forecasts)",
-    "NASA JPL MUR sea surface temperature via NOAA CoastWatch", "NOAA CoastWatch (VIIRS chlorophyll, altimetry currents, ETOPO depth)",
+    "NASA JPL MUR sea surface temperature via NOAA CoastWatch", "NOAA CoastWatch (VIIRS chlorophyll, satellite-altimetry currents, ETOPO depth)",
+    "NOAA/NESDIS HF Radar (near-real-time coastal surface currents)",
     "NOAA National MPA Center (no-fishing areas)", "Florida Fish and Wildlife Conservation Commission (artificial reefs, Unified Reef Map)"]
 DISCLAIMER = ("Experimental. Scores show where conditions match published habitat preferences and have not been checked against catch reports. "
               "Confidence describes model and input limitations, not the probability of catching a fish. "
@@ -166,7 +167,8 @@ def build(fish: dict, heat: dict | None, closures: dict | None, stream: dict | N
             "input_times": fish.get("layers", {}).get("times", {}),
             "datasets": fish.get("layers", {}).get("datasets", {}),
             "freshness": fish.get("layers", {}).get("freshness", {}),
-            "note": "Observation ages and source-specific operational freshness statuses are provided. Thresholds are provisional monitoring rules, not biological validity limits."
+            "current_sources": fish.get("layers", {}).get("current_sources"),
+            "note": "Observation ages and source-specific operational freshness statuses are provided. Currents may blend NOAA HF Radar coastal vectors with satellite-altimetry vectors outside HF Radar coverage; source timestamps and coverage are reported separately. Thresholds are provisional monitoring rules, not biological validity limits."
         },
         "species": index_species, "layers": layers, "attribution": ATTRIBUTION})
     return files

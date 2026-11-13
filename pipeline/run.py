@@ -128,10 +128,25 @@ def build_data_quality(layers: dict | None, sources: dict, errors: list[str], no
                             "depth_min_m": round(float(np.nanmin(depth[finite])), 6) if finite.any() else None,
                             "depth_max_m": round(float(np.nanmax(depth[finite])), 6) if finite.any() else None})
 
-    currents_state = _layer_state(bool(cfg.get("currents", {}).get("enabled")), current_present, errors, "layers currents:")
-    currents_state["dataset"] = cfg.get("currents", {}).get("dataset")
+    current_cfg = cfg.get("currents", {})
+    current_fallback_cfg = cfg.get("currents_fallback", {})
+    current_info = layers.get("currents_info") or {}
+    current_primary = current_info.get("primary") or {}
+    current_fallback = current_info.get("fallback") or {}
+    currents_state = _layer_state(bool(current_cfg.get("enabled") or current_fallback_cfg.get("enabled")), current_present, errors,
+                                  ["layers currents:", "layers currents primary:", "layers currents fallback:"])
+    currents_state.update(current_info)
+    currents_state["dataset"] = layers.get("datasets", {}).get("currents") or current_cfg.get("dataset")
     currents_state["time"] = layers.get("times", {}).get("currents")
-    currents_state["freshness"] = _source_freshness(currents_state["time"], cfg.get("currents", {}).get("freshness"), now)
+    primary_loaded = bool(current_primary.get("loaded")) if current_info else current_present
+    fallback_loaded = bool(current_fallback.get("loaded"))
+    selected_time = current_primary.get("time") if primary_loaded else (current_fallback.get("time") or currents_state["time"])
+    selected_policy = current_cfg.get("freshness") if primary_loaded or not fallback_loaded else current_fallback_cfg.get("freshness")
+    currents_state["freshness"] = _source_freshness(selected_time, selected_policy, now)
+    if primary_loaded:
+        currents_state["primary_freshness"] = _source_freshness(current_primary.get("time") or currents_state["time"], current_cfg.get("freshness"), now)
+    if fallback_loaded:
+        currents_state["fallback_freshness"] = _source_freshness(current_fallback.get("time"), current_fallback_cfg.get("freshness"), now)
     structure_state = _layer_state(bool(arc.get("artificial_reefs", {}).get("enabled") and arc.get("natural_reef", {}).get("enabled")), structure_present, errors, "layers structure:")
     structure_state.update(layers.get("structure_stats") or {})
     habitat_state = _layer_state(bool(arc.get("unified_benthic", {}).get("enabled")), habitat_present, errors, "layers benthic_habitat:")
@@ -162,12 +177,17 @@ def build_pipeline_health(data_quality: dict, fish_updated: bool, errors: list[s
 
     freshness_problems = []
     for name in ("sst", "chlorophyll", "currents"):
-        freshness = layer_states.get(name, {}).get("freshness", {})
-        freshness_status = freshness.get("status")
-        if freshness_status in ("delayed", "stale", "unknown", "future"):
-            age = freshness.get("age_hours")
-            age_text = f" ({age:.1f} hours old)" if isinstance(age, (int, float)) else ""
-            freshness_problems.append(f"{name}: {freshness_status}{age_text}")
+        state = layer_states.get(name, {})
+        checks = [("selected", state.get("freshness", {}))]
+        if name == "currents" and state.get("fallback_freshness"):
+            checks.append(("satellite-altimetry fallback", state["fallback_freshness"]))
+        for source_label, freshness in checks:
+            status = freshness.get("status")
+            if status in ("delayed", "stale", "unknown", "future"):
+                age = freshness.get("age_hours")
+                age_text = f" ({age:.1f} hours old)" if isinstance(age, (int, float)) else ""
+                suffix = f" [{source_label}]" if source_label != "selected" else ""
+                freshness_problems.append(f"{name}{suffix}: {status}{age_text}")
 
     optional_problems = []
     for name, state in layer_states.items():
@@ -246,6 +266,8 @@ def main() -> None:
             fish = build_fish_json(layers, buoys, profiles, registry, now, places, conditions, heat)
             freshness_layers = build_data_quality(layers, sources, errors, now_dt).get("layers", {})
             fish["layers"]["freshness"] = {key: freshness_layers[key].get("freshness") for key in ("sst", "chlorophyll", "currents") if key in freshness_layers}
+            fish["layers"]["current_sources"] = (layers or {}).get("currents_info")
+            fish["layers"]["times"]["stream_edge"] = (layers or {}).get("times", {}).get("stream_edge")
             la, lo = layers["lats"], layers["lons"]
             dlat, dlon = float(la[1] - la[0]), float(lo[1] - lo[0])
             heat_json = {"version": 1, "generated_utc": now, "width": int(len(lo)), "height": int(len(la)),
@@ -279,9 +301,9 @@ def main() -> None:
             stage.mkdir(parents=True, exist_ok=True)
 
             stream = currents.stream_geojson((layers or {}).get("stream_edge_lon"), (layers or {}).get("lats"),
-                                             "NOAA CoastWatch nesdisSSH1day (satellite altimetry)",
-                                             (layers or {}).get("times", {}).get("currents"),
-                                             (layers or {}).get("current_speed") is not None, now)
+                                             (layers or {}).get("stream_edge_source") or "NOAA satellite-altimetry currents (source unavailable)",
+                                             (layers or {}).get("times", {}).get("stream_edge"),
+                                             (layers or {}).get("stream_edge_lon") is not None, now)
 
             (stage / "fish.json").write_text(json.dumps(fish, indent=1, allow_nan=False), encoding="utf-8")
             (stage / "closures.json").write_text(json.dumps(cl_json, allow_nan=False, separators=(",", ":")), encoding="utf-8")
