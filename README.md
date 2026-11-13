@@ -122,8 +122,9 @@ inshore-edge line. The edge is the westernmost point in each latitude row where 
 maximum (and at least about 0.8 kn); eddies are not modeled (`pipeline/currents.py`). It is approximate: roughly 20 km,
 weaker near shore, and geostrophic flow leaves out wind-driven and tidal currents. Sailfish, wahoo and mahi score a
 provisional band around the edge. Each feed's timestamp, freshness, grid coverage and selected/blended source are exposed
-in `latest.json` and the app-facing API. Freshness limits are provisional monitoring thresholds, not biological validity
-limits. If dataset dimensions or variables differ, run `python -m pipeline.check_sources` and update `config/sources.json`.
+in `latest.json` and the app-facing API. The API reports both whole-grid and source-window current coverage so a sparse
+coastal radar footprint cannot be hidden by a large regional denominator. Freshness limits are provisional monitoring
+thresholds, not biological validity limits. If dataset dimensions or variables differ, run `python -m pipeline.check_sources` and update `config/sources.json`.
 
 ## Boat conditions
 A separate sea-state indicator, not part of any fish score. From the nearest fresh buoy readings (within 80 km, under

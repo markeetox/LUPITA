@@ -304,3 +304,27 @@ Compare source age across multiple scheduled refreshes, then calibrate operation
 
 
 - Final health-comparison correction passed the full Python suite: **255 passed, 0 failed, 115 warnings** on [run #409](https://github.com/markeetox/LUPITA/actions/runs/43476053350). The extra test verifies independent HF Radar and altimetry ages. The remaining acceptance gate is live production retrieval and coverage inspection.
+
+
+## 2026-11-13 | First live validation of HF Radar and current-source gap
+
+**Production:** [Pull Ocean Data #203](https://github.com/markeetox/LUPITA/actions/runs/43476661499), success, prediction refreshed, zero pipeline errors.
+
+- HF Radar `ucsdHfrE2` loaded with observation time 2026-11-13T10:00:00Z (7.85 hours old).
+- Raw valid fraction within the configured South Florida request window: 0.02006 (2.006%).
+- Aligned valid fraction over the full 901x1761 North America prediction grid: 0.000123 (0.0123%). This global denominator hides the local footprint; the next code change adds explicit counts/fractions inside the HFR request window.
+- HF Radar quality diagnostics: median HDOP 0.51, median 2 contributing sites, median 39 radials.
+- Satellite altimetry fallback timestamp: 2026-09-28T00:00:00Z (1,121.85 hours old), stale. Its aligned coverage was 53.4818%, so most available current cells still came from the stale broad-area product.
+- Chlorophyll remained delayed at 77.85 hours. SST was fresh at 32.85 hours. Prediction refreshed; health degraded for delayed chlorophyll and stale altimetry fallback.
+- `stream.json` correctly labels the Gulf Stream edge as satellite altimetry, but its timestamp is also 2026-09-28 and stale.
+- The generated `api/v1/index.json` and `latest.json` contain the source diagnostics. `fish.json` returned an empty response through the GitHub file reader and was not independently verified.
+
+**Decision:** HFR live retrieval works, but current coverage is too sparse to rely on it as the regional current field. Preserve it as a measured coastal observation overlay, not as a claim of broad coverage. Do not let the 53.5% combined coverage statistic conceal the stale source that supplies most of those cells.
+
+**Candidate source research:**
+- NOAA Global RTOFS offers daily updated global ocean nowcast/forecast fields, 1/12-degree resolution and forecasts up to eight days, with NetCDF output. It is a promising broad-area model fallback, but ingestion and timestamp/forecast-lead provenance need implementation and validation.
+- USF Ocean Circulation Lab's East Florida Coastal Ocean Model (EFCOM) is geographically attractive: East Florida from Jekyll Island to the Florida Keys, daily update, 1-day hindcast and 3.5-day forecast. It nests FVCOM within Global HYCOM with tides. Its public page currently exposes maps/animations and labels the product research-grade; a machine-readable production feed has not yet been identified.
+- NOAA/AOML near-real-time geostrophic currents at 0.2 degrees were also checked; the live ERDDAP metadata showed the dataset several days behind, so it is not a strong freshness improvement.
+- NOAA HF Radar 1 km and 6 km alternatives have different spatial resolutions and latest observation times; compare their actual South Florida coverage before switching resolutions.
+
+**Next:** add query-region-specific coverage diagnostics, then investigate machine-readable EFCOM and NOAA RTOFS data access. Keep HFR as an observation layer and replace the stale broad-area fallback only after a real production data pull and coverage test. No scoring weights changed.

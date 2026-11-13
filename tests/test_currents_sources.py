@@ -43,6 +43,10 @@ def test_hfr_vectors_overlay_altimetry_and_report_provenance():
     assert info["primary"]["loaded"] and info["fallback"]["loaded"]
     assert info["blend_mode"]=="HF Radar where valid; satellite altimetry elsewhere"
     assert info["primary"]["quality"]["hdop_median"]==0.8
+    assert info["primary"]["query_region_aligned_valid_fraction"]==0.9375
+    assert info["query_region_coverage"]["hfr_valid_fraction"]==0.9375
+    assert info["query_region_coverage"]["altimetry_valid_fraction"]==1.0
+    assert info["query_region_coverage"]["combined_valid_fraction"]==1.0
     assert info["combined_aligned_valid_fraction"]==1.0
     assert np.isclose(layers["current_speed"][0,0],np.hypot(1.0,0.2)*1.943844)
     assert np.isclose(layers["current_speed"][1,1],np.hypot(0.1,0.4)*1.943844)

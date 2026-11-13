@@ -32,25 +32,28 @@ This is the handoff record for future sessions. Read it with [Project Status](PR
 
 HF Radar request window: 24.0-28.5°N, 83.5-78.0°W. It represents near-surface coastal flow, not full-depth or complete offshore circulation. `hdop`, contributing-site and radial-count metrics are reported but not hard quality gates. Altimetry supplies broad-area context and the approximate Gulf Stream edge. HF Radar is used where valid; altimetry fills remaining cells. Each source's timestamp and coverage are kept distinct.
 
-## Active milestone: production validation of HF Radar
-**Status:** configured and committed; live production retrieval not yet verified.
+## Active milestone: validate regional currents and replace stale broad-area fallback
+**Status:** HFR live retrieval confirmed, but its spatial contribution is sparse. Production #203 loaded HFR at 7.85 hours old; only 2.006% of requested HFR source cells contained valid vectors. The 0.0123% aligned fraction is calculated against the entire North America grid and is not a useful local percentage. Satellite altimetry supplied most of the 53.4818% combined current coverage but was 1,121.85 hours old. Pipeline health correctly degraded.
 
 Acceptance criteria:
-1. Scheduled production run succeeds from `main` and exports to `data`.
-2. `latest.json` shows `ucsdHfrE2` loaded with a parseable timestamp and nonzero raw valid fraction.
-3. Inspect South Florida aligned HF Radar coverage; confirm useful map-area coverage and altimetry fill elsewhere.
-4. Altimetry has its own timestamp/freshness and remains the source of the `stream.json` Gulf Stream edge.
-5. Health degrades on stale/missing selected timestamps or stale supporting altimetry, while predictions continue if a usable feed remains.
-6. If HFR is unavailable or coverage negligible, diagnose endpoint, request bounds, latency and coverage before changing sources.
-7. Do not change scoring weights or biology during source validation.
+1. Report HFR, fallback and combined valid fractions inside the South Florida HFR request window, alongside whole-grid fractions.
+2. Compare HFR 1 km, 2 km and 6 km products on the same South Florida window, including timestamps, valid-cell coverage and quality metrics.
+3. Identify a machine-readable broad-area current source with current observation/model initialization time, forecast lead, spatial coverage and units.
+4. Evaluate NOAA Global RTOFS NetCDF fields and USF EFCOM coastal FVCOM output. EFCOM is geographically relevant but its public interface currently exposes visual products and labels results research-grade; machine-readable access is not yet verified.
+5. Keep satellite altimetry as a labeled legacy fallback only until a replacement is verified. Do not silently present a stale fallback as current.
+6. Keep HF Radar as a high-value observation overlay where valid, not a full-coverage regional model.
+7. Keep Gulf Stream-edge provenance separate from the selected nearshore current source.
+8. Do not change scoring weights or biology during source evaluation.
 
 ## Next sequence
-1. Inspect the next Pull Ocean Data run and `latest.json`, `fish.json`, `api/v1/index.json`, and `stream.json`.
-2. Record HFR/altimetry timestamps, valid fractions, quality metrics, blend mode and workflow link in this roadmap and progress log.
-3. Compare several hourly runs before calibrating freshness thresholds.
-4. Add source-quality/coverage context to species explanations without implying catch probability.
-5. Audit species evidence before any scoring changes.
-6. Continue Biscayne shoreline/inlet work from persisted evidence; do not infer connectivity or mix MHW/MHHW/MLLW geometry.
+1. Inspect the next production refresh for query-region coverage metrics.
+2. Test candidate data access and subset sizes for NOAA RTOFS and EFCOM before adding production dependencies.
+3. Compare model fields against HF Radar and local NOAA buoy/current observations where available.
+4. Choose a broad-area fallback only after live timestamp and coverage validation.
+5. Calibrate freshness thresholds after multiple production observations.
+6. Add source-quality/coverage context to species explanations without implying catch probability.
+7. Audit species evidence before any scoring changes.
+8. Continue Biscayne shoreline/inlet work from persisted evidence; do not infer connectivity or mix MHW/MHHW/MLLW geometry.
 
 ## Verification
 ```bash

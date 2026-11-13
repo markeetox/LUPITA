@@ -217,11 +217,23 @@ def load_layers(sources: dict, errors: list[str], fetch=erddap.fetch_csv, fetch_
                 hfr_u = resample(raw_u, clats, clons, lats, lons, min_weight=0.5)
                 hfr_v = resample(raw_v, clats, clons, lats, lons, min_weight=0.5)
                 hfr_valid = np.isfinite(hfr_u) & np.isfinite(hfr_v)
+                query_mask = (
+                    (lats[:, None] >= float(qregion["lat"][0])) &
+                    (lats[:, None] <= float(qregion["lat"][1])) &
+                    (lons[None, :] >= float(qregion["lon"][0])) &
+                    (lons[None, :] <= float(qregion["lon"][1]))
+                )
+                query_cells = int(query_mask.sum())
+                hfr_query_valid = hfr_valid & query_mask
                 hfr_meta.update({
                     "loaded": True, "time": ctime,
                     "source_grid_shape": [int(len(clats)), int(len(clons))],
                     "source_valid_fraction": round(float(vector_valid.mean()), 6),
                     "aligned_valid_fraction": round(float(hfr_valid.mean()), 6),
+                    "query_region": qregion,
+                    "query_region_grid_cells": query_cells,
+                    "query_region_aligned_valid_cells": int(hfr_query_valid.sum()),
+                    "query_region_aligned_valid_fraction": round(float(hfr_query_valid.sum() / query_cells), 6) if query_cells else 0.0,
                     "quality": {
                         "hdop_median": round(float(np.nanmedian(g["hdop"])), 3) if "hdop" in g and np.isfinite(g["hdop"]).any() else None,
                         "number_of_sites_median": round(float(np.nanmedian(g["number_of_sites"])), 2) if "number_of_sites" in g and np.isfinite(g["number_of_sites"]).any() else None,
@@ -276,12 +288,33 @@ def load_layers(sources: dict, errors: list[str], fetch=erddap.fetch_csv, fetch_
             layers["times"]["currents"] = hfr_meta["time"] if hfr_meta["loaded"] else alt_meta["time"]
             layers["datasets"]["currents"] = "NOAA HF Radar + satellite-altimetry fallback" if hfr_meta["loaded"] and alt_meta["loaded"] else (cu.get("dataset") if hfr_meta["loaded"] else cf.get("dataset"))
         combined_valid = (np.isfinite(u) & np.isfinite(v)) if u is not None else np.zeros((len(lats), len(lons)), dtype=bool)
+        query_region = cu.get("query_region", region)
+        query_mask = (
+            (lats[:, None] >= float(query_region["lat"][0])) &
+            (lats[:, None] <= float(query_region["lat"][1])) &
+            (lons[None, :] >= float(query_region["lon"][0])) &
+            (lons[None, :] <= float(query_region["lon"][1]))
+        )
+        query_cells = int(query_mask.sum())
+        hfr_query_valid = np.isfinite(hfr_u) & np.isfinite(hfr_v) & query_mask if hfr_u is not None else np.zeros_like(query_mask)
+        alt_query_valid = np.isfinite(alt_u) & np.isfinite(alt_v) & query_mask if alt_u is not None else np.zeros_like(query_mask)
+        combined_query_valid = combined_valid & query_mask
         layers["currents_info"] = {
             "selected_source": "NOAA HF Radar" if hfr_meta["loaded"] else ("NOAA satellite altimetry fallback" if alt_meta["loaded"] else None),
             "blend_mode": blend_mode,
             "primary": hfr_meta,
             "fallback": alt_meta,
-            "combined_aligned_valid_fraction": round(float(combined_valid.mean()), 6)
+            "combined_aligned_valid_fraction": round(float(combined_valid.mean()), 6),
+            "query_region_coverage": {
+                "region": query_region,
+                "target_grid_cells": query_cells,
+                "hfr_valid_cells": int(hfr_query_valid.sum()),
+                "hfr_valid_fraction": round(float(hfr_query_valid.sum() / query_cells), 6) if query_cells else 0.0,
+                "altimetry_valid_cells": int(alt_query_valid.sum()),
+                "altimetry_valid_fraction": round(float(alt_query_valid.sum() / query_cells), 6) if query_cells else 0.0,
+                "combined_valid_cells": int(combined_query_valid.sum()),
+                "combined_valid_fraction": round(float(combined_query_valid.sum() / query_cells), 6) if query_cells else 0.0
+            }
         }
 
     a = sources.get("arcgis", {})
