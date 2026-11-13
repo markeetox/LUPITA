@@ -32,7 +32,7 @@ Important caution: FWC's map is a regional reef-tract benthic map. Its source fo
 
 - Florida Statute 258.397: https://www.flsenate.gov/Laws/Statutes/2026/258.397
 - The legal description is authoritative for the Aquatic Preserve's statutory scope.
-- The GIS polygon still needs to be obtained from an authoritative FDEP/FWC preserve boundary layer or independently digitized from the legal description and reviewed. Do not hand-draw an approximate polygon for production.
+- FDEP's official Aquatic Preserves layer has now returned a Biscayne Bay polygon (OBJECTID 43; 64,607.58 acres). It is an approximate management GIS boundary, not a legal survey or enforcement boundary. Reconcile it with the statutory description before using it as the final legal boundary.
 
 ### NOAA hydrographic geometry
 
@@ -54,12 +54,13 @@ The file data/spatial/feature-catalog.json is intentionally conservative:
 
 | Feature | Initial status | What is actually supported |
 |---|---|---|
-| Biscayne Bay Aquatic Preserve | Legal boundary definition verified; GIS geometry pending | Florida Statute 258.397 |
+| Biscayne Bay Aquatic Preserve | Legal definition verified; official approximate GIS polygon retrieved; legal reconciliation pending | Florida Statute 258.397 and FDEP OBJECTID 43 |
 | Northern Biscayne Bay | Named ecological context supported; boundary pending | NOAA stock assessment regional description |
 | Central and Southern Biscayne Bay | Combined named ecological context supported; boundary pending | NOAA stock assessment regional description |
 | Safety Valve | Named flat/channel complex supported; geometry pending | NOAA description of grass flats and tidal channels |
 | Government Cut | Named navigation feature; geometry pending | NOAA ENC is the planned geometry source |
 | Bear Cut | Named navigation feature; geometry pending | NOAA ENC is the planned geometry source |
+| Cape Florida Aquatic Preserve | Separate preserve polygon retrieved; not part of the Biscayne Bay preserve | Florida Statute 258.39(11) and FDEP OBJECTID 25 |
 
 Government Cut and Bear Cut currently exist in config/places.json as approximate point locations with display radii. Those are not authoritative channel or inlet geometries and are not copied into the spatial catalog as polygons or lines. Connectivity links remain hypotheses until verified against hydrographic geometry and shoreline/waterbody topology.
 
@@ -84,7 +85,7 @@ Do not promote candidate features to verified boundaries just because their name
 ## 5. Next GIS tasks
 
 1. Run and inspect the first FWC geometry extraction artifact.
-2. Obtain the statutory aquatic-preserve polygon from an authoritative FDEP/FWC GIS service and compare it with the legal description.
+2. Reconcile FDEP's Biscayne Bay preserve polygon (OBJECTID 43) with the statutory description; keep the Cape Florida preserve polygon (OBJECTID 25) separate.
 3. Obtain NOAA ENC Direct to GIS features for the Miami/Biscayne Bay harbor cells. Identify channel and inlet object classes and inspect chart update metadata.
 4. Use benthic habitat polygons, bathymetry, and shoreline geometry together to delineate candidate flat complexes. A seagrass polygon is evidence of mapped seagrass, not automatically a named fishing flat.
 5. Define north/central/south subregion polygons only after a reproducible boundary rule is documented. Preserve the source and method for every boundary.
@@ -154,7 +155,7 @@ Established:
 - Continuous/discontinuous seagrass and unconsolidated sediment are present as mapped polygon classes.
 
 Not established:
-- The legal aquatic-preserve polygon.
+- A legally reconciled aquatic-preserve polygon. FDEP's approximate GIS polygon has been retrieved, but statutory boundary reconciliation is still pending.
 - A bay-wide ecological boundary.
 - Exact northern/central/southern subregion boundaries.
 - Named flat perimeters such as Safety Valve.
@@ -162,3 +163,34 @@ Not established:
 - Species-specific suitability or fish presence.
 
 The next step is to overlay these footprints with the statutory preserve GIS layer, shoreline, bathymetry, and NOAA ENC channel features. Only then should named subregions, flat complexes, or inlet connections receive verified geometries.
+
+
+## 8. FDEP preserve geometry extraction and legal distinction
+
+**GitHub Actions run:** https://github.com/markeetox/LUPITA/actions/runs/43348300268  
+**Artifact:** biscayne-bay-gis-review  
+**Extraction timestamp:** 2026-11-13 01:54:56 UTC  
+**Result:** FDEP and FWC geometry extraction succeeded; all returned polygons passed coordinate validation.
+
+FDEP's Aquatic Preserves layer returned 43 records. The extraction retained two records whose names contain Biscayne Bay:
+
+| FDEP feature | OBJECTID | Acres | Geometry | WGS84 bounds |
+|---|---:|---:|---|---|
+| Biscayne Bay | 43 | 64,607.58 | MultiPolygon | -80.38640 to -80.12160 longitude; 25.28339 to 25.96698 latitude |
+| Biscayne Bay-Cape Florida to Monroe County Line | 25 | 4,163.90 | Polygon | -80.15886 to -80.10493 longitude; 25.64521 to 25.67857 latitude |
+
+These are **two different aquatic preserves**:
+
+- The 64,607.58-acre Biscayne Bay feature is the preserve described by Florida Statute 258.397, which includes Card Sound and natural waterways tidally connected to Biscayne Bay, subject to the statutory exclusions.
+- The 4,163.90-acre Biscayne Bay-Cape Florida to Monroe County Line feature is a separate preserve designation under Florida Statute 258.39(11). FDEP's current public-facing material also calls it Cape Florida Aquatic Preserve. It is a remnant off the eastern shore of Key Biscayne, not an extra piece to merge into the Biscayne Bay Aquatic Preserve.
+
+Supporting sources:
+- Florida Statute 258.397: https://www.flsenate.gov/Laws/Statutes/2026/258.397
+- Florida Statute 258.39: https://www.flsenate.gov/Laws/Statutes/2026/258.39
+- Miami-Dade Biscayne Bay Watershed board packet, describing the two separate preserves and their acreage: https://www.miamidade.gov/environment/library/bbwmab/2024-12-06-board-packet.pdf
+- FDEP Cape Florida Aquatic Preserve: https://floridaaquaticpreserves.org/managed-areas/floridas-coral-reef/cape-florida-aquatic-preserve
+- FDEP Biscayne Bay Aquatic Preserve: https://floridaaquaticpreserves.org/managed-areas/aquatic-preserves/biscayne-bay-aquatic-preserve
+
+FDEP GIS metadata reports the Biscayne Bay Aquatic Preserve geometry was updated in March 2025. The service's published boundary depiction is approximate and is not intended for enforcement or permitting. Treat it as the official management GIS representation for spatial context, not as a surveyed legal boundary. Compare it with the statutory description and preserve source provenance.
+
+The extraction now preserves both records separately in the GeoJSON artifact. The feature catalog references their exact FDEP OBJECTIDs, names, acreage, geometry types, and bounds. It does not merge the Cape Florida polygon into the main bay boundary.
