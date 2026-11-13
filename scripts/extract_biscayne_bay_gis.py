@@ -1,4 +1,4 @@
-"""Research-only extraction of FWC Biscayne Bay GIS polygons."""
+"""Research-only extraction of FWC benthic and FDEP preserve GIS polygons."""
 from __future__ import annotations
 
 import argparse
@@ -167,7 +167,7 @@ def run(output_dir: Path):
         "limitations": [
             "Source-map footprints describe map coverage, not ecological bay boundaries.",
             "Benthic habitat polygons are not automatically flats, channels, or species suitability zones.",
-            "The statutory aquatic-preserve boundary is separate and is not generated here.",
+            "The FDEP preserve polygon is an approximate GIS representation and must be reconciled with the statutory description.",
             "No inlet connectivity is inferred from proximity or names.",
             "Output is EPSG:4326; source service metadata reports WKID 6439.",
         ],
