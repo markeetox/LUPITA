@@ -81,7 +81,8 @@ The result geometry extents can extend beyond the query envelope because feature
 - Chart cell: `US5MIACC.000`; source chart: NOAA Chart 11465.
 - Source date: 2002-10-05.
 - Geometry bounds: [-80.1646204, 25.725, -80.1506732, 25.7362954].
-- The polygon passed geometry validation.
+- The polygon passed geometry validation and is now persisted as feature 253451 in data/spatial/noaa-biscayne-named-water-areas.geojson.
+- Its topology precheck passed as a single valid component.
 - It represents a charted named-water area, not a surveyed channel centerline or current controlling-depth boundary.
 
 NOAA Coast Pilot 4, Chapter 11, paragraph 39 describes the Rickenbacker Causeway bridge over Bear Cut:
@@ -123,18 +124,42 @@ The research feature catalog now records:
 
 The source index is stored in `data/spatial/noaa-biscayne-hydrography-index.json`.
 
+## Persisted source geometries and topology precheck
+
+The research workflow now runs scripts/curate_noaa_named_water_geometries.py after extraction and persists:
+
+- data/spatial/noaa-biscayne-named-water-areas.geojson: 45 original source polygons, preserving each NOAA OBJECTID and source attributes.
+- data/spatial/noaa-biscayne-named-water-topology-audit.json: source IDs, chart cells, source dates, geometry validity, overlap checks, union component counts, and bounds.
+- data/spatial/feature-catalog.json: links the four named-water contexts to the persisted source set and records the current validation state.
+
+The initial topology precheck found:
+
+| Named feature | Source polygons | Connected components | Material overlap pairs |
+|---|---:|---:|---:|
+| Biscayne Bay | 37 | 2 | 0 |
+| Safety Valve | 4 | 1 | 0 |
+| Biscayne Flats | 3 | 1 | 0 |
+| Bear Cut | 1 | 1 | 0 |
+
+The Biscayne Bay union's second component is a very small isolated chart fragment (bounds approximately -80.3250 to -80.3239 longitude and 25.5342 to 25.5355 latitude). It is retained as a source feature and is not bridged to the main component.
+
+Safety Valve and Biscayne Flats each form one connected component, but that does not prove ecological connectivity, current habitat condition, or a complete boundary. All source polygons remain separate in the GeoJSON; no dissolved geometry is persisted.
+
+The curator and topology precheck ran successfully in NOAA hydrography workflow run:
+https://github.com/markeetox/LUPITA/actions/runs/43351815848
+
 ## Limitations and next review
 
 1. NOAA's weekly service refresh does not make old source feature dates current. Several named-water features retain source dates from 2002 to 2011.
 2. NOAA ENC Direct to GIS is not a navigation product. Use current official ENC products and local authorities for navigation.
 3. Named chart polygons do not establish habitat, salinity, flow, tidal exchange, fish movement, or ecological suitability.
-4. Multi-cell mosaics need edge matching and topology QA before creating single geometry objects.
+4. The charted Biscayne Bay fragments do not form a complete ecological or statutory boundary. Reconcile them against FDEP management geometry, authoritative shoreline, and tidal connections.
 5. Government Cut and Norris Cut need exact chart-feature crosswalks or independently sourced geometry.
 6. No production scores, thresholds, weights, species profiles, or API v1 contracts were changed.
 
 ## Immediate next milestone
 
-- Import the verified Bear Cut polygon into a persistent curated GeoJSON file.
-- Reconcile and mosaic the Biscayne Bay, Safety Valve, and Biscayne Flats chart-cell polygons while preserving each original feature.
-- Crosswalk Government Cut and Norris Cut to charted feature geometries; keep them unverified until the source mapping is defensible.
+- Reconcile the 37 Biscayne Bay fragments against the FDEP preserve geometry and authoritative shoreline evidence, without conflating ecological and statutory boundaries.
+- Review Safety Valve and Biscayne Flats against benthic habitat and bathymetry sources before assigning ecological feature types.
+- Crosswalk Government Cut and Norris Cut to exact charted feature geometries; keep them unverified until the source mapping is defensible.
 - Then connect verified spatial feature IDs to Bonefish and Permit species context without changing production scoring.
