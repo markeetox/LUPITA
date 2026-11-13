@@ -157,7 +157,7 @@ def fetch_mur(session, site, lat, lon, start, end, out_dir):
     last_day = end.astimezone(timezone.utc).date()
     output, errors = [], []
     while cursor <= last_day:
-        chunk_end = min(cursor + timedelta(days=89), last_day)
+        chunk_end = min(cursor + timedelta(days=179), last_day)
         start_utc = cursor.isoformat() + "T09:00:00Z"
         end_utc = chunk_end.isoformat() + "T09:00:00Z"
         projection = f"analysed_sst[({start_utc}):1:({end_utc})][({lat:.5f})][({lon:.5f})]"
@@ -233,8 +233,13 @@ def main():
             print(f"WARNING: {message}")
     all_rows = usgs + fwc
     locations = {}
+    # Pair MUR only at the four Biscayne logger sites. The full USGS archive
+    # remains preserved, but these are the most relevant South Florida sites
+    # for this first shallow-reef comparison.
+    selected_usgs_sites = {"brewster", "shadow", "bbnorth", "fowey"}
     for row in usgs:
-        if row["latitude"] != "" and row["longitude"] != "":
+        key = re.sub(r"\\s+", " ", row["site"].strip()).lower()
+        if key in selected_usgs_sites and row["latitude"] != "" and row["longitude"] != "":
             locations[row["site"]] = (float(row["latitude"]), float(row["longitude"]))
     for station, meta in FWC_STATIONS.items():
         locations[station] = (meta["latitude"], meta["longitude"])
@@ -286,6 +291,8 @@ def main():
             "USGS v9 release does not provide per-observation QARTOD flags; do not treat this as equivalent to FWC QC.",
             "FWC aggregate QC flag 1 (PASS) is used for primary summaries; all returned flags are retained and counted.",
             "MUR is daily analysed sea-surface foundation temperature in degree_C, queried at the nearest native 0.01-degree grid coordinate.",
+            "MUR point comparisons are limited to the four Biscayne USGS logger sites plus the selected FWC stations; the full USGS source archive remains included.",
+            "MUR requests are split into 180-day windows to bound request size and avoid hammering the ERDDAP service.",
             "This first comparison uses native-grid MUR, not a reconstruction of LUPITA's stride-5 production sampling.",
             "Sensor temperatures describe the logger environment, not Permit preference or physiological tolerance.",
         ],
