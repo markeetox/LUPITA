@@ -1,5 +1,5 @@
 {
-  "generated_at_utc": "2026-11-13T03:30:21.143567+00:00",
+  "generated_at_utc": "2026-11-13T03:42:44.439983+00:00",
   "source": "NOAA National Geodetic Survey Coastal Mapping Program / NOAA Shoreline Data Explorer",
   "source_download_pattern": "https://nsde.ngs.noaa.gov/downloads/{project_id}.zip",
   "output_crs": "EPSG:4326",
@@ -404,6 +404,136 @@
         "union_length_km": 0.0,
         "overlap_length_km": 0.0
       }
+    },
+    "FL1603A-CM-N": {
+      "status": "converted",
+      "metadata": {
+        "inport_id": 61478,
+        "inport_url": "https://www.fisheries.noaa.gov/inport/item/61478",
+        "project_report_url": "https://www.ngs.noaa.gov/desc_reports/FL1603A-CM-N.PDF",
+        "geographic_cell": "GC11552",
+        "scope": "local Convoy Point shoreline comparison only; not bay-wide coverage",
+        "source_dates": [
+          "2017-03-19"
+        ],
+        "reported_horizontal_accuracy_95pct_m": "1.9",
+        "geographic_extent_wgs84": [
+          -80.3457198,
+          25.44636753,
+          -80.3168564,
+          25.47820684
+        ]
+      },
+      "archive_file": "FL1603A-CM-N.zip",
+      "source_crs": "NAD83 (EPSG:4269 per NOAA InPort metadata)",
+      "shapefiles": {
+        "projbnd": {
+          "source_file": "projbnd.shp",
+          "output_file": "geojson/FL1603A-CM-N_projbnd.geojson",
+          "feature_count": 1,
+          "geometry_types": [
+            "Polygon"
+          ],
+          "class_counts": {
+            "unknown": 1
+          },
+          "attribute_counts": {
+            "unknown": 1
+          },
+          "source_date_counts": {
+            "unknown": 1
+          },
+          "horizontal_accuracy_m_counts": {
+            "unknown": 1
+          },
+          "data_source_counts": {
+            "unknown": 1
+          },
+          "source_id_counts": {
+            "unknown": 1
+          }
+        },
+        "softcopyl1": {
+          "source_file": "softcopyl1.shp",
+          "output_file": "geojson/FL1603A-CM-N_softcopyl1.geojson",
+          "feature_count": 78,
+          "geometry_types": [
+            "LineString"
+          ],
+          "class_counts": {
+            "SHORELINE": 30,
+            "ALONGSHORE FEATURE": 26,
+            "CARTOGRAPHIC LIMIT": 2,
+            "CULTURAL FEATURE MISCELLANEOUS": 5,
+            "NATURAL FEATURE MISCELLANEOUS": 8,
+            "TRANSPORTATION": 7
+          },
+          "attribute_counts": {
+            "Natural.Apparent.Mangrove Or Cypress": 4,
+            "Natural.Mean High Water": 11,
+            "Jetty.Bare": 1,
+            "Man-made.Rip Rap": 6,
+            "Pier": 18,
+            "Pier.Floating": 6,
+            "Jetty.Covers/Uncovers Or Submerged": 1,
+            "Feature Limit": 1,
+            "Source Data Limit": 1,
+            "Cable.Overhead": 5,
+            "Mangrove Or Cypress.Extent": 6,
+            "Stream.Perennial": 2,
+            "Man-made.Bulkhead Or Sea Wall": 5,
+            "Man-made.Ramp": 2,
+            "Man-made.Wharf Or Quay": 1,
+            "Road": 7,
+            "Shoreline/Alongshore Feature Boundary": 1
+          },
+          "source_date_counts": {
+            "20170319": 78
+          },
+          "horizontal_accuracy_m_counts": {
+            "1.9": 78
+          },
+          "data_source_counts": {
+            "D": 78
+          },
+          "source_id_counts": {
+            "GC11552": 78
+          }
+        },
+        "softcopyp1": {
+          "source_file": "softcopyp1.shp",
+          "output_file": "geojson/FL1603A-CM-N_softcopyp1.geojson",
+          "feature_count": 20,
+          "geometry_types": [
+            "Point"
+          ],
+          "class_counts": {
+            "FREESTANDING MARINE FEATURE": 1,
+            "AID TO NAVIGATION": 19
+          },
+          "attribute_counts": {
+            "Pile.Bare": 1,
+            "Daybeacon": 16,
+            "Marine Light.Pile": 3
+          },
+          "source_date_counts": {
+            "20170319": 20
+          },
+          "horizontal_accuracy_m_counts": {
+            "1.9": 20
+          },
+          "data_source_counts": {
+            "D": 20
+          },
+          "source_id_counts": {
+            "GC11552": 20
+          }
+        }
+      },
+      "line_feature_count": 0,
+      "point_feature_count": 0,
+      "mhw_feature_count": 0,
+      "mllw_depth_contour_count": 0
     }
   },
   "project_mhw_linework_comparisons": {
