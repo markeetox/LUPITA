@@ -71,7 +71,11 @@ jobs:
           cp artifacts/noaa-hydrography/harbor_bridge_lines.geojson data/spatial/research/noaa_enc/
           cp artifacts/noaa-hydrography/harbor_landmark_points.geojson data/spatial/research/noaa_enc/
           cp artifacts/bridge-inventory/miamidade_dtpw_bridge_lines.geojson data/spatial/research/transportation/
-          cp artifacts/bridge-inventory/fdot_rci_bridge_lines.geojson data/spatial/research/transportation/
+          if [ -f artifacts/bridge-inventory/fdot_rci_bridge_lines.geojson ]; then
+            cp artifacts/bridge-inventory/fdot_rci_bridge_lines.geojson data/spatial/research/transportation/
+          else
+            echo "Optional FDOT bridge inventory was unavailable; retaining Miami-Dade inventory and extraction summary."
+          fi
           cp artifacts/bridge-inventory/bridge_inventory_summary.json data/spatial/research/transportation/
           git add data/spatial/noaa-biscayne-named-water-areas.geojson data/spatial/noaa-biscayne-named-water-topology-audit.json data/spatial/feature-catalog.json
           git add data/spatial/research/noaa_enc/harbor_causeway_lines.geojson data/spatial/research/noaa_enc/harbor_bridge_lines.geojson data/spatial/research/noaa_enc/harbor_landmark_points.geojson
