@@ -53,12 +53,15 @@ def test_curator_preserves_selected_noaa_source_geometries_and_writes_topology_a
     curated = json.loads((tmp_path / "spatial" / "noaa-biscayne-named-water-areas.geojson").read_text(encoding="utf-8"))
     assert len(curated["features"]) == 46
     assert {feature["properties"]["OBJNAM"] for feature in curated["features"]} == {
-        "Biscayne Bay", "Safety Valve", "Biscayne Flats", "Bear Cut"
+        "Biscayne Bay", "Safety Valve", "Biscayne Flats", "Bear Cut", "Norris Cut"
     }
     bear = [feature for feature in curated["features"] if feature["properties"]["OBJNAM"] == "Bear Cut"]
     assert bear[0]["properties"]["lupita_context_id"] == "sf-bear-cut"
     assert bear[0]["properties"]["lupita_geometry_role"] == "charted_named_water_area_polygon"
     assert bear[0]["geometry"]["type"] == "Polygon"
+    norris = [feature for feature in curated["features"] if feature["properties"]["OBJNAM"] == "Norris Cut"]
+    assert norris[0]["properties"]["lupita_context_id"] == "sf-norris-cut"
+    assert norris[0]["properties"]["OBJECTID"] == 145
     assert audit["source_feature_count"] == 46
     assert audit["groups"]["Biscayne Bay"]["feature_count"] == 37
     assert audit["groups"]["Safety Valve"]["feature_count"] == 4
