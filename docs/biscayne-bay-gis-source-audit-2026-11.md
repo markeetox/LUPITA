@@ -98,3 +98,67 @@ Do not promote candidate features to verified boundaries just because their name
 - No nationwide GIS ingestion.
 - No use of approximate place-radius circles as real inlet, flat, or channel geometry.
 - No treating missing mapped coverage as absence.
+
+
+## 7. First geometry extraction results
+
+**GitHub Actions run:** https://github.com/markeetox/LUPITA/actions/runs/43347704537  
+**Artifact:** biscayne-bay-gis-review  
+**Extraction timestamp:** 2026-11-13 01:49:40 UTC  
+**Result:** extraction and polygon-coordinate validation succeeded.
+
+### Source-map footprints (layer 0)
+
+Two actual source-footprint geometries were returned:
+
+| Source | Date range | Geometry | WGS84 bounds |
+|---|---|---|---|
+| Biscayne Bay NPS | 2005–2013 | Polygon | -80.35156 to -80.09104 longitude; 25.29254 to 25.66869 latitude |
+| Biscayne Bay FWC | 2005–2008 | MultiPolygon | -80.31724 to -80.12051 longitude; 25.38613 to 25.94960 latitude |
+
+Combined footprint bounds: **-80.35156, 25.29254 to -80.09104, 25.94960**.
+
+These are verified source-map coverage geometries, not the bay boundary. They are useful for understanding where mapped benthic evidence came from and where source coverage changes.
+
+### Integrated benthic polygons (layer 7)
+
+The query returned **7,222 polygon features** across 15 pages:
+
+- Biscayne Bay FWC source: 1,336 polygons.
+- Biscayne Bay NPS source: 5,886 polygons.
+
+Class counts:
+
+| Unified Level 1 class | Feature count |
+|---|---:|
+| Individual or Aggregated Patch Reef | 5,122 |
+| Seagrass (Discontinuous) | 828 |
+| Seagrass (Continuous) | 602 |
+| Unconsolidated Sediment | 500 |
+| Not Classified | 162 |
+| Scattered Coral/Rock in Unconsolidated Sediment | 6 |
+| Artificial | 1 |
+| Dredged/Excavated | 1 |
+
+The seagrass and unconsolidated-sediment classes provide **1,930 mapped habitat polygons** that may help identify candidate shallow-flat complexes. They are not, by themselves, named flats or proof of fish habitat suitability.
+
+### Spatial QA finding
+
+A first overlay check found **69 of the 7,222 benthic polygons do not intersect the union of the two source-footprint geometries**. Most are NPS patch-reef or unclassified features, but 15 are seagrass polygons (14 continuous, one discontinuous). Do not silently discard or treat these as valid coverage. The next review must inspect their source attribution and location, and decide whether this reflects footprint-layer semantics, source-map seams, or genuine out-of-footprint records.
+
+### What this establishes, and what it does not
+
+Established:
+- FWC v2.2 provides actual Biscayne-labelled polygon geometries and source attribution.
+- The northern FWC mapping footprint and the NPS mapping footprint overlap in latitude but have different spatial extents and source dates.
+- Continuous/discontinuous seagrass and unconsolidated sediment are present as mapped polygon classes.
+
+Not established:
+- The legal aquatic-preserve polygon.
+- A bay-wide ecological boundary.
+- Exact northern/central/southern subregion boundaries.
+- Named flat perimeters such as Safety Valve.
+- Channel centerlines, inlet polygons, or validated inlet-to-waterbody topology.
+- Species-specific suitability or fish presence.
+
+The next step is to overlay these footprints with the statutory preserve GIS layer, shoreline, bathymetry, and NOAA ENC channel features. Only then should named subregions, flat complexes, or inlet connections receive verified geometries.
