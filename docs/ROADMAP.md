@@ -74,3 +74,6 @@ A metadata check is not a substitute for inspecting the actual production CSV pu
 
 
 **Milestone status:** SST host fallback, truthful `not_attempted` diagnostics, and separate refresh/prediction publication are implemented. Full Python suite passes (**262 passed, 0 failed**) on [run #43493987730](https://github.com/markeetox/LUPITA/actions/runs/43493987730). Remaining acceptance test is one live Pull Ocean Data run to verify mirror response and published snapshot behavior.
+
+
+**Latest validation:** **262 passed, 0 failed, 115 warnings** on [run #43494256052](https://github.com/markeetox/LUPITA/actions/runs/43494256052). SST diagnostics now expose the selected ERDDAP endpoint. Only the live production pull remains before closing this resilience milestone.
