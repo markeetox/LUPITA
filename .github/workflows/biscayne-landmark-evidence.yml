@@ -28,11 +28,15 @@ jobs:
           python-version: "3.12"
           cache: pip
       - name: Install dependencies
-        run: python -m pip install requests pytest
+        run: python -m pip install requests pytest shapely pyproj
       - name: Run focused extraction tests
         run: python -m pytest -q tests/test_biscayne_landmark_evidence.py
       - name: Extract Card Sound, Jewfish Creek, and Rickenbacker evidence
         run: python scripts/extract_biscayne_landmark_evidence.py --output-dir artifacts/biscayne-landmarks
+      - name: Reconcile landmark geometry topology
+        run: python scripts/reconcile_biscayne_landmark_topology.py --input-dir artifacts/biscayne-landmarks --output artifacts/biscayne-landmarks/biscayne_landmark_topology_report.json
+      - name: Run focused topology tests
+        run: python -m pytest -q tests/test_reconcile_biscayne_landmark_topology.py
       - name: Upload focused landmark evidence
         if: always()
         uses: actions/upload-artifact@v4
