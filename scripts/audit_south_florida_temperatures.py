@@ -157,7 +157,7 @@ def fetch_fwc(session, station, out_dir):
     return observations
 
 def fetch_mur(session, site, lat, lon, start, end, out_dir):
-    """Fetch native-grid MUR with bounded requests and verified ERDDAP mirrors."""
+    """Fetch native-grid MUR with independent, bounded requests to each mirror."""
     cursor = start.astimezone(timezone.utc).date()
     last_day = end.astimezone(timezone.utc).date()
     output, errors, warnings = [], [], []
@@ -169,8 +169,21 @@ def fetch_mur(session, site, lat, lon, start, end, out_dir):
         chunk_rows, attempts, used_host = None, [], None
         for base in MUR_BASES:
             url = base + "?" + quote(projection, safe="[]():,.-TZ")
+            host = base.split("/")[2]
             try:
-                response = session.get(url, timeout=(10, 20))
+                # Use a fresh no-retry request path for each mirror. The main
+                # session has a retry adapter for USGS/FWC; sharing it here
+                # obscured which mirror actually failed and could exhaust the
+                # primary host's retry budget before fallback was attempted.
+                response = requests.get(
+                    url, headers={"User-Agent": USER_AGENT},
+                    timeout=(10, 60), allow_redirects=False,
+                )
+                if 300 <= response.status_code < 400:
+                    raise RuntimeError(
+                        f"HTTP {response.status_code} redirect to "
+                        f"{response.headers.get('Location', 'unknown location')}"
+                    )
                 response.raise_for_status()
                 raw_rows = list(csv.reader(io.StringIO(response.text)))
                 if len(raw_rows) < 3:
@@ -191,14 +204,24 @@ def fetch_mur(session, site, lat, lon, start, end, out_dir):
                             "date_utc": stamp.date().isoformat(), "site": site,
                             "logger_latitude": lat, "logger_longitude": lon,
                             "mur_grid_latitude": grid_lat, "mur_grid_longitude": grid_lon,
-                            "mur_sst_c": temp, "mur_source_host": base.split("/")[2],
+                            "mur_sst_c": temp, "mur_source_host": host,
                         })
-                chunk_rows, used_host = parsed, base.split("/")[2]
+                if not parsed:
+                    raise ValueError(f"no valid MUR rows returned by {host}")
+                chunk_rows, used_host = parsed, host
                 break
             except Exception as exc:
-                response = getattr(exc, "response", None)
-                body = (response.text[:180].replace("\n", " ") if response is not None else "")
-                attempts.append(f"{base.split('/')[2]}: {type(exc).__name__}: {exc} {body}".strip())
+                response_obj = getattr(exc, "response", None)
+                body = (
+                    response_obj.text[:180].replace("\\n", " ")
+                    if response_obj is not None else ""
+                )
+                status = getattr(response_obj, "status_code", None)
+                final_url = getattr(response_obj, "url", url)
+                attempts.append(
+                    f"{host}: requested={url} final_url={final_url} "
+                    f"status={status} {type(exc).__name__}: {exc} {body}".strip()
+                )
         if chunk_rows is None:
             message = f"{site} {cursor.isoformat()}..{chunk_end.isoformat()}: " + " | ".join(attempts)
             errors.append(message)
