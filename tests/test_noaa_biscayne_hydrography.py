@@ -89,3 +89,16 @@ def test_coastline_bathymetry_and_habitat_layers_are_distinct_source_classes():
         assert definition["id"] == layer_id
         assert classification in definition["description"].lower()
         assert definition["service"].endswith("/enc_harbour/MapServer")
+
+
+def test_ecological_subregion_landmark_layers_are_extracted_separately():
+    expected = {
+        "harbor_causeway_lines": (118, "causeway"),
+        "harbor_bridge_lines": (87, "bridge"),
+        "harbor_landmark_points": (26, "landmark"),
+    }
+    for key, (layer_id, classification) in expected.items():
+        definition = LAYERS[key]
+        assert definition["id"] == layer_id
+        assert classification in definition["description"].lower()
+        assert definition["service"].endswith("/enc_harbour/MapServer")
