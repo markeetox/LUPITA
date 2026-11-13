@@ -2,6 +2,7 @@ from scripts.extract_south_florida_bridge_inventory import (
     BBOX,
     SOURCES,
     fetch_source,
+    run,
     validate_feature,
 )
 
@@ -17,10 +18,10 @@ def line_feature():
     }
 
 
-def test_sources_are_official_local_and_state_bridge_inventories():
-    assert SOURCES["miamidade_dtpw_bridge_lines"]["layer_id"] == 1
+def test_sources_are_official_and_fdot_is_optional():
+    assert SOURCES["miamidade_dtpw_bridge_lines"]["required"] is True
     assert "Miami-Dade" in SOURCES["miamidade_dtpw_bridge_lines"]["publisher"]
-    assert SOURCES["fdot_rci_bridge_lines"]["layer_id"] == 1
+    assert SOURCES["fdot_rci_bridge_lines"]["required"] is False
     assert "Florida Department of Transportation" in SOURCES["fdot_rci_bridge_lines"]["publisher"]
 
 
@@ -53,6 +54,29 @@ def test_fetch_source_uses_biscayne_extent_and_preserves_bridge_attributes():
     assert summary["feature_count"] == 1
     assert summary["output_crs"] == "EPSG:4326"
     assert BBOX == (-80.55, 25.20, -80.05, 26.10)
+
+
+def test_optional_fdot_failure_does_not_discard_county_inventory(tmp_path, monkeypatch):
+    calls = []
+
+    def fake_fetch(session, definition):
+        calls.append(definition["layer_name"])
+        if definition["layer_name"].startswith("FDOT"):
+            raise RuntimeError("HTTP 403 Forbidden")
+        return (
+            {"type": "FeatureCollection", "features": [line_feature()]},
+            {"feature_count": 1, "output_crs": "EPSG:4326"},
+        )
+
+    monkeypatch.setattr(
+        "scripts.extract_south_florida_bridge_inventory.fetch_source", fake_fetch
+    )
+    report = run(tmp_path)
+    assert report["status"] == "partial"
+    assert report["sources"]["miamidade_dtpw_bridge_lines"]["feature_count"] == 1
+    assert "HTTP 403" in report["errors"]["fdot_rci_bridge_lines"]
+    assert (tmp_path / "miamidade_dtpw_bridge_lines.geojson").exists()
+    assert (tmp_path / "bridge_inventory_summary.json").exists()
 
 
 def test_validate_rejects_out_of_range_coordinates():
