@@ -588,7 +588,7 @@
       "geometry": null,
       "geometry_status": "name_documented_no_direct_named_feature_geometry_identified_in_extracted_layers",
       "boundary_basis": "named_navigation_feature",
-      "boundary_scope_note": "The existing config/places.json point and display radius are approximate and are not an inlet polygon or channel centerline. NOAA Harbour ENC extraction did not return a structured named-water polygon for Government Cut. The Miami Harbor Channel fairway includes nearby dredged/maintained features, but no segment is assigned to Government Cut until a chart-feature crosswalk is completed.",
+      "boundary_scope_note": "The existing config/places.json point and display radius are approximate and are not an inlet polygon or channel centerline. NOAA Harbour ENC extraction did not return a structured named-water polygon for Government Cut. The Miami Harbor Channel fairway includes nearby dredged/maintained features, but no segment is assigned to Government Cut until a chart-feature crosswalk is completed. NOAA Harbour layer 208 adds three named Miami Harbor Channel fairway polygons (OBJECTIDs 42416, 42420, 42422) across three ENC cells. These remain broader project-channel context; no polygon is assigned to Government Cut.",
       "relationships": [
         {
           "type": "connects",
@@ -607,7 +607,7 @@
       "validation_status": "named_feature_supported_geometry_pending",
       "source_geometry_ref": {
         "index_path": "data/spatial/noaa-biscayne-hydrography-index.json",
-        "review_status": "candidate_channel_context_only",
+        "review_status": "miami_harbor_fairway_context_found_exact_government_cut_subgeometry_pending",
         "channel_fairway_feature_count": 44,
         "chart_cells": [
           "US4FL2AI.000",
@@ -616,7 +616,21 @@
           "US5MIACC.000",
           "US5MIACD.000"
         ],
-        "artifact_id": 14002573361
+        "artifact_id": 14002573361,
+        "fairway_layer_id": 208,
+        "fairway_objectids": [
+          42416,
+          42420,
+          42422
+        ],
+        "fairway_chart_cells": [
+          "US5MIACB.000",
+          "US5MIACC.000",
+          "US5MIACD.000"
+        ],
+        "fairway_source_dates": [
+          "20190124"
+        ]
       }
     },
     {
@@ -627,7 +641,7 @@
       "parent_id": null,
       "geometry": null,
       "geometry_status": "44_noaa_usace_maintained_channel_features_retrieved_grouped_by_fairway_topology_review_pending",
-      "boundary_scope_note": "NOAA ENC Direct to GIS returned 44 maintained-channel features with FAIRWAY='Miami Harbor Channel' across five ENC cells. Features have distinct object names including Cut-1 through Cut-4, Fisher Island Turning Basin, Fishermans Channel, Dodge Island Cut, and Miami Harbor Channel. These must remain distinct source features. The fairway grouping does not identify every segment as Government Cut.",
+      "boundary_scope_note": "NOAA ENC Direct to GIS returned 44 maintained-channel features with FAIRWAY='Miami Harbor Channel' across five ENC cells. Features have distinct object names including Cut-1 through Cut-4, Fisher Island Turning Basin, Fishermans Channel, Dodge Island Cut, and Miami Harbor Channel. These must remain distinct source features. The fairway grouping does not identify every segment as Government Cut. A separate Harbour Fairway_area layer (208) returns three named Miami Harbor Channel polygons across three ENC cells; these are not a direct Government Cut subgeometry.",
       "source_geometry_ref": {
         "index_path": "data/spatial/noaa-biscayne-hydrography-index.json",
         "source_layer": "NavigationChartData/MarineTransportation/MapServer/1",
@@ -684,7 +698,22 @@
           "US5MIACC.000",
           "US5MIACD.000"
         ],
-        "artifact_id": 14002573361
+        "artifact_id": 14002573361,
+        "harbor_fairway_layer_id": 208,
+        "harbor_fairway_feature_count": 3,
+        "harbor_fairway_objectids": [
+          42416,
+          42420,
+          42422
+        ],
+        "harbor_fairway_chart_cells": [
+          "US5MIACB.000",
+          "US5MIACC.000",
+          "US5MIACD.000"
+        ],
+        "harbor_fairway_source_dates": [
+          "20190124"
+        ]
       },
       "relationships": [
         {
@@ -699,6 +728,12 @@
           "title": "Coastal Maintained Channels, NOAA ENC Direct to GIS",
           "url": "https://encdirect.noaa.gov/arcgis/rest/services/NavigationChartData/MarineTransportation/MapServer/1",
           "source_type": "official_chart_derived_usace_maintained_channel_features"
+        },
+        {
+          "publisher": "NOAA Office of Coast Survey",
+          "title": "NOAA Harbour ENC Fairway Areas, Miami Harbor Channel",
+          "url": "https://encdirect.noaa.gov/arcgis/rest/services/encdirect/enc_harbour/MapServer/208",
+          "source_type": "charted_fairway_area_navigation_context"
         }
       ],
       "validation_status": "source_features_retrieved_grouping_by_fairway_not_topologically_validated"
