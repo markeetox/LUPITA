@@ -15,4 +15,5 @@ def test_grid_fetch_retries_configured_erddap_mirror_after_primary_failure():
         return ("time,latitude,longitude,analysed_sst\nUTC,degrees_north,degrees_east,degree_C\n2026-11-13T18:00:00Z,25.0,-80.0,28.5\n")
     _,_,grid,stamp,units=_fetch_grid(cfg,{"lat":[25,25],"lon":[-80,-80]},fetch)
     assert len(calls)==2 and "primary.example" in calls[0] and "mirror.example" in calls[1]
+    assert cfg["_selected_base"] == "https://mirror.example/erddap"
     assert grid[0,0]==28.5 and stamp=="2026-11-13T18:00:00Z" and units=="degree_C"
