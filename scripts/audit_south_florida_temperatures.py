@@ -163,7 +163,7 @@ def fetch_mur(session, site, lat, lon, start, end, out_dir):
         projection = f"analysed_sst[({start_utc}):1:({end_utc})][({lat:.5f})][({lon:.5f})]"
         url = MUR_BASE + "?" + quote(projection, safe="[]():,.-TZ")
         try:
-            response = session.get(url, timeout=(10, 30))
+            response = session.get(url, timeout=(10, 20))
             response.raise_for_status()
             raw_rows = list(csv.reader(io.StringIO(response.text)))
             if len(raw_rows) < 3:
@@ -214,7 +214,7 @@ def main():
     out_dir.mkdir(parents=True, exist_ok=True)
     session = requests.Session()
     retry = Retry(
-        total=2, connect=2, read=2, status=2, backoff_factor=0.5,
+        total=1, connect=1, read=1, status=1, backoff_factor=0.5,
         status_forcelist=(408, 425, 429, 500, 502, 503, 504),
         allowed_methods=frozenset(["GET"]), respect_retry_after_header=True,
     )
@@ -248,7 +248,12 @@ def main():
         site_rows = [r for r in all_rows if r["site"] == site]
         if site_rows:
             stamps = [datetime.fromisoformat(r["timestamp"]) for r in site_rows]
-            site_mur, site_errors = fetch_mur(session, site, lat, lon, min(stamps), max(stamps), out_dir)
+            # Initial validation uses the trailing 90-day window per station.
+            # This keeps the first extraction bounded while preserving a useful
+            # daily comparison sample; longer seasonal windows can follow.
+            site_end = max(stamps)
+            site_start = max(min(stamps), site_end - timedelta(days=89))
+            site_mur, site_errors = fetch_mur(session, site, lat, lon, site_start, site_end, out_dir)
             mur.extend(site_mur)
             source_errors.extend(site_errors)
     write_csv(out_dir / "mur_sst_all_sites.csv", mur)
@@ -292,7 +297,8 @@ def main():
             "FWC aggregate QC flag 1 (PASS) is used for primary summaries; all returned flags are retained and counted.",
             "MUR is daily analysed sea-surface foundation temperature in degree_C, queried at the nearest native 0.01-degree grid coordinate.",
             "MUR point comparisons are limited to the four Biscayne USGS logger sites plus the selected FWC stations; the full USGS source archive remains included.",
-            "MUR requests are split into 180-day windows to bound request size and avoid hammering the ERDDAP service.",
+            "MUR is sampled over the trailing 90-day overlap window per station for this first validation pass; it is not a multi-year climatology.",
+            "MUR requests are bounded to 180-day windows and use limited retries to avoid overloading the ERDDAP service.",
             "This first comparison uses native-grid MUR, not a reconstruction of LUPITA's stride-5 production sampling.",
             "Sensor temperatures describe the logger environment, not Permit preference or physiological tolerance.",
         ],
