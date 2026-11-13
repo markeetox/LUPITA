@@ -100,7 +100,7 @@ A follow-up revision tries alternate ERDDAP mirrors that independently expose th
 - Brown University RI Data Discovery Center: https://erddap.riddc.brown.edu/erddap/griddap/jplMURSST41.html
 - EMODnet ERDDAP: https://erddap.emodnet.eu/erddap/info/jplMURSST41/index.html
 
-The follow-up run records the host used for each MUR series and preserves source errors. Even if a mirror succeeds, the comparison is native-grid MUR at the nearest 0.01-degree coordinate, not a reconstruction of LUPITA's stride-5 production sample.
+The follow-up run is deliberately limited to one shallow USGS Biscayne logger (Brewster) and the 23 m FWC station LKA57 to validate mirror access before scaling out. It records the host used for each MUR series and preserves source errors. Even if a mirror succeeds, the comparison is native-grid MUR at the nearest 0.01-degree coordinate, not a reconstruction of LUPITA's stride-5 production sample.
 
 ## Interpretation and safeguards
 
