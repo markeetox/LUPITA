@@ -15,7 +15,7 @@ from collections import Counter
 import shapefile
 from pyproj import CRS, Transformer
 from shapely.geometry import shape as make_shape, mapping
-from shapely.ops import transform as transform_geometry
+from shapely.ops import linemerge, transform as transform_geometry, unary_union
 
 URL = "https://nsde.ngs.noaa.gov/cmp.html"
 PROJECT_IDS = ["FL1808C-TB-N", "FL1808A-TB-N", "FL2317-CS-N"]
@@ -114,6 +114,66 @@ async def download_project_archives(page, output_dir: Path) -> list[dict]:
             record["error"] = f"{type(exc).__name__}: {exc}"
         results.append(record)
     return results
+
+
+def line_topology_summary(features: list[dict]) -> dict:
+    """Measure line connectivity without bridging or snapping source features."""
+    from collections import Counter
+
+    to_metric = Transformer.from_crs(4326, 26917, always_xy=True).transform
+    lines = []
+    endpoint_counts = Counter()
+    for feature in features:
+        geometry = make_shape(feature["geometry"])
+        parts = list(geometry.geoms) if geometry.geom_type == "MultiLineString" else [geometry]
+        for line in parts:
+            if line.geom_type != "LineString" or line.is_empty:
+                continue
+            projected = transform_geometry(to_metric, line)
+            lines.append(projected)
+            if len(projected.coords) >= 2:
+                endpoint_counts[tuple(round(v, 2) for v in projected.coords[0])] += 1
+                endpoint_counts[tuple(round(v, 2) for v in projected.coords[-1])] += 1
+
+    if not lines:
+        return {
+            "feature_count": len(features),
+            "component_count_after_exact_union": 0,
+            "open_endpoint_coordinates": 0,
+            "shared_endpoint_coordinates": 0,
+            "branch_endpoint_coordinates": 0,
+            "sum_feature_length_km": 0.0,
+            "union_length_km": 0.0,
+            "overlap_length_km": 0.0,
+        }
+
+    merged_union = unary_union(lines)
+    merged = linemerge(merged_union) if merged_union.geom_type == "MultiLineString" else merged_union
+    if merged.geom_type == "MultiLineString":
+        component_count = len(merged.geoms)
+    elif merged.geom_type == "LineString":
+        component_count = 1
+    else:
+        component_count = sum(
+            1 for item in getattr(merged, "geoms", [])
+            if item.geom_type in {"LineString", "MultiLineString"}
+        )
+    sum_length = sum(line.length for line in lines)
+    union_length = merged_union.length
+    endpoint_degrees = Counter(endpoint_counts.values())
+    return {
+        "feature_count": len(features),
+        "component_count_after_exact_union": component_count,
+        "open_endpoint_coordinates": endpoint_degrees.get(1, 0),
+        "shared_endpoint_coordinates": endpoint_degrees.get(2, 0),
+        "branch_endpoint_coordinates": sum(
+            count for degree, count in endpoint_degrees.items() if degree > 2
+        ),
+        "sum_feature_length_km": round(sum_length / 1000, 3),
+        "union_length_km": round(union_length / 1000, 3),
+        "overlap_length_km": round(max(0.0, sum_length - union_length) / 1000, 6),
+        "bounds_epsg26917_m": [round(value, 2) for value in merged_union.bounds],
+    }
 
 
 def extract_project_archives(downloads: list[dict], output_dir: Path) -> dict:
@@ -283,6 +343,42 @@ def extract_project_archives(downloads: list[dict], output_dir: Path) -> dict:
 
         project_summaries[project_id] = project_summary
 
+    # Topology review is performed on the separate Natural.Mean High Water
+    # subsets only. No endpoints are snapped and no gaps are bridged.
+    project_mhw_geometries = {}
+    for project_id, summary in project_summaries.items():
+        mhw_path = geojson_root / f"{project_id}_mhw.geojson"
+        if mhw_path.exists():
+            mhw_collection = json.loads(mhw_path.read_text(encoding="utf-8"))
+            summary["mhw_topology"] = line_topology_summary(mhw_collection["features"])
+            if mhw_collection["features"]:
+                project_mhw_geometries[project_id] = unary_union([
+                    make_shape(feature["geometry"])
+                    for feature in mhw_collection["features"]
+                ])
+        mllw_path = geojson_root / f"{project_id}_mllw_depth_contours.geojson"
+        if mllw_path.exists():
+            mllw_collection = json.loads(mllw_path.read_text(encoding="utf-8"))
+            summary["mllw_depth_contour_topology"] = line_topology_summary(
+                mllw_collection["features"]
+            )
+
+    project_comparisons = {}
+    project_ids = sorted(project_mhw_geometries)
+    for i, first in enumerate(project_ids):
+        for second in project_ids[i + 1:]:
+            distance_m = transform_geometry(
+                Transformer.from_crs(4326, 26917, always_xy=True).transform,
+                project_mhw_geometries[first],
+            ).distance(transform_geometry(
+                Transformer.from_crs(4326, 26917, always_xy=True).transform,
+                project_mhw_geometries[second],
+            ))
+            project_comparisons[f"{first}__{second}"] = {
+                "nearest_mhw_line_distance_km": round(distance_m / 1000, 3),
+                "interpretation": "measured separation between retrieved MHW linework; not proof of a data gap or missing shoreline",
+            }
+
     audit = {
         "generated_at_utc": __import__("datetime").datetime.now(
             __import__("datetime").timezone.utc
@@ -291,6 +387,8 @@ def extract_project_archives(downloads: list[dict], output_dir: Path) -> dict:
         "source_download_pattern": "https://nsde.ngs.noaa.gov/downloads/{project_id}.zip",
         "output_crs": "EPSG:4326",
         "project_summaries": project_summaries,
+        "project_mhw_linework_comparisons": project_comparisons,
+        "topology_method": "exact geometric union and endpoint counting in EPSG:26917; no snapping, gap bridging, or dissolving of persisted source features",
         "guardrails": [
             "MHW subset includes only CLASS=SHORELINE and ATTRIBUTE=Natural.Mean High Water.",
             "MLLW subset contains Depth Contour lines with INFORM=MLLW; it is not an MLLW shoreline and contains no numeric contour depth attribute.",
