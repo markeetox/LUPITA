@@ -4,8 +4,10 @@ on:
   workflow_dispatch:
   pull_request:
     paths:
-      - "scripts/extract_biscayne_landmark_evidence.py"\n      - "scripts/reconcile_biscayne_landmark_topology.py"
-      - "tests/test_biscayne_landmark_evidence.py"\n      - "tests/test_reconcile_biscayne_landmark_topology.py"
+      - "scripts/extract_biscayne_landmark_evidence.py"
+      - "scripts/reconcile_biscayne_landmark_topology.py"
+      - "tests/test_biscayne_landmark_evidence.py"
+      - "tests/test_reconcile_biscayne_landmark_topology.py"
       - ".github/workflows/biscayne-landmark-evidence.yml"
 
 permissions:
