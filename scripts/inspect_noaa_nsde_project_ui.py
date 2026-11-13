@@ -159,13 +159,20 @@ def extract_project_archives(downloads: list[dict], output_dir: Path) -> dict:
             if not prj_path.exists():
                 raise RuntimeError(f"Missing CRS sidecar for {shp_path.name}")
             source_crs = CRS.from_wkt(prj_path.read_text(encoding="utf-8"))
-            if source_crs.to_epsg() != 4269:
+            # NOAA's PRJ is valid NAD83 WKT with an EPSG:4269 authority tag,
+            # but its legacy TOWGS84 clause prevents pyproj from resolving to_epsg().
+            if not (
+                source_crs.is_geographic
+                and source_crs.datum.name == "North American Datum 1983"
+                and source_crs.ellipsoid.name == "GRS 1980"
+                and 'AUTHORITY["EPSG","4269"]' in prj_path.read_text(encoding="utf-8")
+            ):
                 raise RuntimeError(
                     f"Unexpected source CRS for {shp_path.name}: {source_crs.to_string()}"
                 )
-            project_summary["source_crs"] = "EPSG:4269"
-            to_wgs84 = Transformer.from_crs(4269, 4326, always_xy=True).transform
-            to_length_crs = Transformer.from_crs(4269, 26917, always_xy=True).transform
+            project_summary["source_crs"] = "NAD83 (EPSG:4269 per NOAA InPort metadata)"
+            to_wgs84 = Transformer.from_crs(source_crs, 4326, always_xy=True).transform
+            to_length_crs = Transformer.from_crs(source_crs, 26917, always_xy=True).transform
 
             all_features = []
             mhw_features = []
