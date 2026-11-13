@@ -37,7 +37,7 @@ All extracted geometries passed coordinate-range and geometry-type validation.
 |---|---:|---|---|
 | Coastal Maintained Channels | 149 | 136 Polygon, 13 MultiPolygon | Includes Miami Harbor Channel, Dinner Key Channel, Deering Bay Channel, Turkey Point Channel, Miami River segments, and Intracoastal Waterway segments |
 | Harbour Dredged Areas | 161 | Polygon | Charted dredged-area polygons |
-| Harbour Named Water Areas | 189 | Polygon | Includes Biscayne Bay, Card Sound, Safety Valve, Biscayne Flats, and Bear Cut |
+| Harbour Named Water Areas | 189 | Polygon | Includes Biscayne Bay, Card Sound, Safety Valve, Biscayne Flats, Bear Cut, and Norris Cut |
 | Harbour Canal Areas | 13 | Polygon | Includes Mowry Canal, Florida City Canal, Military Canal, North Canal, and Little River |
 | Harbour Tideway Areas | 0 | None | No features returned in this query area |
 | Harbour Fairway Areas | 62 | Polygon | Includes three named Miami Harbor Channel fairway polygons across three ENC cells |
@@ -130,7 +130,7 @@ The research feature catalog now records:
 - Six Card Sound chart fragments.
 - Four Safety Valve named-water polygons, correctly typed as a named-water complex rather than a validated flat/channel complex.
 - Three Biscayne Flats mud-flat polygons as a candidate named flat complex.
-- Bear Cut as a directly named NOAA charted water-area feature, with source OBJECTID and bounds.
+- Bear Cut and Norris Cut as directly named NOAA charted water-area features, with source OBJECTIDs, chart cells, source dates, and bounds.
 - The 44-feature Miami Harbor Channel fairway group, preserving all source object IDs and chart cells.
 - Government Cut and Norris Cut as named features with geometry still pending, rather than assigning nearby polygons by guesswork.
 
