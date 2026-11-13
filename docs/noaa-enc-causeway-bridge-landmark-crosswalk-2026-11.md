@@ -26,7 +26,13 @@ The named `Rickenbacker Causeway` feature is in `Harbor.Land_Area`, not `Harbor.
 - Chart cell: `US5MIACB.000`
 - Bounding box (WGS84): `[-80.200988, 25.745429, -80.1892736, 25.747347]`
 
-This is a charted land-area polygon and can serve as a named landmark anchor for reviewing the published North/Central Biscayne Bay division. It is not a cross-bay ecological boundary line. The bridge-line extraction did not return an identified Rickenbacker bridge feature.
+This is a charted land-area polygon and can serve as a named landmark anchor for reviewing the published North/Central Biscayne Bay division. It is not a cross-bay ecological boundary line.
+
+An independent Miami-Dade County source confirms that the Rickenbacker Causeway is a 3.6-mile corridor containing 1.2 miles of bridge structures, with the Bear Cut Bridge at the eastern end: https://www.miamidade.gov/global/transportation/public-works/rickenbacker-causeway.page
+
+Miami-Dade's Bear Cut Bridge project identifies Bridge No. 874544 and describes the bridge as part of County Road 913 / Rickenbacker Causeway: https://www.miamidade.gov/resources/transportation_publicworks/documents/bear-cut-bridge-fact-sheet.pdf
+
+NOAA Coast Pilot 4 also describes the fixed span at Rickenbacker Causeway and the highway bridge over Bear Cut. These official sources establish the named structure crosswalk, but they do not supply a digitized bridge geometry in the extracted Harbour ENC bridge layer. The bridge-line extraction did not return an identified Rickenbacker bridge feature.
 
 ## Card Sound crossing candidates
 
@@ -39,7 +45,11 @@ Four unnamed fixed-bridge features cluster around the Card Sound crossing area:
 | 20579 | `[-80.388294, 25.298303, -80.385953, 25.303169]` | Chart 11463, 2003-04 |
 | 20580 | `[-80.358911, 25.283319, -80.356186, 25.284038]` | Chart 11463, 2003-04 |
 
-Their positions make them candidates for a Card Sound crossing crosswalk, but the ENC attributes do not name them. They must remain **unconfirmed bridge candidates** until independently matched to an authoritative named bridge/road source. Do not use these features to draw a boundary or infer water connectivity.
+FDOT independently identifies the Card Sound Bridge as Bridge Identification Number **904990**, a high-level fixed bridge on CR 905A / Card Sound Road crossing the Atlantic Intracoastal Waterway: https://pdaexternal.fdot.gov/Pub/AdvertisementPublic/StreamExternalEDMSDocument?EdmsDocumentNumber=17977642
+
+FDOT's current project page places the project between south of Milepost 5 / Mile Marker 4 and Milepost 6.242 / Mile Marker 5 at the Miami-Dade / Monroe County line: https://www.fdotmiamidade.com/project/329/453765-1-22-01
+
+The NOAA bridge cluster is geographically consistent with the Card Sound crossing, but the ENC attributes do not name the four objects and this review has not compared them to an authoritative bridge centerline or surveyed structure footprint. Keep OBJECTIDs 20577, 20578, 20579, and 20580 as **candidate matches only**, not confirmed geometry for Bridge 904990. Do not use them to draw a bay boundary or infer water connectivity.
 
 Two additional unnamed fixed-bridge features occur farther north in the southern query area:
 
@@ -60,7 +70,7 @@ The literature-based subregion limits remain:
 - Central Biscayne Bay: Rickenbacker Causeway to Featherbed Bank / Black Point.
 - South Biscayne Bay: Featherbed Bank / Black Point to Card Sound / Jewfish Creek.
 
-The NOAA extraction adds a named Rickenbacker Causeway land-area anchor and a set of unnamed Card Sound-area bridge candidates. It does **not** establish cross-bay dividing lines at any of these limits. Featherbed Bank and Black Point remain separately supported by named-water/chart context and literature, not by this bridge/landmark layer extraction.
+The NOAA extraction adds a named Rickenbacker Causeway land-area anchor and a set of unnamed Card Sound-area bridge candidates. Independent county and FDOT references identify the Rickenbacker/Bear Cut and Card Sound bridge structures. This does **not** establish cross-bay dividing lines at any of these limits. Featherbed Bank and Black Point remain separately supported by named-water/chart context and literature, not by this bridge/landmark layer extraction.
 
 Keep all three subregion geometries null until cross-bay boundaries are digitized from defensible source geometry and independently reviewed. Do not snap bridge candidates, extend causeway polygons across water, or infer ecological boundaries from a nearby chart object.
 
