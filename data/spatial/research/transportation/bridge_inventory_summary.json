@@ -1,6 +1,6 @@
 {
   "report_version": 1,
-  "generated_at_utc": "2026-11-13T14:44:15.996372+00:00",
+  "generated_at_utc": "2026-11-13T14:44:59.864696+00:00",
   "purpose": "Research-only transportation infrastructure crosswalk; not ecological or navigation geometry.",
   "status": "partial",
   "query_bbox_wgs84": [
@@ -17,7 +17,7 @@
       "layer_id": 1,
       "layer_name": "Miami-Dade DTPWBridge",
       "source_description": "County-maintained bridge polylines from the DTPW EAMS GIS view. Source feature class is updated as needed by DTPW. Infrastructure reference only.",
-      "generated_at_utc": "2026-11-13T14:44:15.495142+00:00",
+      "generated_at_utc": "2026-11-13T14:44:59.784428+00:00",
       "query_bbox_wgs84": [
         -80.55,
         25.2,
