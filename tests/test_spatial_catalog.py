@@ -82,6 +82,8 @@ def test_noaa_charted_features_preserve_source_ids_and_unverified_geometry_state
     norris = by_id["sf-norris-cut"]
     if "source_geometry_persisted" in norris["geometry_status"]:
         assert norris["source_geometry_ref"]["geojson_feature_id"] == "253447"
+        assert norris["source_geometry_ref"]["review_status"] == "direct_named_water_area_polygon_persisted_channel_centerline_pending"
+        assert "Norris Cut source polygon is persisted in the curated GeoJSON" in norris["boundary_scope_note"]
     assert flats["source_geometry_ref"]["objectids"] == [246316, 246317, 246323]
     assert flats["source_geometry_ref"]["charted_category"] == "mud flats"
     assert flats["geometry"] is None
