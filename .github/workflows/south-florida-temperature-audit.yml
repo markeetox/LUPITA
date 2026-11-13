@@ -24,9 +24,10 @@ jobs:
       - name: Download logger observations and matching MUR SST
         run: python scripts/audit_south_florida_temperatures.py --output temperature-research-output
       - name: Upload raw extracts and research report
+        if: always()
         uses: actions/upload-artifact@v4
         with:
           name: south-florida-temperature-audit
           path: temperature-research-output/
-          if-no-files-found: error
+          if-no-files-found: warn
           retention-days: 30
