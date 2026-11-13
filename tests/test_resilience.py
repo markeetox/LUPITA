@@ -12,12 +12,13 @@ ROOT = Path(__file__).resolve().parent.parent
 
 
 class Resp:
-    def __init__(self, status, text="ok"):
+    def __init__(self, status, text="ok", headers=None):
         self.status_code, self.text = status, text
+        self.headers = headers or {}
 
     def raise_for_status(self):
         if self.status_code >= 400:
-            raise requests.HTTPError(f"{self.status_code} Client Error")
+            raise requests.HTTPError(f"{self.status_code} Client Error", response=self)
 
 
 def scripted(*outcomes):
@@ -34,27 +35,54 @@ def scripted(*outcomes):
     return getter
 
 
-def test_a_refused_request_is_retried_with_growing_waits_and_then_succeeds():
-    waits, g = [], scripted(403, 403, 200)
+def test_transient_server_errors_are_retried_with_growing_waits():
+    waits, g = [], scripted(503, 502, 200)
     r = http.get("https://x", sleep=waits.append, getter=g)
     assert r.status_code == 200 and len(g.calls) == 3
-    assert 20 <= waits[0] <= 25 and 40 <= waits[1] <= 45                       # 20 s then 40 s, plus a little jitter
-    assert "fish-habitat-map" in g.calls[0]["User-Agent"]                      # identifies itself to the server
+    assert 20 <= waits[0] <= 25 and 40 <= waits[1] <= 45
+    assert "fish-habitat-map" in g.calls[0]["User-Agent"]
+
+
+def test_forbidden_request_is_not_retried_and_includes_server_diagnostics():
+    waits = []
+    response = Resp(
+        403,
+        'Forbidden: Your IP address is on this ERDDAP request blacklist.',
+        {"Date": "Fri, 13 Nov 2026 00:22:49 GMT", "Server": "Apache",
+         "Content-Type": "text/plain;charset=UTF-8"},
+    )
+    g = scripted(response)
+    with pytest.raises(requests.HTTPError) as caught:
+        http.get("https://coastwatch.example/erddap/griddap/d.csv", attempts=4,
+                 sleep=waits.append, getter=g)
+    message = str(caught.value)
+    assert len(g.calls) == 1
+    assert waits == []
+    assert "HTTP 403" in message and "attempt 1/4" in message
+    assert "request blacklist" in message
+    assert "Apache" in message and "text/plain" in message
+
+
+def test_exhausted_transient_status_reports_final_attempt():
+    g = scripted(503)
+    with pytest.raises(requests.HTTPError, match="attempt 3/3"):
+        http.get("https://x", attempts=3, base_delay=0, sleep=lambda s: None, getter=g)
+    assert len(g.calls) == 3
 
 
 def test_network_errors_are_retried_and_missing_pages_are_not():
     waits = []
     assert http.get("https://x", sleep=waits.append, getter=scripted(requests.ConnectionError("boom"), 200)).status_code == 200
     g = scripted(404, 200)
-    with pytest.raises(requests.HTTPError):
+    with pytest.raises(requests.HTTPError, match="attempt 1/4"):
         http.get("https://x", sleep=waits.append, getter=g)
     assert len(g.calls) == 1                                                    # a 404 will not get better by asking again
 
 
 def test_it_gives_up_after_the_last_attempt_with_the_real_error():
-    g = scripted(403)
-    with pytest.raises(requests.HTTPError, match="403"):
-        http.get("https://x", attempts=3, sleep=lambda s: None, getter=g)
+    g = scripted(503)
+    with pytest.raises(requests.HTTPError, match="503"):
+        http.get("https://x", attempts=3, base_delay=0, sleep=lambda s: None, getter=g)
     assert len(g.calls) == 3
 
 
