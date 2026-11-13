@@ -710,11 +710,26 @@
       "region": "south_florida",
       "parent_id": null,
       "geometry": null,
-      "geometry_status": "name_documented_geometry_not_identified_in_extracted_noaa_feature_layers",
-      "boundary_scope_note": "NOAA Coast Pilot 4, Chapter 11, paragraph 38 describes Norris Cut as a shallow inlet just south of the Main Channel to Miami Harbor between Fisher Island and Virginia Key. The current structured Harbour ENC extraction did not return a directly named Norris Cut geometry. Do not borrow geometry from nearby channel features.",
+      "geometry_status": "source_geometry_persisted_topology_precheck_passed_not_navigation_boundary",
+      "boundary_scope_note": "NOAA Coast Pilot 4, Chapter 11, paragraph 38 describes Norris Cut as a shallow inlet just south of the Main Channel to Miami Harbor between Fisher Island and Virginia Key. NOAA Harbour ENC layer 237 directly returns a named-water polygon for Norris Cut (OBJECTID 253447, Chart 11468, source date 2004-01). This is a charted named-water area, not a surveyed channel centerline or current controlling-depth boundary. The original source polygon is persisted in the curated GeoJSON and passed geometry validation. It remains a charted named-water area, not a surveyed centerline or depth boundary.",
       "source_geometry_ref": {
         "index_path": "data/spatial/noaa-biscayne-hydrography-index.json",
-        "review_status": "named_in_publication_only_geometry_pending"
+        "review_status": "named_in_publication_only_geometry_pending",
+        "curated_geojson_path": "data/spatial/noaa-biscayne-named-water-areas.geojson",
+        "topology_audit_path": "data/spatial/noaa-biscayne-named-water-topology-audit.json",
+        "source_objectids": [
+          253447
+        ],
+        "source_feature_count": 1,
+        "chart_cells": [
+          "US5MIACC.000"
+        ],
+        "source_dates": [
+          "200401"
+        ],
+        "connected_component_count": 1,
+        "positive_area_overlap_pairs": [],
+        "geojson_feature_id": "253447"
       },
       "relationships": [],
       "provenance": [
@@ -725,7 +740,7 @@
           "source_type": "official_hydrographic_publication"
         }
       ],
-      "validation_status": "official_name_and_description_found_geometry_pending"
+      "validation_status": "charted_named_water_geometry_persisted_topology_precheck_passed_not_navigation_boundary"
     }
   ]
 }
