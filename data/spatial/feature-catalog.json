@@ -810,9 +810,9 @@
       "region": "south_florida",
       "parent_id": "sf-biscayne-bay-ecological-context",
       "geometry": null,
-      "geometry_status": "charted_source_polygons_persisted_topology_precheck_passed_boundary_unverified",
+      "geometry_status": "source_chart_fragments_persisted_topology_precheck_passed_boundary_unverified",
       "boundary_basis": "NOAA ENC charted named-water area",
-      "boundary_scope_note": "NOAA Harbour ENC returns 3 charted source polygons named Black Ledge and classifies the feature as ledge. Source chart date: 20180726. These are charted source geometries, not surveyed ecological, legal, habitat, or navigation boundaries. Preserve source polygons individually; a connected-component result does not establish current water connectivity or fish habitat.",
+      "boundary_scope_note": "NOAA Harbour ENC returns 3 charted source polygons named Black Ledge and classifies the feature as ledge. Source chart date: 20180726. These are charted source geometries, not surveyed ecological, legal, habitat, or navigation boundaries. Preserve source polygons individually; a connected-component result does not establish current water connectivity or fish habitat. A first geometric topology precheck found one connected component and no material overlaps. Source polygons remain separate; this does not establish current ecological connectivity, habitat condition, channel centerline, or navigation boundary.",
       "relationships": [
         {
           "type": "located_within",
@@ -828,7 +828,7 @@
           "source_type": "official_charted_named_water_area"
         }
       ],
-      "validation_status": "charted_source_geometry_persisted_topology_precheck_passed_not_ecological_boundary",
+      "validation_status": "source_fragments_persisted_mosaic_not_promoted_to_boundary",
       "source_geometry_ref": {
         "index_path": "data/spatial/noaa-biscayne-hydrography-index.json",
         "source_layer_id": 237,
@@ -860,9 +860,9 @@
       "region": "south_florida",
       "parent_id": "sf-biscayne-bay-ecological-context",
       "geometry": null,
-      "geometry_status": "charted_source_polygons_persisted_topology_precheck_passed_boundary_unverified",
+      "geometry_status": "source_chart_fragments_persisted_topology_precheck_passed_boundary_unverified",
       "boundary_basis": "NOAA ENC charted named-water area",
-      "boundary_scope_note": "NOAA Harbour ENC returns 1 charted source polygon named Featherbed Bank and classifies the feature as bank. Source chart date: 20021005. These are charted source geometries, not surveyed ecological, legal, habitat, or navigation boundaries. Preserve source polygons individually; a connected-component result does not establish current water connectivity or fish habitat.",
+      "boundary_scope_note": "NOAA Harbour ENC returns 1 charted source polygon named Featherbed Bank and classifies the feature as bank. Source chart date: 20021005. These are charted source geometries, not surveyed ecological, legal, habitat, or navigation boundaries. Preserve source polygons individually; a connected-component result does not establish current water connectivity or fish habitat. A first geometric topology precheck found one connected component and no material overlaps. Source polygons remain separate; this does not establish current ecological connectivity, habitat condition, channel centerline, or navigation boundary.",
       "relationships": [
         {
           "type": "located_within",
@@ -878,7 +878,7 @@
           "source_type": "official_charted_named_water_area"
         }
       ],
-      "validation_status": "charted_source_geometry_persisted_topology_precheck_passed_not_ecological_boundary",
+      "validation_status": "source_fragments_persisted_mosaic_not_promoted_to_boundary",
       "source_geometry_ref": {
         "index_path": "data/spatial/noaa-biscayne-hydrography-index.json",
         "source_layer_id": 237,
@@ -906,9 +906,9 @@
       "region": "south_florida",
       "parent_id": "sf-biscayne-bay-ecological-context",
       "geometry": null,
-      "geometry_status": "charted_source_polygons_persisted_topology_precheck_passed_boundary_unverified",
+      "geometry_status": "source_chart_fragments_persisted_topology_precheck_passed_boundary_unverified",
       "boundary_basis": "NOAA ENC charted named-water area",
-      "boundary_scope_note": "NOAA Harbour ENC returns 1 charted source polygon named Lewis Cut; the source category is blank. Source chart date: 20021005. These are charted source geometries, not surveyed ecological, legal, habitat, or navigation boundaries. Preserve source polygons individually; a connected-component result does not establish current water connectivity or fish habitat. The source polygon only touches the charted Biscayne Bay named-water union and has no positive-area overlap; do not infer a physical inlet or open-water connection from that contact.",
+      "boundary_scope_note": "NOAA Harbour ENC returns 1 charted source polygon named Lewis Cut; the source category is blank. Source chart date: 20021005. These are charted source geometries, not surveyed ecological, legal, habitat, or navigation boundaries. Preserve source polygons individually; a connected-component result does not establish current water connectivity or fish habitat. The source polygon only touches the charted Biscayne Bay named-water union and has no positive-area overlap; do not infer a physical inlet or open-water connection from that contact. A first geometric topology precheck found one connected component and no material overlaps. Source polygons remain separate; this does not establish current ecological connectivity, habitat condition, channel centerline, or navigation boundary.",
       "relationships": [
         {
           "type": "adjacent_to",
@@ -924,7 +924,7 @@
           "source_type": "official_charted_named_water_area"
         }
       ],
-      "validation_status": "charted_source_geometry_persisted_topology_precheck_passed_not_ecological_boundary",
+      "validation_status": "source_fragments_persisted_mosaic_not_promoted_to_boundary",
       "source_geometry_ref": {
         "index_path": "data/spatial/noaa-biscayne-hydrography-index.json",
         "source_layer_id": 237,
@@ -952,9 +952,9 @@
       "region": "south_florida",
       "parent_id": "sf-biscayne-bay-ecological-context",
       "geometry": null,
-      "geometry_status": "charted_source_polygons_persisted_topology_precheck_passed_boundary_unverified",
+      "geometry_status": "source_chart_fragments_persisted_topology_precheck_passed_boundary_unverified",
       "boundary_basis": "NOAA ENC charted named-water area",
-      "boundary_scope_note": "NOAA Harbour ENC returns 2 charted source polygons named Biscayne Channel and classifies the feature as sea channel. Source chart date: 20021005. These are charted source geometries, not surveyed ecological, legal, habitat, or navigation boundaries. Preserve source polygons individually; a connected-component result does not establish current water connectivity or fish habitat.",
+      "boundary_scope_note": "NOAA Harbour ENC returns 2 charted source polygons named Biscayne Channel and classifies the feature as sea channel. Source chart date: 20021005. These are charted source geometries, not surveyed ecological, legal, habitat, or navigation boundaries. Preserve source polygons individually; a connected-component result does not establish current water connectivity or fish habitat. A first geometric topology precheck found one connected component and no material overlaps. Source polygons remain separate; this does not establish current ecological connectivity, habitat condition, channel centerline, or navigation boundary.",
       "relationships": [
         {
           "type": "overlaps",
@@ -970,7 +970,7 @@
           "source_type": "official_charted_named_water_area"
         }
       ],
-      "validation_status": "charted_source_geometry_persisted_topology_precheck_passed_not_ecological_boundary",
+      "validation_status": "source_fragments_persisted_mosaic_not_promoted_to_boundary",
       "source_geometry_ref": {
         "index_path": "data/spatial/noaa-biscayne-hydrography-index.json",
         "source_layer_id": 237,
@@ -1000,9 +1000,9 @@
       "region": "south_florida",
       "parent_id": "sf-biscayne-bay-ecological-context",
       "geometry": null,
-      "geometry_status": "charted_source_polygons_persisted_topology_precheck_passed_boundary_unverified",
+      "geometry_status": "source_chart_fragments_persisted_topology_precheck_passed_boundary_unverified",
       "boundary_basis": "NOAA ENC charted named-water area",
-      "boundary_scope_note": "NOAA Harbour ENC returns 1 charted source polygon named Sands Cut; the source category is blank. Source chart date: 20021005. These are charted source geometries, not surveyed ecological, legal, habitat, or navigation boundaries. Preserve source polygons individually; a connected-component result does not establish current water connectivity or fish habitat. The source polygon only touches the charted Biscayne Bay named-water union and has no positive-area overlap; do not infer a physical inlet or open-water connection from that contact.",
+      "boundary_scope_note": "NOAA Harbour ENC returns 1 charted source polygon named Sands Cut; the source category is blank. Source chart date: 20021005. These are charted source geometries, not surveyed ecological, legal, habitat, or navigation boundaries. Preserve source polygons individually; a connected-component result does not establish current water connectivity or fish habitat. The source polygon only touches the charted Biscayne Bay named-water union and has no positive-area overlap; do not infer a physical inlet or open-water connection from that contact. A first geometric topology precheck found one connected component and no material overlaps. Source polygons remain separate; this does not establish current ecological connectivity, habitat condition, channel centerline, or navigation boundary.",
       "relationships": [
         {
           "type": "adjacent_to",
@@ -1018,7 +1018,7 @@
           "source_type": "official_charted_named_water_area"
         }
       ],
-      "validation_status": "charted_source_geometry_persisted_topology_precheck_passed_not_ecological_boundary",
+      "validation_status": "source_fragments_persisted_mosaic_not_promoted_to_boundary",
       "source_geometry_ref": {
         "index_path": "data/spatial/noaa-biscayne-hydrography-index.json",
         "source_layer_id": 237,
@@ -1046,9 +1046,9 @@
       "region": "south_florida",
       "parent_id": "sf-biscayne-bay-ecological-context",
       "geometry": null,
-      "geometry_status": "charted_source_polygons_persisted_topology_precheck_passed_boundary_unverified",
+      "geometry_status": "source_chart_fragments_persisted_topology_precheck_passed_boundary_unverified",
       "boundary_basis": "NOAA ENC charted named-water area",
-      "boundary_scope_note": "NOAA Harbour ENC returns 1 charted source polygon named Snapper Creek Canal and classifies the feature as canal. Source chart date: 200411. These are charted source geometries, not surveyed ecological, legal, habitat, or navigation boundaries. Preserve source polygons individually; a connected-component result does not establish current water connectivity or fish habitat. The source polygon only touches the charted Biscayne Bay named-water union and has no positive-area overlap; do not infer a physical inlet or open-water connection from that contact.",
+      "boundary_scope_note": "NOAA Harbour ENC returns 1 charted source polygon named Snapper Creek Canal and classifies the feature as canal. Source chart date: 200411. These are charted source geometries, not surveyed ecological, legal, habitat, or navigation boundaries. Preserve source polygons individually; a connected-component result does not establish current water connectivity or fish habitat. The source polygon only touches the charted Biscayne Bay named-water union and has no positive-area overlap; do not infer a physical inlet or open-water connection from that contact. A first geometric topology precheck found one connected component and no material overlaps. Source polygons remain separate; this does not establish current ecological connectivity, habitat condition, channel centerline, or navigation boundary.",
       "relationships": [
         {
           "type": "adjacent_to",
@@ -1064,7 +1064,7 @@
           "source_type": "official_charted_named_water_area"
         }
       ],
-      "validation_status": "charted_source_geometry_persisted_topology_precheck_passed_not_ecological_boundary",
+      "validation_status": "source_fragments_persisted_mosaic_not_promoted_to_boundary",
       "source_geometry_ref": {
         "index_path": "data/spatial/noaa-biscayne-hydrography-index.json",
         "source_layer_id": 237,
@@ -1092,9 +1092,9 @@
       "region": "south_florida",
       "parent_id": "sf-biscayne-bay-ecological-context",
       "geometry": null,
-      "geometry_status": "charted_source_polygons_persisted_topology_precheck_passed_boundary_unverified",
+      "geometry_status": "source_chart_fragments_persisted_topology_precheck_passed_boundary_unverified",
       "boundary_basis": "NOAA ENC charted named-water area",
-      "boundary_scope_note": "NOAA Harbour ENC returns 1 charted source polygon named Goulds Canal and classifies the feature as canal. Source chart date: 20021005. These are charted source geometries, not surveyed ecological, legal, habitat, or navigation boundaries. Preserve source polygons individually; a connected-component result does not establish current water connectivity or fish habitat. The source polygon only touches the charted Biscayne Bay named-water union and has no positive-area overlap; do not infer a physical inlet or open-water connection from that contact.",
+      "boundary_scope_note": "NOAA Harbour ENC returns 1 charted source polygon named Goulds Canal and classifies the feature as canal. Source chart date: 20021005. These are charted source geometries, not surveyed ecological, legal, habitat, or navigation boundaries. Preserve source polygons individually; a connected-component result does not establish current water connectivity or fish habitat. The source polygon only touches the charted Biscayne Bay named-water union and has no positive-area overlap; do not infer a physical inlet or open-water connection from that contact. A first geometric topology precheck found one connected component and no material overlaps. Source polygons remain separate; this does not establish current ecological connectivity, habitat condition, channel centerline, or navigation boundary.",
       "relationships": [
         {
           "type": "adjacent_to",
@@ -1110,7 +1110,7 @@
           "source_type": "official_charted_named_water_area"
         }
       ],
-      "validation_status": "charted_source_geometry_persisted_topology_precheck_passed_not_ecological_boundary",
+      "validation_status": "source_fragments_persisted_mosaic_not_promoted_to_boundary",
       "source_geometry_ref": {
         "index_path": "data/spatial/noaa-biscayne-hydrography-index.json",
         "source_layer_id": 237,
@@ -1138,9 +1138,9 @@
       "region": "south_florida",
       "parent_id": "sf-biscayne-bay-ecological-context",
       "geometry": null,
-      "geometry_status": "charted_source_polygons_persisted_topology_precheck_passed_boundary_unverified",
+      "geometry_status": "source_chart_fragments_persisted_topology_precheck_passed_boundary_unverified",
       "boundary_basis": "NOAA ENC charted named-water area",
-      "boundary_scope_note": "NOAA Harbour ENC returns 1 charted source polygon named Deering Channel and classifies the feature as sea channel. Source chart date: 20021005. These are charted source geometries, not surveyed ecological, legal, habitat, or navigation boundaries. Preserve source polygons individually; a connected-component result does not establish current water connectivity or fish habitat.",
+      "boundary_scope_note": "NOAA Harbour ENC returns 1 charted source polygon named Deering Channel and classifies the feature as sea channel. Source chart date: 20021005. These are charted source geometries, not surveyed ecological, legal, habitat, or navigation boundaries. Preserve source polygons individually; a connected-component result does not establish current water connectivity or fish habitat. A first geometric topology precheck found one connected component and no material overlaps. Source polygons remain separate; this does not establish current ecological connectivity, habitat condition, channel centerline, or navigation boundary.",
       "relationships": [
         {
           "type": "located_within",
@@ -1156,7 +1156,7 @@
           "source_type": "official_charted_named_water_area"
         }
       ],
-      "validation_status": "charted_source_geometry_persisted_topology_precheck_passed_not_ecological_boundary",
+      "validation_status": "source_fragments_persisted_mosaic_not_promoted_to_boundary",
       "source_geometry_ref": {
         "index_path": "data/spatial/noaa-biscayne-hydrography-index.json",
         "source_layer_id": 237,
@@ -1184,9 +1184,9 @@
       "region": "south_florida",
       "parent_id": "sf-biscayne-bay-ecological-context",
       "geometry": null,
-      "geometry_status": "charted_source_polygons_persisted_topology_precheck_passed_boundary_unverified",
+      "geometry_status": "source_chart_fragments_persisted_topology_precheck_passed_boundary_unverified",
       "boundary_basis": "NOAA ENC charted named-water area",
-      "boundary_scope_note": "NOAA Harbour ENC returns 2 charted source polygons named Cape Florida Channel and classifies the feature as sea channel. Source chart date: 20021005. These are charted source geometries, not surveyed ecological, legal, habitat, or navigation boundaries. Preserve source polygons individually; a connected-component result does not establish current water connectivity or fish habitat.",
+      "boundary_scope_note": "NOAA Harbour ENC returns 2 charted source polygons named Cape Florida Channel and classifies the feature as sea channel. Source chart date: 20021005. These are charted source geometries, not surveyed ecological, legal, habitat, or navigation boundaries. Preserve source polygons individually; a connected-component result does not establish current water connectivity or fish habitat. A first geometric topology precheck found one connected component and no material overlaps. Source polygons remain separate; this does not establish current ecological connectivity, habitat condition, channel centerline, or navigation boundary.",
       "relationships": [
         {
           "type": "located_within",
@@ -1202,7 +1202,7 @@
           "source_type": "official_charted_named_water_area"
         }
       ],
-      "validation_status": "charted_source_geometry_persisted_topology_precheck_passed_not_ecological_boundary",
+      "validation_status": "source_fragments_persisted_mosaic_not_promoted_to_boundary",
       "source_geometry_ref": {
         "index_path": "data/spatial/noaa-biscayne-hydrography-index.json",
         "source_layer_id": 237,
