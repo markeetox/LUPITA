@@ -1,6 +1,6 @@
 import pytest
 
-from scripts.extract_noaa_biscayne_hydrography import fetch_channels, validate_feature
+from scripts.extract_noaa_biscayne_hydrography import LAYERS, fetch_channels, validate_feature
 
 
 def polygon_feature():
@@ -61,3 +61,15 @@ def test_fetch_channels_queries_biscayne_bbox_and_preserves_source_attributes():
     assert summary["feature_count"] == 1
     assert summary["feature_name_counts"] == {"Example maintained channel": 1}
     assert summary["output_crs"] == "EPSG:4326"
+
+
+
+def test_route_crosswalk_layers_are_included_as_navigation_context_only():
+    expected = {
+        "harbor_fairway_areas": 208,
+        "harbor_deep_water_route_areas": 207,
+        "harbor_two_way_route_areas": 216,
+        "harbor_recommended_route_centerlines": 133,
+    }
+    assert {key: LAYERS[key]["id"] for key in expected} == expected
+    assert all("navigation" in LAYERS[key]["description"].lower() for key in expected)
