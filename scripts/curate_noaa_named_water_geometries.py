@@ -24,8 +24,9 @@ CONTEXTS = {
     "Safety Valve": ("sf-biscayne-safety-valve-complex", "charted_named_water_area_source_polygon"),
     "Biscayne Flats": ("sf-biscayne-flats", "charted_named_mud_flat_source_polygon"),
     "Bear Cut": ("sf-bear-cut", "charted_named_water_area_polygon"),
+    "Norris Cut": ("sf-norris-cut", "charted_named_water_area_polygon"),
 }
-EXPECTED_COUNTS = {"Biscayne Bay": 37, "Safety Valve": 4, "Biscayne Flats": 3, "Bear Cut": 1}
+EXPECTED_COUNTS = {"Biscayne Bay": 37, "Safety Valve": 4, "Biscayne Flats": 3, "Bear Cut": 1, "Norris Cut": 1}
 
 
 def curate(source_path: Path, output_dir: Path) -> dict[str, Any]:
@@ -149,8 +150,8 @@ def curate(source_path: Path, output_dir: Path) -> dict[str, Any]:
             ref["source_dates"] = group["source_dates"]
             ref["connected_component_count"] = group["connected_component_count"]
             ref["positive_area_overlap_pairs"] = group["positive_area_overlap_pairs"]
-            if name == "Bear Cut":
-                ref["geojson_feature_id"] = "253451"
+            if name in {"Bear Cut", "Norris Cut"}:
+                ref["geojson_feature_id"] = str(group["objectids"][0])
                 feature["geometry_status"] = "source_geometry_persisted_topology_precheck_passed_not_navigation_boundary"
                 feature["validation_status"] = "charted_named_water_geometry_persisted_topology_precheck_passed_not_navigation_boundary"
                 note = feature["boundary_scope_note"]
