@@ -15,8 +15,20 @@ from typing import Any
 
 import requests
 
-WFS_ENDPOINT = "https://geodesy.noaa.gov/GeoServer/NSDE/ows"
-WMS_ENDPOINT = "https://geodesy.noaa.gov/GeoServer/NSDE/ows"
+WFS_ENDPOINTS = [
+    "https://geodesy.noaa.gov/GeoServer/NSDE/ows",
+    "https://geodesy.noaa.gov/GeoServer/NSDE/wfs",
+    "https://www.ngs.noaa.gov/GeoServer/NSDE/ows",
+    "https://www.ngs.noaa.gov/GeoServer/NSDE/wfs",
+    "https://geodesy.noaa.gov/geoserver/NSDE/ows",
+]
+WMS_ENDPOINTS = [
+    "https://geodesy.noaa.gov/GeoServer/NSDE/ows",
+    "https://geodesy.noaa.gov/GeoServer/NSDE/wms",
+    "https://www.ngs.noaa.gov/GeoServer/NSDE/ows",
+    "https://www.ngs.noaa.gov/GeoServer/NSDE/wms",
+    "https://geodesy.noaa.gov/geoserver/NSDE/ows",
+]
 TIMEOUT = (15, 90)
 PROJECTS = [
     {
@@ -118,24 +130,31 @@ def is_candidate(layer: dict[str, str]) -> bool:
     return any(word in text for word in KEYWORDS)
 
 
-def request_capabilities(session: requests.Session, service: str, version: str) -> tuple[str, str]:
+def request_capabilities(
+    session: requests.Session, service: str, version: str
+) -> tuple[str, str]:
+    endpoints = WFS_ENDPOINTS if service.upper() == "WFS" else WMS_ENDPOINTS
     params = {"service": service, "request": "GetCapabilities", "version": version}
-    response = None
     errors = []
-    for attempt in range(3):
-        try:
-            response = session.get(WFS_ENDPOINT, params=params, timeout=TIMEOUT)
-            if response.status_code in {429, 500, 502, 503, 504} and attempt < 2:
-                time.sleep(2 ** attempt)
-                continue
-            response.raise_for_status()
-            # Parse before treating a 200 HTML error page as success.
-            ET.fromstring(response.text)
-            return response.url, response.text
-        except (requests.RequestException, ET.ParseError) as exc:
-            errors.append(f"attempt {attempt + 1}: {type(exc).__name__}: {exc}")
-            if attempt < 2:
-                time.sleep(2 ** attempt)
+    for endpoint in endpoints:
+        for attempt in range(2):
+            try:
+                response = session.get(endpoint, params=params, timeout=TIMEOUT)
+                if response.status_code in {429, 500, 502, 503, 504} and attempt == 0:
+                    time.sleep(2)
+                    continue
+                response.raise_for_status()
+                # Parse before treating a 200 HTML error page as success.
+                ET.fromstring(response.text)
+                return response.url, response.text
+            except (requests.RequestException, ET.ParseError) as exc:
+                body = ""
+                if isinstance(exc, requests.HTTPError) and exc.response is not None:
+                    body = (exc.response.text or "")[:240].replace("\\n", " ")
+                errors.append(
+                    f"{endpoint} attempt {attempt + 1}: {type(exc).__name__}: {exc}; body={body!r}"
+                )
+                break
     raise RuntimeError(f"{service} GetCapabilities failed: {'; '.join(errors)}")
 
 
@@ -165,14 +184,14 @@ def run_audit(output_dir: Path, session: requests.Session | None = None) -> dict
         "status": "service_inventory_retrieved",
         "purpose": "Discover NOAA NGS shoreline service layers before selecting and downloading project-specific vectors.",
         "wfs": {
-            "endpoint": WFS_ENDPOINT,
+            "candidate_endpoints": WFS_ENDPOINTS,
             "capabilities_url": wfs_url,
             "version": "2.0.0",
             "feature_type_count": len(feature_types),
             "candidate_feature_types": candidate_types,
         },
         "wms": {
-            "endpoint": WMS_ENDPOINT,
+            "candidate_endpoints": WMS_ENDPOINTS,
             "capabilities_url": wms_url,
             "layer_count": len(wms_layers),
             "candidate_layers": [item for item in wms_layers if is_candidate(item)],
