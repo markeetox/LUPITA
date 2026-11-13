@@ -84,7 +84,7 @@ def test_noaa_charted_features_preserve_source_ids_and_unverified_geometry_state
     assert safety["source_geometry_ref"]["objectids"] == [246300, 246319, 246322, 253421]
     assert safety["feature_type"] == "named_water_area_complex"
     assert government["geometry"] is None
-    assert "not_identified" in government["geometry_status"]
+    assert government["geometry_status"] == "name_documented_no_direct_named_feature_geometry_identified_in_extracted_layers"
     assert harbor["source_geometry_ref"]["objectids"]
     assert len(harbor["source_geometry_ref"]["objectids"]) == 44
 
