@@ -1,15 +1,15 @@
 # LUPITA project status
 
 **Last reviewed:** 2026-11-13  
-**Active research branch:** `research/biscayne-noaa-enc-hydrography`  
-**Branch head at initial record:** `85afcff7cf4ee18e926a8accd29946b600018be0`  
-**Production branch:** `main`
+**Production branch:** `main`  
+**Consolidation staging branch:** `integration/main-consolidation`  
+**Active GIS research branch:** `research/biscayne-noaa-enc-hydrography`
 
 ## Executive status
 
-LUPITA's production prediction pipeline and map client remain separate from the current Biscayne Bay spatial-research work. The active research branch extends the GIS evidence base; it does not change production species scoring, thresholds, weights, or API behavior.
+LUPITA is being consolidated around one authoritative application branch: `main`. The temporary `integration/main-consolidation` branch is a pre-production staging area only. The `data` branch is reserved for generated application exports and is excluded from code consolidation. GIS research remains separate from production scoring until reviewed and promoted.
 
-The current research branch is the head of [PR #70](https://github.com/markeetox/LUPITA/pull/70), which targets [PR #69's research branch](https://github.com/markeetox/LUPITA/pull/69), rather than targeting `main` directly. PR #69 is itself open against `main`. This is a stacked pull-request sequence. Review and merge dependencies in order; do not merge the child branch directly into production.
+PR #69 and PR #66 have been squash-merged into `integration/main-consolidation`. PR #68 is being repaired and validated against that staging branch. PR #70 still needs its base retargeted after the GIS foundation is integrated. No consolidation changes have been merged into production `main`.
 
 ## Current workstreams
 
@@ -56,7 +56,8 @@ No inferred inlet connections, snapped seams, or synthetic channel centerlines a
 **Status:** existing production pipeline remains the live app data path.
 
 - The scheduled workflow is `.github/workflows/pipeline.yml`, hourly at 10 minutes past the hour UTC.
-- The workflow runs tests, catalog generation, and the prediction pipeline, then publishes app-facing JSON to the `data` branch.
+- The workflow runs from `main`, executes tests, catalog generation, and the prediction pipeline, then exports app-facing JSON to the `data` branch.
+- The optional checkout of the previous `data` publication is only a last-known-good export fallback; it is not required for prediction generation. The intended contract is that `main` can run without `data` and export to it when available.
 - The README's prediction, species, bite-timing, boat-condition, closures, and API sections describe the production pipeline. Changes to those processes must be reflected here and in the README.
 - Spatial research must not be described as affecting fish predictions until it is deliberately integrated, tested, and promoted.
 
@@ -64,12 +65,12 @@ No inferred inlet connections, snapped seams, or synthetic channel centerlines a
 
 | Pull request | Purpose | Base | State |
 |---|---|---|---|
-| [#70](https://github.com/markeetox/LUPITA/pull/70) | NOAA hydrography and Biscayne inlet review | `research/biscayne-bay-gis-foundation` | Open |
-| [#69](https://github.com/markeetox/LUPITA/pull/69) | Biscayne GIS geometry foundation | `main` | Open |
-| [#68](https://github.com/markeetox/LUPITA/pull/68) | South Florida spatial-context schema and species habitat contexts | `main` | Open |
-| [#66](https://github.com/markeetox/LUPITA/pull/66) | South Florida in-situ temperature audit | `main` | Open |
+| [#70](https://github.com/markeetox/LUPITA/pull/70) | NOAA hydrography and Biscayne inlet review | stacked research branch; retarget pending | Open |
+| [#69](https://github.com/markeetox/LUPITA/pull/69) | Biscayne GIS geometry foundation | integration staging | Merged |
+| [#68](https://github.com/markeetox/LUPITA/pull/68) | South Florida spatial-context schema and species habitat contexts | integration staging | Open, test repair pushed |
+| [#66](https://github.com/markeetox/LUPITA/pull/66) | South Florida in-situ temperature audit | integration staging | Merged |
 
-PR #70 is stacked on the #69 branch. The PR list and branch heads must be rechecked before each merge decision.
+PR #70 originated as a stacked branch on #69. The consolidation staging branch removes that dependency before the combined work is offered to `main`.
 
 ## Known limitations and blockers
 
@@ -78,16 +79,17 @@ PR #70 is stacked on the #69 branch. The PR list and branch heads must be rechec
 3. The 17.691 km nearest separation between FL1808A and FL1808C MHW linework is a measured separation between project vectors, not proof of a missing coastline or permission to interpolate.
 4. Government Cut requires an exact source-feature crosswalk.
 5. Candidate subregions, flats, channels, and inlet connections must retain confidence/provenance and must not be promoted based on proximity alone.
-6. The latest topology workflow failure exposed a missing syntax preflight and a malformed Jewfish Creek expression/test block. The first correction was incomplete and failed the compile preflight before extraction. A follow-up correction removes the remaining extra parenthesis; current-head focused validation is still required.
+6. The Jewfish Creek shared-boundary test exposed projection-induced false zero measurements. The implementation now evaluates shared-edge topology in source coordinates and projects the resulting line only for metric length; current-head focused validation is still required.
+7. Five expensive FWC/NOAA source-acquisition workflows have been changed to manual-only so PR synchronization cannot repeatedly trigger downloads and branch-write loops.
 
 ## Next implementation milestones
 
-1. Stabilize and validate the focused landmark extraction/topology workflow.
-2. Review its generated Card Sound, Jewfish Creek, and Rickenbacker evidence artifact.
-3. Reconcile authoritative landmark references and candidate subregions without inventing separator lines.
-4. Build a source-backed spatial entity model that can later link named places, habitat patches, depth context, and species profiles.
-5. Define explicit promotion criteria from research artifacts to production map/prediction inputs.
-6. Evaluate the prediction system separately against observed catches or other independent evidence before making accuracy claims.
+1. Complete the integration staging audit and merge the remaining useful feature/fix/research branches without carrying branch-to-branch dependencies.
+2. Validate PR #68 and the updated PR #70 research workflows on the current heads.
+3. Separate the main pipeline's generated outputs from the optional last-known-good export fallback.
+4. Open one consolidated PR from `integration/main-consolidation` to `main` after the full suite and focused GIS tests pass.
+5. Reconcile authoritative landmark references and candidate subregions without inventing separator lines.
+6. Define explicit promotion criteria from research artifacts to production map/prediction inputs.
 
 ## Validation policy
 
