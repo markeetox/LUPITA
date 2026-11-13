@@ -120,13 +120,14 @@ def partitioned_line_overlay(linework, charted_bay, preserve) -> dict:
     chart_only = chart_intersection.difference(preserve)
     preserve_only = preserve_intersection.difference(charted_bay)
     outside_both = linework.difference(charted_bay.union(preserve))
-    result = {
-        "inside_both_km": round(line_only_length(both) / 1000, 3),
-        "charted_bay_only_km": round(line_only_length(chart_only) / 1000, 3),
-        "fdep_preserve_only_km": round(line_only_length(preserve_only) / 1000, 3),
-        "outside_both_km": round(line_only_length(outside_both) / 1000, 3),
+    raw_lengths_km = {
+        "inside_both_km": line_only_length(both) / 1000,
+        "charted_bay_only_km": line_only_length(chart_only) / 1000,
+        "fdep_preserve_only_km": line_only_length(preserve_only) / 1000,
+        "outside_both_km": line_only_length(outside_both) / 1000,
     }
-    result["partition_total_km"] = round(sum(result.values()), 3)
+    result = {key: round(value, 3) for key, value in raw_lengths_km.items()}
+    result["partition_total_km"] = round(sum(raw_lengths_km.values()), 3)
     return result
 
 
