@@ -9,7 +9,7 @@ on:
       - ".github/workflows/noaa-biscayne-hydrography.yml"
 
 permissions:
-  contents: read
+  contents: write
 
 concurrency:
   group: noaa-biscayne-hydrography
@@ -27,10 +27,26 @@ jobs:
           cache: pip
       - name: Install dependencies
         run: python -m pip install -r requirements.txt
+      - name: Install geometry QA dependency
+        run: python -m pip install shapely
       - name: Run NOAA hydrography tests
         run: python -m pytest -q tests/test_noaa_biscayne_hydrography.py
       - name: Extract NOAA Harbour ENC and maintained-channel geometries
         run: python scripts/extract_noaa_biscayne_hydrography.py --output-dir artifacts/noaa-hydrography
+      - name: Curate named-water geometries and run topology precheck
+        run: python scripts/curate_noaa_named_water_geometries.py --output-dir data/spatial
+      - name: Persist curated GIS review data on the research branch
+        if: github.event_name == 'workflow_dispatch' && github.ref == 'refs/heads/research/biscayne-noaa-enc-hydrography'
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add data/spatial/noaa-biscayne-named-water-areas.geojson data/spatial/noaa-biscayne-named-water-topology-audit.json data/spatial/feature-catalog.json
+          if git diff --cached --quiet; then
+            echo "No curated GIS changes to commit."
+            exit 0
+          fi
+          git commit -m "Persist curated Biscayne named-water geometries"
+          git push origin "HEAD:${GITHUB_REF_NAME}"
       - name: Upload NOAA hydrography review artifact
         if: always()
         uses: actions/upload-artifact@v4
