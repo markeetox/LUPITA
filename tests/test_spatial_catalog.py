@@ -206,3 +206,22 @@ def test_curated_noaa_named_water_geometries_and_topology_audit_are_persisted():
     if norris_persisted:
         assert audit["groups"]["Norris Cut"]["objectids"] == [253447]
         assert audit["groups"]["Norris Cut"]["connected_component_count"] == 1
+
+
+def test_biscayne_ecological_subregions_use_published_landmarks_without_fake_boundaries():
+    catalog = json.loads(CATALOG_PATH.read_text(encoding="utf-8"))
+    by_id = {feature["id"]: feature for feature in catalog["features"]}
+    expected = {
+        "sf-biscayne-bay-northern-context": ("Dumfoundling Bay", "Rickenbacker Causeway"),
+        "sf-biscayne-bay-central-southern-context": ("Rickenbacker Causeway", "Featherbed Bank / Black Point"),
+        "sf-biscayne-bay-southern-context": ("Featherbed Bank / Black Point", "Card Sound / Jewfish Creek"),
+    }
+    for feature_id, limits in expected.items():
+        feature = by_id[feature_id]
+        assert feature["feature_type"] == "bay_subregion"
+        assert feature["geometry"] is None
+        assert feature["geometry_status"] == "literature_landmarks_identified_cross_bay_boundary_geometry_pending"
+        assert feature["subregion_definition"]["north_limit"] == limits[0]
+        assert feature["subregion_definition"]["south_limit"] == limits[1]
+        assert feature["subregion_definition"]["limit_geometry_status"] == "landmarks_referenced_not_digitized"
+        assert feature["provenance"][0]["url"] == "https://doi.org/10.3389/fmars.2022.894663"
