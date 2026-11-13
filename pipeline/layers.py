@@ -67,10 +67,13 @@ def _fetch_grid(cfg: dict, region: dict, fetch):
     """Try the main ERDDAP server, then any fallback_bases from the config."""
     failures = []
     query_region = cfg.get("query_region", region)
+    cfg.pop("_selected_base", None)
     for base in [cfg["base"]] + list(cfg.get("fallback_bases", [])):
         try:
             url = erddap.build_griddap_url({**cfg, "base": base}, query_region)
-            return erddap.parse_grid_csv(fetch(url), cfg["variable"])
+            result = erddap.parse_grid_csv(fetch(url), cfg["variable"])
+            cfg["_selected_base"] = base
+            return result
         except Exception as exc:
             failures.append(f"{base}: {type(exc).__name__}: {exc}")
     raise RuntimeError("ERDDAP grid request failed: " + " | ".join(failures))
