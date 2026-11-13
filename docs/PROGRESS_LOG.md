@@ -389,3 +389,9 @@ Compare source age across multiple scheduled refreshes, then calibrate operation
 - The first full-suite run caught one regression: `build_data_quality(None, ...)` without an SST error must continue to mean `unavailable`, not `not_attempted`. The guard now requires an explicit `layers sst:` error before downstream layers receive `not_attempted`.
 - Corrected Python suite: **262 passed, 0 failed, 115 warnings** on [run #43493987730](https://github.com/markeetox/LUPITA/actions/runs/43493987730), commit `735f888b02ab3ddb8065277c4758e00097778ce6`.
 - Next validation: manually dispatch Pull Ocean Data and inspect SST source selected, timestamp, `api/v1/refresh.json`, `latest.json` snapshot metadata, and last-known-good prediction timestamps.
+
+
+### Final code validation and source provenance
+- Added `source_endpoint` to SST diagnostics and verified the fallback loader records the actual selected host.
+- Latest full Python suite: **262 passed, 0 failed, 115 warnings** on [run #43494256052](https://github.com/markeetox/LUPITA/actions/runs/43494256052), commit `5da0dc56470975216e032b98b0f230a586d8102c`.
+- Live Pull Ocean Data verification remains outstanding. Inspect `latest.json` for `sst.source_endpoint` and `data_quality.layers.sst.source_endpoint`, and `api/v1/refresh.json` for refresh health and the prediction snapshot timestamp.
