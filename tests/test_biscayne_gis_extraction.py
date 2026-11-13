@@ -96,8 +96,12 @@ def test_extract_layer_uses_layer_specific_service_and_name_attribute():
 
         def get(self, url, params, timeout):
             self.url = url
-            assert params["where"] == "NAME LIKE '%BISCAYNE BAY%'"
-            return Response()
+            assert params["where"] == "1=1"
+            feature = polygon_feature()
+            feature["properties"] = {"OBJECTID": 9, "NAME": "BISCAYNE BAY AQUATIC PRESERVE"}
+            other = polygon_feature()
+            other["properties"] = {"OBJECTID": 10, "NAME": "FLORIDA KEYS AQUATIC PRESERVE"}
+            return Response({"features": [feature, other]})
 
     session = Session()
     _, summary = extract_layer(
@@ -105,10 +109,14 @@ def test_extract_layer_uses_layer_specific_service_and_name_attribute():
         {
             "id": 0,
             "service": "https://fdep.example/MapServer",
-            "where": "NAME LIKE '%BISCAYNE BAY%'",
+            "where": "1=1",
+            "filter_attribute": "NAME",
+            "filter_contains": "BISCAYNE BAY",
             "description": "preserve test",
         },
     )
     assert session.url == "https://fdep.example/MapServer/0/query"
     assert summary["service_url"] == "https://fdep.example/MapServer/0"
+    assert summary["raw_feature_count"] == 2
+    assert summary["feature_count"] == 1
     assert summary["source_counts"] == {"BISCAYNE BAY AQUATIC PRESERVE": 1}
