@@ -83,7 +83,7 @@ NOAA InPort records link these projects to the Shoreline Data Explorer for vecto
 
 The project-specific MHW and MLLW linework must be retrieved and retained as separate datums. Their source metadata, survey dates, geographic-cell coverage, and seam/topology behavior must be checked before using them to reconcile Biscayne Bay, inlets, or harbor shorelines.
 
-Project archive acquisition is being checked by the NSDE download-discovery workflow. Until its artifact is inspected, no project-specific geometry is considered retrieved.
+Project archive acquisition has now been verified for FL1808A, FL1808C, and FL2317. The NSDE research workflow downloads the official ZIPs, validates the archives, converts all line and point shapefiles from NAD83 (EPSG:4269) to EPSG:4326 GeoJSON, and emits separate Natural.Mean High Water and MLLW depth-contour subsets. The next CI run persists those original ZIPs and derived GeoJSON files on this research branch. These project-specific files are still undergoing feature-class and topology review before any boundary use.
 
 ## Rejected service candidate
 
