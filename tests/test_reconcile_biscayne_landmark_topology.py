@@ -15,9 +15,9 @@ def write(path, features):
 
 def test_jewfish_polygons_contiguous_and_station_not_promoted(tmp_path):
     write(tmp_path/"jewfish_creek_layer_237.geojson",[
-        feature(246221,"Jewfish Creek",polygon(-80.391,25.183,-80.389,25.185),DSNM="US5FL5GL.000",SORDAT="200304"),
-        feature(246228,"Jewfish Creek",polygon(-80.389,25.183,-80.387,25.185),DSNM="US5FL5HL.000",SORDAT="200304"),
-        feature(246231,"Barnes Sound",polygon(-80.387,25.183,-80.385,25.185))])
+        feature(246221,"Jewfish Creek",polygon(-80.389,25.184,-80.387,25.186),DSNM="US5FL5GL.000",SORDAT="200304"),
+        feature(246228,"Jewfish Creek",polygon(-80.387,25.184,-80.385,25.186),DSNM="US5FL5HL.000",SORDAT="200304"),
+        feature(246231,"Barnes Sound",polygon(-80.385,25.184,-80.383,25.186))])
     write(tmp_path/"jewfish_creek_layer_84.geojson",[feature(1,None,line(-80.39,25.184,-80.388,25.184))])
     result=analyze_jewfish(tmp_path)
     assert result["source_objectids"]==[246221,246228]
