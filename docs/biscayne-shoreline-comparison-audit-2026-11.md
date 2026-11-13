@@ -67,23 +67,22 @@ MHHW is not MHW. The MHHW line is not a surveyed shoreline, not a direct observa
 
 The original un-clipped source records are retained in the workflow artifact rather than committed to the repository.
 
-## Project-specific NOAA shoreline candidates still pending
+## Project-specific NOAA shoreline vectors retrieved
 
-The next source acquisition remains the actual project vectors:
-
-- **FL1808C-TB-N:** Rickenbacker Island to Snapper Creek Canal, imagery/lidar dates 2018-07-26 to 2019-04-13.
-- **FL1808A-TB-N:** Fender Point to Card Sound, imagery/lidar dates 2018-07-26 to 2019-04-16.
-- **FL2317-CS-N:** Port of Miami, imagery date 2023-10-21, reported horizontal accuracy 1.2 m at 95% confidence.
-
-NOAA InPort records link these projects to the Shoreline Data Explorer for vector downloads. Inspection of the official National Shoreline page's inline code confirmed that the UI constructs project ZIP downloads as `https://nsde.ngs.noaa.gov/downloads/{project_id}.zip`. A research workflow now probes the exact project archives, checks ZIP integrity, and inventories their contents:
+The official NOAA National Shoreline project ZIPs have now been downloaded, ZIP-validated, converted from NAD83 (EPSG:4269) to EPSG:4326 GeoJSON, and persisted on this research branch:
 
 - FL1808C: https://www.fisheries.noaa.gov/inport/item/73241
 - FL1808A: https://www.fisheries.noaa.gov/inport/item/74866
 - FL2317: https://www.fisheries.noaa.gov/inport/item/76789
 
-The project-specific MHW and MLLW linework must be retrieved and retained as separate datums. Their source metadata, survey dates, geographic-cell coverage, and seam/topology behavior must be checked before using them to reconcile Biscayne Bay, inlets, or harbor shorelines.
+The project source ZIPs are under `data/spatial/research/noaa_cmp/source/`; derived line and point GeoJSON is under `data/spatial/research/noaa_cmp/geojson/`. The conversion preserves source feature IDs, classes, attributes, source dates, horizontal accuracy, and source IDs.
 
-Project archive acquisition has now been verified for FL1808A, FL1808C, and FL2317. The NSDE research workflow downloads the official ZIPs, validates the archives, converts all line and point shapefiles from NAD83 (EPSG:4269) to EPSG:4326 GeoJSON, and emits separate Natural.Mean High Water and MLLW depth-contour subsets. The next CI run persists those original ZIPs and derived GeoJSON files on this research branch. These project-specific files are still undergoing feature-class and topology review before any boundary use.
+FL1808A and FL1808C contain Natural.Mean High Water shoreline features and separate MLLW-referenced depth-contour lines. The latter are not MLLW shorelines and contain no numeric contour-depth attribute. FL2317 is newer but contains port structures and man-made shoreline only; it has no Natural.Mean High Water feature.
+
+Topology and FDEP/NOAA ENC overlay results are documented in:
+`docs/noaa-cmp-project-shoreline-and-preserve-overlay-2026-11.md`.
+
+The official project archives are now retrieved. Their segmented geometry, chart-cell coverage, source-date differences, and boundary relationships are being reviewed before any spatial feature IDs are used in species contexts.
 
 ## Rejected service candidate
 
