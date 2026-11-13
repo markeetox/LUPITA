@@ -1,7 +1,6 @@
-"""Research-only extraction of NOAA coastal maintained channel geometries near Biscayne Bay.
+"""Research-only extraction of NOAA ENC hydrographic features near Biscayne Bay.
 
-This NOAA theme layer represents USACE-maintained/surveyed coastal channels. It is
-not a complete inventory of tidal inlets, and it is not certified for navigation.
+The Harbour ENC service is intended for GIS/research display, not navigation.
 """
 from __future__ import annotations
 
@@ -16,14 +15,52 @@ from typing import Any
 
 import requests
 
-SERVICE = (
+SERVICE = "https://encdirect.noaa.gov/arcgis/rest/services/encdirect/enc_harbour/MapServer"
+MARINE_TRANSPORTATION_SERVICE = (
     "https://encdirect.noaa.gov/arcgis/rest/services/"
     "NavigationChartData/MarineTransportation/MapServer"
 )
-LAYER_ID = 1
 BBOX = (-80.55, 25.20, -80.05, 26.10)
 TIMEOUT = (15, 90)
-GEOMETRY_TYPES = {"Point", "MultiPoint", "LineString", "MultiLineString", "Polygon", "MultiPolygon"}
+PAGE_SIZE = 1000
+MAX_PAGES = 100
+LAYERS = {
+    "coastal_maintained_channels": {
+        "service": MARINE_TRANSPORTATION_SERVICE,
+        "id": 1,
+        "name": "Coastal Maintained Channels",
+        "publisher": "NOAA Office of Coast Survey; source data copyright USACE",
+        "description": "USACE-maintained and surveyed coastal channels and waterways.",
+    },
+    "harbor_dredged_areas": {
+        "service": SERVICE,
+        "id": 228,
+        "name": "Harbor.Dredged_Area",
+        "publisher": "NOAA Office of Coast Survey",
+        "description": "Dredged-area polygons in large-scale Harbour ENC compilation.",
+    },
+    "harbor_named_water_areas": {
+        "service": SERVICE,
+        "id": 237,
+        "name": "Harbor.Sea_Area_Named_Water_Area",
+        "publisher": "NOAA Office of Coast Survey",
+        "description": "Named water-area polygons in large-scale Harbour ENC compilation.",
+    },
+    "harbor_canal_areas": {
+        "service": SERVICE,
+        "id": 170,
+        "name": "Harbor.Canal_area",
+        "publisher": "NOAA Office of Coast Survey",
+        "description": "Canal-area polygons in large-scale Harbour ENC compilation.",
+    },
+    "harbor_tideway_areas": {
+        "service": SERVICE,
+        "id": 205,
+        "name": "Harbor.Tideway_area",
+        "publisher": "NOAA Office of Coast Survey",
+        "description": "Tideway-area polygons in large-scale Harbour ENC compilation.",
+    },
+}
 
 
 def iter_positions(geometry: dict[str, Any]):
@@ -51,7 +88,7 @@ def validate_feature(feature: dict[str, Any]) -> None:
     geometry = feature.get("geometry")
     if not isinstance(geometry, dict):
         raise ValueError("Feature has no geometry")
-    if geometry.get("type") not in GEOMETRY_TYPES:
+    if geometry.get("type") not in {"Point", "MultiPoint", "LineString", "MultiLineString", "Polygon", "MultiPolygon"}:
         raise ValueError(f"Unsupported NOAA geometry type: {geometry.get('type')!r}")
     positions = list(iter_positions(geometry))
     if not positions:
@@ -64,8 +101,10 @@ def validate_feature(feature: dict[str, Any]) -> None:
             raise ValueError(f"Coordinate outside EPSG:4326 bounds: {position!r}")
 
 
-def fetch_channels(session: requests.Session) -> tuple[dict[str, Any], dict[str, Any]]:
-    url = f"{SERVICE}/{LAYER_ID}/query"
+def fetch_layer(session: requests.Session, definition: dict[str, Any]):
+    service = definition["service"]
+    layer_id = definition["id"]
+    url = f"{service}/{layer_id}/query"
     xmin, ymin, xmax, ymax = BBOX
     params = {
         "where": "1=1",
@@ -78,31 +117,44 @@ def fetch_channels(session: requests.Session) -> tuple[dict[str, Any], dict[str,
         "outSR": "4326",
         "returnZ": "false",
         "returnM": "false",
+        "resultOffset": 0,
+        "resultRecordCount": PAGE_SIZE,
+        "orderByFields": "OBJECTID ASC",
+        "returnExceededLimitFeatures": "true",
         "f": "geojson",
     }
-    response = None
-    for attempt in range(3):
-        response = session.get(url, params=params, timeout=TIMEOUT)
-        if response.status_code in {429, 500, 502, 503, 504} and attempt < 2:
-            time.sleep(2 ** attempt)
-            continue
-        break
-    response.raise_for_status()
-    payload = response.json()
-    if payload.get("error"):
-        raise RuntimeError(f"NOAA ArcGIS query error: {payload['error']}")
-    features = payload.get("features")
-    if not isinstance(features, list):
-        raise RuntimeError("NOAA response does not contain a GeoJSON features array")
-    for feature in features:
-        validate_feature(feature)
+    features = []
+    pages = 0
+    while pages < MAX_PAGES:
+        response = None
+        for attempt in range(3):
+            response = session.get(url, params=params, timeout=TIMEOUT)
+            if response.status_code in {429, 500, 502, 503, 504} and attempt < 2:
+                time.sleep(2 ** attempt)
+                continue
+            break
+        response.raise_for_status()
+        payload = response.json()
+        if payload.get("error"):
+            raise RuntimeError(f"NOAA ArcGIS layer {layer_id} error: {payload['error']}")
+        page = payload.get("features")
+        if not isinstance(page, list):
+            raise RuntimeError(f"NOAA layer {layer_id} response has no features array")
+        for feature in page:
+            validate_feature(feature)
+        features.extend(page)
+        pages += 1
+        params["resultOffset"] += len(page)
+        if not page or (len(page) < PAGE_SIZE and not payload.get("exceededTransferLimit")):
+            break
+    else:
+        raise RuntimeError(f"NOAA layer {layer_id} exceeded {MAX_PAGES} page safety limit")
 
-    names = Counter()
-    geometry_types = Counter()
+    names, geometry_types = Counter(), Counter()
     bounds = [180.0, 90.0, -180.0, -90.0]
     for feature in features:
         props = feature.get("properties") or {}
-        name = props.get("OBJNAM") or props.get("FAIRWAY") or "unnamed"
+        name = props.get("OBJNAM") or props.get("FAIRWAY") or props.get("CATSEA") or "unnamed"
         names[str(name)] += 1
         geometry_types[feature["geometry"]["type"]] += 1
         for lon, lat, *_ in iter_positions(feature["geometry"]):
@@ -113,52 +165,74 @@ def fetch_channels(session: requests.Session) -> tuple[dict[str, Any], dict[str,
 
     collection = {
         "type": "FeatureCollection",
-        "name": "noaa_coastal_maintained_channels_biscayne_aoi",
+        "name": f"noaa_{definition['name'].lower().replace('.', '_').replace(' ', '_')}",
         "crs": {"type": "name", "properties": {"name": "urn:ogc:def:crs:OGC:1.3:CRS84"}},
         "features": features,
     }
     summary = {
-        "source": "NOAA ENC Direct to GIS, NavigationChartData/MarineTransportation",
-        "service_url": SERVICE,
-        "layer_id": LAYER_ID,
-        "layer_name": "Coastal Maintained Channels",
-        "publisher": "NOAA Office of Coast Survey; source data copyright USACE",
-        "source_description": (
-            "Coastal channels and waterways maintained and surveyed by USACE. "
-            "For coastal/ocean use planning; not for navigation."
-        ),
+        "source": "NOAA ENC Direct to GIS",
+        "service_url": service,
+        "layer_id": layer_id,
+        "layer_name": definition["name"],
+        "publisher": definition["publisher"],
+        "source_description": definition["description"],
         "generated_at_utc": datetime.now(timezone.utc).isoformat(),
         "query_bbox_wgs84": list(BBOX),
         "output_crs": "EPSG:4326",
         "feature_count": len(features),
+        "pages": pages,
         "geometry_types": dict(geometry_types),
         "feature_name_counts": dict(names),
         "result_bbox_wgs84": bounds if features else None,
         "validation": "all returned geometries and coordinates passed validation",
-        "limitations": [
-            "This layer contains only maintained/surveyed coastal channels, not every inlet, pass, creek, or tidal connection.",
-            "The layer geometry is not certified for navigation and does not provide current controlling depths.",
-            "A channel polygon does not by itself establish ecological connectivity or fish movement.",
-            "No Government Cut or Bear Cut identity is assigned unless the source attributes and geometry support it.",
-        ],
     }
     return collection, summary
+
+
+def fetch_channels(session: requests.Session):
+    """Backward-compatible helper for the maintained-channel theme layer."""
+    return fetch_layer(session, LAYERS["coastal_maintained_channels"])
 
 
 def run(output_dir: Path) -> dict[str, Any]:
     output_dir.mkdir(parents=True, exist_ok=True)
     session = requests.Session()
     session.headers.update({"User-Agent": "LUPITA-South-Florida-Hydrography-Audit/1.0"})
-    collection, summary = fetch_channels(session)
-    (output_dir / "noaa_coastal_maintained_channels.geojson").write_text(
-        json.dumps(collection, separators=(",", ":"), ensure_ascii=False) + "\n",
+    summaries, errors = {}, {}
+    for key, definition in LAYERS.items():
+        try:
+            collection, summary = fetch_layer(session, definition)
+            (output_dir / f"{key}.geojson").write_text(
+                json.dumps(collection, separators=(",", ":"), ensure_ascii=False) + "\n",
+                encoding="utf-8",
+            )
+            summaries[key] = summary
+        except Exception as exc:
+            errors[key] = f"{type(exc).__name__}: {exc}"
+            print(f"WARNING: NOAA layer {key} unavailable: {errors[key]}", file=sys.stderr)
+    report = {
+        "report_version": 2,
+        "generated_at_utc": datetime.now(timezone.utc).isoformat(),
+        "purpose": "Research-only hydrographic geometry extraction; not production model input or navigation data.",
+        "status": "degraded" if errors else "healthy",
+        "layer_errors": errors,
+        "query_bbox_wgs84": list(BBOX),
+        "output_crs": "EPSG:4326",
+        "layers": summaries,
+        "limitations": [
+            "NOAA ENC Direct to GIS is not certified for navigation.",
+            "The maintained-channel theme layer contains only USACE-maintained/surveyed coastal channels, not every inlet or tidal pass.",
+            "ENC hydrographic objects are chart features; their presence does not establish ecological connectivity or fish movement.",
+            "No Government Cut or Bear Cut identity is assigned unless source attributes and geometry support it.",
+            "Named water-area polygons may not represent a complete bay or inlet boundary.",
+            "The Harbour service is updated weekly and reflects the scale band of its source ENC cells.",
+        ],
+    }
+    (output_dir / "noaa_hydrography_summary.json").write_text(
+        json.dumps(report, indent=2, ensure_ascii=False) + "\n",
         encoding="utf-8",
     )
-    (output_dir / "noaa_channel_summary.json").write_text(
-        json.dumps(summary, indent=2, ensure_ascii=False) + "\n",
-        encoding="utf-8",
-    )
-    return summary
+    return report
 
 
 def main() -> int:
@@ -166,11 +240,14 @@ def main() -> int:
     parser.add_argument("--output-dir", default="artifacts/noaa-hydrography")
     args = parser.parse_args()
     try:
-        summary = run(Path(args.output_dir))
+        report = run(Path(args.output_dir))
     except Exception as exc:
         print(f"NOAA hydrography extraction failed: {type(exc).__name__}: {exc}", file=sys.stderr)
         return 1
-    print(json.dumps(summary, indent=2))
+    for key, summary in report["layers"].items():
+        print(f"{key}: {summary['feature_count']} features; {summary['feature_name_counts']}")
+    if report["layer_errors"]:
+        print(f"Completed with optional layer errors: {report['layer_errors']}", file=sys.stderr)
     return 0
 
 
