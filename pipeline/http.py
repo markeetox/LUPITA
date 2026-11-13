@@ -18,10 +18,13 @@ def _response_error(response, url: str, attempt: int, attempts: int) -> requests
     status = response.status_code
     details = [f"HTTP {status} for {url} (attempt {attempt}/{attempts})"]
     response_headers = getattr(response, "headers", {}) or {}
+    # requests uses a case-insensitive mapping, but normalize explicitly so
+    # diagnostics also behave consistently with test doubles and other adapters.
+    normalized_headers = {str(name).lower(): value for name, value in response_headers.items()}
     selected = {
-        name: response_headers[name]
+        name: normalized_headers[name]
         for name in DIAGNOSTIC_HEADERS
-        if name in response_headers
+        if name in normalized_headers
     }
     if selected:
         details.append(f"headers={selected!r}")
