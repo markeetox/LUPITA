@@ -10,7 +10,12 @@ import json
 from io import BytesIO
 from pathlib import Path
 import zipfile
+from collections import Counter
 
+import shapefile
+from pyproj import CRS, Transformer
+from shapely.geometry import shape as make_shape, mapping
+from shapely.ops import transform as transform_geometry
 from playwright.async_api import async_playwright
 
 URL = "https://nsde.ngs.noaa.gov/cmp.html"
@@ -89,6 +94,178 @@ async def download_project_archives(page, output_dir: Path) -> list[dict]:
     return results
 
 
+def extract_project_archives(downloads: list[dict], output_dir: Path) -> dict:
+    """Convert downloaded NOAA shapefiles to NAD83-to-WGS84 GeoJSON and subsets."""
+    extracted_root = output_dir / "extracted"
+    extracted_root.mkdir(parents=True, exist_ok=True)
+    geojson_root = output_dir / "geojson"
+    geojson_root.mkdir(parents=True, exist_ok=True)
+    project_summaries = {}
+
+    for download in downloads:
+        project_id = download["project_id"]
+        archive_name = download.get("archive_file")
+        if not archive_name:
+            project_summaries[project_id] = {
+                "status": "archive_not_downloaded",
+                "download_error": download.get("error") or download.get("body_snippet"),
+            }
+            continue
+
+        archive_path = output_dir / archive_name
+        project_dir = extracted_root / project_id
+        project_dir.mkdir(parents=True, exist_ok=True)
+        with zipfile.ZipFile(archive_path) as archive:
+            archive.extractall(project_dir)
+
+        project_summary = {
+            "status": "converted",
+            "archive_file": archive_name,
+            "source_crs": None,
+            "shapefiles": {},
+            "line_feature_count": 0,
+            "point_feature_count": 0,
+            "mhw_feature_count": 0,
+            "mllw_depth_contour_count": 0,
+        }
+
+        for shp_path in sorted(project_dir.glob("*.shp")):
+            reader = shapefile.Reader(str(shp_path), encoding="utf-8")
+            fields = [field[0] for field in reader.fields[1:]]
+            prj_path = shp_path.with_suffix(".prj")
+            if not prj_path.exists():
+                raise RuntimeError(f"Missing CRS sidecar for {shp_path.name}")
+            source_crs = CRS.from_wkt(prj_path.read_text(encoding="utf-8"))
+            if source_crs.to_epsg() != 4269:
+                raise RuntimeError(
+                    f"Unexpected source CRS for {shp_path.name}: {source_crs.to_string()}"
+                )
+            project_summary["source_crs"] = "EPSG:4269"
+            to_wgs84 = Transformer.from_crs(4269, 4326, always_xy=True).transform
+            to_length_crs = Transformer.from_crs(4269, 26917, always_xy=True).transform
+
+            all_features = []
+            mhw_features = []
+            mllw_features = []
+            class_counts = Counter()
+            attribute_counts = Counter()
+            source_date_counts = Counter()
+            accuracy_counts = Counter()
+            data_source_counts = Counter()
+            mhw_length_m = 0.0
+            mllw_length_m = 0.0
+
+            for shape_record in reader.iterShapeRecords():
+                properties = shape_record.record.as_dict()
+                geometry = make_shape(shape_record.shape.__geo_interface__)
+                geometry = transform_geometry(to_wgs84, geometry)
+                if geometry.is_empty:
+                    continue
+                feature = {
+                    "type": "Feature",
+                    "id": properties.get("FEATURE_ID"),
+                    "properties": {
+                        **properties,
+                        "LUPITA_SOURCE_PROJECT_ID": project_id,
+                        "LUPITA_SOURCE_FILE": shp_path.name,
+                        "LUPITA_SOURCE_CRS": "EPSG:4269",
+                        "LUPITA_OUTPUT_CRS": "EPSG:4326",
+                    },
+                    "geometry": mapping(geometry),
+                }
+                all_features.append(feature)
+                class_counts[str(properties.get("CLASS") or "unknown")] += 1
+                attribute_counts[str(properties.get("ATTRIBUTE") or "unknown")] += 1
+                source_date_counts[str(properties.get("SRC_DATE") or "unknown")] += 1
+                accuracy_counts[str(properties.get("HOR_ACC") or "unknown")] += 1
+                data_source_counts[str(properties.get("DATA_SOURC") or "unknown")] += 1
+
+                if shp_path.stem.endswith("_l1"):
+                    if (
+                        properties.get("CLASS") == "SHORELINE"
+                        and properties.get("ATTRIBUTE") == "Natural.Mean High Water"
+                    ):
+                        mhw_features.append(feature)
+                        mhw_length_m += transform_geometry(to_length_crs, make_shape(
+                            shape_record.shape.__geo_interface__
+                        )).length
+                    if (
+                        properties.get("CLASS") == "CONTOUR"
+                        and properties.get("ATTRIBUTE") == "Depth Contour"
+                        and properties.get("INFORM") == "MLLW"
+                    ):
+                        mllw_features.append(feature)
+                        mllw_length_m += transform_geometry(to_length_crs, make_shape(
+                            shape_record.shape.__geo_interface__
+                        )).length
+
+            output_name = f"{project_id}_{shp_path.stem.split('_')[-1]}.geojson"
+            output_path = geojson_root / output_name
+            output_path.write_text(json.dumps({
+                "type": "FeatureCollection",
+                "name": output_name.removesuffix(".geojson"),
+                "features": all_features,
+            }, separators=(",", ":")) + "\n", encoding="utf-8")
+
+            layer_summary = {
+                "source_file": shp_path.name,
+                "output_file": f"geojson/{output_name}",
+                "feature_count": len(all_features),
+                "geometry_types": sorted({f["geometry"]["type"] for f in all_features}),
+                "class_counts": dict(class_counts),
+                "attribute_counts": dict(attribute_counts),
+                "source_date_counts": dict(source_date_counts),
+                "horizontal_accuracy_m_counts": dict(accuracy_counts),
+                "data_source_counts": dict(data_source_counts),
+            }
+            project_summary["shapefiles"][shp_path.stem] = layer_summary
+
+            if shp_path.stem.endswith("_l1"):
+                project_summary["line_feature_count"] += len(all_features)
+                project_summary["mhw_feature_count"] += len(mhw_features)
+                project_summary["mllw_depth_contour_count"] += len(mllw_features)
+                for suffix, subset in (
+                    ("mhw", mhw_features),
+                    ("mllw_depth_contours", mllw_features),
+                ):
+                    subset_name = f"{project_id}_{suffix}.geojson"
+                    (geojson_root / subset_name).write_text(json.dumps({
+                        "type": "FeatureCollection",
+                        "name": subset_name.removesuffix(".geojson"),
+                        "features": subset,
+                    }, separators=(",", ":")) + "\n", encoding="utf-8")
+                project_summary["mhw_total_length_km"] = round(mhw_length_m / 1000, 3)
+                project_summary["mllw_depth_contour_total_length_km"] = round(
+                    mllw_length_m / 1000, 3
+                )
+            elif shp_path.stem.endswith("_p1"):
+                project_summary["point_feature_count"] += len(all_features)
+
+        project_summaries[project_id] = project_summary
+
+    audit = {
+        "generated_at_utc": __import__("datetime").datetime.now(
+            __import__("datetime").timezone.utc
+        ).isoformat(),
+        "source": "NOAA National Geodetic Survey Coastal Mapping Program / NOAA Shoreline Data Explorer",
+        "source_download_pattern": "https://nsde.ngs.noaa.gov/downloads/{project_id}.zip",
+        "output_crs": "EPSG:4326",
+        "project_summaries": project_summaries,
+        "guardrails": [
+            "MHW subset includes only CLASS=SHORELINE and ATTRIBUTE=Natural.Mean High Water.",
+            "MLLW subset contains Depth Contour lines with INFORM=MLLW; it is not an MLLW shoreline and contains no numeric contour depth attribute.",
+            "Apparent mangrove lines, mangrove extents, man-made shoreline structures, alongshore features, and cartographic limits remain in the full source linework and are not merged into the MHW subset.",
+            "Project geographic rectangles are data-management extents and do not prove complete surveyed coverage.",
+            "FL2317 is a port-focused source; no Natural.Mean High Water shoreline features were present in its line shapefile.",
+            "No production scoring, species profiles, or API v1 fields are changed.",
+        ],
+    }
+    (output_dir / "noaa_cmp_project_geometry_audit.json").write_text(
+        json.dumps(audit, indent=2) + "\n", encoding="utf-8"
+    )
+    return audit
+
+
 async def run(output_dir: Path) -> dict:
     output_dir.mkdir(parents=True, exist_ok=True)
     network_events = []
@@ -123,6 +300,7 @@ async def run(output_dir: Path) -> dict:
         }
         (output_dir / "initial.html").write_text(await page.content(), encoding="utf-8")
         downloads = await download_project_archives(page, output_dir)
+        geometry_audit = extract_project_archives(downloads, output_dir)
         projects = []
         for project_id in PROJECT_IDS:
             try:
@@ -137,8 +315,9 @@ async def run(output_dir: Path) -> dict:
             "initial": initial,
             "project_filter_results": projects,
             "project_downloads": downloads,
+            "geometry_audit": geometry_audit,
             "network_events": network_events[-500:],
-            "note": "No download button was clicked. This is an interface/network discovery artifact only.",
+            "note": "Project ZIPs were downloaded using the URL pattern exposed by NOAA NSDE; source shapefiles were converted from EPSG:4269 to EPSG:4326 for research inspection."
         }
         (output_dir / "nsde_cmp_ui_audit.json").write_text(
             json.dumps(report, indent=2) + "\n", encoding="utf-8"
@@ -159,6 +338,7 @@ if __name__ == "__main__":
              "error": d.get("error"), "download_status": d.get("download_status")}
             for d in result["project_downloads"]
         ],
+        "geometry_audit": result["geometry_audit"]["project_summaries"],
         "project_results": [
             {"project_id": p["project_id"], "error": p.get("error"),
              "body_text_length": len(p.get("body_text", "")),
