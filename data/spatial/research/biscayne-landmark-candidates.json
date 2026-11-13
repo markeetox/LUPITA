@@ -1,0 +1,223 @@
+{
+  "audit_version": 1,
+  "snapshot_commit": "5bc84910248fb98a5acb171020edeb290e35bdef",
+  "status": "landmark_candidates_partially_resolved_boundary_lines_pending",
+  "purpose": "Research-only inventory of published North/Central/South Biscayne Bay landmark references. No cross-bay boundary geometry is created.",
+  "coordinate_crs": "EPSG:4326",
+  "literature_basis": {
+    "publisher": "Frontiers in Marine Science",
+    "title": "Characterizing Nearshore Fish Assemblages From Intact and Altered Mangrove Shorelines in Biscayne Bay, Florida, United States",
+    "published": "2022-07-22",
+    "url": "https://doi.org/10.3389/fmars.2022.894663",
+    "reported_contexts": [
+      {
+        "name": "North Biscayne Bay",
+        "north_limit": "Dumfoundling Bay",
+        "south_limit": "Rickenbacker Causeway"
+      },
+      {
+        "name": "Central Biscayne Bay",
+        "north_limit": "Rickenbacker Causeway",
+        "south_limit": "Featherbed Bank / Black Point"
+      },
+      {
+        "name": "South Biscayne Bay",
+        "north_limit": "Featherbed Bank / Black Point",
+        "south_limit": "Card Sound / Jewfish Creek"
+      }
+    ],
+    "limitation": "Published landmark extents do not provide digitized cross-bay separator lines. These labels do not authorize drawing cross-bay polygons."
+  },
+  "landmarks": [
+    {
+      "id": "dumfoundling-bay",
+      "name": "Dumfoundling Bay",
+      "role": "North Biscayne Bay northern landmark",
+      "candidate_reference": {
+        "type": "point",
+        "coordinates": [
+          -80.1298124,
+          25.9452653
+        ],
+        "coordinate_order": "longitude_latitude",
+        "coordinate_source": "GNIS Feature ID 281852 as reported by a secondary GNIS-derived feature page",
+        "source_url": "https://geo.mytopo.com/feature/florida/miami-dade/bay/281852/dumfoundling-bay/"
+      },
+      "geometry_status": "candidate_point_only_official_gnis_record_not_yet_retrieved",
+      "confidence": "provisional",
+      "notes": [
+        "The coordinate is a named-feature reference point, not a shoreline or cross-bay boundary.",
+        "Verify directly against the current USGS GNIS download/API before promotion."
+      ]
+    },
+    {
+      "id": "rickenbacker-causeway",
+      "name": "Rickenbacker Causeway",
+      "role": "North/Central Biscayne Bay separator landmark",
+      "candidate_reference": {
+        "type": "bridge_line_segments",
+        "source_file": "data/spatial/research/transportation/miamidade_dtpw_bridge_lines.geojson",
+        "source_records": [
+          {
+            "objectid": 78165,
+            "bridge_no": 874544,
+            "waterway": "BISCAYNE BAY (BEAR CUT)",
+            "bbox_wgs84": [
+              -80.16104466875652,
+              25.728301604846482,
+              -80.15637723641268,
+              25.73243732175507
+            ]
+          },
+          {
+            "objectid": 78030,
+            "bridge_no": 874542,
+            "waterway": "BISCAYNE BAY",
+            "bbox_wgs84": [
+              -80.2018632524097,
+              25.747174602368634,
+              -80.20044878155983,
+              25.748331912078427
+            ]
+          },
+          {
+            "objectid": 78127,
+            "bridge_no": 874541,
+            "waterway": "BISCAYNE BAY",
+            "bbox_wgs84": [
+              -80.20216834926518,
+              25.746950598763647,
+              -80.20057754127116,
+              25.748117713755576
+            ]
+          }
+        ],
+        "official_source_url": "https://www.miamidade.gov/global/transportation/public-works/rickenbacker-causeway.page"
+      },
+      "geometry_status": "official_county_bridge_inventory_lines_persisted_causeway_corridor_not_fully_reconstructed",
+      "confidence": "high_for_bridge_identity_and_local_geometry",
+      "notes": [
+        "County describes a 3.6-mile corridor with distinct bridge and roadway segments.",
+        "Bear Cut Bridge is the eastern bridge between Virginia Key and Key Biscayne; the causeway is not one single bridge line.",
+        "Use the actual causeway corridor/land polygons to assess a cross-bay separator, not just one bridge segment."
+      ]
+    },
+    {
+      "id": "featherbed-bank",
+      "name": "Featherbed Bank",
+      "role": "Central/South Biscayne Bay separator landmark",
+      "candidate_reference": {
+        "type": "charted_named_water_polygon",
+        "source_layer": "NOAA ENC Harbour Sea Area Named Water Area, layer 237",
+        "objectid": 246301,
+        "chart_cell": "US5FL5LN.000",
+        "source_date": "2002-10-05",
+        "bbox_wgs84": [
+          -80.23541699999998,
+          25.516617999999994,
+          -80.218433,
+          25.531581000000017
+        ],
+        "source_index": "data/spatial/noaa-biscayne-hydrography-index.json"
+      },
+      "geometry_status": "charted_polygon_persisted_and_bbox_verified",
+      "confidence": "high_for_charted_named_feature_location_not_boundary",
+      "notes": [
+        "NOAA classifies the feature as a bank.",
+        "The source polygon is a named chart context, not a cross-bay boundary or a current habitat survey."
+      ]
+    },
+    {
+      "id": "black-point",
+      "name": "Black Point",
+      "role": "Alternative/paired Central/South Biscayne Bay separator landmark",
+      "candidate_reference": {
+        "type": "official_marina_approach_marker",
+        "coordinates": [
+          -80.2983333333,
+          25.525
+        ],
+        "coordinate_order": "longitude_latitude",
+        "source_description": "Miami-Dade County Black Point Marina page gives the outer channel marker at 25 degrees 31.5 minutes N, 80 degrees 17.9 minutes W.",
+        "source_url": "https://www.miamidade.gov/parks/black-point-marina.asp"
+      },
+      "geometry_status": "official_facility_navigation_reference_point_not_shoreline_boundary",
+      "confidence": "high_for_marker_position_not_ecological_boundary",
+      "notes": [
+        "This is an approach marker offshore of Black Point Marina, not the Black Point shoreline or a separator line.",
+        "Keep Black Point and Featherbed Bank as distinct references until the literature's paired landmark meaning is spatially resolved."
+      ]
+    },
+    {
+      "id": "card-sound",
+      "name": "Card Sound",
+      "role": "South Biscayne Bay southern landmark",
+      "candidate_reference": {
+        "type": "NOAA_charted_named_water_feature_set",
+        "source_layer": 237,
+        "objectids": [
+          246233,
+          246243,
+          246247,
+          246258,
+          246267,
+          246284
+        ],
+        "chart_cells": [
+          "US5FL5IL.000",
+          "US5FL5IM.000",
+          "US5FL5IN.000",
+          "US5FL5JM.000",
+          "US5FL5JN.000"
+        ],
+        "source_date": "2003-04",
+        "index_file": "data/spatial/noaa-biscayne-hydrography-index.json"
+      },
+      "geometry_status": "source_ids_indexed_curated_geometry_not_yet_persisted",
+      "confidence": "high_for_charted_name_and_source_ids_geometry_retrieval_pending",
+      "notes": [
+        "Six chart-cell polygons form a multi-cell named-water source set.",
+        "The six features must be retrieved and mosaicked/reviewed with their original chart-cell identity preserved.",
+        "Do not infer that Card Sound's named-water polygon edge is the ecological southern boundary."
+      ]
+    },
+    {
+      "id": "jewfish-creek",
+      "name": "Jewfish Creek",
+      "role": "Paired South Biscayne Bay southern landmark",
+      "candidate_reference": {
+        "type": "NOAA_tidal_benchmark_station",
+        "station_id": "8723613",
+        "coordinates": [
+          -80.39,
+          25.1833
+        ],
+        "coordinate_order": "longitude_latitude",
+        "station_name": "JEWFISH CREEK, BARNES SOUND, FL",
+        "chart": "NOAA Chart 11462",
+        "source_url": "https://tidesandcurrents.noaa.gov/benchmarks/8723613.html"
+      },
+      "geometry_status": "official_station_reference_point_not_channel_or_ecological_boundary",
+      "confidence": "high_for_station_identity_and_reference_coordinate",
+      "notes": [
+        "The NOAA station is explicitly named Jewfish Creek, Barnes Sound.",
+        "A tidal benchmark location is not the creek mouth, channel centerline, or ecological boundary.",
+        "NOAA Coast Pilot distinguishes Card Sound, Little Card Sound, Barnes Sound, and Jewfish Creek as separate waterway reaches."
+      ]
+    }
+  ],
+  "next_actions": [
+    "Retrieve the current official USGS GNIS record for Dumfoundling Bay and preserve its source metadata.",
+    "Extract the full Rickenbacker Causeway corridor from county roadway/bridge and land-area geometry; identify the water-crossing separator only where the source geometry supports it.",
+    "Retrieve all six NOAA Card Sound polygons by exact OBJECTID and preserve chart-cell provenance.",
+    "Retrieve NOAA chart/hydrographic geometry for Jewfish Creek and distinguish the channel from the NOAA tidal benchmark station.",
+    "Assess whether Featherbed Bank and Black Point represent one paired regional separator or two alternative landmarks; do not collapse them into one coordinate.",
+    "Only then test feature membership against the candidate separators. Keep subregion polygon geometry null until a defensible cross-bay line exists."
+  ],
+  "guardrails": [
+    "No boundary line is generated from point coordinates or bounding boxes.",
+    "No ecological region is equated with an FDEP preserve boundary.",
+    "No channel connectivity or fish passage is inferred from proximity.",
+    "All results remain research-only."
+  ]
+}
