@@ -84,7 +84,15 @@
           253451
         ],
         "source_feature_count": 1,
-        "geojson_feature_id": "253451"
+        "geojson_feature_id": "253451",
+        "chart_cells": [
+          "US5MIACC.000"
+        ],
+        "source_dates": [
+          "20021005"
+        ],
+        "connected_component_count": 1,
+        "positive_area_overlap_pairs": []
       }
     },
     {
@@ -160,7 +168,7 @@
       "geometry": null,
       "geometry_status": "source_chart_fragments_persisted_topology_precheck_passed_complete_boundary_unverified",
       "boundary_basis": "multi_source_ecological_context",
-      "boundary_scope_note": "This is the ecological waterbody entity, distinct from the statutory aquatic preserve and the Biscayne National Park boundary. Its polygon must be assembled from authoritative shoreline, hydrographic, and tidal-connection evidence. NOAA Harbour ENC also contains 37 charted Biscayne Bay named-water polygons across 17 ENC cells. These are chart-cell fragments, not a complete ecological or statutory boundary; mosaic and topology review is pending. Original chart fragments are persisted individually with a topology precheck; no dissolved or complete boundary is promoted. A first geometric topology precheck is complete: the union has two disconnected components, one a very small isolated fragment. Original chart fragments are persisted individually; no dissolved or complete boundary is promoted. Full boundary reconciliation against shoreline, preserve, and tidal-connectivity evidence remains pending.",
+      "boundary_scope_note": "This is the ecological waterbody entity, distinct from the statutory aquatic preserve and the Biscayne National Park boundary. Its polygon must be assembled from authoritative shoreline, hydrographic, and tidal-connection evidence. NOAA Harbour ENC also contains 37 charted Biscayne Bay named-water polygons across 17 ENC cells. These are chart-cell fragments, not a complete ecological or statutory boundary; a first geometric topology precheck is complete. The union has two disconnected components, one a very small isolated fragment. Full boundary reconciliation remains pending. Original chart fragments are persisted individually with a topology precheck; no dissolved or complete boundary is promoted. Original chart fragments are persisted individually; no dissolved or complete boundary is promoted.",
       "relationships": [
         {
           "type": "has_management_boundary",
@@ -182,12 +190,30 @@
         "source_layer_id": 237,
         "source_layer_name": "Harbor.Sea_Area_Named_Water_Area",
         "feature_count": 37,
-        "chart_cells": 17,
+        "chart_cells": [
+          "US5FL5JM.000",
+          "US5FL5JN.000",
+          "US5FL5KL.000",
+          "US5FL5KM.000",
+          "US5FL5KN.000",
+          "US5FL5LM.000",
+          "US5FL5LN.000",
+          "US5FL5MM.000",
+          "US5FL5MN.000",
+          "US5MIABA.000",
+          "US5MIABB.000",
+          "US5MIABC.000",
+          "US5MIACB.000",
+          "US5MIACC.000",
+          "US5MIADB.000",
+          "US5MIADC.000",
+          "US5MIAEC.000"
+        ],
         "source_dates": [
-          "2002-10-05",
-          "2003-04",
-          "2008-06",
-          "2011-02"
+          "20021005",
+          "200304",
+          "200806",
+          "201102"
         ],
         "artifact_id": 14002573361,
         "curated_geojson_path": "data/spatial/noaa-biscayne-named-water-areas.geojson",
@@ -231,7 +257,9 @@
           253475,
           253477
         ],
-        "source_feature_count": 37
+        "source_feature_count": 37,
+        "connected_component_count": 2,
+        "positive_area_overlap_pairs": []
       }
     },
     {
@@ -286,7 +314,12 @@
           246317,
           246323
         ],
-        "source_feature_count": 3
+        "source_feature_count": 3,
+        "source_dates": [
+          "20021005"
+        ],
+        "connected_component_count": 1,
+        "positive_area_overlap_pairs": []
       },
       "relationships": [
         {
@@ -356,7 +389,12 @@
           246322,
           253421
         ],
-        "source_feature_count": 4
+        "source_feature_count": 4,
+        "source_dates": [
+          "20021005"
+        ],
+        "connected_component_count": 1,
+        "positive_area_overlap_pairs": []
       }
     },
     {
