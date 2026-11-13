@@ -1,0 +1,41 @@
+name: NOAA Biscayne Bay hydrography audit
+
+on:
+  workflow_dispatch: {}
+  pull_request:
+    paths:
+      - "scripts/extract_noaa_biscayne_hydrography.py"
+      - "tests/test_noaa_biscayne_hydrography.py"
+      - ".github/workflows/noaa-biscayne-hydrography.yml"
+
+permissions:
+  contents: read
+
+concurrency:
+  group: noaa-biscayne-hydrography
+  cancel-in-progress: true
+
+jobs:
+  extract-and-validate:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+      - name: Install dependencies
+        run: python -m pip install -r requirements.txt
+      - name: Run NOAA hydrography tests
+        run: python -m pytest -q tests/test_noaa_biscayne_hydrography.py
+      - name: Extract NOAA coastal maintained channels
+        run: python scripts/extract_noaa_biscayne_hydrography.py --output-dir artifacts/noaa-hydrography
+      - name: Upload NOAA hydrography review artifact
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: noaa-biscayne-hydrography-review
+          path: artifacts/noaa-hydrography/
+          if-no-files-found: warn
+          retention-days: 14
