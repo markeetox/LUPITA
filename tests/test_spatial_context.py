@@ -58,7 +58,7 @@ def test_unknown_is_not_absence_for_unmapped_bay_geometry():
     bay = next(feature for feature in catalog["features"] if feature["id"] == "biscayne-bay")
     assert bay["geometry"] is None
     assert bay["geometry_status"] == "pending_authoritative_geometry"
-    assert "not use for point-in-polygon" in bay["provenance"]["notes"]
+    assert "no spatial membership is permitted" in bay["provenance"]["notes"].lower()
 
 
 def test_biscayne_bay_catalog_preserves_source_candidates_and_boundary_caveat():
