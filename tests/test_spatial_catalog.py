@@ -97,6 +97,8 @@ def test_noaa_charted_features_preserve_source_ids_and_unverified_geometry_state
     assert safety["feature_type"] == "named_water_area_complex"
     assert government["geometry"] is None
     assert government["geometry_status"] == "name_documented_no_direct_named_feature_geometry_identified_in_extracted_layers"
+    assert government["source_geometry_ref"]["fairway_layer_id"] == 208
+    assert government["source_geometry_ref"]["fairway_objectids"] == [42416, 42420, 42422]
     assert harbor["source_geometry_ref"]["objectids"]
     assert len(harbor["source_geometry_ref"]["objectids"]) == 44
 
@@ -115,6 +117,12 @@ def test_noaa_hydrography_index_records_charted_feature_provenance():
     assert index["channel_features"]["Miami Harbor Channel fairway"]["feature_count"] == 44
     assert "not_identified" in index["channel_features"]["Government Cut"]["status"]
     assert "direct_named_water_area_polygon_found" in index["channel_features"]["Norris Cut"]["status"]
+    route_layers = index["route_layer_inventory"]
+    assert route_layers["harbor_fairway_areas"]["feature_count"] == 62
+    assert route_layers["harbor_fairway_areas"]["miami_harbor_channel_objectids"] == [42416, 42420, 42422]
+    assert route_layers["harbor_deep_water_route_parts"]["feature_count"] == 0
+    assert route_layers["harbor_two_way_route_parts"]["feature_count"] == 0
+    assert route_layers["harbor_recommended_route_centerlines"]["feature_count"] == 0
 
 
 
