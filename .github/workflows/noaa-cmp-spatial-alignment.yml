@@ -1,0 +1,74 @@
+name: NOAA CMP and FDEP spatial alignment audit
+
+on:
+  workflow_dispatch: {}
+  pull_request:
+    paths:
+      - "scripts/audit_noaa_cmp_spatial_alignment.py"
+      - "tests/test_noaa_cmp_spatial_alignment.py"
+      - ".github/workflows/noaa-cmp-spatial-alignment.yml"
+      - "data/spatial/noaa-biscayne-named-water-areas.geojson"
+      - "data/spatial/research/noaa_cmp/geojson/*.geojson"
+
+permissions:
+  contents: write
+
+concurrency:
+  group: noaa-cmp-spatial-alignment
+  cancel-in-progress: false
+
+jobs:
+  overlay:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.head_ref || github.ref_name }}
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Install overlay dependencies
+        run: |
+          python -m pip install requests shapely pyproj pytest
+      - name: Test overlay metrics
+        run: python -m pytest -q tests/test_noaa_cmp_spatial_alignment.py
+      - name: Download FDEP preserves and compute spatial overlays
+        run: python scripts/audit_noaa_cmp_spatial_alignment.py --repo-root . --output-dir artifacts/noaa-cmp-overlay
+      - name: Persist FDEP geometry and overlay audit on research branch
+        if: success() && github.event_name == 'pull_request'
+        env:
+          TARGET_BRANCH: ${{ github.head_ref }}
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git fetch origin "${TARGET_BRANCH}"
+          git reset --hard FETCH_HEAD
+          mkdir -p data/spatial/research/noaa_cmp/overlay
+          cp artifacts/noaa-cmp-overlay/fdep_biscayne_aquatic_preserves.geojson data/spatial/research/noaa_cmp/overlay/
+          cp artifacts/noaa-cmp-overlay/fdep_aquatic_preserves_layer_metadata.json data/spatial/research/noaa_cmp/overlay/
+          cp artifacts/noaa-cmp-overlay/noaa_cmp_fdep_spatial_alignment_audit.json data/spatial/research/noaa_cmp/overlay/
+          git add data/spatial/research/noaa_cmp/overlay/
+          if git diff --cached --quiet; then
+            echo "No spatial alignment outputs changed."
+            exit 0
+          fi
+          git commit -m "Persist NOAA CMP and FDEP shoreline overlay audit"
+          for attempt in 1 2 3; do
+            if git push origin "HEAD:${TARGET_BRANCH}"; then
+              exit 0
+            fi
+            echo "Push race detected; rebasing on latest research branch (attempt ${attempt}/3)."
+            git fetch origin "${TARGET_BRANCH}"
+            git rebase FETCH_HEAD
+          done
+          exit 1
+      - name: Upload spatial alignment audit
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: noaa-cmp-fdep-spatial-alignment
+          path: artifacts/noaa-cmp-overlay/
+          if-no-files-found: warn
+          retention-days: 14
