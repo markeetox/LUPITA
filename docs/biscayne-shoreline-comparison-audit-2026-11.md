@@ -89,6 +89,15 @@ A hosted NOAA CUSP FeatureServer copy returned no features for the South Florida
 
 The older NSDE GeoServer WFS endpoint documented in historical material returned HTTP 404 from the GitHub runner. The Florida DEP MapServer layers above were used only as comparison sources.
 
+## Validation and artifact
+
+- NOAA MHW/MHHW extraction, geometry validation, clipping, and research-branch persistence succeeded:
+  https://github.com/markeetox/LUPITA/actions/runs/43356355642
+- Artifact ID: `14005603545`, containing the original un-clipped source records, clipped outputs, layer metadata, and audit JSON.
+- Focused shoreline tests: 3 passed.
+- Repository-wide Python suite on the same code revision before the data-only persistence commit: 205 passed, 54 warnings:
+  https://github.com/markeetox/LUPITA/actions/runs/43356355591
+
 ## Guardrails
 
 - The query rectangle is a review window, not the bay boundary.
