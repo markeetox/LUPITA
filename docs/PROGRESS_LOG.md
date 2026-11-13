@@ -301,3 +301,6 @@ Compare source age across multiple scheduled refreshes, then calibrate operation
 
 - Follow-up run #408 found one regression in the health test: the fallback freshness check was being skipped in a minimal fixture without a separate primary_freshness object. Updated the health check to compare selected and fallback observation status/age directly, avoiding duplicate warnings when the fallback is itself the selected source.
 - Run #408: 254 passed, 1 failed. Correction committed separately; next suite run is the acceptance check.
+
+
+- Final health-comparison correction passed the full Python suite: **255 passed, 0 failed, 115 warnings** on [run #409](https://github.com/markeetox/LUPITA/actions/runs/43476053350). The extra test verifies independent HF Radar and altimetry ages. The remaining acceptance gate is live production retrieval and coverage inspection.
