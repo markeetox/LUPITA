@@ -168,7 +168,7 @@
       "geometry": null,
       "geometry_status": "source_chart_fragments_persisted_topology_precheck_passed_complete_boundary_unverified",
       "boundary_basis": "multi_source_ecological_context",
-      "boundary_scope_note": "This is the ecological waterbody entity, distinct from the statutory aquatic preserve and the Biscayne National Park boundary. Its polygon must be assembled from authoritative shoreline, hydrographic, and tidal-connection evidence. NOAA Harbour ENC also contains 37 charted Biscayne Bay named-water polygons across 17 ENC cells. These are chart-cell fragments, not a complete ecological or statutory boundary; a first geometric topology precheck is complete. The union has two disconnected components, one a very small isolated fragment. Full boundary reconciliation remains pending. Original chart fragments are persisted individually with a topology precheck; no dissolved or complete boundary is promoted. Original chart fragments are persisted individually; no dissolved or complete boundary is promoted. Original chart fragments are persisted individually; no dissolved or complete boundary is promoted.",
+      "boundary_scope_note": "This is the ecological waterbody entity, distinct from the statutory aquatic preserve and the Biscayne National Park boundary. Its polygon must be assembled from authoritative shoreline, hydrographic, and tidal-connection evidence. NOAA Harbour ENC also contains 37 charted Biscayne Bay named-water polygons across 17 ENC cells. These are chart-cell fragments, not a complete ecological or statutory boundary. A first geometric topology precheck is complete: the union has two disconnected components, one a very small isolated fragment. Full boundary reconciliation remains pending. Original chart fragments are persisted individually; no dissolved or complete boundary is promoted.",
       "relationships": [
         {
           "type": "has_management_boundary",
@@ -291,7 +291,7 @@
       "parent_id": "sf-biscayne-bay-ecological-context",
       "geometry": null,
       "geometry_status": "source_chart_fragments_persisted_topology_precheck_passed_boundary_unverified",
-      "boundary_scope_note": "NOAA Harbour ENC names three polygons Biscayne Flats and classifies them as mud flats. This is a charted feature classification, not evidence of current substrate condition, seagrass, fish use, or ecological suitability. The polygons span two ENC cells and require topology review before being assembled into one complex. Original chart fragments are persisted individually with a topology precheck; no dissolved or complete boundary is promoted. A first geometric topology precheck found one connected component and no material overlaps. Source polygons remain separate; the charted mud-flat class does not establish current substrate or habitat.",
+      "boundary_scope_note": "NOAA Harbour ENC names three polygons Biscayne Flats and classifies them as mud flats. This is a charted feature classification, not evidence of current substrate condition, seagrass, fish use, or ecological suitability. The polygons span two ENC cells and require topology review before being assembled into one complex. A first geometric topology precheck found one connected component and no material overlaps. Source polygons remain separate; the charted mud-flat class does not establish current substrate or habitat.",
       "source_geometry_ref": {
         "index_path": "data/spatial/noaa-biscayne-hydrography-index.json",
         "source_layer_id": 237,
@@ -347,7 +347,7 @@
       "geometry": null,
       "geometry_status": "source_chart_fragments_persisted_topology_precheck_passed_boundary_unverified",
       "boundary_basis": "named_ecological_feature",
-      "boundary_scope_note": "NOAA describes a broad area of grass flats and tidal channels near the center of the bay that exchanges water with the Atlantic. It must not be reduced to a single point or a single flat polygon. NOAA ENC names four source polygons as Safety Valve. The source class is named water area, not flat or channel habitat. Preserve the four source features separately until multi-cell geometry reconciliation. Original chart fragments are persisted individually with a topology precheck; no dissolved or complete boundary is promoted. A first geometric topology precheck found one connected component and no material overlaps. Source polygons remain separate; this does not establish ecological connectivity or current habitat.",
+      "boundary_scope_note": "NOAA describes a broad area of grass flats and tidal channels near the center of the bay that exchanges water with the Atlantic. It must not be reduced to a single point or a single flat polygon. NOAA ENC names four source polygons as Safety Valve. The source class is named water area, not flat or channel habitat. Preserve the four source features separately until multi-cell geometry reconciliation. A first geometric topology precheck found one connected component and no material overlaps. Source polygons remain separate; this does not establish ecological connectivity or current habitat.",
       "relationships": [
         {
           "type": "water_exchange_area",
