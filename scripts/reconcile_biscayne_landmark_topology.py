@@ -30,6 +30,8 @@ def analyze_jewfish(folder: Path):
     creek = [f for f in water if properties(f).get("OBJNAM") == "Jewfish Creek"]
     if len(creek) != 2:
         raise ValueError(f"Expected exactly two Jewfish Creek polygons; found {len(creek)}")
+    source_geoms = [shape(f["geometry"]) for f in creek]
+    source_merged = unary_union(source_geoms)
     geoms = [projected(f) for f in creek]
     merged = geoms[0].union(geoms[1])
     if not merged.is_valid:
@@ -40,12 +42,17 @@ def analyze_jewfish(folder: Path):
         p = properties(f)
         if p.get("OBJNAM") == "Jewfish Creek":
             continue
+        source_g = shape(f["geometry"])
         g = projected(f)
         inter = merged.intersection(g)
+        # Evaluate shared-edge topology before projection; projection can turn
+        # identical source-coordinate edges into slightly different segments.
+        shared_boundary_source = source_merged.boundary.intersection(source_g.boundary)
+        shared_boundary_m = transform(PROJECT, shared_boundary_source).length if not shared_boundary_source.is_empty else 0.0
         if inter.area > 0 or inter.length > 0 or merged.distance(g) < 1:
             relations.append({"objectid": feature_id(f), "name": p.get("OBJNAM"),
                 "chart_cell": p.get("DSNM"), "overlap_area_m2": round(inter.area, 2),
-                "shared_boundary_m": round(merged.boundary.intersection(g.boundary).length, 2),
+                "shared_boundary_m": round(shared_boundary_m, 2),
                 "overlap_boundary_perimeter_m": round(inter.boundary.length if inter.area > 0 else 0, 2), "minimum_distance_m": round(merged.distance(g), 2)})
     coast = []
     for f in load_features(folder, "jewfish_creek_layer_84.geojson"):
