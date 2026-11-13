@@ -9,7 +9,7 @@ on:
       - ".github/workflows/noaa-biscayne-shoreline-audit.yml"
 
 permissions:
-  contents: read
+  contents: write
 
 concurrency:
   group: noaa-biscayne-shoreline-audit
@@ -31,8 +31,30 @@ jobs:
         run: python -m pip install shapely
       - name: Test NOAA service metadata parser
         run: python -m pytest -q tests/test_noaa_shoreline_services.py
-      - name: Discover NOAA NGS shoreline services and project layers
+      - name: Extract NOAA MHW and MHHW shoreline comparison geometries
         run: python scripts/audit_noaa_shoreline_services.py --output-dir artifacts/noaa-shoreline
+      - name: Persist clipped shoreline comparison geometry on research branch
+        if: success() && github.event_name == 'pull_request'
+        env:
+          TARGET_BRANCH: ${{ github.head_ref }}
+        run: |
+          mkdir -p data/spatial/research
+          cp artifacts/noaa-shoreline/noaa_composite_shoreline_mhw_biscayne.geojson data/spatial/research/
+          cp artifacts/noaa-shoreline/noaa_mhhw_screening_line_biscayne.geojson data/spatial/research/
+          cp artifacts/noaa-shoreline/noaa_nsde_shoreline_service_inventory.json data/spatial/research/noaa-shoreline-comparison-audit.json
+          cp artifacts/noaa-shoreline/noaa_composite_shoreline_mhw_metadata.json data/spatial/research/
+          cp artifacts/noaa-shoreline/noaa_mhhw_screening_line_metadata.json data/spatial/research/
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git fetch origin "${TARGET_BRANCH}"
+          git reset --hard FETCH_HEAD
+          git add data/spatial/research/noaa_composite_shoreline_mhw_biscayne.geojson data/spatial/research/noaa_mhhw_screening_line_biscayne.geojson data/spatial/research/noaa-shoreline-comparison-audit.json data/spatial/research/noaa_composite_shoreline_mhw_metadata.json data/spatial/research/noaa_mhhw_screening_line_metadata.json
+          if git diff --cached --quiet; then
+            echo "No shoreline comparison outputs changed."
+            exit 0
+          fi
+          git commit -m "Persist NOAA Biscayne shoreline comparison geometry"
+          git push origin "HEAD:${TARGET_BRANCH}"
       - name: Upload NOAA shoreline service inventory
         if: always()
         uses: actions/upload-artifact@v4
