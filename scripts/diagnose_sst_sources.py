@@ -71,11 +71,12 @@ def probe(label: str, url: str) -> None:
                 print(f"first_observation_time={latest_csv_time(response.text)!r}", flush=True)
                 print(f"body_preview={response.text[:240].replace(chr(10), ' | ')!r}", flush=True)
             else:
-                for key in ("time_coverage_start", "time_coverage_end", "date_created", "testOutOfDate"):
-                    marker = key + ' = '
-                    pos = response.text.find(marker)
-                    if pos >= 0:
-                        print(response.text[pos:pos + 120].splitlines()[0], flush=True)
+                for line in response.text.splitlines():
+                    if any(key in line for key in (
+                        "time_coverage_start", "time_coverage_end", "date_created",
+                        "testOutOfDate", "actual_range"
+                    )):
+                        print(f"metadata: {line.strip()[:300]}", flush=True)
         else:
             print(f"error_body_preview={response.text[:800]!r}", flush=True)
     except requests.RequestException as exc:
