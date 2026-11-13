@@ -42,6 +42,7 @@ jobs:
           cp artifacts/nsde-cmp-ui/FL1808A-TB-N.zip data/spatial/research/noaa_cmp/source/
           cp artifacts/nsde-cmp-ui/FL1808C-TB-N.zip data/spatial/research/noaa_cmp/source/
           cp artifacts/nsde-cmp-ui/FL2317-CS-N.zip data/spatial/research/noaa_cmp/source/
+          cp artifacts/nsde-cmp-ui/FL1603A-CM-N.zip data/spatial/research/noaa_cmp/source/
           cp artifacts/nsde-cmp-ui/geojson/*.geojson data/spatial/research/noaa_cmp/geojson/
           cp artifacts/nsde-cmp-ui/noaa_cmp_project_geometry_audit.json data/spatial/research/noaa_cmp/noaa_cmp_project_geometry_audit.json
           git add data/spatial/research/noaa_cmp/
