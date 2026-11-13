@@ -86,6 +86,9 @@ def validate_catalog(catalog: Any) -> list[str]:
     region = catalog.get("region")
     if not isinstance(region, dict) or not region.get("id") or not region.get("name"):
         errors.append("region must contain non-empty id and name")
+        region_id = None
+    else:
+        region_id = region["id"]
     features = catalog.get("features")
     if not isinstance(features, list):
         return errors + ["features must be an array"]
@@ -97,8 +100,8 @@ def validate_catalog(catalog: Any) -> list[str]:
             errors.append(f"{prefix} must be an object")
             continue
         feature_id = feature.get("id")
-        if not isinstance(feature_id, str) or not feature_id:
-            errors.append(f"{prefix}.id must be a non-empty string")
+        if not isinstance(feature_id, str) or not feature_id or any(not (char.islower() or char.isdigit() or char == "-") for char in feature_id):
+            errors.append(f"{prefix}.id must contain lowercase letters, digits, and hyphens")
         elif feature_id in ids:
             errors.append(f"duplicate feature id: {feature_id}")
         else:
@@ -107,7 +110,7 @@ def validate_catalog(catalog: Any) -> list[str]:
             errors.append(f"{prefix}.name must be a non-empty string")
         if feature.get("feature_type") not in VALID_FEATURE_TYPES:
             errors.append(f"{prefix}.feature_type is unsupported")
-        if feature.get("region_id") != (region or {}).get("id"):
+        if feature.get("region_id") != region_id:
             errors.append(f"{prefix}.region_id must match the catalog region")
         geometry_status = feature.get("geometry_status")
         if geometry_status not in {"verified", "provisional", "pending_authoritative_geometry", "not_applicable"}:
@@ -125,7 +128,11 @@ def validate_catalog(catalog: Any) -> list[str]:
     for index, feature in enumerate(features):
         if not isinstance(feature, dict):
             continue
-        for relationship_index, relationship in enumerate(feature.get("relationships", [])):
+        relationships = feature.get("relationships", [])
+        if not isinstance(relationships, list):
+            errors.append(f"features[{index}].relationships must be an array")
+            continue
+        for relationship_index, relationship in enumerate(relationships):
             rel_prefix = f"features[{index}].relationships[{relationship_index}]"
             if not isinstance(relationship, dict):
                 errors.append(f"{rel_prefix} must be an object")
