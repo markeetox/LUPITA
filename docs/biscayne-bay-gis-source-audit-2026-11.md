@@ -68,6 +68,7 @@ Government Cut and Bear Cut currently exist in config/places.json as approximate
 
 Run the **Biscayne Bay GIS geometry audit** workflow manually or through a pull request. The artifact contains:
 
+- fdep_aquatic_preserve_polygons.geojson
 - source_footprints.geojson
 - unified_benthic_polygons.geojson
 - summary.json
