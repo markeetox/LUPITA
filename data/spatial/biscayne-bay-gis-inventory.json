@@ -1,7 +1,7 @@
 {
   "audit_version": 1,
-  "generated_at_utc": "2026-11-13T01:49:40.846574+00:00",
-  "status": "extracted_geometry_review_pending",
+  "generated_at_utc": "2026-11-13T01:54:56Z",
+  "status": "fdep_and_fwc_geometry_extracted_review_pending",
   "service": "https://gis.myfwc.com/hosting/rest/services/Projects_FWC/UnifiedReefMapProject_v2_2/MapServer",
   "output_crs": "EPSG:4326",
   "source_footprints": {
@@ -84,9 +84,49 @@
     "Geometry artifact remains the raw review source; this summary is not a replacement for the geometries."
   ],
   "review_artifact": {
-    "workflow_run_id": 43347704537,
-    "workflow_url": "https://github.com/markeetox/LUPITA/actions/runs/43347704537",
+    "workflow_run_id": 43348300268,
+    "workflow_url": "https://github.com/markeetox/LUPITA/actions/runs/43348300268",
     "artifact_name": "biscayne-bay-gis-review",
-    "artifact_id": 14001249391
+    "artifact_id": 14003175396
+  },
+  "fdep_aquatic_preserves": {
+    "layer_id": 0,
+    "service_url": "https://ca.dep.state.fl.us/arcgis/rest/services/OpenData/AQUATIC_PRESERVES/MapServer/0",
+    "raw_feature_count": 43,
+    "filtered_feature_count": 2,
+    "geometry_types": {
+      "Polygon": 1,
+      "MultiPolygon": 1
+    },
+    "output_crs": "EPSG:4326",
+    "features": {
+      "Biscayne Bay": {
+        "objectid": 43,
+        "acres": 64607.580491,
+        "geometry_type": "MultiPolygon",
+        "bbox_wgs84": [
+          -80.38639777120336,
+          25.283393021597988,
+          -80.12159664607981,
+          25.96698446645934
+        ],
+        "statutory_context": "Florida Statute 258.397",
+        "status": "official_approximate_gis_geometry_retrieved_reconciliation_pending"
+      },
+      "Biscayne Bay-Cape Florida to Monroe County Line": {
+        "objectid": 25,
+        "acres": 4163.903858,
+        "geometry_type": "Polygon",
+        "bbox_wgs84": [
+          -80.15885975408122,
+          25.645209636397418,
+          -80.10493075545824,
+          25.67857222694478
+        ],
+        "statutory_context": "Florida Statute 258.39(11)",
+        "status": "separate_preserve_geometry_retrieved"
+      }
+    },
+    "caveat": "The two FDEP records are separate preserve designations. Do not merge them. FDEP's GIS boundaries are approximate management mapping and not legal survey/enforcement geometry."
   }
 }
