@@ -145,21 +145,55 @@ def curate(source_path: Path, output_dir: Path) -> dict[str, Any]:
             ref["topology_audit_path"] = "data/spatial/noaa-biscayne-named-water-topology-audit.json"
             ref["source_objectids"] = group["objectids"]
             ref["source_feature_count"] = group["feature_count"]
+            ref["chart_cells"] = group["chart_cells"]
+            ref["source_dates"] = group["source_dates"]
+            ref["connected_component_count"] = group["connected_component_count"]
+            ref["positive_area_overlap_pairs"] = group["positive_area_overlap_pairs"]
             if name == "Bear Cut":
                 ref["geojson_feature_id"] = "253451"
-                feature["geometry_status"] = "source_geometry_persisted_in_curated_geojson_topology_review_pending"
-                feature["validation_status"] = "charted_named_water_geometry_persisted_not_navigation_boundary"
-                feature["boundary_scope_note"] += (
-                    " The original source polygon is now persisted in the curated GeoJSON; "
-                    "it remains a charted named-water area, not a surveyed centerline or depth boundary."
+                feature["geometry_status"] = "source_geometry_persisted_topology_precheck_passed_not_navigation_boundary"
+                feature["validation_status"] = "charted_named_water_geometry_persisted_topology_precheck_passed_not_navigation_boundary"
+                note = feature["boundary_scope_note"]
+                note = note.replace(
+                    "Geometry is retrieved and coordinate-validated; static geometry import and topology review remain pending.",
+                    ""
+                )
+                note = note.split(" The original source polygon is now persisted")[0]
+                note = note.split(" The original source polygon is persisted in the curated GeoJSON and passed geometry validation.")[0]
+                feature["boundary_scope_note"] = note.rstrip() + (
+                    " The original source polygon is persisted in the curated GeoJSON and passed geometry validation. "
+                    "It remains a charted named-water area, not a surveyed centerline or depth boundary."
                 )
             else:
-                feature["geometry_status"] = "source_chart_fragments_persisted_individually_topology_precheck_recorded_boundary_unverified"
-                feature["validation_status"] = "source_fragments_persisted_mosaic_not_promoted_to_boundary"
-                feature["boundary_scope_note"] += (
-                    " Original chart fragments are persisted individually with a topology precheck; "
-                    "no dissolved or complete boundary is promoted."
+                feature["geometry_status"] = (
+                    "source_chart_fragments_persisted_topology_precheck_passed_complete_boundary_unverified"
+                    if name == "Biscayne Bay"
+                    else "source_chart_fragments_persisted_topology_precheck_passed_boundary_unverified"
                 )
+                feature["validation_status"] = "source_fragments_persisted_mosaic_not_promoted_to_boundary"
+                note = feature["boundary_scope_note"]
+                if name == "Biscayne Bay":
+                    note = note.split(" A first geometric topology precheck is complete:")[0]
+                    note = note.replace(
+                        "mosaic and topology review is pending.",
+                        "a first geometric topology precheck is complete. The union has two disconnected components, "
+                        "one a very small isolated fragment. Full boundary reconciliation remains pending."
+                    )
+                    feature["boundary_scope_note"] = note + (
+                        " Original chart fragments are persisted individually; no dissolved or complete boundary is promoted."
+                    )
+                elif name == "Safety Valve":
+                    note = note.split(" A first geometric topology precheck found")[0]
+                    feature["boundary_scope_note"] = note + (
+                        " A first geometric topology precheck found one connected component and no material overlaps. "
+                        "Source polygons remain separate; this does not establish ecological connectivity or current habitat."
+                    )
+                else:
+                    note = note.split(" A first geometric topology precheck found")[0]
+                    feature["boundary_scope_note"] = note + (
+                        " A first geometric topology precheck found one connected component and no material overlaps. "
+                        "Source polygons remain separate; the charted mud-flat class does not establish current substrate or habitat."
+                    )
         catalog_path.write_text(json.dumps(catalog, indent=2, ensure_ascii=False) + "\n", encoding="utf-8")
 
     return audit
