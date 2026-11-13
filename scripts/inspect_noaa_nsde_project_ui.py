@@ -19,6 +19,29 @@ from shapely.ops import transform as transform_geometry
 
 URL = "https://nsde.ngs.noaa.gov/cmp.html"
 PROJECT_IDS = ["FL1808C-TB-N", "FL1808A-TB-N", "FL2317-CS-N"]
+PROJECT_METADATA = {
+    "FL1808A-TB-N": {
+        "inport_id": 74866,
+        "inport_url": "https://www.fisheries.noaa.gov/inport/item/74866",
+        "source_dates": ["2018-07-26", "2019-04-16"],
+        "reported_horizontal_accuracy_95pct_m": "1.3-3.0",
+        "geographic_extent_wgs84": [-80.40325, 25.3252299521071, -80.2171900246895, 25.5119399520435],
+    },
+    "FL1808C-TB-N": {
+        "inport_id": 73241,
+        "inport_url": "https://www.fisheries.noaa.gov/inport/item/73241",
+        "source_dates": ["2018-07-26", "2019-04-13"],
+        "reported_horizontal_accuracy_95pct_m": "1.3-3.0",
+        "geographic_extent_wgs84": [-80.3095, 25.6344886723368, -80.16894, 25.7729300000031],
+    },
+    "FL2317-CS-N": {
+        "inport_id": 76789,
+        "inport_url": "https://www.fisheries.noaa.gov/inport/item/76789",
+        "source_dates": ["2023-10-21"],
+        "reported_horizontal_accuracy_95pct_m": "1.2",
+        "geographic_extent_wgs84": [-80.2157448950401, 25.7342282449007, -80.1074168708588, 25.8119979108154],
+    },
+}
 
 
 async def inspect_project(page, project_id: str, output_dir: Path) -> dict:
@@ -119,6 +142,7 @@ def extract_project_archives(downloads: list[dict], output_dir: Path) -> dict:
 
         project_summary = {
             "status": "converted",
+            "metadata": PROJECT_METADATA.get(project_id, {}),
             "archive_file": archive_name,
             "source_crs": None,
             "shapefiles": {},
@@ -151,6 +175,7 @@ def extract_project_archives(downloads: list[dict], output_dir: Path) -> dict:
             source_date_counts = Counter()
             accuracy_counts = Counter()
             data_source_counts = Counter()
+            source_id_counts = Counter()
             mhw_length_m = 0.0
             mllw_length_m = 0.0
 
@@ -178,6 +203,7 @@ def extract_project_archives(downloads: list[dict], output_dir: Path) -> dict:
                 source_date_counts[str(properties.get("SRC_DATE") or "unknown")] += 1
                 accuracy_counts[str(properties.get("HOR_ACC") or "unknown")] += 1
                 data_source_counts[str(properties.get("DATA_SOURC") or "unknown")] += 1
+                source_id_counts[str(properties.get("SOURCE_ID") or "unknown")] += 1
 
                 if shp_path.stem.endswith("_l1"):
                     if (
@@ -216,6 +242,7 @@ def extract_project_archives(downloads: list[dict], output_dir: Path) -> dict:
                 "source_date_counts": dict(source_date_counts),
                 "horizontal_accuracy_m_counts": dict(accuracy_counts),
                 "data_source_counts": dict(data_source_counts),
+                "source_id_counts": dict(source_id_counts),
             }
             project_summary["shapefiles"][shp_path.stem] = layer_summary
 
