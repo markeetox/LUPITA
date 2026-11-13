@@ -158,7 +158,7 @@ def curate(source_path: Path, output_dir: Path) -> dict[str, Any]:
                     "Geometry is retrieved and coordinate-validated; static geometry import and topology review remain pending.",
                     ""
                 )
-                if "original source polygon is persisted in the curated GeoJSON" not in note.lower():
+                if "original source polygon is persisted in the curated geojson" not in note.lower():
                     note = note.rstrip() + (
                         " The original source polygon is persisted in the curated GeoJSON and passed geometry validation. "
                         "It remains a charted named-water area, not a surveyed centerline or depth boundary."
