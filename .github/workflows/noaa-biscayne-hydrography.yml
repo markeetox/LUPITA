@@ -2,16 +2,6 @@ name: NOAA Biscayne Bay hydrography audit
 
 on:
   workflow_dispatch: {}
-  pull_request:
-    paths:
-      - "scripts/extract_noaa_biscayne_hydrography.py"
-      - "scripts/extract_south_florida_bridge_inventory.py"
-      - "scripts/curate_noaa_named_water_geometries.py"
-      - "tests/test_noaa_biscayne_hydrography.py"
-      - "tests/test_south_florida_bridge_inventory.py"
-      - "tests/test_curate_noaa_named_water_geometries.py"
-      - "tests/test_spatial_catalog.py"
-      - ".github/workflows/noaa-biscayne-hydrography.yml"
 
 permissions:
   contents: write
