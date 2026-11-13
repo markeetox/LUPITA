@@ -114,6 +114,15 @@ def test_noaa_hydrography_index_records_charted_feature_provenance():
     assert named["Bear Cut"]["geometry_type"] == "Polygon"
     assert named["Norris Cut"]["objectids"] == [253447]
     assert named["Norris Cut"]["source_chart"] == "NOAA Chart 11468"
+    assert named["Black Ledge"]["objectids"] == [246297, 246304, 246318]
+    assert named["Featherbed Bank"]["objectids"] == [246301]
+    assert named["Lewis Cut"]["objectids"] == [246302]
+    assert named["Biscayne Channel"]["objectids"] == [253424, 253427]
+    assert named["Cape Florida Channel"]["objectids"] == [253420, 253432]
+    context_layers = index["charted_context_layer_inventory"]["layers"]
+    assert context_layers["harbor_coastline_lines"]["review_window_intersections"] == 47
+    assert context_layers["harbor_depth_contour_lines"]["review_window_intersections"] == 294
+    assert context_layers["harbor_vegetation_areas"]["charted_category"] == "mangroves"
     assert index["channel_features"]["Miami Harbor Channel fairway"]["feature_count"] == 44
     assert "not_identified" in index["channel_features"]["Government Cut"]["status"]
     assert "direct_named_water_area_polygon_found" in index["channel_features"]["Norris Cut"]["status"]
@@ -135,7 +144,7 @@ def test_curated_noaa_named_water_geometries_and_topology_audit_are_persisted():
     norris_persisted = "source_geometry_persisted" in next(
         feature for feature in catalog["features"] if feature["id"] == "sf-norris-cut"
     )["geometry_status"]
-    expected_count = 46 if norris_persisted else 45
+    expected_count = 58 if norris_persisted else 57
     assert geojson["metadata"]["source_feature_count"] == expected_count
     assert len(geojson["features"]) == expected_count
     by_name = {}
@@ -149,6 +158,23 @@ def test_curated_noaa_named_water_geometries_and_topology_audit_are_persisted():
         assert len(by_name["Norris Cut"]) == 1
     else:
         assert "Norris Cut" not in by_name
+    assert len(by_name["Black Ledge"]) == 3
+    assert len(by_name["Featherbed Bank"]) == 1
+    assert len(by_name["Lewis Cut"]) == 1
+    assert len(by_name["Biscayne Channel"]) == 2
+    assert len(by_name["Sands Cut"]) == 1
+    assert len(by_name["Snapper Creek Canal"]) == 1
+    assert len(by_name["Goulds Canal"]) == 1
+    assert len(by_name["Deering Channel"]) == 1
+    assert len(by_name["Cape Florida Channel"]) == 2
+
+    for feature_name in (
+        "Black Ledge", "Featherbed Bank", "Lewis Cut", "Biscayne Channel",
+        "Sands Cut", "Snapper Creek Canal", "Goulds Canal", "Deering Channel",
+        "Cape Florida Channel",
+    ):
+        assert audit["groups"][feature_name]["connected_component_count"] == 1
+        assert audit["groups"][feature_name]["positive_area_overlap_pairs"] == []
 
     bear = by_name["Bear Cut"][0]
     assert str(bear["properties"]["OBJECTID"]) == "253451"
