@@ -50,6 +50,9 @@ def test_extract_project_archives_creates_separate_mhw_and_mllw_subsets(tmp_path
     assert summary["line_feature_count"] == 2
     assert summary["mhw_feature_count"] == 1
     assert summary["mllw_depth_contour_count"] == 1
+    assert summary["mhw_topology"]["component_count_after_exact_union"] == 1
+    assert summary["mhw_topology"]["open_endpoint_coordinates"] == 2
+    assert summary["mllw_depth_contour_topology"]["component_count_after_exact_union"] == 1
     assert len(all_lines["features"]) == 2
     assert mhw["features"][0]["properties"]["ATTRIBUTE"] == "Natural.Mean High Water"
     assert mllw["features"][0]["properties"]["INFORM"] == "MLLW"
