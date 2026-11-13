@@ -347,10 +347,29 @@ Compare source age across multiple scheduled refreshes, then calibrate operation
 ### Validation
 
 - The prior regional coverage change passed **255 tests, 0 failures** on [run #410](https://github.com/markeetox/LUPITA/actions/runs/43483859099).
-- The new age-guard tests and full suite are pending CI on this commit.
+- Full Python suite passed **257 tests, 0 failures, 115 warnings** on [run #415](https://github.com/markeetox/LUPITA/actions/runs/43484934310). The regression tests verify that stale altimetry cannot fill HF Radar gaps or create a current layer on its own.
 - No prediction weights or biological scoring rules changed.
 
 ### Next
 
 - Inspect the next production refresh to verify stale altimetry is excluded from current vectors.
 - Implement and validate the NOAA RTOFS operational HTTPS/GRIB ingestion path, preserving model initialization time and forecast lead separately from observation age.
+
+
+## 2026-11-13 | Select NOAA S-111 RTOFS East as broad-area current model candidate
+
+### Source assessment
+
+- Identified NOAA's S-111 surface-current product derived from Global RTOFS, with Atlantic output published as `rtofs_east` in the public `noaa-s111-pds` S3 bucket.
+- S-111 provides HDF5 tiles in a standard designed for marine navigation. RTOFS East guidance is updated once daily, contains 72 hours of forecast guidance at 6-hour intervals, and is approximately 8.5 km resolution.
+- Currents are represented at 4.5 m below the surface, or half the water depth where shallower. This is more relevant to vessel movement than satellite-altimetry geostrophic flow and complements the near-surface HF Radar observation layer.
+- NOAA's S-111 README describes the delivery service as preliminary. The bucket's static RTOFS East catalog is intended to be overwritten with each new run, and the tile naming scheme supports downloading only geographic cells of interest.
+
+### Decision
+
+- Prefer NOAA S-111 RTOFS East tiles over downloading full global RTOFS NetCDF files. The tiled HDF5 product should avoid repeatedly transferring very large global files and already expresses current guidance in a vessel-oriented standard.
+- Do not enable it yet. First verify current catalog contents, identify the tile(s) covering South Florida, inspect actual HDF5 structure/variables/time groups, and compare forecast values against HF Radar and available local observations.
+- Keep the 72-hour altimetry age guard active. Stale altimetry remains excluded from current vectors; its separate Gulf Stream-edge role remains visible.
+- If S-111 tile coverage or availability is inadequate, use NOAA's supported RTOFS HTTPS/GRIB output as the alternate ingestion path.
+
+**Sources:** NOAA S-111 AWS README; NOAA Office of Coast Survey developer documentation; NOAA RTOFS Open Data registry.
