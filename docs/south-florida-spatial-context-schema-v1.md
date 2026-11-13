@@ -84,3 +84,23 @@ Do not substitute offshore satellite SST for shallow-bay or bottom temperature w
 4. Extend validators to enforce geometry-type conventions and relationship semantics after source selection.
 5. Add source coverage and spatial/vertical/temporal support metadata for environmental observations.
 6. Build candidate habitat-context matching in shadow mode; do not change production scoring until independently validated.
+
+
+## Initial authoritative source inventory
+
+The following sources are candidates for geometry and habitat layers. They are not interchangeable, and each must be clipped, versioned, and assessed for coverage before being used.
+
+| Source | Potential use | Important limitation |
+| --- | --- | --- |
+| [Florida Statutes §258.397](https://www.flsenate.gov/Laws/Statutes/2026/258.397) | Legal description of the Biscayne Bay Aquatic Preserve boundary | This is a legal preserve boundary, not automatically the ecological shoreline or a suitable bay-subregion partition. It includes Card Sound and excludes submerged lands conveyed for Biscayne National Park. Do not silently label it as the complete bay polygon. |
+| [FWC Unified Reef Map v2.2](https://myfwc.com/research/gis/fisheries/unified-reef-map/) | Benthic habitat polygons and monitoring context | The detailed Biscayne Bay/National Park layers include historical mapping clipped to the park boundary. They are valuable local habitat evidence but do not cover the entire bay as one uniform dataset. |
+| [FWC Seagrass Statewide, layer 15](https://gis.myfwc.com/hosting/rest/services/Open_Data/Seagrass_Statewide/MapServer/15) | Continuous and patchy seagrass polygons | A statewide compilation from multiple source agencies, dates, scales, and methods. Not all areas are mapped; not suitable for treating unmapped cells as seagrass absence or for unqualified time-series comparisons. |
+| [FWC Tidal Flats, layer 21](https://gis.myfwc.com/hosting/rest/services/Open_Data/Tidal_Flats/MapServer/21) | Unvegetated tidal-flat polygons | Compiled from best available source mapping and NWI inputs. Source dates and mapping scales must be retained. |
+| [FWC SIMM reports](https://myfwc.com/research/habitat/seagrasses/simm/simm-reports/) | Regional seagrass mapping and monitoring context, including Biscayne Bay | Reports and map vintages are region-specific; inspect each underlying source and publication date. |
+| [Miami-Dade DERM Benthic Habitat Monitoring Program](https://data.florida-seacar.org/programs/details/4018) | Local seagrass/benthic monitoring observations | Monitoring/quadrat data are not automatically continuous habitat polygons; retain station, quadrat, sampling date, and method. |
+
+### Source-selection rule
+
+Use a legal boundary only for the legal context it actually represents. Use habitat polygons for the habitat classes and mapped dates they actually support. Preserve original source geometry, CRS, source date, mapping method, and coverage. Do not fill mapping gaps by drawing plausible-looking polygons.
+
+The next geometry pass should compare the statutory preserve boundary with the FWC/NPS Biscayne Bay benthic mapping footprints and select a defensible waterbody boundary or explicitly represent separate legal/ecological extents. Only then should bay subregions, flats, and inlet relationships be materialized in the catalog.
