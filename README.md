@@ -39,7 +39,7 @@ Keep production changes separate from research-only work. Do not promote candida
 
 - `main` is the only authoritative application/code branch. The pipeline, API generator, species profiles, source configuration, tests, and maintained spatial catalog live there.
 - The hourly pipeline checks out `main`, runs tests and prediction generation, and creates the app-facing export from the generated outputs.
-- `data` is a publication target for generated JSON/API assets, not a source-code dependency or a place where application logic is maintained.
+- `data` is a publication target for generated JSON/API assets, not a source-code dependency or a place where application logic is maintained. Its current 725-path snapshot contains only JSON/API/PNG publication assets and no source-code files.
 - The pipeline's optional checkout of the previous `data` publication is only a last-known-good export fallback. It is not used to run the prediction engine. A missing `data` branch must not prevent tests, prediction generation, or a new export.
 - Keep research acquisition artifacts and candidate geometry separate from production scoring until explicit validation and promotion.
 - Production runtime dependencies remain in `requirements.txt`. CI installs `requirements-research.txt` separately when it runs the full suite or GIS extraction tests.
