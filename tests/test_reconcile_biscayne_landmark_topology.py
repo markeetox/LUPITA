@@ -23,7 +23,7 @@ def test_jewfish_polygons_contiguous_and_station_not_promoted(tmp_path):
     assert result["source_objectids"]==[246221,246228]
     assert result["union_component_count"]==1 and result["polygon_gap_m"]==0
     assert result["station_8723613"]["inside_mapped_creek_polygon"] is False
-    assert result["named_water_relations"][0]["name"]=="Barnes Sound"\n    assert result["named_water_relations"][0]["overlap_area_m2"]>0\n    assert result["named_water_relations"][0]["shared_boundary_m"]==0
+    assert result["named_water_relations"][0]["name"]=="Barnes Sound"\n    assert result["named_water_relations"][0]["overlap_area_m2"]>0\n    assert result["named_water_relations"][0]["shared_boundary_m"]>0\n    assert result["named_water_relations"][0]["shared_boundary_m"] < result["named_water_relations"][0]["overlap_boundary_perimeter_m"]
 
 def test_card_sound_requires_exact_source_objectids(tmp_path):
     ids=[246233,246243,246247,246258,246267,246284]
