@@ -1,0 +1,84 @@
+{
+  "schema_version": 1,
+  "crs": "EPSG:4326",
+  "region": {
+    "id": "south-florida",
+    "name": "South Florida"
+  },
+  "features": [
+    {
+      "id": "biscayne-bay",
+      "name": "Biscayne Bay",
+      "feature_type": "bay",
+      "region_id": "south-florida",
+      "geometry": null,
+      "geometry_status": "pending_authoritative_geometry",
+      "relationships": [],
+      "provenance": {
+        "sources": [],
+        "notes": "Stable feature identity established. Do not use for point-in-polygon analysis until an authoritative bay boundary is selected, versioned, and loaded. The bay must not be treated as one homogeneous habitat."
+      },
+      "notes": "Initial South Florida waterbody pilot. Subregions, flats, channels, and inlet connections will be separate features when authoritative geometries and relationships are established."
+    },
+    {
+      "id": "usgs-crest-brewster-reef",
+      "name": "Brewster Reef USGS temperature logger",
+      "feature_type": "monitoring_station",
+      "region_id": "south-florida",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [-80.09974, 25.56676]
+      },
+      "geometry_status": "verified",
+      "vertical_support": {
+        "sensor_depth_m": 3.9624,
+        "depth_reference": "water depth at reef-fixed logger deployment",
+        "notes": "USGS CREST Florida Keys underwater temperature release v9 reports 13 ft deployment depth. Logger sensor was positioned a few inches above substrate."
+      },
+      "relationships": [],
+      "provenance": {
+        "sources": [
+          {
+            "organization": "USGS",
+            "title": "Florida Keys Coral Reef Underwater Temperature Data, Version 9",
+            "url": "https://doi.org/10.5066/F71C1TZK",
+            "version": "9"
+          },
+          {
+            "organization": "USGS",
+            "title": "Florida coral underwater temperatures metadata",
+            "url": "https://cmgds.marine.usgs.gov/catalog/spcmsc/FL_coral_underwater_temps_metadata_v9.html"
+          }
+        ],
+        "notes": "Monitoring station only. It is not itself a reef habitat polygon or a fish-presence observation."
+      }
+    },
+    {
+      "id": "fwc-flkeys-lka57",
+      "name": "FWC-FWRI FLKEYS Array LKA57",
+      "feature_type": "monitoring_station",
+      "region_id": "south-florida",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [-81.9493, 24.4373]
+      },
+      "geometry_status": "verified",
+      "vertical_support": {
+        "sensor_depth_m": 23,
+        "depth_reference": "station sensor depth below surface",
+        "notes": "SECOORA ERDDAP reports z=-23 m (positive-up convention)."
+      },
+      "relationships": [],
+      "provenance": {
+        "sources": [
+          {
+            "organization": "FWC-FWRI via SECOORA",
+            "title": "FLKEYS Array LKA57 station observations",
+            "url": "https://erddap.secoora.org/erddap/tabledap/org_secoora_flkeys_lka57.html"
+          }
+        ],
+        "notes": "Monitoring station only. Its depth is relevant to deeper reef-tract temperature context but does not establish fish occupancy."
+      }
+    }
+  ]
+}
