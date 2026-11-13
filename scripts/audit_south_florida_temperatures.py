@@ -163,7 +163,7 @@ def fetch_mur(session, site, lat, lon, start, end, out_dir):
         projection = f"analysed_sst[({start_utc}):1:({end_utc})][({lat:.5f})][({lon:.5f})]"
         url = MUR_BASE + "?" + quote(projection, safe="[]():,.-TZ")
         try:
-            response = session.get(url, timeout=(20, 180))
+            response = session.get(url, timeout=(10, 30))
             response.raise_for_status()
             raw_rows = list(csv.reader(io.StringIO(response.text)))
             if len(raw_rows) < 3:
@@ -214,7 +214,7 @@ def main():
     out_dir.mkdir(parents=True, exist_ok=True)
     session = requests.Session()
     retry = Retry(
-        total=4, connect=3, read=3, status=3, backoff_factor=1.0,
+        total=2, connect=2, read=2, status=2, backoff_factor=0.5,
         status_forcelist=(408, 425, 429, 500, 502, 503, 504),
         allowed_methods=frozenset(["GET"]), respect_retry_after_header=True,
     )
