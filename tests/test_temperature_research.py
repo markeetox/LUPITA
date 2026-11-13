@@ -35,3 +35,47 @@ def test_parse_float_rejects_fill_and_nonphysical_values():
     assert MODULE.parse_float("-9999") is None
     assert MODULE.parse_float("nan") is None
     assert MODULE.parse_float("29.1") == 29.1
+
+
+
+def test_mur_fallback_uses_each_mirror_without_replaying_primary(monkeypatch, tmp_path):
+    calls = []
+
+    class FakeResponse:
+        def __init__(self, url, status_code, text):
+            self.url = url
+            self.status_code = status_code
+            self.text = text
+            self.headers = {}
+
+        def raise_for_status(self):
+            if self.status_code >= 400:
+                raise MODULE.requests.HTTPError(
+                    f"HTTP {self.status_code}", response=self
+                )
+
+    def fake_get(url, **kwargs):
+        calls.append(url)
+        if "coastwatch.pfeg.noaa.gov" in url:
+            return FakeResponse(url, 503, "temporary primary outage")
+        csv_text = (
+            "time,latitude,longitude,analysed_sst\\n"
+            "UTC,degrees_north,degrees_east,degree_C\\n"
+            "2024-01-01T09:00:00Z,25.57,-80.10,25.4\\n"
+        )
+        return FakeResponse(url, 200, csv_text)
+
+    monkeypatch.setattr(MODULE.requests, "get", fake_get)
+    rows, errors, warnings = MODULE.fetch_mur(
+        None, "Brewster", 25.56676, -80.09974,
+        datetime(2024, 1, 1, tzinfo=timezone.utc),
+        datetime(2024, 1, 1, tzinfo=timezone.utc),
+        tmp_path,
+    )
+
+    assert len(calls) == 2
+    assert "coastwatch.pfeg.noaa.gov" in calls[0]
+    assert "erddap.marine.usf.edu" in calls[1]
+    assert rows[0]["mur_source_host"] == "erddap.marine.usf.edu"
+    assert errors == []
+    assert len(warnings) == 1
