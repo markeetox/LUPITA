@@ -168,7 +168,7 @@
       "geometry": null,
       "geometry_status": "source_chart_fragments_persisted_topology_precheck_passed_complete_boundary_unverified",
       "boundary_basis": "multi_source_ecological_context",
-      "boundary_scope_note": "This is the ecological waterbody entity, distinct from the statutory aquatic preserve and the Biscayne National Park boundary. Its polygon must be assembled from authoritative shoreline, hydrographic, and tidal-connection evidence. NOAA Harbour ENC also contains 37 charted Biscayne Bay named-water polygons across 17 ENC cells. These are chart-cell fragments, not a complete ecological or statutory boundary. A first geometric topology precheck is complete: the union has two disconnected components, one a very small isolated fragment. Full boundary reconciliation remains pending. Original chart fragments are persisted individually; no dissolved or complete boundary is promoted.",
+      "boundary_scope_note": "This is the ecological waterbody entity, distinct from the statutory aquatic preserve and the Biscayne National Park boundary. Its polygon must be assembled from authoritative shoreline, hydrographic, and tidal-connection evidence. NOAA Harbour ENC also contains 37 charted Biscayne Bay named-water polygons across 17 ENC cells. These are chart-cell fragments, not a complete ecological or statutory boundary. A first geometric topology precheck is complete: the union has two disconnected components, one a very small isolated fragment. Full boundary reconciliation remains pending. Original chart fragments are persisted individually; no dissolved or complete boundary is promoted. The NOAA charted named-water union was overlaid against FDEP Biscayne Bay Aquatic Preserve OBJECTID 43; the substantial mismatch confirms that these are different source concepts and neither is a complete ecological bay boundary. NOAA NGS shoreline projects FL1808C-TB-N (GC12023) and FL1808A-TB-N (GC12021) are identified as high-accuracy MHW/MLLW shoreline candidates but have not yet been retrieved.",
       "relationships": [
         {
           "type": "has_management_boundary",
@@ -182,6 +182,24 @@
           "title": "Biscayne Bay Stock Assessment",
           "url": "https://www.fisheries.noaa.gov/s3/2026-04/biscayne-bay-stock-508gw.pdf",
           "source_type": "ecological_waterbody_description"
+        },
+        {
+          "publisher": "NOAA National Geodetic Survey",
+          "title": "Coastal Mapping Program FL1808C-TB-N / GC12023, Rickenbacker Island to Snapper Creek Canal",
+          "url": "https://www.ngs.noaa.gov/desc_reports/FL1808C-TB-N.PDF",
+          "source_type": "high_accuracy_tidal_referenced_shoreline_candidate"
+        },
+        {
+          "publisher": "NOAA National Geodetic Survey",
+          "title": "Coastal Mapping Program FL1808A-TB-N / GC12021, Fender Point to Card Sound",
+          "url": "https://www.ngs.noaa.gov/desc_reports/FL1808A-TB-N.pdf",
+          "source_type": "high_accuracy_tidal_referenced_shoreline_candidate"
+        },
+        {
+          "publisher": "NOAA National Geodetic Survey",
+          "title": "NOAA Shoreline Data Explorer CUSP and National Shoreline product distinctions",
+          "url": "https://nsde.ngs.noaa.gov/more.html",
+          "source_type": "shoreline_product_quality_and_currency_reference"
         }
       ],
       "validation_status": "source_fragments_persisted_mosaic_not_promoted_to_boundary",
@@ -259,7 +277,32 @@
         ],
         "source_feature_count": 37,
         "connected_component_count": 2,
-        "positive_area_overlap_pairs": []
+        "positive_area_overlap_pairs": [],
+        "shoreline_source_candidates": [
+          {
+            "project_id": "FL1808C-TB-N",
+            "geographic_cell": "GC12023",
+            "coverage": "Rickenbacker Island southward to Snapper Creek Canal",
+            "download_status": "available_through_noaa_shoreline_data_explorer_not_yet_retrieved"
+          },
+          {
+            "project_id": "FL1808A-TB-N",
+            "geographic_cell": "GC12021",
+            "coverage": "Fender Point to Card Sound",
+            "download_status": "available_through_noaa_shoreline_data_explorer_not_yet_retrieved"
+          }
+        ]
+      },
+      "boundary_reconciliation": {
+        "method": "Area overlay in NAD83 / UTM zone 17N (EPSG:26917)",
+        "noaa_charted_named_water_union_km2": 512.865,
+        "fdep_biscayne_bay_preserve_km2": 261.411,
+        "intersection_km2": 180.106,
+        "noaa_union_outside_fdep_km2": 332.759,
+        "fdep_outside_noaa_union_km2": 81.306,
+        "intersection_as_fraction_of_fdep_area": 0.689,
+        "intersection_as_fraction_of_noaa_union_area": 0.351,
+        "interpretation": "These are geometric overlay statistics between distinct source semantics, not accuracy metrics. Neither source is promoted as the ecological bay boundary."
       }
     },
     {
