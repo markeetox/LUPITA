@@ -250,10 +250,16 @@ def curate(source_path: Path, output_dir: Path) -> dict[str, Any]:
                             " A first geometric topology precheck found one connected component and no material overlaps. "
                             "Source polygons remain separate; this does not establish ecological connectivity or current habitat."
                         )
-                    else:
+                    elif name == "Biscayne Flats":
                         note = note.rstrip() + (
                             " A first geometric topology precheck found one connected component and no material overlaps. "
                             "Source polygons remain separate; the charted mud-flat class does not establish current substrate or habitat."
+                        )
+                    else:
+                        note = note.rstrip() + (
+                            " A first geometric topology precheck found one connected component and no material overlaps. "
+                            "Source polygons remain separate; this does not establish current ecological connectivity, "
+                            "habitat condition, channel centerline, or navigation boundary."
                         )
                 feature["boundary_scope_note"] = note
         catalog_path.write_text(json.dumps(catalog, indent=2, ensure_ascii=False) + "\n", encoding="utf-8")
