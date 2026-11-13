@@ -113,11 +113,12 @@ for an untested Flutter starting point (`pipeline/api.py` builds the files; `tes
 ## Currents and the Gulf Stream edge
 Near-surface coastal currents now use NOAA/NESDIS HF Radar's near-real-time hourly 2 km product (`ucsdHfrE2`), requested
 only over the configured South Florida window. Eastward and northward velocity components are `water_u` and `water_v`
-in m/s. The pipeline overlays valid HF Radar vectors on the broader NOAA CoastWatch satellite-altimetry product
-(`nesdisSSH1day`, daily, 25 km, `ugos`/`vgos`) and uses altimetry wherever HF Radar has no valid vector. This is a
-spatial fallback, not a claim that the two products measure identical depths or physics. HF Radar represents near-surface
-coastal flow and has variable coverage; its `hdop`, contributing-radar and radial-count fields are reported as diagnostics
-but are not yet hard quality gates. The satellite-altimetry feed remains the source for the approximate Gulf Stream
+in m/s. Valid HF Radar vectors are used as the near-surface current observations. NOAA CoastWatch satellite
+altimetry (`nesdisSSH1day`, daily, 25 km, `ugos`/`vgos`) may fill radar gaps only when its timestamp is known,
+non-future, and no older than 72 hours. Missing, invalid, future-dated, or older altimetry is excluded from current
+vectors rather than presented as current conditions. HF Radar has variable coverage; its `hdop`, contributing-radar
+and radial-count fields are reported as diagnostics but are not yet hard quality gates. Satellite altimetry remains
+the source for the approximate Gulf Stream
 inshore-edge line. The edge is the westernmost point in each latitude row where northward flow reaches half the row's
 maximum (and at least about 0.8 kn); eddies are not modeled (`pipeline/currents.py`). It is approximate: roughly 20 km,
 weaker near shore, and geostrophic flow leaves out wind-driven and tidal currents. Sailfish, wahoo and mahi score a
