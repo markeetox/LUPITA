@@ -33,6 +33,7 @@ Keep production changes separate from research-only work. Do not promote candida
 - `tests/`: prediction, data-contract, extraction, and spatial QA tests.
 - `web/`: map client.
 - `.github/workflows/`: scheduled production refresh/export, lightweight PR validation, and manual-only source-acquisition workflows.
+- `requirements-research.txt`: optional GIS/research QA dependencies for tests and source analysis; not required by the production runtime.
 
 ## Execution and data-export boundary
 
@@ -41,6 +42,7 @@ Keep production changes separate from research-only work. Do not promote candida
 - `data` is a publication target for generated JSON/API assets, not a source-code dependency or a place where application logic is maintained.
 - The pipeline's optional checkout of the previous `data` publication is only a last-known-good export fallback. It is not used to run the prediction engine. A missing `data` branch must not prevent tests, prediction generation, or a new export.
 - Keep research acquisition artifacts and candidate geometry separate from production scoring until explicit validation and promotion.
+- Production runtime dependencies remain in `requirements.txt`. CI installs `requirements-research.txt` separately when it runs the full suite or GIS extraction tests.
 
 ## Current operational process
 
@@ -70,6 +72,7 @@ been checked against catch reports. The versioned app API exposes these outputs 
 ```
 python3 -m venv .venv && source .venv/bin/activate
 pip install -r requirements.txt
+pip install -r requirements-research.txt  # full test suite and GIS research QA only
 python -m pytest -q
 python -m pipeline.check_sources     # confirms stations, dataset IDs, dimensions, units
 python -m pipeline.run               # writes data/live/latest.json and data/live/fish.json
