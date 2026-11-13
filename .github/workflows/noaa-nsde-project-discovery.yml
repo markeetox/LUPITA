@@ -50,7 +50,15 @@ jobs:
             exit 0
           fi
           git commit -m "Persist NOAA Biscayne project shoreline vectors"
-          git push origin "HEAD:${TARGET_BRANCH}"
+          for attempt in 1 2 3; do
+            if git push origin "HEAD:\${TARGET_BRANCH}"; then
+              exit 0
+            fi
+            echo "Push race detected; rebasing on latest research branch (attempt \${attempt}/3)."
+            git fetch origin "\${TARGET_BRANCH}"
+            git rebase FETCH_HEAD
+          done
+          exit 1
       - name: Upload NSDE UI inspection and NOAA CMP source archives
         if: always()
         uses: actions/upload-artifact@v4
