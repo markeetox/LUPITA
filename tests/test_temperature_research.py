@@ -28,7 +28,7 @@ def test_read_usgs_wide_csv_normalizes_known_biscayne_site():
     assert len(brewster) == 1
     assert brewster[0]["temperature_c"] == 29.25
     assert brewster[0]["latitude"] == 25.56676
-    assert brewster[0]["sensor_depth_m"] == 3.96
+    assert brewster[0]["sensor_depth_m"] == 3.9624
 
 
 def test_parse_float_rejects_fill_and_nonphysical_values():
