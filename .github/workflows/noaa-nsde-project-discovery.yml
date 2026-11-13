@@ -11,7 +11,7 @@ permissions:
   contents: write
 
 concurrency:
-  group: lupita-research-branch-writes
+  group: noaa-nsde-project-discovery
   cancel-in-progress: false
 
 jobs:
