@@ -74,6 +74,34 @@ LAYERS = {
         "publisher": "NOAA Office of Coast Survey",
         "description": "Tideway-area polygons in large-scale Harbour ENC compilation.",
     },
+    "harbor_fairway_areas": {
+        "service": SERVICE,
+        "id": 208,
+        "name": "Harbor.Fairway_area",
+        "publisher": "NOAA Office of Coast Survey",
+        "description": "Charted fairway polygons; navigation-route context only, not ecological corridors or habitat.",
+    },
+    "harbor_deep_water_route_areas": {
+        "service": SERVICE,
+        "id": 207,
+        "name": "Harbor.Deep_Water_Route_Part_area",
+        "publisher": "NOAA Office of Coast Survey",
+        "description": "Charted deep-water route polygons; navigation context only, not ecological corridors or current depth guarantees.",
+    },
+    "harbor_two_way_route_areas": {
+        "service": SERVICE,
+        "id": 216,
+        "name": "Harbor.Two_Way_Route_Part_area",
+        "publisher": "NOAA Office of Coast Survey",
+        "description": "Charted two-way route polygons; navigation context only, not ecological connectivity.",
+    },
+    "harbor_recommended_route_centerlines": {
+        "service": SERVICE,
+        "id": 133,
+        "name": "Harbor.Recommended_Route_Centerline_line",
+        "publisher": "NOAA Office of Coast Survey",
+        "description": "Charted recommended-route centerlines; navigation route geometry, not channel or fish-movement centerlines.",
+    },
 }
 
 
