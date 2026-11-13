@@ -164,6 +164,28 @@
       ],
       "status": "named_water_area_polygon_retrieved_and_geometry_validated",
       "caveat": "The polygon represents a charted named-water area, not a surveyed channel centerline or current controlling-depth boundary."
+    },
+    "Norris Cut": {
+      "feature_count": 1,
+      "objectids": [
+        253447
+      ],
+      "chart_cells": [
+        "US5MIACC.000"
+      ],
+      "source_dates": [
+        "2004-01"
+      ],
+      "source_chart": "NOAA Chart 11468",
+      "geometry_type": "Polygon",
+      "bbox_wgs84": [
+        -80.1498818,
+        25.7503267,
+        -80.1396955,
+        25.7620415
+      ],
+      "status": "named_water_area_polygon_retrieved_and_geometry_validated",
+      "caveat": "This is a charted named-water area, not a surveyed channel centerline or current controlling-depth boundary."
     }
   },
   "channel_features": {
@@ -223,7 +245,14 @@
         "US5MIACD.000"
       ],
       "status": "maintained_channel_and_dredged_area_polygons_retrieved_review_pending",
-      "caveat": "Features share the Miami Harbor Channel fairway attribute but have distinct names including Cut-1 through Cut-4, Fisher Island Turning Basin, Fishermans Channel, and Dodge Island Cut. Do not label all of these as Government Cut."
+      "caveat": "Features share the Miami Harbor Channel fairway attribute but have distinct names including Cut-1 through Cut-4, Fisher Island Turning Basin, Fishermans Channel, and Dodge Island Cut. Do not label all of these as Government Cut.",
+      "fairway_layer_id": 208,
+      "fairway_layer_feature_count": 3,
+      "fairway_chart_cells": [
+        "US5MIACB.000",
+        "US5MIACC.000",
+        "US5MIACD.000"
+      ]
     },
     "Government Cut": {
       "status": "name_documented_geometry_not_identified_as_a_named_feature_in_extracted_layers",
@@ -231,14 +260,24 @@
         "NOAA Coast Pilot 4, Chapter 10, paragraph 414 describes the federal project channel from the sea buoy to inside Government Cut.",
         "NOAA chart 11468 labels Government Cut and Miami Harbor entrance features."
       ],
-      "caveat": "Nearby Miami Harbor Channel fairway features are candidate spatial context only. Exact Government Cut geometry still needs a chart-feature crosswalk or independently verified digitization."
+      "caveat": "Nearby Miami Harbor Channel fairway features are candidate spatial context only. Do not assign an individual Cut-N or fairway polygon to Government Cut without a defensible chart-feature crosswalk.",
+      "fairway_layer_id": 208,
+      "fairway_named_polygon_count": 3,
+      "fairway_chart_cells": [
+        "US5MIACB.000",
+        "US5MIACC.000",
+        "US5MIACD.000"
+      ],
+      "fairway_crosswalk_status": "Miami Harbor Channel fairway polygons retrieved; exact Government Cut subgeometry still not identified"
     },
     "Norris Cut": {
-      "status": "name_documented_geometry_not_identified_in_extracted_layers",
-      "evidence": [
-        "NOAA Coast Pilot 4, Chapter 11, paragraph 38 describes Norris Cut as a shallow inlet just south of the Main Channel to Miami Harbor between Fisher Island and Virginia Key."
-      ],
-      "caveat": "Do not assign geometry from nearby chart features without a direct source-feature match."
+      "status": "direct_named_water_area_polygon_found_channel_centerline_not_identified",
+      "source_layer_id": 237,
+      "source_objectid": 253447,
+      "chart_cell": "US5MIACC.000",
+      "source_chart": "NOAA Chart 11468",
+      "source_date": "2004-01",
+      "caveat": "The directly named source is a named-water polygon. It does not establish the full physical inlet channel, controlling depth, or ecological connectivity."
     }
   },
   "workflow": {
