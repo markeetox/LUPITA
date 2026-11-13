@@ -9,7 +9,7 @@
 
 LUPITA is being consolidated around one authoritative application branch: `main`. The temporary `integration/main-consolidation` branch is a pre-production staging area only. The `data` branch is reserved for generated application exports and is excluded from code consolidation. GIS research remains separate from production scoring until reviewed and promoted.
 
-PRs #66, #68, and #69 have been squash-merged into `integration/main-consolidation`. The 85 unique/updated paths from PR #70 have also been imported into staging as a consolidated tree commit, removing its stacked dependency. Original PRs #70 and #71 are closed as superseded. No consolidation changes have been merged into production `main`.
+PRs #66, #68, and #69 have been squash-merged into `integration/main-consolidation`. The 85 unique/updated paths from PR #70 have also been imported into staging as a consolidated tree commit, removing its stacked dependency. Original PRs #70 and #71 are closed as superseded. Consolidated PR #72 targets `main`; its Python suite, species validator, and focused Biscayne workflow all pass. Only the Vercel preview status is failing due to an external 24-hour deployment rate limit.
 
 ## Current workstreams
 
@@ -70,6 +70,7 @@ No inferred inlet connections, snapped seams, or synthetic channel centerlines a
 | [#68](https://github.com/markeetox/LUPITA/pull/68) | South Florida spatial-context schema and species habitat contexts | integration staging | Merged |
 | [#66](https://github.com/markeetox/LUPITA/pull/66) | South Florida in-situ temperature audit | integration staging | Merged |
 | [#71](https://github.com/markeetox/LUPITA/pull/71) | Prediction reliability changes | already present in current codebase | Closed, superseded |
+| [#72](https://github.com/markeetox/LUPITA/pull/72) | Single-main runtime and data-export consolidation | `main` | Open, checks passed |
 
 PR #70 originated as a stacked branch on #69. Its resulting file tree is now in the staging branch without the old commit chain. PR #71 was reviewed against the current tree and its meaningful API/confidence changes were already present, so it was closed without importing stale versions of core files.
 
@@ -80,18 +81,17 @@ PR #70 originated as a stacked branch on #69. Its resulting file tree is now in 
 3. The 17.691 km nearest separation between FL1808A and FL1808C MHW linework is a measured separation between project vectors, not proof of a missing coastline or permission to interpolate.
 4. Government Cut requires an exact source-feature crosswalk.
 5. Candidate subregions, flats, channels, and inlet connections must retain confidence/provenance and must not be promoted based on proximity alone.
-6. The Jewfish Creek shared-boundary test exposed projection-induced false zero measurements. The implementation now evaluates shared-edge topology in source coordinates and projects the resulting line only for metric length. A local reproduction returns a 100.763 m shared boundary for the synthetic fixture; the consolidated GitHub workflow still needs a successful run.
+6. The Jewfish Creek shared-boundary test exposed projection-induced false zero measurements. The implementation now evaluates shared-edge topology in source coordinates and projects the resulting line only for metric length. The focused GitHub workflow now passes all 4 topology tests; the synthetic shared edge measures 100.763 m.
 7. Five expensive FWC/NOAA source-acquisition workflows and the in-situ temperature extraction workflow are manual-only so PR synchronization cannot repeatedly trigger downloads and branch-write loops.
 8. The first consolidated species-validator run failed during test collection because the full suite now includes GIS tests but the workflow installed only production requirements. Added `requirements-research.txt` and wired it into all full-suite CI workflows; rerun is pending.
 
 ## Next implementation milestones
 
-1. Finish the branch-by-branch audit, import only unique useful changes, and close/archive superseded branches.
-2. Rerun the full Python suite and species validator with `requirements-research.txt`, then confirm the focused GIS test and manual-only source-acquisition policy.
-3. Confirm the production workflow can run from `main` and publish outputs to `data` without requiring the data branch for prediction execution.
-4. Open one consolidated PR from `integration/main-consolidation` to `main` after validation.
-5. Reconcile authoritative landmark references and candidate subregions without inventing separator lines.
-6. Define explicit promotion criteria from research artifacts to production map/prediction inputs.
+1. Merge consolidated PR #72 into `main`; the required Python, species, and focused GIS checks pass.
+2. Retain `data` as the generated export branch. Its current 725 paths are JSON/API/PNG assets only, with no source-code files.
+3. Archive or delete superseded feature/fix/research branches after the merge; keep only `main` and `data` as active branches.
+4. Verify the next scheduled `main` pipeline run exports successfully to `data`.
+5. Continue Biscayne boundary and inlet reconciliation as research within `main`, without promoting unverified geometry.
 
 ## Validation policy
 
