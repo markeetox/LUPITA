@@ -17,7 +17,7 @@ PAGE_SIZE = 500
 MAX_PAGES = 100
 TIMEOUT = (15, 90)
 LAYERS = {
-    "statutory_preserve_boundary": {
+    "fdep_aquatic_preserve_polygons": {
         "id": 0,
         "service": FDEP_SERVICE,
         "where": "1=1",
@@ -26,7 +26,7 @@ LAYERS = {
         "out_fields": "OBJECTID,NAME,COUNTIES,REGION,ACRES",
         "return_z": False,
         "return_m": False,
-        "description": "FDEP aquatic-preserve polygons filtered locally to Biscayne Bay; official mapped boundary is approximate and not for enforcement.",
+        "description": "FDEP aquatic-preserve polygons filtered locally to Biscayne Bay names; retain distinct preserve designations. Official mapped boundaries are approximate and not for enforcement.",
     },
     "source_footprints": {
         "id": 0,
