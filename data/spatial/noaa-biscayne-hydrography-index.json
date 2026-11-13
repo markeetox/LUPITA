@@ -291,5 +291,42 @@
     "Source dates on individual features are older than the current weekly service refresh; weekly refresh does not make the original source survey current.",
     "Charted geographic names and classes are not proof of habitat condition or biological use.",
     "No ecological connectivity, current, or fish movement is inferred from geometry alone."
-  ]
+  ],
+  "route_layer_inventory": {
+    "harbor_fairway_areas": {
+      "layer_id": 208,
+      "feature_count": 62,
+      "geometry_type": "Polygon",
+      "miami_harbor_channel_feature_count": 3,
+      "miami_harbor_channel_objectids": [
+        42416,
+        42420,
+        42422
+      ],
+      "chart_cells": [
+        "US5MIACB.000",
+        "US5MIACC.000",
+        "US5MIACD.000"
+      ],
+      "source_dates": [
+        "20190124"
+      ],
+      "status": "broader_miami_harbor_channel_fairway_context_retrieved_exact_government_cut_subgeometry_unresolved"
+    },
+    "harbor_deep_water_route_parts": {
+      "layer_id": 207,
+      "feature_count": 0,
+      "status": "no_features_returned_within_query_bbox"
+    },
+    "harbor_two_way_route_parts": {
+      "layer_id": 216,
+      "feature_count": 0,
+      "status": "no_features_returned_within_query_bbox"
+    },
+    "harbor_recommended_route_centerlines": {
+      "layer_id": 133,
+      "feature_count": 0,
+      "status": "no_features_returned_within_query_bbox"
+    }
+  }
 }
