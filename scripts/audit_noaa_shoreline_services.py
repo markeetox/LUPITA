@@ -1,8 +1,8 @@
 """Research-only extraction of Florida shoreline comparison layers.
 
 The Florida DEP service republishes NOAA-derived MHW composite shoreline and
-NOAA MHHW screening linework. They are kept as separate source products and
-are not treated as project-specific FL1808A/FL1808C vectors.
+NOAA MHHW screening linework. Original source records and Biscayne-area clipped
+copies are kept separately; no final bay boundary is inferred.
 """
 from __future__ import annotations
 
@@ -13,10 +13,11 @@ from pathlib import Path
 from typing import Any
 
 import requests
+from shapely.geometry import GeometryCollection, LineString, MultiLineString, box, mapping, shape
 
 SERVICE = "https://ca.dep.state.fl.us/arcgis/rest/services/Map_Direct/Program_Support/MapServer"
 BBOX = (-80.45, 25.25, -80.05, 26.00)
-BATCH_SIZE = 500
+BATCH_SIZE = 1
 TIMEOUT = (15, 90)
 
 LAYERS = {
@@ -33,6 +34,7 @@ LAYERS = {
         "publisher": "NOAA Office for Coastal Management; hosted by Florida DEP",
         "output_file": "noaa_composite_shoreline_mhw_biscayne.geojson",
         "metadata_url": "https://ca.dep.state.fl.us/arcgis/rest/services/Map_Direct/Program_Support/MapServer/41",
+        "required": True,
     },
     "noaa_mhhw_screening_line": {
         "id": 40,
@@ -46,6 +48,7 @@ LAYERS = {
         "publisher": "NOAA Office for Coastal Management; hosted by Florida DEP",
         "output_file": "noaa_mhhw_screening_line_biscayne.geojson",
         "metadata_url": "https://ca.dep.state.fl.us/arcgis/rest/services/Map_Direct/Program_Support/MapServer/40",
+        "required": False,
     },
 }
 
@@ -126,6 +129,47 @@ def validate_geojson_feature(feature: dict[str, Any]) -> None:
             raise ValueError(f"Coordinate outside EPSG:4326 bounds: {position!r}")
 
 
+def esri_feature_to_geojson(feature: dict[str, Any]) -> dict[str, Any]:
+    attributes = feature.get("attributes") or {}
+    paths = (feature.get("geometry") or {}).get("paths") or []
+    if not paths:
+        raise ValueError("ArcGIS JSON feature has no polyline paths")
+    geometry = {
+        "type": "LineString" if len(paths) == 1 else "MultiLineString",
+        "coordinates": paths[0] if len(paths) == 1 else paths,
+    }
+    converted = {
+        "type": "Feature",
+        "id": attributes.get("OBJECTID"),
+        "properties": attributes,
+        "geometry": geometry,
+    }
+    validate_geojson_feature(converted)
+    return converted
+
+
+def clip_line_geometry(geometry: dict[str, Any], aoi):
+    clipped = shape(geometry).intersection(aoi)
+
+    def collect_lines(item):
+        if item.is_empty:
+            return []
+        if item.geom_type == "LineString":
+            return [item]
+        if item.geom_type == "MultiLineString":
+            return list(item.geoms)
+        if item.geom_type == "GeometryCollection":
+            return [line for child in item.geoms for line in collect_lines(child)]
+        return []
+
+    lines = collect_lines(clipped)
+    if not lines:
+        return None
+    if len(lines) == 1:
+        return mapping(lines[0])
+    return mapping(MultiLineString(lines))
+
+
 def fetch_layer(
     session: requests.Session, definition: dict[str, Any], output_dir: Path
 ) -> tuple[dict[str, Any], dict[str, Any]]:
@@ -163,50 +207,105 @@ def fetch_layer(
     if ids_payload.get("error"):
         raise RuntimeError(f"NOAA-derived layer ID query error: {ids_payload['error']}")
     object_ids = sorted(ids_payload.get("objectIds") or [])
-    features = []
 
-    for offset in range(0, len(object_ids), BATCH_SIZE):
-        batch = object_ids[offset : offset + BATCH_SIZE]
+    source_features = []
+    failed_object_ids = []
+    for object_id in object_ids:
         params = {
-            "objectIds": ",".join(str(value) for value in batch),
+            "objectIds": str(object_id),
             "outFields": "*",
             "returnGeometry": "true",
             "outSR": 4326,
             "f": "geojson",
         }
         response = session.get(query_url, params=params, timeout=TIMEOUT)
-        response.raise_for_status()
-        payload = response.json()
-        if payload.get("error"):
-            raise RuntimeError(f"NOAA-derived feature query error: {payload['error']}")
-        page = payload.get("features")
-        if not isinstance(page, list):
-            raise RuntimeError("NOAA-derived layer response has no GeoJSON features array")
-        for feature in page:
+        try:
+            response.raise_for_status()
+            payload = response.json()
+            if payload.get("error"):
+                raise RuntimeError(str(payload["error"]))
+            page = payload.get("features")
+            if not isinstance(page, list):
+                raise RuntimeError("GeoJSON response has no features array")
+            converted = page
+        except Exception as geojson_error:
+            # Some ArcGIS map services fail GeoJSON serialization for specific
+            # features; retry that single object in native ArcGIS JSON format.
+            fallback_params = {**params, "f": "json"}
+            fallback = session.get(query_url, params=fallback_params, timeout=TIMEOUT)
+            try:
+                fallback.raise_for_status()
+                fallback_payload = fallback.json()
+                if fallback_payload.get("error"):
+                    raise RuntimeError(str(fallback_payload["error"]))
+                converted = [
+                    esri_feature_to_geojson(item)
+                    for item in fallback_payload.get("features", [])
+                ]
+            except Exception as fallback_error:
+                if definition["required"]:
+                    raise RuntimeError(
+                        f"Required layer {definition['id']} object {object_id} failed "
+                        f"GeoJSON and ArcGIS JSON retrieval: {geojson_error}; {fallback_error}"
+                    ) from fallback_error
+                failed_object_ids.append({
+                    "object_id": object_id,
+                    "geojson_error": str(geojson_error),
+                    "fallback_error": str(fallback_error),
+                })
+                continue
+        for feature in converted:
             validate_geojson_feature(feature)
-        features.extend(page)
+        source_features.extend(converted)
 
-    if len(features) != len(object_ids):
-        raise RuntimeError(
-            f"Layer {definition['id']} returned {len(features)} features "
-            f"for {len(object_ids)} object IDs"
-        )
-
-    collection = {
+    raw_collection = {
         "type": "FeatureCollection",
-        "name": definition["name"].replace(" ", "_"),
+        "name": f"{definition['name'].replace(' ', '_')}_source_raw",
         "crs": {"type": "name", "properties": {"name": "EPSG:4326"}},
-        "features": features,
+        "features": source_features,
     }
-    (output_dir / definition["output_file"]).write_text(
-        json.dumps(collection, separators=(",", ":")) + "\n", encoding="utf-8"
+    raw_file = f"{Path(definition['output_file']).stem}_source_raw.geojson"
+    (output_dir / raw_file).write_text(
+        json.dumps(raw_collection, separators=(",", ":")) + "\n", encoding="utf-8"
     )
 
-    attribute_counts: dict[str, int] = {}
+    aoi = box(xmin, ymin, xmax, ymax)
+    clipped_features = []
+    for feature in source_features:
+        clipped_geometry = clip_line_geometry(feature["geometry"], aoi)
+        if clipped_geometry is None:
+            continue
+        properties = dict(feature.get("properties") or {})
+        properties["LUPITA_SOURCE_OBJECTID"] = (
+            feature.get("id") or properties.get("OBJECTID")
+        )
+        properties["LUPITA_SOURCE_LAYER_ID"] = definition["id"]
+        properties["LUPITA_CLIP_BBOX_WGS84"] = json.dumps(list(BBOX))
+        clipped = {
+            "type": "Feature",
+            "id": feature.get("id"),
+            "properties": properties,
+            "geometry": clipped_geometry,
+        }
+        validate_geojson_feature(clipped)
+        clipped_features.append(clipped)
+
+    clipped_collection = {
+        "type": "FeatureCollection",
+        "name": f"{definition['name'].replace(' ', '_')}_biscayne_bbox_clip",
+        "crs": {"type": "name", "properties": {"name": "EPSG:4326"}},
+        "features": clipped_features,
+    }
+    (output_dir / definition["output_file"]).write_text(
+        json.dumps(clipped_collection, separators=(",", ":")) + "\n",
+        encoding="utf-8",
+    )
+
     field_name = "F_NAME" if "F_NAME" in {
         field.get("name") for field in metadata.get("fields", [])
     } else "OBJECTID"
-    for feature in features:
+    attribute_counts: dict[str, int] = {}
+    for feature in source_features:
         value = str((feature.get("properties") or {}).get(field_name) or "unknown")
         attribute_counts[value] = attribute_counts.get(value, 0) + 1
 
@@ -214,19 +313,23 @@ def fetch_layer(
         "layer_id": definition["id"],
         "layer_name": metadata.get("name"),
         "datum_or_product": definition["datum"],
-        "feature_count": len(features),
-        "object_id_count": len(object_ids),
+        "source_object_id_count": len(object_ids),
+        "source_feature_count_retrieved": len(source_features),
+        "source_feature_count_failed": len(failed_object_ids),
+        "failed_object_ids": failed_object_ids,
+        "clipped_feature_count": len(clipped_features),
         "geometry_types": sorted({
-            feature["geometry"]["type"] for feature in features
+            feature["geometry"]["type"] for feature in clipped_features
         }),
         "attribute_field": field_name,
-        "attribute_counts": attribute_counts,
+        "source_attribute_counts": attribute_counts,
         "bbox_wgs84": list(BBOX),
         "output_crs": "EPSG:4326",
         "source_spatial_reference": metadata.get("extent", {}).get("spatialReference"),
         "source_extent": metadata.get("extent"),
         "max_record_count": metadata.get("maxRecordCount"),
-        "output_file": definition["output_file"],
+        "raw_source_file": raw_file,
+        "clipped_output_file": definition["output_file"],
         "metadata_url": definition["metadata_url"],
         "description": definition["description"],
     }
@@ -241,20 +344,30 @@ def run_audit(output_dir: Path, session: requests.Session | None = None) -> dict
     })
 
     summaries = {}
+    layer_errors = {}
     for key, definition in LAYERS.items():
-        metadata, summary = fetch_layer(session, definition, output_dir)
-        (output_dir / f"{key}_metadata.json").write_text(
-            json.dumps(metadata, indent=2) + "\n", encoding="utf-8"
-        )
-        summaries[key] = summary
+        try:
+            metadata, summary = fetch_layer(session, definition, output_dir)
+            (output_dir / f"{key}_metadata.json").write_text(
+                json.dumps(metadata, indent=2) + "\n", encoding="utf-8"
+            )
+            summaries[key] = summary
+        except Exception as exc:
+            if definition["required"]:
+                raise
+            layer_errors[key] = f"{type(exc).__name__}: {exc}"
 
+    status = "complete" if not layer_errors and not any(
+        value["source_feature_count_failed"] for value in summaries.values()
+    ) else "partial_optional_layer_or_feature_failures"
     report = {
-        "audit_version": 3,
+        "audit_version": 4,
         "generated_at_utc": datetime.now(timezone.utc).isoformat(),
-        "status": "florida_noaa_shoreline_comparison_geometry_retrieved",
+        "status": status,
         "service": SERVICE,
         "query_bbox_wgs84": list(BBOX),
         "shoreline_layers": summaries,
+        "optional_layer_errors": layer_errors,
         "project_metadata_candidates": PROJECTS,
         "rejected_cusp_candidate": {
             "url": "https://services.arcgis.com/rD2ylXRs80UroD90/ArcGIS/rest/services/NOAA_Coastal_Shoreline/FeatureServer/0",
@@ -286,14 +399,17 @@ def main() -> int:
     args = parser.parse_args()
     report = run_audit(args.output_dir)
     print(json.dumps({
+        "status": report["status"],
         "layers": {
             key: {
-                "feature_count": value["feature_count"],
-                "attribute_counts": value["attribute_counts"],
-                "output_file": value["output_file"],
+                "source_feature_count": value["source_feature_count_retrieved"],
+                "clipped_feature_count": value["clipped_feature_count"],
+                "failed_source_features": value["source_feature_count_failed"],
+                "output_file": value["clipped_output_file"],
             }
             for key, value in report["shoreline_layers"].items()
         },
+        "optional_layer_errors": report["optional_layer_errors"],
         "output_dir": str(args.output_dir),
     }, indent=2))
     return 0
