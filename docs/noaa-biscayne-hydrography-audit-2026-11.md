@@ -40,6 +40,10 @@ All extracted geometries passed coordinate-range and geometry-type validation.
 | Harbour Named Water Areas | 189 | Polygon | Includes Biscayne Bay, Card Sound, Safety Valve, Biscayne Flats, and Bear Cut |
 | Harbour Canal Areas | 13 | Polygon | Includes Mowry Canal, Florida City Canal, Military Canal, North Canal, and Little River |
 | Harbour Tideway Areas | 0 | None | No features returned in this query area |
+| Harbour Fairway Areas | 62 | Polygon | Includes three named Miami Harbor Channel fairway polygons across three ENC cells |
+| Harbour Deep Water Route Parts | 0 | None | No features returned in this query area |
+| Harbour Two-Way Route Parts | 0 | None | No features returned in this query area |
+| Harbour Recommended Route Centerlines | 0 | None | No features returned in this query area |
 | Harbour Named Water Area Points | 0 | None | No point label anchors returned |
 | Harbour Navigation Lines | 8 | LineString | All returned features were unnamed |
 
@@ -100,7 +104,7 @@ Some returned features carry source information warning that the depiction is mi
 
 ### Government Cut
 
-The structured feature layers queried here did not return a directly named Government Cut polygon or line. Nearby Miami Harbor Channel fairway features are candidate spatial context only.
+The structured feature layers queried here did not return a directly named Government Cut polygon or line. NOAA Harbour layer 208 returns three named Miami Harbor Channel fairway polygons across cells US5MIACB.000, US5MIACC.000, and US5MIACD.000. The maintained-channel theme also returns 44 features with FAIRWAY = Miami Harbor Channel across five ENC cells. These are project-channel context, not a direct Government Cut feature crosswalk.
 
 NOAA Coast Pilot 4, Chapter 10, paragraph 414 describes the federal project channel from the sea buoy to inside Government Cut, then onward to Fisher Island Turning Basin and Fishermans Channel. This provides a textual crosswalk target, but the exact ENC feature-to-Government-Cut assignment still needs review.
 
