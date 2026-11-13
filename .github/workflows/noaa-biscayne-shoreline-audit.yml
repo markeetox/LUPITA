@@ -2,11 +2,6 @@ name: NOAA Biscayne shoreline service audit
 
 on:
   workflow_dispatch: {}
-  pull_request:
-    paths:
-      - "scripts/audit_noaa_shoreline_services.py"
-      - "tests/test_noaa_shoreline_services.py"
-      - ".github/workflows/noaa-biscayne-shoreline-audit.yml"
 
 permissions:
   contents: write
