@@ -1,4 +1,4 @@
-"""HTTP GET with retries, for servers that sometimes refuse or time out (NOAA ERDDAP, ArcGIS, CO-OPS)."""
+"""HTTP GET with bounded retries and useful diagnostics for upstream failures."""
 from __future__ import annotations
 
 import random
@@ -6,25 +6,64 @@ import time
 
 import requests
 
-# 403 is included: ERDDAP servers answer 403 when they rate-limit or briefly block a busy address.
-RETRY_STATUS = {403, 408, 425, 429, 500, 502, 503, 504}
+# Do not retry 403: ERDDAP uses it for access denials and IP blacklisting.
+# Retrying a forbidden request can make an upstream block worse.
+RETRY_STATUS = {408, 425, 429, 500, 502, 503, 504}
 USER_AGENT = "fish-habitat-map/0.2 (+https://github.com/markeetox/lupita)"
+DIAGNOSTIC_HEADERS = ("date", "server", "content-type", "retry-after", "x-ratelimit-remaining")
+
+
+def _response_error(response, url: str, attempt: int, attempts: int) -> requests.HTTPError:
+    """Build a bounded, actionable HTTP error without dumping an entire response."""
+    status = response.status_code
+    details = [f"HTTP {status} for {url} (attempt {attempt}/{attempts})"]
+    response_headers = getattr(response, "headers", {}) or {}
+    selected = {
+        name: response_headers[name]
+        for name in DIAGNOSTIC_HEADERS
+        if name in response_headers
+    }
+    if selected:
+        details.append(f"headers={selected!r}")
+    body = " ".join(str(getattr(response, "text", "")).split())
+    if body:
+        details.append(f"body={body[:600]!r}")
+    return requests.HTTPError("; ".join(details), response=response)
 
 
 def get(url, params=None, headers=None, timeout=120, attempts=4, base_delay=20.0, sleep=time.sleep, getter=requests.get):
-    """GET url, retrying refusals and network errors with growing waits (base_delay, then x2, x4, ...).
-    Returns the response, or raises the last error once the attempts run out."""
-    headers = {"User-Agent": USER_AGENT, **(headers or {})}
+    """GET with exponential backoff for transient failures, never retrying HTTP 403.
+
+    Retry delays grow as base_delay, 2*base_delay, 4*base_delay, etc.
+    Permanent HTTP errors include the attempt number and bounded response diagnostics.
+    """
+    if attempts < 1:
+        raise ValueError("attempts must be at least 1")
+    request_headers = {"User-Agent": USER_AGENT, **(headers or {})}
     last_exc = None
-    for k in range(attempts):
+
+    for index in range(attempts):
+        attempt = index + 1
         try:
-            r = getter(url, params=params, headers=headers, timeout=timeout)
+            response = getter(url, params=params, headers=request_headers, timeout=timeout)
         except (requests.ConnectionError, requests.Timeout) as exc:
             last_exc = exc
+            if attempt == attempts:
+                exc.args = (f"Request to {url} failed after {attempt}/{attempts} attempts: {exc}",)
+                raise
         else:
-            if r.status_code not in RETRY_STATUS or k == attempts - 1:
-                r.raise_for_status()
-                return r
-        if k < attempts - 1:
-            sleep(base_delay * 2 ** k + random.uniform(0, 5))
+            status = response.status_code
+            if status == 403:
+                raise _response_error(response, url, attempt, attempts)
+            if status not in RETRY_STATUS:
+                if status >= 400:
+                    raise _response_error(response, url, attempt, attempts)
+                return response
+            if attempt == attempts:
+                raise _response_error(response, url, attempt, attempts)
+
+        if attempt < attempts:
+            sleep(base_delay * 2 ** index + random.uniform(0, 5))
+
+    # The loop either returns or raises; this is a defensive guard.
     raise last_exc
