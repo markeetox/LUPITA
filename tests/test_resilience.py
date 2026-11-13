@@ -61,6 +61,7 @@ def test_forbidden_request_is_not_retried_and_includes_server_diagnostics():
     assert len(g.calls) == 1
     assert waits == []
     assert "HTTP 403" in message and "attempt 1/4" in message
+    assert "https://coastwatch.example/erddap/griddap/d.csv" in message
     assert "request blacklist" in message
     assert "Apache" in message and "text/plain" in message
 
