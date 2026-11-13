@@ -87,3 +87,16 @@ def test_noaa_charted_features_preserve_source_ids_and_unverified_geometry_state
     assert "not_identified" in government["geometry_status"]
     assert harbor["source_geometry_ref"]["objectids"]
     assert len(harbor["source_geometry_ref"]["objectids"]) == 44
+
+
+def test_noaa_hydrography_index_records_charted_feature_provenance():
+    index_path = Path(__file__).parents[1] / "data" / "spatial" / "noaa-biscayne-hydrography-index.json"
+    index = json.loads(index_path.read_text(encoding="utf-8"))
+    named = index["named_water_features"]
+    assert named["Biscayne Bay"]["feature_count"] == 37
+    assert named["Safety Valve"]["feature_count"] == 4
+    assert named["Biscayne Flats"]["charted_category"] == "mud flats"
+    assert named["Bear Cut"]["objectids"] == [253451]
+    assert named["Bear Cut"]["geometry_type"] == "Polygon"
+    assert index["channel_features"]["Miami Harbor Channel fairway"]["feature_count"] == 44
+    assert "not_identified" in index["channel_features"]["Government Cut"]["status"]
