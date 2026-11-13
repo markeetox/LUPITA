@@ -120,7 +120,10 @@ def fetch_cusp_shoreline(
     query_url = f"{ARCGIS_CUSP_LAYER}/query"
     id_params = {
         "where": "1=1",
-        "geometry": f"{xmin},{ymin},{xmax},{ymax}",
+        "geometry": json.dumps({
+            "xmin": xmin, "ymin": ymin, "xmax": xmax, "ymax": ymax,
+            "spatialReference": {"wkid": 4326},
+        }),
         "geometryType": "esriGeometryEnvelope",
         "inSR": 4326,
         "spatialRel": "esriSpatialRelIntersects",
@@ -198,6 +201,7 @@ def fetch_cusp_shoreline(
         "source_fields": [field.get("name") for field in metadata.get("fields", [])],
         "service_last_edit_date": metadata.get("editingInfo", {}).get("lastEditDate"),
         "service_max_record_count": metadata.get("maxRecordCount"),
+        "service_extent": metadata.get("extent"),
     }
     return metadata, summary
 
