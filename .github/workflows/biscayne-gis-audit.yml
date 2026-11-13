@@ -1,0 +1,41 @@
+name: Biscayne Bay GIS geometry audit
+
+on:
+  workflow_dispatch: {}
+  pull_request:
+    paths:
+      - "scripts/extract_biscayne_bay_gis.py"
+      - "tests/test_biscayne_gis_extraction.py"
+      - ".github/workflows/biscayne-gis-audit.yml"
+
+permissions:
+  contents: read
+
+concurrency:
+  group: biscayne-gis-audit
+  cancel-in-progress: true
+
+jobs:
+  extract-and-validate:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+      - name: Install dependencies
+        run: python -m pip install -r requirements.txt
+      - name: Run extraction tests
+        run: python -m pytest -q tests/test_biscayne_gis_extraction.py
+      - name: Extract FWC source and benthic geometries
+        run: python scripts/extract_biscayne_bay_gis.py --output-dir artifacts/biscayne-gis
+      - name: Upload GIS review artifact
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: biscayne-bay-gis-review
+          path: artifacts/biscayne-gis/
+          if-no-files-found: warn
+          retention-days: 14
