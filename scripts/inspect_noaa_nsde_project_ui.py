@@ -18,7 +18,7 @@ from shapely.geometry import shape as make_shape, mapping
 from shapely.ops import linemerge, transform as transform_geometry, unary_union
 
 URL = "https://nsde.ngs.noaa.gov/cmp.html"
-PROJECT_IDS = ["FL1808C-TB-N", "FL1808A-TB-N", "FL2317-CS-N"]
+PROJECT_IDS = ["FL1808C-TB-N", "FL1808A-TB-N", "FL2317-CS-N", "FL1603A-CM-N"]
 PROJECT_METADATA = {
     "FL1808A-TB-N": {
         "inport_id": 74866,
@@ -40,6 +40,16 @@ PROJECT_METADATA = {
         "source_dates": ["2023-10-21"],
         "reported_horizontal_accuracy_95pct_m": "1.2",
         "geographic_extent_wgs84": [-80.2157448950401, 25.7342282449007, -80.1074168708588, 25.8119979108154],
+    },
+    "FL1603A-CM-N": {
+        "inport_id": 61478,
+        "inport_url": "https://www.fisheries.noaa.gov/inport/item/61478",
+        "project_report_url": "https://www.ngs.noaa.gov/desc_reports/FL1603A-CM-N.PDF",
+        "geographic_cell": "GC11552",
+        "scope": "local Convoy Point shoreline comparison only; not bay-wide coverage",
+        "source_dates": ["2017-03-19"],
+        "reported_horizontal_accuracy_95pct_m": "1.9",
+        "geographic_extent_wgs84": [-80.3457198, 25.44636753, -80.3168564, 25.47820684],
     },
 }
 
