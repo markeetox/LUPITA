@@ -12,10 +12,17 @@ from typing import Any
 import requests
 
 SERVICE = "https://gis.myfwc.com/hosting/rest/services/Projects_FWC/UnifiedReefMapProject_v2_2/MapServer"
+FDEP_SERVICE = "https://ags.dep.state.fl.us/arcgis/rest/services/OpenData/AQUATIC_PRESERVES/MapServer"
 PAGE_SIZE = 500
 MAX_PAGES = 100
 TIMEOUT = (15, 90)
 LAYERS = {
+    "statutory_preserve_boundary": {
+        "id": 0,
+        "service": FDEP_SERVICE,
+        "where": "NAME LIKE '%BISCAYNE BAY%'",
+        "description": "FDEP aquatic-preserve polygon; official mapped boundary is approximate and not for enforcement.",
+    },
     "source_footprints": {
         "id": 0,
         "where": "Source LIKE '%Biscayne Bay%'",
@@ -67,8 +74,8 @@ def validate_feature(feature: dict[str, Any]) -> None:
             raise ValueError(f"Coordinate outside EPSG:4326 bounds: {point!r}")
 
 
-def _request_page(session, layer_id, where, offset, page_size=PAGE_SIZE):
-    url = f"{SERVICE}/{layer_id}/query"
+def _request_page(session, layer_id, where, offset, page_size=PAGE_SIZE, service=SERVICE):
+    url = f"{service}/{layer_id}/query"
     params = {
         "where": where, "outFields": "*", "returnGeometry": "true",
         "outSR": "4326", "f": "geojson", "resultOffset": offset,
@@ -91,7 +98,8 @@ def extract_layer(session, name, definition):
     features = []
     pages = 0
     while pages < MAX_PAGES:
-        payload = _request_page(session, layer_id, definition["where"], offset)
+        service = definition.get("service", SERVICE)
+        payload = _request_page(session, layer_id, definition["where"], offset, service=service)
         page = payload["features"]
         for feature in page:
             validate_feature(feature)
@@ -107,7 +115,7 @@ def extract_layer(session, name, definition):
     bounds = [180.0, 90.0, -180.0, -90.0]
     for feature in features:
         props = feature.get("properties") or {}
-        source = props.get("Source") or props.get("FIRST_Source") or "unknown"
+        source = props.get("Source") or props.get("FIRST_Source") or props.get("NAME") or "unknown"
         habitat = next((props.get(key) for key in (
             "FIRST_ClassLv1", "FIRST_ClassLv2", "FIRST_ClassLv3",
             "FIRST_ClassLv4", "Legend"
@@ -123,7 +131,7 @@ def extract_layer(session, name, definition):
     collection = {"type": "FeatureCollection", "name": name, "features": features}
     summary = {
         "layer_id": layer_id,
-        "service_url": f"{SERVICE}/{layer_id}",
+        "service_url": f"{service}/{layer_id}",
         "query_where": definition["where"],
         "description": definition["description"],
         "output_crs": "EPSG:4326",
@@ -154,7 +162,7 @@ def run(output_dir: Path):
         "report_version": 1,
         "generated_at_utc": datetime.now(timezone.utc).isoformat(),
         "purpose": "Research-only geometry extraction; not production model input.",
-        "service": SERVICE,
+        "services": {"fwc_unified_reef_map": SERVICE, "fdep_aquatic_preserves": FDEP_SERVICE},
         "layers": layers,
         "limitations": [
             "Source-map footprints describe map coverage, not ecological bay boundaries.",
