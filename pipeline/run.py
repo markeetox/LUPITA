@@ -36,6 +36,8 @@ def _grid_report(cfg: dict, when, lats, lons, grid) -> dict:
     out = {"parameter": cfg["parameter"], "dataset": cfg["dataset"], "time": when,
            "gradient_unit": cfg.get("gradient_unit"), "shape": [int(len(lats)), int(len(lons))]}
     out.update(summarize_grid(grid, lats, lons, cfg.get("log_scale", False), cfg.get("gradient_min", 0.0)))
+    if cfg.get("_selected_base"):
+        out["source_endpoint"] = cfg["_selected_base"]
     return out
 
 
@@ -107,6 +109,7 @@ def build_data_quality(layers: dict | None, sources: dict, errors: list[str], no
     sst_state = _layer_state(bool(cfg.get("sst", {}).get("enabled")), sst is not None, errors, "layers sst:")
     if sst is not None:
         sst_state.update({"dataset": cfg.get("sst", {}).get("dataset"),
+                          "source_endpoint": cfg.get("sst", {}).get("_selected_base"),
                           "grid_shape": [int(sst.shape[0]), int(sst.shape[1])],
                           "valid_fraction": round(float(np.isfinite(sst).mean()), 6),
                           "time": layers.get("times", {}).get("sst"),
