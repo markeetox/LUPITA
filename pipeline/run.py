@@ -140,7 +140,7 @@ def build_data_quality(layers: dict | None, sources: dict, errors: list[str], no
     currents_state["time"] = layers.get("times", {}).get("currents")
     primary_loaded = bool(current_primary.get("loaded")) if current_info else current_present
     fallback_loaded = bool(current_fallback.get("loaded"))
-    fallback_used = bool(current_fallback.get("used_for_currents"))
+    fallback_used = bool(current_fallback.get("used_for_currents", current_fallback.get("loaded")) )
     currents_state["fallback_used_for_currents"] = fallback_used
     selected_time = current_primary.get("time") if primary_loaded else (current_fallback.get("time") if fallback_used else None)
     selected_policy = current_cfg.get("freshness") if primary_loaded or not fallback_used else current_fallback_cfg.get("freshness")

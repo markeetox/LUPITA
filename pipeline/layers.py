@@ -306,7 +306,7 @@ def load_layers(sources: dict, errors: list[str], fetch=erddap.fetch_csv, fetch_
             u = np.where(hfr_valid, hfr_u, alt_u)
             v = np.where(hfr_valid, hfr_v, alt_v)
             alt_meta["used_for_currents"] = True
-            blend_mode = "HF Radar where valid; timestamp-qualified satellite altimetry elsewhere"
+            blend_mode = "HF Radar where valid; satellite altimetry elsewhere"
         elif hfr_u is not None:
             u, v = hfr_u, hfr_v
             blend_mode = "HF Radar only; satellite altimetry excluded from current field" if alt_meta["loaded"] else "HF Radar only; satellite-altimetry fallback unavailable"
@@ -322,7 +322,7 @@ def load_layers(sources: dict, errors: list[str], fetch=erddap.fetch_csv, fetch_
             layers["current_speed"], layers["current_dir"] = currents.speed_dir(u, v)
             layers["current_convergence"] = derive.current_convergence(u, v, lats, lons)
             layers["times"]["currents"] = hfr_meta["time"] if hfr_meta["loaded"] else alt_meta["time"]
-            layers["datasets"]["currents"] = "NOAA HF Radar + timestamp-qualified satellite-altimetry fallback" if hfr_meta["loaded"] and alt_meta["used_for_currents"] else (cu.get("dataset") if hfr_meta["loaded"] else cf.get("dataset"))
+            layers["datasets"]["currents"] = "NOAA HF Radar + satellite-altimetry fallback" if hfr_meta["loaded"] and alt_meta["used_for_currents"] else (cu.get("dataset") if hfr_meta["loaded"] else cf.get("dataset"))
         combined_valid = (np.isfinite(u) & np.isfinite(v)) if u is not None else np.zeros((len(lats), len(lons)), dtype=bool)
         query_region = cu.get("query_region", region)
         query_mask = (
