@@ -173,3 +173,10 @@ Always confirm with FWC, NOAA Sanctuaries or the National Park Service.
 ## Source freshness and prediction diagnostics
 
 Dynamic ERDDAP inputs (sea-surface temperature, chlorophyll, NOAA HF Radar currents and satellite-altimetry Gulf Stream-edge support) publish their observation timestamps, calculated ages, and source-specific freshness statuses in `latest.json` and the app-facing API index. Statuses are `fresh`, `delayed`, `stale`, `unknown`, or `future`; a missing or unparseable timestamp is never treated as fresh. The chlorophyll summary freshness uses the primary scene timestamp when no aggregate timestamp is supplied; primary and gap-filled scene ages remain separately available when reported. The initial warning/stale thresholds in `config/sources.json` are provisional operational monitoring limits for daily products, not scientific validity limits or fish-presence probabilities. They should be tuned from recorded source latency before being used to exclude data from scoring. A delayed or stale input degrades pipeline health but does not silently erase a completed prediction refresh.
+
+
+### ERDDAP source failover and failed-refresh semantics
+
+The required MUR SST grid (`jplMURSST41`) is requested from NOAA CoastWatch ERDDAP first, then retried against NOAA's `upwell.pfeg.noaa.gov/erddap` mirror for the same dataset. This is host failover, not a change of scientific product. Failure at both hosts still blocks prediction refresh; no unvalidated SST product is substituted.
+
+When SST cannot load, downstream layers are marked `not_attempted`. HF Radar is not considered tested unless its request actually starts. The published `latest.json` reports the current refresh, while `api/v1/index.json` and prediction files remain the last-known-good snapshot after a failed refresh. `api/v1/refresh.json` reports current-run health and the timestamp of the prediction snapshot being served.

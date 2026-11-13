@@ -78,3 +78,8 @@ tide, moon, current, no-fishing check and so on), `timing` and `sea`.
 - Show `disclaimer` and `attribution` somewhere reachable (an info screen is fine). Fish pictures are original illustrations today. If you
   replace them with photos, keep each photo's `credit` visible.
 - Do not poll more often than every 15 to 30 minutes; the data changes hourly.
+
+
+## Refresh status versus prediction snapshot
+
+`GET /api/v1/refresh.json` reports the latest pipeline attempt, whether predictions refreshed, and the timestamp/status of the prediction snapshot currently served. `GET /api/v1/index.json` and species/heat/closure/stream resources describe the last successfully generated prediction snapshot. On failure, those prediction resources remain unchanged while `refresh.json` and root `latest.json` report the failed attempt. Clients should use `prediction_snapshot.generated_utc` to display data age.

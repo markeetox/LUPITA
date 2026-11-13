@@ -55,6 +55,8 @@ jobs:
             if [ ! -d publish/api ] && [ -d previous/api ]; then cp -r previous/api publish/api; fi
             if [ ! -d publish/heat ] && [ -d previous/heat ]; then cp -r previous/heat publish/heat; fi
           fi
+      - name: Preserve last-known-good predictions and publish current refresh diagnostics
+        run: python -m pipeline.publication --publish-dir publish --previous-dir previous
       - uses: peaceiris/actions-gh-pages@v4
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}

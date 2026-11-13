@@ -126,3 +126,12 @@ See [Biscayne research pipeline policy](biscayne-research-pipeline-policy-2026-1
 **Validation:** the first full-suite run reported 250 passed and one failed. The failure exposed a missing fallback from the chlorophyll aggregate timestamp to its primary scene timestamp; the correction is recorded in the progress log. Full-suite rerun and production refresh remain pending. The production prediction formula and species weights are unchanged.
 
 **Next:** compare several hourly refreshes to determine actual latency distributions before adjusting thresholds or using freshness to gate scoring.
+
+
+## 2026-11-13 | SST host failover and refresh/prediction separation
+
+- Pull Ocean Data [#204](https://github.com/markeetox/LUPITA/actions/runs/43486365838) failed at the final health gate after the required MUR SST request returned HTTP 503 from CoastWatch ERDDAP after four attempts. The full suite passed (257 tests).
+- Diagnostic correction: `load_layers` returns immediately when SST cannot load. HF Radar, satellite altimetry, chlorophyll, bathymetry and spatial layers were not requested. Their states should be `not_attempted`, not source failures or unknown freshness.
+- NOAA's `upwell.pfeg.noaa.gov/erddap` documents access to the same `jplMURSST41` dataset and is being added as a host fallback, not a different SST product.
+- Failed refresh publication will preserve the last-known-good prediction files/API snapshot and expose current health through `latest.json` plus `api/v1/refresh.json`.
+- Validate mirror retry, diagnostic states and publication restoration with focused/full tests, then one manual production pull.

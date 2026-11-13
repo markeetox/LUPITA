@@ -373,3 +373,13 @@ Compare source age across multiple scheduled refreshes, then calibrate operation
 - If S-111 tile coverage or availability is inadequate, use NOAA's supported RTOFS HTTPS/GRIB output as the alternate ingestion path.
 
 **Sources:** NOAA S-111 AWS README; NOAA Office of Coast Survey developer documentation; NOAA RTOFS Open Data registry.
+
+
+## 2026-11-13 | Diagnose production refresh #204 and add SST failover
+
+- Run [#204](https://github.com/markeetox/LUPITA/actions/runs/43486365838) passed 257 tests but failed its final health gate because NOAA CoastWatch ERDDAP returned HTTP 503 for required `jplMURSST41` SST after four attempts.
+- HF Radar was not tested in that run: `load_layers` exits immediately after SST failure, before downstream gridded requests. The missing currents timestamp was therefore not a separate HF Radar error.
+- Add NOAA's `upwell.pfeg.noaa.gov/erddap` host as a fallback for the same MUR dataset. Keep CoastWatch primary and do not substitute another SST product.
+- Mark downstream layers `not_attempted` and freshness `not_assessed` when SST prevents their requests.
+- Add publication preparation to restore last-known-good prediction/API files after failed refreshes and publish current diagnostics at `api/v1/refresh.json`, with snapshot timestamp in `latest.json`.
+- Focused/full validation and live production confirmation remain pending. No prediction weights or biology rules changed.

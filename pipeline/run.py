@@ -93,6 +93,7 @@ def build_data_quality(layers: dict | None, sources: dict, errors: list[str], no
     """Create additive, machine-readable diagnostics for each environmental input."""
     cfg = sources.get("erddap", {})
     arc = sources.get("arcgis", {})
+    layers_not_loaded = layers is None
     layers = layers or {}
     sst = layers.get("sst_c")
     chl_info = layers.get("chlorophyll_info") or {}
@@ -112,13 +113,19 @@ def build_data_quality(layers: dict | None, sources: dict, errors: list[str], no
 
     chl_state = _layer_state(bool(cfg.get("chlorophyll", {}).get("enabled") or cfg.get("chlorophyll_gapfilled", {}).get("enabled")), bool(chl_info.get("primary_loaded") or chl_info.get("gapfilled_used")), errors, ["layers chlorophyll:", "layers chlorophyll_gapfilled:"])
     chl_state.update({key: value for key, value in chl_info.items() if key != "status"})
-    chl_state["freshness"] = _source_freshness(chl_info.get("time") or chl_info.get("primary_time") or layers.get("times", {}).get("chlorophyll"), cfg.get("chlorophyll", {}).get("freshness"), now)
+    if layers_not_loaded and sst is None:
+        chl_state.update(status="not_attempted", not_attempted_reason="Required SST grid unavailable; downstream gridded layers were not requested.")
+        chl_state["freshness"] = {"status": "not_assessed", "observed_at": None, "age_hours": None}
+    else:
+        chl_state["freshness"] = _source_freshness(chl_info.get("time") or chl_info.get("primary_time") or layers.get("times", {}).get("chlorophyll"), cfg.get("chlorophyll", {}).get("freshness"), now)
     if chl_info.get("primary_time"):
         chl_state["primary_freshness"] = _source_freshness(chl_info.get("primary_time"), cfg.get("chlorophyll", {}).get("freshness"), now)
     if chl_info.get("gapfilled_time"):
         chl_state["gapfilled_freshness"] = _source_freshness(chl_info.get("gapfilled_time"), cfg.get("chlorophyll_gapfilled", {}).get("freshness"), now)
 
     bathy_state = _layer_state(bool(cfg.get("bathymetry", {}).get("enabled")), layers.get("depth_m") is not None, errors, "layers bathymetry:")
+    if layers_not_loaded and sst is None:
+        bathy_state.update(status="not_attempted", not_attempted_reason="Required SST grid unavailable; downstream gridded layers were not requested.")
     bathy_state.update(bathy_info)
     if layers.get("depth_m") is not None and not bathy_info:
         depth = layers["depth_m"]
@@ -135,6 +142,8 @@ def build_data_quality(layers: dict | None, sources: dict, errors: list[str], no
     current_fallback = current_info.get("fallback") or {}
     currents_state = _layer_state(bool(current_cfg.get("enabled") or current_fallback_cfg.get("enabled")), current_present, errors,
                                   ["layers currents:", "layers currents primary:", "layers currents fallback:"])
+    if layers_not_loaded and sst is None:
+        currents_state.update(status="not_attempted", not_attempted_reason="Required SST grid unavailable; HF Radar and altimetry requests were never started.")
     currents_state.update(current_info)
     currents_state["dataset"] = layers.get("datasets", {}).get("currents") or current_cfg.get("dataset")
     currents_state["time"] = layers.get("times", {}).get("currents")
@@ -144,16 +153,23 @@ def build_data_quality(layers: dict | None, sources: dict, errors: list[str], no
     currents_state["fallback_used_for_currents"] = fallback_used
     selected_time = current_primary.get("time") if primary_loaded else (current_fallback.get("time") if fallback_used else (currents_state["time"] if not fallback_loaded else None))
     selected_policy = current_cfg.get("freshness") if primary_loaded or not fallback_used else current_fallback_cfg.get("freshness")
-    currents_state["freshness"] = _source_freshness(selected_time, selected_policy, now)
+    currents_state["freshness"] = ({"status": "not_assessed", "observed_at": None, "age_hours": None}
+                                    if layers_not_loaded and sst is None else _source_freshness(selected_time, selected_policy, now))
     if primary_loaded:
         currents_state["primary_freshness"] = _source_freshness(current_primary.get("time") or currents_state["time"], current_cfg.get("freshness"), now)
     if fallback_loaded:
         currents_state["fallback_freshness"] = _source_freshness(current_fallback.get("time"), current_fallback_cfg.get("freshness"), now)
     structure_state = _layer_state(bool(arc.get("artificial_reefs", {}).get("enabled") and arc.get("natural_reef", {}).get("enabled")), structure_present, errors, "layers structure:")
+    if layers_not_loaded and sst is None:
+        structure_state.update(status="not_attempted", not_attempted_reason="Required SST grid unavailable; spatial layers were not requested.")
     structure_state.update(layers.get("structure_stats") or {})
     habitat_state = _layer_state(bool(arc.get("unified_benthic", {}).get("enabled")), habitat_present, errors, "layers benthic_habitat:")
+    if layers_not_loaded and sst is None:
+        habitat_state.update(status="not_attempted", not_attempted_reason="Required SST grid unavailable; spatial layers were not requested.")
     habitat_state.update(layers.get("habitat_info") or {})
     closure_state = _layer_state(bool(sources.get("closures", {}).get("enabled")), closure_present, errors, "layers closures:")
+    if layers_not_loaded and sst is None:
+        closure_state.update(status="not_attempted", not_attempted_reason="Required SST grid unavailable; closure request was not reached.")
     closure_state["area_count"] = len(layers.get("closure_areas") or [])
 
     return {"schema_version": 1, "layers": {
@@ -190,6 +206,8 @@ def build_pipeline_health(data_quality: dict, fish_updated: bool, errors: list[s
                 checks.append(("satellite-altimetry fallback", fallback_freshness))
         for source_label, freshness in checks:
             status = freshness.get("status")
+            if status == "not_assessed":
+                continue
             if status in ("delayed", "stale", "unknown", "future"):
                 age = freshness.get("age_hours")
                 age_text = f" ({age:.1f} hours old)" if isinstance(age, (int, float)) else ""

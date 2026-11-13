@@ -63,3 +63,11 @@ python -m pipeline.check_sources
 python -m pipeline.run
 ```
 A metadata check is not a substitute for inspecting the actual production CSV pull and coverage.
+
+
+## Active milestone: upstream outage resilience and truthful publication
+1. Use NOAA CoastWatch `jplMURSST41` first and the documented `upwell` ERDDAP mirror second.
+2. Report dependent layers as `not_attempted` when SST prevents their requests from starting.
+3. Separate current refresh health from last-known-good prediction data with `latest.json` and `api/v1/refresh.json`.
+4. Restore prior `data` branch prediction files/API when a refresh fails.
+5. Validate with focused/full tests and a manual production pull. Do not change scoring weights or species biology.

@@ -1,5 +1,5 @@
 {
-  "note": "NOAA CoastWatch ERDDAP is the canonical host for the configured chlorophyll and ETOPO datasets. NOAA-20 daily chlorophyll latitude is a descending coordinate axis and must be requested north-to-south. ETOPO 15-arc-second data is sampled at stride 15 across the broad North America grid to keep requests bounded; this is regional context, not reef-scale bathymetry. The gap-filled chlorophyll product is disabled until its freshness and scientific suitability are independently validated; do not enable it merely because the primary source is unavailable. NOAA HF Radar 2 km currents are the primary near-surface coastal source for the South Florida request window; satellite altimetry supports Gulf Stream-edge context and is age-gated before any current-vector fallback use. Satellite altimetry is retained for Gulf Stream-edge context, but may fill current vectors only when its timestamp is known, non-future, and no older than 72 hours; stale or undated values are excluded from the current field.",
+  "note": "NOAA CoastWatch ERDDAP is the canonical host for the configured chlorophyll and ETOPO datasets. NOAA-20 daily chlorophyll latitude is a descending coordinate axis and must be requested north-to-south. ETOPO 15-arc-second data is sampled at stride 15 across the broad North America grid to keep requests bounded; this is regional context, not reef-scale bathymetry. The gap-filled chlorophyll product is disabled until its freshness and scientific suitability are independently validated; do not enable it merely because the primary source is unavailable. NOAA HF Radar 2 km currents are the primary near-surface coastal source for the South Florida request window; satellite altimetry supports Gulf Stream-edge context and is age-gated before any current-vector fallback use. Satellite altimetry is retained for Gulf Stream-edge context, but may fill current vectors only when its timestamp is known, non-future, and no older than 72 hours; stale or undated values are excluded from the current field. The required MUR SST grid uses NOAA CoastWatch ERDDAP first and NOAA's upwell ERDDAP mirror as a host fallback for the same jplMURSST41 dataset.",
   "region": {
     "name": "north_america_coastlines",
     "lat": [
@@ -37,7 +37,10 @@
         "warning_age_hours": 36,
         "stale_age_hours": 72,
         "basis": "Provisional operational thresholds for a daily gridded SST product; validate against observed ERDDAP latency."
-      }
+      },
+      "fallback_bases": [
+        "https://upwell.pfeg.noaa.gov/erddap"
+      ]
     },
     "chlorophyll": {
       "enabled": true,
