@@ -1,5 +1,5 @@
 {
-  "generated_at_utc": "2026-11-13T03:22:05.155263+00:00",
+  "generated_at_utc": "2026-11-13T03:24:35.367124+00:00",
   "source": "NOAA National Geodetic Survey Coastal Mapping Program / NOAA Shoreline Data Explorer",
   "source_download_pattern": "https://nsde.ngs.noaa.gov/downloads/{project_id}.zip",
   "output_crs": "EPSG:4326",
@@ -132,7 +132,39 @@
       "mhw_feature_count": 70,
       "mllw_depth_contour_count": 54,
       "mhw_total_length_km": 18.029,
-      "mllw_depth_contour_total_length_km": 11.83
+      "mllw_depth_contour_total_length_km": 11.83,
+      "mhw_topology": {
+        "feature_count": 70,
+        "component_count_after_exact_union": 69,
+        "open_endpoint_coordinates": 128,
+        "shared_endpoint_coordinates": 6,
+        "branch_endpoint_coordinates": 0,
+        "sum_feature_length_km": 18.029,
+        "union_length_km": 18.029,
+        "overlap_length_km": 0.0,
+        "bounds_epsg26917_m": [
+          571872.04,
+          2837854.5,
+          581121.32,
+          2848412.27
+        ]
+      },
+      "mllw_depth_contour_topology": {
+        "feature_count": 54,
+        "component_count_after_exact_union": 53,
+        "open_endpoint_coordinates": 78,
+        "shared_endpoint_coordinates": 15,
+        "branch_endpoint_coordinates": 0,
+        "sum_feature_length_km": 11.83,
+        "union_length_km": 11.83,
+        "overlap_length_km": 0.0,
+        "bounds_epsg26917_m": [
+          573458.38,
+          2837612.36,
+          581135.77,
+          2848409.56
+        ]
+      }
     },
     "FL1808A-TB-N": {
       "status": "converted",
@@ -256,7 +288,39 @@
       "mhw_feature_count": 58,
       "mllw_depth_contour_count": 118,
       "mhw_total_length_km": 39.44,
-      "mllw_depth_contour_total_length_km": 13.989
+      "mllw_depth_contour_total_length_km": 13.989,
+      "mhw_topology": {
+        "feature_count": 58,
+        "component_count_after_exact_union": 51,
+        "open_endpoint_coordinates": 64,
+        "shared_endpoint_coordinates": 26,
+        "branch_endpoint_coordinates": 0,
+        "sum_feature_length_km": 39.44,
+        "union_length_km": 39.44,
+        "overlap_length_km": 0.0,
+        "bounds_epsg26917_m": [
+          565611.15,
+          2803357.93,
+          571883.37,
+          2821569.51
+        ]
+      },
+      "mllw_depth_contour_topology": {
+        "feature_count": 118,
+        "component_count_after_exact_union": 117,
+        "open_endpoint_coordinates": 102,
+        "shared_endpoint_coordinates": 67,
+        "branch_endpoint_coordinates": 0,
+        "sum_feature_length_km": 13.989,
+        "union_length_km": 13.989,
+        "overlap_length_km": 0.0,
+        "bounds_epsg26917_m": [
+          565910.05,
+          2804241.96,
+          571965.97,
+          2821070.04
+        ]
+      }
     },
     "FL2317-CS-N": {
       "status": "converted",
@@ -319,9 +383,36 @@
       "mhw_feature_count": 0,
       "mllw_depth_contour_count": 0,
       "mhw_total_length_km": 0.0,
-      "mllw_depth_contour_total_length_km": 0.0
+      "mllw_depth_contour_total_length_km": 0.0,
+      "mhw_topology": {
+        "feature_count": 0,
+        "component_count_after_exact_union": 0,
+        "open_endpoint_coordinates": 0,
+        "shared_endpoint_coordinates": 0,
+        "branch_endpoint_coordinates": 0,
+        "sum_feature_length_km": 0.0,
+        "union_length_km": 0.0,
+        "overlap_length_km": 0.0
+      },
+      "mllw_depth_contour_topology": {
+        "feature_count": 0,
+        "component_count_after_exact_union": 0,
+        "open_endpoint_coordinates": 0,
+        "shared_endpoint_coordinates": 0,
+        "branch_endpoint_coordinates": 0,
+        "sum_feature_length_km": 0.0,
+        "union_length_km": 0.0,
+        "overlap_length_km": 0.0
+      }
     }
   },
+  "project_mhw_linework_comparisons": {
+    "FL1808A-TB-N__FL1808C-TB-N": {
+      "nearest_mhw_line_distance_km": 17.691,
+      "interpretation": "measured separation between retrieved MHW linework; not proof of a data gap or missing shoreline"
+    }
+  },
+  "topology_method": "exact geometric union and endpoint counting in EPSG:26917; no snapping, gap bridging, or dissolving of persisted source features",
   "guardrails": [
     "MHW subset includes only CLASS=SHORELINE and ATTRIBUTE=Natural.Mean High Water.",
     "MLLW subset contains Depth Contour lines with INFORM=MLLW; it is not an MLLW shoreline and contains no numeric contour depth attribute.",
