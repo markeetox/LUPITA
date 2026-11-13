@@ -4,6 +4,7 @@ from __future__ import annotations
 import argparse
 import json
 import sys
+import time
 from collections import Counter
 from datetime import datetime, timezone
 from pathlib import Path
@@ -26,6 +27,7 @@ LAYERS = {
         "out_fields": "OBJECTID,NAME,COUNTIES,REGION,ACRES",
         "return_z": False,
         "return_m": False,
+        "optional": True,
         "description": "FDEP aquatic-preserve polygons filtered locally to Biscayne Bay names; retain distinct preserve designations. Official mapped boundaries are approximate and not for enforcement.",
     },
     "source_footprints": {
@@ -91,7 +93,13 @@ def _request_page(session, layer_id, where, offset, page_size=PAGE_SIZE, service
         params["returnZ"] = str(return_z).lower()
     if return_m is not None:
         params["returnM"] = str(return_m).lower()
-    response = session.get(url, params=params, timeout=TIMEOUT)
+    response = None
+    for attempt in range(3):
+        response = session.get(url, params=params, timeout=TIMEOUT)
+        if response.status_code in {500, 502, 503, 504} and attempt < 2:
+            time.sleep(2 ** attempt)
+            continue
+        break
     response.raise_for_status()
     payload = response.json()
     if payload.get("error"):
@@ -175,17 +183,26 @@ def run(output_dir: Path):
     session = requests.Session()
     session.headers.update({"User-Agent": "LUPITA-South-Florida-GIS-Audit/1.0"})
     layers = {}
+    layer_errors = {}
     for name, definition in LAYERS.items():
-        collection, summary = extract_layer(session, name, definition)
-        (output_dir / f"{name}.geojson").write_text(
-            json.dumps(collection, separators=(",", ":"), ensure_ascii=False) + "\n",
-            encoding="utf-8",
-        )
-        layers[name] = summary
+        try:
+            collection, summary = extract_layer(session, name, definition)
+            (output_dir / f"{name}.geojson").write_text(
+                json.dumps(collection, separators=(",", ":"), ensure_ascii=False) + "\n",
+                encoding="utf-8",
+            )
+            layers[name] = summary
+        except Exception as exc:
+            if not definition.get("optional"):
+                raise
+            layer_errors[name] = f"{type(exc).__name__}: {exc}"
+            print(f"WARNING: optional layer {name} unavailable: {layer_errors[name]}", file=sys.stderr)
     report = {
         "report_version": 1,
         "generated_at_utc": datetime.now(timezone.utc).isoformat(),
         "purpose": "Research-only geometry extraction; not production model input.",
+        "status": "degraded" if layer_errors else "healthy",
+        "layer_errors": layer_errors,
         "services": {"fwc_unified_reef_map": SERVICE, "fdep_aquatic_preserves": FDEP_SERVICE},
         "layers": layers,
         "limitations": [
@@ -216,6 +233,8 @@ def main():
         print(f"  sources: {layer['source_counts']}")
         print(f"  classes: {layer['habitat_class_counts']}")
         print(f"  bbox: {layer['bbox_wgs84']}")
+    if report["layer_errors"]:
+        print(f"Completed with optional source errors: {report['layer_errors']}", file=sys.stderr)
     return 0
 
 
