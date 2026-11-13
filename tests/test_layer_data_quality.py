@@ -100,3 +100,29 @@ def test_missing_dynamic_observation_time_is_explicitly_unknown():
     report = build_data_quality({"sst_c": np.ones((2, 2)), "times": {}}, _sources(), [], now=datetime(2026, 11, 13, tzinfo=timezone.utc))
     assert report["layers"]["sst"]["freshness"]["status"] == "unknown"
     assert report["layers"]["sst"]["freshness"]["age_hours"] is None
+
+
+def test_current_data_quality_reports_hf_radar_and_altimetry_ages_separately():
+    layers = {
+        "current_speed": np.ones((2, 2)),
+        "times": {
+            "currents": "2026-11-13T10:00:00Z",
+            "stream_edge": "2026-11-10T00:00:00Z",
+        },
+        "datasets": {"currents": "HF Radar + satellite altimetry"},
+        "currents_info": {
+            "primary": {"dataset": "hfr-test", "loaded": True, "time": "2026-11-13T10:00:00Z"},
+            "fallback": {"dataset": "alt-test", "loaded": True, "time": "2026-11-10T00:00:00Z"},
+            "blend_mode": "HF Radar where valid; satellite altimetry elsewhere",
+        },
+    }
+    report = build_data_quality(
+        layers, _sources(), [],
+        now=datetime(2026, 11, 13, 12, tzinfo=timezone.utc),
+    )
+    current = report["layers"]["currents"]
+    assert current["freshness"]["status"] == "fresh"
+    assert current["primary_freshness"]["status"] == "fresh"
+    assert current["fallback_freshness"]["status"] == "stale"
+    assert current["primary_freshness"]["age_hours"] == 2.0
+    assert current["fallback_freshness"]["age_hours"] == 84.0

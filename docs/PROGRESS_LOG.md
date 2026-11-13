@@ -289,3 +289,11 @@ Compare source age across multiple scheduled refreshes, then calibrate operation
 **Validation:** NOAA metadata confirms dataset dimensions, variable names and units. Mocked tests cover blend/fallback behavior and stale fallback health. Live CSV retrieval and South Florida coverage remain unverified until the next production refresh.
 
 **Next:** inspect the first post-change Pull Ocean Data run. Confirm HFR timestamp, source and aligned valid fractions, quality diagnostics, altimetry timestamp, blend mode, and stream-edge provenance before treating the new feed as production-validated.
+
+
+### Validation update
+
+- Initial Python run #405 exposed three integration fixtures that still mocked only the previous altimetry request. The test fixtures were updated to return the HF Radar vector and quality fields, and the no-currents fixture now disables both sources.
+- Masked the HF Radar product fill sentinel across velocity and diagnostic grids so missing HDOP/site/radial values cannot distort summary statistics.
+- Corrected full-suite run #407: **254 passed, 0 failed, 115 warnings**. [Python tests run #407](https://github.com/markeetox/LUPITA/actions/runs/43475604949).
+- Added explicit assertions that HF Radar and altimetry observation ages remain separate. The suite result above predates this final additional assertion and health-reporting refinement; a fresh run is required.

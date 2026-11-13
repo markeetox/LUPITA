@@ -179,7 +179,7 @@ def build_pipeline_health(data_quality: dict, fish_updated: bool, errors: list[s
     for name in ("sst", "chlorophyll", "currents"):
         state = layer_states.get(name, {})
         checks = [("selected", state.get("freshness", {}))]
-        if name == "currents" and state.get("fallback_freshness"):
+        if name == "currents" and state.get("primary_freshness") and state.get("fallback_freshness"):
             checks.append(("satellite-altimetry fallback", state["fallback_freshness"]))
         for source_label, freshness in checks:
             status = freshness.get("status")
@@ -266,7 +266,13 @@ def main() -> None:
             fish = build_fish_json(layers, buoys, profiles, registry, now, places, conditions, heat)
             freshness_layers = build_data_quality(layers, sources, errors, now_dt).get("layers", {})
             fish["layers"]["freshness"] = {key: freshness_layers[key].get("freshness") for key in ("sst", "chlorophyll", "currents") if key in freshness_layers}
-            fish["layers"]["current_sources"] = (layers or {}).get("currents_info")
+            current_state = freshness_layers.get("currents", {})
+            fish["layers"]["current_sources"] = {
+                **((layers or {}).get("currents_info") or {}),
+                "primary_freshness": current_state.get("primary_freshness"),
+                "fallback_freshness": current_state.get("fallback_freshness"),
+                "selected_freshness": current_state.get("freshness")
+            }
             fish["layers"]["times"]["stream_edge"] = (layers or {}).get("times", {}).get("stream_edge")
             la, lo = layers["lats"], layers["lons"]
             dlat, dlon = float(la[1] - la[0]), float(lo[1] - lo[0])
