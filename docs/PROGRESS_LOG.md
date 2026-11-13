@@ -184,3 +184,38 @@ Run the focused Biscayne landmark evidence workflow once the commit is pushed, t
 ### Next action
 
 Merge PR #72 into `main` after reviewing the Vercel preview limitation. Then archive/delete obsolete branches, leaving `main` and `data` as the active branch pair.
+
+
+## 2026-11-13 | Merge single-main consolidation into production
+
+**Merged PR:** [#72](https://github.com/markeetox/LUPITA/pull/72)  
+**Production merge commit:** `1526aecd12c0561b6c3cf9fc8250110fb8de0a11`
+
+### Result
+
+- PR #72 successfully merged into `main` using a squash merge.
+- `main` is now the authoritative application, prediction, research, test, documentation, and workflow branch.
+- The separate `data` branch remains the generated publication target and was not modified by the consolidation.
+- The `data` branch was verified at head `ba3194b19a235bc4859c623ee9fda9f6b19075b7`: 725 generated JSON/API/PNG paths, no source-code files.
+- The old stacked NOAA PR and the superseded prediction-reliability PR were closed. Their useful changes are either in `main` or already present in the current codebase.
+
+### Final validation on the consolidated code tree
+
+- Python suite: 248 passed, 115 warnings.
+- Species validator: 248 passed, 115 warnings; 130 profiles inspected, 127 structurally valid, 0 model compatibility issues.
+- Focused Biscayne extraction/topology: extraction succeeded; 4 topology tests passed.
+- The Vercel PR preview was rate-limited for 24 hours. This did not affect Python tests or the merge, and the PR contained no frontend source changes.
+
+### Remaining operational cleanup
+
+- `integration/main-consolidation` is no longer needed after the merge.
+- Several old feature/fix/research branch references remain in GitHub. Their useful changes have been checked against `main`; redundant branches can now be deleted after a final inventory.
+- Verify the next scheduled hourly pipeline run from `main` publishes successfully to `data`.
+
+### Architecture decision
+
+Keep exactly two active branch roles:
+1. `main`: all maintained application and research source code.
+2. `data`: generated publication output only.
+
+No application logic, tests, or workflow source belongs on `data`.
