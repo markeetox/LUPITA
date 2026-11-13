@@ -180,3 +180,6 @@ Dynamic ERDDAP inputs (sea-surface temperature, chlorophyll, NOAA HF Radar curre
 The required MUR SST grid (`jplMURSST41`) is requested from NOAA CoastWatch ERDDAP first, then retried against NOAA's `upwell.pfeg.noaa.gov/erddap` mirror for the same dataset. This is host failover, not a change of scientific product. Failure at both hosts still blocks prediction refresh; no unvalidated SST product is substituted.
 
 When SST cannot load, downstream layers are marked `not_attempted`. HF Radar is not considered tested unless its request actually starts. The published `latest.json` reports the current refresh, while `api/v1/index.json` and prediction files remain the last-known-good snapshot after a failed refresh. `api/v1/refresh.json` reports current-run health and the timestamp of the prediction snapshot being served.
+
+
+The selected SST ERDDAP host is exposed as `source_endpoint` in `latest.json` and `data_quality.layers.sst`, making primary-versus-mirror selection auditable after each production refresh.
