@@ -7,15 +7,25 @@ from datetime import datetime, timedelta, timezone
 from pathlib import Path
 from urllib.parse import quote
 import requests
+from requests.adapters import HTTPAdapter
+from urllib3.util.retry import Retry
 
 USGS_ZIP = "https://coastal.er.usgs.gov/data-release/doi-F71C1TZK/data/FL_coral_underwater_temps_to_Jul2024.zip"
 SECOORA_BASE = "https://erddap.secoora.org/erddap/tabledap"
 MUR_BASE = "https://coastwatch.pfeg.noaa.gov/erddap/griddap/jplMURSST41.csv"
 USER_AGENT = "LUPITA-South-Florida-Temperature-Research/1.0 (+https://github.com/markeetox/LUPITA)"
 USGS_SITES = {
-    "brewster reef": {"latitude": 25.56676, "longitude": -80.09974, "depth_m": 3.96},
-    "shadow reef": {"latitude": 25.47775, "longitude": -80.14088, "depth_m": 3.66},
-    "ball buoy north": {"latitude": 25.31877, "longitude": -80.18426, "depth_m": 3.35},
+    # Keys match the actual abbreviated site-column headers in the v9 CSV.
+    "pulaski light": {"latitude": 24.69355, "longitude": -82.77280, "depth_m": 4.8768},
+    "sombrero": {"latitude": 24.62687, "longitude": -81.10893, "depth_m": 4.2672},
+    "molasses": {"latitude": 25.01047, "longitude": -80.37530, "depth_m": 3.9624},
+    "fowey": {"latitude": 25.59047, "longitude": -80.09560, "depth_m": 3.9624},
+    "crocker": {"latitude": 24.90908, "longitude": -80.52665, "depth_m": 3.9624},
+    "pulaski west": {"latitude": 24.70280, "longitude": -82.79883, "depth_m": 3.6576},
+    "garden key": {"latitude": 24.62074, "longitude": -82.86740, "depth_m": 2.1336},
+    "brewster": {"latitude": 25.56676, "longitude": -80.09974, "depth_m": 3.9624},
+    "shadow": {"latitude": 25.47775, "longitude": -80.14088, "depth_m": 3.6576},
+    "bbnorth": {"latitude": 25.31877, "longitude": -80.18426, "depth_m": 3.3528},
 }
 FWC_STATIONS = {
     "HFA04": {"dataset": "org_secoora_flkeys_hfa04", "latitude": 24.6687, "longitude": -82.8926, "z_m": -11.0, "start": "2020-12-11T15:00:00Z", "end": "2022-08-12T14:00:00Z"},
@@ -142,33 +152,48 @@ def fetch_fwc(session, station, out_dir):
     return observations
 
 def fetch_mur(session, site, lat, lon, start, end, out_dir):
-    start_utc = start.astimezone(timezone.utc).date().isoformat() + "T09:00:00Z"
-    end_utc = end.astimezone(timezone.utc).date().isoformat() + "T09:00:00Z"
-    projection = f"analysed_sst[({start_utc}):1:({end_utc})][({lat:.5f})][({lon:.5f})]"
-    url = MUR_BASE + "?" + quote(projection, safe="[]():,.-TZ")
-    response = session.get(url, timeout=(20, 180))
-    response.raise_for_status()
-    raw_rows = list(csv.reader(io.StringIO(response.text)))
-    if len(raw_rows) < 3:
-        raise ValueError(f"MUR returned no rows for {site}: {response.text[:300]}")
-    header, output = raw_rows[0], []
-    for raw in raw_rows[2:]:
-        if not raw or len(raw) < len(header):
-            continue
-        row = dict(zip(header, raw))
+    """Fetch native-grid MUR in bounded 90-day chunks; retain per-chunk errors."""
+    cursor = start.astimezone(timezone.utc).date()
+    last_day = end.astimezone(timezone.utc).date()
+    output, errors = [], []
+    while cursor <= last_day:
+        chunk_end = min(cursor + timedelta(days=89), last_day)
+        start_utc = cursor.isoformat() + "T09:00:00Z"
+        end_utc = chunk_end.isoformat() + "T09:00:00Z"
+        projection = f"analysed_sst[({start_utc}):1:({end_utc})][({lat:.5f})][({lon:.5f})]"
+        url = MUR_BASE + "?" + quote(projection, safe="[]():,.-TZ")
         try:
-            stamp = datetime.fromisoformat(row["time"].replace("Z", "+00:00"))
-            temp = parse_float(row.get("analysed_sst"))
-            grid_lat, grid_lon = float(row["latitude"]), float(row["longitude"])
-        except (KeyError, ValueError):
-            continue
-        if temp is not None:
-            output.append({"date_utc": stamp.date().isoformat(), "site": site,
-                "logger_latitude": lat, "logger_longitude": lon,
-                "mur_grid_latitude": grid_lat, "mur_grid_longitude": grid_lon, "mur_sst_c": temp})
+            response = session.get(url, timeout=(20, 180))
+            response.raise_for_status()
+            raw_rows = list(csv.reader(io.StringIO(response.text)))
+            if len(raw_rows) < 3:
+                raise ValueError(f"empty MUR response: {response.text[:250]}")
+            header = raw_rows[0]
+            for raw in raw_rows[2:]:
+                if not raw or len(raw) < len(header):
+                    continue
+                row = dict(zip(header, raw))
+                try:
+                    stamp = datetime.fromisoformat(row["time"].replace("Z", "+00:00"))
+                    temp = parse_float(row.get("analysed_sst"))
+                    grid_lat, grid_lon = float(row["latitude"]), float(row["longitude"])
+                except (KeyError, ValueError):
+                    continue
+                if temp is not None:
+                    output.append({
+                        "date_utc": stamp.date().isoformat(), "site": site,
+                        "logger_latitude": lat, "logger_longitude": lon,
+                        "mur_grid_latitude": grid_lat, "mur_grid_longitude": grid_lon,
+                        "mur_sst_c": temp,
+                    })
+        except Exception as exc:
+            message = f"{site} {cursor.isoformat()}..{chunk_end.isoformat()}: {type(exc).__name__}: {exc}"
+            errors.append(message)
+            print(f"WARNING: MUR chunk failed: {message}")
+        cursor = chunk_end + timedelta(days=1)
     safe = re.sub(r"[^a-z0-9]+", "-", site.lower()).strip("-")
     write_csv(out_dir / f"mur_{safe}.csv", output)
-    return output
+    return output, errors
 
 def summarize(rows, pass_only=False):
     counts = Counter(str(r.get("qc_flag", "not_provided")) for r in rows)
@@ -188,11 +213,24 @@ def main():
     out_dir = Path(args.output)
     out_dir.mkdir(parents=True, exist_ok=True)
     session = requests.Session()
+    retry = Retry(
+        total=4, connect=3, read=3, status=3, backoff_factor=1.0,
+        status_forcelist=(408, 425, 429, 500, 502, 503, 504),
+        allowed_methods=frozenset(["GET"]), respect_retry_after_header=True,
+    )
+    session.mount("https://", HTTPAdapter(max_retries=retry))
     session.headers.update({"User-Agent": USER_AGENT})
     start = datetime(2020, 1, 1, tzinfo=timezone.utc)
     end = datetime(2024, 8, 15, tzinfo=timezone.utc)
     usgs = fetch_usgs(session, start, end, out_dir)
-    fwc = [row for station in FWC_STATIONS for row in fetch_fwc(session, station, out_dir)]
+    fwc, source_errors = [], []
+    for station in FWC_STATIONS:
+        try:
+            fwc.extend(fetch_fwc(session, station, out_dir))
+        except Exception as exc:
+            message = f"FWC {station}: {type(exc).__name__}: {exc}"
+            source_errors.append(message)
+            print(f"WARNING: {message}")
     all_rows = usgs + fwc
     locations = {}
     for row in usgs:
@@ -205,7 +243,9 @@ def main():
         site_rows = [r for r in all_rows if r["site"] == site]
         if site_rows:
             stamps = [datetime.fromisoformat(r["timestamp"]) for r in site_rows]
-            mur.extend(fetch_mur(session, site, lat, lon, min(stamps), max(stamps), out_dir))
+            site_mur, site_errors = fetch_mur(session, site, lat, lon, min(stamps), max(stamps), out_dir)
+            mur.extend(site_mur)
+            source_errors.extend(site_errors)
     write_csv(out_dir / "mur_sst_all_sites.csv", mur)
 
     # Pair daily in-situ means with the MUR value for the same site/date.
@@ -238,6 +278,8 @@ def main():
     report = {
         "generated_utc": datetime.now(timezone.utc).isoformat(),
         "scope": "Research only; no production pipeline/model changes",
+        "status": "degraded" if source_errors else "complete",
+        "source_errors": source_errors,
         "sources": {"usgs": USGS_ZIP, "fwc": SECOORA_BASE, "mur": "https://coastwatch.pfeg.noaa.gov/erddap/griddap/jplMURSST41.html"},
         "method_notes": [
             "USGS logger timestamps use the documented fixed GMT-04:00 convention.",
@@ -280,6 +322,9 @@ def main():
         "| Site | Records | Min °C | Mean °C | Max °C |", "|---|---:|---:|---:|---:|"]
     for site, stats in report["mur_site_summary"].items():
         lines.append(f"| {site} | {stats['records']} | {stats['min_c']} | {stats['mean_c']} | {stats['max_c']} |")
+    if source_errors:
+        lines += ["", "## Source errors", ""]
+        lines.extend(f"- {error}" for error in source_errors)
     lines += ["", "## Paired daily comparison", "",
         f"Matched daily records: {len(paired)}", "",
         "| Site | Paired days | Mean in-situ minus MUR °C | Mean absolute difference °C | Max absolute difference °C |",
@@ -291,6 +336,8 @@ def main():
         "Raw USGS archive, normalized USGS observations, raw FWC extracts, normalized FWC observations and MUR CSVs are retained with this report.", ""]
     (out_dir / "README.md").write_text("\\n".join(lines), encoding="utf-8")
     print(json.dumps(report, indent=2))
+    if not usgs and not fwc:
+        raise RuntimeError("No in-situ observations were retrieved; see source errors")
 
 if __name__ == "__main__":
     main()
