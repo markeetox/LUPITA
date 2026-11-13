@@ -2,12 +2,13 @@
 
 **Last reviewed:** 2026-11-13  
 **Production branch:** `main`  
-**Consolidation staging branch:** `integration/main-consolidation`  
-**Active GIS research branch:** `research/biscayne-noaa-enc-hydrography`
+**Canonical application branch:** `main`  
+**Generated export branch:** `data`  
+**Consolidation staging branch:** `integration/main-consolidation` (merged; no longer active)
 
 ## Executive status
 
-LUPITA is being consolidated around one authoritative application branch: `main`. The temporary `integration/main-consolidation` branch is a pre-production staging area only. The `data` branch is reserved for generated application exports and is excluded from code consolidation. GIS research remains separate from production scoring until reviewed and promoted.
+LUPITA is being consolidated around one authoritative application branch: `main`. The temporary `integration/main-consolidation` branch was used for staging and is now redundant after PR #72 merged. The `data` branch is reserved for generated application exports and is excluded from code consolidation. GIS research remains separate from production scoring until reviewed and promoted.
 
 PRs #66, #68, and #69 have been squash-merged into `integration/main-consolidation`. The 85 unique/updated paths from PR #70 have also been imported into staging as a consolidated tree commit, removing its stacked dependency. Original PRs #70 and #71 are closed as superseded. Consolidated PR #72 targets `main`; its Python suite, species validator, and focused Biscayne workflow all pass. Only the Vercel preview status is failing due to an external 24-hour deployment rate limit.
 
@@ -70,7 +71,7 @@ No inferred inlet connections, snapped seams, or synthetic channel centerlines a
 | [#68](https://github.com/markeetox/LUPITA/pull/68) | South Florida spatial-context schema and species habitat contexts | integration staging | Merged |
 | [#66](https://github.com/markeetox/LUPITA/pull/66) | South Florida in-situ temperature audit | integration staging | Merged |
 | [#71](https://github.com/markeetox/LUPITA/pull/71) | Prediction reliability changes | already present in current codebase | Closed, superseded |
-| [#72](https://github.com/markeetox/LUPITA/pull/72) | Single-main runtime and data-export consolidation | `main` | Open, checks passed |
+| [#72](https://github.com/markeetox/LUPITA/pull/72) | Single-main runtime and data-export consolidation | `main` | Merged |
 
 PR #70 originated as a stacked branch on #69. Its resulting file tree is now in the staging branch without the old commit chain. PR #71 was reviewed against the current tree and its meaningful API/confidence changes were already present, so it was closed without importing stale versions of core files.
 
@@ -87,11 +88,9 @@ PR #70 originated as a stacked branch on #69. Its resulting file tree is now in 
 
 ## Next implementation milestones
 
-1. Merge consolidated PR #72 into `main`; the required Python, species, and focused GIS checks pass.
-2. Retain `data` as the generated export branch. Its current 725 paths are JSON/API/PNG assets only, with no source-code files.
-3. Archive or delete superseded feature/fix/research branches after the merge; keep only `main` and `data` as active branches.
-4. Verify the next scheduled `main` pipeline run exports successfully to `data`.
-5. Continue Biscayne boundary and inlet reconciliation as research within `main`, without promoting unverified geometry.
+1. Verify the next scheduled `main` pipeline run exports successfully to `data`.
+2. Remove obsolete branch references after confirming their useful changes are represented in `main`; keep only `main` and `data` active.
+3. Continue Biscayne boundary and inlet reconciliation within `main` using manual research workflows, without promoting unverified geometry.
 
 ## Validation policy
 
