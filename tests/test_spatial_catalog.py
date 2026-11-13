@@ -185,6 +185,12 @@ def test_curated_noaa_named_water_geometries_and_topology_audit_are_persisted():
         assert "mud-flat class" not in note
         assert by_id[feature_id]["geometry"] is None
         assert by_id[feature_id]["source_geometry_ref"]["source_feature_count"] >= 1
+    assert catalog["geometry_policy"]["parent_id_semantics"].startswith("parent_id is a catalog grouping")
+    assert by_id["sf-biscayne-black-ledge"]["relationships"][0]["type"] == "located_within"
+    assert by_id["sf-biscayne-channel"]["relationships"][0]["type"] == "overlaps"
+    for feature_id in ("sf-lewis-cut", "sf-sands-cut", "sf-snapper-creek-canal", "sf-goulds-canal"):
+        assert by_id[feature_id]["relationships"][0]["type"] == "adjacent_to"
+        assert "no positive-area overlap" in by_id[feature_id]["relationships"][0]["status"]
 
     bear = by_name["Bear Cut"][0]
     assert str(bear["properties"]["OBJECTID"]) == "253451"
