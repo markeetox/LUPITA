@@ -7,7 +7,9 @@ from __future__ import annotations
 
 import asyncio
 import json
+from io import BytesIO
 from pathlib import Path
+import zipfile
 
 from playwright.async_api import async_playwright
 
@@ -48,6 +50,45 @@ async def inspect_project(page, project_id: str, output_dir: Path) -> dict:
     }
 
 
+async def download_project_archives(page, output_dir: Path) -> list[dict]:
+    """Download official project ZIPs using the URL template in NSDE's CMP UI."""
+    results = []
+    for project_id in PROJECT_IDS:
+        url = f"https://nsde.ngs.noaa.gov/downloads/{project_id}.zip"
+        record = {"project_id": project_id, "url": url}
+        try:
+            response = await page.request.get(url, timeout=120000)
+            body = await response.body()
+            record.update({
+                "http_status": response.status,
+                "content_type": response.headers.get("content-type"),
+                "content_length_header": response.headers.get("content-length"),
+                "downloaded_bytes": len(body),
+                "final_url": response.url,
+            })
+            if response.status == 200 and body[:4] == b"PK\\x03\\x04":
+                archive_path = output_dir / f"{project_id}.zip"
+                archive_path.write_bytes(body)
+                with zipfile.ZipFile(BytesIO(body)) as archive:
+                    names = archive.namelist()
+                    record["archive_file"] = archive_path.name
+                    record["archive_entries"] = names
+                    record["shapefile_components"] = [
+                        name for name in names if name.lower().endswith((".shp", ".shx", ".dbf", ".prj"))
+                    ]
+                    record["metadata_entries"] = [
+                        name for name in names if name.lower().endswith((".xml", ".txt", ".pdf", ".html"))
+                    ]
+                    record["zip_integrity"] = "passed"
+            else:
+                record["download_status"] = "not_a_zip_or_http_error"
+                record["body_snippet"] = body[:500].decode("utf-8", errors="replace")
+        except Exception as exc:
+            record["error"] = f"{type(exc).__name__}: {exc}"
+        results.append(record)
+    return results
+
+
 async def run(output_dir: Path) -> dict:
     output_dir.mkdir(parents=True, exist_ok=True)
     network_events = []
@@ -81,6 +122,7 @@ async def run(output_dir: Path) -> dict:
             ),
         }
         (output_dir / "initial.html").write_text(await page.content(), encoding="utf-8")
+        downloads = await download_project_archives(page, output_dir)
         projects = []
         for project_id in PROJECT_IDS:
             try:
@@ -94,6 +136,7 @@ async def run(output_dir: Path) -> dict:
             "url": URL,
             "initial": initial,
             "project_filter_results": projects,
+            "project_downloads": downloads,
             "network_events": network_events[-500:],
             "note": "No download button was clicked. This is an interface/network discovery artifact only.",
         }
@@ -110,6 +153,12 @@ if __name__ == "__main__":
         "initial_status": result["initial"]["status"],
         "initial_url": result["initial"]["url"],
         "inputs": result["initial"]["inputs"],
+        "project_downloads": [
+            {"project_id": d["project_id"], "http_status": d.get("http_status"),
+             "downloaded_bytes": d.get("downloaded_bytes"), "archive_file": d.get("archive_file"),
+             "error": d.get("error"), "download_status": d.get("download_status")}
+            for d in result["project_downloads"]
+        ],
         "project_results": [
             {"project_id": p["project_id"], "error": p.get("error"),
              "body_text_length": len(p.get("body_text", "")),
