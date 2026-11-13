@@ -1,0 +1,219 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "LUPITA Spatial Context Catalog",
+  "type": "object",
+  "required": [
+    "schema_version",
+    "crs",
+    "region",
+    "features"
+  ],
+  "additionalProperties": false,
+  "properties": {
+    "schema_version": {
+      "const": 1
+    },
+    "crs": {
+      "const": "EPSG:4326"
+    },
+    "region": {
+      "type": "object",
+      "required": [
+        "id",
+        "name"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "id": {
+          "type": "string",
+          "pattern": "^[a-z0-9-]+$"
+        },
+        "name": {
+          "type": "string",
+          "minLength": 1
+        }
+      }
+    },
+    "features": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/feature"
+      }
+    }
+  },
+  "$defs": {
+    "relationship": {
+      "type": "object",
+      "required": [
+        "type",
+        "target_id"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "type": {
+          "enum": [
+            "part_of",
+            "connects_to",
+            "overlaps",
+            "near"
+          ]
+        },
+        "target_id": {
+          "type": "string",
+          "pattern": "^[a-z0-9-]+$"
+        },
+        "notes": {
+          "type": "string"
+        }
+      }
+    },
+    "source": {
+      "type": "object",
+      "required": [
+        "organization",
+        "title",
+        "url"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "organization": {
+          "type": "string",
+          "minLength": 1
+        },
+        "title": {
+          "type": "string",
+          "minLength": 1
+        },
+        "url": {
+          "type": "string",
+          "format": "uri"
+        },
+        "accessed_utc": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "version": {
+          "type": "string"
+        }
+      }
+    },
+    "feature": {
+      "type": "object",
+      "required": [
+        "id",
+        "name",
+        "feature_type",
+        "region_id",
+        "geometry",
+        "geometry_status",
+        "provenance"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "id": {
+          "type": "string",
+          "pattern": "^[a-z0-9-]+$"
+        },
+        "name": {
+          "type": "string",
+          "minLength": 1
+        },
+        "feature_type": {
+          "enum": [
+            "bay",
+            "bay_subregion",
+            "inlet",
+            "pass",
+            "channel",
+            "flat",
+            "nearshore_zone",
+            "reef",
+            "reef_tract",
+            "monitoring_station"
+          ]
+        },
+        "region_id": {
+          "type": "string",
+          "pattern": "^[a-z0-9-]+$"
+        },
+        "geometry": {
+          "oneOf": [
+            {
+              "type": "null"
+            },
+            {
+              "type": "object",
+              "required": [
+                "type",
+                "coordinates"
+              ],
+              "properties": {
+                "type": {
+                  "enum": [
+                    "Point",
+                    "MultiPoint",
+                    "LineString",
+                    "MultiLineString",
+                    "Polygon",
+                    "MultiPolygon"
+                  ]
+                },
+                "coordinates": {}
+              }
+            }
+          ]
+        },
+        "geometry_status": {
+          "enum": [
+            "verified",
+            "provisional",
+            "pending_authoritative_geometry",
+            "not_applicable"
+          ]
+        },
+        "vertical_support": {
+          "type": "object",
+          "properties": {
+            "sensor_depth_m": {
+              "type": "number"
+            },
+            "depth_reference": {
+              "type": "string"
+            },
+            "notes": {
+              "type": "string"
+            }
+          },
+          "additionalProperties": false
+        },
+        "relationships": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/relationship"
+          }
+        },
+        "provenance": {
+          "type": "object",
+          "required": [
+            "sources"
+          ],
+          "additionalProperties": false,
+          "properties": {
+            "sources": {
+              "type": "array",
+              "items": {
+                "$ref": "#/$defs/source"
+              }
+            },
+            "notes": {
+              "type": "string"
+            }
+          }
+        },
+        "notes": {
+          "type": "string"
+        }
+      }
+    }
+  }
+}

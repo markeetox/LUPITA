@@ -137,5 +137,62 @@
   "lon_range": [
     -100,
     -50
-  ]
+  ],
+  "habitat_contexts": {
+    "schema_version": 1,
+    "contexts": [
+      {
+        "id": "shallow-flat-use",
+        "feature_types": [
+          "flat",
+          "bay_subregion",
+          "nearshore_zone"
+        ],
+        "habitat_roles": [
+          "foraging",
+          "occupancy"
+        ],
+        "evidence_status": "supported_general_association",
+        "local_validation": "required",
+        "sources": [
+          "https://pubmed.ncbi.nlm.nih.gov/31823365/"
+        ],
+        "notes": "Lower Florida Keys telemetry documents use of nearshore flats shallower than 3 m. Validate transfer to individual South Florida flats."
+      },
+      {
+        "id": "reef-tract-use",
+        "feature_types": [
+          "reef",
+          "reef_tract"
+        ],
+        "habitat_roles": [
+          "occupancy",
+          "spawning_context"
+        ],
+        "evidence_status": "supported_general_association",
+        "local_validation": "required",
+        "sources": [
+          "https://pubmed.ncbi.nlm.nih.gov/31823365/"
+        ],
+        "notes": "The study documents use of Florida Reef Tract habitat at approximately 15–40 m and seasonal reef occupancy. This does not make every hard-bottom polygon confirmed spawning habitat."
+      },
+      {
+        "id": "flats-to-reef-connectivity",
+        "feature_types": [
+          "flat",
+          "reef_tract"
+        ],
+        "habitat_roles": [
+          "movement",
+          "connectivity"
+        ],
+        "evidence_status": "supported_general_association",
+        "local_validation": "required",
+        "sources": [
+          "https://pubmed.ncbi.nlm.nih.gov/31823365/"
+        ],
+        "notes": "Tagged fish used both nearshore flats and deeper reef habitat. Connectivity is an ecological context, not a route prediction."
+      }
+    ]
+  }
 }
