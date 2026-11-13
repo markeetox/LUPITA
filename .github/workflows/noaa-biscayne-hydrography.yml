@@ -65,11 +65,11 @@ jobs:
           fi
           git commit -m "Persist curated Biscayne named-water geometries"
           for attempt in 1 2 3; do
-            if git push origin "HEAD:\${TARGET_BRANCH}"; then
+            if git push origin "HEAD:${TARGET_BRANCH}"; then
               exit 0
             fi
             echo "Push race detected; rebasing on latest research branch (attempt \${attempt}/3)."
-            git fetch origin "\${TARGET_BRANCH}"
+            git fetch origin "${TARGET_BRANCH}"
             git rebase FETCH_HEAD
           done
           exit 1
