@@ -12,7 +12,7 @@ from typing import Any
 import requests
 
 SERVICE = "https://gis.myfwc.com/hosting/rest/services/Projects_FWC/UnifiedReefMapProject_v2_2/MapServer"
-FDEP_SERVICE = "https://ags.dep.state.fl.us/arcgis/rest/services/OpenData/AQUATIC_PRESERVES/MapServer"
+FDEP_SERVICE = "https://ca.dep.state.fl.us/arcgis/rest/services/OpenData/AQUATIC_PRESERVES/MapServer"
 PAGE_SIZE = 500
 MAX_PAGES = 100
 TIMEOUT = (15, 90)
@@ -23,6 +23,9 @@ LAYERS = {
         "where": "1=1",
         "filter_attribute": "NAME",
         "filter_contains": "BISCAYNE BAY",
+        "out_fields": "OBJECTID,NAME,COUNTIES,REGION,ACRES",
+        "return_z": False,
+        "return_m": False,
         "description": "FDEP aquatic-preserve polygons filtered locally to Biscayne Bay; official mapped boundary is approximate and not for enforcement.",
     },
     "source_footprints": {
@@ -76,14 +79,18 @@ def validate_feature(feature: dict[str, Any]) -> None:
             raise ValueError(f"Coordinate outside EPSG:4326 bounds: {point!r}")
 
 
-def _request_page(session, layer_id, where, offset, page_size=PAGE_SIZE, service=SERVICE):
+def _request_page(session, layer_id, where, offset, page_size=PAGE_SIZE, service=SERVICE, out_fields="*", return_z=None, return_m=None):
     url = f"{service}/{layer_id}/query"
     params = {
-        "where": where, "outFields": "*", "returnGeometry": "true",
+        "where": where, "outFields": out_fields, "returnGeometry": "true",
         "outSR": "4326", "f": "geojson", "resultOffset": offset,
         "resultRecordCount": page_size, "orderByFields": "OBJECTID ASC",
         "returnExceededLimitFeatures": "true",
     }
+    if return_z is not None:
+        params["returnZ"] = str(return_z).lower()
+    if return_m is not None:
+        params["returnM"] = str(return_m).lower()
     response = session.get(url, params=params, timeout=TIMEOUT)
     response.raise_for_status()
     payload = response.json()
@@ -101,7 +108,11 @@ def extract_layer(session, name, definition):
     pages = 0
     while pages < MAX_PAGES:
         service = definition.get("service", SERVICE)
-        payload = _request_page(session, layer_id, definition["where"], offset, service=service)
+        payload = _request_page(
+            session, layer_id, definition["where"], offset, service=service,
+            out_fields=definition.get("out_fields", "*"),
+            return_z=definition.get("return_z"), return_m=definition.get("return_m"),
+        )
         page = payload["features"]
         for feature in page:
             validate_feature(feature)
