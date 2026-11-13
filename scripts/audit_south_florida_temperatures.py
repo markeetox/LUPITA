@@ -238,7 +238,7 @@ def main():
     # for this first shallow-reef comparison.
     selected_usgs_sites = {"brewster", "shadow", "bbnorth", "fowey"}
     for row in usgs:
-        key = re.sub(r"\\s+", " ", row["site"].strip()).lower()
+        key = re.sub(r"\s+", " ", row["site"].strip()).lower()
         if key in selected_usgs_sites and row["latitude"] != "" and row["longitude"] != "":
             locations[row["site"]] = (float(row["latitude"]), float(row["longitude"]))
     for station, meta in FWC_STATIONS.items():
