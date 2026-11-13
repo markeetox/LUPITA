@@ -32,7 +32,15 @@ Keep production changes separate from research-only work. Do not promote candida
 - `scripts/`: repeatable GIS extraction, curation, and topology/audit tools.
 - `tests/`: prediction, data-contract, extraction, and spatial QA tests.
 - `web/`: map client.
-- `.github/workflows/`: scheduled production refreshes and focused/manual research workflows.
+- `.github/workflows/`: scheduled production refresh/export, lightweight PR validation, and manual-only source-acquisition workflows.
+
+## Execution and data-export boundary
+
+- `main` is the only authoritative application/code branch. The pipeline, API generator, species profiles, source configuration, tests, and maintained spatial catalog live there.
+- The hourly pipeline checks out `main`, runs tests and prediction generation, and creates the app-facing export from the generated outputs.
+- `data` is a publication target for generated JSON/API assets, not a source-code dependency or a place where application logic is maintained.
+- The pipeline's optional checkout of the previous `data` publication is only a last-known-good export fallback. It is not used to run the prediction engine. A missing `data` branch must not prevent tests, prediction generation, or a new export.
+- Keep research acquisition artifacts and candidate geometry separate from production scoring until explicit validation and promotion.
 
 ## Current operational process
 
@@ -42,6 +50,7 @@ Keep production changes separate from research-only work. Do not promote candida
 4. Run targeted syntax checks and unit tests before expensive extraction or spatial audits.
 5. Run only the workflows affected by the change. Use the full Python suite for broad integration milestones or pre-merge validation, not every research iteration.
    - The focused Biscayne landmark workflow is `.github/workflows/biscayne-landmark-evidence.yml`; it compiles its extraction/reconciliation scripts and tests before tests or network extraction.
+   - Expensive FWC/NOAA discovery and geometry extraction workflows are manually triggered only. PR automation validates code and tests; it must not launch repeated source acquisition or write extraction outputs back to a PR branch.
 6. Record outputs, source provenance, uncertainty, and limitations. Keep candidate and verified states explicit.
 7. Update this README, Project Status, and Progress Log in the same commit as each implementation batch.
 
@@ -55,7 +64,7 @@ been checked against catch reports. The versioned app API exposes these outputs 
 - `config/`: buoy stations and ERDDAP dataset settings
 - `pipeline/`: data pulls (`sources/`), `layers.py` (common grid), `scoring.py`, `predict.py`, `run.py`
 - `web/index.html`: map viewer (deployed on Vercel, root directory `web`)
-- `.github/workflows/pipeline.yml`: runs hourly at 10 minutes past the hour (UTC), tests and refreshes the pipeline, then publishes app-facing JSON to the `data` branch
+- `.github/workflows/pipeline.yml`: runs hourly at 10 minutes past the hour (UTC), tests and refreshes the pipeline from `main`, then exports app-facing JSON to the `data` branch
 
 ## Run locally
 ```
