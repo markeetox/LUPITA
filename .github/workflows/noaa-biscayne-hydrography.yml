@@ -58,7 +58,12 @@ jobs:
           git reset --hard FETCH_HEAD
           python scripts/curate_noaa_named_water_geometries.py --source artifacts/noaa-hydrography/harbor_named_water_areas.geojson --output-dir data/spatial
           python -m pytest -q tests/test_spatial_catalog.py
+          mkdir -p data/spatial/research/noaa_enc
+          cp artifacts/noaa-hydrography/harbor_causeway_lines.geojson data/spatial/research/noaa_enc/
+          cp artifacts/noaa-hydrography/harbor_bridge_lines.geojson data/spatial/research/noaa_enc/
+          cp artifacts/noaa-hydrography/harbor_landmark_points.geojson data/spatial/research/noaa_enc/
           git add data/spatial/noaa-biscayne-named-water-areas.geojson data/spatial/noaa-biscayne-named-water-topology-audit.json data/spatial/feature-catalog.json
+          git add data/spatial/research/noaa_enc/harbor_causeway_lines.geojson data/spatial/research/noaa_enc/harbor_bridge_lines.geojson data/spatial/research/noaa_enc/harbor_landmark_points.geojson
           if git diff --cached --quiet; then
             echo "No curated GIS changes to commit."
             exit 0
