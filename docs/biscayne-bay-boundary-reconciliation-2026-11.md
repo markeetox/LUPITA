@@ -78,6 +78,18 @@ https://www.fisheries.noaa.gov/inport/item/74866
 
 These projects are promising high-accuracy shoreline sources, but their footprints must be inspected before assuming they provide complete, seamless coverage of Biscayne Bay. Their MHW and MLLW lines represent different tidal datums and must not be mixed as if they were one shoreline.
 
+### Supplemental local and historical shoreline sources
+
+Two additional NOAA NGS records are relevant, but they should not be treated as a seamless current shoreline:
+
+- **FL1603A-CM-N, Convoy Point:** small local coverage around Convoy Point (metadata extent approximately 25.4464–25.4782 N), based on imagery from 2017-03-19. Metadata reports 1.9 m horizontal accuracy at 95% confidence. It is useful as a local comparison source, not a bay-wide boundary.
+  - InPort metadata: https://www.fisheries.noaa.gov/inport/item/61478
+  - Completion report: https://www.ngs.noaa.gov/desc_reports/FL1603A-CM-N.PDF
+- **FL1934E, Biscayne Bay historical shoreline rescue:** vectorized historic shoreline from survey maps dated 1934-08-01 through 1935-01-25. This is valuable for historical shoreline-change context, not current shoreline geometry.
+  - InPort metadata: https://www.fisheries.noaa.gov/inport/item/63718
+
+The published rectangular metadata extents for FL1808A and FL1808C also deserve a coverage check. FL1808A spans approximately 25.3252–25.5119 N, while FL1808C spans approximately 25.6345–25.7729 N. This leaves an apparent latitude interval between the two project extents. NOAA metadata warns that rectangular geographic limits are for data management and do not imply complete surveyed coverage, so this is not yet proof of an actual shoreline gap. The exact geographic-cell geometries must be retrieved and inspected before describing coverage as continuous.
+
 ### NOAA CUSP as a secondary check
 
 NOAA's Continually Updated Shoreline Product (CUSP) is intended to provide the most up-to-date shoreline and incorporates contemporary NOAA and non-NOAA sources. NOAA explicitly states that CUSP has less stringent acquisition and quality-control requirements than the project-based National Shoreline. Use CUSP as a currency/completeness comparison, not as a substitute for the project-specific MHW/MLLW vectors without reviewing its source and quality metadata.
