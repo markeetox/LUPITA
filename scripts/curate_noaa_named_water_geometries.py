@@ -160,11 +160,21 @@ def curate(source_path: Path, output_dir: Path) -> dict[str, Any]:
                     ""
                 )
                 if name == "Norris Cut":
+                    ref["review_status"] = "direct_named_water_area_polygon_persisted_channel_centerline_pending"
                     note = note.replace(
                         "The current structured Harbour ENC extraction did not return a directly named Norris Cut geometry. Do not borrow geometry from nearby channel features.",
-                        "NOAA Harbour ENC layer 237 directly returns a named-water polygon for Norris Cut (OBJECTID 253447, Chart 11468, source date 2004-01). This is a charted named-water area, not a surveyed channel centerline or current controlling-depth boundary."
+                        "NOAA Harbour ENC layer 237 directly returns a named-water polygon for Norris Cut (OBJECTID 253447, Chart 11468, source date 2004-01)."
                     )
-                if "original source polygon is persisted in the curated geojson" not in note.lower():
+                    note = note.replace(
+                        " The original source polygon is persisted in the curated GeoJSON and passed geometry validation. It remains a charted named-water area, not a surveyed centerline or depth boundary.",
+                        ""
+                    )
+                    if "Norris Cut source polygon is persisted in the curated GeoJSON" not in note:
+                        note = note.rstrip() + (
+                            " The Norris Cut source polygon is persisted in the curated GeoJSON and passed geometry validation. "
+                            "The full inlet channel centerline and current controlling-depth boundary remain unverified."
+                        )
+                elif "original source polygon is persisted in the curated geojson" not in note.lower():
                     note = note.rstrip() + (
                         " The original source polygon is persisted in the curated GeoJSON and passed geometry validation. "
                         "It remains a charted named-water area, not a surveyed centerline or depth boundary."
