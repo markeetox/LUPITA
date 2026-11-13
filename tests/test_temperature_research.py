@@ -59,9 +59,9 @@ def test_mur_fallback_uses_each_mirror_without_replaying_primary(monkeypatch, tm
         if "coastwatch.pfeg.noaa.gov" in url:
             return FakeResponse(url, 503, "temporary primary outage")
         csv_text = (
-            "time,latitude,longitude,analysed_sst\\n"
-            "UTC,degrees_north,degrees_east,degree_C\\n"
-            "2024-01-01T09:00:00Z,25.57,-80.10,25.4\\n"
+            "time,latitude,longitude,analysed_sst\n"
+            "UTC,degrees_north,degrees_east,degree_C\n"
+            "2024-01-01T09:00:00Z,25.57,-80.10,25.4\n"
         )
         return FakeResponse(url, 200, csv_text)
 
