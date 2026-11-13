@@ -44,6 +44,8 @@ def test_validate_rejects_out_of_range_coordinate():
 
 def test_extract_layer_paginates_and_summarizes():
     class Response:
+        status_code = 200
+
         def __init__(self, payload):
             self.payload = payload
 
@@ -82,6 +84,8 @@ def test_extract_layer_paginates_and_summarizes():
 
 def test_extract_layer_uses_layer_specific_service_and_name_attribute():
     class Response:
+        status_code = 200
+
         def __init__(self, payload):
             self.payload = payload
 
