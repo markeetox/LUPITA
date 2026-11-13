@@ -9,7 +9,7 @@
 
 LUPITA is being consolidated around one authoritative application branch: `main`. The temporary `integration/main-consolidation` branch is a pre-production staging area only. The `data` branch is reserved for generated application exports and is excluded from code consolidation. GIS research remains separate from production scoring until reviewed and promoted.
 
-PR #69 and PR #66 have been squash-merged into `integration/main-consolidation`. PR #68 is being repaired and validated against that staging branch. PR #70 still needs its base retargeted after the GIS foundation is integrated. No consolidation changes have been merged into production `main`.
+PRs #66, #68, and #69 have been squash-merged into `integration/main-consolidation`. The 85 unique/updated paths from PR #70 have also been imported into staging as a consolidated tree commit, removing its stacked dependency. Original PRs #70 and #71 are closed as superseded. No consolidation changes have been merged into production `main`.
 
 ## Current workstreams
 
@@ -65,12 +65,13 @@ No inferred inlet connections, snapped seams, or synthetic channel centerlines a
 
 | Pull request | Purpose | Base | State |
 |---|---|---|---|
-| [#70](https://github.com/markeetox/LUPITA/pull/70) | NOAA hydrography and Biscayne inlet review | stacked research branch; retarget pending | Open |
+| [#70](https://github.com/markeetox/LUPITA/pull/70) | NOAA hydrography and Biscayne inlet review | imported into integration staging | Closed, superseded |
 | [#69](https://github.com/markeetox/LUPITA/pull/69) | Biscayne GIS geometry foundation | integration staging | Merged |
-| [#68](https://github.com/markeetox/LUPITA/pull/68) | South Florida spatial-context schema and species habitat contexts | integration staging | Open, test repair pushed |
+| [#68](https://github.com/markeetox/LUPITA/pull/68) | South Florida spatial-context schema and species habitat contexts | integration staging | Merged |
 | [#66](https://github.com/markeetox/LUPITA/pull/66) | South Florida in-situ temperature audit | integration staging | Merged |
+| [#71](https://github.com/markeetox/LUPITA/pull/71) | Prediction reliability changes | already present in current codebase | Closed, superseded |
 
-PR #70 originated as a stacked branch on #69. The consolidation staging branch removes that dependency before the combined work is offered to `main`.
+PR #70 originated as a stacked branch on #69. Its resulting file tree is now in the staging branch without the old commit chain. PR #71 was reviewed against the current tree and its meaningful API/confidence changes were already present, so it was closed without importing stale versions of core files.
 
 ## Known limitations and blockers
 
@@ -79,15 +80,15 @@ PR #70 originated as a stacked branch on #69. The consolidation staging branch r
 3. The 17.691 km nearest separation between FL1808A and FL1808C MHW linework is a measured separation between project vectors, not proof of a missing coastline or permission to interpolate.
 4. Government Cut requires an exact source-feature crosswalk.
 5. Candidate subregions, flats, channels, and inlet connections must retain confidence/provenance and must not be promoted based on proximity alone.
-6. The Jewfish Creek shared-boundary test exposed projection-induced false zero measurements. The implementation now evaluates shared-edge topology in source coordinates and projects the resulting line only for metric length; current-head focused validation is still required.
+6. The Jewfish Creek shared-boundary test exposed projection-induced false zero measurements. The implementation now evaluates shared-edge topology in source coordinates and projects the resulting line only for metric length. A local reproduction returns a 100.763 m shared boundary for the synthetic fixture; the consolidated GitHub workflow still needs a successful run.
 7. Five expensive FWC/NOAA source-acquisition workflows have been changed to manual-only so PR synchronization cannot repeatedly trigger downloads and branch-write loops.
 
 ## Next implementation milestones
 
-1. Complete the integration staging audit and merge the remaining useful feature/fix/research branches without carrying branch-to-branch dependencies.
-2. Validate PR #68 and the updated PR #70 research workflows on the current heads.
-3. Separate the main pipeline's generated outputs from the optional last-known-good export fallback.
-4. Open one consolidated PR from `integration/main-consolidation` to `main` after the full suite and focused GIS tests pass.
+1. Finish the branch-by-branch audit, import only unique useful changes, and close/archive superseded branches.
+2. Run the full Python suite and focused GIS tests once on the consolidated staging branch; current PR #70 runs were blocked with `action_required` and had no jobs.
+3. Confirm the production workflow can run from `main` and publish outputs to `data` without requiring the data branch for prediction execution.
+4. Open one consolidated PR from `integration/main-consolidation` to `main` after validation.
 5. Reconcile authoritative landmark references and candidate subregions without inventing separator lines.
 6. Define explicit promotion criteria from research artifacts to production map/prediction inputs.
 
