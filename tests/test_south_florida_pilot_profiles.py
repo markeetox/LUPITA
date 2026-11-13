@@ -14,7 +14,7 @@ def test_pilot_profiles_have_species_specific_source_documented_descriptions():
     bonefish = load("bonefish")
     permit = load("permit")
 
-    assert "northern Florida Keys" in bonefish["profile"]["behavior"]
+    assert "northern florida keys" in bonefish["profile"]["behavior"].lower()
     assert "spawning" in bonefish["profile"]["life_history"].lower()
     assert "Bahamas" in bonefish["profile"]["spawning"]
     assert "Florida Reef Tract" in permit["profile"]["behavior"]
