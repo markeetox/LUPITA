@@ -18,9 +18,9 @@
       "region": "south_florida",
       "parent_id": null,
       "geometry": null,
-      "geometry_status": "pending_authoritative_gis_extraction",
+      "geometry_status": "official_fdep_geometry_retrieved_reconciliation_pending",
       "boundary_basis": "Florida Statute 258.397",
-      "boundary_scope_note": "The statutory preserve includes Card Sound and natural waterways tidally connected to Biscayne Bay, extends across mouths of artificial waterways, and excludes submerged lands conveyed for Biscayne National Monument. It is not automatically identical to the full ecological bay.",
+      "boundary_scope_note": "The statutory preserve includes Card Sound and natural waterways tidally connected to Biscayne Bay, extends across mouths of artificial waterways, and excludes submerged lands conveyed for Biscayne National Monument. FDEP's official GIS layer returns the distinct feature named Biscayne Bay (OBJECTID 43; 64,607.58 acres). Its polygon is an approximate mapped representation, not a legal survey or enforcement boundary.",
       "relationships": [],
       "provenance": [
         {
@@ -28,9 +28,86 @@
           "title": "2026 Florida Statutes, Chapter 258.397",
           "url": "https://www.flsenate.gov/Laws/Statutes/2026/258.397",
           "source_type": "legal_boundary_description"
+        },
+        {
+          "publisher": "Florida Department of Environmental Protection",
+          "title": "Aquatic Preserves GIS layer, feature Biscayne Bay (OBJECTID 43)",
+          "url": "https://ca.dep.state.fl.us/arcgis/rest/services/OpenData/AQUATIC_PRESERVES/MapServer/0",
+          "source_type": "official_approximate_management_boundary"
         }
       ],
-      "validation_status": "legal_definition_verified_geometry_pending"
+      "validation_status": "legal_definition_and_official_approximate_gis_geometry_retrieved_reconciliation_pending",
+      "source_geometry": {
+        "service_url": "https://ca.dep.state.fl.us/arcgis/rest/services/OpenData/AQUATIC_PRESERVES/MapServer/0",
+        "objectid": 43,
+        "source_name": "Biscayne Bay",
+        "source_geometry_type": "MultiPolygon",
+        "output_crs": "EPSG:4326",
+        "source_wkid": 6439,
+        "reported_acres": 64607.580491,
+        "bbox_wgs84": [
+          -80.38639777120336,
+          25.283393021597988,
+          -80.12159664607981,
+          25.96698446645934
+        ],
+        "review_artifact_id": 14003175396
+      }
+    },
+    {
+      "id": "sf-cape-florida-aquatic-preserve",
+      "name": "Biscayne Bay-Cape Florida to Monroe County Line Aquatic Preserve",
+      "feature_type": "protected_waterbody_boundary",
+      "region": "south_florida",
+      "parent_id": null,
+      "geometry": null,
+      "geometry_status": "official_fdep_geometry_retrieved_separate_preserve",
+      "boundary_basis": "Florida Statute 258.39(11) and FDEP aquatic-preserve GIS",
+      "boundary_scope_note": "This is a separate preserve designation, not part of the Biscayne Bay Aquatic Preserve polygon. FDEP GIS feature OBJECTID 25 reports 4,163.90 acres and maps a remnant offshore of Key Biscayne. Preserve the distinction; do not merge it into the Biscayne Bay boundary. FDEP describes this preserve under the newer common name Cape Florida Aquatic Preserve.",
+      "source_geometry": {
+        "service_url": "https://ca.dep.state.fl.us/arcgis/rest/services/OpenData/AQUATIC_PRESERVES/MapServer/0",
+        "objectid": 25,
+        "source_name": "Biscayne Bay-Cape Florida to Monroe County Line",
+        "source_geometry_type": "Polygon",
+        "output_crs": "EPSG:4326",
+        "source_wkid": 6439,
+        "reported_acres": 4163.903858,
+        "bbox_wgs84": [
+          -80.15885975408122,
+          25.645209636397418,
+          -80.10493075545824,
+          25.67857222694478
+        ],
+        "review_artifact_id": 14003175396
+      },
+      "relationships": [
+        {
+          "type": "adjacent_to",
+          "target_id": "sf-biscayne-bay-ecological-context",
+          "status": "spatial_review_pending"
+        }
+      ],
+      "provenance": [
+        {
+          "publisher": "Florida Department of Environmental Protection",
+          "title": "Aquatic Preserves GIS layer, Cape Florida preserve feature",
+          "url": "https://ca.dep.state.fl.us/arcgis/rest/services/OpenData/AQUATIC_PRESERVES/MapServer/0",
+          "source_type": "official_approximate_management_boundary"
+        },
+        {
+          "publisher": "Florida Legislature",
+          "title": "2026 Florida Statutes, Chapter 258.39(11)",
+          "url": "https://www.flsenate.gov/Laws/Statutes/2026/258.39",
+          "source_type": "legal_boundary_reference"
+        },
+        {
+          "publisher": "Florida Department of Environmental Protection",
+          "title": "Cape Florida Aquatic Preserve",
+          "url": "https://floridaaquaticpreserves.org/managed-areas/floridas-coral-reef/cape-florida-aquatic-preserve",
+          "source_type": "official_management_area_description"
+        }
+      ],
+      "validation_status": "separate_preserve_designation_and_official_approximate_gis_geometry_retrieved"
     },
     {
       "id": "sf-biscayne-bay-ecological-context",
