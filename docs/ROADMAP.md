@@ -71,3 +71,6 @@ A metadata check is not a substitute for inspecting the actual production CSV pu
 3. Separate current refresh health from last-known-good prediction data with `latest.json` and `api/v1/refresh.json`.
 4. Restore prior `data` branch prediction files/API when a refresh fails.
 5. Validate with focused/full tests and a manual production pull. Do not change scoring weights or species biology.
+
+
+**Milestone status:** SST host fallback, truthful `not_attempted` diagnostics, and separate refresh/prediction publication are implemented. Full Python suite passes (**262 passed, 0 failed**) on [run #43493987730](https://github.com/markeetox/LUPITA/actions/runs/43493987730). Remaining acceptance test is one live Pull Ocean Data run to verify mirror response and published snapshot behavior.
