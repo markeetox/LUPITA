@@ -1,6 +1,6 @@
 {
-  "generated_at_utc": "2026-11-13T12:17:56.433959+00:00",
-  "status": "overlay_metrics_computed",
+  "generated_at_utc": "2026-11-13T12:26:12.680552+00:00",
+  "status": "feature_level_overlay_metrics_computed",
   "output_crs_for_measurements": "EPSG:26917",
   "sources": {
     "noaa_cmp_projects": [
@@ -10,6 +10,51 @@
     ],
     "noaa_enc_named_water": "https://encdirect.noaa.gov/arcgis/rest/services/encdirect/enc_harbour/MapServer/237",
     "fdep_aquatic_preserves": "https://ca.dep.state.fl.us/arcgis/rest/services/OpenData/AQUATIC_PRESERVES/MapServer/0"
+  },
+  "comparison_geometry": {
+    "noaa_enc_biscayne_bay_polygon_count": 37,
+    "noaa_enc_biscayne_bay_objectids": [
+      246262,
+      246278,
+      246285,
+      246286,
+      246287,
+      246288,
+      246293,
+      246298,
+      246299,
+      246303,
+      246306,
+      246307,
+      246308,
+      246309,
+      246310,
+      246311,
+      246312,
+      246313,
+      246314,
+      246315,
+      246320,
+      246321,
+      253418,
+      253419,
+      253422,
+      253425,
+      253428,
+      253429,
+      253430,
+      253435,
+      253438,
+      253448,
+      253449,
+      253460,
+      253462,
+      253475,
+      253477
+    ],
+    "fdep_biscayne_bay_objectid": 43,
+    "fdep_cape_florida_preserve_objectid": 25,
+    "interpretation": "NOAA charted named-water polygons and FDEP management preserves are separate comparison contexts, not substitutes for a shoreline or ecological boundary."
   },
   "fdep_preserves": {
     "Biscayne Bay": {
@@ -21,7 +66,6 @@
       "acres": 4163.903858
     }
   },
-  "noaa_enc_biscayne_bay_charted_polygon_count": 37,
   "noaa_enc_biscayne_bay_vs_fdep_objectid_43_area_overlay": {
     "first_area_km2": 512.865,
     "second_area_km2": 261.411,
@@ -33,6 +77,14 @@
     "FL1808A-TB-N": {
       "mhw_feature_count": 58,
       "mhw_line_length_km": 39.44,
+      "source_dates": [
+        "20180726"
+      ],
+      "horizontal_accuracy_m": [
+        "2.3"
+      ],
+      "features_intersecting_charted_bay": 42,
+      "features_intersecting_fdep_preserve": 14,
       "overlays": {
         "noaa_charted_biscayne_bay_named_water_union": {
           "total_line_length_km": 39.44,
@@ -54,6 +106,13 @@
           "outside_polygon_length_km": 39.44,
           "inside_line_length_pct": 0.0,
           "minimum_distance_to_polygon_boundary_m": 24286.33
+        },
+        "mutually_exclusive_chart_and_preserve_partition": {
+          "inside_both_km": 3.703,
+          "charted_bay_only_km": 8.612,
+          "fdep_preserve_only_km": 2.548,
+          "outside_both_km": 24.577,
+          "partition_total_km": 39.44
         }
       },
       "status": "mhw_linework_retrieved"
@@ -61,6 +120,17 @@
     "FL1808C-TB-N": {
       "mhw_feature_count": 70,
       "mhw_line_length_km": 18.029,
+      "source_dates": [
+        "20180726",
+        "20190412",
+        "20190413"
+      ],
+      "horizontal_accuracy_m": [
+        "1.3",
+        "2.3"
+      ],
+      "features_intersecting_charted_bay": 38,
+      "features_intersecting_fdep_preserve": 39,
       "overlays": {
         "noaa_charted_biscayne_bay_named_water_union": {
           "total_line_length_km": 18.029,
@@ -82,6 +152,13 @@
           "outside_polygon_length_km": 18.029,
           "inside_line_length_pct": 0.0,
           "minimum_distance_to_polygon_boundary_m": 8291.17
+        },
+        "mutually_exclusive_chart_and_preserve_partition": {
+          "inside_both_km": 1.626,
+          "charted_bay_only_km": 0.998,
+          "fdep_preserve_only_km": 5.766,
+          "outside_both_km": 9.64,
+          "partition_total_km": 18.03
         }
       },
       "status": "mhw_linework_retrieved"
@@ -89,20 +166,2554 @@
     "FL2317-CS-N": {
       "mhw_feature_count": 0,
       "mhw_line_length_km": 0,
+      "source_dates": [],
+      "horizontal_accuracy_m": [],
+      "features_intersecting_charted_bay": 0,
+      "features_intersecting_fdep_preserve": 0,
       "overlays": {},
       "status": "no_natural_mhw_features_in_project"
     }
   },
-  "nearest_mhw_project_separations_km": {
-    "FL1808A-TB-N__FL1808C-TB-N": 17.691
+  "feature_level_mhw_overlays": {
+    "FL1808A-TB-N": [
+      {
+        "feature_id": 2077162,
+        "source_id": "GC12021",
+        "source_date": "20180726",
+        "horizontal_accuracy_m": "2.3",
+        "length_m": 73.8,
+        "inside_noaa_charted_biscayne_bay_m": 0.0,
+        "inside_fdep_biscayne_bay_preserve_m": 0.0,
+        "partition_m": {
+          "inside_both": 0.0,
+          "charted_bay_only": 0.0,
+          "fdep_preserve_only": 0.0,
+          "outside_both": 73.8
+        },
+        "named_water_context_hits": []
+      },
+      {
+        "feature_id": 2077163,
+        "source_id": "GC12021",
+        "source_date": "20180726",
+        "horizontal_accuracy_m": "2.3",
+        "length_m": 27.3,
+        "inside_noaa_charted_biscayne_bay_m": 27.3,
+        "inside_fdep_biscayne_bay_preserve_m": 27.3,
+        "partition_m": {
+          "inside_both": 27.3,
+          "charted_bay_only": 0.0,
+          "fdep_preserve_only": 0.0,
+          "outside_both": 0.0
+        },
+        "named_water_context_hits": [
+          {
+            "objectid": 246288,
+            "name": "Biscayne Bay",
+            "chart_cell": "US5FL5KM.000",
+            "intersection_length_m": 27.3
+          }
+        ]
+      },
+      {
+        "feature_id": 2077511,
+        "source_id": "GC12021",
+        "source_date": "20180726",
+        "horizontal_accuracy_m": "2.3",
+        "length_m": 1293.8,
+        "inside_noaa_charted_biscayne_bay_m": 0.0,
+        "inside_fdep_biscayne_bay_preserve_m": 0.0,
+        "partition_m": {
+          "inside_both": 0.0,
+          "charted_bay_only": 0.0,
+          "fdep_preserve_only": 0.0,
+          "outside_both": 1293.8
+        },
+        "named_water_context_hits": []
+      },
+      {
+        "feature_id": 2077175,
+        "source_id": "GC12021",
+        "source_date": "20180726",
+        "horizontal_accuracy_m": "2.3",
+        "length_m": 2009.1,
+        "inside_noaa_charted_biscayne_bay_m": 787.3,
+        "inside_fdep_biscayne_bay_preserve_m": 1880.1,
+        "partition_m": {
+          "inside_both": 779.6,
+          "charted_bay_only": 7.7,
+          "fdep_preserve_only": 1100.5,
+          "outside_both": 121.3
+        },
+        "named_water_context_hits": [
+          {
+            "objectid": 246286,
+            "name": "Biscayne Bay",
+            "chart_cell": "US5FL5KL.000",
+            "intersection_length_m": 787.3
+          }
+        ]
+      },
+      {
+        "feature_id": 2077176,
+        "source_id": "GC12021",
+        "source_date": "20180726",
+        "horizontal_accuracy_m": "2.3",
+        "length_m": 1062.7,
+        "inside_noaa_charted_biscayne_bay_m": 802.8,
+        "inside_fdep_biscayne_bay_preserve_m": 1062.7,
+        "partition_m": {
+          "inside_both": 802.8,
+          "charted_bay_only": 0.0,
+          "fdep_preserve_only": 259.9,
+          "outside_both": 0.0
+        },
+        "named_water_context_hits": [
+          {
+            "objectid": 246286,
+            "name": "Biscayne Bay",
+            "chart_cell": "US5FL5KL.000",
+            "intersection_length_m": 616.6
+          },
+          {
+            "objectid": 246288,
+            "name": "Biscayne Bay",
+            "chart_cell": "US5FL5KM.000",
+            "intersection_length_m": 186.2
+          }
+        ]
+      },
+      {
+        "feature_id": 2077180,
+        "source_id": "GC12021",
+        "source_date": "20180726",
+        "horizontal_accuracy_m": "2.3",
+        "length_m": 24.5,
+        "inside_noaa_charted_biscayne_bay_m": 24.5,
+        "inside_fdep_biscayne_bay_preserve_m": 0.0,
+        "partition_m": {
+          "inside_both": 0.0,
+          "charted_bay_only": 24.5,
+          "fdep_preserve_only": 0.0,
+          "outside_both": 0.0
+        },
+        "named_water_context_hits": []
+      },
+      {
+        "feature_id": 2077181,
+        "source_id": "GC12021",
+        "source_date": "20180726",
+        "horizontal_accuracy_m": "2.3",
+        "length_m": 238.1,
+        "inside_noaa_charted_biscayne_bay_m": 199.5,
+        "inside_fdep_biscayne_bay_preserve_m": 0.0,
+        "partition_m": {
+          "inside_both": 0.0,
+          "charted_bay_only": 199.5,
+          "fdep_preserve_only": 0.0,
+          "outside_both": 38.6
+        },
+        "named_water_context_hits": [
+          {
+            "objectid": 246287,
+            "name": "Biscayne Bay",
+            "chart_cell": "US5FL5KL.000",
+            "intersection_length_m": 199.5
+          }
+        ]
+      },
+      {
+        "feature_id": 2077185,
+        "source_id": "GC12021",
+        "source_date": "20180726",
+        "horizontal_accuracy_m": "2.3",
+        "length_m": 581.7,
+        "inside_noaa_charted_biscayne_bay_m": 434.3,
+        "inside_fdep_biscayne_bay_preserve_m": 0.0,
+        "partition_m": {
+          "inside_both": 0.0,
+          "charted_bay_only": 434.3,
+          "fdep_preserve_only": 0.0,
+          "outside_both": 147.4
+        },
+        "named_water_context_hits": [
+          {
+            "objectid": 246287,
+            "name": "Biscayne Bay",
+            "chart_cell": "US5FL5KL.000",
+            "intersection_length_m": 434.3
+          }
+        ]
+      },
+      {
+        "feature_id": 2077152,
+        "source_id": "GC12021",
+        "source_date": "20180726",
+        "horizontal_accuracy_m": "2.3",
+        "length_m": 1178.9,
+        "inside_noaa_charted_biscayne_bay_m": 459.7,
+        "inside_fdep_biscayne_bay_preserve_m": 0.0,
+        "partition_m": {
+          "inside_both": 0.0,
+          "charted_bay_only": 459.7,
+          "fdep_preserve_only": 0.0,
+          "outside_both": 719.2
+        },
+        "named_water_context_hits": [
+          {
+            "objectid": 246287,
+            "name": "Biscayne Bay",
+            "chart_cell": "US5FL5KL.000",
+            "intersection_length_m": 459.7
+          }
+        ]
+      },
+      {
+        "feature_id": 2077528,
+        "source_id": "GC12021",
+        "source_date": "20180726",
+        "horizontal_accuracy_m": "2.3",
+        "length_m": 13.2,
+        "inside_noaa_charted_biscayne_bay_m": 12.0,
+        "inside_fdep_biscayne_bay_preserve_m": 0.0,
+        "partition_m": {
+          "inside_both": 0.0,
+          "charted_bay_only": 12.0,
+          "fdep_preserve_only": 0.0,
+          "outside_both": 1.2
+        },
+        "named_water_context_hits": []
+      },
+      {
+        "feature_id": 2077529,
+        "source_id": "GC12021",
+        "source_date": "20180726",
+        "horizontal_accuracy_m": "2.3",
+        "length_m": 38.1,
+        "inside_noaa_charted_biscayne_bay_m": 0.0,
+        "inside_fdep_biscayne_bay_preserve_m": 0.0,
+        "partition_m": {
+          "inside_both": 0.0,
+          "charted_bay_only": 0.0,
+          "fdep_preserve_only": 0.0,
+          "outside_both": 38.1
+        },
+        "named_water_context_hits": []
+      },
+      {
+        "feature_id": 2077530,
+        "source_id": "GC12021",
+        "source_date": "20180726",
+        "horizontal_accuracy_m": "2.3",
+        "length_m": 166.1,
+        "inside_noaa_charted_biscayne_bay_m": 0.0,
+        "inside_fdep_biscayne_bay_preserve_m": 38.6,
+        "partition_m": {
+          "inside_both": 0.0,
+          "charted_bay_only": 0.0,
+          "fdep_preserve_only": 38.6,
+          "outside_both": 127.5
+        },
+        "named_water_context_hits": []
+      },
+      {
+        "feature_id": 2077153,
+        "source_id": "GC12021",
+        "source_date": "20180726",
+        "horizontal_accuracy_m": "2.3",
+        "length_m": 269.2,
+        "inside_noaa_charted_biscayne_bay_m": 91.6,
+        "inside_fdep_biscayne_bay_preserve_m": 0.0,
+        "partition_m": {
+          "inside_both": 0.0,
+          "charted_bay_only": 91.6,
+          "fdep_preserve_only": 0.0,
+          "outside_both": 177.6
+        },
+        "named_water_context_hits": [
+          {
+            "objectid": 246287,
+            "name": "Biscayne Bay",
+            "chart_cell": "US5FL5KL.000",
+            "intersection_length_m": 91.6
+          }
+        ]
+      },
+      {
+        "feature_id": 2077154,
+        "source_id": "GC12021",
+        "source_date": "20180726",
+        "horizontal_accuracy_m": "2.3",
+        "length_m": 260.8,
+        "inside_noaa_charted_biscayne_bay_m": 28.5,
+        "inside_fdep_biscayne_bay_preserve_m": 0.0,
+        "partition_m": {
+          "inside_both": 0.0,
+          "charted_bay_only": 28.5,
+          "fdep_preserve_only": 0.0,
+          "outside_both": 232.2
+        },
+        "named_water_context_hits": [
+          {
+            "objectid": 246287,
+            "name": "Biscayne Bay",
+            "chart_cell": "US5FL5KL.000",
+            "intersection_length_m": 28.5
+          }
+        ]
+      },
+      {
+        "feature_id": 2077138,
+        "source_id": "GC12021",
+        "source_date": "20180726",
+        "horizontal_accuracy_m": "2.3",
+        "length_m": 794.9,
+        "inside_noaa_charted_biscayne_bay_m": 398.6,
+        "inside_fdep_biscayne_bay_preserve_m": 0.0,
+        "partition_m": {
+          "inside_both": 0.0,
+          "charted_bay_only": 398.6,
+          "fdep_preserve_only": 0.0,
+          "outside_both": 396.3
+        },
+        "named_water_context_hits": [
+          {
+            "objectid": 246262,
+            "name": "Biscayne Bay",
+            "chart_cell": "US5FL5JM.000",
+            "intersection_length_m": 398.6
+          }
+        ]
+      },
+      {
+        "feature_id": 2077230,
+        "source_id": "GC12021",
+        "source_date": "20180726",
+        "horizontal_accuracy_m": "2.3",
+        "length_m": 37.5,
+        "inside_noaa_charted_biscayne_bay_m": 37.5,
+        "inside_fdep_biscayne_bay_preserve_m": 0.0,
+        "partition_m": {
+          "inside_both": 0.0,
+          "charted_bay_only": 37.5,
+          "fdep_preserve_only": 0.0,
+          "outside_both": 0.0
+        },
+        "named_water_context_hits": [
+          {
+            "objectid": 246262,
+            "name": "Biscayne Bay",
+            "chart_cell": "US5FL5JM.000",
+            "intersection_length_m": 37.5
+          }
+        ]
+      },
+      {
+        "feature_id": 2077139,
+        "source_id": "GC12021",
+        "source_date": "20180726",
+        "horizontal_accuracy_m": "2.3",
+        "length_m": 656.0,
+        "inside_noaa_charted_biscayne_bay_m": 0.0,
+        "inside_fdep_biscayne_bay_preserve_m": 0.0,
+        "partition_m": {
+          "inside_both": 0.0,
+          "charted_bay_only": 0.0,
+          "fdep_preserve_only": 0.0,
+          "outside_both": 656.0
+        },
+        "named_water_context_hits": []
+      },
+      {
+        "feature_id": 2077228,
+        "source_id": "GC12021",
+        "source_date": "20180726",
+        "horizontal_accuracy_m": "2.3",
+        "length_m": 104.9,
+        "inside_noaa_charted_biscayne_bay_m": 104.9,
+        "inside_fdep_biscayne_bay_preserve_m": 0.0,
+        "partition_m": {
+          "inside_both": 0.0,
+          "charted_bay_only": 104.9,
+          "fdep_preserve_only": 0.0,
+          "outside_both": 0.0
+        },
+        "named_water_context_hits": [
+          {
+            "objectid": 246262,
+            "name": "Biscayne Bay",
+            "chart_cell": "US5FL5JM.000",
+            "intersection_length_m": 104.9
+          }
+        ]
+      },
+      {
+        "feature_id": 2077233,
+        "source_id": "GC12021",
+        "source_date": "20180726",
+        "horizontal_accuracy_m": "2.3",
+        "length_m": 756.8,
+        "inside_noaa_charted_biscayne_bay_m": 672.9,
+        "inside_fdep_biscayne_bay_preserve_m": 588.4,
+        "partition_m": {
+          "inside_both": 548.5,
+          "charted_bay_only": 124.4,
+          "fdep_preserve_only": 40.0,
+          "outside_both": 43.9
+        },
+        "named_water_context_hits": [
+          {
+            "objectid": 246287,
+            "name": "Biscayne Bay",
+            "chart_cell": "US5FL5KL.000",
+            "intersection_length_m": 672.9
+          }
+        ]
+      },
+      {
+        "feature_id": 2077570,
+        "source_id": "GC12021",
+        "source_date": "20180726",
+        "horizontal_accuracy_m": "2.3",
+        "length_m": 1093.6,
+        "inside_noaa_charted_biscayne_bay_m": 432.8,
+        "inside_fdep_biscayne_bay_preserve_m": 277.1,
+        "partition_m": {
+          "inside_both": 122.2,
+          "charted_bay_only": 310.6,
+          "fdep_preserve_only": 154.8,
+          "outside_both": 506.0
+        },
+        "named_water_context_hits": [
+          {
+            "objectid": 246287,
+            "name": "Biscayne Bay",
+            "chart_cell": "US5FL5KL.000",
+            "intersection_length_m": 432.8
+          }
+        ]
+      },
+      {
+        "feature_id": 2077235,
+        "source_id": "GC12021",
+        "source_date": "20180726",
+        "horizontal_accuracy_m": "2.3",
+        "length_m": 1258.1,
+        "inside_noaa_charted_biscayne_bay_m": 492.7,
+        "inside_fdep_biscayne_bay_preserve_m": 1183.9,
+        "partition_m": {
+          "inside_both": 492.7,
+          "charted_bay_only": 0.0,
+          "fdep_preserve_only": 691.1,
+          "outside_both": 74.2
+        },
+        "named_water_context_hits": [
+          {
+            "objectid": 246288,
+            "name": "Biscayne Bay",
+            "chart_cell": "US5FL5KM.000",
+            "intersection_length_m": 492.7
+          }
+        ]
+      },
+      {
+        "feature_id": 2077236,
+        "source_id": "GC12021",
+        "source_date": "20180726",
+        "horizontal_accuracy_m": "2.3",
+        "length_m": 831.0,
+        "inside_noaa_charted_biscayne_bay_m": 616.1,
+        "inside_fdep_biscayne_bay_preserve_m": 710.1,
+        "partition_m": {
+          "inside_both": 534.9,
+          "charted_bay_only": 81.2,
+          "fdep_preserve_only": 175.2,
+          "outside_both": 39.7
+        },
+        "named_water_context_hits": [
+          {
+            "objectid": 246288,
+            "name": "Biscayne Bay",
+            "chart_cell": "US5FL5KM.000",
+            "intersection_length_m": 616.1
+          }
+        ]
+      },
+      {
+        "feature_id": 2077122,
+        "source_id": "GC12021",
+        "source_date": "20180726",
+        "horizontal_accuracy_m": "2.3",
+        "length_m": 57.8,
+        "inside_noaa_charted_biscayne_bay_m": 57.8,
+        "inside_fdep_biscayne_bay_preserve_m": 57.8,
+        "partition_m": {
+          "inside_both": 57.8,
+          "charted_bay_only": 0.0,
+          "fdep_preserve_only": 0.0,
+          "outside_both": 0.0
+        },
+        "named_water_context_hits": [
+          {
+            "objectid": 246286,
+            "name": "Biscayne Bay",
+            "chart_cell": "US5FL5KL.000",
+            "intersection_length_m": 57.8
+          }
+        ]
+      },
+      {
+        "feature_id": 2077120,
+        "source_id": "GC12021",
+        "source_date": "20180726",
+        "horizontal_accuracy_m": "2.3",
+        "length_m": 90.0,
+        "inside_noaa_charted_biscayne_bay_m": 71.9,
+        "inside_fdep_biscayne_bay_preserve_m": 90.0,
+        "partition_m": {
+          "inside_both": 71.9,
+          "charted_bay_only": 0.0,
+          "fdep_preserve_only": 18.1,
+          "outside_both": 0.0
+        },
+        "named_water_context_hits": [
+          {
+            "objectid": 246286,
+            "name": "Biscayne Bay",
+            "chart_cell": "US5FL5KL.000",
+            "intersection_length_m": 55.8
+          }
+        ]
+      },
+      {
+        "feature_id": 2077121,
+        "source_id": "GC12021",
+        "source_date": "20180726",
+        "horizontal_accuracy_m": "2.3",
+        "length_m": 59.7,
+        "inside_noaa_charted_biscayne_bay_m": 59.7,
+        "inside_fdep_biscayne_bay_preserve_m": 59.7,
+        "partition_m": {
+          "inside_both": 59.7,
+          "charted_bay_only": 0.0,
+          "fdep_preserve_only": 0.0,
+          "outside_both": 0.0
+        },
+        "named_water_context_hits": [
+          {
+            "objectid": 246286,
+            "name": "Biscayne Bay",
+            "chart_cell": "US5FL5KL.000",
+            "intersection_length_m": 59.7
+          }
+        ]
+      },
+      {
+        "feature_id": 2077123,
+        "source_id": "GC12021",
+        "source_date": "20180726",
+        "horizontal_accuracy_m": "2.3",
+        "length_m": 61.3,
+        "inside_noaa_charted_biscayne_bay_m": 0.0,
+        "inside_fdep_biscayne_bay_preserve_m": 61.3,
+        "partition_m": {
+          "inside_both": 0.0,
+          "charted_bay_only": 0.0,
+          "fdep_preserve_only": 61.3,
+          "outside_both": 0.0
+        },
+        "named_water_context_hits": []
+      },
+      {
+        "feature_id": 2077124,
+        "source_id": "GC12021",
+        "source_date": "20180726",
+        "horizontal_accuracy_m": "2.3",
+        "length_m": 1475.0,
+        "inside_noaa_charted_biscayne_bay_m": 969.8,
+        "inside_fdep_biscayne_bay_preserve_m": 0.0,
+        "partition_m": {
+          "inside_both": 0.0,
+          "charted_bay_only": 969.8,
+          "fdep_preserve_only": 0.0,
+          "outside_both": 505.2
+        },
+        "named_water_context_hits": [
+          {
+            "objectid": 246262,
+            "name": "Biscayne Bay",
+            "chart_cell": "US5FL5JM.000",
+            "intersection_length_m": 969.8
+          }
+        ]
+      },
+      {
+        "feature_id": 2077580,
+        "source_id": "GC12021",
+        "source_date": "20180726",
+        "horizontal_accuracy_m": "2.3",
+        "length_m": 478.1,
+        "inside_noaa_charted_biscayne_bay_m": 132.0,
+        "inside_fdep_biscayne_bay_preserve_m": 0.0,
+        "partition_m": {
+          "inside_both": 0.0,
+          "charted_bay_only": 132.0,
+          "fdep_preserve_only": 0.0,
+          "outside_both": 346.1
+        },
+        "named_water_context_hits": [
+          {
+            "objectid": 246287,
+            "name": "Biscayne Bay",
+            "chart_cell": "US5FL5KL.000",
+            "intersection_length_m": 132.0
+          }
+        ]
+      },
+      {
+        "feature_id": 2077125,
+        "source_id": "GC12021",
+        "source_date": "20180726",
+        "horizontal_accuracy_m": "2.3",
+        "length_m": 780.8,
+        "inside_noaa_charted_biscayne_bay_m": 513.2,
+        "inside_fdep_biscayne_bay_preserve_m": 0.0,
+        "partition_m": {
+          "inside_both": 0.0,
+          "charted_bay_only": 513.2,
+          "fdep_preserve_only": 0.0,
+          "outside_both": 267.6
+        },
+        "named_water_context_hits": [
+          {
+            "objectid": 246262,
+            "name": "Biscayne Bay",
+            "chart_cell": "US5FL5JM.000",
+            "intersection_length_m": 513.2
+          }
+        ]
+      },
+      {
+        "feature_id": 2077126,
+        "source_id": "GC12021",
+        "source_date": "20180726",
+        "horizontal_accuracy_m": "2.3",
+        "length_m": 11.9,
+        "inside_noaa_charted_biscayne_bay_m": 0.0,
+        "inside_fdep_biscayne_bay_preserve_m": 0.0,
+        "partition_m": {
+          "inside_both": 0.0,
+          "charted_bay_only": 0.0,
+          "fdep_preserve_only": 0.0,
+          "outside_both": 11.9
+        },
+        "named_water_context_hits": []
+      },
+      {
+        "feature_id": 2077187,
+        "source_id": "GC12021",
+        "source_date": "20180726",
+        "horizontal_accuracy_m": "2.3",
+        "length_m": 1023.6,
+        "inside_noaa_charted_biscayne_bay_m": 242.8,
+        "inside_fdep_biscayne_bay_preserve_m": 0.0,
+        "partition_m": {
+          "inside_both": 0.0,
+          "charted_bay_only": 242.8,
+          "fdep_preserve_only": 0.0,
+          "outside_both": 780.8
+        },
+        "named_water_context_hits": [
+          {
+            "objectid": 246287,
+            "name": "Biscayne Bay",
+            "chart_cell": "US5FL5KL.000",
+            "intersection_length_m": 242.8
+          }
+        ]
+      },
+      {
+        "feature_id": 2077189,
+        "source_id": "GC12021",
+        "source_date": "20180726",
+        "horizontal_accuracy_m": "2.3",
+        "length_m": 175.6,
+        "inside_noaa_charted_biscayne_bay_m": 66.3,
+        "inside_fdep_biscayne_bay_preserve_m": 0.0,
+        "partition_m": {
+          "inside_both": 0.0,
+          "charted_bay_only": 66.3,
+          "fdep_preserve_only": 0.0,
+          "outside_both": 109.3
+        },
+        "named_water_context_hits": [
+          {
+            "objectid": 246287,
+            "name": "Biscayne Bay",
+            "chart_cell": "US5FL5KL.000",
+            "intersection_length_m": 66.3
+          }
+        ]
+      },
+      {
+        "feature_id": 2077191,
+        "source_id": "GC12021",
+        "source_date": "20180726",
+        "horizontal_accuracy_m": "2.3",
+        "length_m": 1302.6,
+        "inside_noaa_charted_biscayne_bay_m": 327.7,
+        "inside_fdep_biscayne_bay_preserve_m": 0.0,
+        "partition_m": {
+          "inside_both": 0.0,
+          "charted_bay_only": 327.7,
+          "fdep_preserve_only": 0.0,
+          "outside_both": 974.9
+        },
+        "named_water_context_hits": [
+          {
+            "objectid": 246287,
+            "name": "Biscayne Bay",
+            "chart_cell": "US5FL5KL.000",
+            "intersection_length_m": 327.7
+          }
+        ]
+      },
+      {
+        "feature_id": 2077583,
+        "source_id": "GC12021",
+        "source_date": "20180726",
+        "horizontal_accuracy_m": "2.3",
+        "length_m": 155.3,
+        "inside_noaa_charted_biscayne_bay_m": 18.8,
+        "inside_fdep_biscayne_bay_preserve_m": 0.0,
+        "partition_m": {
+          "inside_both": 0.0,
+          "charted_bay_only": 18.8,
+          "fdep_preserve_only": 0.0,
+          "outside_both": 136.5
+        },
+        "named_water_context_hits": []
+      },
+      {
+        "feature_id": 2077587,
+        "source_id": "GC12021",
+        "source_date": "20180726",
+        "horizontal_accuracy_m": "2.3",
+        "length_m": 565.6,
+        "inside_noaa_charted_biscayne_bay_m": 12.5,
+        "inside_fdep_biscayne_bay_preserve_m": 0.0,
+        "partition_m": {
+          "inside_both": 0.0,
+          "charted_bay_only": 12.5,
+          "fdep_preserve_only": 0.0,
+          "outside_both": 553.1
+        },
+        "named_water_context_hits": []
+      },
+      {
+        "feature_id": 2077134,
+        "source_id": "GC12021",
+        "source_date": "20180726",
+        "horizontal_accuracy_m": "2.3",
+        "length_m": 34.8,
+        "inside_noaa_charted_biscayne_bay_m": 0.0,
+        "inside_fdep_biscayne_bay_preserve_m": 0.0,
+        "partition_m": {
+          "inside_both": 0.0,
+          "charted_bay_only": 0.0,
+          "fdep_preserve_only": 0.0,
+          "outside_both": 34.8
+        },
+        "named_water_context_hits": []
+      },
+      {
+        "feature_id": 2077132,
+        "source_id": "GC12021",
+        "source_date": "20180726",
+        "horizontal_accuracy_m": "2.3",
+        "length_m": 261.0,
+        "inside_noaa_charted_biscayne_bay_m": 194.8,
+        "inside_fdep_biscayne_bay_preserve_m": 0.0,
+        "partition_m": {
+          "inside_both": 0.0,
+          "charted_bay_only": 194.8,
+          "fdep_preserve_only": 0.0,
+          "outside_both": 66.3
+        },
+        "named_water_context_hits": [
+          {
+            "objectid": 246262,
+            "name": "Biscayne Bay",
+            "chart_cell": "US5FL5JM.000",
+            "intersection_length_m": 194.8
+          }
+        ]
+      },
+      {
+        "feature_id": 2077135,
+        "source_id": "GC12021",
+        "source_date": "20180726",
+        "horizontal_accuracy_m": "2.3",
+        "length_m": 26.7,
+        "inside_noaa_charted_biscayne_bay_m": 0.0,
+        "inside_fdep_biscayne_bay_preserve_m": 0.0,
+        "partition_m": {
+          "inside_both": 0.0,
+          "charted_bay_only": 0.0,
+          "fdep_preserve_only": 0.0,
+          "outside_both": 26.7
+        },
+        "named_water_context_hits": []
+      },
+      {
+        "feature_id": 2077136,
+        "source_id": "GC12021",
+        "source_date": "20180726",
+        "horizontal_accuracy_m": "2.3",
+        "length_m": 2242.4,
+        "inside_noaa_charted_biscayne_bay_m": 153.4,
+        "inside_fdep_biscayne_bay_preserve_m": 0.0,
+        "partition_m": {
+          "inside_both": 0.0,
+          "charted_bay_only": 153.4,
+          "fdep_preserve_only": 0.0,
+          "outside_both": 2089.0
+        },
+        "named_water_context_hits": [
+          {
+            "objectid": 246262,
+            "name": "Biscayne Bay",
+            "chart_cell": "US5FL5JM.000",
+            "intersection_length_m": 153.4
+          }
+        ]
+      },
+      {
+        "feature_id": 2077137,
+        "source_id": "GC12021",
+        "source_date": "20180726",
+        "horizontal_accuracy_m": "2.3",
+        "length_m": 1945.5,
+        "inside_noaa_charted_biscayne_bay_m": 0.0,
+        "inside_fdep_biscayne_bay_preserve_m": 0.0,
+        "partition_m": {
+          "inside_both": 0.0,
+          "charted_bay_only": 0.0,
+          "fdep_preserve_only": 0.0,
+          "outside_both": 1945.5
+        },
+        "named_water_context_hits": []
+      },
+      {
+        "feature_id": 2077193,
+        "source_id": "GC12021",
+        "source_date": "20180726",
+        "horizontal_accuracy_m": "2.3",
+        "length_m": 448.4,
+        "inside_noaa_charted_biscayne_bay_m": 412.4,
+        "inside_fdep_biscayne_bay_preserve_m": 0.0,
+        "partition_m": {
+          "inside_both": 0.0,
+          "charted_bay_only": 412.4,
+          "fdep_preserve_only": 0.0,
+          "outside_both": 36.0
+        },
+        "named_water_context_hits": [
+          {
+            "objectid": 246287,
+            "name": "Biscayne Bay",
+            "chart_cell": "US5FL5KL.000",
+            "intersection_length_m": 412.4
+          }
+        ]
+      },
+      {
+        "feature_id": 2077197,
+        "source_id": "GC12021",
+        "source_date": "20180726",
+        "horizontal_accuracy_m": "2.3",
+        "length_m": 245.1,
+        "inside_noaa_charted_biscayne_bay_m": 70.7,
+        "inside_fdep_biscayne_bay_preserve_m": 0.0,
+        "partition_m": {
+          "inside_both": 0.0,
+          "charted_bay_only": 70.7,
+          "fdep_preserve_only": 0.0,
+          "outside_both": 174.3
+        },
+        "named_water_context_hits": [
+          {
+            "objectid": 246287,
+            "name": "Biscayne Bay",
+            "chart_cell": "US5FL5KL.000",
+            "intersection_length_m": 70.7
+          }
+        ]
+      },
+      {
+        "feature_id": 2077205,
+        "source_id": "GC12021",
+        "source_date": "20180726",
+        "horizontal_accuracy_m": "2.3",
+        "length_m": 405.0,
+        "inside_noaa_charted_biscayne_bay_m": 0.0,
+        "inside_fdep_biscayne_bay_preserve_m": 0.0,
+        "partition_m": {
+          "inside_both": 0.0,
+          "charted_bay_only": 0.0,
+          "fdep_preserve_only": 0.0,
+          "outside_both": 405.0
+        },
+        "named_water_context_hits": []
+      },
+      {
+        "feature_id": 2077207,
+        "source_id": "GC12021",
+        "source_date": "20180726",
+        "horizontal_accuracy_m": "2.3",
+        "length_m": 4135.9,
+        "inside_noaa_charted_biscayne_bay_m": 0.0,
+        "inside_fdep_biscayne_bay_preserve_m": 8.1,
+        "partition_m": {
+          "inside_both": 0.0,
+          "charted_bay_only": 0.0,
+          "fdep_preserve_only": 8.1,
+          "outside_both": 4127.8
+        },
+        "named_water_context_hits": []
+      },
+      {
+        "feature_id": 2077593,
+        "source_id": "GC12021",
+        "source_date": "20180726",
+        "horizontal_accuracy_m": "2.3",
+        "length_m": 1365.7,
+        "inside_noaa_charted_biscayne_bay_m": 62.4,
+        "inside_fdep_biscayne_bay_preserve_m": 0.0,
+        "partition_m": {
+          "inside_both": 0.0,
+          "charted_bay_only": 62.4,
+          "fdep_preserve_only": 0.0,
+          "outside_both": 1303.3
+        },
+        "named_water_context_hits": [
+          {
+            "objectid": 246287,
+            "name": "Biscayne Bay",
+            "chart_cell": "US5FL5KL.000",
+            "intersection_length_m": 62.4
+          }
+        ]
+      },
+      {
+        "feature_id": 2077600,
+        "source_id": "GC12021",
+        "source_date": "20180726",
+        "horizontal_accuracy_m": "2.3",
+        "length_m": 361.3,
+        "inside_noaa_charted_biscayne_bay_m": 341.1,
+        "inside_fdep_biscayne_bay_preserve_m": 0.0,
+        "partition_m": {
+          "inside_both": 0.0,
+          "charted_bay_only": 341.1,
+          "fdep_preserve_only": 0.0,
+          "outside_both": 20.2
+        },
+        "named_water_context_hits": [
+          {
+            "objectid": 246287,
+            "name": "Biscayne Bay",
+            "chart_cell": "US5FL5KL.000",
+            "intersection_length_m": 341.1
+          }
+        ]
+      },
+      {
+        "feature_id": 2077221,
+        "source_id": "GC12021",
+        "source_date": "20180726",
+        "horizontal_accuracy_m": "2.3",
+        "length_m": 96.7,
+        "inside_noaa_charted_biscayne_bay_m": 96.7,
+        "inside_fdep_biscayne_bay_preserve_m": 0.0,
+        "partition_m": {
+          "inside_both": 0.0,
+          "charted_bay_only": 96.7,
+          "fdep_preserve_only": 0.0,
+          "outside_both": 0.0
+        },
+        "named_water_context_hits": [
+          {
+            "objectid": 246262,
+            "name": "Biscayne Bay",
+            "chart_cell": "US5FL5JM.000",
+            "intersection_length_m": 96.7
+          }
+        ]
+      },
+      {
+        "feature_id": 2077604,
+        "source_id": "GC12021",
+        "source_date": "20180726",
+        "horizontal_accuracy_m": "2.3",
+        "length_m": 216.1,
+        "inside_noaa_charted_biscayne_bay_m": 0.0,
+        "inside_fdep_biscayne_bay_preserve_m": 0.0,
+        "partition_m": {
+          "inside_both": 0.0,
+          "charted_bay_only": 0.0,
+          "fdep_preserve_only": 0.0,
+          "outside_both": 216.1
+        },
+        "named_water_context_hits": []
+      },
+      {
+        "feature_id": 2077226,
+        "source_id": "GC12021",
+        "source_date": "20180726",
+        "horizontal_accuracy_m": "2.3",
+        "length_m": 233.1,
+        "inside_noaa_charted_biscayne_bay_m": 229.8,
+        "inside_fdep_biscayne_bay_preserve_m": 0.0,
+        "partition_m": {
+          "inside_both": 0.0,
+          "charted_bay_only": 229.8,
+          "fdep_preserve_only": 0.0,
+          "outside_both": 3.3
+        },
+        "named_water_context_hits": [
+          {
+            "objectid": 246262,
+            "name": "Biscayne Bay",
+            "chart_cell": "US5FL5JM.000",
+            "intersection_length_m": 229.8
+          }
+        ]
+      },
+      {
+        "feature_id": 2077140,
+        "source_id": "GC12021",
+        "source_date": "20180726",
+        "horizontal_accuracy_m": "2.3",
+        "length_m": 1207.7,
+        "inside_noaa_charted_biscayne_bay_m": 0.0,
+        "inside_fdep_biscayne_bay_preserve_m": 0.0,
+        "partition_m": {
+          "inside_both": 0.0,
+          "charted_bay_only": 0.0,
+          "fdep_preserve_only": 0.0,
+          "outside_both": 1207.7
+        },
+        "named_water_context_hits": []
+      },
+      {
+        "feature_id": 2077141,
+        "source_id": "GC12021",
+        "source_date": "20180726",
+        "horizontal_accuracy_m": "2.3",
+        "length_m": 40.6,
+        "inside_noaa_charted_biscayne_bay_m": 40.6,
+        "inside_fdep_biscayne_bay_preserve_m": 0.0,
+        "partition_m": {
+          "inside_both": 0.0,
+          "charted_bay_only": 40.6,
+          "fdep_preserve_only": 0.0,
+          "outside_both": 0.0
+        },
+        "named_water_context_hits": [
+          {
+            "objectid": 246287,
+            "name": "Biscayne Bay",
+            "chart_cell": "US5FL5KL.000",
+            "intersection_length_m": 40.6
+          }
+        ]
+      },
+      {
+        "feature_id": 2077561,
+        "source_id": "GC12021",
+        "source_date": "20180726",
+        "horizontal_accuracy_m": "2.3",
+        "length_m": 587.2,
+        "inside_noaa_charted_biscayne_bay_m": 587.2,
+        "inside_fdep_biscayne_bay_preserve_m": 205.7,
+        "partition_m": {
+          "inside_both": 205.7,
+          "charted_bay_only": 381.5,
+          "fdep_preserve_only": 0.0,
+          "outside_both": 0.0
+        },
+        "named_water_context_hits": [
+          {
+            "objectid": 246287,
+            "name": "Biscayne Bay",
+            "chart_cell": "US5FL5KL.000",
+            "intersection_length_m": 446.8
+          },
+          {
+            "objectid": 246288,
+            "name": "Biscayne Bay",
+            "chart_cell": "US5FL5KM.000",
+            "intersection_length_m": 140.5
+          }
+        ]
+      },
+      {
+        "feature_id": 2077143,
+        "source_id": "GC12021",
+        "source_date": "20180726",
+        "horizontal_accuracy_m": "2.3",
+        "length_m": 1822.1,
+        "inside_noaa_charted_biscayne_bay_m": 1234.5,
+        "inside_fdep_biscayne_bay_preserve_m": 0.0,
+        "partition_m": {
+          "inside_both": 0.0,
+          "charted_bay_only": 1234.5,
+          "fdep_preserve_only": 0.0,
+          "outside_both": 587.6
+        },
+        "named_water_context_hits": [
+          {
+            "objectid": 246287,
+            "name": "Biscayne Bay",
+            "chart_cell": "US5FL5KL.000",
+            "intersection_length_m": 1234.5
+          }
+        ]
+      },
+      {
+        "feature_id": 2077144,
+        "source_id": "GC12021",
+        "source_date": "20180726",
+        "horizontal_accuracy_m": "2.3",
+        "length_m": 565.3,
+        "inside_noaa_charted_biscayne_bay_m": 348.9,
+        "inside_fdep_biscayne_bay_preserve_m": 0.0,
+        "partition_m": {
+          "inside_both": 0.0,
+          "charted_bay_only": 348.9,
+          "fdep_preserve_only": 0.0,
+          "outside_both": 216.3
+        },
+        "named_water_context_hits": [
+          {
+            "objectid": 246287,
+            "name": "Biscayne Bay",
+            "chart_cell": "US5FL5KL.000",
+            "intersection_length_m": 348.9
+          }
+        ]
+      },
+      {
+        "feature_id": 2077270,
+        "source_id": "GC12021",
+        "source_date": "20180726",
+        "horizontal_accuracy_m": "2.3",
+        "length_m": 397.7,
+        "inside_noaa_charted_biscayne_bay_m": 0.0,
+        "inside_fdep_biscayne_bay_preserve_m": 0.0,
+        "partition_m": {
+          "inside_both": 0.0,
+          "charted_bay_only": 0.0,
+          "fdep_preserve_only": 0.0,
+          "outside_both": 397.7
+        },
+        "named_water_context_hits": []
+      },
+      {
+        "feature_id": 2077146,
+        "source_id": "GC12021",
+        "source_date": "20180726",
+        "horizontal_accuracy_m": "2.3",
+        "length_m": 695.2,
+        "inside_noaa_charted_biscayne_bay_m": 22.2,
+        "inside_fdep_biscayne_bay_preserve_m": 0.0,
+        "partition_m": {
+          "inside_both": 0.0,
+          "charted_bay_only": 22.2,
+          "fdep_preserve_only": 0.0,
+          "outside_both": 673.1
+        },
+        "named_water_context_hits": []
+      },
+      {
+        "feature_id": 2077147,
+        "source_id": "GC12021",
+        "source_date": "20180726",
+        "horizontal_accuracy_m": "2.3",
+        "length_m": 2883.3,
+        "inside_noaa_charted_biscayne_bay_m": 425.1,
+        "inside_fdep_biscayne_bay_preserve_m": 0.0,
+        "partition_m": {
+          "inside_both": 0.0,
+          "charted_bay_only": 425.1,
+          "fdep_preserve_only": 0.0,
+          "outside_both": 2458.2
+        },
+        "named_water_context_hits": [
+          {
+            "objectid": 246287,
+            "name": "Biscayne Bay",
+            "chart_cell": "US5FL5KL.000",
+            "intersection_length_m": 425.1
+          }
+        ]
+      },
+      {
+        "feature_id": 2077159,
+        "source_id": "GC12021",
+        "source_date": "20180726",
+        "horizontal_accuracy_m": "2.3",
+        "length_m": 215.9,
+        "inside_noaa_charted_biscayne_bay_m": 0.0,
+        "inside_fdep_biscayne_bay_preserve_m": 0.0,
+        "partition_m": {
+          "inside_both": 0.0,
+          "charted_bay_only": 0.0,
+          "fdep_preserve_only": 0.0,
+          "outside_both": 215.9
+        },
+        "named_water_context_hits": []
+      }
+    ],
+    "FL1808C-TB-N": [
+      {
+        "feature_id": 1983572,
+        "source_id": "GC12023",
+        "source_date": "20180726",
+        "horizontal_accuracy_m": "2.3",
+        "length_m": 619.6,
+        "inside_noaa_charted_biscayne_bay_m": 332.2,
+        "inside_fdep_biscayne_bay_preserve_m": 36.1,
+        "partition_m": {
+          "inside_both": 17.3,
+          "charted_bay_only": 314.9,
+          "fdep_preserve_only": 18.8,
+          "outside_both": 268.5
+        },
+        "named_water_context_hits": [
+          {
+            "objectid": 253438,
+            "name": "Biscayne Bay",
+            "chart_cell": "US5MIACB.000",
+            "intersection_length_m": 332.2
+          }
+        ]
+      },
+      {
+        "feature_id": 1983574,
+        "source_id": "GC12023",
+        "source_date": "20180726",
+        "horizontal_accuracy_m": "2.3",
+        "length_m": 31.2,
+        "inside_noaa_charted_biscayne_bay_m": 31.1,
+        "inside_fdep_biscayne_bay_preserve_m": 31.2,
+        "partition_m": {
+          "inside_both": 31.1,
+          "charted_bay_only": 0.0,
+          "fdep_preserve_only": 0.0,
+          "outside_both": 0.0
+        },
+        "named_water_context_hits": [
+          {
+            "objectid": 253438,
+            "name": "Biscayne Bay",
+            "chart_cell": "US5MIACB.000",
+            "intersection_length_m": 31.1
+          }
+        ]
+      },
+      {
+        "feature_id": 1983575,
+        "source_id": "GC12023",
+        "source_date": "20180726",
+        "horizontal_accuracy_m": "2.3",
+        "length_m": 45.8,
+        "inside_noaa_charted_biscayne_bay_m": 15.8,
+        "inside_fdep_biscayne_bay_preserve_m": 34.0,
+        "partition_m": {
+          "inside_both": 15.8,
+          "charted_bay_only": 0.0,
+          "fdep_preserve_only": 18.2,
+          "outside_both": 11.8
+        },
+        "named_water_context_hits": []
+      },
+      {
+        "feature_id": 1983576,
+        "source_id": "GC12023",
+        "source_date": "20180726",
+        "horizontal_accuracy_m": "2.3",
+        "length_m": 76.6,
+        "inside_noaa_charted_biscayne_bay_m": 52.9,
+        "inside_fdep_biscayne_bay_preserve_m": 76.6,
+        "partition_m": {
+          "inside_both": 52.9,
+          "charted_bay_only": 0.0,
+          "fdep_preserve_only": 23.7,
+          "outside_both": 0.0
+        },
+        "named_water_context_hits": [
+          {
+            "objectid": 253438,
+            "name": "Biscayne Bay",
+            "chart_cell": "US5MIACB.000",
+            "intersection_length_m": 52.9
+          }
+        ]
+      },
+      {
+        "feature_id": 1983597,
+        "source_id": "GC12023",
+        "source_date": "20180726",
+        "horizontal_accuracy_m": "2.3",
+        "length_m": 105.1,
+        "inside_noaa_charted_biscayne_bay_m": 0.0,
+        "inside_fdep_biscayne_bay_preserve_m": 0.0,
+        "partition_m": {
+          "inside_both": 0.0,
+          "charted_bay_only": 0.0,
+          "fdep_preserve_only": 0.0,
+          "outside_both": 105.1
+        },
+        "named_water_context_hits": []
+      },
+      {
+        "feature_id": 1983599,
+        "source_id": "GC12023",
+        "source_date": "20180726",
+        "horizontal_accuracy_m": "2.3",
+        "length_m": 83.5,
+        "inside_noaa_charted_biscayne_bay_m": 62.0,
+        "inside_fdep_biscayne_bay_preserve_m": 0.0,
+        "partition_m": {
+          "inside_both": 0.0,
+          "charted_bay_only": 62.0,
+          "fdep_preserve_only": 0.0,
+          "outside_both": 21.5
+        },
+        "named_water_context_hits": [
+          {
+            "objectid": 253422,
+            "name": "Biscayne Bay",
+            "chart_cell": "US5MIABB.000",
+            "intersection_length_m": 62.0
+          }
+        ]
+      },
+      {
+        "feature_id": 1983600,
+        "source_id": "GC12023",
+        "source_date": "20180726",
+        "horizontal_accuracy_m": "2.3",
+        "length_m": 107.5,
+        "inside_noaa_charted_biscayne_bay_m": 36.5,
+        "inside_fdep_biscayne_bay_preserve_m": 0.0,
+        "partition_m": {
+          "inside_both": 0.0,
+          "charted_bay_only": 36.5,
+          "fdep_preserve_only": 0.0,
+          "outside_both": 71.1
+        },
+        "named_water_context_hits": [
+          {
+            "objectid": 253422,
+            "name": "Biscayne Bay",
+            "chart_cell": "US5MIABB.000",
+            "intersection_length_m": 36.5
+          }
+        ]
+      },
+      {
+        "feature_id": 1983603,
+        "source_id": "GC12023",
+        "source_date": "20180726",
+        "horizontal_accuracy_m": "2.3",
+        "length_m": 81.6,
+        "inside_noaa_charted_biscayne_bay_m": 4.6,
+        "inside_fdep_biscayne_bay_preserve_m": 11.3,
+        "partition_m": {
+          "inside_both": 4.6,
+          "charted_bay_only": 0.0,
+          "fdep_preserve_only": 6.7,
+          "outside_both": 70.4
+        },
+        "named_water_context_hits": []
+      },
+      {
+        "feature_id": 1983605,
+        "source_id": "GC12023",
+        "source_date": "20180726",
+        "horizontal_accuracy_m": "2.3",
+        "length_m": 331.0,
+        "inside_noaa_charted_biscayne_bay_m": 115.9,
+        "inside_fdep_biscayne_bay_preserve_m": 15.5,
+        "partition_m": {
+          "inside_both": 8.2,
+          "charted_bay_only": 107.7,
+          "fdep_preserve_only": 7.3,
+          "outside_both": 207.8
+        },
+        "named_water_context_hits": [
+          {
+            "objectid": 253422,
+            "name": "Biscayne Bay",
+            "chart_cell": "US5MIABB.000",
+            "intersection_length_m": 97.3
+          }
+        ]
+      },
+      {
+        "feature_id": 1983607,
+        "source_id": "GC12023",
+        "source_date": "20180726",
+        "horizontal_accuracy_m": "2.3",
+        "length_m": 80.9,
+        "inside_noaa_charted_biscayne_bay_m": 0.0,
+        "inside_fdep_biscayne_bay_preserve_m": 0.0,
+        "partition_m": {
+          "inside_both": 0.0,
+          "charted_bay_only": 0.0,
+          "fdep_preserve_only": 0.0,
+          "outside_both": 80.9
+        },
+        "named_water_context_hits": []
+      },
+      {
+        "feature_id": 1983566,
+        "source_id": "GC12023",
+        "source_date": "20180726",
+        "horizontal_accuracy_m": "2.3",
+        "length_m": 1099.5,
+        "inside_noaa_charted_biscayne_bay_m": 379.9,
+        "inside_fdep_biscayne_bay_preserve_m": 1099.5,
+        "partition_m": {
+          "inside_both": 379.9,
+          "charted_bay_only": 0.0,
+          "fdep_preserve_only": 719.6,
+          "outside_both": 0.0
+        },
+        "named_water_context_hits": [
+          {
+            "objectid": 253438,
+            "name": "Biscayne Bay",
+            "chart_cell": "US5MIACB.000",
+            "intersection_length_m": 379.9
+          }
+        ]
+      },
+      {
+        "feature_id": 1983567,
+        "source_id": "GC12023",
+        "source_date": "20180726",
+        "horizontal_accuracy_m": "2.3",
+        "length_m": 831.0,
+        "inside_noaa_charted_biscayne_bay_m": 80.7,
+        "inside_fdep_biscayne_bay_preserve_m": 831.0,
+        "partition_m": {
+          "inside_both": 80.7,
+          "charted_bay_only": 0.0,
+          "fdep_preserve_only": 750.3,
+          "outside_both": 0.0
+        },
+        "named_water_context_hits": [
+          {
+            "objectid": 253438,
+            "name": "Biscayne Bay",
+            "chart_cell": "US5MIACB.000",
+            "intersection_length_m": 80.7
+          }
+        ]
+      },
+      {
+        "feature_id": 1983626,
+        "source_id": "GC12023",
+        "source_date": "20180726",
+        "horizontal_accuracy_m": "2.3",
+        "length_m": 483.7,
+        "inside_noaa_charted_biscayne_bay_m": 0.0,
+        "inside_fdep_biscayne_bay_preserve_m": 0.0,
+        "partition_m": {
+          "inside_both": 0.0,
+          "charted_bay_only": 0.0,
+          "fdep_preserve_only": 0.0,
+          "outside_both": 483.7
+        },
+        "named_water_context_hits": []
+      },
+      {
+        "feature_id": 1983662,
+        "source_id": "GC12023",
+        "source_date": "20180726",
+        "horizontal_accuracy_m": "2.3",
+        "length_m": 109.9,
+        "inside_noaa_charted_biscayne_bay_m": 72.4,
+        "inside_fdep_biscayne_bay_preserve_m": 0.0,
+        "partition_m": {
+          "inside_both": 0.0,
+          "charted_bay_only": 72.4,
+          "fdep_preserve_only": 0.0,
+          "outside_both": 37.5
+        },
+        "named_water_context_hits": [
+          {
+            "objectid": 253419,
+            "name": "Biscayne Bay",
+            "chart_cell": "US5MIABA.000",
+            "intersection_length_m": 72.4
+          }
+        ]
+      },
+      {
+        "feature_id": 1983664,
+        "source_id": "GC12023",
+        "source_date": "20180726",
+        "horizontal_accuracy_m": "2.3",
+        "length_m": 92.3,
+        "inside_noaa_charted_biscayne_bay_m": 0.0,
+        "inside_fdep_biscayne_bay_preserve_m": 65.6,
+        "partition_m": {
+          "inside_both": 0.0,
+          "charted_bay_only": 0.0,
+          "fdep_preserve_only": 65.6,
+          "outside_both": 26.7
+        },
+        "named_water_context_hits": []
+      },
+      {
+        "feature_id": 1983667,
+        "source_id": "GC12023",
+        "source_date": "20180726",
+        "horizontal_accuracy_m": "2.3",
+        "length_m": 101.8,
+        "inside_noaa_charted_biscayne_bay_m": 25.6,
+        "inside_fdep_biscayne_bay_preserve_m": 8.0,
+        "partition_m": {
+          "inside_both": 0.0,
+          "charted_bay_only": 25.6,
+          "fdep_preserve_only": 8.0,
+          "outside_both": 68.1
+        },
+        "named_water_context_hits": [
+          {
+            "objectid": 253419,
+            "name": "Biscayne Bay",
+            "chart_cell": "US5MIABA.000",
+            "intersection_length_m": 25.6
+          }
+        ]
+      },
+      {
+        "feature_id": 1983759,
+        "source_id": "GC12023",
+        "source_date": "20180726",
+        "horizontal_accuracy_m": "2.3",
+        "length_m": 62.0,
+        "inside_noaa_charted_biscayne_bay_m": 32.9,
+        "inside_fdep_biscayne_bay_preserve_m": 60.6,
+        "partition_m": {
+          "inside_both": 32.9,
+          "charted_bay_only": 0.0,
+          "fdep_preserve_only": 27.7,
+          "outside_both": 1.4
+        },
+        "named_water_context_hits": [
+          {
+            "objectid": 253438,
+            "name": "Biscayne Bay",
+            "chart_cell": "US5MIACB.000",
+            "intersection_length_m": 32.9
+          }
+        ]
+      },
+      {
+        "feature_id": 1983761,
+        "source_id": "GC12023",
+        "source_date": "20180726",
+        "horizontal_accuracy_m": "2.3",
+        "length_m": 45.1,
+        "inside_noaa_charted_biscayne_bay_m": 14.5,
+        "inside_fdep_biscayne_bay_preserve_m": 32.3,
+        "partition_m": {
+          "inside_both": 13.5,
+          "charted_bay_only": 1.0,
+          "fdep_preserve_only": 18.8,
+          "outside_both": 11.8
+        },
+        "named_water_context_hits": []
+      },
+      {
+        "feature_id": 1983764,
+        "source_id": "GC12023",
+        "source_date": "20180726",
+        "horizontal_accuracy_m": "2.3",
+        "length_m": 107.0,
+        "inside_noaa_charted_biscayne_bay_m": 17.7,
+        "inside_fdep_biscayne_bay_preserve_m": 36.9,
+        "partition_m": {
+          "inside_both": 17.3,
+          "charted_bay_only": 0.4,
+          "fdep_preserve_only": 19.6,
+          "outside_both": 69.7
+        },
+        "named_water_context_hits": []
+      },
+      {
+        "feature_id": 1983568,
+        "source_id": "GC12023",
+        "source_date": "20180726",
+        "horizontal_accuracy_m": "2.3",
+        "length_m": 1277.9,
+        "inside_noaa_charted_biscayne_bay_m": 186.5,
+        "inside_fdep_biscayne_bay_preserve_m": 1277.9,
+        "partition_m": {
+          "inside_both": 186.5,
+          "charted_bay_only": 0.0,
+          "fdep_preserve_only": 1091.4,
+          "outside_both": 0.0
+        },
+        "named_water_context_hits": [
+          {
+            "objectid": 253422,
+            "name": "Biscayne Bay",
+            "chart_cell": "US5MIABB.000",
+            "intersection_length_m": 186.5
+          }
+        ]
+      },
+      {
+        "feature_id": 1983569,
+        "source_id": "GC12023",
+        "source_date": "20180726",
+        "horizontal_accuracy_m": "2.3",
+        "length_m": 663.1,
+        "inside_noaa_charted_biscayne_bay_m": 106.0,
+        "inside_fdep_biscayne_bay_preserve_m": 663.1,
+        "partition_m": {
+          "inside_both": 106.0,
+          "charted_bay_only": 0.0,
+          "fdep_preserve_only": 557.2,
+          "outside_both": 0.0
+        },
+        "named_water_context_hits": [
+          {
+            "objectid": 253422,
+            "name": "Biscayne Bay",
+            "chart_cell": "US5MIABB.000",
+            "intersection_length_m": 83.0
+          }
+        ]
+      },
+      {
+        "feature_id": 1983570,
+        "source_id": "GC12023",
+        "source_date": "20180726",
+        "horizontal_accuracy_m": "2.3",
+        "length_m": 644.8,
+        "inside_noaa_charted_biscayne_bay_m": 190.9,
+        "inside_fdep_biscayne_bay_preserve_m": 644.8,
+        "partition_m": {
+          "inside_both": 190.9,
+          "charted_bay_only": 0.0,
+          "fdep_preserve_only": 453.8,
+          "outside_both": 0.0
+        },
+        "named_water_context_hits": [
+          {
+            "objectid": 253438,
+            "name": "Biscayne Bay",
+            "chart_cell": "US5MIACB.000",
+            "intersection_length_m": 118.1
+          },
+          {
+            "objectid": 253422,
+            "name": "Biscayne Bay",
+            "chart_cell": "US5MIABB.000",
+            "intersection_length_m": 72.9
+          }
+        ]
+      },
+      {
+        "feature_id": 1983571,
+        "source_id": "GC12023",
+        "source_date": "20180726",
+        "horizontal_accuracy_m": "2.3",
+        "length_m": 721.9,
+        "inside_noaa_charted_biscayne_bay_m": 0.0,
+        "inside_fdep_biscayne_bay_preserve_m": 721.9,
+        "partition_m": {
+          "inside_both": 0.0,
+          "charted_bay_only": 0.0,
+          "fdep_preserve_only": 721.9,
+          "outside_both": 0.0
+        },
+        "named_water_context_hits": []
+      },
+      {
+        "feature_id": 1983633,
+        "source_id": "GC12023",
+        "source_date": "20180726",
+        "horizontal_accuracy_m": "2.3",
+        "length_m": 832.7,
+        "inside_noaa_charted_biscayne_bay_m": 0.0,
+        "inside_fdep_biscayne_bay_preserve_m": 0.0,
+        "partition_m": {
+          "inside_both": 0.0,
+          "charted_bay_only": 0.0,
+          "fdep_preserve_only": 0.0,
+          "outside_both": 832.7
+        },
+        "named_water_context_hits": []
+      },
+      {
+        "feature_id": 1983634,
+        "source_id": "GC12023",
+        "source_date": "20180726",
+        "horizontal_accuracy_m": "2.3",
+        "length_m": 458.4,
+        "inside_noaa_charted_biscayne_bay_m": 0.0,
+        "inside_fdep_biscayne_bay_preserve_m": 0.0,
+        "partition_m": {
+          "inside_both": 0.0,
+          "charted_bay_only": 0.0,
+          "fdep_preserve_only": 0.0,
+          "outside_both": 458.4
+        },
+        "named_water_context_hits": []
+      },
+      {
+        "feature_id": 1983670,
+        "source_id": "GC12023",
+        "source_date": "20180726",
+        "horizontal_accuracy_m": "2.3",
+        "length_m": 141.5,
+        "inside_noaa_charted_biscayne_bay_m": 0.0,
+        "inside_fdep_biscayne_bay_preserve_m": 0.0,
+        "partition_m": {
+          "inside_both": 0.0,
+          "charted_bay_only": 0.0,
+          "fdep_preserve_only": 0.0,
+          "outside_both": 141.5
+        },
+        "named_water_context_hits": []
+      },
+      {
+        "feature_id": 1983672,
+        "source_id": "GC12023",
+        "source_date": "20180726",
+        "horizontal_accuracy_m": "2.3",
+        "length_m": 8.6,
+        "inside_noaa_charted_biscayne_bay_m": 0.0,
+        "inside_fdep_biscayne_bay_preserve_m": 0.0,
+        "partition_m": {
+          "inside_both": 0.0,
+          "charted_bay_only": 0.0,
+          "fdep_preserve_only": 0.0,
+          "outside_both": 8.6
+        },
+        "named_water_context_hits": []
+      },
+      {
+        "feature_id": 1983674,
+        "source_id": "GC12023",
+        "source_date": "20180726",
+        "horizontal_accuracy_m": "2.3",
+        "length_m": 45.8,
+        "inside_noaa_charted_biscayne_bay_m": 0.0,
+        "inside_fdep_biscayne_bay_preserve_m": 0.0,
+        "partition_m": {
+          "inside_both": 0.0,
+          "charted_bay_only": 0.0,
+          "fdep_preserve_only": 0.0,
+          "outside_both": 45.8
+        },
+        "named_water_context_hits": []
+      },
+      {
+        "feature_id": 1983676,
+        "source_id": "GC12023",
+        "source_date": "20180726",
+        "horizontal_accuracy_m": "2.3",
+        "length_m": 253.9,
+        "inside_noaa_charted_biscayne_bay_m": 84.8,
+        "inside_fdep_biscayne_bay_preserve_m": 28.9,
+        "partition_m": {
+          "inside_both": 28.9,
+          "charted_bay_only": 55.9,
+          "fdep_preserve_only": 0.0,
+          "outside_both": 169.1
+        },
+        "named_water_context_hits": [
+          {
+            "objectid": 253419,
+            "name": "Biscayne Bay",
+            "chart_cell": "US5MIABA.000",
+            "intersection_length_m": 84.8
+          }
+        ]
+      },
+      {
+        "feature_id": 1983678,
+        "source_id": "GC12023",
+        "source_date": "20190413",
+        "horizontal_accuracy_m": "1.3",
+        "length_m": 372.5,
+        "inside_noaa_charted_biscayne_bay_m": 0.0,
+        "inside_fdep_biscayne_bay_preserve_m": 0.0,
+        "partition_m": {
+          "inside_both": 0.0,
+          "charted_bay_only": 0.0,
+          "fdep_preserve_only": 0.0,
+          "outside_both": 372.5
+        },
+        "named_water_context_hits": []
+      },
+      {
+        "feature_id": 1983782,
+        "source_id": "GC12023",
+        "source_date": "20180726",
+        "horizontal_accuracy_m": "2.3",
+        "length_m": 272.2,
+        "inside_noaa_charted_biscayne_bay_m": 0.0,
+        "inside_fdep_biscayne_bay_preserve_m": 0.0,
+        "partition_m": {
+          "inside_both": 0.0,
+          "charted_bay_only": 0.0,
+          "fdep_preserve_only": 0.0,
+          "outside_both": 272.2
+        },
+        "named_water_context_hits": []
+      },
+      {
+        "feature_id": 1983791,
+        "source_id": "GC12023",
+        "source_date": "20180726",
+        "horizontal_accuracy_m": "2.3",
+        "length_m": 3.6,
+        "inside_noaa_charted_biscayne_bay_m": 3.6,
+        "inside_fdep_biscayne_bay_preserve_m": 0.0,
+        "partition_m": {
+          "inside_both": 0.0,
+          "charted_bay_only": 3.6,
+          "fdep_preserve_only": 0.0,
+          "outside_both": 0.0
+        },
+        "named_water_context_hits": []
+      },
+      {
+        "feature_id": 1983581,
+        "source_id": "GC12023",
+        "source_date": "20180726",
+        "horizontal_accuracy_m": "2.3",
+        "length_m": 78.7,
+        "inside_noaa_charted_biscayne_bay_m": 27.7,
+        "inside_fdep_biscayne_bay_preserve_m": 44.8,
+        "partition_m": {
+          "inside_both": 23.4,
+          "charted_bay_only": 4.3,
+          "fdep_preserve_only": 21.4,
+          "outside_both": 29.5
+        },
+        "named_water_context_hits": [
+          {
+            "objectid": 253438,
+            "name": "Biscayne Bay",
+            "chart_cell": "US5MIACB.000",
+            "intersection_length_m": 27.7
+          }
+        ]
+      },
+      {
+        "feature_id": 1983582,
+        "source_id": "GC12023",
+        "source_date": "20180726",
+        "horizontal_accuracy_m": "2.3",
+        "length_m": 42.4,
+        "inside_noaa_charted_biscayne_bay_m": 9.6,
+        "inside_fdep_biscayne_bay_preserve_m": 7.2,
+        "partition_m": {
+          "inside_both": 2.3,
+          "charted_bay_only": 7.3,
+          "fdep_preserve_only": 4.9,
+          "outside_both": 27.9
+        },
+        "named_water_context_hits": []
+      },
+      {
+        "feature_id": 1983585,
+        "source_id": "GC12023",
+        "source_date": "20180726",
+        "horizontal_accuracy_m": "2.3",
+        "length_m": 338.5,
+        "inside_noaa_charted_biscayne_bay_m": 92.9,
+        "inside_fdep_biscayne_bay_preserve_m": 259.5,
+        "partition_m": {
+          "inside_both": 75.9,
+          "charted_bay_only": 17.0,
+          "fdep_preserve_only": 183.6,
+          "outside_both": 62.0
+        },
+        "named_water_context_hits": [
+          {
+            "objectid": 253438,
+            "name": "Biscayne Bay",
+            "chart_cell": "US5MIACB.000",
+            "intersection_length_m": 92.9
+          }
+        ]
+      },
+      {
+        "feature_id": 1983587,
+        "source_id": "GC12023",
+        "source_date": "20180726",
+        "horizontal_accuracy_m": "2.3",
+        "length_m": 41.0,
+        "inside_noaa_charted_biscayne_bay_m": 38.6,
+        "inside_fdep_biscayne_bay_preserve_m": 40.6,
+        "partition_m": {
+          "inside_both": 38.6,
+          "charted_bay_only": 0.0,
+          "fdep_preserve_only": 1.9,
+          "outside_both": 0.4
+        },
+        "named_water_context_hits": [
+          {
+            "objectid": 253438,
+            "name": "Biscayne Bay",
+            "chart_cell": "US5MIACB.000",
+            "intersection_length_m": 38.6
+          }
+        ]
+      },
+      {
+        "feature_id": 1983590,
+        "source_id": "GC12023",
+        "source_date": "20180726",
+        "horizontal_accuracy_m": "2.3",
+        "length_m": 154.7,
+        "inside_noaa_charted_biscayne_bay_m": 11.8,
+        "inside_fdep_biscayne_bay_preserve_m": 41.0,
+        "partition_m": {
+          "inside_both": 11.8,
+          "charted_bay_only": 0.0,
+          "fdep_preserve_only": 29.2,
+          "outside_both": 113.7
+        },
+        "named_water_context_hits": []
+      },
+      {
+        "feature_id": 1983591,
+        "source_id": "GC12023",
+        "source_date": "20180726",
+        "horizontal_accuracy_m": "2.3",
+        "length_m": 203.6,
+        "inside_noaa_charted_biscayne_bay_m": 98.0,
+        "inside_fdep_biscayne_bay_preserve_m": 93.2,
+        "partition_m": {
+          "inside_both": 73.3,
+          "charted_bay_only": 24.7,
+          "fdep_preserve_only": 19.8,
+          "outside_both": 85.8
+        },
+        "named_water_context_hits": [
+          {
+            "objectid": 253438,
+            "name": "Biscayne Bay",
+            "chart_cell": "US5MIACB.000",
+            "intersection_length_m": 64.3
+          },
+          {
+            "objectid": 253422,
+            "name": "Biscayne Bay",
+            "chart_cell": "US5MIABB.000",
+            "intersection_length_m": 33.7
+          }
+        ]
+      },
+      {
+        "feature_id": 1983593,
+        "source_id": "GC12023",
+        "source_date": "20180726",
+        "horizontal_accuracy_m": "2.3",
+        "length_m": 104.0,
+        "inside_noaa_charted_biscayne_bay_m": 79.3,
+        "inside_fdep_biscayne_bay_preserve_m": 54.7,
+        "partition_m": {
+          "inside_both": 52.4,
+          "charted_bay_only": 26.9,
+          "fdep_preserve_only": 2.3,
+          "outside_both": 22.5
+        },
+        "named_water_context_hits": [
+          {
+            "objectid": 253422,
+            "name": "Biscayne Bay",
+            "chart_cell": "US5MIABB.000",
+            "intersection_length_m": 79.3
+          }
+        ]
+      },
+      {
+        "feature_id": 1983595,
+        "source_id": "GC12023",
+        "source_date": "20180726",
+        "horizontal_accuracy_m": "2.3",
+        "length_m": 91.1,
+        "inside_noaa_charted_biscayne_bay_m": 0.2,
+        "inside_fdep_biscayne_bay_preserve_m": 25.2,
+        "partition_m": {
+          "inside_both": 0.2,
+          "charted_bay_only": 0.0,
+          "fdep_preserve_only": 25.0,
+          "outside_both": 65.9
+        },
+        "named_water_context_hits": []
+      },
+      {
+        "feature_id": 1983617,
+        "source_id": "GC12023",
+        "source_date": "20180726",
+        "horizontal_accuracy_m": "2.3",
+        "length_m": 377.1,
+        "inside_noaa_charted_biscayne_bay_m": 128.7,
+        "inside_fdep_biscayne_bay_preserve_m": 11.8,
+        "partition_m": {
+          "inside_both": 11.8,
+          "charted_bay_only": 116.9,
+          "fdep_preserve_only": 0.0,
+          "outside_both": 248.4
+        },
+        "named_water_context_hits": [
+          {
+            "objectid": 253419,
+            "name": "Biscayne Bay",
+            "chart_cell": "US5MIABA.000",
+            "intersection_length_m": 128.7
+          }
+        ]
+      },
+      {
+        "feature_id": 1983618,
+        "source_id": "GC12023",
+        "source_date": "20180726",
+        "horizontal_accuracy_m": "2.3",
+        "length_m": 25.5,
+        "inside_noaa_charted_biscayne_bay_m": 0.0,
+        "inside_fdep_biscayne_bay_preserve_m": 0.0,
+        "partition_m": {
+          "inside_both": 0.0,
+          "charted_bay_only": 0.0,
+          "fdep_preserve_only": 0.0,
+          "outside_both": 25.5
+        },
+        "named_water_context_hits": []
+      },
+      {
+        "feature_id": 1983619,
+        "source_id": "GC12023",
+        "source_date": "20180726",
+        "horizontal_accuracy_m": "2.3",
+        "length_m": 25.3,
+        "inside_noaa_charted_biscayne_bay_m": 0.0,
+        "inside_fdep_biscayne_bay_preserve_m": 0.0,
+        "partition_m": {
+          "inside_both": 0.0,
+          "charted_bay_only": 0.0,
+          "fdep_preserve_only": 0.0,
+          "outside_both": 25.3
+        },
+        "named_water_context_hits": []
+      },
+      {
+        "feature_id": 1983620,
+        "source_id": "GC12023",
+        "source_date": "20180726",
+        "horizontal_accuracy_m": "2.3",
+        "length_m": 358.6,
+        "inside_noaa_charted_biscayne_bay_m": 0.0,
+        "inside_fdep_biscayne_bay_preserve_m": 0.0,
+        "partition_m": {
+          "inside_both": 0.0,
+          "charted_bay_only": 0.0,
+          "fdep_preserve_only": 0.0,
+          "outside_both": 358.6
+        },
+        "named_water_context_hits": []
+      },
+      {
+        "feature_id": 1983621,
+        "source_id": "GC12023",
+        "source_date": "20180726",
+        "horizontal_accuracy_m": "2.3",
+        "length_m": 84.3,
+        "inside_noaa_charted_biscayne_bay_m": 0.0,
+        "inside_fdep_biscayne_bay_preserve_m": 0.0,
+        "partition_m": {
+          "inside_both": 0.0,
+          "charted_bay_only": 0.0,
+          "fdep_preserve_only": 0.0,
+          "outside_both": 84.3
+        },
+        "named_water_context_hits": []
+      },
+      {
+        "feature_id": 1983638,
+        "source_id": "GC12023",
+        "source_date": "20180726",
+        "horizontal_accuracy_m": "2.3",
+        "length_m": 1627.3,
+        "inside_noaa_charted_biscayne_bay_m": 29.8,
+        "inside_fdep_biscayne_bay_preserve_m": 66.9,
+        "partition_m": {
+          "inside_both": 13.7,
+          "charted_bay_only": 16.1,
+          "fdep_preserve_only": 53.1,
+          "outside_both": 1544.4
+        },
+        "named_water_context_hits": [
+          {
+            "objectid": 253419,
+            "name": "Biscayne Bay",
+            "chart_cell": "US5MIABA.000",
+            "intersection_length_m": 29.8
+          }
+        ]
+      },
+      {
+        "feature_id": 1983679,
+        "source_id": "GC12023",
+        "source_date": "20180726",
+        "horizontal_accuracy_m": "2.3",
+        "length_m": 352.9,
+        "inside_noaa_charted_biscayne_bay_m": 0.0,
+        "inside_fdep_biscayne_bay_preserve_m": 0.0,
+        "partition_m": {
+          "inside_both": 0.0,
+          "charted_bay_only": 0.0,
+          "fdep_preserve_only": 0.0,
+          "outside_both": 352.9
+        },
+        "named_water_context_hits": []
+      },
+      {
+        "feature_id": 1983684,
+        "source_id": "GC12023",
+        "source_date": "20190412",
+        "horizontal_accuracy_m": "1.3",
+        "length_m": 145.0,
+        "inside_noaa_charted_biscayne_bay_m": 0.0,
+        "inside_fdep_biscayne_bay_preserve_m": 0.0,
+        "partition_m": {
+          "inside_both": 0.0,
+          "charted_bay_only": 0.0,
+          "fdep_preserve_only": 0.0,
+          "outside_both": 145.0
+        },
+        "named_water_context_hits": []
+      },
+      {
+        "feature_id": 1983686,
+        "source_id": "GC12023",
+        "source_date": "20190412",
+        "horizontal_accuracy_m": "1.3",
+        "length_m": 91.3,
+        "inside_noaa_charted_biscayne_bay_m": 0.0,
+        "inside_fdep_biscayne_bay_preserve_m": 0.0,
+        "partition_m": {
+          "inside_both": 0.0,
+          "charted_bay_only": 0.0,
+          "fdep_preserve_only": 0.0,
+          "outside_both": 91.3
+        },
+        "named_water_context_hits": []
+      },
+      {
+        "feature_id": 1983731,
+        "source_id": "GC12023",
+        "source_date": "20180726",
+        "horizontal_accuracy_m": "2.3",
+        "length_m": 10.7,
+        "inside_noaa_charted_biscayne_bay_m": 7.0,
+        "inside_fdep_biscayne_bay_preserve_m": 0.0,
+        "partition_m": {
+          "inside_both": 0.0,
+          "charted_bay_only": 7.0,
+          "fdep_preserve_only": 0.0,
+          "outside_both": 3.7
+        },
+        "named_water_context_hits": []
+      },
+      {
+        "feature_id": 1983770,
+        "source_id": "GC12023",
+        "source_date": "20180726",
+        "horizontal_accuracy_m": "2.3",
+        "length_m": 218.0,
+        "inside_noaa_charted_biscayne_bay_m": 0.0,
+        "inside_fdep_biscayne_bay_preserve_m": 0.0,
+        "partition_m": {
+          "inside_both": 0.0,
+          "charted_bay_only": 0.0,
+          "fdep_preserve_only": 0.0,
+          "outside_both": 218.0
+        },
+        "named_water_context_hits": []
+      },
+      {
+        "feature_id": 1983623,
+        "source_id": "GC12023",
+        "source_date": "20180726",
+        "horizontal_accuracy_m": "2.3",
+        "length_m": 400.4,
+        "inside_noaa_charted_biscayne_bay_m": 0.0,
+        "inside_fdep_biscayne_bay_preserve_m": 0.0,
+        "partition_m": {
+          "inside_both": 0.0,
+          "charted_bay_only": 0.0,
+          "fdep_preserve_only": 0.0,
+          "outside_both": 400.4
+        },
+        "named_water_context_hits": []
+      },
+      {
+        "feature_id": 1983691,
+        "source_id": "GC12023",
+        "source_date": "20180726",
+        "horizontal_accuracy_m": "2.3",
+        "length_m": 25.6,
+        "inside_noaa_charted_biscayne_bay_m": 0.0,
+        "inside_fdep_biscayne_bay_preserve_m": 0.0,
+        "partition_m": {
+          "inside_both": 0.0,
+          "charted_bay_only": 0.0,
+          "fdep_preserve_only": 0.0,
+          "outside_both": 25.6
+        },
+        "named_water_context_hits": []
+      },
+      {
+        "feature_id": 1983692,
+        "source_id": "GC12023",
+        "source_date": "20180726",
+        "horizontal_accuracy_m": "2.3",
+        "length_m": 16.9,
+        "inside_noaa_charted_biscayne_bay_m": 0.0,
+        "inside_fdep_biscayne_bay_preserve_m": 0.0,
+        "partition_m": {
+          "inside_both": 0.0,
+          "charted_bay_only": 0.0,
+          "fdep_preserve_only": 0.0,
+          "outside_both": 16.9
+        },
+        "named_water_context_hits": []
+      },
+      {
+        "feature_id": 1983693,
+        "source_id": "GC12023",
+        "source_date": "20180726",
+        "horizontal_accuracy_m": "2.3",
+        "length_m": 48.8,
+        "inside_noaa_charted_biscayne_bay_m": 0.0,
+        "inside_fdep_biscayne_bay_preserve_m": 0.0,
+        "partition_m": {
+          "inside_both": 0.0,
+          "charted_bay_only": 0.0,
+          "fdep_preserve_only": 0.0,
+          "outside_both": 48.8
+        },
+        "named_water_context_hits": []
+      },
+      {
+        "feature_id": 1983694,
+        "source_id": "GC12023",
+        "source_date": "20180726",
+        "horizontal_accuracy_m": "2.3",
+        "length_m": 709.7,
+        "inside_noaa_charted_biscayne_bay_m": 0.0,
+        "inside_fdep_biscayne_bay_preserve_m": 0.0,
+        "partition_m": {
+          "inside_both": 0.0,
+          "charted_bay_only": 0.0,
+          "fdep_preserve_only": 0.0,
+          "outside_both": 709.7
+        },
+        "named_water_context_hits": []
+      },
+      {
+        "feature_id": 1983695,
+        "source_id": "GC12023",
+        "source_date": "20180726",
+        "horizontal_accuracy_m": "2.3",
+        "length_m": 136.6,
+        "inside_noaa_charted_biscayne_bay_m": 0.0,
+        "inside_fdep_biscayne_bay_preserve_m": 0.0,
+        "partition_m": {
+          "inside_both": 0.0,
+          "charted_bay_only": 0.0,
+          "fdep_preserve_only": 0.0,
+          "outside_both": 136.6
+        },
+        "named_water_context_hits": []
+      },
+      {
+        "feature_id": 1983771,
+        "source_id": "GC12023",
+        "source_date": "20180726",
+        "horizontal_accuracy_m": "2.3",
+        "length_m": 292.3,
+        "inside_noaa_charted_biscayne_bay_m": 0.0,
+        "inside_fdep_biscayne_bay_preserve_m": 0.0,
+        "partition_m": {
+          "inside_both": 0.0,
+          "charted_bay_only": 0.0,
+          "fdep_preserve_only": 0.0,
+          "outside_both": 292.3
+        },
+        "named_water_context_hits": []
+      },
+      {
+        "feature_id": 1983774,
+        "source_id": "GC12023",
+        "source_date": "20180726",
+        "horizontal_accuracy_m": "2.3",
+        "length_m": 17.3,
+        "inside_noaa_charted_biscayne_bay_m": 3.8,
+        "inside_fdep_biscayne_bay_preserve_m": 4.8,
+        "partition_m": {
+          "inside_both": 0.0,
+          "charted_bay_only": 3.8,
+          "fdep_preserve_only": 4.8,
+          "outside_both": 8.6
+        },
+        "named_water_context_hits": []
+      },
+      {
+        "feature_id": 1983776,
+        "source_id": "GC12023",
+        "source_date": "20190413",
+        "horizontal_accuracy_m": "1.3",
+        "length_m": 246.5,
+        "inside_noaa_charted_biscayne_bay_m": 9.0,
+        "inside_fdep_biscayne_bay_preserve_m": 152.7,
+        "partition_m": {
+          "inside_both": 8.7,
+          "charted_bay_only": 0.2,
+          "fdep_preserve_only": 144.0,
+          "outside_both": 93.6
+        },
+        "named_water_context_hits": []
+      },
+      {
+        "feature_id": 1983777,
+        "source_id": "GC12023",
+        "source_date": "20180726",
+        "horizontal_accuracy_m": "2.3",
+        "length_m": 439.2,
+        "inside_noaa_charted_biscayne_bay_m": 58.8,
+        "inside_fdep_biscayne_bay_preserve_m": 45.4,
+        "partition_m": {
+          "inside_both": 0.0,
+          "charted_bay_only": 58.8,
+          "fdep_preserve_only": 45.4,
+          "outside_both": 335.0
+        },
+        "named_water_context_hits": [
+          {
+            "objectid": 253422,
+            "name": "Biscayne Bay",
+            "chart_cell": "US5MIABB.000",
+            "intersection_length_m": 58.8
+          }
+        ]
+      },
+      {
+        "feature_id": 1983794,
+        "source_id": "GC12023",
+        "source_date": "20180726",
+        "horizontal_accuracy_m": "2.3",
+        "length_m": 82.2,
+        "inside_noaa_charted_biscayne_bay_m": 32.0,
+        "inside_fdep_biscayne_bay_preserve_m": 82.2,
+        "partition_m": {
+          "inside_both": 32.0,
+          "charted_bay_only": 0.0,
+          "fdep_preserve_only": 50.2,
+          "outside_both": 0.0
+        },
+        "named_water_context_hits": [
+          {
+            "objectid": 253419,
+            "name": "Biscayne Bay",
+            "chart_cell": "US5MIABA.000",
+            "intersection_length_m": 32.0
+          }
+        ]
+      },
+      {
+        "feature_id": 1983795,
+        "source_id": "GC12023",
+        "source_date": "20180726",
+        "horizontal_accuracy_m": "2.3",
+        "length_m": 228.0,
+        "inside_noaa_charted_biscayne_bay_m": 4.3,
+        "inside_fdep_biscayne_bay_preserve_m": 83.6,
+        "partition_m": {
+          "inside_both": 4.3,
+          "charted_bay_only": 0.0,
+          "fdep_preserve_only": 79.4,
+          "outside_both": 144.4
+        },
+        "named_water_context_hits": []
+      },
+      {
+        "feature_id": 1983796,
+        "source_id": "GC12023",
+        "source_date": "20180726",
+        "horizontal_accuracy_m": "2.3",
+        "length_m": 18.3,
+        "inside_noaa_charted_biscayne_bay_m": 0.0,
+        "inside_fdep_biscayne_bay_preserve_m": 0.0,
+        "partition_m": {
+          "inside_both": 0.0,
+          "charted_bay_only": 0.0,
+          "fdep_preserve_only": 0.0,
+          "outside_both": 18.3
+        },
+        "named_water_context_hits": []
+      },
+      {
+        "feature_id": 1983735,
+        "source_id": "GC12023",
+        "source_date": "20180726",
+        "horizontal_accuracy_m": "2.3",
+        "length_m": 38.6,
+        "inside_noaa_charted_biscayne_bay_m": 4.0,
+        "inside_fdep_biscayne_bay_preserve_m": 16.9,
+        "partition_m": {
+          "inside_both": 4.0,
+          "charted_bay_only": 0.0,
+          "fdep_preserve_only": 12.9,
+          "outside_both": 21.7
+        },
+        "named_water_context_hits": []
+      },
+      {
+        "feature_id": 1983738,
+        "source_id": "GC12023",
+        "source_date": "20180726",
+        "horizontal_accuracy_m": "2.3",
+        "length_m": 291.0,
+        "inside_noaa_charted_biscayne_bay_m": 0.0,
+        "inside_fdep_biscayne_bay_preserve_m": 291.0,
+        "partition_m": {
+          "inside_both": 0.0,
+          "charted_bay_only": 0.0,
+          "fdep_preserve_only": 291.0,
+          "outside_both": 0.0
+        },
+        "named_water_context_hits": []
+      },
+      {
+        "feature_id": 1983740,
+        "source_id": "GC12023",
+        "source_date": "20180726",
+        "horizontal_accuracy_m": "2.3",
+        "length_m": 157.7,
+        "inside_noaa_charted_biscayne_bay_m": 0.0,
+        "inside_fdep_biscayne_bay_preserve_m": 157.7,
+        "partition_m": {
+          "inside_both": 0.0,
+          "charted_bay_only": 0.0,
+          "fdep_preserve_only": 157.7,
+          "outside_both": 0.0
+        },
+        "named_water_context_hits": []
+      },
+      {
+        "feature_id": 1983745,
+        "source_id": "GC12023",
+        "source_date": "20180726",
+        "horizontal_accuracy_m": "2.3",
+        "length_m": 48.7,
+        "inside_noaa_charted_biscayne_bay_m": 45.8,
+        "inside_fdep_biscayne_bay_preserve_m": 23.0,
+        "partition_m": {
+          "inside_both": 23.0,
+          "charted_bay_only": 22.7,
+          "fdep_preserve_only": 0.0,
+          "outside_both": 2.9
+        },
+        "named_water_context_hits": [
+          {
+            "objectid": 253438,
+            "name": "Biscayne Bay",
+            "chart_cell": "US5MIACB.000",
+            "intersection_length_m": 45.8
+          }
+        ]
+      },
+      {
+        "feature_id": 1983748,
+        "source_id": "GC12023",
+        "source_date": "20180726",
+        "horizontal_accuracy_m": "2.3",
+        "length_m": 261.1,
+        "inside_noaa_charted_biscayne_bay_m": 95.8,
+        "inside_fdep_biscayne_bay_preserve_m": 208.0,
+        "partition_m": {
+          "inside_both": 84.1,
+          "charted_bay_only": 11.7,
+          "fdep_preserve_only": 123.9,
+          "outside_both": 41.5
+        },
+        "named_water_context_hits": [
+          {
+            "objectid": 253438,
+            "name": "Biscayne Bay",
+            "chart_cell": "US5MIACB.000",
+            "intersection_length_m": 95.8
+          }
+        ]
+      },
+      {
+        "feature_id": 1983752,
+        "source_id": "GC12023",
+        "source_date": "20190412",
+        "horizontal_accuracy_m": "1.3",
+        "length_m": 8.1,
+        "inside_noaa_charted_biscayne_bay_m": 0.0,
+        "inside_fdep_biscayne_bay_preserve_m": 6.7,
+        "partition_m": {
+          "inside_both": 0.0,
+          "charted_bay_only": 0.0,
+          "fdep_preserve_only": 6.7,
+          "outside_both": 1.3
+        },
+        "named_water_context_hits": []
+      }
+    ],
+    "FL2317-CS-N": []
+  },
+  "nearest_mhw_project_separations": {
+    "FL1808A-TB-N__FL1808C-TB-N": {
+      "minimum_line_geometry_distance_m": 17690.77,
+      "minimum_distance_feature_ids": [
+        2077140,
+        1983664
+      ],
+      "minimum_endpoint_to_endpoint_distance_m": 17690.77,
+      "interpretation": "separate extracted project coverage; not an alongshore gap or physical water connection"
+    }
   },
   "limitations": [
     "NOAA ENC named-water polygons are charted named-water areas, not complete ecological or statutory boundaries.",
     "FDEP Aquatic Preserve polygons are approximate management GIS geometries, not legal survey or enforcement geometry.",
     "MHW project linework is source-specific shoreline evidence, but its segmented coverage does not establish a continuous bay boundary.",
     "Line length inside a preserve or charted water polygon is a spatial overlay statistic, not a shoreline-accuracy score.",
+    "MHW lines outside both comparison polygons are not automatically errors or missing shoreline.",
     "The MHHW screening product is not used in this MHW overlay.",
     "No gaps are bridged, no lines are snapped, and separate FDEP preserve designations are not merged.",
+    "The FL1808A/FL1808C project separation is a distance between extracted source line sets, not an alongshore gap or evidence of an inlet connection.",
     "No production scoring, species profile values, or API v1 behavior is changed."
   ]
 }
