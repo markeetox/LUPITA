@@ -163,7 +163,13 @@ def test_every_timing_block_is_well_formed_and_cites_its_evidence():
         cfg = p.get("timing")
         if not cfg:
             continue
-        assert cfg["status"] == "angler_lore" and cfg["sources"] and cfg["note"], sid
+        assert cfg["status"] == "angler_lore" and cfg["note"], sid
+        if sid in {"bonefish", "permit"}:
+            # These pilot profiles deliberately expose unsupported timing hypotheses as
+            # uncalibrated rather than attaching unrelated sources to numeric timing maps.
+            assert cfg["sources"] == [] and "not calibrated" in cfg["note"].lower(), sid
+        else:
+            assert cfg["sources"], sid
         for name, keys in (("light", {"dawn", "day", "dusk", "night"}), ("tide", {"rising", "falling", "slack_high", "slack_low"}),
                            ("front", {"approaching", "just_passed", "lull"})):
             c = cfg.get(name)
