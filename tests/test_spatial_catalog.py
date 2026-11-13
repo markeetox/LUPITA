@@ -175,6 +175,16 @@ def test_curated_noaa_named_water_geometries_and_topology_audit_are_persisted():
     ):
         assert audit["groups"][feature_name]["connected_component_count"] == 1
         assert audit["groups"][feature_name]["positive_area_overlap_pairs"] == []
+    by_id = {feature["id"]: feature for feature in catalog["features"]}
+    for feature_id in (
+        "sf-biscayne-black-ledge", "sf-featherbed-bank", "sf-lewis-cut",
+        "sf-biscayne-channel", "sf-sands-cut", "sf-snapper-creek-canal",
+        "sf-goulds-canal", "sf-deering-channel", "sf-cape-florida-channel",
+    ):
+        note = by_id[feature_id]["boundary_scope_note"].lower()
+        assert "mud-flat class" not in note
+        assert by_id[feature_id]["geometry"] is None
+        assert by_id[feature_id]["source_geometry_ref"]["source_feature_count"] >= 1
 
     bear = by_name["Bear Cut"][0]
     assert str(bear["properties"]["OBJECTID"]) == "253451"
