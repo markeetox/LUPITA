@@ -42,6 +42,8 @@ jobs:
       - name: Curate named-water geometries and run topology precheck
         run: python scripts/curate_noaa_named_water_geometries.py --output-dir data/spatial
       - name: Validate persisted spatial catalog and curated geometries
+        env:
+          LUPITA_REQUIRE_CURATED_GIS: "1"
         run: python -m pytest -q tests/test_spatial_catalog.py
       - name: Persist curated GIS review data on the research branch
         if: github.event_name == 'workflow_dispatch' || (github.event_name == 'pull_request' && github.event.pull_request.head.repo.full_name == github.repository)
