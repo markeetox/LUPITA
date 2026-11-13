@@ -190,7 +190,7 @@ def test_curated_noaa_named_water_geometries_and_topology_audit_are_persisted():
     assert by_id["sf-biscayne-channel"]["relationships"][0]["type"] == "overlaps"
     for feature_id in ("sf-lewis-cut", "sf-sands-cut", "sf-snapper-creek-canal", "sf-goulds-canal"):
         assert by_id[feature_id]["relationships"][0]["type"] == "adjacent_to"
-        assert "no positive-area overlap" in by_id[feature_id]["relationships"][0]["status"]
+        assert "no_positive_area_overlap" in by_id[feature_id]["relationships"][0]["status"]
 
     bear = by_name["Bear Cut"][0]
     assert str(bear["properties"]["OBJECTID"]) == "253451"
