@@ -45,12 +45,13 @@ def analyze_jewfish(folder: Path):
         if inter.area > 0 or inter.length > 0 or merged.distance(g) < 1:
             relations.append({"objectid": feature_id(f), "name": p.get("OBJNAM"),
                 "chart_cell": p.get("DSNM"), "overlap_area_m2": round(inter.area, 2),
-                "shared_boundary_m": round(merged.boundary.intersection(g.boundary).length, 2),\n                "overlap_boundary_perimeter_m": round(inter.boundary.length if inter.area > 0 else 0, 2), "minimum_distance_m": round(merged.distance(g), 2)})
+                "shared_boundary_m": round(merged.boundary.intersection(g.boundary).length, 2),
+                "overlap_boundary_perimeter_m": round(inter.boundary.length if inter.area > 0 else 0, 2), "minimum_distance_m": round(merged.distance(g), 2)})
     coast = []
     for f in load_features(folder, "jewfish_creek_layer_84.geojson"):
         inter = merged.intersection(projected(f))
         if not inter.is_empty and inter.length > 0:
-            coast.append({"objectid": feature_id(f), "line_length_inside_land_polygon_m": round(inter.length, 2),
+            coast.append({"objectid": feature_id(f), "line_length_inside_named_creek_m": round(inter.length, 2),
                 "source_date": properties(f).get("SORDAT"), "chart_cell": properties(f).get("DSNM")})
     return {"source_layer": 237, "source_objectids": sorted(feature_id(f) for f in creek),
         "chart_cells": sorted({properties(f).get("DSNM") for f in creek}),
@@ -127,7 +128,7 @@ def analyze_rickenbacker(folder: Path):
     for f in load_features(folder, "rickenbacker_causeway_layer_84.geojson"):
         inter = causeway.intersection(projected(f))
         if not inter.is_empty and inter.length > 0:
-            coast.append({"objectid": feature_id(f), "intersection_length_m": round(inter.length, 2),
+            coast.append({"objectid": feature_id(f), "line_length_inside_named_land_polygon_m": round(inter.length, 2),
                 "chart_cell": properties(f).get("DSNM"), "source_date": properties(f).get("SORDAT")})
     bridges = []
     for f in load_features(folder, "rickenbacker_causeway_layer_87.geojson"):
@@ -145,7 +146,9 @@ def analyze_rickenbacker(folder: Path):
 def run(folder: Path):
     return {"report_version": 1, "status": "research_only", "measurement_crs": "EPSG:26917",
         "source": "NOAA ENC Harbour MapServer; source attributes retained in input GeoJSON",
-        "jewfish_creek": analyze_jewfish(folder),\n        "jewfish_creek_depth_context": analyze_jewfish_depth(folder, unary_union([projected(f) for f in load_features(folder, "jewfish_creek_layer_237.geojson") if properties(f).get("OBJNAM") == "Jewfish Creek")])),\n        "card_sound": analyze_card_sound(folder),
+        "jewfish_creek": analyze_jewfish(folder),
+        "jewfish_creek_depth_context": analyze_jewfish_depth(folder, unary_union([projected(f) for f in load_features(folder, "jewfish_creek_layer_237.geojson") if properties(f).get("OBJNAM") == "Jewfish Creek")])),
+        "card_sound": analyze_card_sound(folder),
         "rickenbacker_causeway": analyze_rickenbacker(folder),
         "limitations": ["ENC geometry is chart context, not certified navigation data.",
             "No geometry is modified, dissolved, snapped, extended, or bridged.",
