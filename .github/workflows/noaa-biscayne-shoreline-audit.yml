@@ -1,0 +1,41 @@
+name: NOAA Biscayne shoreline service audit
+
+on:
+  workflow_dispatch: {}
+  pull_request:
+    paths:
+      - "scripts/audit_noaa_shoreline_services.py"
+      - "tests/test_noaa_shoreline_services.py"
+      - ".github/workflows/noaa-biscayne-shoreline-audit.yml"
+
+permissions:
+  contents: read
+
+concurrency:
+  group: noaa-biscayne-shoreline-audit
+  cancel-in-progress: true
+
+jobs:
+  discover-and-inventory:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+      - name: Install dependencies
+        run: python -m pip install -r requirements.txt
+      - name: Test NOAA service metadata parser
+        run: python -m pytest -q tests/test_noaa_shoreline_services.py
+      - name: Discover NOAA NGS shoreline services and project layers
+        run: python scripts/audit_noaa_shoreline_services.py --output-dir artifacts/noaa-shoreline
+      - name: Upload NOAA shoreline service inventory
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: noaa-biscayne-shoreline-service-inventory
+          path: artifacts/noaa-shoreline/
+          if-no-files-found: warn
+          retention-days: 14
