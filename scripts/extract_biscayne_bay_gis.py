@@ -20,8 +20,10 @@ LAYERS = {
     "statutory_preserve_boundary": {
         "id": 0,
         "service": FDEP_SERVICE,
-        "where": "NAME LIKE '%BISCAYNE BAY%'",
-        "description": "FDEP aquatic-preserve polygon; official mapped boundary is approximate and not for enforcement.",
+        "where": "1=1",
+        "filter_attribute": "NAME",
+        "filter_contains": "BISCAYNE BAY",
+        "description": "FDEP aquatic-preserve polygons filtered locally to Biscayne Bay; official mapped boundary is approximate and not for enforcement.",
     },
     "source_footprints": {
         "id": 0,
@@ -111,6 +113,15 @@ def extract_layer(session, name, definition):
     else:
         raise RuntimeError(f"Layer {layer_id} exceeded {MAX_PAGES} page safety limit")
 
+    raw_feature_count = len(features)
+    filter_attribute = definition.get("filter_attribute")
+    filter_contains = definition.get("filter_contains")
+    if filter_attribute and filter_contains:
+        needle = str(filter_contains).casefold()
+        features = [
+            feature for feature in features
+            if needle in str((feature.get("properties") or {}).get(filter_attribute, "")).casefold()
+        ]
     sources, classes = Counter(), Counter()
     bounds = [180.0, 90.0, -180.0, -90.0]
     for feature in features:
@@ -133,8 +144,10 @@ def extract_layer(session, name, definition):
         "layer_id": layer_id,
         "service_url": f"{service}/{layer_id}",
         "query_where": definition["where"],
+        "client_filter": {"attribute": filter_attribute, "contains": filter_contains} if filter_attribute else None,
         "description": definition["description"],
         "output_crs": "EPSG:4326",
+        "raw_feature_count": raw_feature_count,
         "feature_count": len(features),
         "pages": pages,
         "geometry_types": dict(Counter(f["geometry"]["type"] for f in features)),
