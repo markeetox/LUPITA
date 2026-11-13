@@ -159,6 +159,11 @@ def curate(source_path: Path, output_dir: Path) -> dict[str, Any]:
                     "Geometry is retrieved and coordinate-validated; static geometry import and topology review remain pending.",
                     ""
                 )
+                if name == "Norris Cut":
+                    note = note.replace(
+                        "The current structured Harbour ENC extraction did not return a directly named Norris Cut geometry. Do not borrow geometry from nearby channel features.",
+                        "NOAA Harbour ENC layer 237 directly returns a named-water polygon for Norris Cut (OBJECTID 253447, Chart 11468, source date 2004-01). This is a charted named-water area, not a surveyed channel centerline or current controlling-depth boundary."
+                    )
                 if "original source polygon is persisted in the curated geojson" not in note.lower():
                     note = note.rstrip() + (
                         " The original source polygon is persisted in the curated GeoJSON and passed geometry validation. "
