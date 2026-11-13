@@ -711,10 +711,10 @@
       "parent_id": null,
       "geometry": null,
       "geometry_status": "source_geometry_persisted_topology_precheck_passed_not_navigation_boundary",
-      "boundary_scope_note": "NOAA Coast Pilot 4, Chapter 11, paragraph 38 describes Norris Cut as a shallow inlet just south of the Main Channel to Miami Harbor between Fisher Island and Virginia Key. NOAA Harbour ENC layer 237 directly returns a named-water polygon for Norris Cut (OBJECTID 253447, Chart 11468, source date 2004-01). This is a charted named-water area, not a surveyed channel centerline or current controlling-depth boundary. The original source polygon is persisted in the curated GeoJSON and passed geometry validation. It remains a charted named-water area, not a surveyed centerline or depth boundary.",
+      "boundary_scope_note": "NOAA Coast Pilot 4, Chapter 11, paragraph 38 describes Norris Cut as a shallow inlet just south of the Main Channel to Miami Harbor between Fisher Island and Virginia Key. NOAA Harbour ENC layer 237 directly returns a named-water polygon for Norris Cut (OBJECTID 253447, Chart 11468, source date 2004-01). This is a charted named-water area, not a surveyed channel centerline or current controlling-depth boundary. The Norris Cut source polygon is persisted in the curated GeoJSON and passed geometry validation. The full inlet channel centerline and current controlling-depth boundary remain unverified.",
       "source_geometry_ref": {
         "index_path": "data/spatial/noaa-biscayne-hydrography-index.json",
-        "review_status": "named_in_publication_only_geometry_pending",
+        "review_status": "direct_named_water_area_polygon_persisted_channel_centerline_pending",
         "curated_geojson_path": "data/spatial/noaa-biscayne-named-water-areas.geojson",
         "topology_audit_path": "data/spatial/noaa-biscayne-named-water-topology-audit.json",
         "source_objectids": [
