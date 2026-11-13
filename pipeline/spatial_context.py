@@ -142,3 +142,56 @@ def validate_catalog(catalog: Any) -> list[str]:
 def load_catalog(path: Path | None = None) -> dict[str, Any]:
     path = path or ROOT / "data" / "spatial" / "catalog.json"
     return json.loads(path.read_text(encoding="utf-8"))
+
+
+VALID_HABITAT_ROLES = {
+    "foraging", "feeding", "occupancy", "movement", "refuge",
+    "spawning_context", "connectivity", "nursery",
+}
+VALID_EVIDENCE_STATUSES = {
+    "supported_general_association", "candidate_association",
+}
+VALID_LOCAL_VALIDATION = {"required", "in_progress", "validated", "not_applicable"}
+
+
+def validate_habitat_contexts(value: Any) -> list[str]:
+    """Validate optional descriptive species habitat contexts without scoring them."""
+    errors: list[str] = []
+    if not isinstance(value, dict):
+        return ["habitat_contexts must be an object"]
+    if value.get("schema_version") != 1:
+        errors.append("habitat_contexts.schema_version must equal 1")
+    contexts = value.get("contexts")
+    if not isinstance(contexts, list):
+        return errors + ["habitat_contexts.contexts must be an array"]
+    ids: set[str] = set()
+    for index, context in enumerate(contexts):
+        prefix = f"habitat_contexts.contexts[{index}]"
+        if not isinstance(context, dict):
+            errors.append(f"{prefix} must be an object")
+            continue
+        context_id = context.get("id")
+        if not isinstance(context_id, str) or not context_id:
+            errors.append(f"{prefix}.id must be a non-empty string")
+        elif context_id in ids:
+            errors.append(f"duplicate habitat context id: {context_id}")
+        else:
+            ids.add(context_id)
+        feature_types = context.get("feature_types")
+        if not isinstance(feature_types, list) or not feature_types:
+            errors.append(f"{prefix}.feature_types must be a non-empty array")
+        elif any(kind not in VALID_FEATURE_TYPES for kind in feature_types):
+            errors.append(f"{prefix}.feature_types contains an unsupported feature type")
+        roles = context.get("habitat_roles")
+        if not isinstance(roles, list) or not roles:
+            errors.append(f"{prefix}.habitat_roles must be a non-empty array")
+        elif any(role not in VALID_HABITAT_ROLES for role in roles):
+            errors.append(f"{prefix}.habitat_roles contains an unsupported role")
+        if context.get("evidence_status") not in VALID_EVIDENCE_STATUSES:
+            errors.append(f"{prefix}.evidence_status is unsupported")
+        if context.get("local_validation") not in VALID_LOCAL_VALIDATION:
+            errors.append(f"{prefix}.local_validation is unsupported")
+        sources = context.get("sources")
+        if not isinstance(sources, list) or not sources or any(not isinstance(source, str) or not source.startswith(("https://", "http://")) for source in sources):
+            errors.append(f"{prefix}.sources must contain at least one HTTP(S) reference")
+    return errors
