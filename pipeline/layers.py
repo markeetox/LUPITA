@@ -336,7 +336,7 @@ def load_layers(sources: dict, errors: list[str], fetch=erddap.fetch_csv, fetch_
         alt_query_valid = np.isfinite(alt_u) & np.isfinite(alt_v) & query_mask if alt_u is not None else np.zeros_like(query_mask)
         combined_query_valid = combined_valid & query_mask
         layers["currents_info"] = {
-            "selected_source": "NOAA HF Radar" if hfr_meta["loaded"] else ("NOAA satellite altimetry fallback" if alt_meta["loaded"] else None),
+            "selected_source": "NOAA HF Radar" if hfr_meta["loaded"] else ("NOAA satellite altimetry fallback" if alt_meta.get("used_for_currents") else None),
             "blend_mode": blend_mode,
             "primary": hfr_meta,
             "fallback": alt_meta,

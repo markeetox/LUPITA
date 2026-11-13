@@ -70,7 +70,7 @@ def _multi_csv(lats, lons, names, fn):
     rows = ["time,latitude,longitude," + ",".join(names), "UTC,degrees_north,degrees_east," + ",".join("m s-1" for _ in names)]
     for la in lats:
         for lo in lons:
-            rows.append(f"2026-10-11T00:00:00Z,{la},{lo}," + ",".join(str(x) for x in fn(la, lo)))
+            rows.append(f"2026-11-13T17:00:00Z,{la},{lo}," + ",".join(str(x) for x in fn(la, lo)))
     return "\n".join(rows)
 
 
