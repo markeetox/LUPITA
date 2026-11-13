@@ -102,8 +102,11 @@ def test_noaa_hydrography_index_records_charted_feature_provenance():
     assert named["Biscayne Flats"]["charted_category"] == "mud flats"
     assert named["Bear Cut"]["objectids"] == [253451]
     assert named["Bear Cut"]["geometry_type"] == "Polygon"
+    assert named["Norris Cut"]["objectids"] == [253447]
+    assert named["Norris Cut"]["source_chart"] == "NOAA Chart 11468"
     assert index["channel_features"]["Miami Harbor Channel fairway"]["feature_count"] == 44
     assert "not_identified" in index["channel_features"]["Government Cut"]["status"]
+    assert "direct_named_water_area_polygon_found" in index["channel_features"]["Norris Cut"]["status"]
 
 
 
