@@ -78,3 +78,37 @@ def test_extract_layer_paginates_and_summarizes():
     assert summary["output_crs"] == "EPSG:4326"
     assert summary["source_counts"] == {"Biscayne Bay FWC": 1}
     assert summary["habitat_class_counts"] == {"Seagrass (Continuous)": 1}
+
+
+def test_extract_layer_uses_layer_specific_service_and_name_attribute():
+    class Response:
+        def raise_for_status(self):
+            pass
+
+        def json(self):
+            feature = polygon_feature()
+            feature["properties"] = {"OBJECTID": 9, "NAME": "BISCAYNE BAY AQUATIC PRESERVE"}
+            return {"features": [feature]}
+
+    class Session:
+        def __init__(self):
+            self.url = None
+
+        def get(self, url, params, timeout):
+            self.url = url
+            assert params["where"] == "NAME LIKE '%BISCAYNE BAY%'"
+            return Response()
+
+    session = Session()
+    _, summary = extract_layer(
+        session, "preserve",
+        {
+            "id": 0,
+            "service": "https://fdep.example/MapServer",
+            "where": "NAME LIKE '%BISCAYNE BAY%'",
+            "description": "preserve test",
+        },
+    )
+    assert session.url == "https://fdep.example/MapServer/0/query"
+    assert summary["service_url"] == "https://fdep.example/MapServer/0"
+    assert summary["source_counts"] == {"BISCAYNE BAY AQUATIC PRESERVE": 1}
