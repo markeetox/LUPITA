@@ -21,6 +21,7 @@ SOURCES = {
         "layer_id": 1,
         "layer_name": "Miami-Dade DTPWBridge",
         "publisher": "Miami-Dade County Department of Transportation and Public Works",
+        "required": True,
         "description": (
             "County-maintained bridge polylines from the DTPW EAMS GIS view. "
             "Source feature class is updated as needed by DTPW. Infrastructure reference only."
@@ -31,6 +32,7 @@ SOURCES = {
         "layer_id": 1,
         "layer_name": "FDOT Roadway Characteristics Inventory Bridges",
         "publisher": "Florida Department of Transportation, Transportation Data and Analytics Office",
+        "required": False,
         "description": (
             "Bridge polylines derived from FDOT RCI Feature 258 / BRIDGENO event mapping. "
             "Inventory geometry may not reflect current conditions. Infrastructure reference only."
@@ -123,7 +125,7 @@ def run(output_dir: Path) -> dict[str, Any]:
     output_dir.mkdir(parents=True, exist_ok=True)
     session = requests.Session()
     session.headers.update({"User-Agent": "LUPITA-South-Florida-Bridge-Crosswalk/1.0"})
-    summaries, errors = {}, {}
+    summaries, errors, required_errors = {}, {}, {}
     for key, definition in SOURCES.items():
         try:
             collection, summary = fetch_source(session, definition)
@@ -133,19 +135,24 @@ def run(output_dir: Path) -> dict[str, Any]:
             )
             summaries[key] = summary
         except Exception as exc:
-            errors[key] = f"{type(exc).__name__}: {exc}"
+            message = f"{type(exc).__name__}: {exc}"
+            errors[key] = message
+            if definition["required"]:
+                required_errors[key] = message
     report = {
         "report_version": 1,
         "generated_at_utc": datetime.now(timezone.utc).isoformat(),
         "purpose": "Research-only transportation infrastructure crosswalk; not ecological or navigation geometry.",
-        "status": "degraded" if errors else "healthy",
+        "status": "failed" if required_errors else ("partial" if errors else "healthy"),
         "query_bbox_wgs84": list(BBOX),
         "output_crs": "EPSG:4326",
         "sources": summaries,
         "errors": errors,
+        "required_source_errors": required_errors,
         "limitations": [
             "Bridge inventory features describe transportation structures, not ecological boundaries.",
             "Inventory and chart source dates must be retained; service refresh does not guarantee current field verification.",
+            "Optional source failures are recorded and do not discard successful required-source data.",
             "No bridge geometry is extended or snapped to create a cross-bay boundary.",
         ],
     }
@@ -153,8 +160,8 @@ def run(output_dir: Path) -> dict[str, Any]:
         json.dumps(report, indent=2, ensure_ascii=False) + "\n",
         encoding="utf-8",
     )
-    if errors:
-        raise RuntimeError(f"One or more bridge inventory sources failed: {errors}")
+    if required_errors:
+        raise RuntimeError(f"Required bridge inventory sources failed: {required_errors}")
     return report
 
 
