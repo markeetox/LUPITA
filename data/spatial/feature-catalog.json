@@ -94,6 +94,15 @@
         ],
         "connected_component_count": 1,
         "positive_area_overlap_pairs": []
+      },
+      "habitat_overlay_ref": {
+        "audit_path": "data/spatial/biscayne-subregion-habitat-audit.json",
+        "named_chart_context_name": "Bear Cut",
+        "source_feature_count": 1,
+        "intersecting_benthic_source_feature_count": 31,
+        "mapped_tidal_flat_source_feature_count": 7,
+        "status": "historical_source_overlay_not_current_habitat_or_species_suitability",
+        "note": "Source polygon intersections are evidence of mapped spatial overlap only. They do not establish current habitat condition, fish presence, water connectivity, or navigation limits."
       }
     },
     {
@@ -352,6 +361,15 @@
         "intersection_as_fraction_of_fdep_area": 0.689,
         "intersection_as_fraction_of_noaa_union_area": 0.351,
         "interpretation": "These are geometric overlay statistics between distinct source semantics, not accuracy metrics. Neither source is promoted as the ecological bay boundary."
+      },
+      "habitat_overlay_ref": {
+        "audit_path": "data/spatial/biscayne-subregion-habitat-audit.json",
+        "named_chart_context_name": "Biscayne Bay",
+        "source_feature_count": 37,
+        "intersecting_benthic_source_feature_count": 1453,
+        "mapped_tidal_flat_source_feature_count": 186,
+        "status": "historical_source_overlay_not_current_habitat_or_species_suitability",
+        "note": "Source polygon intersections are evidence of mapped spatial overlap only. They do not establish current habitat condition, fish presence, water connectivity, or navigation limits."
       }
     },
     {
@@ -388,7 +406,7 @@
       "parent_id": "sf-biscayne-bay-ecological-context",
       "geometry": null,
       "geometry_status": "source_chart_fragments_persisted_topology_precheck_passed_boundary_unverified",
-      "boundary_scope_note": "NOAA Harbour ENC names three polygons Biscayne Flats and classifies them as mud flats. This is a charted feature classification, not evidence of current substrate condition, seagrass, fish use, or ecological suitability. The polygons span two ENC cells and require topology review before being assembled into one complex. A first geometric topology precheck found one connected component and no material overlaps. Source polygons remain separate; the charted mud-flat class does not establish current substrate or habitat.",
+      "boundary_scope_note": "NOAA Harbour ENC names three polygons Biscayne Flats and classifies them as mud flats. This is a charted feature classification, not evidence of current substrate condition, seagrass, fish use, or ecological suitability. The polygons span two ENC cells and require topology review before being assembled into one complex. A first geometric topology precheck found one connected component and no material overlaps. Source polygons remain separate; the charted mud-flat class does not establish current substrate or habitat. The 2005-2013 FWC/NPS unified benthic overlay found 35 discontinuous-seagrass polygons, 17 unconsolidated-sediment polygons, one continuous-seagrass polygon, and one artificial feature intersecting the three old chart polygons; no source polygons were classified as Tidal Flats. The chart name/class and later mapped benthic classes are distinct source concepts.",
       "source_geometry_ref": {
         "index_path": "data/spatial/noaa-biscayne-hydrography-index.json",
         "source_layer_id": 237,
@@ -433,7 +451,16 @@
           "source_type": "official_charted_named_water_area"
         }
       ],
-      "validation_status": "source_fragments_persisted_mosaic_not_promoted_to_boundary"
+      "validation_status": "source_fragments_persisted_mosaic_not_promoted_to_boundary",
+      "habitat_overlay_ref": {
+        "audit_path": "data/spatial/biscayne-subregion-habitat-audit.json",
+        "named_chart_context_name": "Biscayne Flats",
+        "source_feature_count": 3,
+        "intersecting_benthic_source_feature_count": 54,
+        "mapped_tidal_flat_source_feature_count": 0,
+        "status": "historical_source_overlay_not_current_habitat_or_species_suitability",
+        "note": "Source polygon intersections are evidence of mapped spatial overlap only. They do not establish current habitat condition, fish presence, water connectivity, or navigation limits."
+      }
     },
     {
       "id": "sf-biscayne-safety-valve-complex",
@@ -492,6 +519,15 @@
         ],
         "connected_component_count": 1,
         "positive_area_overlap_pairs": []
+      },
+      "habitat_overlay_ref": {
+        "audit_path": "data/spatial/biscayne-subregion-habitat-audit.json",
+        "named_chart_context_name": "Safety Valve",
+        "source_feature_count": 4,
+        "intersecting_benthic_source_feature_count": 219,
+        "mapped_tidal_flat_source_feature_count": 0,
+        "status": "historical_source_overlay_not_current_habitat_or_species_suitability",
+        "note": "Source polygon intersections are evidence of mapped spatial overlap only. They do not establish current habitat condition, fish presence, water connectivity, or navigation limits."
       }
     },
     {
@@ -817,7 +853,16 @@
           "source_type": "charted_named_water_area_geometry"
         }
       ],
-      "validation_status": "charted_named_water_geometry_persisted_topology_precheck_passed_not_navigation_boundary"
+      "validation_status": "charted_named_water_geometry_persisted_topology_precheck_passed_not_navigation_boundary",
+      "habitat_overlay_ref": {
+        "audit_path": "data/spatial/biscayne-subregion-habitat-audit.json",
+        "named_chart_context_name": "Norris Cut",
+        "source_feature_count": 1,
+        "intersecting_benthic_source_feature_count": 27,
+        "mapped_tidal_flat_source_feature_count": 6,
+        "status": "historical_source_overlay_not_current_habitat_or_species_suitability",
+        "note": "Source polygon intersections are evidence of mapped spatial overlap only. They do not establish current habitat condition, fish presence, water connectivity, or navigation limits."
+      }
     },
     {
       "id": "sf-biscayne-black-ledge",
@@ -867,6 +912,15 @@
         "positive_area_overlap_pairs": [],
         "curated_geojson_path": "data/spatial/noaa-biscayne-named-water-areas.geojson",
         "topology_audit_path": "data/spatial/noaa-biscayne-named-water-topology-audit.json"
+      },
+      "habitat_overlay_ref": {
+        "audit_path": "data/spatial/biscayne-subregion-habitat-audit.json",
+        "named_chart_context_name": "Black Ledge",
+        "source_feature_count": 3,
+        "intersecting_benthic_source_feature_count": 3,
+        "mapped_tidal_flat_source_feature_count": 0,
+        "status": "historical_source_overlay_not_current_habitat_or_species_suitability",
+        "note": "Source polygon intersections are evidence of mapped spatial overlap only. They do not establish current habitat condition, fish presence, water connectivity, or navigation limits."
       }
     },
     {
@@ -913,6 +967,15 @@
         "positive_area_overlap_pairs": [],
         "curated_geojson_path": "data/spatial/noaa-biscayne-named-water-areas.geojson",
         "topology_audit_path": "data/spatial/noaa-biscayne-named-water-topology-audit.json"
+      },
+      "habitat_overlay_ref": {
+        "audit_path": "data/spatial/biscayne-subregion-habitat-audit.json",
+        "named_chart_context_name": "Featherbed Bank",
+        "source_feature_count": 1,
+        "intersecting_benthic_source_feature_count": 1,
+        "mapped_tidal_flat_source_feature_count": 0,
+        "status": "historical_source_overlay_not_current_habitat_or_species_suitability",
+        "note": "Source polygon intersections are evidence of mapped spatial overlap only. They do not establish current habitat condition, fish presence, water connectivity, or navigation limits."
       }
     },
     {
@@ -959,6 +1022,15 @@
         "positive_area_overlap_pairs": [],
         "curated_geojson_path": "data/spatial/noaa-biscayne-named-water-areas.geojson",
         "topology_audit_path": "data/spatial/noaa-biscayne-named-water-topology-audit.json"
+      },
+      "habitat_overlay_ref": {
+        "audit_path": "data/spatial/biscayne-subregion-habitat-audit.json",
+        "named_chart_context_name": "Lewis Cut",
+        "source_feature_count": 1,
+        "intersecting_benthic_source_feature_count": 2,
+        "mapped_tidal_flat_source_feature_count": 0,
+        "status": "historical_source_overlay_not_current_habitat_or_species_suitability",
+        "note": "Source polygon intersections are evidence of mapped spatial overlap only. They do not establish current habitat condition, fish presence, water connectivity, or navigation limits."
       }
     },
     {
@@ -970,7 +1042,7 @@
       "geometry": null,
       "geometry_status": "source_chart_fragments_persisted_topology_precheck_passed_boundary_unverified",
       "boundary_basis": "NOAA ENC charted named-water area",
-      "boundary_scope_note": "NOAA Harbour ENC returns 2 charted source polygons named Biscayne Channel and classifies the feature as sea channel. Source chart date: 20021005. These are charted source geometries, not surveyed ecological, legal, habitat, or navigation boundaries. Preserve source polygons individually; a connected-component result does not establish current water connectivity or fish habitat. A first geometric topology precheck found one connected component and no material overlaps. Source polygons remain separate; this does not establish current ecological connectivity, habitat condition, channel centerline, or navigation boundary.",
+      "boundary_scope_note": "NOAA Harbour ENC returns 2 charted source polygons named Biscayne Channel and classifies the feature as sea channel. Source chart date: 20021005. These are charted source geometries, not surveyed ecological, legal, habitat, or navigation boundaries. Preserve source polygons individually; a connected-component result does not establish current water connectivity or fish habitat. A first geometric topology precheck found one connected component and no material overlaps. Source polygons remain separate; this does not establish current ecological connectivity, habitat condition, channel centerline, or navigation boundary. The current FWC/NPS unified benthic source extraction returned no mapped benthic polygons intersecting these chart polygons; this is a source-coverage result, not evidence of absent habitat.",
       "relationships": [
         {
           "type": "overlaps",
@@ -1007,6 +1079,15 @@
         "positive_area_overlap_pairs": [],
         "curated_geojson_path": "data/spatial/noaa-biscayne-named-water-areas.geojson",
         "topology_audit_path": "data/spatial/noaa-biscayne-named-water-topology-audit.json"
+      },
+      "habitat_overlay_ref": {
+        "audit_path": "data/spatial/biscayne-subregion-habitat-audit.json",
+        "named_chart_context_name": "Biscayne Channel",
+        "source_feature_count": 2,
+        "intersecting_benthic_source_feature_count": 0,
+        "mapped_tidal_flat_source_feature_count": 0,
+        "status": "historical_source_overlay_not_current_habitat_or_species_suitability",
+        "note": "Source polygon intersections are evidence of mapped spatial overlap only. They do not establish current habitat condition, fish presence, water connectivity, or navigation limits."
       }
     },
     {
@@ -1053,6 +1134,15 @@
         "positive_area_overlap_pairs": [],
         "curated_geojson_path": "data/spatial/noaa-biscayne-named-water-areas.geojson",
         "topology_audit_path": "data/spatial/noaa-biscayne-named-water-topology-audit.json"
+      },
+      "habitat_overlay_ref": {
+        "audit_path": "data/spatial/biscayne-subregion-habitat-audit.json",
+        "named_chart_context_name": "Sands Cut",
+        "source_feature_count": 1,
+        "intersecting_benthic_source_feature_count": 2,
+        "mapped_tidal_flat_source_feature_count": 0,
+        "status": "historical_source_overlay_not_current_habitat_or_species_suitability",
+        "note": "Source polygon intersections are evidence of mapped spatial overlap only. They do not establish current habitat condition, fish presence, water connectivity, or navigation limits."
       }
     },
     {
@@ -1099,6 +1189,15 @@
         "positive_area_overlap_pairs": [],
         "curated_geojson_path": "data/spatial/noaa-biscayne-named-water-areas.geojson",
         "topology_audit_path": "data/spatial/noaa-biscayne-named-water-topology-audit.json"
+      },
+      "habitat_overlay_ref": {
+        "audit_path": "data/spatial/biscayne-subregion-habitat-audit.json",
+        "named_chart_context_name": "Snapper Creek Canal",
+        "source_feature_count": 1,
+        "intersecting_benthic_source_feature_count": 1,
+        "mapped_tidal_flat_source_feature_count": 0,
+        "status": "historical_source_overlay_not_current_habitat_or_species_suitability",
+        "note": "Source polygon intersections are evidence of mapped spatial overlap only. They do not establish current habitat condition, fish presence, water connectivity, or navigation limits."
       }
     },
     {
@@ -1145,6 +1244,15 @@
         "positive_area_overlap_pairs": [],
         "curated_geojson_path": "data/spatial/noaa-biscayne-named-water-areas.geojson",
         "topology_audit_path": "data/spatial/noaa-biscayne-named-water-topology-audit.json"
+      },
+      "habitat_overlay_ref": {
+        "audit_path": "data/spatial/biscayne-subregion-habitat-audit.json",
+        "named_chart_context_name": "Goulds Canal",
+        "source_feature_count": 1,
+        "intersecting_benthic_source_feature_count": 2,
+        "mapped_tidal_flat_source_feature_count": 0,
+        "status": "historical_source_overlay_not_current_habitat_or_species_suitability",
+        "note": "Source polygon intersections are evidence of mapped spatial overlap only. They do not establish current habitat condition, fish presence, water connectivity, or navigation limits."
       }
     },
     {
@@ -1191,6 +1299,15 @@
         "positive_area_overlap_pairs": [],
         "curated_geojson_path": "data/spatial/noaa-biscayne-named-water-areas.geojson",
         "topology_audit_path": "data/spatial/noaa-biscayne-named-water-topology-audit.json"
+      },
+      "habitat_overlay_ref": {
+        "audit_path": "data/spatial/biscayne-subregion-habitat-audit.json",
+        "named_chart_context_name": "Deering Channel",
+        "source_feature_count": 1,
+        "intersecting_benthic_source_feature_count": 11,
+        "mapped_tidal_flat_source_feature_count": 0,
+        "status": "historical_source_overlay_not_current_habitat_or_species_suitability",
+        "note": "Source polygon intersections are evidence of mapped spatial overlap only. They do not establish current habitat condition, fish presence, water connectivity, or navigation limits."
       }
     },
     {
@@ -1239,6 +1356,15 @@
         "positive_area_overlap_pairs": [],
         "curated_geojson_path": "data/spatial/noaa-biscayne-named-water-areas.geojson",
         "topology_audit_path": "data/spatial/noaa-biscayne-named-water-topology-audit.json"
+      },
+      "habitat_overlay_ref": {
+        "audit_path": "data/spatial/biscayne-subregion-habitat-audit.json",
+        "named_chart_context_name": "Cape Florida Channel",
+        "source_feature_count": 2,
+        "intersecting_benthic_source_feature_count": 17,
+        "mapped_tidal_flat_source_feature_count": 1,
+        "status": "historical_source_overlay_not_current_habitat_or_species_suitability",
+        "note": "Source polygon intersections are evidence of mapped spatial overlap only. They do not establish current habitat condition, fish presence, water connectivity, or navigation limits."
       }
     },
     {
