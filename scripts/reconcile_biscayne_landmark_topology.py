@@ -5,7 +5,7 @@ from itertools import combinations
 from pathlib import Path
 from pyproj import Transformer
 from shapely.geometry import Point, shape
-from shapely.ops import transform
+from shapely.ops import transform, unary_union
 
 PROJECT = Transformer.from_crs("EPSG:4326", "EPSG:26917", always_xy=True).transform
 STATION = Point(-80.39, 25.1833)
@@ -45,12 +45,12 @@ def analyze_jewfish(folder: Path):
         if inter.area > 0 or inter.length > 0 or merged.distance(g) < 1:
             relations.append({"objectid": feature_id(f), "name": p.get("OBJNAM"),
                 "chart_cell": p.get("DSNM"), "overlap_area_m2": round(inter.area, 2),
-                "shared_boundary_m": round(inter.length, 2), "minimum_distance_m": round(merged.distance(g), 2)})
+                "shared_boundary_m": round(merged.boundary.intersection(g.boundary).length, 2),\n                "overlap_boundary_perimeter_m": round(inter.boundary.length if inter.area > 0 else 0, 2), "minimum_distance_m": round(merged.distance(g), 2)})
     coast = []
     for f in load_features(folder, "jewfish_creek_layer_84.geojson"):
         inter = merged.intersection(projected(f))
         if not inter.is_empty and inter.length > 0:
-            coast.append({"objectid": feature_id(f), "intersection_length_m": round(inter.length, 2),
+            coast.append({"objectid": feature_id(f), "line_length_inside_land_polygon_m": round(inter.length, 2),
                 "source_date": properties(f).get("SORDAT"), "chart_cell": properties(f).get("DSNM")})
     return {"source_layer": 237, "source_objectids": sorted(feature_id(f) for f in creek),
         "chart_cells": sorted({properties(f).get("DSNM") for f in creek}),
@@ -67,6 +67,34 @@ def analyze_jewfish(folder: Path):
         "named_water_relations": relations, "intersecting_coastline_features": coast,
         "interpretation": "NOAA charted named-water polygons and coastline context; not surveyed channel geometry"}
 
+
+def analyze_jewfish_depth(folder: Path, creek_geometry):
+    contours = load_features(folder, "jewfish_creek_layer_104.geojson")
+    areas = load_features(folder, "jewfish_creek_layer_227.geojson")
+    contour_groups = {}
+    for f in contours:
+        value = properties(f).get("VALDCO")
+        g = projected(f)
+        row = contour_groups.setdefault(str(value), {"contour_value_m": value, "feature_count": 0,
+            "total_line_length_m": 0.0, "line_length_inside_named_creek_m": 0.0})
+        row["feature_count"] += 1
+        row["total_line_length_m"] += g.length
+        row["line_length_inside_named_creek_m"] += g.intersection(creek_geometry).length
+    area_groups = {}
+    for f in areas:
+        p, g = properties(f), projected(f)
+        key = f"{p.get('DRVAL1')} to {p.get('DRVAL2')}"
+        row = area_groups.setdefault(key, {"depth_range_m": [p.get("DRVAL1"), p.get("DRVAL2")],
+            "feature_count": 0, "total_area_km2": 0.0, "area_inside_named_creek_km2": 0.0})
+        row["feature_count"] += 1
+        row["total_area_km2"] += g.area / 1_000_000
+        row["area_inside_named_creek_km2"] += g.intersection(creek_geometry).area / 1_000_000
+    return {"depth_contours": sorted(contour_groups.values(), key=lambda x: (x["contour_value_m"] is None, x["contour_value_m"] or 0)),
+        "depth_areas": sorted(area_groups.values(), key=lambda x: (x["depth_range_m"][0] is None, x["depth_range_m"][0] or 0)),
+        "encoded_depth_unit": "metres",
+        "vertical_datum": "not populated in returned feature attributes; do not compare as a common datum without source metadata",
+        "interpretation": "chart depth classes are retained as source context, not current controlling depths or navigational advice"}
+
 def analyze_card_sound(folder: Path):
     features = load_features(folder, "noaa_card_sound_named_water.geojson")
     expected = {246233, 246243, 246247, 246258, 246267, 246284}
@@ -79,7 +107,7 @@ def analyze_card_sound(folder: Path):
         inter = a.intersection(b)
         if a.intersects(b) or a.distance(b) < 1:
             pairs.append({"objectids": [aid, bid], "intersects": a.intersects(b),
-                "overlap_area_m2": round(inter.area, 2), "shared_boundary_m": round(inter.length, 2),
+                "overlap_area_m2": round(inter.area, 2), "shared_boundary_m": round(a.boundary.intersection(b.boundary).length, 2),
                 "minimum_distance_m": round(a.distance(b), 3)})
     rows = []
     for oid, f in sorted(by_id.items()):
@@ -117,7 +145,7 @@ def analyze_rickenbacker(folder: Path):
 def run(folder: Path):
     return {"report_version": 1, "status": "research_only", "measurement_crs": "EPSG:26917",
         "source": "NOAA ENC Harbour MapServer; source attributes retained in input GeoJSON",
-        "jewfish_creek": analyze_jewfish(folder), "card_sound": analyze_card_sound(folder),
+        "jewfish_creek": analyze_jewfish(folder),\n        "jewfish_creek_depth_context": analyze_jewfish_depth(folder, unary_union([projected(f) for f in load_features(folder, "jewfish_creek_layer_237.geojson") if properties(f).get("OBJNAM") == "Jewfish Creek")])),\n        "card_sound": analyze_card_sound(folder),
         "rickenbacker_causeway": analyze_rickenbacker(folder),
         "limitations": ["ENC geometry is chart context, not certified navigation data.",
             "No geometry is modified, dissolved, snapped, extended, or bridged.",
