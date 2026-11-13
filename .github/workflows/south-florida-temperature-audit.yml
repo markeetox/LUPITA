@@ -9,7 +9,7 @@ on:
 
 concurrency:
   group: south-florida-in-situ-temperature-audit
-  cancel-in-progress: false
+  cancel-in-progress: true
 
 permissions:
   contents: read
