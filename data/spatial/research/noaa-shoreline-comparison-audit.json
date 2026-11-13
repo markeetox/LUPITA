@@ -1,0 +1,238 @@
+{
+  "audit_version": 4,
+  "generated_at_utc": "2026-11-13T03:03:42.067123+00:00",
+  "status": "complete",
+  "service": "https://ca.dep.state.fl.us/arcgis/rest/services/Map_Direct/Program_Support/MapServer",
+  "query_bbox_wgs84": [
+    -80.45,
+    25.25,
+    -80.05,
+    26.0
+  ],
+  "shoreline_layers": {
+    "noaa_composite_shoreline_mhw": {
+      "layer_id": 41,
+      "layer_name": "NOAA Composite Shoreline",
+      "datum_or_product": "MHW",
+      "source_object_id_count": 7,
+      "source_feature_count_retrieved": 7,
+      "source_feature_count_failed": 0,
+      "failed_object_ids": [],
+      "clipped_feature_count": 7,
+      "geometry_types": [
+        "MultiLineString"
+      ],
+      "attribute_field": "F_NAME",
+      "source_attribute_counts": {
+        "Apparent shore": 2,
+        "Approx. Shore": 1,
+        "Gen. manmade object": 1,
+        "SPOR": 2,
+        "User added line": 1
+      },
+      "bbox_wgs84": [
+        -80.45,
+        25.25,
+        -80.05,
+        26.0
+      ],
+      "output_crs": "EPSG:4326",
+      "source_spatial_reference": {
+        "wkid": 102967,
+        "latestWkid": 6439,
+        "xyTolerance": 0.001,
+        "zTolerance": 0.001,
+        "mTolerance": 0.001,
+        "falseX": -19550100,
+        "falseY": -7526400,
+        "xyUnits": 225743210.67916927,
+        "falseZ": -100000,
+        "zUnits": 10000,
+        "falseM": -100000,
+        "mUnits": 10000
+      },
+      "source_extent": {
+        "xmin": 61935.7679000013,
+        "ymin": 59428.1010999996,
+        "xmax": 794179.978599999,
+        "ymax": 748405.8073,
+        "spatialReference": {
+          "wkid": 102967,
+          "latestWkid": 6439,
+          "xyTolerance": 0.001,
+          "zTolerance": 0.001,
+          "mTolerance": 0.001,
+          "falseX": -19550100,
+          "falseY": -7526400,
+          "xyUnits": 225743210.67916927,
+          "falseZ": -100000,
+          "zUnits": 10000,
+          "falseM": -100000,
+          "mUnits": 10000
+        }
+      },
+      "max_record_count": 4000,
+      "raw_source_file": "noaa_composite_shoreline_mhw_biscayne_source_raw.geojson",
+      "clipped_output_file": "noaa_composite_shoreline_mhw_biscayne.geojson",
+      "metadata_url": "https://ca.dep.state.fl.us/arcgis/rest/services/Map_Direct/Program_Support/MapServer/41",
+      "description": "NOAA Office for Coastal Management composite shoreline derived from historic NOAA shoreline manuscripts (T-sheets); MHW shoreline context. Shoreline may have changed since the source surveys."
+    },
+    "noaa_mhhw_screening_line": {
+      "layer_id": 40,
+      "layer_name": "NOAA Mean Higher High Water (MHHW)",
+      "datum_or_product": "MHHW",
+      "source_object_id_count": 2,
+      "source_feature_count_retrieved": 2,
+      "source_feature_count_failed": 0,
+      "failed_object_ids": [],
+      "clipped_feature_count": 2,
+      "geometry_types": [
+        "MultiLineString"
+      ],
+      "attribute_field": "OBJECTID",
+      "source_attribute_counts": {
+        "9": 1,
+        "10": 1
+      },
+      "bbox_wgs84": [
+        -80.45,
+        25.25,
+        -80.05,
+        26.0
+      ],
+      "output_crs": "EPSG:4326",
+      "source_spatial_reference": {
+        "wkid": 102967,
+        "latestWkid": 6439,
+        "xyTolerance": 0.001,
+        "zTolerance": 0.001,
+        "mTolerance": 0.001,
+        "falseX": -19550100,
+        "falseY": -7526400,
+        "xyUnits": 225743210.67916927,
+        "falseZ": -100000,
+        "zUnits": 10000,
+        "falseM": -100000,
+        "mUnits": 10000
+      },
+      "source_extent": {
+        "xmin": 61772.4609000012,
+        "ymin": 45584.716,
+        "xmax": 799829.063000001,
+        "ymax": 759742.2342,
+        "spatialReference": {
+          "wkid": 102967,
+          "latestWkid": 6439,
+          "xyTolerance": 0.001,
+          "zTolerance": 0.001,
+          "mTolerance": 0.001,
+          "falseX": -19550100,
+          "falseY": -7526400,
+          "xyUnits": 225743210.67916927,
+          "falseZ": -100000,
+          "zUnits": 10000,
+          "falseM": -100000,
+          "mUnits": 10000
+        }
+      },
+      "max_record_count": 4000,
+      "raw_source_file": "noaa_mhhw_screening_line_biscayne_source_raw.geojson",
+      "clipped_output_file": "noaa_mhhw_screening_line_biscayne.geojson",
+      "metadata_url": "https://ca.dep.state.fl.us/arcgis/rest/services/Map_Direct/Program_Support/MapServer/40",
+      "description": "NOAA Office for Coastal Management screening-level predicted MHHW extent derived from tidal and elevation data; not a surveyed MHW shoreline."
+    }
+  },
+  "optional_layer_errors": {},
+  "project_metadata_candidates": [
+    {
+      "project_id": "FL1808C-TB-N",
+      "inport_id": 73241,
+      "name": "Biscayne Bay, Rickenbacker Island to Snapper Creek Canal",
+      "imagery_or_lidar_dates": "2018-07-26 to 2019-04-13",
+      "reported_mhw_accuracy_95pct_m": 2.3,
+      "reported_mllw_accuracy_95pct_m": 3.0,
+      "inport_url": "https://www.fisheries.noaa.gov/inport/item/73241",
+      "completion_report": "https://www.ngs.noaa.gov/desc_reports/FL1808C-TB-N.PDF",
+      "geographic_extent_wgs84": [
+        -80.3095,
+        25.63448867,
+        -80.16894,
+        25.77293
+      ],
+      "status": "project_metadata_verified_vectors_not_yet_retrieved"
+    },
+    {
+      "project_id": "FL1808A-TB-N",
+      "inport_id": 74866,
+      "name": "Biscayne Bay, Fender Point to Card Sound",
+      "imagery_or_lidar_dates": "2018-07-26 to 2019-04-16",
+      "reported_mhw_accuracy_95pct_m": 2.3,
+      "reported_mllw_accuracy_95pct_m": 3.0,
+      "inport_url": "https://www.fisheries.noaa.gov/inport/item/74866",
+      "completion_report": "https://www.ngs.noaa.gov/desc_reports/FL1808A-TB-N.pdf",
+      "geographic_extent_wgs84": [
+        -80.40325,
+        25.32522995,
+        -80.21719,
+        25.51193995
+      ],
+      "status": "project_metadata_verified_vectors_not_yet_retrieved"
+    },
+    {
+      "project_id": "FL2317-CS-N",
+      "inport_id": 76789,
+      "name": "Port of Miami",
+      "imagery_or_lidar_dates": "2023-10-21",
+      "reported_horizontal_accuracy_95pct_m": 1.2,
+      "inport_url": "https://www.fisheries.noaa.gov/inport/item/76789",
+      "completion_report": "https://www.ngs.noaa.gov/desc_reports/FL2317-CS-N.pdf",
+      "geographic_extent_wgs84": [
+        -80.2157448,
+        25.73422824,
+        -80.1074168,
+        25.81199791
+      ],
+      "status": "newer_port_of_miami_shoreline_candidate_vectors_not_yet_retrieved"
+    },
+    {
+      "project_id": "FL0413",
+      "inport_id": 61412,
+      "name": "Port of Miami",
+      "imagery_or_lidar_dates": "2005-02",
+      "inport_url": "https://www.fisheries.noaa.gov/inport/item/61412",
+      "geographic_extent_wgs84": [
+        -80.336873,
+        25.5093105,
+        -80.1019091,
+        25.9546342
+      ],
+      "status": "older_port_of_miami_comparison_candidate"
+    },
+    {
+      "project_id": "FL1603A-CM-N",
+      "inport_id": 61478,
+      "name": "Convoy Point",
+      "imagery_or_lidar_dates": "2017-03-19",
+      "inport_url": "https://www.fisheries.noaa.gov/inport/item/61478",
+      "completion_report": "https://www.ngs.noaa.gov/desc_reports/FL1603A-CM-N.PDF",
+      "status": "local_comparison_candidate_vectors_not_yet_retrieved"
+    }
+  ],
+  "rejected_cusp_candidate": {
+    "url": "https://services.arcgis.com/rD2ylXRs80UroD90/ArcGIS/rest/services/NOAA_Coastal_Shoreline/FeatureServer/0",
+    "declared_latest_wkid": 6416,
+    "declared_crs_name": "NAD83(2011) / California zone 1 (ftUS)",
+    "south_florida_query_feature_count": 0,
+    "status": "not_used_spatial_reference_and_extent_not_compatible_with_south_florida_aoi"
+  },
+  "limitations": [
+    "NOAA Composite Shoreline is derived from historic T-sheets and may not represent current shoreline position.",
+    "NOAA MHHW is a screening-level predicted tidal extent, not the MHW shoreline and not a legal boundary.",
+    "MHW and MHHW products are preserved as separate datums and must not be merged.",
+    "Neither Florida comparison layer is a substitute for the FL1808A/FL1808C project-specific MHW and MLLW vectors.",
+    "The NOAA Port of Miami FL2317 project remains the newer local project candidate; its actual vector download is still pending.",
+    "Project metadata rectangles are not proof of complete surveyed coverage.",
+    "No final Biscayne Bay boundary is created by this audit.",
+    "These shoreline layers are not navigation products or legal survey boundaries."
+  ]
+}
