@@ -5,8 +5,10 @@ on:
   pull_request:
     paths:
       - "scripts/extract_noaa_biscayne_hydrography.py"
+      - "scripts/extract_south_florida_bridge_inventory.py"
       - "scripts/curate_noaa_named_water_geometries.py"
       - "tests/test_noaa_biscayne_hydrography.py"
+      - "tests/test_south_florida_bridge_inventory.py"
       - "tests/test_curate_noaa_named_water_geometries.py"
       - "tests/test_spatial_catalog.py"
       - ".github/workflows/noaa-biscayne-hydrography.yml"
@@ -21,7 +23,7 @@ concurrency:
 jobs:
   extract-and-validate:
     runs-on: ubuntu-latest
-    timeout-minutes: 15
+    timeout-minutes: 20
     steps:
       - uses: actions/checkout@v4
         with:
@@ -35,10 +37,16 @@ jobs:
         run: python -m pip install -r requirements.txt
       - name: Install geometry QA dependency
         run: python -m pip install shapely
-      - name: Run NOAA hydrography tests
-        run: python -m pytest -q tests/test_noaa_biscayne_hydrography.py tests/test_curate_noaa_named_water_geometries.py
+      - name: Run NOAA and bridge inventory extraction tests
+        run: |
+          python -m pytest -q \
+            tests/test_noaa_biscayne_hydrography.py \
+            tests/test_south_florida_bridge_inventory.py \
+            tests/test_curate_noaa_named_water_geometries.py
       - name: Extract NOAA Harbour ENC and maintained-channel geometries
         run: python scripts/extract_noaa_biscayne_hydrography.py --output-dir artifacts/noaa-hydrography
+      - name: Extract official Miami-Dade and FDOT bridge inventory geometries
+        run: python scripts/extract_south_florida_bridge_inventory.py --output-dir artifacts/bridge-inventory
       - name: Curate named-water geometries and run topology precheck
         run: python scripts/curate_noaa_named_water_geometries.py --output-dir data/spatial
       - name: Validate persisted spatial catalog and curated geometries
@@ -58,31 +66,37 @@ jobs:
           git reset --hard FETCH_HEAD
           python scripts/curate_noaa_named_water_geometries.py --source artifacts/noaa-hydrography/harbor_named_water_areas.geojson --output-dir data/spatial
           python -m pytest -q tests/test_spatial_catalog.py
-          mkdir -p data/spatial/research/noaa_enc
+          mkdir -p data/spatial/research/noaa_enc data/spatial/research/transportation
           cp artifacts/noaa-hydrography/harbor_causeway_lines.geojson data/spatial/research/noaa_enc/
           cp artifacts/noaa-hydrography/harbor_bridge_lines.geojson data/spatial/research/noaa_enc/
           cp artifacts/noaa-hydrography/harbor_landmark_points.geojson data/spatial/research/noaa_enc/
+          cp artifacts/bridge-inventory/miamidade_dtpw_bridge_lines.geojson data/spatial/research/transportation/
+          cp artifacts/bridge-inventory/fdot_rci_bridge_lines.geojson data/spatial/research/transportation/
+          cp artifacts/bridge-inventory/bridge_inventory_summary.json data/spatial/research/transportation/
           git add data/spatial/noaa-biscayne-named-water-areas.geojson data/spatial/noaa-biscayne-named-water-topology-audit.json data/spatial/feature-catalog.json
           git add data/spatial/research/noaa_enc/harbor_causeway_lines.geojson data/spatial/research/noaa_enc/harbor_bridge_lines.geojson data/spatial/research/noaa_enc/harbor_landmark_points.geojson
+          git add data/spatial/research/transportation/
           if git diff --cached --quiet; then
             echo "No curated GIS changes to commit."
             exit 0
           fi
-          git commit -m "Persist curated Biscayne named-water geometries"
+          git commit -m "Persist curated Biscayne named-water and bridge geometries"
           for attempt in 1 2 3; do
             if git push origin "HEAD:${TARGET_BRANCH}"; then
               exit 0
             fi
-            echo "Push race detected; rebasing on latest research branch (attempt \${attempt}/3)."
+            echo "Push race detected; rebasing on latest research branch (attempt ${attempt}/3)."
             git fetch origin "${TARGET_BRANCH}"
             git rebase FETCH_HEAD
           done
           exit 1
-      - name: Upload NOAA hydrography review artifact
+      - name: Upload NOAA and bridge inventory review artifacts
         if: always()
         uses: actions/upload-artifact@v4
         with:
           name: noaa-biscayne-hydrography-review
-          path: artifacts/noaa-hydrography/
+          path: |
+            artifacts/noaa-hydrography/
+            artifacts/bridge-inventory/
           if-no-files-found: warn
           retention-days: 14
