@@ -173,22 +173,25 @@ def curate(source_path: Path, output_dir: Path) -> dict[str, Any]:
                 feature["validation_status"] = "source_fragments_persisted_mosaic_not_promoted_to_boundary"
                 note = feature["boundary_scope_note"]
                 if name == "Biscayne Bay":
-                    note = note.split(" A first geometric topology precheck is complete:")[0]
-                    note = note.replace(
-                        "mosaic and topology review is pending.",
-                        "a first geometric topology precheck is complete. The union has two disconnected components, "
-                        "one a very small isolated fragment. Full boundary reconciliation remains pending."
+                    anchor = (
+                        "NOAA Harbour ENC also contains 37 charted Biscayne Bay named-water polygons across 17 ENC cells."
                     )
-                    feature["boundary_scope_note"] = note + (
-                        " Original chart fragments are persisted individually; no dissolved or complete boundary is promoted."
+                    prefix = note.split(anchor)[0]
+                    feature["boundary_scope_note"] = prefix + anchor + (
+                        " These are chart-cell fragments, not a complete ecological or statutory boundary. "
+                        "A first geometric topology precheck is complete: the union has two disconnected components, "
+                        "one a very small isolated fragment. Full boundary reconciliation remains pending. "
+                        "Original chart fragments are persisted individually; no dissolved or complete boundary is promoted."
                     )
                 elif name == "Safety Valve":
+                    note = note.split(" Original chart fragments are persisted individually")[0]
                     note = note.split(" A first geometric topology precheck found")[0]
                     feature["boundary_scope_note"] = note + (
                         " A first geometric topology precheck found one connected component and no material overlaps. "
                         "Source polygons remain separate; this does not establish ecological connectivity or current habitat."
                     )
                 else:
+                    note = note.split(" Original chart fragments are persisted individually")[0]
                     note = note.split(" A first geometric topology precheck found")[0]
                     feature["boundary_scope_note"] = note + (
                         " A first geometric topology precheck found one connected component and no material overlaps. "
