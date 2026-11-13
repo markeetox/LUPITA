@@ -65,3 +65,25 @@ def test_cape_florida_preserve_is_separate_from_biscayne_bay_preserve():
     assert cape["source_geometry"]["reported_acres"] < biscayne["source_geometry"]["reported_acres"]
     assert "separate preserve" in cape["boundary_scope_note"].lower()
     assert cape["id"] != biscayne["id"]
+
+
+def test_noaa_charted_features_preserve_source_ids_and_unverified_geometry_states():
+    catalog = json.loads(CATALOG_PATH.read_text(encoding="utf-8"))
+    by_id = {feature["id"]: feature for feature in catalog["features"]}
+    bear = by_id["sf-bear-cut"]
+    flats = by_id["sf-biscayne-flats"]
+    safety = by_id["sf-biscayne-safety-valve-complex"]
+    government = by_id["sf-government-cut"]
+    harbor = by_id["sf-miami-harbor-channel-system"]
+    assert bear["source_geometry_ref"]["objectid"] == 253451
+    assert bear["geometry"] is None
+    assert "static_import_pending" in bear["geometry_status"]
+    assert flats["source_geometry_ref"]["objectids"] == [246316, 246317, 246323]
+    assert flats["source_geometry_ref"]["charted_category"] == "mud flats"
+    assert flats["geometry"] is None
+    assert safety["source_geometry_ref"]["objectids"] == [246300, 246319, 246322, 253421]
+    assert safety["feature_type"] == "named_water_area_complex"
+    assert government["geometry"] is None
+    assert "not_identified" in government["geometry_status"]
+    assert harbor["source_geometry_ref"]["objectids"]
+    assert len(harbor["source_geometry_ref"]["objectids"]) == 44
