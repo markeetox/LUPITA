@@ -1,5 +1,5 @@
 {
-  "generated_at_utc": "2026-11-13T15:01:27.023870+00:00",
+  "generated_at_utc": "2026-11-13T15:04:17.345796+00:00",
   "source": "NOAA National Geodetic Survey Coastal Mapping Program / NOAA Shoreline Data Explorer",
   "source_download_pattern": "https://nsde.ngs.noaa.gov/downloads/{project_id}.zip",
   "output_crs": "EPSG:4326",
