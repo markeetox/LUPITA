@@ -168,7 +168,7 @@ def fetch_cusp_shoreline(
         "features": features,
     }
     (output_dir / "noaa_cusp_biscayne_shoreline.geojson").write_text(
-        json.dumps(collection, separators=(",", ":")) + "\\n", encoding="utf-8"
+        json.dumps(collection, separators=(",", ":")) + "\n", encoding="utf-8"
     )
 
     source_counts: dict[str, int] = {}
@@ -209,7 +209,7 @@ def run_audit(output_dir: Path, session: requests.Session | None = None) -> dict
 
     cusp_metadata, cusp_summary = fetch_cusp_shoreline(session, output_dir)
     (output_dir / "noaa_cusp_layer_metadata.json").write_text(
-        json.dumps(cusp_metadata, indent=2) + "\\n", encoding="utf-8"
+        json.dumps(cusp_metadata, indent=2) + "\n", encoding="utf-8"
     )
 
     report = {
@@ -243,7 +243,7 @@ def run_audit(output_dir: Path, session: requests.Session | None = None) -> dict
         ],
     }
     (output_dir / "noaa_nsde_shoreline_service_inventory.json").write_text(
-        json.dumps(report, indent=2) + "\\n", encoding="utf-8"
+        json.dumps(report, indent=2) + "\n", encoding="utf-8"
     )
     return report
 def main() -> int:
