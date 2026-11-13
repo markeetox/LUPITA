@@ -206,6 +206,31 @@ def main():
             stamps = [datetime.fromisoformat(r["timestamp"]) for r in site_rows]
             mur.extend(fetch_mur(session, site, lat, lon, min(stamps), max(stamps), out_dir))
     write_csv(out_dir / "mur_sst_all_sites.csv", mur)
+
+    # Pair daily in-situ means with the MUR value for the same site/date.
+    # FWC uses aggregate QC PASS only; USGS has no per-row QC field in this release.
+    insitu_daily = defaultdict(list)
+    for row in all_rows:
+        if row["source"].startswith("FWC") and row.get("qc_flag") not in (1, "1"):
+            continue
+        insitu_daily[(row["site"], row["date_utc"])].append(float(row["temperature_c"]))
+    mur_daily = {(row["site"], row["date_utc"]): float(row["mur_sst_c"]) for row in mur}
+    paired = []
+    for key, values in insitu_daily.items():
+        if key not in mur_daily:
+            continue
+        insitu_mean = statistics.fmean(values)
+        mur_value = mur_daily[key]
+        paired.append({
+            "site": key[0], "date_utc": key[1], "insitu_records": len(values),
+            "insitu_daily_mean_c": round(insitu_mean, 4), "mur_sst_c": round(mur_value, 4),
+            "insitu_minus_mur_c": round(insitu_mean - mur_value, 4),
+        })
+    write_csv(out_dir / "daily_insitu_mur_comparison.csv", paired)
+    pair_groups = defaultdict(list)
+    for row in paired:
+        pair_groups[row["site"]].append(float(row["insitu_minus_mur_c"]))
+
     groups = defaultdict(list)
     for row in all_rows:
         groups[(row["source"], row["site"])].append(row)
@@ -223,6 +248,16 @@ def main():
         ],
         "in_situ_summary": {f"{source} | {site}": summarize(rows, pass_only=True) for (source, site), rows in groups.items()},
         "mur_records": len(mur), "mur_site_summary": {},
+        "paired_daily_records": len(paired),
+        "paired_daily_difference_summary": {
+            site: {
+                "paired_days": len(values),
+                "mean_insitu_minus_mur_c": round(statistics.fmean(values), 3),
+                "mean_absolute_difference_c": round(statistics.fmean(abs(v) for v in values), 3),
+                "max_absolute_difference_c": round(max(abs(v) for v in values), 3),
+            }
+            for site, values in pair_groups.items()
+        },
     }
     for site in locations:
         vals = [float(r["mur_sst_c"]) for r in mur if r["site"] == site]
@@ -244,6 +279,12 @@ def main():
         "| Site | Records | Min °C | Mean °C | Max °C |", "|---|---:|---:|---:|---:|"]
     for site, stats in report["mur_site_summary"].items():
         lines.append(f"| {site} | {stats['records']} | {stats['min_c']} | {stats['mean_c']} | {stats['max_c']} |")
+    lines += ["", "## Paired daily comparison", "",
+        f"Matched daily records: {len(paired)}", "",
+        "| Site | Paired days | Mean in-situ minus MUR °C | Mean absolute difference °C | Max absolute difference °C |",
+        "|---|---:|---:|---:|---:|"]
+    for site, stats in report["paired_daily_difference_summary"].items():
+        lines.append(f"| {site} | {stats['paired_days']} | {stats['mean_insitu_minus_mur_c']} | {stats['mean_absolute_difference_c']} | {stats['max_absolute_difference_c']} |")
     lines += ["", "## Interpretation", "",
         "Compare each sensor only over its own observed dates. Surface-to-sensor differences can reflect vertical gradients, spatial separation, daily analysis/compositing and sensor exposure. They are not Permit preference or tolerance estimates.", "",
         "Raw USGS archive, normalized USGS observations, raw FWC extracts, normalized FWC observations and MUR CSVs are retained with this report.", ""]
