@@ -297,3 +297,7 @@ Compare source age across multiple scheduled refreshes, then calibrate operation
 - Masked the HF Radar product fill sentinel across velocity and diagnostic grids so missing HDOP/site/radial values cannot distort summary statistics.
 - Corrected full-suite run #407: **254 passed, 0 failed, 115 warnings**. [Python tests run #407](https://github.com/markeetox/LUPITA/actions/runs/43475604949).
 - Added explicit assertions that HF Radar and altimetry observation ages remain separate. The suite result above predates this final additional assertion and health-reporting refinement; a fresh run is required.
+
+
+- Follow-up run #408 found one regression in the health test: the fallback freshness check was being skipped in a minimal fixture without a separate primary_freshness object. Updated the health check to compare selected and fallback observation status/age directly, avoiding duplicate warnings when the fallback is itself the selected source.
+- Run #408: 254 passed, 1 failed. Correction committed separately; next suite run is the acceptance check.

@@ -179,8 +179,13 @@ def build_pipeline_health(data_quality: dict, fish_updated: bool, errors: list[s
     for name in ("sst", "chlorophyll", "currents"):
         state = layer_states.get(name, {})
         checks = [("selected", state.get("freshness", {}))]
-        if name == "currents" and state.get("primary_freshness") and state.get("fallback_freshness"):
-            checks.append(("satellite-altimetry fallback", state["fallback_freshness"]))
+        if name == "currents" and state.get("fallback_freshness"):
+            fallback_freshness = state["fallback_freshness"]
+            selected_freshness = state.get("freshness", {})
+            differs = any(fallback_freshness.get(key) != selected_freshness.get(key)
+                          for key in ("status", "age_hours", "observed_at"))
+            if differs:
+                checks.append(("satellite-altimetry fallback", fallback_freshness))
         for source_label, freshness in checks:
             status = freshness.get("status")
             if status in ("delayed", "stale", "unknown", "future"):

@@ -16,7 +16,8 @@ This is the handoff record for future sessions. Read it with [Project Status](PR
 - Freshness diagnostics: `536984e0af96ddf0cc0c7a8edd344a2b4050568c`; chlorophyll fallback correction: `9c7ed75a739652e54f1989b0a224d1a0d3419cb8`.
 - Last pre-upgrade production refresh: [workflow #202](https://github.com/markeetox/LUPITA/actions/runs/43469532292), success with predictions refreshed, but currents about 1,121 hours old and health degraded.
 - Last pre-upgrade Python tests: [run #404](https://github.com/markeetox/LUPITA/actions/runs/43467354619).
-- First HF Radar integration suite after fixture corrections: [run #407](https://github.com/markeetox/LUPITA/actions/runs/43475604949), **254 passed, 0 failed, 115 warnings**. A small follow-up assertion/refinement was committed after that run and still needs a fresh suite.
+- First HF Radar integration suite after fixture corrections: [run #407](https://github.com/markeetox/LUPITA/actions/runs/43475604949), **254 passed, 0 failed, 115 warnings**.
+- Run #408 added per-feed freshness assertions; 254 passed and 1 health-test assertion failed because the minimal fixture omitted a separate primary freshness object. The fallback comparison was corrected in the next commit; a fresh suite is required.
 - HF Radar source/loader commit: `a4e7bcf633a84238723dd250df9f5a1e3f87e159`.
 
 ## Environmental sources
