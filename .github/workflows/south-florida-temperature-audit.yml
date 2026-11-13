@@ -7,6 +7,10 @@ on:
       - ".github/workflows/south-florida-temperature-audit.yml"
   workflow_dispatch: {}
 
+concurrency:
+  group: south-florida-in-situ-temperature-audit
+  cancel-in-progress: false
+
 permissions:
   contents: read
 
