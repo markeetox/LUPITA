@@ -32,9 +32,9 @@
       "region": "south_florida",
       "parent_id": "sf-biscayne-bay-ecological-context",
       "geometry": null,
-      "geometry_status": "NOAA_named_water_area_polygon_retrieved_geometry_validation_passed_static_import_pending",
+      "geometry_status": "source_geometry_persisted_in_curated_geojson_topology_review_pending",
       "boundary_basis": "named_navigation_feature",
-      "boundary_scope_note": "NOAA ENC names this polygon Bear Cut. It is a charted named-water area, not a surveyed channel centerline or current controlling-depth boundary. NOAA Coast Pilot 4 also describes the Rickenbacker Causeway bridge over Bear Cut. Geometry is retrieved and coordinate-validated; static geometry import and topology review remain pending.",
+      "boundary_scope_note": "NOAA ENC names this polygon Bear Cut. It is a charted named-water area, not a surveyed channel centerline or current controlling-depth boundary. NOAA Coast Pilot 4 also describes the Rickenbacker Causeway bridge over Bear Cut. Geometry is retrieved and coordinate-validated; static geometry import and topology review remain pending. The original source polygon is now persisted in the curated GeoJSON; it remains a charted named-water area, not a surveyed centerline or depth boundary.",
       "relationships": [
         {
           "type": "connects",
@@ -62,7 +62,7 @@
           "source_type": "official_hydrographic_publication"
         }
       ],
-      "validation_status": "named_feature_supported_geometry_pending",
+      "validation_status": "charted_named_water_geometry_persisted_not_navigation_boundary",
       "source_geometry_ref": {
         "index_path": "data/spatial/noaa-biscayne-hydrography-index.json",
         "source_layer_id": 237,
@@ -77,7 +77,14 @@
           -80.1506732,
           25.7362954
         ],
-        "artifact_id": 14002573361
+        "artifact_id": 14002573361,
+        "curated_geojson_path": "data/spatial/noaa-biscayne-named-water-areas.geojson",
+        "topology_audit_path": "data/spatial/noaa-biscayne-named-water-topology-audit.json",
+        "source_objectids": [
+          253451
+        ],
+        "source_feature_count": 1,
+        "geojson_feature_id": "253451"
       }
     },
     {
@@ -151,9 +158,9 @@
       "region": "south_florida",
       "parent_id": null,
       "geometry": null,
-      "geometry_status": "NOAA_charted_named_water_polygons_retrieved_37_features_mosaic_review_pending",
+      "geometry_status": "source_chart_fragments_persisted_individually_topology_precheck_recorded_boundary_unverified",
       "boundary_basis": "multi_source_ecological_context",
-      "boundary_scope_note": "This is the ecological waterbody entity, distinct from the statutory aquatic preserve and the Biscayne National Park boundary. Its polygon must be assembled from authoritative shoreline, hydrographic, and tidal-connection evidence. NOAA Harbour ENC also contains 37 charted Biscayne Bay named-water polygons across 17 ENC cells. These are chart-cell fragments, not a complete ecological or statutory boundary; mosaic and topology review is pending.",
+      "boundary_scope_note": "This is the ecological waterbody entity, distinct from the statutory aquatic preserve and the Biscayne National Park boundary. Its polygon must be assembled from authoritative shoreline, hydrographic, and tidal-connection evidence. NOAA Harbour ENC also contains 37 charted Biscayne Bay named-water polygons across 17 ENC cells. These are chart-cell fragments, not a complete ecological or statutory boundary; mosaic and topology review is pending. Original chart fragments are persisted individually with a topology precheck; no dissolved or complete boundary is promoted.",
       "relationships": [
         {
           "type": "has_management_boundary",
@@ -169,7 +176,7 @@
           "source_type": "ecological_waterbody_description"
         }
       ],
-      "validation_status": "ecological_entity_supported_boundary_pending",
+      "validation_status": "source_fragments_persisted_mosaic_not_promoted_to_boundary",
       "source_geometry_ref": {
         "index_path": "data/spatial/noaa-biscayne-hydrography-index.json",
         "source_layer_id": 237,
@@ -182,7 +189,49 @@
           "2008-06",
           "2011-02"
         ],
-        "artifact_id": 14002573361
+        "artifact_id": 14002573361,
+        "curated_geojson_path": "data/spatial/noaa-biscayne-named-water-areas.geojson",
+        "topology_audit_path": "data/spatial/noaa-biscayne-named-water-topology-audit.json",
+        "source_objectids": [
+          246262,
+          246278,
+          246285,
+          246286,
+          246287,
+          246288,
+          246293,
+          246298,
+          246299,
+          246303,
+          246306,
+          246307,
+          246308,
+          246309,
+          246310,
+          246311,
+          246312,
+          246313,
+          246314,
+          246315,
+          246320,
+          246321,
+          253418,
+          253419,
+          253422,
+          253425,
+          253428,
+          253429,
+          253430,
+          253435,
+          253438,
+          253448,
+          253449,
+          253460,
+          253462,
+          253475,
+          253477
+        ],
+        "source_feature_count": 37
       }
     },
     {
@@ -213,8 +262,8 @@
       "region": "south_florida",
       "parent_id": "sf-biscayne-bay-ecological-context",
       "geometry": null,
-      "geometry_status": "NOAA_charted_mud_flat_polygons_retrieved_multi_cell_reconciliation_pending",
-      "boundary_scope_note": "NOAA Harbour ENC names three polygons Biscayne Flats and classifies them as mud flats. This is a charted feature classification, not evidence of current substrate condition, seagrass, fish use, or ecological suitability. The polygons span two ENC cells and require topology review before being assembled into one complex.",
+      "geometry_status": "source_chart_fragments_persisted_individually_topology_precheck_recorded_boundary_unverified",
+      "boundary_scope_note": "NOAA Harbour ENC names three polygons Biscayne Flats and classifies them as mud flats. This is a charted feature classification, not evidence of current substrate condition, seagrass, fish use, or ecological suitability. The polygons span two ENC cells and require topology review before being assembled into one complex. Original chart fragments are persisted individually with a topology precheck; no dissolved or complete boundary is promoted.",
       "source_geometry_ref": {
         "index_path": "data/spatial/noaa-biscayne-hydrography-index.json",
         "source_layer_id": 237,
@@ -229,7 +278,15 @@
         ],
         "source_date": "2002-10-05",
         "charted_category": "mud flats",
-        "artifact_id": 14002573361
+        "artifact_id": 14002573361,
+        "curated_geojson_path": "data/spatial/noaa-biscayne-named-water-areas.geojson",
+        "topology_audit_path": "data/spatial/noaa-biscayne-named-water-topology-audit.json",
+        "source_objectids": [
+          246316,
+          246317,
+          246323
+        ],
+        "source_feature_count": 3
       },
       "relationships": [
         {
@@ -246,7 +303,7 @@
           "source_type": "official_charted_named_water_area"
         }
       ],
-      "validation_status": "charted_name_and_category_retrieved_geometry_mosaic_review_pending"
+      "validation_status": "source_fragments_persisted_mosaic_not_promoted_to_boundary"
     },
     {
       "id": "sf-biscayne-safety-valve-complex",
@@ -255,9 +312,9 @@
       "region": "south_florida",
       "parent_id": "sf-biscayne-bay-central-southern-context",
       "geometry": null,
-      "geometry_status": "NOAA_named_water_area_polygons_retrieved_multi_cell_reconciliation_pending",
+      "geometry_status": "source_chart_fragments_persisted_individually_topology_precheck_recorded_boundary_unverified",
       "boundary_basis": "named_ecological_feature",
-      "boundary_scope_note": "NOAA describes a broad area of grass flats and tidal channels near the center of the bay that exchanges water with the Atlantic. It must not be reduced to a single point or a single flat polygon. NOAA ENC names four source polygons as Safety Valve. The source class is named water area, not flat or channel habitat. Preserve the four source features separately until multi-cell geometry reconciliation.",
+      "boundary_scope_note": "NOAA describes a broad area of grass flats and tidal channels near the center of the bay that exchanges water with the Atlantic. It must not be reduced to a single point or a single flat polygon. NOAA ENC names four source polygons as Safety Valve. The source class is named water area, not flat or channel habitat. Preserve the four source features separately until multi-cell geometry reconciliation. Original chart fragments are persisted individually with a topology precheck; no dissolved or complete boundary is promoted.",
       "relationships": [
         {
           "type": "water_exchange_area",
@@ -273,7 +330,7 @@
           "source_type": "ecological_feature_description"
         }
       ],
-      "validation_status": "named_feature_supported_geometry_pending",
+      "validation_status": "source_fragments_persisted_mosaic_not_promoted_to_boundary",
       "source_geometry_ref": {
         "index_path": "data/spatial/noaa-biscayne-hydrography-index.json",
         "source_layer_id": 237,
@@ -290,7 +347,16 @@
           "US5MIABB.000"
         ],
         "source_date": "2002-10-05",
-        "artifact_id": 14002573361
+        "artifact_id": 14002573361,
+        "curated_geojson_path": "data/spatial/noaa-biscayne-named-water-areas.geojson",
+        "topology_audit_path": "data/spatial/noaa-biscayne-named-water-topology-audit.json",
+        "source_objectids": [
+          246300,
+          246319,
+          246322,
+          253421
+        ],
+        "source_feature_count": 4
       }
     },
     {
