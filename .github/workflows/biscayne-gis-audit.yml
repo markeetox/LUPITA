@@ -2,14 +2,6 @@ name: Biscayne Bay GIS geometry audit
 
 on:
   workflow_dispatch: {}
-  pull_request:
-    paths:
-      - "scripts/extract_biscayne_bay_gis.py"
-      - "scripts/build_biscayne_subregion_candidates.py"
-      - "tests/test_biscayne_gis_extraction.py"
-      - "tests/test_biscayne_subregion_candidates.py"
-      - "tests/test_spatial_catalog.py"
-      - ".github/workflows/biscayne-gis-audit.yml"
 
 permissions:
   contents: write
