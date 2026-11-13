@@ -41,3 +41,15 @@ def test_legal_preserve_and_ecological_bay_are_distinct_entities():
     assert preserve["id"] != bay["id"]
     assert preserve["geometry"] is None
     assert bay["geometry"] is None
+
+
+def test_biscayne_gis_inventory_is_explicitly_source_coverage_not_bay_boundary():
+    inventory_path = Path(__file__).parents[1] / "data" / "spatial" / "biscayne-bay-gis-inventory.json"
+    inventory = json.loads(inventory_path.read_text(encoding="utf-8"))
+    footprints = inventory["source_footprints"]
+    assert footprints["feature_count"] == 2
+    assert footprints["meaning"].startswith("Source-map coverage footprints")
+    benthic = inventory["unified_benthic_polygons"]
+    assert benthic["feature_count"] == 7222
+    assert benthic["class_counts"]["Seagrass (Continuous)"] > 0
+    assert inventory["first_spatial_qa"]["feature_footprint_nonintersection_count"] > 0
