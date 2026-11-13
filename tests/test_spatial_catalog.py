@@ -79,6 +79,9 @@ def test_noaa_charted_features_preserve_source_ids_and_unverified_geometry_state
     assert bear["geometry"] is None
     assert "source_geometry_persisted" in bear["geometry_status"]
     assert bear["source_geometry_ref"]["curated_geojson_path"] == "data/spatial/noaa-biscayne-named-water-areas.geojson"
+    norris = by_id["sf-norris-cut"]
+    assert "source_geometry_persisted" in norris["geometry_status"]
+    assert norris["source_geometry_ref"]["geojson_feature_id"] == "253447"
     assert flats["source_geometry_ref"]["objectids"] == [246316, 246317, 246323]
     assert flats["source_geometry_ref"]["charted_category"] == "mud flats"
     assert flats["geometry"] is None
@@ -109,8 +112,8 @@ def test_curated_noaa_named_water_geometries_and_topology_audit_are_persisted():
     geojson = json.loads((spatial_dir / "noaa-biscayne-named-water-areas.geojson").read_text(encoding="utf-8"))
     audit = json.loads((spatial_dir / "noaa-biscayne-named-water-topology-audit.json").read_text(encoding="utf-8"))
 
-    assert geojson["metadata"]["source_feature_count"] == 45
-    assert len(geojson["features"]) == 45
+    assert geojson["metadata"]["source_feature_count"] == 46
+    assert len(geojson["features"]) == 46
     by_name = {}
     for feature in geojson["features"]:
         by_name.setdefault(feature["properties"]["OBJNAM"], []).append(feature)
@@ -118,6 +121,7 @@ def test_curated_noaa_named_water_geometries_and_topology_audit_are_persisted():
     assert len(by_name["Safety Valve"]) == 4
     assert len(by_name["Biscayne Flats"]) == 3
     assert len(by_name["Bear Cut"]) == 1
+    assert len(by_name["Norris Cut"]) == 1
 
     bear = by_name["Bear Cut"][0]
     assert str(bear["properties"]["OBJECTID"]) == "253451"
@@ -130,3 +134,5 @@ def test_curated_noaa_named_water_geometries_and_topology_audit_are_persisted():
     assert audit["groups"]["Biscayne Flats"]["connected_component_count"] == 1
     assert audit["groups"]["Bear Cut"]["objectids"] == [253451]
     assert audit["groups"]["Bear Cut"]["dissolved_geometry_persisted"] is False
+    assert audit["groups"]["Norris Cut"]["objectids"] == [253447]
+    assert audit["groups"]["Norris Cut"]["connected_component_count"] == 1
