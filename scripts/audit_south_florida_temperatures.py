@@ -12,7 +12,12 @@ from urllib3.util.retry import Retry
 
 USGS_ZIP = "https://coastal.er.usgs.gov/data-release/doi-F71C1TZK/data/FL_coral_underwater_temps_to_Jul2024.zip"
 SECOORA_BASE = "https://erddap.secoora.org/erddap/tabledap"
-MUR_BASE = "https://coastwatch.pfeg.noaa.gov/erddap/griddap/jplMURSST41.csv"
+MUR_BASES = [
+    "https://coastwatch.pfeg.noaa.gov/erddap/griddap/jplMURSST41.csv",
+    "https://erddap.marine.usf.edu/erddap/griddap/jplMURSST41.csv",
+    "https://erddap.riddc.brown.edu/erddap/griddap/jplMURSST41.csv",
+    "https://erddap.emodnet.eu/erddap/griddap/jplMURSST41.csv",
+]
 USER_AGENT = "LUPITA-South-Florida-Temperature-Research/1.0 (+https://github.com/markeetox/LUPITA)"
 USGS_SITES = {
     # Keys match the actual abbreviated site-column headers in the v9 CSV.
@@ -152,48 +157,60 @@ def fetch_fwc(session, station, out_dir):
     return observations
 
 def fetch_mur(session, site, lat, lon, start, end, out_dir):
-    """Fetch native-grid MUR in bounded 90-day chunks; retain per-chunk errors."""
+    """Fetch native-grid MUR with bounded requests and verified ERDDAP mirrors."""
     cursor = start.astimezone(timezone.utc).date()
     last_day = end.astimezone(timezone.utc).date()
-    output, errors = [], []
+    output, errors, warnings = [], [], []
     while cursor <= last_day:
         chunk_end = min(cursor + timedelta(days=179), last_day)
         start_utc = cursor.isoformat() + "T09:00:00Z"
         end_utc = chunk_end.isoformat() + "T09:00:00Z"
         projection = f"analysed_sst[({start_utc}):1:({end_utc})][({lat:.5f})][({lon:.5f})]"
-        url = MUR_BASE + "?" + quote(projection, safe="[]():,.-TZ")
-        try:
-            response = session.get(url, timeout=(10, 20))
-            response.raise_for_status()
-            raw_rows = list(csv.reader(io.StringIO(response.text)))
-            if len(raw_rows) < 3:
-                raise ValueError(f"empty MUR response: {response.text[:250]}")
-            header = raw_rows[0]
-            for raw in raw_rows[2:]:
-                if not raw or len(raw) < len(header):
-                    continue
-                row = dict(zip(header, raw))
-                try:
-                    stamp = datetime.fromisoformat(row["time"].replace("Z", "+00:00"))
-                    temp = parse_float(row.get("analysed_sst"))
-                    grid_lat, grid_lon = float(row["latitude"]), float(row["longitude"])
-                except (KeyError, ValueError):
-                    continue
-                if temp is not None:
-                    output.append({
-                        "date_utc": stamp.date().isoformat(), "site": site,
-                        "logger_latitude": lat, "logger_longitude": lon,
-                        "mur_grid_latitude": grid_lat, "mur_grid_longitude": grid_lon,
-                        "mur_sst_c": temp,
-                    })
-        except Exception as exc:
-            message = f"{site} {cursor.isoformat()}..{chunk_end.isoformat()}: {type(exc).__name__}: {exc}"
+        chunk_rows, attempts, used_host = None, [], None
+        for base in MUR_BASES:
+            url = base + "?" + quote(projection, safe="[]():,.-TZ")
+            try:
+                response = session.get(url, timeout=(10, 20))
+                response.raise_for_status()
+                raw_rows = list(csv.reader(io.StringIO(response.text)))
+                if len(raw_rows) < 3:
+                    raise ValueError(f"empty MUR response: {response.text[:250]}")
+                header, parsed = raw_rows[0], []
+                for raw in raw_rows[2:]:
+                    if not raw or len(raw) < len(header):
+                        continue
+                    row = dict(zip(header, raw))
+                    try:
+                        stamp = datetime.fromisoformat(row["time"].replace("Z", "+00:00"))
+                        temp = parse_float(row.get("analysed_sst"))
+                        grid_lat, grid_lon = float(row["latitude"]), float(row["longitude"])
+                    except (KeyError, ValueError):
+                        continue
+                    if temp is not None:
+                        parsed.append({
+                            "date_utc": stamp.date().isoformat(), "site": site,
+                            "logger_latitude": lat, "logger_longitude": lon,
+                            "mur_grid_latitude": grid_lat, "mur_grid_longitude": grid_lon,
+                            "mur_sst_c": temp, "mur_source_host": base.split("/")[2],
+                        })
+                chunk_rows, used_host = parsed, base.split("/")[2]
+                break
+            except Exception as exc:
+                response = getattr(exc, "response", None)
+                body = (response.text[:180].replace("\n", " ") if response is not None else "")
+                attempts.append(f"{base.split('/')[2]}: {type(exc).__name__}: {exc} {body}".strip())
+        if chunk_rows is None:
+            message = f"{site} {cursor.isoformat()}..{chunk_end.isoformat()}: " + " | ".join(attempts)
             errors.append(message)
-            print(f"WARNING: MUR chunk failed: {message}")
+            print(f"WARNING: all MUR mirrors failed: {message}")
+        else:
+            output.extend(chunk_rows)
+            if used_host != "coastwatch.pfeg.noaa.gov":
+                warnings.append(f"{site} {cursor.isoformat()}..{chunk_end.isoformat()}: used MUR mirror {used_host} after primary CoastWatch failed")
         cursor = chunk_end + timedelta(days=1)
     safe = re.sub(r"[^a-z0-9]+", "-", site.lower()).strip("-")
     write_csv(out_dir / f"mur_{safe}.csv", output)
-    return output, errors
+    return output, errors, warnings
 
 def summarize(rows, pass_only=False):
     counts = Counter(str(r.get("qc_flag", "not_provided")) for r in rows)
@@ -223,7 +240,7 @@ def main():
     start = datetime(2020, 1, 1, tzinfo=timezone.utc)
     end = datetime(2024, 8, 15, tzinfo=timezone.utc)
     usgs = fetch_usgs(session, start, end, out_dir)
-    fwc, source_errors = [], []
+    fwc, source_errors, source_warnings = [], [], []
     for station in FWC_STATIONS:
         try:
             fwc.extend(fetch_fwc(session, station, out_dir))
@@ -253,9 +270,10 @@ def main():
             # daily comparison sample; longer seasonal windows can follow.
             site_end = max(stamps)
             site_start = max(min(stamps), site_end - timedelta(days=89))
-            site_mur, site_errors = fetch_mur(session, site, lat, lon, site_start, site_end, out_dir)
+            site_mur, site_errors, site_warnings = fetch_mur(session, site, lat, lon, site_start, site_end, out_dir)
             mur.extend(site_mur)
             source_errors.extend(site_errors)
+            source_warnings.extend(site_warnings)
     write_csv(out_dir / "mur_sst_all_sites.csv", mur)
 
     # Pair daily in-situ means with the MUR value for the same site/date.
@@ -290,6 +308,8 @@ def main():
         "scope": "Research only; no production pipeline/model changes",
         "status": "degraded" if source_errors else "complete",
         "source_errors": source_errors,
+        "source_warnings": source_warnings,
+        "mur_hosts_used": sorted({row["mur_source_host"] for row in mur}),
         "sources": {"usgs": USGS_ZIP, "fwc": SECOORA_BASE, "mur": "https://coastwatch.pfeg.noaa.gov/erddap/griddap/jplMURSST41.html"},
         "method_notes": [
             "USGS logger timestamps use the documented fixed GMT-04:00 convention.",
@@ -298,7 +318,8 @@ def main():
             "MUR is daily analysed sea-surface foundation temperature in degree_C, queried at the nearest native 0.01-degree grid coordinate.",
             "MUR point comparisons are limited to the four Biscayne USGS logger sites plus the selected FWC stations; the full USGS source archive remains included.",
             "MUR is sampled over the trailing 90-day overlap window per station for this first validation pass; it is not a multi-year climatology.",
-            "MUR requests are bounded to 180-day windows and use limited retries to avoid overloading the ERDDAP service.",
+            "MUR requests use 180-day windows and limited retries. If CoastWatch is unavailable, the same jplMURSST41 dataset is queried from verified USF, Brown RI Data Discovery Center, or EMODnet ERDDAP mirrors.",
+            "Each MUR row records the ERDDAP host used; all mirrors expose the same NASA JPL dataset ID, variable and degree_C units.",
             "This first comparison uses native-grid MUR, not a reconstruction of LUPITA's stride-5 production sampling.",
             "Sensor temperatures describe the logger environment, not Permit preference or physiological tolerance.",
         ],
@@ -335,6 +356,9 @@ def main():
         "| Site | Records | Min °C | Mean °C | Max °C |", "|---|---:|---:|---:|---:|"]
     for site, stats in report["mur_site_summary"].items():
         lines.append(f"| {site} | {stats['records']} | {stats['min_c']} | {stats['mean_c']} | {stats['max_c']} |")
+    if source_warnings:
+        lines += ["", "## Source fallback warnings", ""]
+        lines.extend(f"- {warning}" for warning in source_warnings)
     if source_errors:
         lines += ["", "## Source errors", ""]
         lines.extend(f"- {error}" for error in source_errors)
