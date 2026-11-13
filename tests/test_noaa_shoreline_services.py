@@ -13,6 +13,7 @@ from scripts.audit_noaa_shoreline_services import (
 def line_feature(object_id=1, name="historic shoreline"):
     return {
         "type": "Feature",
+        "id": object_id,
         "properties": {"OBJECTID": object_id, "F_NAME": name},
         "geometry": {
             "type": "LineString",
@@ -32,7 +33,7 @@ def test_validate_shoreline_lines_and_reject_bad_geometry():
         validate_geojson_feature(feature)
 
 
-def test_fetch_noaa_composite_shoreline_preserves_source_geometry(tmp_path):
+def test_fetch_noaa_composite_shoreline_preserves_raw_and_clipped_geometry(tmp_path):
     definition = LAYERS["noaa_composite_shoreline_mhw"]
 
     class Response:
@@ -65,17 +66,19 @@ def test_fetch_noaa_composite_shoreline_preserves_source_geometry(tmp_path):
                 assert envelope["spatialReference"]["wkid"] == 4326
                 assert envelope["xmin"] == -80.45
                 return Response({"objectIds": [1, 2]})
-            ids = [int(value) for value in params["objectIds"].split(",")]
-            return Response({"features": [line_feature(value) for value in ids]})
+            return Response({"features": [line_feature(int(params["objectIds"]))]})
 
     session = Session()
     metadata, summary = fetch_layer(session, definition, tmp_path)
-    output = json.loads((tmp_path / definition["output_file"]).read_text())
+    clipped = json.loads((tmp_path / definition["output_file"]).read_text())
+    raw = json.loads((tmp_path / summary["raw_source_file"]).read_text())
     assert metadata["name"] == "NOAA Composite Shoreline"
-    assert summary["feature_count"] == 2
-    assert summary["attribute_counts"] == {"historic shoreline": 2}
-    assert output["features"][0]["geometry"]["type"] == "LineString"
-    assert output["features"][0]["properties"]["F_NAME"] == "historic shoreline"
+    assert summary["source_feature_count_retrieved"] == 2
+    assert summary["clipped_feature_count"] == 2
+    assert summary["source_attribute_counts"] == {"historic shoreline": 2}
+    assert clipped["features"][0]["geometry"]["type"] == "LineString"
+    assert clipped["features"][0]["properties"]["LUPITA_SOURCE_OBJECTID"] == 1
+    assert raw["features"][0]["properties"]["F_NAME"] == "historic shoreline"
     assert session.calls[0][0] == f"{SERVICE}/41"
     assert session.calls[1][1]["returnIdsOnly"] == "true"
 
