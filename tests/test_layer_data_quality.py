@@ -1,3 +1,5 @@
+from datetime import datetime, timezone
+
 import numpy as np
 
 from pipeline.run import build_data_quality
@@ -6,10 +8,10 @@ from pipeline.run import build_data_quality
 def _sources():
     return {
         "erddap": {
-            "sst": {"enabled": True, "dataset": "sst-test"},
-            "chlorophyll": {"enabled": True, "dataset": "chl-test"},
+            "sst": {"enabled": True, "dataset": "sst-test", "freshness": {"warning_age_hours": 36, "stale_age_hours": 72}},
+            "chlorophyll": {"enabled": True, "dataset": "chl-test", "freshness": {"warning_age_hours": 72, "stale_age_hours": 120}},
             "bathymetry": {"enabled": True, "dataset": "etopo-test", "stride": {"latitude": 15, "longitude": 15}},
-            "currents": {"enabled": True, "dataset": "currents-test"},
+            "currents": {"enabled": True, "dataset": "currents-test", "freshness": {"warning_age_hours": 36, "stale_age_hours": 72}},
         },
         "arcgis": {
             "artificial_reefs": {"enabled": True},
@@ -23,7 +25,7 @@ def _sources():
 def test_data_quality_reports_loaded_layers_and_gapfilled_usage():
     layers = {
         "sst_c": np.array([[28.0, 29.0], [np.nan, 30.0]]),
-        "times": {"sst": "2026-11-12T12:00:00Z"},
+        "times": {"sst": "2026-11-12T12:00:00Z", "currents": "2026-11-12T18:00:00Z"},
         "chlorophyll_info": {
             "primary_dataset": "chl-test", "primary_loaded": True,
             "primary_source_grid_shape": [4, 4], "primary_source_valid_fraction": 0.2,
@@ -50,19 +52,24 @@ def test_data_quality_reports_loaded_layers_and_gapfilled_usage():
         "closure_areas": [{"name": "test"}],
     }
 
-    report = build_data_quality(layers, _sources(), ["layers currents: endpoint unavailable"])
+    report = build_data_quality(layers, _sources(), ["layers currents: endpoint unavailable"], now=datetime(2026, 11, 13, 12, tzinfo=timezone.utc))
     result = report["layers"]
 
     assert result["sst"]["status"] == "loaded"
     assert result["sst"]["valid_fraction"] == 0.75
+    assert result["sst"]["freshness"]["status"] == "fresh"
+    assert result["sst"]["freshness"]["age_hours"] == 24.0
     assert result["chlorophyll"]["status"] == "loaded"
     assert result["chlorophyll"]["gapfilled_used"] is True
     assert result["chlorophyll"]["primary_time"] == "2026-11-10T12:00:00Z"
     assert result["chlorophyll"]["gapfilled_time"] == "2026-11-11T12:00:00Z"
     assert result["chlorophyll"]["final_valid_fraction"] == 0.9
+    assert result["chlorophyll"]["freshness"]["status"] == "fresh"
     assert result["bathymetry"]["status"] == "loaded"
     assert result["bathymetry"]["depth_valid_fraction"] == 0.75
     assert result["currents"]["status"] == "failed"
+    assert result["currents"]["time"] == "2026-11-12T18:00:00Z"
+    assert result["currents"]["freshness"]["status"] == "fresh"
     assert result["reef_structure"]["status"] == "loaded"
     assert result["benthic_habitat"]["status"] == "loaded"
     assert result["closures"]["area_count"] == 1
@@ -86,3 +93,9 @@ def test_bathymetry_minimum_preserves_sub_millimeter_positive_depth():
     }
     report = build_data_quality(layers, _sources(), [])
     assert report["layers"]["bathymetry"]["depth_min_m"] == 0.0004
+
+
+def test_missing_dynamic_observation_time_is_explicitly_unknown():
+    report = build_data_quality({"sst_c": np.ones((2, 2)), "times": {}}, _sources(), [], now=datetime(2026, 11, 13, tzinfo=timezone.utc))
+    assert report["layers"]["sst"]["freshness"]["status"] == "unknown"
+    assert report["layers"]["sst"]["freshness"]["age_hours"] is None

@@ -32,7 +32,12 @@
       "parameter": "sst_c",
       "log_scale": false,
       "gradient_unit": "degC per km",
-      "gradient_min": 0.05
+      "gradient_min": 0.05,
+      "freshness": {
+        "warning_age_hours": 36,
+        "stale_age_hours": 72,
+        "basis": "Provisional operational thresholds for a daily gridded SST product; validate against observed ERDDAP latency."
+      }
     },
     "chlorophyll": {
       "enabled": true,
@@ -56,7 +61,12 @@
       "note": "Near-real-time NOAA-20 VIIRS, 4 km. Daily scenes have gaps under cloud; see valid_fraction in the output.",
       "descending_dims": [
         "latitude"
-      ]
+      ],
+      "freshness": {
+        "warning_age_hours": 72,
+        "stale_age_hours": 120,
+        "basis": "Provisional operational thresholds for daily satellite scenes; cloud gaps and processing latency are expected."
+      }
     },
     "chlorophyll_gapfilled": {
       "enabled": false,
@@ -116,7 +126,12 @@
         "longitude": 1
       },
       "parameter": "current_speed",
-      "note": "NOAA CoastWatch geostrophic currents from satellite altimetry, daily, 25 km grid, listed as experimental. u = east, v = north, in m/s. Dimensions and variable names are from the ERDDAP listing and not yet verified here: run check_sources."
+      "note": "NOAA CoastWatch geostrophic currents from satellite altimetry, daily, 25 km grid, listed as experimental. u = east, v = north, in m/s. Dimensions and variable names are from the ERDDAP listing and not yet verified here: run check_sources.",
+      "freshness": {
+        "warning_age_hours": 36,
+        "stale_age_hours": 72,
+        "basis": "Provisional operational thresholds for a daily satellite-altimetry product; validate against observed ERDDAP latency."
+      }
     }
   },
   "arcgis": {

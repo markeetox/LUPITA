@@ -165,7 +165,8 @@ def build(fish: dict, heat: dict | None, closures: dict | None, stream: dict | N
             "generated_utc": fish.get("generated_utc"),
             "input_times": fish.get("layers", {}).get("times", {}),
             "datasets": fish.get("layers", {}).get("datasets", {}),
-            "note": "Input timestamps and dataset identifiers are provided so consumers can assess data age. No universal freshness threshold is implied."
+            "freshness": fish.get("layers", {}).get("freshness", {}),
+            "note": "Observation ages and source-specific operational freshness statuses are provided. Thresholds are provisional monitoring rules, not biological validity limits."
         },
         "species": index_species, "layers": layers, "attribution": ATTRIBUTION})
     return files

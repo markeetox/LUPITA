@@ -160,3 +160,8 @@ Always confirm with FWC, NOAA Sanctuaries or the National Park Service.
 - `heat.json`: each map-based fish's full score grid (one byte per cell), painted by the map as a smooth heat layer
 - `closures.json`: no-fishing area outlines and details, drawn in red on the map
 - `latest.json`: buoy readings and satellite scene summaries
+
+
+## Source freshness and prediction diagnostics
+
+Dynamic ERDDAP inputs (sea-surface temperature, chlorophyll and satellite-altimetry currents) publish their observation timestamp, calculated age, and a source-specific freshness status in `latest.json` and the app-facing API index. Statuses are `fresh`, `delayed`, `stale`, `unknown`, or `future`; a missing or unparseable timestamp is never treated as fresh. The initial warning/stale thresholds in `config/sources.json` are provisional operational monitoring limits for daily products, not scientific validity limits or fish-presence probabilities. They should be tuned from recorded source latency before being used to exclude data from scoring. A delayed or stale input degrades pipeline health but does not silently erase a completed prediction refresh.

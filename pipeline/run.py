@@ -60,7 +60,36 @@ def _layer_state(enabled: bool, present: bool, errors: list[str], prefix: str | 
     return result
 
 
-def build_data_quality(layers: dict | None, sources: dict, errors: list[str]) -> dict:
+def _source_freshness(observed_at: str | None, policy: dict | None, now: datetime | None = None) -> dict:
+    """Measure source age against explicit operational thresholds; never infer missing timestamps."""
+    policy = policy or {}
+    warning, stale = policy.get("warning_age_hours"), policy.get("stale_age_hours")
+    result = {"observed_at": observed_at, "warning_age_hours": warning, "stale_age_hours": stale,
+              "threshold_basis": policy.get("basis")}
+    if not observed_at:
+        result.update(status="unknown", age_hours=None)
+        return result
+    if warning is None or stale is None or float(warning) < 0 or float(stale) <= float(warning):
+        result.update(status="unconfigured", age_hours=None)
+        return result
+    try:
+        observed = datetime.fromisoformat(str(observed_at).replace("Z", "+00:00"))
+        if observed.tzinfo is None:
+            observed = observed.replace(tzinfo=timezone.utc)
+        current = now or datetime.now(timezone.utc)
+        if current.tzinfo is None:
+            current = current.replace(tzinfo=timezone.utc)
+        age = (current.astimezone(timezone.utc) - observed.astimezone(timezone.utc)).total_seconds() / 3600
+    except (TypeError, ValueError, OverflowError):
+        result.update(status="unknown", age_hours=None, timestamp_error="unparseable_observation_time")
+        return result
+    result["age_hours"] = round(age, 2)
+    result["status"] = ("future" if age < -0.25 else "fresh" if age <= float(warning)
+                        else "delayed" if age <= float(stale) else "stale")
+    return result
+
+
+def build_data_quality(layers: dict | None, sources: dict, errors: list[str], now: datetime | None = None) -> dict:
     """Create additive, machine-readable diagnostics for each environmental input."""
     cfg = sources.get("erddap", {})
     arc = sources.get("arcgis", {})
@@ -78,10 +107,16 @@ def build_data_quality(layers: dict | None, sources: dict, errors: list[str]) ->
         sst_state.update({"dataset": cfg.get("sst", {}).get("dataset"),
                           "grid_shape": [int(sst.shape[0]), int(sst.shape[1])],
                           "valid_fraction": round(float(np.isfinite(sst).mean()), 6),
-                          "time": layers.get("times", {}).get("sst")})
+                          "time": layers.get("times", {}).get("sst"),
+                          "freshness": _source_freshness(layers.get("times", {}).get("sst"), cfg.get("sst", {}).get("freshness"), now)})
 
     chl_state = _layer_state(bool(cfg.get("chlorophyll", {}).get("enabled") or cfg.get("chlorophyll_gapfilled", {}).get("enabled")), bool(chl_info.get("primary_loaded") or chl_info.get("gapfilled_used")), errors, ["layers chlorophyll:", "layers chlorophyll_gapfilled:"])
     chl_state.update({key: value for key, value in chl_info.items() if key != "status"})
+    chl_state["freshness"] = _source_freshness(chl_info.get("time") or layers.get("times", {}).get("chlorophyll"), cfg.get("chlorophyll", {}).get("freshness"), now)
+    if chl_info.get("primary_time"):
+        chl_state["primary_freshness"] = _source_freshness(chl_info.get("primary_time"), cfg.get("chlorophyll", {}).get("freshness"), now)
+    if chl_info.get("gapfilled_time"):
+        chl_state["gapfilled_freshness"] = _source_freshness(chl_info.get("gapfilled_time"), cfg.get("chlorophyll_gapfilled", {}).get("freshness"), now)
 
     bathy_state = _layer_state(bool(cfg.get("bathymetry", {}).get("enabled")), layers.get("depth_m") is not None, errors, "layers bathymetry:")
     bathy_state.update(bathy_info)
@@ -95,6 +130,8 @@ def build_data_quality(layers: dict | None, sources: dict, errors: list[str]) ->
 
     currents_state = _layer_state(bool(cfg.get("currents", {}).get("enabled")), current_present, errors, "layers currents:")
     currents_state["dataset"] = cfg.get("currents", {}).get("dataset")
+    currents_state["time"] = layers.get("times", {}).get("currents")
+    currents_state["freshness"] = _source_freshness(currents_state["time"], cfg.get("currents", {}).get("freshness"), now)
     structure_state = _layer_state(bool(arc.get("artificial_reefs", {}).get("enabled") and arc.get("natural_reef", {}).get("enabled")), structure_present, errors, "layers structure:")
     structure_state.update(layers.get("structure_stats") or {})
     habitat_state = _layer_state(bool(arc.get("unified_benthic", {}).get("enabled")), habitat_present, errors, "layers benthic_habitat:")
@@ -123,6 +160,15 @@ def build_pipeline_health(data_quality: dict, fish_updated: bool, errors: list[s
     if not fish_updated:
         critical.append("Prediction outputs were not refreshed.")
 
+    freshness_problems = []
+    for name in ("sst", "chlorophyll", "currents"):
+        freshness = layer_states.get(name, {}).get("freshness", {})
+        freshness_status = freshness.get("status")
+        if freshness_status in ("delayed", "stale", "unknown", "future"):
+            age = freshness.get("age_hours")
+            age_text = f" ({age:.1f} hours old)" if isinstance(age, (int, float)) else ""
+            freshness_problems.append(f"{name}: {freshness_status}{age_text}")
+
     optional_problems = []
     for name, state in layer_states.items():
         if name == "sst" or state.get("status") == "disabled":
@@ -132,7 +178,7 @@ def build_pipeline_health(data_quality: dict, fish_updated: bool, errors: list[s
 
     if critical:
         status = "failed"
-    elif errors or optional_problems:
+    elif errors or optional_problems or freshness_problems:
         status = "degraded"
     else:
         status = "healthy"
@@ -142,6 +188,7 @@ def build_pipeline_health(data_quality: dict, fish_updated: bool, errors: list[s
         "prediction_refreshed": bool(fish_updated),
         "critical_issues": critical,
         "optional_layer_issues": optional_problems,
+        "freshness_issues": freshness_problems,
         "warnings": list(errors),
     }
 
@@ -197,6 +244,8 @@ def main() -> None:
                 chl = _grid_report(cfg["chlorophyll"], layers["times"]["chlorophyll"], clats, clons, cgrid)
             heat: dict = {}
             fish = build_fish_json(layers, buoys, profiles, registry, now, places, conditions, heat)
+            freshness_layers = build_data_quality(layers, sources, errors, now_dt).get("layers", {})
+            fish["layers"]["freshness"] = {key: freshness_layers[key].get("freshness") for key in ("sst", "chlorophyll", "currents") if key in freshness_layers}
             la, lo = layers["lats"], layers["lons"]
             dlat, dlon = float(la[1] - la[0]), float(lo[1] - lo[0])
             heat_json = {"version": 1, "generated_utc": now, "width": int(len(lo)), "height": int(len(la)),
@@ -215,7 +264,7 @@ def main() -> None:
               "sst": sst, "chlorophyll": chl, "structure": (layers or {}).get("structure_stats"),
               "habitat": (layers or {}).get("habitat_info"),
               "bathymetry": (layers or {}).get("bathymetry_info"),
-              "data_quality": build_data_quality(layers, sources, errors),
+              "data_quality": build_data_quality(layers, sources, errors, now_dt),
               "closures": {"loaded": cl_loaded, "areas": len(cl_json["features"])},
               "conditions": {**timing.summary(conditions), "sea": seastate.summary(buoys, conditions)}, "fish_updated": fish is not None, "errors": errors}
     latest["pipeline_health"] = build_pipeline_health(latest["data_quality"], fish is not None, errors)

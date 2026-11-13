@@ -88,10 +88,28 @@ PR #70 originated as a stacked branch on #69. Its resulting file tree is now in 
 
 ## Next implementation milestones
 
-1. Verify the next scheduled `main` pipeline run exports successfully to `data`.
-2. Remove obsolete branch references after confirming their useful changes are represented in `main`; keep only `main` and `data` active.
-3. Continue Biscayne boundary and inlet reconciliation within `main` using manual research workflows, without promoting unverified geometry.
+1. Build a source-latency history from repeated production refreshes and validate the provisional freshness thresholds against actual ERDDAP observation delays.
+2. Extend input-quality diagnostics into species-level prediction explanations, preserving the distinction between weighted habitat suitability scores and catch probability.
+3. Audit species profile evidence and scorer compatibility before changing any biological preferences or weights.
+4. Continue Biscayne boundary and inlet reconciliation within `main` using manual research workflows, without promoting unverified geometry.
 
 ## Validation policy
 
 See [Biscayne research pipeline policy](biscayne-research-pipeline-policy-2026-11.md). In short: syntax and focused tests first; source-specific geometry QA only when inputs or logic change; full-suite validation at broad integration and pre-merge checkpoints. Do not rerun every NOAA extraction for an unrelated code or documentation change.
+
+
+## 2026-11-13 | Source freshness diagnostics milestone
+
+**Branch:** `main`  
+**Purpose:** distinguish successful source loading from timely, timestamped observations.
+
+- Added per-source observation age and freshness status for SST, chlorophyll and satellite-altimetry currents in `latest.json`.
+- Added explicit unknown status for missing or unparseable timestamps and surfaced the currents observation time, which was previously omitted from the quality report.
+- Added provisional, source-specific warning/stale thresholds to `config/sources.json`. These are operational monitoring limits only and must be calibrated against observed source latency before any scoring gate is introduced.
+- Pipeline health now degrades when dynamic inputs are delayed, stale, future-dated or missing timestamps, while preserving the distinction between degraded data quality and a failed prediction refresh.
+- Added the same freshness diagnostics to `fish.json` layer metadata and the app-facing API index.
+- Added regression coverage for source-age calculation, missing timestamps and degraded health.
+
+**Validation:** pending targeted Python tests and the next production refresh. The production prediction formula and species weights are unchanged.
+
+**Next:** compare several hourly refreshes to determine actual latency distributions before adjusting thresholds or using freshness to gate scoring.

@@ -219,3 +219,28 @@ Keep exactly two active branch roles:
 2. `data`: generated publication output only.
 
 No application logic, tests, or workflow source belongs on `data`.
+
+
+## 2026-11-13 | Add source freshness diagnostics
+
+**Branch:** `main`  
+**Starting commit:** `e6d437eb170baf07177e2147c2887d5fdc02ac59`
+
+### Changes
+
+- Added timestamp-age diagnostics for dynamic SST, chlorophyll and satellite-altimetry current inputs.
+- Added explicit `fresh`, `delayed`, `stale`, `unknown`, `future` and `unconfigured` states; missing timestamps are not interpreted as fresh.
+- Surfaced the current observation timestamp in the quality report.
+- Added provisional source-specific warning/stale thresholds in `config/sources.json`; thresholds are operational monitoring policy, not biological cutoffs.
+- Degraded pipeline health when dynamic input freshness cannot be established or exceeds configured warning thresholds. Prediction scoring and species weights remain unchanged.
+- Propagated freshness metadata to `fish.json` and `api/v1/index.json`.
+- Added regression tests for freshness classification and health reporting.
+- Updated README and project status to record the new contract and next validation step.
+
+### Validation
+
+- Pending targeted Python tests and production refresh. No NOAA/FWC research extraction workflows are required for this code-only change.
+
+### Next action
+
+Compare source age across multiple scheduled refreshes, then calibrate operational thresholds before introducing any scoring gates.

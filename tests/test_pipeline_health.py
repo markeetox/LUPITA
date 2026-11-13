@@ -40,3 +40,22 @@ def test_optional_layer_failure_is_degraded_not_critical():
 def test_non_layer_warnings_are_degraded():
     result = build_pipeline_health(_quality(), True, ["weather forecast: unavailable"])
     assert result["status"] == "degraded"
+
+
+def test_delayed_or_stale_dynamic_inputs_degrade_health_without_hiding_predictions():
+    quality = _quality()
+    quality["layers"]["sst"]["freshness"] = {"status": "fresh", "age_hours": 30}
+    quality["layers"]["chlorophyll"]["freshness"] = {"status": "stale", "age_hours": 130}
+    quality["layers"]["bathymetry"]["freshness"] = {"status": "static"}
+    result = build_pipeline_health(quality, True, [])
+    assert result["status"] == "degraded"
+    assert result["prediction_refreshed"] is True
+    assert result["freshness_issues"] == ["chlorophyll: stale (130.0 hours old)"]
+
+
+def test_missing_timestamp_for_loaded_critical_input_is_reported():
+    quality = _quality()
+    quality["layers"]["sst"]["freshness"] = {"status": "unknown", "age_hours": None}
+    result = build_pipeline_health(quality, True, [])
+    assert result["status"] == "degraded"
+    assert result["freshness_issues"] == ["sst: unknown"]
