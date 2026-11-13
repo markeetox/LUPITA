@@ -1,7 +1,7 @@
 {
   "index_version": 1,
-  "generated_at_utc": "2026-11-13T02:04:04Z",
-  "purpose": "Persistent index of selected NOAA ENC named-water features and channel features extracted for research review. Full source geometries remain in the linked workflow artifact until curated static geometry import.",
+  "generated_at_utc": "2026-11-13T04:06:49.915Z",
+  "purpose": "Persistent index of selected NOAA ENC named-water features and channel features extracted for research review. Curated original source geometries are persisted in the linked GeoJSON; chart fragments are not promoted to complete ecological, statutory, habitat, or navigation boundaries.",
   "source": {
     "publisher": "NOAA Office of Coast Survey",
     "service": "https://encdirect.noaa.gov/arcgis/rest/services/encdirect/enc_harbour/MapServer",
@@ -10,8 +10,8 @@
     "geometry_type": "Polygon",
     "source_scale_band": "Harbour ENC, nominal 1:5,000 to 1:50,000",
     "source_refresh": "Weekly ENC service refresh",
-    "artifact_id": 14002573361,
-    "workflow_run_id": 43349431049
+    "artifact_id": 14009386093,
+    "workflow_run_id": 43363005067
   },
   "named_water_features": {
     "Biscayne Bay": {
@@ -186,6 +186,174 @@
       ],
       "status": "named_water_area_polygon_retrieved_and_geometry_validated",
       "caveat": "This is a charted named-water area, not a surveyed channel centerline or current controlling-depth boundary."
+    },
+    "Black Ledge": {
+      "feature_count": 3,
+      "objectids": [
+        246297,
+        246304,
+        246318
+      ],
+      "chart_cells": [
+        "US5FL5LM.000",
+        "US5FL5MM.000",
+        "US5FL5MN.000"
+      ],
+      "source_dates": [
+        "2018-07-26"
+      ],
+      "geometry_type": "Polygon",
+      "connected_component_count": 1,
+      "positive_area_overlap_pairs": [],
+      "charted_category": "ledge",
+      "status": "charted_source_polygons_persisted_topology_precheck_passed_boundary_unverified",
+      "caveat": "Preserved NOAA chart polygons are source context only, not a surveyed ecological, statutory, habitat, or navigation boundary. A one-component topology result does not prove current water connectivity or fish habitat."
+    },
+    "Featherbed Bank": {
+      "feature_count": 1,
+      "objectids": [
+        246301
+      ],
+      "chart_cells": [
+        "US5FL5LN.000"
+      ],
+      "source_dates": [
+        "2002-10-05"
+      ],
+      "geometry_type": "Polygon",
+      "connected_component_count": 1,
+      "positive_area_overlap_pairs": [],
+      "charted_category": "bank",
+      "status": "charted_source_polygons_persisted_topology_precheck_passed_boundary_unverified",
+      "caveat": "Preserved NOAA chart polygons are source context only, not a surveyed ecological, statutory, habitat, or navigation boundary. A one-component topology result does not prove current water connectivity or fish habitat."
+    },
+    "Lewis Cut": {
+      "feature_count": 1,
+      "objectids": [
+        246302
+      ],
+      "chart_cells": [
+        "US5FL5LN.000"
+      ],
+      "source_dates": [
+        "2002-10-05"
+      ],
+      "geometry_type": "Polygon",
+      "connected_component_count": 1,
+      "positive_area_overlap_pairs": [],
+      "status": "charted_source_polygons_persisted_topology_precheck_passed_boundary_unverified",
+      "caveat": "Preserved NOAA chart polygons are source context only, not a surveyed ecological, statutory, habitat, or navigation boundary. A one-component topology result does not prove current water connectivity or fish habitat."
+    },
+    "Biscayne Channel": {
+      "feature_count": 2,
+      "objectids": [
+        253424,
+        253427
+      ],
+      "chart_cells": [
+        "US5MIABB.000",
+        "US5MIABC.000"
+      ],
+      "source_dates": [
+        "2002-10-05"
+      ],
+      "geometry_type": "Polygon",
+      "connected_component_count": 1,
+      "positive_area_overlap_pairs": [],
+      "charted_category": "sea channel",
+      "status": "charted_source_polygons_persisted_topology_precheck_passed_boundary_unverified",
+      "caveat": "Preserved NOAA chart polygons are source context only, not a surveyed ecological, statutory, habitat, or navigation boundary. A one-component topology result does not prove current water connectivity or fish habitat."
+    },
+    "Sands Cut": {
+      "feature_count": 1,
+      "objectids": [
+        246290
+      ],
+      "chart_cells": [
+        "US5FL5KN.000"
+      ],
+      "source_dates": [
+        "2002-10-05"
+      ],
+      "geometry_type": "Polygon",
+      "connected_component_count": 1,
+      "positive_area_overlap_pairs": [],
+      "status": "charted_source_polygons_persisted_topology_precheck_passed_boundary_unverified",
+      "caveat": "Preserved NOAA chart polygons are source context only, not a surveyed ecological, statutory, habitat, or navigation boundary. A one-component topology result does not prove current water connectivity or fish habitat."
+    },
+    "Snapper Creek Canal": {
+      "feature_count": 1,
+      "objectids": [
+        253417
+      ],
+      "chart_cells": [
+        "US5MIABA.000"
+      ],
+      "source_dates": [
+        "2004-11"
+      ],
+      "geometry_type": "Polygon",
+      "connected_component_count": 1,
+      "positive_area_overlap_pairs": [],
+      "charted_category": "canal",
+      "status": "charted_source_polygons_persisted_topology_precheck_passed_boundary_unverified",
+      "caveat": "Preserved NOAA chart polygons are source context only, not a surveyed ecological, statutory, habitat, or navigation boundary. A one-component topology result does not prove current water connectivity or fish habitat."
+    },
+    "Goulds Canal": {
+      "feature_count": 1,
+      "objectids": [
+        246296
+      ],
+      "chart_cells": [
+        "US5FL5LM.000"
+      ],
+      "source_dates": [
+        "2002-10-05"
+      ],
+      "geometry_type": "Polygon",
+      "connected_component_count": 1,
+      "positive_area_overlap_pairs": [],
+      "charted_category": "canal",
+      "status": "charted_source_polygons_persisted_topology_precheck_passed_boundary_unverified",
+      "caveat": "Preserved NOAA chart polygons are source context only, not a surveyed ecological, statutory, habitat, or navigation boundary. A one-component topology result does not prove current water connectivity or fish habitat."
+    },
+    "Deering Channel": {
+      "feature_count": 1,
+      "objectids": [
+        253446
+      ],
+      "chart_cells": [
+        "US5MIACB.000"
+      ],
+      "source_dates": [
+        "2002-10-05"
+      ],
+      "geometry_type": "Polygon",
+      "connected_component_count": 1,
+      "positive_area_overlap_pairs": [],
+      "charted_category": "sea channel",
+      "status": "charted_source_polygons_persisted_topology_precheck_passed_boundary_unverified",
+      "caveat": "Preserved NOAA chart polygons are source context only, not a surveyed ecological, statutory, habitat, or navigation boundary. A one-component topology result does not prove current water connectivity or fish habitat."
+    },
+    "Cape Florida Channel": {
+      "feature_count": 2,
+      "objectids": [
+        253420,
+        253432
+      ],
+      "chart_cells": [
+        "US5MIABB.000",
+        "US5MIABC.000"
+      ],
+      "source_dates": [
+        "2002-10-05"
+      ],
+      "geometry_type": "Polygon",
+      "connected_component_count": 1,
+      "positive_area_overlap_pairs": [],
+      "charted_category": "sea channel",
+      "status": "charted_source_polygons_persisted_topology_precheck_passed_boundary_unverified",
+      "caveat": "Preserved NOAA chart polygons are source context only, not a surveyed ecological, statutory, habitat, or navigation boundary. A one-component topology result does not prove current water connectivity or fish habitat."
     }
   },
   "channel_features": {
@@ -328,5 +496,76 @@
       "feature_count": 0,
       "status": "no_features_returned_within_query_bbox"
     }
+  },
+  "charted_context_layer_inventory": {
+    "service": "https://encdirect.noaa.gov/arcgis/rest/services/encdirect/enc_harbour/MapServer",
+    "review_window_wgs84": [
+      -80.43,
+      25.49,
+      -80.1,
+      25.67
+    ],
+    "review_window_is_boundary": false,
+    "layers": {
+      "harbor_coastline_lines": {
+        "layer_id": 84,
+        "feature_count_full_extent": 1080,
+        "review_window_intersections": 47,
+        "geometry_type": "LineString",
+        "status": "chart_derived_coastline_context"
+      },
+      "harbor_depth_contour_lines": {
+        "layer_id": 104,
+        "feature_count_full_extent": 1894,
+        "review_window_intersections": 294,
+        "geometry_type": "LineString",
+        "status": "charted_depth_context_vertical_datum_review_required"
+      },
+      "harbor_depth_areas": {
+        "layer_id": 227,
+        "feature_count_full_extent": 1965,
+        "review_window_intersections": 320,
+        "geometry_type": "Polygon",
+        "status": "charted_depth_context_vertical_datum_review_required"
+      },
+      "harbor_unsurveyed_areas": {
+        "layer_id": 230,
+        "feature_count_full_extent": 41,
+        "review_window_intersections": 1,
+        "geometry_type": "Polygon",
+        "status": "chart_data_quality_context"
+      },
+      "harbor_land_areas": {
+        "layer_id": 233,
+        "feature_count_full_extent": 518,
+        "review_window_intersections": 27,
+        "geometry_type": "Polygon",
+        "status": "charted_land_context"
+      },
+      "harbor_vegetation_areas": {
+        "layer_id": 239,
+        "feature_count_full_extent": 143,
+        "review_window_intersections": 7,
+        "geometry_type": "Polygon",
+        "charted_category": "mangroves",
+        "status": "historical_charted_vegetation_not_current_habitat"
+      },
+      "harbor_seabed_areas": {
+        "layer_id": 200,
+        "feature_count_full_extent": 0,
+        "review_window_intersections": 0,
+        "geometry_type": null,
+        "status": "no_features_returned_not_evidence_of_absent_seabed_class"
+      }
+    },
+    "source_artifact_id": 14009386093,
+    "workflow_run_id": 43363005067,
+    "caveats": [
+      "The review window is an inventory envelope, not a shoreline or ecological boundary.",
+      "Chart source dates are older than the weekly service refresh; weekly refresh does not make source geometry current.",
+      "Depth contour and depth-area values must not be merged with other bathymetry until vertical datum and units are reconciled.",
+      "Charted vegetation features in the review window are mangroves, not seagrass.",
+      "NOAA ENC Direct to GIS is not certified for navigation."
+    ]
   }
 }
