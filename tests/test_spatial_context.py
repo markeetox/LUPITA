@@ -59,3 +59,14 @@ def test_unknown_is_not_absence_for_unmapped_bay_geometry():
     assert bay["geometry"] is None
     assert bay["geometry_status"] == "pending_authoritative_geometry"
     assert "not use for point-in-polygon" in bay["provenance"]["notes"]
+
+
+def test_biscayne_bay_catalog_preserves_source_candidates_and_boundary_caveat():
+    catalog = load_catalog()
+    bay = next(feature for feature in catalog["features"] if feature["id"] == "biscayne-bay")
+    source_urls = {source["url"] for source in bay["provenance"]["sources"]}
+    assert "https://www.flsenate.gov/Laws/Statutes/2026/258.397" in source_urls
+    assert "https://gis.myfwc.com/hosting/rest/services/Open_Data/Seagrass_Statewide/MapServer/15" in source_urls
+    assert "https://gis.myfwc.com/hosting/rest/services/Open_Data/Tidal_Flats/MapServer/21" in source_urls
+    assert bay["geometry"] is None
+    assert "not a selected bay polygon" in bay["provenance"]["notes"]
