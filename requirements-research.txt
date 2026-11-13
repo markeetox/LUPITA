@@ -1,0 +1,5 @@
+# Optional dependencies for research-only GIS extraction and geometry QA.
+# These are test/analysis dependencies, not required by the production prediction runtime.
+shapely>=2.0
+pyproj>=3.6
+pyshp>=2.3

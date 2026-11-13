@@ -1,0 +1,45 @@
+{
+  "report_version": 1,
+  "generated_at_utc": "2026-11-13T15:14:18.727642+00:00",
+  "purpose": "Research-only transportation infrastructure crosswalk; not ecological or navigation geometry.",
+  "status": "partial",
+  "query_bbox_wgs84": [
+    -80.55,
+    25.2,
+    -80.05,
+    26.1
+  ],
+  "output_crs": "EPSG:4326",
+  "sources": {
+    "miamidade_dtpw_bridge_lines": {
+      "source": "Miami-Dade County Department of Transportation and Public Works",
+      "service_url": "https://gisweb.miamidade.gov/arcgis/rest/services/EAMS/EAMS_Map/MapServer",
+      "layer_id": 1,
+      "layer_name": "Miami-Dade DTPWBridge",
+      "source_description": "County-maintained bridge polylines from the DTPW EAMS GIS view. Source feature class is updated as needed by DTPW. Infrastructure reference only.",
+      "generated_at_utc": "2026-11-13T15:14:18.285418+00:00",
+      "query_bbox_wgs84": [
+        -80.55,
+        25.2,
+        -80.05,
+        26.1
+      ],
+      "output_crs": "EPSG:4326",
+      "feature_count": 228,
+      "geometry_types": [
+        "LineString"
+      ],
+      "validation": "all returned geometries and coordinates passed validation"
+    }
+  },
+  "errors": {
+    "fdot_rci_bridge_lines": "HTTPError: 403 Client Error: Forbidden for url: https://gis.fdot.gov/arcgis/rest/services/RCI_Layers/FeatureServer/1/query?where=1%3D1&geometry=-80.55%2C25.2%2C-80.05%2C26.1&geometryType=esriGeometryEnvelope&inSR=4326&spatialRel=esriSpatialRelIntersects&outFields=%2A&returnGeometry=true&outSR=4326&returnZ=false&returnM=false&resultOffset=0&resultRecordCount=1000&orderByFields=OBJECTID+ASC&f=geojson"
+  },
+  "required_source_errors": {},
+  "limitations": [
+    "Bridge inventory features describe transportation structures, not ecological boundaries.",
+    "Inventory and chart source dates must be retained; service refresh does not guarantee current field verification.",
+    "Optional source failures are recorded and do not discard successful required-source data.",
+    "No bridge geometry is extended or snapped to create a cross-bay boundary."
+  ]
+}

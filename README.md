@@ -1,8 +1,64 @@
-# Fish habitat map
+# LUPITA | Fishing intelligence and habitat mapping
 
-Scores where fish are likely to be from live ocean conditions plus per-species habitat profiles.
+LUPITA combines live marine conditions, per-species habitat models, spatial context, and a map-facing prediction API. Predictions are evidence-weighted estimates, not guarantees of fish presence or catch probability.
+
+## Current project direction
+
+The project has two connected workstreams:
+
+- **Prediction platform:** maintain the production habitat and bite-timing pipeline, environmental inputs, species profiles, API contract, and map client.
+- **Spatial intelligence research:** build a defensible South Florida geographic model from NOAA, FWC, FDEP, county, and other authoritative sources. Research geometry is not production geometry until it passes source review, topology checks, and explicit promotion.
+
+The active Biscayne Bay GIS work is tracked in [Project Status](docs/PROJECT_STATUS.md), with decisions and historical milestones in the [Progress Log](docs/PROGRESS_LOG.md). Source acquisition and validation policy is documented in [Biscayne research pipeline policy](docs/biscayne-research-pipeline-policy-2026-11.md).
+
+## Repository records and change discipline
+
+Every implementation batch must update this README and the relevant project records in the same commit.
+
+- [Project Status](docs/PROJECT_STATUS.md): current branch/PR state, completed work, blockers, and next milestone.
+- [Progress Log](docs/PROGRESS_LOG.md): dated, chronological record of changes, commits, decisions, and validation outcomes.
+- [Biscayne research pipeline policy](docs/biscayne-research-pipeline-policy-2026-11.md): source-freeze, provenance, and targeted-validation rules.
+
+Keep production changes separate from research-only work. Do not promote candidate geography, infer inlet connectivity from proximity, or merge unlike shoreline datums. A successful extraction or green workflow proves that a process ran, not that an ecological interpretation is correct.
+
+## Current architecture at a glance
+
+- `data/species/`: species habitat and timing profiles.
+- `data/parameters.json`: factor registry, units, sources, evidence tiers, and status.
+- `config/`: stations, source datasets, tides, and named places.
+- `pipeline/`: environmental data ingestion, grid construction, scoring, prediction, and API generation.
+- `data/spatial/`: curated spatial catalog and named-water source geometry.
+- `data/spatial/research/`: source-preserving NOAA/FWC/FDEP/county research datasets, derived comparison layers, and audit outputs.
+- `scripts/`: repeatable GIS extraction, curation, and topology/audit tools.
+- `tests/`: prediction, data-contract, extraction, and spatial QA tests.
+- `web/`: map client.
+- `.github/workflows/`: scheduled production refresh/export, lightweight PR validation, and manual-only source-acquisition workflows.
+- `requirements-research.txt`: optional GIS/research QA dependencies for tests and source analysis; not required by the production runtime.
+
+## Execution and data-export boundary
+
+- `main` is the only authoritative application/code branch. The pipeline, API generator, species profiles, source configuration, tests, and maintained spatial catalog live there.
+- The hourly pipeline checks out `main`, runs tests and prediction generation, and creates the app-facing export from the generated outputs.
+- `data` is a publication target for generated JSON/API assets, not a source-code dependency or a place where application logic is maintained. Its current 725-path snapshot contains only JSON/API/PNG publication assets and no source-code files.
+- The pipeline's optional checkout of the previous `data` publication is only a last-known-good export fallback. It is not used to run the prediction engine. A missing `data` branch must not prevent tests, prediction generation, or a new export.
+- Keep research acquisition artifacts and candidate geometry separate from production scoring until explicit validation and promotion.
+- Production runtime dependencies remain in `requirements.txt`. CI installs `requirements-research.txt` separately when it runs the full suite or GIS extraction tests.
+
+## Current operational process
+
+1. Inspect existing source manifests and persisted artifacts before acquiring data.
+2. Reuse frozen source snapshots unless the source, extraction logic, or a documented QA condition changes.
+3. Make one coherent implementation batch on a research or feature branch. Do not work directly on `main` for experimental GIS interpretation.
+4. Run targeted syntax checks and unit tests before expensive extraction or spatial audits.
+5. Run only the workflows affected by the change. Use the full Python suite for broad integration milestones or pre-merge validation, not every research iteration.
+   - The focused Biscayne landmark workflow is `.github/workflows/biscayne-landmark-evidence.yml`; it compiles its extraction/reconciliation scripts and tests before tests or network extraction.
+   - Expensive FWC/NOAA discovery and geometry extraction workflows are manually triggered only. PR automation validates code and tests; it must not launch repeated source acquisition or write extraction outputs back to a PR branch.
+6. Record outputs, source provenance, uncertainty, and limitations. Keep candidate and verified states explicit.
+7. Update this README, Project Status, and Progress Log in the same commit as each implementation batch.
+
+
 Experimental: scores show where conditions match published habitat preferences; they have not
-been checked against catch reports. Seabound will later fetch the output as a map filter.
+been checked against catch reports. The versioned app API exposes these outputs to the map client.
 
 ## Layout
 - `data/parameters.json`: registry of every factor (key, unit, source, tier, status)
@@ -10,12 +66,13 @@ been checked against catch reports. Seabound will later fetch the output as a ma
 - `config/`: buoy stations and ERDDAP dataset settings
 - `pipeline/`: data pulls (`sources/`), `layers.py` (common grid), `scoring.py`, `predict.py`, `run.py`
 - `web/index.html`: map viewer (deployed on Vercel, root directory `web`)
-- `.github/workflows/pipeline.yml`: every 3 hours, runs tests + pipeline, publishes JSON to the `data` branch
+- `.github/workflows/pipeline.yml`: runs hourly at 10 minutes past the hour (UTC), tests and refreshes the pipeline from `main`, then exports app-facing JSON to the `data` branch
 
 ## Run locally
 ```
 python3 -m venv .venv && source .venv/bin/activate
 pip install -r requirements.txt
+pip install -r requirements-research.txt  # full test suite and GIS research QA only
 python -m pytest -q
 python -m pipeline.check_sources     # confirms stations, dataset IDs, dimensions, units
 python -m pipeline.run               # writes data/live/latest.json and data/live/fish.json
@@ -47,7 +104,7 @@ A fish with no `timing` block shows "No reliable time-of-day information" instea
   A front is a wind shift from the south/west side to a firm northerly, plus an air-temperature fall or pressure rise.
 - Barometric pressure is used only as a sign of a front, not as a direct fish factor: studies have not shown a direct effect.
 
-## App API (for Seabound)
+## App API
 The pipeline also writes a small versioned API under `api/v1/` (published on the `data` branch): `index.json`, one JSON file per
 fish, ready-to-draw heat overlay PNGs, the fish pictures, no-fishing areas and the Gulf Stream edge. See `docs/seabound-api.md`
 for the contract, hosting advice and what is deliberately left out (legal sizes and bag limits), and `docs/seabound_client.dart`

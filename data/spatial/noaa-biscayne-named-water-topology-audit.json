@@ -1,0 +1,516 @@
+{
+  "audit_version": 1,
+  "generated_at_utc": "2026-11-13T15:14:20.270206+00:00",
+  "source_url": "https://encdirect.noaa.gov/arcgis/rest/services/encdirect/enc_harbour/MapServer/237",
+  "source_layer_id": 237,
+  "source_crs": "EPSG:4326",
+  "curated_geojson_path": "data/spatial/noaa-biscayne-named-water-areas.geojson",
+  "source_feature_count": 59,
+  "groups": {
+    "Biscayne Bay": {
+      "context_id": "sf-biscayne-bay-ecological-context",
+      "feature_count": 37,
+      "objectids": [
+        246262,
+        246278,
+        246285,
+        246286,
+        246287,
+        246288,
+        246293,
+        246298,
+        246299,
+        246303,
+        246306,
+        246307,
+        246308,
+        246309,
+        246310,
+        246311,
+        246312,
+        246313,
+        246314,
+        246315,
+        246320,
+        246321,
+        253418,
+        253419,
+        253422,
+        253425,
+        253428,
+        253429,
+        253430,
+        253435,
+        253438,
+        253448,
+        253449,
+        253460,
+        253462,
+        253475,
+        253477
+      ],
+      "chart_cells": [
+        "US5FL5JM.000",
+        "US5FL5JN.000",
+        "US5FL5KL.000",
+        "US5FL5KM.000",
+        "US5FL5KN.000",
+        "US5FL5LM.000",
+        "US5FL5LN.000",
+        "US5FL5MM.000",
+        "US5FL5MN.000",
+        "US5MIABA.000",
+        "US5MIABB.000",
+        "US5MIABC.000",
+        "US5MIACB.000",
+        "US5MIACC.000",
+        "US5MIADB.000",
+        "US5MIADC.000",
+        "US5MIAEC.000"
+      ],
+      "source_dates": [
+        "20021005",
+        "200304",
+        "200806",
+        "201102"
+      ],
+      "geometry_types": [
+        "Polygon"
+      ],
+      "invalid_or_empty_objectids": [],
+      "positive_area_overlap_pairs": [],
+      "union_geometry_type": "MultiPolygon",
+      "connected_component_count": 2,
+      "component_bounds_wgs84": [
+        [
+          -80.34644200000002,
+          25.367335700000012,
+          -80.12278900000001,
+          25.923515699999996
+        ],
+        [
+          -80.32499999999999,
+          25.534177999999997,
+          -80.32388400000002,
+          25.53548269999999
+        ]
+      ],
+      "dissolved_geometry_persisted": false,
+      "interpretation": "Source chart features only; no complete ecological, statutory, habitat, or navigational boundary is asserted."
+    },
+    "Sands Cut": {
+      "context_id": "sf-sands-cut",
+      "feature_count": 1,
+      "objectids": [
+        246290
+      ],
+      "chart_cells": [
+        "US5FL5KN.000"
+      ],
+      "source_dates": [
+        "20021005"
+      ],
+      "geometry_types": [
+        "Polygon"
+      ],
+      "invalid_or_empty_objectids": [],
+      "positive_area_overlap_pairs": [],
+      "union_geometry_type": "Polygon",
+      "connected_component_count": 1,
+      "component_bounds_wgs84": [
+        [
+          -80.18134500000002,
+          25.49274539999999,
+          -80.1769018,
+          25.496703000000025
+        ]
+      ],
+      "dissolved_geometry_persisted": false,
+      "interpretation": "Source chart features only; no complete ecological, statutory, habitat, or navigational boundary is asserted."
+    },
+    "Goulds Canal": {
+      "context_id": "sf-goulds-canal",
+      "feature_count": 1,
+      "objectids": [
+        246296
+      ],
+      "chart_cells": [
+        "US5FL5LM.000"
+      ],
+      "source_dates": [
+        "20021005"
+      ],
+      "geometry_types": [
+        "Polygon"
+      ],
+      "invalid_or_empty_objectids": [],
+      "positive_area_overlap_pairs": [],
+      "union_geometry_type": "Polygon",
+      "connected_component_count": 1,
+      "component_bounds_wgs84": [
+        [
+          -80.32499999999999,
+          25.53340800000001,
+          -80.32279199999999,
+          25.534668699999997
+        ]
+      ],
+      "dissolved_geometry_persisted": false,
+      "interpretation": "Source chart features only; no complete ecological, statutory, habitat, or navigational boundary is asserted."
+    },
+    "Black Ledge": {
+      "context_id": "sf-biscayne-black-ledge",
+      "feature_count": 3,
+      "objectids": [
+        246297,
+        246304,
+        246318
+      ],
+      "chart_cells": [
+        "US5FL5LM.000",
+        "US5FL5MM.000",
+        "US5FL5MN.000"
+      ],
+      "source_dates": [
+        "20180726"
+      ],
+      "geometry_types": [
+        "Polygon"
+      ],
+      "invalid_or_empty_objectids": [],
+      "positive_area_overlap_pairs": [],
+      "union_geometry_type": "Polygon",
+      "connected_component_count": 1,
+      "component_bounds_wgs84": [
+        [
+          -80.25917850000002,
+          25.574247500000013,
+          -80.2433633,
+          25.594516699999986
+        ]
+      ],
+      "dissolved_geometry_persisted": false,
+      "interpretation": "Source chart features only; no complete ecological, statutory, habitat, or navigational boundary is asserted."
+    },
+    "Safety Valve": {
+      "context_id": "sf-biscayne-safety-valve-complex",
+      "feature_count": 4,
+      "objectids": [
+        246300,
+        246319,
+        246322,
+        253421
+      ],
+      "chart_cells": [
+        "US5FL5LN.000",
+        "US5FL5MN.000",
+        "US5FL5MO.000",
+        "US5MIABB.000"
+      ],
+      "source_dates": [
+        "20021005"
+      ],
+      "geometry_types": [
+        "Polygon"
+      ],
+      "invalid_or_empty_objectids": [],
+      "positive_area_overlap_pairs": [],
+      "union_geometry_type": "Polygon",
+      "connected_component_count": 1,
+      "component_bounds_wgs84": [
+        [
+          -80.20864269999998,
+          25.532880999999975,
+          -80.15067720000002,
+          25.652375399999983
+        ]
+      ],
+      "dissolved_geometry_persisted": false,
+      "interpretation": "Source chart features only; no complete ecological, statutory, habitat, or navigational boundary is asserted."
+    },
+    "Featherbed Bank": {
+      "context_id": "sf-featherbed-bank",
+      "feature_count": 1,
+      "objectids": [
+        246301
+      ],
+      "chart_cells": [
+        "US5FL5LN.000"
+      ],
+      "source_dates": [
+        "20021005"
+      ],
+      "geometry_types": [
+        "Polygon"
+      ],
+      "invalid_or_empty_objectids": [],
+      "positive_area_overlap_pairs": [],
+      "union_geometry_type": "Polygon",
+      "connected_component_count": 1,
+      "component_bounds_wgs84": [
+        [
+          -80.23541699999998,
+          25.516617999999994,
+          -80.218433,
+          25.531581000000017
+        ]
+      ],
+      "dissolved_geometry_persisted": false,
+      "interpretation": "Source chart features only; no complete ecological, statutory, habitat, or navigational boundary is asserted."
+    },
+    "Lewis Cut": {
+      "context_id": "sf-lewis-cut",
+      "feature_count": 1,
+      "objectids": [
+        246302
+      ],
+      "chart_cells": [
+        "US5FL5LN.000"
+      ],
+      "source_dates": [
+        "20021005"
+      ],
+      "geometry_types": [
+        "Polygon"
+      ],
+      "invalid_or_empty_objectids": [],
+      "positive_area_overlap_pairs": [],
+      "union_geometry_type": "Polygon",
+      "connected_component_count": 1,
+      "component_bounds_wgs84": [
+        [
+          -80.17727000000002,
+          25.51676200000003,
+          -80.17500000000001,
+          25.521972000000005
+        ]
+      ],
+      "dissolved_geometry_persisted": false,
+      "interpretation": "Source chart features only; no complete ecological, statutory, habitat, or navigational boundary is asserted."
+    },
+    "Biscayne Flats": {
+      "context_id": "sf-biscayne-flats",
+      "feature_count": 3,
+      "objectids": [
+        246316,
+        246317,
+        246323
+      ],
+      "chart_cells": [
+        "US5FL5MN.000",
+        "US5FL5MO.000"
+      ],
+      "source_dates": [
+        "20021005"
+      ],
+      "geometry_types": [
+        "Polygon"
+      ],
+      "invalid_or_empty_objectids": [],
+      "positive_area_overlap_pairs": [],
+      "union_geometry_type": "Polygon",
+      "connected_component_count": 1,
+      "component_bounds_wgs84": [
+        [
+          -80.19293429999999,
+          25.62043890000001,
+          -80.1510806,
+          25.647057200000006
+        ]
+      ],
+      "dissolved_geometry_persisted": false,
+      "interpretation": "Source chart features only; no complete ecological, statutory, habitat, or navigational boundary is asserted."
+    },
+    "Snapper Creek Canal": {
+      "context_id": "sf-snapper-creek-canal",
+      "feature_count": 1,
+      "objectids": [
+        253417
+      ],
+      "chart_cells": [
+        "US5MIABA.000"
+      ],
+      "source_dates": [
+        "200411"
+      ],
+      "geometry_types": [
+        "Polygon"
+      ],
+      "invalid_or_empty_objectids": [],
+      "positive_area_overlap_pairs": [],
+      "union_geometry_type": "Polygon",
+      "connected_component_count": 1,
+      "component_bounds_wgs84": [
+        [
+          -80.27972899999997,
+          25.65776699999998,
+          -80.26834400000001,
+          25.66634099999999
+        ]
+      ],
+      "dissolved_geometry_persisted": false,
+      "interpretation": "Source chart features only; no complete ecological, statutory, habitat, or navigational boundary is asserted."
+    },
+    "Cape Florida Channel": {
+      "context_id": "sf-cape-florida-channel",
+      "feature_count": 2,
+      "objectids": [
+        253420,
+        253432
+      ],
+      "chart_cells": [
+        "US5MIABB.000",
+        "US5MIABC.000"
+      ],
+      "source_dates": [
+        "20021005"
+      ],
+      "geometry_types": [
+        "Polygon"
+      ],
+      "invalid_or_empty_objectids": [],
+      "positive_area_overlap_pairs": [],
+      "union_geometry_type": "Polygon",
+      "connected_component_count": 1,
+      "component_bounds_wgs84": [
+        [
+          -80.18076769999999,
+          25.674489900000026,
+          -80.16533199999998,
+          25.68639589999998
+        ]
+      ],
+      "dissolved_geometry_persisted": false,
+      "interpretation": "Source chart features only; no complete ecological, statutory, habitat, or navigational boundary is asserted."
+    },
+    "Biscayne Channel": {
+      "context_id": "sf-biscayne-channel",
+      "feature_count": 2,
+      "objectids": [
+        253424,
+        253427
+      ],
+      "chart_cells": [
+        "US5MIABB.000",
+        "US5MIABC.000"
+      ],
+      "source_dates": [
+        "20021005"
+      ],
+      "geometry_types": [
+        "Polygon"
+      ],
+      "invalid_or_empty_objectids": [],
+      "positive_area_overlap_pairs": [],
+      "union_geometry_type": "Polygon",
+      "connected_component_count": 1,
+      "component_bounds_wgs84": [
+        [
+          -80.18390160000001,
+          25.651217700000018,
+          -80.1553834,
+          25.655199900000014
+        ]
+      ],
+      "dissolved_geometry_persisted": false,
+      "interpretation": "Source chart features only; no complete ecological, statutory, habitat, or navigational boundary is asserted."
+    },
+    "Deering Channel": {
+      "context_id": "sf-deering-channel",
+      "feature_count": 1,
+      "objectids": [
+        253446
+      ],
+      "chart_cells": [
+        "US5MIACB.000"
+      ],
+      "source_dates": [
+        "20021005"
+      ],
+      "geometry_types": [
+        "Polygon"
+      ],
+      "invalid_or_empty_objectids": [],
+      "positive_area_overlap_pairs": [],
+      "union_geometry_type": "Polygon",
+      "connected_component_count": 1,
+      "component_bounds_wgs84": [
+        [
+          -80.20837979999999,
+          25.733227699999986,
+          -80.20104930000002,
+          25.74170529999998
+        ]
+      ],
+      "dissolved_geometry_persisted": false,
+      "interpretation": "Source chart features only; no complete ecological, statutory, habitat, or navigational boundary is asserted."
+    },
+    "Norris Cut": {
+      "context_id": "sf-norris-cut",
+      "feature_count": 1,
+      "objectids": [
+        253447
+      ],
+      "chart_cells": [
+        "US5MIACC.000"
+      ],
+      "source_dates": [
+        "200401"
+      ],
+      "geometry_types": [
+        "Polygon"
+      ],
+      "invalid_or_empty_objectids": [],
+      "positive_area_overlap_pairs": [],
+      "union_geometry_type": "Polygon",
+      "connected_component_count": 1,
+      "component_bounds_wgs84": [
+        [
+          -80.1498818,
+          25.750326700000016,
+          -80.13969550000002,
+          25.76204150000001
+        ]
+      ],
+      "dissolved_geometry_persisted": false,
+      "interpretation": "Source chart features only; no complete ecological, statutory, habitat, or navigational boundary is asserted."
+    },
+    "Bear Cut": {
+      "context_id": "sf-bear-cut",
+      "feature_count": 1,
+      "objectids": [
+        253451
+      ],
+      "chart_cells": [
+        "US5MIACC.000"
+      ],
+      "source_dates": [
+        "20021005"
+      ],
+      "geometry_types": [
+        "Polygon"
+      ],
+      "invalid_or_empty_objectids": [],
+      "positive_area_overlap_pairs": [],
+      "union_geometry_type": "Polygon",
+      "connected_component_count": 1,
+      "component_bounds_wgs84": [
+        [
+          -80.16462039999999,
+          25.725000000000023,
+          -80.15067320000003,
+          25.736295400000017
+        ]
+      ],
+      "dissolved_geometry_persisted": false,
+      "interpretation": "Source chart features only; no complete ecological, statutory, habitat, or navigational boundary is asserted."
+    }
+  },
+  "guardrails": [
+    "Connected components are a geometric precheck, not proof of a complete waterbody boundary.",
+    "A one-component union does not establish ecological connectivity or habitat classification.",
+    "Disconnected fragments are not bridged or filled.",
+    "All source features remain individually available in the curated GeoJSON.",
+    "Bear Cut remains a charted named-water polygon, not a channel centerline or controlling-depth boundary."
+  ]
+}

@@ -1,0 +1,290 @@
+{
+  "currentVersion": 11.1,
+  "cimVersion": "3.1.0",
+  "id": 0,
+  "name": "Aquatic Preserves",
+  "type": "Feature Layer",
+  "description": "Aquatic Preserves are state-owned sovereign submerged lands in areas which have exceptional biological, aesthetic, and scientific value, as described in Chapter 258.39, Florida Statutes, which have been set aside for the benefit of future generations. These areas are managed by the Florida Department of Environmental Protection's Office of Coastal and Aquatic Managed Areas.Currently, all Aquatic Preserves are also Outstanding Florida Waters (OFWs). However, it is important to note that there are three Aquatic Preserves whose OFW boundaries differ from the Aquatic Preserve boundary. These are described more specifically in the OFW rule 62-302.700: Indian River - Malabar to Vero Beach - does not include portions of Sebastian and Turkey creeks; Wekiva River - does not include portions of the St. Johns River; and Big Bend Seagrasses - the OFW rule specifies certain \"incorporated and unincorporated areas\" that are excluded from the Aquatic Preserve.",
+  "geometryType": "esriGeometryPolygon",
+  "sourceSpatialReference": {
+    "wkid": 102967,
+    "latestWkid": 6439,
+    "xyTolerance": 0.001,
+    "zTolerance": 0.001,
+    "mTolerance": 0.001,
+    "falseX": -19550100,
+    "falseY": -7526400,
+    "xyUnits": 10000,
+    "falseZ": -100000,
+    "zUnits": 10000,
+    "falseM": -100000,
+    "mUnits": 10000
+  },
+  "copyrightText": "FDEP, Division of State Lands, Bureau of Survey & Mapping",
+  "parentLayer": null,
+  "subLayers": [],
+  "minScale": 5000000,
+  "maxScale": 0,
+  "referenceScale": 0.0,
+  "drawingInfo": {
+    "renderer": {
+      "type": "simple",
+      "symbol": {
+        "type": "esriSFS",
+        "style": "esriSFSVertical",
+        "color": [
+          0,
+          112,
+          255,
+          255
+        ],
+        "outline": {
+          "type": "esriSLS",
+          "style": "esriSLSSolid",
+          "color": [
+            0,
+            112,
+            255,
+            255
+          ],
+          "width": 1
+        }
+      }
+    },
+    "scaleSymbols": true,
+    "transparency": 0,
+    "labelingInfo": null
+  },
+  "defaultVisibility": false,
+  "extent": {
+    "xmin": 73951.988499999,
+    "ymin": 70455.92810000009,
+    "xmax": 799595.9180999991,
+    "ymax": 748864.1298,
+    "spatialReference": {
+      "wkid": 102967,
+      "latestWkid": 6439,
+      "xyTolerance": 0.001,
+      "zTolerance": 0.001,
+      "mTolerance": 0.001,
+      "falseX": -19550100,
+      "falseY": -7526400,
+      "xyUnits": 10000,
+      "falseZ": -100000,
+      "zUnits": 10000,
+      "falseM": -100000,
+      "mUnits": 10000
+    }
+  },
+  "hasAttachments": false,
+  "htmlPopupType": "esriServerHTMLPopupTypeNone",
+  "displayField": "NAME",
+  "typeIdField": null,
+  "subtypeFieldName": null,
+  "subtypeField": null,
+  "defaultSubtypeCode": null,
+  "fields": [
+    {
+      "name": "OBJECTID",
+      "type": "esriFieldTypeOID",
+      "alias": "OBJECTID",
+      "domain": null
+    },
+    {
+      "name": "ACRES",
+      "type": "esriFieldTypeDouble",
+      "alias": "ACRES",
+      "domain": null
+    },
+    {
+      "name": "NAME",
+      "type": "esriFieldTypeString",
+      "alias": "Name",
+      "length": 255,
+      "domain": null
+    },
+    {
+      "name": "COUNTIES",
+      "type": "esriFieldTypeString",
+      "alias": "Counties",
+      "length": 255,
+      "domain": null
+    },
+    {
+      "name": "REGION",
+      "type": "esriFieldTypeString",
+      "alias": "Region",
+      "length": 255,
+      "domain": null
+    },
+    {
+      "name": "PRESERVE_MANAGER",
+      "type": "esriFieldTypeString",
+      "alias": "Preserve Manager",
+      "length": 255,
+      "domain": null
+    },
+    {
+      "name": "EMAIL",
+      "type": "esriFieldTypeString",
+      "alias": "Email",
+      "length": 255,
+      "domain": null
+    },
+    {
+      "name": "PHONE",
+      "type": "esriFieldTypeString",
+      "alias": "Phone",
+      "length": 255,
+      "domain": null
+    },
+    {
+      "name": "PRESERVE_DESCRIPTION_SUMMARY",
+      "type": "esriFieldTypeString",
+      "alias": "Preserve Description Summary",
+      "length": 1073741822,
+      "domain": null
+    },
+    {
+      "name": "CSO",
+      "type": "esriFieldTypeDouble",
+      "alias": "CSO",
+      "domain": null
+    },
+    {
+      "name": "CSO_WEBPAGE_LINK",
+      "type": "esriFieldTypeDouble",
+      "alias": "CSO Webpage Link",
+      "domain": null
+    },
+    {
+      "name": "STATE_WEBPAGE_LINK",
+      "type": "esriFieldTypeString",
+      "alias": "State Webpage Link",
+      "length": 255,
+      "domain": null
+    },
+    {
+      "name": "SHORT_DESCRIPTION_SUMMARY",
+      "type": "esriFieldTypeString",
+      "alias": "SHORT_DESCRIPTION_SUMMARY",
+      "length": 1000,
+      "domain": null
+    },
+    {
+      "name": "SHAPE",
+      "type": "esriFieldTypeGeometry",
+      "alias": "SHAPE",
+      "domain": null
+    },
+    {
+      "name": "SHAPE.AREA",
+      "type": "esriFieldTypeDouble",
+      "alias": "SHAPE.AREA",
+      "domain": null
+    },
+    {
+      "name": "SHAPE.LEN",
+      "type": "esriFieldTypeDouble",
+      "alias": "SHAPE.LEN",
+      "domain": null
+    }
+  ],
+  "geometryField": {
+    "name": "SHAPE",
+    "type": "esriFieldTypeGeometry",
+    "alias": "SHAPE"
+  },
+  "indexes": [
+    {
+      "name": "R634236_SDE_ROWID_UK",
+      "fields": "OBJECTID",
+      "isAscending": true,
+      "isUnique": true,
+      "description": ""
+    },
+    {
+      "name": "A2034_IX1",
+      "fields": "SHAPE",
+      "isAscending": true,
+      "isUnique": true,
+      "description": ""
+    }
+  ],
+  "subtypes": [],
+  "relationships": [],
+  "canModifyLayer": true,
+  "canScaleSymbols": false,
+  "hasLabels": false,
+  "capabilities": "Map,Query,Data",
+  "maxRecordCount": 1000,
+  "supportsStatistics": true,
+  "supportsExceedsLimitStatistics": true,
+  "supportsAdvancedQueries": true,
+  "hasZ": true,
+  "hasM": true,
+  "supportedQueryFormats": "JSON, geoJSON, PBF",
+  "isDataVersioned": false,
+  "ownershipBasedAccessControlForFeatures": {
+    "allowOthersToQuery": true
+  },
+  "useStandardizedQueries": true,
+  "supportedSpatialRelationships": [
+    "esriSpatialRelIntersects",
+    "esriSpatialRelContains",
+    "esriSpatialRelCrosses",
+    "esriSpatialRelEnvelopeIntersects",
+    "esriSpatialRelIndexIntersects",
+    "esriSpatialRelOverlaps",
+    "esriSpatialRelTouches",
+    "esriSpatialRelWithin",
+    "esriSpatialRelRelation"
+  ],
+  "advancedQueryCapabilities": {
+    "useStandardizedQueries": true,
+    "supportsStatistics": true,
+    "supportsPercentileStatistics": true,
+    "supportsHavingClause": true,
+    "supportsOrderBy": true,
+    "supportsDistinct": true,
+    "supportsCountDistinct": true,
+    "supportsPagination": true,
+    "supportsLod": false,
+    "supportsQueryWithLodSR": false,
+    "supportsTrueCurve": true,
+    "supportsQueryWithDatumTransformation": true,
+    "supportsReturningQueryExtent": true,
+    "supportsQueryWithDistance": true,
+    "supportsSqlExpression": true,
+    "supportsTimeRelation": true,
+    "supportsSqlFormat": false,
+    "supportsQueryAnalytic": true
+  },
+  "supportsDatumTransformation": true,
+  "advancedQueryAnalyticCapabilities": {
+    "supportsLinearRegression": true,
+    "supportsAsync": false,
+    "supportsPercentileAnalytic": true
+  },
+  "dateFieldsTimeReference": null,
+  "preferredTimeReference": null,
+  "datesInUnknownTimezone": false,
+  "hasGeometryProperties": true,
+  "geometryProperties": {
+    "shapeAreaFieldName": "SHAPE.AREA",
+    "shapeLengthFieldName": "SHAPE.LEN",
+    "units": "esriMeters",
+    "mapUnits": {
+      "uwkid": 9001
+    }
+  },
+  "hasMetadata": true,
+  "isDataArchived": false,
+  "archivingInfo": {
+    "supportsQueryWithHistoricMoment": false,
+    "startArchivingMoment": -1
+  },
+  "supportsCoordinatesQuantization": true,
+  "supportsDynamicLegends": true,
+  "serviceItemId": "57485f349be44937ba7b8d23c0a7c38f"
+}

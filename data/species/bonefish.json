@@ -138,5 +138,44 @@
   "lon_range": [
     -100,
     -50
-  ]
+  ],
+  "habitat_contexts": {
+    "schema_version": 1,
+    "contexts": [
+      {
+        "id": "shallow-flat-use",
+        "feature_types": [
+          "flat",
+          "bay_subregion",
+          "nearshore_zone"
+        ],
+        "habitat_roles": [
+          "foraging",
+          "movement"
+        ],
+        "evidence_status": "supported_general_association",
+        "local_validation": "required",
+        "sources": [
+          "https://doi.org/10.3354/meps291237"
+        ],
+        "notes": "Northern Florida Keys telemetry supports use of shallow foraging areas. Transfer to individual Biscayne Bay flats and mapped habitat classes requires local validation."
+      },
+      {
+        "id": "channel-and-refuge-context",
+        "feature_types": [
+          "channel"
+        ],
+        "habitat_roles": [
+          "movement",
+          "refuge"
+        ],
+        "evidence_status": "candidate_association",
+        "local_validation": "required",
+        "sources": [
+          "https://doi.org/10.3354/meps291237"
+        ],
+        "notes": "The cited telemetry documents use of deeper channels that may provide thermal refuge. Do not treat this as a validated South Florida channel preference or a real-time location claim."
+      }
+    ]
+  }
 }

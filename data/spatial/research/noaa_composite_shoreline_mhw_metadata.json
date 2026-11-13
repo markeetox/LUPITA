@@ -1,0 +1,196 @@
+{
+  "currentVersion": 11.1,
+  "cimVersion": "3.1.0",
+  "id": 41,
+  "name": "NOAA Composite Shoreline",
+  "type": "Feature Layer",
+  "description": "The NOAA Office for Coastal Management\u2019s composite shoreline is a high-resolution vector shoreline based on a multi-temporal collection of NOAA shoreline manuscripts (T-sheets), which are special-use planimetric or topographic maps that precisely define the shoreline and alongshore natural and man-made features. Note that shorelines may have eroded, acreted, or been anthropogenically altered since the historic T-sheets were produced.These data are derived from shoreline data that were produced by the NOAA National Ocean Service including its predecessor agencies. Where T-sheets are unavailable, NOAA\u2019s extracted vector shoreline (EVS) was used to compile seamless shoreline coverage. For this layer, NOAA's national dataset was clipped to the Florida state boundary and control points, jetties, and piers were removed.",
+  "geometryType": "esriGeometryPolyline",
+  "sourceSpatialReference": {
+    "wkid": 102967,
+    "latestWkid": 6439,
+    "xyTolerance": 0.001,
+    "zTolerance": 0.001,
+    "mTolerance": 0.001,
+    "falseX": -19550100,
+    "falseY": -7526400,
+    "xyUnits": 10000,
+    "falseZ": 0,
+    "zUnits": 1,
+    "falseM": 0,
+    "mUnits": 1
+  },
+  "copyrightText": "National Oceanic and Atmospheric Administration (NOAA) Office for Coastal Management",
+  "parentLayer": null,
+  "subLayers": [],
+  "minScale": 0,
+  "maxScale": 0,
+  "drawingInfo": {
+    "renderer": {
+      "type": "simple",
+      "symbol": {
+        "type": "esriSLS",
+        "style": "esriSLSSolid",
+        "color": [
+          255,
+          0,
+          0,
+          255
+        ],
+        "width": 2
+      }
+    },
+    "scaleSymbols": false,
+    "transparency": 0,
+    "labelingInfo": null
+  },
+  "defaultVisibility": false,
+  "extent": {
+    "xmin": 61935.7679000013,
+    "ymin": 59428.1010999996,
+    "xmax": 794179.978599999,
+    "ymax": 748405.8073,
+    "spatialReference": {
+      "wkid": 102967,
+      "latestWkid": 6439,
+      "xyTolerance": 0.001,
+      "zTolerance": 0.001,
+      "mTolerance": 0.001,
+      "falseX": -19550100,
+      "falseY": -7526400,
+      "xyUnits": 225743210.67916927,
+      "falseZ": -100000,
+      "zUnits": 10000,
+      "falseM": -100000,
+      "mUnits": 10000
+    }
+  },
+  "hasAttachments": false,
+  "htmlPopupType": "esriServerHTMLPopupTypeAsHTMLText",
+  "displayField": "F_NAME",
+  "typeIdField": null,
+  "subtypeFieldName": null,
+  "subtypeField": null,
+  "defaultSubtypeCode": null,
+  "fields": [
+    {
+      "name": "OBJECTID",
+      "type": "esriFieldTypeOID",
+      "alias": "OBJECTID",
+      "domain": null
+    },
+    {
+      "name": "F_NAME",
+      "type": "esriFieldTypeString",
+      "alias": "F_NAME",
+      "length": 20,
+      "domain": null
+    },
+    {
+      "name": "SHAPE",
+      "type": "esriFieldTypeGeometry",
+      "alias": "SHAPE",
+      "domain": null
+    },
+    {
+      "name": "SHAPE.LEN",
+      "type": "esriFieldTypeDouble",
+      "alias": "SHAPE.LEN",
+      "domain": null
+    }
+  ],
+  "geometryField": {
+    "name": "SHAPE",
+    "type": "esriFieldTypeGeometry",
+    "alias": "SHAPE"
+  },
+  "indexes": [
+    {
+      "name": "R482605_SDE_ROWID_UK",
+      "fields": "OBJECTID",
+      "isAscending": true,
+      "isUnique": true,
+      "description": ""
+    },
+    {
+      "name": "A1705_IX1",
+      "fields": "SHAPE",
+      "isAscending": true,
+      "isUnique": true,
+      "description": ""
+    }
+  ],
+  "subtypes": [],
+  "relationships": [],
+  "canModifyLayer": true,
+  "canScaleSymbols": false,
+  "hasLabels": false,
+  "capabilities": "Map,Query,Data",
+  "maxRecordCount": 4000,
+  "supportsStatistics": true,
+  "supportsExceedsLimitStatistics": true,
+  "supportsAdvancedQueries": true,
+  "supportedQueryFormats": "JSON, geoJSON, PBF",
+  "isDataVersioned": false,
+  "ownershipBasedAccessControlForFeatures": {
+    "allowOthersToQuery": true
+  },
+  "useStandardizedQueries": true,
+  "supportedSpatialRelationships": [
+    "esriSpatialRelIntersects",
+    "esriSpatialRelContains",
+    "esriSpatialRelCrosses",
+    "esriSpatialRelEnvelopeIntersects",
+    "esriSpatialRelIndexIntersects",
+    "esriSpatialRelOverlaps",
+    "esriSpatialRelTouches",
+    "esriSpatialRelWithin",
+    "esriSpatialRelRelation"
+  ],
+  "advancedQueryCapabilities": {
+    "useStandardizedQueries": true,
+    "supportsStatistics": true,
+    "supportsPercentileStatistics": true,
+    "supportsHavingClause": true,
+    "supportsOrderBy": true,
+    "supportsDistinct": true,
+    "supportsCountDistinct": true,
+    "supportsPagination": true,
+    "supportsLod": false,
+    "supportsQueryWithLodSR": false,
+    "supportsTrueCurve": true,
+    "supportsQueryWithDatumTransformation": true,
+    "supportsReturningQueryExtent": true,
+    "supportsQueryWithDistance": true,
+    "supportsSqlExpression": true,
+    "supportsTimeRelation": true,
+    "supportsSqlFormat": false,
+    "supportsQueryAnalytic": true
+  },
+  "supportsDatumTransformation": true,
+  "advancedQueryAnalyticCapabilities": {
+    "supportsLinearRegression": true,
+    "supportsAsync": false,
+    "supportsPercentileAnalytic": true
+  },
+  "dateFieldsTimeReference": null,
+  "preferredTimeReference": null,
+  "datesInUnknownTimezone": false,
+  "hasGeometryProperties": true,
+  "geometryProperties": {
+    "shapeLengthFieldName": "SHAPE.LEN",
+    "units": "esriMeters",
+    "mapUnits": {
+      "uwkid": 9001
+    }
+  },
+  "hasMetadata": true,
+  "isDataArchived": false,
+  "archivingInfo": {
+    "supportsQueryWithHistoricMoment": false,
+    "startArchivingMoment": -1
+  },
+  "supportsCoordinatesQuantization": true,
+  "supportsDynamicLegends": true,
+  "serviceItemId": "6b515aed26e940ab81254c06708ae0d7"
+}

@@ -1,0 +1,56 @@
+name: Focused Biscayne landmark evidence extraction
+
+on:
+  workflow_dispatch:
+  pull_request:
+    paths:
+      - "scripts/extract_biscayne_landmark_evidence.py"
+      - "scripts/reconcile_biscayne_landmark_topology.py"
+      - "tests/test_biscayne_landmark_evidence.py"
+      - "tests/test_reconcile_biscayne_landmark_topology.py"
+      - ".github/workflows/biscayne-landmark-evidence.yml"
+
+permissions:
+  contents: read
+
+concurrency:
+  group: biscayne-landmark-evidence
+  cancel-in-progress: false
+
+jobs:
+  extract-landmark-evidence:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event_name == 'pull_request' && github.head_ref || github.ref_name }}
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+      - name: Install dependencies
+        run: python -m pip install requests pytest shapely pyproj
+      - name: Compile focused scripts and tests
+        run: >-
+          python -m py_compile
+          scripts/extract_biscayne_landmark_evidence.py
+          scripts/reconcile_biscayne_landmark_topology.py
+          tests/test_biscayne_landmark_evidence.py
+          tests/test_reconcile_biscayne_landmark_topology.py
+      - name: Run focused extraction tests
+        run: python -m pytest -q tests/test_biscayne_landmark_evidence.py
+      - name: Extract Card Sound, Jewfish Creek, and Rickenbacker evidence
+        run: python scripts/extract_biscayne_landmark_evidence.py --output-dir artifacts/biscayne-landmarks
+      - name: Reconcile landmark geometry topology
+        run: python scripts/reconcile_biscayne_landmark_topology.py --input-dir artifacts/biscayne-landmarks --output artifacts/biscayne-landmarks/biscayne_landmark_topology_report.json
+      - name: Run focused topology tests
+        run: python -m pytest -q tests/test_reconcile_biscayne_landmark_topology.py
+      - name: Upload focused landmark evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: biscayne-landmark-evidence
+          path: artifacts/biscayne-landmarks/
+          if-no-files-found: warn
+          retention-days: 30
