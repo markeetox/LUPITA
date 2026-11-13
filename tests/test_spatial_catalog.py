@@ -225,3 +225,38 @@ def test_biscayne_ecological_subregions_use_published_landmarks_without_fake_bou
         assert feature["subregion_definition"]["south_limit"] == limits[1]
         assert feature["subregion_definition"]["limit_geometry_status"] == "landmarks_referenced_not_digitized"
         assert feature["provenance"][0]["url"] == "https://doi.org/10.3389/fmars.2022.894663"
+
+
+def test_named_biscayne_contexts_link_to_historical_benthic_overlay_audit():
+    spatial_dir = Path(__file__).parents[1] / "data" / "spatial"
+    catalog = json.loads(CATALOG_PATH.read_text(encoding="utf-8"))
+    audit = json.loads((spatial_dir / "biscayne-subregion-habitat-audit.json").read_text(encoding="utf-8"))
+    by_id = {feature["id"]: feature for feature in catalog["features"]}
+    expected = {
+        "sf-biscayne-bay-ecological-context": "Biscayne Bay",
+        "sf-biscayne-safety-valve-complex": "Safety Valve",
+        "sf-biscayne-flats": "Biscayne Flats",
+        "sf-bear-cut": "Bear Cut",
+        "sf-norris-cut": "Norris Cut",
+        "sf-biscayne-black-ledge": "Black Ledge",
+        "sf-featherbed-bank": "Featherbed Bank",
+        "sf-lewis-cut": "Lewis Cut",
+        "sf-biscayne-channel": "Biscayne Channel",
+        "sf-sands-cut": "Sands Cut",
+        "sf-snapper-creek-canal": "Snapper Creek Canal",
+        "sf-goulds-canal": "Goulds Canal",
+        "sf-deering-channel": "Deering Channel",
+        "sf-cape-florida-channel": "Cape Florida Channel",
+    }
+    for feature_id, name in expected.items():
+        ref = by_id[feature_id]["habitat_overlay_ref"]
+        assert ref["audit_path"] == "data/spatial/biscayne-subregion-habitat-audit.json"
+        assert ref["named_chart_context_name"] == name
+        assert ref["status"] == "historical_source_overlay_not_current_habitat_or_species_suitability"
+        assert name in audit["named_chart_context_overlays"]
+    flats = audit["named_chart_context_overlays"]["Biscayne Flats"]["benthic_overlay"]
+    assert flats["intersecting_source_feature_count"] == 54
+    assert flats["tidal_flat_source_feature_count"] == 0
+    channel = audit["named_chart_context_overlays"]["Biscayne Channel"]["benthic_overlay"]
+    assert channel["intersecting_source_feature_count"] == 0
+    assert audit["tidal_flat_patch_inventory"]["source_feature_count_within_source_footprints"] == 219
