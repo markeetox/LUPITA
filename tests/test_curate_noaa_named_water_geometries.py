@@ -1,5 +1,9 @@
 import json
 
+import pytest
+
+pytest.importorskip("shapely")
+
 from scripts.curate_noaa_named_water_geometries import curate
 
 
