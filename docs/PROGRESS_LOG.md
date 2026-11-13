@@ -115,3 +115,33 @@ Run the focused Biscayne landmark evidence workflow once the commit is pushed, t
 2. Keep only useful, non-superseded changes in staging; do not import stale profile or pipeline files.
 3. Run one full Python suite and one focused GIS validation pass on the consolidated tree.
 4. Prepare the final single PR into `main`, keeping `data` as the generated export destination only.
+
+
+## 2026-11-13 | Fix consolidated CI dependencies and stop research extraction fan-out
+
+**Staging branch:** `integration/main-consolidation`
+
+### Validation findings
+
+- The focused Biscayne landmark workflow passed on the consolidated PR:
+  https://github.com/markeetox/LUPITA/actions/runs/43452278652
+  - Python compile preflight passed.
+  - Focused extraction tests passed.
+  - Card Sound/Jewfish Creek/Rickenbacker extraction passed.
+  - Topology reconciliation and all focused topology tests passed.
+- The species-validator workflow failed during test collection because the full suite now includes GIS research tests importing Shapely, PyProj, and PyShp, but that workflow installed only `requirements.txt`.
+- The main Python test workflow already installed those packages directly and was still running when this entry was written.
+
+### Changes
+
+- Added `requirements-research.txt` for optional GIS/research QA dependencies. These are not part of production runtime requirements.
+- Updated Python tests, species validation, and the scheduled production workflow to install the research requirements before running the full suite.
+- Enabled pip caching in the scheduled workflow to reduce repeated hourly installation overhead.
+- Changed the South Florida in-situ temperature extraction workflow to manual-only. It had an unexpected pull-request trigger and started downloading logger observations during the consolidation PR.
+- Updated README and project status to explain the distinction between production runtime dependencies and optional research/test dependencies.
+
+### Next actions
+
+1. Verify the new full-suite and species-validator runs pass on the updated PR #72 head.
+2. Confirm only lightweight validation workflows run automatically on PRs.
+3. Complete the final branch inventory, then merge PR #72 only after all required checks pass.
