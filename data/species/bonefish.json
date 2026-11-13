@@ -7,7 +7,7 @@
     "gray ghost"
   ],
   "habitat_zone": "inshore",
-  "review_status": "draft v1 - compiled from NOAA Fisheries and regional fisheries management guidelines",
+  "review_status": "South Florida pilot draft; descriptive ecology is source-documented, but thermal scoring and feeding timing are not validated.",
   "image": {
     "status": "placeholder",
     "kind": "illustration",
@@ -17,42 +17,48 @@
     "plan": "web/fish/placeholder.png is a transparent placeholder image."
   },
   "profile": {
-    "size": "Variable per NOAA / regional guidelines",
-    "diet": "Small fish, crustaceans, and cephalopods.",
-    "behavior": "Active predator along coastal, shelf, or offshore environments.",
-    "life_history": "Spawns seasonally along coastal or shelf waters.",
-    "regulations_link": "https://www.fisheries.noaa.gov/",
+    "size": "Not specified in this pilot profile; size is not used by the current model.",
+    "diet": "Not characterized in this pilot profile; diet is not used by the current model.",
+    "behavior": "A shallow-water flats-associated species. Northern Florida Keys acoustic telemetry documents use of shallow foraging areas and deeper channels that may provide thermal refuge. These findings describe habitat use, not a real-time fish location.",
+    "life_history": "This pilot distinguishes shallow-flat foraging habitat from seasonal offshore spawning movement. The two should not be collapsed into one habitat score.",
+    "regulations_link": "https://myfwc.com/fishing/saltwater/recreational/",
     "sources": [
-      "https://www.fisheries.noaa.gov/"
+      "https://doi.org/10.3354/meps291237",
+      "https://www.fisheries.noaa.gov/resource/peer-reviewed-research/bonefish-albula-vulpes-home-range-spawning-site-linkages-support"
     ],
-    "spawning": "Spawns seasonally based on water temperature and regional climate.",
-    "overwintering": "Migrates to warmer or deeper waters depending on season."
+    "spawning": "Seasonal offshore spawning migrations and links between home ranges and spawning sites have been documented for Bahamas bonefish. The timing, routes, and transferability of those findings to South Florida require local validation.",
+    "overwintering": "No South Florida overwintering route or seasonal refuge rule is encoded in this pilot profile."
   },
   "factors": [
     {
       "param": "sst_c",
       "kind": "range",
       "range": [
-        20.0,
-        35.0
+        20,
+        35
       ],
       "ideal": [
-        25.0,
-        31.0
+        25,
+        31
       ],
       "weight": 0.35,
       "active": true,
-      "value_status": "sourced",
-      "value_notes": "NOAA oceanographic temperature profile for Bonefish.",
-      "reason_template": "Water is {value} C, within the preferred thermal range for Bonefish.",
-      "sources": [
-        "https://www.fisheries.noaa.gov/"
-      ],
+      "value_status": "provisional",
+      "value_notes": "The configured temperature bounds are legacy screening values, not a validated adult Bonefish preference or physiological tolerance range. The cited telemetry and spawning studies do not establish these numeric SST thresholds. Preserve them only for compatibility until a suitable temperature study and independent local validation are available.",
+      "reason_template": "Water is {value} C, within the currently configured provisional screening band for Bonefish; this is not a validated thermal preference.",
+      "sources": [],
       "gate": true,
       "required": true
     }
   ],
-  "open_items": [],
+  "open_items": [
+    "Find a primary study supporting adult Albula vulpes thermal tolerance or preferred temperature; do not infer SST thresholds from habitat-use telemetry.",
+    "Determine whether Bahamas spawning-site linkage findings transfer to South Florida timing, routes, and population structure.",
+    "Add independent South Florida observations or telemetry for seasonal presence and movement validation.",
+    "Represent shallow-flat foraging, channel/refuge context, and spawning movement as separate candidate dimensions.",
+    "Document the provenance and applicability of each habitat feature, including mapped-coverage gaps.",
+    "Keep current SST range, weight, active state, gate, and required flag unchanged until evidence and validation justify a model change."
+  ],
   "display": {
     "color": "#aff20c"
   },
@@ -67,10 +73,8 @@
   "confidence_cap": "Medium",
   "timing": {
     "status": "angler_lore",
-    "note": "Timing weights and light/tide preferences for Bonefish.",
-    "sources": [
-      "https://www.fisheries.noaa.gov/"
-    ],
+    "note": "Angler-derived timing hypotheses only. The numeric light, tide, and front maps are legacy uncalibrated settings, not demonstrated Bonefish feeding probabilities. Calibrate against timestamped, effort-aware observations before using them as biological claims.",
+    "sources": [],
     "weights": {
       "light": 0.5,
       "tide": 0.3,
@@ -78,7 +82,7 @@
     },
     "light": {
       "map": {
-        "dusk": 1.0,
+        "dusk": 1,
         "night": 0.8,
         "dawn": 0.9,
         "day": 0.6
@@ -92,7 +96,7 @@
     },
     "tide": {
       "map": {
-        "falling": 1.0,
+        "falling": 1,
         "slack_low": 0.6,
         "rising": 0.7,
         "slack_high": 0.5
@@ -118,8 +122,8 @@
     }
   },
   "lat_range": [
-    15.0,
-    27.0
+    15,
+    27
   ],
   "regulations": {
     "summary": "Regulated species - See MyFWC/NOAA guidelines",
@@ -132,7 +136,7 @@
     "source_url": "https://myfwc.com/fishing/saltwater/recreational/"
   },
   "lon_range": [
-    -100.0,
-    -50.0
+    -100,
+    -50
   ]
 }
