@@ -20,6 +20,7 @@ USGS_SITES = {
 FWC_STATIONS = {
     "HFA04": {"dataset": "org_secoora_flkeys_hfa04", "latitude": 24.6687, "longitude": -82.8926, "z_m": -11.0, "start": "2020-12-11T15:00:00Z", "end": "2022-08-12T14:00:00Z"},
     "RHA54": {"dataset": "org_secoora_flkeys_rha54", "latitude": 24.5056, "longitude": -83.1305, "z_m": -43.0, "start": "2023-09-22T14:00:00Z", "end": "2024-08-14T13:00:00Z"},
+    "LKA57": {"dataset": "org_secoora_flkeys_lka57", "latitude": 24.4373, "longitude": -81.9493, "z_m": -23.0, "start": "2021-07-26T16:00:00Z", "end": "2024-06-25T19:00:00Z"},
 }
 
 def parse_usgs_time(value):
