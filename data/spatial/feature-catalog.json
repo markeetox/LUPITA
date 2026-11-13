@@ -22,31 +22,62 @@
       "boundary_basis": "Florida Statute 258.397",
       "boundary_scope_note": "The statutory preserve includes Card Sound and natural waterways tidally connected to Biscayne Bay, extends across mouths of artificial waterways, and excludes submerged lands conveyed for Biscayne National Monument. It is not automatically identical to the full ecological bay.",
       "relationships": [],
-      "provenance": [{
-        "publisher": "Florida Legislature",
-        "title": "2026 Florida Statutes, Chapter 258.397",
-        "url": "https://www.flsenate.gov/Laws/Statutes/2026/258.397",
-        "source_type": "legal_boundary_description"
-      }],
+      "provenance": [
+        {
+          "publisher": "Florida Legislature",
+          "title": "2026 Florida Statutes, Chapter 258.397",
+          "url": "https://www.flsenate.gov/Laws/Statutes/2026/258.397",
+          "source_type": "legal_boundary_description"
+        }
+      ],
       "validation_status": "legal_definition_verified_geometry_pending"
+    },
+    {
+      "id": "sf-biscayne-bay-ecological-context",
+      "name": "Biscayne Bay",
+      "feature_type": "ecological_waterbody",
+      "region": "south_florida",
+      "parent_id": null,
+      "geometry": null,
+      "geometry_status": "pending_ecological_boundary_review",
+      "boundary_basis": "multi_source_ecological_context",
+      "boundary_scope_note": "This is the ecological waterbody entity, distinct from the statutory aquatic preserve and the Biscayne National Park boundary. Its polygon must be assembled from authoritative shoreline, hydrographic, and tidal-connection evidence.",
+      "relationships": [
+        {
+          "type": "has_management_boundary",
+          "target_id": "sf-biscayne-bay-aquatic-preserve",
+          "status": "relationship_supported_geometry_pending"
+        }
+      ],
+      "provenance": [
+        {
+          "publisher": "NOAA Fisheries",
+          "title": "Biscayne Bay Stock Assessment",
+          "url": "https://www.fisheries.noaa.gov/s3/2026-04/biscayne-bay-stock-508gw.pdf",
+          "source_type": "ecological_waterbody_description"
+        }
+      ],
+      "validation_status": "ecological_entity_supported_boundary_pending"
     },
     {
       "id": "sf-biscayne-bay-northern-context",
       "name": "Northern Biscayne Bay",
       "feature_type": "bay_subregion",
       "region": "south_florida",
-      "parent_id": "sf-biscayne-bay-aquatic-preserve",
+      "parent_id": "sf-biscayne-bay-ecological-context",
       "geometry": null,
       "geometry_status": "not_yet_digitized",
       "boundary_basis": "candidate_ecological_subregion",
       "boundary_scope_note": "NOAA describes a distinct northern portion of the bay. Exact polygon limits are not supplied by the cited description.",
       "relationships": [],
-      "provenance": [{
-        "publisher": "NOAA Fisheries",
-        "title": "Biscayne Bay Stock Assessment",
-        "url": "https://www.fisheries.noaa.gov/s3/2026-04/biscayne-bay-stock-508gw.pdf",
-        "source_type": "ecological_region_description"
-      }],
+      "provenance": [
+        {
+          "publisher": "NOAA Fisheries",
+          "title": "Biscayne Bay Stock Assessment",
+          "url": "https://www.fisheries.noaa.gov/s3/2026-04/biscayne-bay-stock-508gw.pdf",
+          "source_type": "ecological_region_description"
+        }
+      ],
       "validation_status": "named_context_supported_boundary_pending"
     },
     {
@@ -54,18 +85,20 @@
       "name": "Central and Southern Biscayne Bay",
       "feature_type": "bay_subregion",
       "region": "south_florida",
-      "parent_id": "sf-biscayne-bay-aquatic-preserve",
+      "parent_id": "sf-biscayne-bay-ecological-context",
       "geometry": null,
       "geometry_status": "not_yet_digitized",
       "boundary_basis": "candidate_ecological_subregion",
       "boundary_scope_note": "NOAA distinguishes central and southern portions from the more developed northern portion. These remain one provisional context until source geometry supports separate boundaries.",
       "relationships": [],
-      "provenance": [{
-        "publisher": "NOAA Fisheries",
-        "title": "Biscayne Bay Stock Assessment",
-        "url": "https://www.fisheries.noaa.gov/s3/2026-04/biscayne-bay-stock-508gw.pdf",
-        "source_type": "ecological_region_description"
-      }],
+      "provenance": [
+        {
+          "publisher": "NOAA Fisheries",
+          "title": "Biscayne Bay Stock Assessment",
+          "url": "https://www.fisheries.noaa.gov/s3/2026-04/biscayne-bay-stock-508gw.pdf",
+          "source_type": "ecological_region_description"
+        }
+      ],
       "validation_status": "named_context_supported_boundary_pending"
     },
     {
@@ -78,17 +111,21 @@
       "geometry_status": "pending_hydrographic_and_habitat_geometry",
       "boundary_basis": "named_ecological_feature",
       "boundary_scope_note": "NOAA describes a broad area of grass flats and tidal channels near the center of the bay that exchanges water with the Atlantic. It must not be reduced to a single point or a single flat polygon.",
-      "relationships": [{
-        "type": "water_exchange_area",
-        "target_id": "sf-atlantic-ocean",
-        "status": "concept_supported_geometry_pending"
-      }],
-      "provenance": [{
-        "publisher": "NOAA Fisheries",
-        "title": "Biscayne Bay Stock Assessment",
-        "url": "https://www.fisheries.noaa.gov/s3/2026-04/biscayne-bay-stock-508gw.pdf",
-        "source_type": "ecological_feature_description"
-      }],
+      "relationships": [
+        {
+          "type": "water_exchange_area",
+          "target_id": "sf-atlantic-ocean",
+          "status": "concept_supported_geometry_pending"
+        }
+      ],
+      "provenance": [
+        {
+          "publisher": "NOAA Fisheries",
+          "title": "Biscayne Bay Stock Assessment",
+          "url": "https://www.fisheries.noaa.gov/s3/2026-04/biscayne-bay-stock-508gw.pdf",
+          "source_type": "ecological_feature_description"
+        }
+      ],
       "validation_status": "named_feature_supported_geometry_pending"
     },
     {
@@ -96,22 +133,26 @@
       "name": "Government Cut",
       "feature_type": "tidal_inlet_or_navigation_channel",
       "region": "south_florida",
-      "parent_id": "sf-biscayne-bay-aquatic-preserve",
+      "parent_id": "sf-biscayne-bay-ecological-context",
       "geometry": null,
       "geometry_status": "pending_noaa_enc_geometry",
       "boundary_basis": "named_navigation_feature",
       "boundary_scope_note": "The existing config/places.json point and display radius are approximate and are not an inlet polygon or channel centerline.",
-      "relationships": [{
-        "type": "connects",
-        "target_id": "sf-atlantic-ocean",
-        "status": "connectivity_hypothesis_geometry_pending"
-      }],
-      "provenance": [{
-        "publisher": "NOAA Office of Coast Survey",
-        "title": "NOAA ENC GIS Data and Services",
-        "url": "https://www.nauticalcharts.noaa.gov/data/gis-data-and-services.html",
-        "source_type": "hydrographic_navigation_data_catalog"
-      }],
+      "relationships": [
+        {
+          "type": "connects",
+          "target_id": "sf-atlantic-ocean",
+          "status": "connectivity_hypothesis_geometry_pending"
+        }
+      ],
+      "provenance": [
+        {
+          "publisher": "NOAA Office of Coast Survey",
+          "title": "NOAA ENC GIS Data and Services",
+          "url": "https://www.nauticalcharts.noaa.gov/data/gis-data-and-services.html",
+          "source_type": "hydrographic_navigation_data_catalog"
+        }
+      ],
       "validation_status": "named_feature_supported_geometry_pending"
     },
     {
@@ -119,22 +160,26 @@
       "name": "Bear Cut",
       "feature_type": "tidal_inlet_or_navigation_channel",
       "region": "south_florida",
-      "parent_id": "sf-biscayne-bay-aquatic-preserve",
+      "parent_id": "sf-biscayne-bay-ecological-context",
       "geometry": null,
       "geometry_status": "pending_noaa_enc_geometry",
       "boundary_basis": "named_navigation_feature",
       "boundary_scope_note": "The existing config/places.json point is approximate and is not a validated channel or inlet geometry.",
-      "relationships": [{
-        "type": "connects",
-        "target_id": "sf-atlantic-ocean",
-        "status": "connectivity_hypothesis_geometry_pending"
-      }],
-      "provenance": [{
-        "publisher": "NOAA Office of Coast Survey",
-        "title": "NOAA ENC GIS Data and Services",
-        "url": "https://www.nauticalcharts.noaa.gov/data/gis-data-and-services.html",
-        "source_type": "hydrographic_navigation_data_catalog"
-      }],
+      "relationships": [
+        {
+          "type": "connects",
+          "target_id": "sf-atlantic-ocean",
+          "status": "connectivity_hypothesis_geometry_pending"
+        }
+      ],
+      "provenance": [
+        {
+          "publisher": "NOAA Office of Coast Survey",
+          "title": "NOAA ENC GIS Data and Services",
+          "url": "https://www.nauticalcharts.noaa.gov/data/gis-data-and-services.html",
+          "source_type": "hydrographic_navigation_data_catalog"
+        }
+      ],
       "validation_status": "named_feature_supported_geometry_pending"
     },
     {
