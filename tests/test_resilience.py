@@ -30,6 +30,8 @@ def scripted(*outcomes):
         o = outcomes[min(len(calls) - 1, len(outcomes) - 1)]
         if isinstance(o, Exception):
             raise o
+        if isinstance(o, Resp):
+            return o
         return Resp(o)
     getter.calls = calls
     return getter
