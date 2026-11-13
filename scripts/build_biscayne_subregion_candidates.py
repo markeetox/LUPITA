@@ -14,7 +14,8 @@ from pathlib import Path
 from typing import Any
 
 from pyproj import Transformer
-from shapely.geometry import shape
+from shapely import make_valid
+from shapely.geometry import GeometryCollection, MultiPolygon, Polygon, shape
 from shapely.ops import transform, unary_union
 
 AREA_CRS = "EPSG:26917"
@@ -71,13 +72,25 @@ def read_collection(path: Path) -> dict[str, Any]:
     return payload
 
 
-def valid_polygon(feature: dict[str, Any], source: str):
+def valid_polygon(feature: dict[str, Any], source: str, *, repair: bool = False):
     geometry = feature.get("geometry")
     if not geometry or geometry.get("type") not in {"Polygon", "MultiPolygon"}:
         raise ValueError(f"{source}: expected polygon geometry")
     geom = shape(geometry)
-    if geom.is_empty or not geom.is_valid or geom.area <= 0:
-        raise ValueError(f"{source}: empty, invalid, or zero-area polygon")
+    if geom.is_empty or geom.area <= 0:
+        raise ValueError(f"{source}: empty or zero-area polygon")
+    if not geom.is_valid:
+        if not repair:
+            raise ValueError(f"{source}: invalid polygon geometry")
+        geom = make_valid(geom)
+        if isinstance(geom, GeometryCollection):
+            polygon_parts = [
+                part for part in geom.geoms
+                if isinstance(part, (Polygon, MultiPolygon)) and not part.is_empty
+            ]
+            geom = unary_union(polygon_parts)
+        if geom.is_empty or not geom.is_valid or geom.area <= 0:
+            raise ValueError(f"{source}: polygon could not be repaired for analysis")
     return geom
 
 
@@ -99,10 +112,16 @@ def build_audit(
     named_water: dict[str, Any],
 ) -> tuple[dict[str, Any], dict[str, Any]]:
     benthic_features = benthic["features"]
-    benthic_geometries = [
-        valid_polygon(feature, f"benthic OBJECTID {feature.get('properties', {}).get('OBJECTID')}")
-        for feature in benthic_features
-    ]
+    repaired_benthic_objectids = []
+    benthic_geometries = []
+    for feature in benthic_features:
+        objectid = (feature.get("properties") or {}).get("OBJECTID")
+        original = shape(feature["geometry"])
+        if not original.is_valid:
+            repaired_benthic_objectids.append(int(objectid))
+        benthic_geometries.append(
+            valid_polygon(feature, f"benthic OBJECTID {objectid}", repair=True)
+        )
     footprint_geometries = [
         valid_polygon(feature, f"source footprint OBJECTID {feature.get('properties', {}).get('OBJECTID')}")
         for feature in footprints["features"]
@@ -268,6 +287,11 @@ def build_audit(
         "generated_at_utc": datetime.now(timezone.utc).isoformat(),
         "status": "research_candidate_inventory_boundary_geometry_pending",
         "area_crs": AREA_CRS,
+        "benthic_geometry_repairs_for_analysis_only": {
+            "count": len(repaired_benthic_objectids),
+            "objectids": sorted(repaired_benthic_objectids),
+            "note": "Invalid source polygons are preserved unchanged in source records. make_valid() is used only for overlay calculations; repaired geometries are not substituted into the source GeoJSON.",
+        },
         "purpose": "Research-only ecological subregion and mapped benthic habitat candidate audit. No production model inputs.",
         "subregions": subregions,
         "named_chart_context_overlays": overlays,
