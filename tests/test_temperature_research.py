@@ -17,14 +17,14 @@ def test_parse_usgs_fixed_gmt_minus_four():
 
 def test_read_usgs_wide_csv_normalizes_known_biscayne_site():
     content = (
-        '"Time, GMT-04:00","Brewster Reef","Unknown Site"\n'
+        '"Time, GMT-04:00","Brewster","Unknown Site"\n'
         '"06/01/2024 12:15","29.25","28.5"\n'
         '"06/01/2024 12:30","","28.6"\n'
     )
     start = datetime(2024, 6, 1, tzinfo=timezone.utc)
     end = datetime(2024, 6, 2, tzinfo=timezone.utc)
     rows = MODULE.read_usgs_csv(content, start, end)
-    brewster = [row for row in rows if row["site"] == "Brewster Reef"]
+    brewster = [row for row in rows if row["site"] == "Brewster"]
     assert len(brewster) == 1
     assert brewster[0]["temperature_c"] == 29.25
     assert brewster[0]["latitude"] == 25.56676
