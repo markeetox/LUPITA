@@ -168,7 +168,7 @@
       "geometry": null,
       "geometry_status": "source_chart_fragments_persisted_topology_precheck_passed_complete_boundary_unverified",
       "boundary_basis": "multi_source_ecological_context",
-      "boundary_scope_note": "This is the ecological waterbody entity, distinct from the statutory aquatic preserve and the Biscayne National Park boundary. Its polygon must be assembled from authoritative shoreline, hydrographic, and tidal-connection evidence. NOAA Harbour ENC also contains 37 charted Biscayne Bay named-water polygons across 17 ENC cells. These are chart-cell fragments, not a complete ecological or statutory boundary. A first geometric topology precheck is complete: the union has two disconnected components, one a very small isolated fragment. Full boundary reconciliation remains pending. Original chart fragments are persisted individually; no dissolved or complete boundary is promoted. The NOAA charted named-water union was overlaid against FDEP Biscayne Bay Aquatic Preserve OBJECTID 43; the substantial mismatch confirms that these are different source concepts and neither is a complete ecological bay boundary. NOAA NGS shoreline projects FL1808C-TB-N (GC12023) and FL1808A-TB-N (GC12021) are identified as high-accuracy MHW/MLLW shoreline candidates but have not yet been retrieved.",
+      "boundary_scope_note": "This is the ecological waterbody entity, distinct from the statutory aquatic preserve and the Biscayne National Park boundary. Its polygon must be assembled from authoritative shoreline, hydrographic, and tidal-connection evidence. NOAA Harbour ENC also contains 37 charted Biscayne Bay named-water polygons across 17 ENC cells. These are chart-cell fragments, not a complete ecological or statutory boundary. A first geometric topology precheck is complete: the union has two disconnected components, one a very small isolated fragment. Full boundary reconciliation remains pending. Original chart fragments are persisted individually; no dissolved or complete boundary is promoted. The NOAA charted named-water union was overlaid against FDEP Biscayne Bay Aquatic Preserve OBJECTID 43; the substantial mismatch confirms that these are different source concepts and neither is a complete ecological bay boundary. NOAA NGS shoreline projects FL1808C-TB-N (GC12023) and FL1808A-TB-N (GC12021) are identified as high-accuracy MHW/MLLW shoreline candidates but have not yet been retrieved. NOAA NGS metadata shows an apparent latitude interval between FL1808A and FL1808C project extents; because those extents are data-management rectangles, this is a coverage question to inspect, not a confirmed shoreline gap. FL1603A Convoy Point is local supplemental coverage; FL1934E is historical only.",
       "relationships": [
         {
           "type": "has_management_boundary",
@@ -200,6 +200,18 @@
           "title": "NOAA Shoreline Data Explorer CUSP and National Shoreline product distinctions",
           "url": "https://nsde.ngs.noaa.gov/more.html",
           "source_type": "shoreline_product_quality_and_currency_reference"
+        },
+        {
+          "publisher": "NOAA National Geodetic Survey",
+          "title": "Shoreline Mapping Program FL1603A-CM-N, Convoy Point",
+          "url": "https://www.fisheries.noaa.gov/inport/item/61478",
+          "source_type": "local_high_accuracy_shoreline_candidate"
+        },
+        {
+          "publisher": "NOAA National Geodetic Survey",
+          "title": "Shoreline Data Rescue Project FL1934E, historical Biscayne Bay shoreline",
+          "url": "https://www.fisheries.noaa.gov/inport/item/63718",
+          "source_type": "historical_shoreline_change_reference"
         }
       ],
       "validation_status": "source_fragments_persisted_mosaic_not_promoted_to_boundary",
@@ -290,8 +302,33 @@
             "geographic_cell": "GC12021",
             "coverage": "Fender Point to Card Sound",
             "download_status": "available_through_noaa_shoreline_data_explorer_not_yet_retrieved"
+          },
+          {
+            "project_id": "FL1603A-CM-N",
+            "coverage": "Convoy Point local shoreline",
+            "source_imagery_date": "2017-03-19",
+            "reported_horizontal_accuracy_95pct_m": 1.9,
+            "download_status": "available_through_noaa_shoreline_data_explorer_not_yet_retrieved",
+            "role": "local_comparison_only"
+          },
+          {
+            "project_id": "FL1934E",
+            "coverage": "Biscayne Bay historical shoreline",
+            "source_dates": [
+              "1934-08-01",
+              "1935-01-25"
+            ],
+            "download_status": "available_through_noaa_shoreline_data_explorer_not_yet_retrieved",
+            "role": "historical_change_reference_only"
           }
-        ]
+        ],
+        "shoreline_coverage_caveat": {
+          "fl1808a_latitude_extent_north": 25.51193995,
+          "fl1808c_latitude_extent_south": 25.63448867,
+          "apparent_latitude_interval_between_project_extents": 0.12254872,
+          "status": "metadata_extent_gap_to_investigate_not_confirmed_surveyed_shoreline_gap",
+          "note": "NOAA metadata states rectangular geographic limits are data-management bounds and do not imply complete surveyed coverage. Retrieve and inspect actual geographic cells before deciding coverage continuity."
+        }
       },
       "boundary_reconciliation": {
         "method": "Area overlay in NAD83 / UTM zone 17N (EPSG:26917)",
