@@ -141,24 +141,35 @@
     },
     {
       "id": "sf-biscayne-bay-central-southern-context",
-      "name": "Central and Southern Biscayne Bay",
+      "name": "Central Biscayne Bay",
       "feature_type": "bay_subregion",
       "region": "south_florida",
       "parent_id": "sf-biscayne-bay-ecological-context",
       "geometry": null,
-      "geometry_status": "not_yet_digitized",
-      "boundary_basis": "candidate_ecological_subregion",
-      "boundary_scope_note": "NOAA distinguishes central and southern portions from the more developed northern portion. These remain one provisional context until source geometry supports separate boundaries.",
-      "relationships": [],
-      "provenance": [
+      "geometry_status": "literature_landmarks_identified_cross_bay_boundary_geometry_pending",
+      "boundary_basis": "peer_reviewed_ecological_region_description",
+      "boundary_scope_note": "Published ecological segmentation places Central Biscayne Bay from the Rickenbacker Causeway to Featherbed Bank / Black Point. These are landmark limits, not a digitized cross-bay boundary line. Geometry remains pending GIS validation; this is not a legal or management boundary.",
+      "relationships": [
         {
-          "publisher": "NOAA Fisheries",
-          "title": "Biscayne Bay Stock Assessment",
-          "url": "https://www.fisheries.noaa.gov/s3/2026-04/biscayne-bay-stock-508gw.pdf",
-          "source_type": "ecological_region_description"
+          "type": "located_within",
+          "target_id": "sf-biscayne-bay-ecological-context",
+          "status": "literature_region_extent_supported_boundary_geometry_pending"
         }
       ],
-      "validation_status": "named_context_supported_boundary_pending"
+      "provenance": [
+        {
+          "publisher": "Frontiers in Marine Science",
+          "title": "Characterizing Nearshore Fish Assemblages From Intact and Altered Mangrove Shorelines in Biscayne Bay, Florida, United States",
+          "url": "https://doi.org/10.3389/fmars.2022.894663",
+          "source_type": "peer_reviewed_ecological_subregion_definition"
+        }
+      ],
+      "validation_status": "literature_extent_supported_boundary_geometry_pending",
+      "subregion_definition": {
+        "north_limit": "Rickenbacker Causeway",
+        "south_limit": "Featherbed Bank / Black Point",
+        "limit_geometry_status": "landmarks_referenced_not_digitized"
+      }
     },
     {
       "id": "sf-biscayne-bay-ecological-context",
@@ -169,7 +180,7 @@
       "geometry": null,
       "geometry_status": "source_chart_fragments_persisted_topology_precheck_passed_complete_boundary_unverified",
       "boundary_basis": "multi_source_ecological_context",
-      "boundary_scope_note": "This is the ecological waterbody entity, distinct from the statutory aquatic preserve and the Biscayne National Park boundary. Its polygon must be assembled from authoritative shoreline, hydrographic, and tidal-connection evidence. NOAA Harbour ENC also contains 37 charted Biscayne Bay named-water polygons across 17 ENC cells. These are chart-cell fragments, not a complete ecological or statutory boundary. A first geometric topology precheck is complete: the union has two disconnected components, one a very small isolated fragment. Full boundary reconciliation remains pending. Original chart fragments are persisted individually; no dissolved or complete boundary is promoted. The NOAA charted named-water union was overlaid against FDEP Biscayne Bay Aquatic Preserve OBJECTID 43; the substantial mismatch confirms that these are different source concepts and neither is a complete ecological bay boundary. NOAA NGS shoreline projects FL1808C-TB-N (GC12023) and FL1808A-TB-N (GC12021) are identified as high-accuracy MHW/MLLW shoreline candidates but have not yet been retrieved. NOAA NGS metadata shows an apparent latitude interval between FL1808A and FL1808C project extents; because those extents are data-management rectangles, this is a coverage question to inspect, not a confirmed shoreline gap. FL1603A Convoy Point is local supplemental coverage; FL1934E is historical only.",
+      "boundary_scope_note": "This is the ecological waterbody entity, distinct from the statutory aquatic preserve and Biscayne National Park boundary. Its complete polygon must be assembled from authoritative shoreline, hydrographic, and tidal-connection evidence. NOAA Harbour ENC chart fragments are preserved individually and are not a complete ecological or statutory boundary. NOAA NGS projects FL1808A-TB-N / GC12021 and FL1808C-TB-N / GC12023 have now been retrieved and their MHW linework inspected. Their 17.691 km nearest-feature separation is diagonal across the bay between opposite-side shoreline features, not an alongshore gap measurement. The project linework does not justify bridging or interpolation. FL1603A provides local Convoy Point comparison only. FDEP preserve geometry remains a separate management overlay.",
       "relationships": [
         {
           "type": "has_management_boundary",
@@ -296,20 +307,20 @@
             "project_id": "FL1808C-TB-N",
             "geographic_cell": "GC12023",
             "coverage": "Rickenbacker Island southward to Snapper Creek Canal",
-            "download_status": "available_through_noaa_shoreline_data_explorer_not_yet_retrieved"
+            "download_status": "retrieved_source_archive_extracted_and_mhw_geometry_audited"
           },
           {
             "project_id": "FL1808A-TB-N",
             "geographic_cell": "GC12021",
             "coverage": "Fender Point to Card Sound",
-            "download_status": "available_through_noaa_shoreline_data_explorer_not_yet_retrieved"
+            "download_status": "retrieved_source_archive_extracted_and_mhw_geometry_audited"
           },
           {
             "project_id": "FL1603A-CM-N",
             "coverage": "Convoy Point local shoreline",
             "source_imagery_date": "2017-03-19",
             "reported_horizontal_accuracy_95pct_m": 1.9,
-            "download_status": "available_through_noaa_shoreline_data_explorer_not_yet_retrieved",
+            "download_status": "retrieved_source_archive_extracted_and_mhw_geometry_audited",
             "role": "local_comparison_only"
           },
           {
@@ -327,8 +338,8 @@
           "fl1808a_latitude_extent_north": 25.51193995,
           "fl1808c_latitude_extent_south": 25.63448867,
           "apparent_latitude_interval_between_project_extents": 0.12254872,
-          "status": "metadata_extent_gap_to_investigate_not_confirmed_surveyed_shoreline_gap",
-          "note": "NOAA metadata states rectangular geographic limits are data-management bounds and do not imply complete surveyed coverage. Retrieve and inspect actual geographic cells before deciding coverage continuity."
+          "status": "project_geometry_retrieved_nearest_feature_distance_not_an_alongshore_gap",
+          "note": "Actual project MHW geometries were retrieved and inspected. The 17.691 km nearest-feature distance is diagonal between opposite-side shoreline features, not evidence of a missing coastline segment or absent water connection."
         }
       },
       "boundary_reconciliation": {
@@ -345,24 +356,29 @@
     },
     {
       "id": "sf-biscayne-bay-northern-context",
-      "name": "Northern Biscayne Bay",
+      "name": "North Biscayne Bay",
       "feature_type": "bay_subregion",
       "region": "south_florida",
       "parent_id": "sf-biscayne-bay-ecological-context",
       "geometry": null,
-      "geometry_status": "not_yet_digitized",
-      "boundary_basis": "candidate_ecological_subregion",
-      "boundary_scope_note": "NOAA describes a distinct northern portion of the bay. Exact polygon limits are not supplied by the cited description.",
+      "geometry_status": "literature_landmarks_identified_cross_bay_boundary_geometry_pending",
+      "boundary_basis": "peer_reviewed_ecological_region_description",
+      "boundary_scope_note": "Published ecological segmentation places North Biscayne Bay from Dumfoundling Bay to the Rickenbacker Causeway. These are landmark limits, not a digitized cross-bay boundary line. Geometry remains pending GIS validation; this is not a legal or management boundary.",
       "relationships": [],
       "provenance": [
         {
-          "publisher": "NOAA Fisheries",
-          "title": "Biscayne Bay Stock Assessment",
-          "url": "https://www.fisheries.noaa.gov/s3/2026-04/biscayne-bay-stock-508gw.pdf",
-          "source_type": "ecological_region_description"
+          "publisher": "Frontiers in Marine Science",
+          "title": "Characterizing Nearshore Fish Assemblages From Intact and Altered Mangrove Shorelines in Biscayne Bay, Florida, United States",
+          "url": "https://doi.org/10.3389/fmars.2022.894663",
+          "source_type": "peer_reviewed_ecological_subregion_definition"
         }
       ],
-      "validation_status": "named_context_supported_boundary_pending"
+      "validation_status": "literature_extent_supported_boundary_geometry_pending",
+      "subregion_definition": {
+        "north_limit": "Dumfoundling Bay",
+        "south_limit": "Rickenbacker Causeway",
+        "limit_geometry_status": "landmarks_referenced_not_digitized"
+      }
     },
     {
       "id": "sf-biscayne-flats",
@@ -1224,6 +1240,38 @@
         "curated_geojson_path": "data/spatial/noaa-biscayne-named-water-areas.geojson",
         "topology_audit_path": "data/spatial/noaa-biscayne-named-water-topology-audit.json"
       }
+    },
+    {
+      "id": "sf-biscayne-bay-southern-context",
+      "name": "South Biscayne Bay",
+      "feature_type": "bay_subregion",
+      "region": "south_florida",
+      "parent_id": "sf-biscayne-bay-ecological-context",
+      "geometry": null,
+      "geometry_status": "literature_landmarks_identified_cross_bay_boundary_geometry_pending",
+      "boundary_basis": "peer_reviewed_ecological_region_description",
+      "boundary_scope_note": "Published ecological segmentation places South Biscayne Bay from Featherbed Bank / Black Point to Card Sound / Jewfish Creek. These are landmark limits, not a digitized cross-bay boundary line. Geometry remains pending GIS validation; this is not a legal or management boundary.",
+      "subregion_definition": {
+        "north_limit": "Featherbed Bank / Black Point",
+        "south_limit": "Card Sound / Jewfish Creek",
+        "limit_geometry_status": "landmarks_referenced_not_digitized"
+      },
+      "relationships": [
+        {
+          "type": "located_within",
+          "target_id": "sf-biscayne-bay-ecological-context",
+          "status": "literature_region_extent_supported_boundary_geometry_pending"
+        }
+      ],
+      "provenance": [
+        {
+          "publisher": "Frontiers in Marine Science",
+          "title": "Characterizing Nearshore Fish Assemblages From Intact and Altered Mangrove Shorelines in Biscayne Bay, Florida, United States",
+          "url": "https://doi.org/10.3389/fmars.2022.894663",
+          "source_type": "peer_reviewed_ecological_subregion_definition"
+        }
+      ],
+      "validation_status": "literature_extent_supported_boundary_geometry_pending"
     }
   ]
 }
