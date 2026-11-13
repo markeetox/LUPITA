@@ -144,7 +144,7 @@ def test_curated_noaa_named_water_geometries_and_topology_audit_are_persisted():
     norris_persisted = "source_geometry_persisted" in next(
         feature for feature in catalog["features"] if feature["id"] == "sf-norris-cut"
     )["geometry_status"]
-    expected_count = 58 if norris_persisted else 57
+    expected_count = 59 if norris_persisted else 58
     assert geojson["metadata"]["source_feature_count"] == expected_count
     assert len(geojson["features"]) == expected_count
     by_name = {}
