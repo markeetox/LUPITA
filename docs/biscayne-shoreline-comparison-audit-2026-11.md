@@ -75,13 +75,15 @@ The next source acquisition remains the actual project vectors:
 - **FL1808A-TB-N:** Fender Point to Card Sound, imagery/lidar dates 2018-07-26 to 2019-04-16.
 - **FL2317-CS-N:** Port of Miami, imagery date 2023-10-21, reported horizontal accuracy 1.2 m at 95% confidence.
 
-NOAA InPort records link these projects to the Shoreline Data Explorer for vector downloads:
+NOAA InPort records link these projects to the Shoreline Data Explorer for vector downloads. Inspection of the official National Shoreline page's inline code confirmed that the UI constructs project ZIP downloads as `https://nsde.ngs.noaa.gov/downloads/{project_id}.zip`. A research workflow now probes the exact project archives, checks ZIP integrity, and inventories their contents:
 
 - FL1808C: https://www.fisheries.noaa.gov/inport/item/73241
 - FL1808A: https://www.fisheries.noaa.gov/inport/item/74866
 - FL2317: https://www.fisheries.noaa.gov/inport/item/76789
 
 The project-specific MHW and MLLW linework must be retrieved and retained as separate datums. Their source metadata, survey dates, geographic-cell coverage, and seam/topology behavior must be checked before using them to reconcile Biscayne Bay, inlets, or harbor shorelines.
+
+Project archive acquisition is being checked by the NSDE download-discovery workflow. Until its artifact is inspected, no project-specific geometry is considered retrieved.
 
 ## Rejected service candidate
 
