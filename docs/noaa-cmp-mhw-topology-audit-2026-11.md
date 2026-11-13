@@ -33,7 +33,7 @@ FL1808A-TB-N (GC12021) has 58 MHW features forming 51 exact-endpoint components.
 ### Interpretation
 
 - **GC11552 / FL1603A-CM-N to GC12021 / FL1808A-TB-N:** the nearest MHW geometries touch/intersect (0.00 m minimum geometry distance). Their nearest endpoints are 0.18 m apart (feature IDs 1442040 and 2077583). This is a promising local tie-in candidate, but it is not yet an accepted seam: source dates differ (2017 vs. 2018/2019), and the closest geometry pair and closest endpoint pair are not the same pair. Review the local feature geometry and source metadata before any conflation.
-- **GC12021 / FL1808A-TB-N to GC12023 / FL1808C-TB-N:** the closest MHW line geometries and endpoints are 17,690.77 m apart (feature IDs 2077140 and 1983664). This is a substantial separation in the extracted MHW coverage. It is a **dataset coverage gap**, not proof that the physical shoreline or a water connection is absent. Do not draw a connector across it.
+- **GC12021 / FL1808A-TB-N to GC12023 / FL1808C-TB-N:** the closest MHW line geometries and endpoints are 17,690.77 m apart (feature IDs 2077140 and 1983664). The closest pair is a diagonal separation between shoreline features on different sides of the bay, not an along-shore seam measurement. It must not be described as a missing 17.69 km coastline segment or used to infer a physical break or absent water connection. Do not draw a connector across it.
 - **GC11552 to GC12023:** the nearest MHW geometry distance is 21,793.35 m and nearest endpoint distance is 21,825.45 m. These projects are not adjacent in this extract.
 - **GC12001 / FL2317-CS-N:** no MHW linework was supplied, so it cannot be used to establish a shoreline seam with GC12023 despite its geographic proximity.
 
@@ -41,7 +41,7 @@ FL1808A-TB-N (GC12021) has 58 MHW features forming 51 exact-endpoint components.
 
 1. Keep each NOAA CMP project and source feature ID distinct in the research catalog.
 2. Mark the FL1603A-CM-N / FL1808A-TB-N contact as a **candidate local seam for manual review**, not a verified merged shoreline.
-3. Mark the GC12021 / GC12023 separation as an **uncovered interval in the extracted MHW datasets**. Do not bridge or interpolate it.
+3. Record the GC12021 / GC12023 17.69 km value only as the nearest geometric separation between two project line sets. Do not label it an alongshore coverage gap, bridge it, or interpolate a connector.
 4. Do not use FL2317-CS-N as shoreline evidence until a separate authoritative shoreline source is found for that area.
 5. Keep MHW, mangrove extent, apparent mangrove, depth contours, piers, jetties, and other structures as distinct feature classes.
 6. Continue using NOAA ENC named-water geometry and FDEP preserve geometry as separate contextual layers; neither is a substitute for a complete ecological or statutory bay boundary.
@@ -56,4 +56,4 @@ FL1808A-TB-N (GC12021) has 58 MHW features forming 51 exact-endpoint components.
 
 ## Next GIS milestone
 
-Acquire and validate authoritative shoreline / hydrographic coverage for the uncovered GC12021-to-GC12023 interval, then inspect actual inlet and channel geometries against NOAA ENC and other authoritative hydrography. Only after those source checks should the team define candidate subregions, flats, channels, and inlet connections.
+Inspect NOAA Harbour ENC coastline, depth contours, depth areas, unsurveyed areas, and vegetation in the intervening geographic band. Compare chart-derived features with project-specific MHW geometry without treating the nearest cross-bay separation as a missing shoreline segment. Then identify any additional NOAA CMP or NCEI survey coverage needed for specific shore segments. Only after source dates, chart cells, vertical datums, and geometry are reviewed should candidate subregions, flats, channels, and inlet connections be defined.
