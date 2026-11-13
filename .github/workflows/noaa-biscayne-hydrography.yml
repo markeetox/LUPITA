@@ -30,7 +30,7 @@ jobs:
       - name: Install geometry QA dependency
         run: python -m pip install shapely
       - name: Run NOAA hydrography tests
-        run: python -m pytest -q tests/test_noaa_biscayne_hydrography.py
+        run: python -m pytest -q tests/test_noaa_biscayne_hydrography.py tests/test_curate_noaa_named_water_geometries.py
       - name: Extract NOAA Harbour ENC and maintained-channel geometries
         run: python scripts/extract_noaa_biscayne_hydrography.py --output-dir artifacts/noaa-hydrography
       - name: Curate named-water geometries and run topology precheck
