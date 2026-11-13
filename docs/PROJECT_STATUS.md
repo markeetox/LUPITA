@@ -110,6 +110,6 @@ See [Biscayne research pipeline policy](biscayne-research-pipeline-policy-2026-1
 - Added the same freshness diagnostics to `fish.json` layer metadata and the app-facing API index.
 - Added regression coverage for source-age calculation, missing timestamps and degraded health.
 
-**Validation:** pending targeted Python tests and the next production refresh. The production prediction formula and species weights are unchanged.
+**Validation:** the first full-suite run reported 250 passed and one failed. The failure exposed a missing fallback from the chlorophyll aggregate timestamp to its primary scene timestamp; the correction is recorded in the progress log. Full-suite rerun and production refresh remain pending. The production prediction formula and species weights are unchanged.
 
 **Next:** compare several hourly refreshes to determine actual latency distributions before adjusting thresholds or using freshness to gate scoring.

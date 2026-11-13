@@ -112,7 +112,7 @@ def build_data_quality(layers: dict | None, sources: dict, errors: list[str], no
 
     chl_state = _layer_state(bool(cfg.get("chlorophyll", {}).get("enabled") or cfg.get("chlorophyll_gapfilled", {}).get("enabled")), bool(chl_info.get("primary_loaded") or chl_info.get("gapfilled_used")), errors, ["layers chlorophyll:", "layers chlorophyll_gapfilled:"])
     chl_state.update({key: value for key, value in chl_info.items() if key != "status"})
-    chl_state["freshness"] = _source_freshness(chl_info.get("time") or layers.get("times", {}).get("chlorophyll"), cfg.get("chlorophyll", {}).get("freshness"), now)
+    chl_state["freshness"] = _source_freshness(chl_info.get("time") or chl_info.get("primary_time") or layers.get("times", {}).get("chlorophyll"), cfg.get("chlorophyll", {}).get("freshness"), now)
     if chl_info.get("primary_time"):
         chl_state["primary_freshness"] = _source_freshness(chl_info.get("primary_time"), cfg.get("chlorophyll", {}).get("freshness"), now)
     if chl_info.get("gapfilled_time"):

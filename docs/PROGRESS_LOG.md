@@ -244,3 +244,30 @@ No application logic, tests, or workflow source belongs on `data`.
 ### Next action
 
 Compare source age across multiple scheduled refreshes, then calibrate operational thresholds before introducing any scoring gates.
+
+
+## 2026-11-13 | Correct chlorophyll freshness summary timestamp fallback
+
+**Branch:** `main`  
+**Parent commit:** `536984e0af96ddf0cc0c7a8edd344a2b4050568c`
+
+### Finding
+
+- The first full Python suite after source-freshness diagnostics completed with **250 passed, 1 failed**.
+- The failing test was `tests/test_layer_data_quality.py::test_data_quality_reports_loaded_layers_and_gapfilled_usage`.
+- Chlorophyll metadata supplied `primary_time`, but no top-level aggregate `time` or `layers.times.chlorophyll`. The summary freshness field therefore reported `unknown` despite a valid primary-scene timestamp.
+
+### Correction
+
+- Use the primary chlorophyll scene timestamp as the summary freshness fallback when an aggregate timestamp is unavailable.
+- Keep primary and gap-filled freshness diagnostics separate; do not infer one scene's timestamp from the other.
+- No scoring weights, source thresholds, or prediction behavior changed.
+
+### Validation
+
+- The existing regression test covers the fixture that exposed the missing fallback.
+- Full-suite rerun is required on this correction commit.
+
+### Next action
+
+- Confirm the Python suite passes, then inspect the next scheduled production export for the freshness fields.
