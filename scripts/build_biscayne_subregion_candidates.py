@@ -77,8 +77,8 @@ def valid_polygon(feature: dict[str, Any], source: str, *, repair: bool = False)
     if not geometry or geometry.get("type") not in {"Polygon", "MultiPolygon"}:
         raise ValueError(f"{source}: expected polygon geometry")
     geom = shape(geometry)
-    if geom.is_empty or geom.area <= 0:
-        raise ValueError(f"{source}: empty or zero-area polygon")
+    if geom.is_empty:
+        raise ValueError(f"{source}: empty polygon")
     if not geom.is_valid:
         if not repair:
             raise ValueError(f"{source}: invalid polygon geometry")
@@ -91,6 +91,8 @@ def valid_polygon(feature: dict[str, Any], source: str, *, repair: bool = False)
             geom = unary_union(polygon_parts)
         if geom.is_empty or not geom.is_valid or geom.area <= 0:
             raise ValueError(f"{source}: polygon could not be repaired for analysis")
+    elif geom.area <= 0:
+        raise ValueError(f"{source}: zero-area polygon")
     return geom
 
 
