@@ -88,11 +88,11 @@ Two additional NOAA NGS records are relevant, but they should not be treated as 
 - **FL1934E, Biscayne Bay historical shoreline rescue:** vectorized historic shoreline from survey maps dated 1934-08-01 through 1935-01-25. This is valuable for historical shoreline-change context, not current shoreline geometry.
   - InPort metadata: https://www.fisheries.noaa.gov/inport/item/63718
 
-The published rectangular metadata extents for FL1808A and FL1808C also deserve a coverage check. FL1808A spans approximately 25.3252–25.5119 N, while FL1808C spans approximately 25.6345–25.7729 N. This leaves an apparent latitude interval between the two project extents. NOAA metadata warns that rectangular geographic limits are for data management and do not imply complete surveyed coverage, so this is not yet proof of an actual shoreline gap. The exact geographic-cell geometries must be retrieved and inspected before describing coverage as continuous.
+The published rectangular metadata extents for FL1808A and FL1808C also deserve a coverage check. FL1808A spans approximately 25.3252–25.5119 N, while FL1808C spans approximately 25.6345–25.7729 N. This leaves an apparent latitude interval between the two project extents. NOAA metadata warns that rectangular geographic limits are for data management and do not imply complete surveyed coverage, so this is not yet proof of an actual shoreline gap. The official project ZIPs have now been retrieved and their actual MHW linework inspected. The closest MHW segments between FL1808A and FL1808C are 17.691 km apart. That measured separation is not proof of missing data: the project source geometries are segmented, the published extents are data-management bounds, and the project areas are not intended to be silently stitched. The source ID fields identify GC12021 and GC12023, but the separate ENC cell boundary geometries have not yet been acquired for a formal seam review.
 
 ### NOAA CUSP as a secondary check
 
-NOAA's Continually Updated Shoreline Product (CUSP) is intended to provide the most up-to-date shoreline and incorporates contemporary NOAA and non-NOAA sources. NOAA explicitly states that CUSP has less stringent acquisition and quality-control requirements than the project-based National Shoreline. Use CUSP as a currency/completeness comparison, not as a substitute for the project-specific MHW/MLLW vectors without reviewing its source and quality metadata.
+NOAA's Continually Updated Shoreline Product (CUSP) is intended to provide more current shoreline context and incorporates contemporary NOAA and non-NOAA sources. NOAA explicitly states that CUSP has less stringent acquisition and quality-control requirements than the project-based National Shoreline. A hosted ArcGIS CUSP copy encountered during this audit declared a California-zone spatial reference and returned no South Florida features, so it was rejected rather than force-reprojected. A valid South Florida CUSP source remains a possible secondary comparison, not a substitute for the project-specific MHW/MLLW vectors.
 
 NOAA Shoreline Data Explorer:
 https://nsde.ngs.noaa.gov/
@@ -100,14 +100,14 @@ https://nsde.ngs.noaa.gov/
 NOAA explanation of CUSP and National Shoreline:
 https://nsde.ngs.noaa.gov/more.html
 
-## Recommended next extraction
+## Recommended next extraction and spatial review
 
-1. Retrieve GC12023 and GC12021 shoreline shapefiles and metadata through the NOAA Shoreline Data Explorer.
-2. Preserve source project, geographic cell, MHW/MLLW datum, source dates, and feature attributes.
-3. Compare project footprints for overlap and gaps before merging.
-4. Inspect topological continuity and shoreline classification at the project seam.
-5. Use the shoreline as a land-water constraint only. Define the bay's open-water boundary, inlets, and tidal connections using separate hydrographic and ecological evidence.
-6. Keep the FDEP preserve as a separate management-boundary feature and retain the NOAA ENC named-water fragments as chart-derived context.
+1. Retrieve the small FL1603A-CM-N Convoy Point vectors as a local comparison source; do not treat it as bay-wide coverage.
+2. Inspect the exact GC12021 and GC12023 chart-cell geometries and project-neatline coverage, keeping them distinct from the metadata bounding rectangles.
+3. Compare MHW segments with benthic habitat, bathymetry, and NOAA ENC charted water features without assuming the preserve or chart polygons are the shoreline.
+4. Investigate whether a separate NOAA CMP project covers the 17.691 km separation between the retrieved MHW linework; do not fill it with interpolation.
+5. Crosswalk Government Cut and Norris Cut using source hydrography and channel geometry, not shoreline proximity.
+6. Keep the FDEP preserve as a separate management-boundary feature and retain NOAA ENC named-water fragments as chart-derived context.
 
 ## Guardrails
 
