@@ -84,3 +84,34 @@ Run the focused Biscayne landmark evidence workflow once the commit is pushed, t
 2. Retarget PR #70 to the staging branch after confirming the #69 foundation is already present.
 3. Review remaining unique branches against the staged tree, preserving only changes not superseded by main or other selected branches.
 4. Implement and validate the final main-to-data export boundary, then prepare one consolidated PR to `main`.
+
+
+## 2026-11-13 | Consolidate Biscayne research and resolve superseded PRs
+
+**Staging branch:** `integration/main-consolidation`  
+**Consolidation commit:** `4c84158bac5bc18efe780c4487a119b26865f510`
+
+### Changes
+
+- Merged PR #68 after its corrected current-head Python tests and species validator both passed:
+  - Python tests: https://github.com/markeetox/LUPITA/actions/runs/43450291705
+  - Species validator: https://github.com/markeetox/LUPITA/actions/runs/43450292042
+- Imported 85 added/updated paths from the NOAA hydrography research branch into the integration tree in one consolidated commit. This preserves the GIS scripts, source geometry, audits, topology reports, research documentation, and manual-only workflows without importing 444 branch commits.
+- Preserved integration-specific files from the spatial-context and in-situ work rather than replacing them with older versions from the stacked NOAA branch.
+- Retargeted PR #70 to the staging branch, then closed it as superseded after its content was imported. Its old branch dependency on PR #69 is no longer required.
+- Reviewed PR #71 against the current integration tree. The confidence basis, API data-quality fields, site-kind labels, and regression test were already present; closed it as superseded rather than merging stale core files.
+- The five expensive source-acquisition workflows remain manual-only. The focused landmark workflow remains the PR validation path.
+
+### Validation
+
+- PR #68: 193 passed, 0 failed on the corrected head; the species validator also passed.
+- Local Shapely/pyproj reproduction of the Jewfish Creek synthetic fixture measured a 100.7629 m shared boundary when topology is evaluated in source coordinates and only the resulting line is projected for length.
+- The previous PR #70 workflow attempts returned `action_required` with no jobs, so they are not counted as successful validation. A fresh full-suite and focused GIS run is still required on the consolidated staging tree.
+- Production `main` and the separate `data` branch have not been modified by these consolidation operations.
+
+### Next actions
+
+1. Audit remaining branches for genuinely unique code versus changes already present in current `main`.
+2. Keep only useful, non-superseded changes in staging; do not import stale profile or pipeline files.
+3. Run one full Python suite and one focused GIS validation pass on the consolidated tree.
+4. Prepare the final single PR into `main`, keeping `data` as the generated export destination only.
