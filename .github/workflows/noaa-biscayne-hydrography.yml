@@ -15,7 +15,7 @@ permissions:
   contents: write
 
 concurrency:
-  group: lupita-research-branch-writes
+  group: noaa-biscayne-hydrography
   cancel-in-progress: false
 
 jobs:
