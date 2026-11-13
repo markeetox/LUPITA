@@ -40,6 +40,7 @@ def test_curator_preserves_selected_noaa_source_geometries_and_writes_topology_a
         ("Safety Valve", 4),
         ("Biscayne Flats", 3),
         ("Bear Cut", 1),
+        ("Norris Cut", 1),
     ):
         for index in range(count):
             features.append(_feature(objectid, name, f"CELL-{index % 2}"))
@@ -50,7 +51,7 @@ def test_curator_preserves_selected_noaa_source_geometries_and_writes_topology_a
     audit = curate(source, tmp_path / "spatial")
 
     curated = json.loads((tmp_path / "spatial" / "noaa-biscayne-named-water-areas.geojson").read_text(encoding="utf-8"))
-    assert len(curated["features"]) == 45
+    assert len(curated["features"]) == 46
     assert {feature["properties"]["OBJNAM"] for feature in curated["features"]} == {
         "Biscayne Bay", "Safety Valve", "Biscayne Flats", "Bear Cut"
     }
@@ -58,9 +59,10 @@ def test_curator_preserves_selected_noaa_source_geometries_and_writes_topology_a
     assert bear[0]["properties"]["lupita_context_id"] == "sf-bear-cut"
     assert bear[0]["properties"]["lupita_geometry_role"] == "charted_named_water_area_polygon"
     assert bear[0]["geometry"]["type"] == "Polygon"
-    assert audit["source_feature_count"] == 45
+    assert audit["source_feature_count"] == 46
     assert audit["groups"]["Biscayne Bay"]["feature_count"] == 37
     assert audit["groups"]["Safety Valve"]["feature_count"] == 4
     assert audit["groups"]["Biscayne Flats"]["feature_count"] == 3
-    assert audit["groups"]["Bear Cut"]["objectids"] == [objectid - 1]
+    assert audit["groups"]["Bear Cut"]["objectids"] == [144]
+    assert audit["groups"]["Norris Cut"]["objectids"] == [145]
     assert (tmp_path / "spatial" / "noaa-biscayne-named-water-topology-audit.json").exists()
