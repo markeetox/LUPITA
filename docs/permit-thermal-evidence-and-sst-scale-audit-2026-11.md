@@ -163,3 +163,94 @@ SST can remain useful as a broad regional ocean-temperature context layer, espec
 - NASA JPL MUR SST v4.1 product: https://podaac.jpl.nasa.gov/dataset/MUR-JPL-L4-GLOB-v4.1
 - NOAA CoastWatch ERDDAP dataset metadata: https://coastwatch.pfeg.noaa.gov/erddap/info/jplMURSST41/index.html
 - Ern, Andreassen & Jutfelt (2023), general review of acute upper thermal tolerance mechanisms in fish: https://doi.org/10.1152/physiol.00027.2022
+
+
+## 6. South Florida in-situ temperature source audit
+
+The source review identified two particularly useful public data streams. They answer different parts of the scale problem and should not be treated as interchangeable.
+
+### USGS CREST Florida Keys underwater temperature release (Version 9)
+
+**Source:** Kuffner, I.B. (2024), USGS data release, DOI: https://doi.org/10.5066/F71C1TZK  
+**Landing page:** https://coastal.er.usgs.gov/data-release/doi-F71C1TZK/  
+**Direct archive:** https://coastal.er.usgs.gov/data-release/doi-F71C1TZK/data/FL_coral_underwater_temps_to_Jul2024.zip  
+**Metadata:** https://cmgds.marine.usgs.gov/catalog/spcmsc/FL_coral_underwater_temps_metadata_v9.html
+
+Verified source characteristics:
+
+- Ten offshore reef sites across Biscayne National Park, Florida Keys National Marine Sanctuary and Dry Tortugas National Park.
+- Measurements every 15 minutes.
+- HOBO Water Temp Pro V2 loggers deployed in duplicate, attached to reef-fixed concrete blocks.
+- Logger depths are 7–16 feet of seawater (approximately 2.1–4.9 m).
+- Version 9 includes data through July 2024. Some site records began in 2009; the three Biscayne National Park sites (Ball Buoy North, Shadow Reef, Brewster Reef) began in May 2023.
+- This is direct in-water logger temperature at shallow reef sites, not satellite SST.
+
+The metadata reports these observed ranges for the three Biscayne sites:
+
+| Site | Coordinates | Logger depth | Data period | Reported temperature range |
+|---|---|---:|---|---:|
+| Brewster Reef | 25.56676, -80.09974 | 13 ft / 4.0 m | May 2023–Jul 2024 | 21.569–32.549 °C |
+| Shadow Reef | 25.47775, -80.14088 | 12 ft / 3.7 m | May 2023–Jul 2024 | 20.138–33.261 °C |
+| Ball Buoy North | 25.31877, -80.18426 | 11 ft / 3.4 m | May 2023–Jul 2024 | 20.591–33.248 °C |
+
+**Interpretation boundary:** these are site-level extrema reported in dataset metadata, not a substitute for a row-level time-series analysis. The sites are shallow reef locations, not 15–40 m reef-tract stations. They are useful for shallow nearshore reef context and for comparing high-frequency in-water temperatures against daily satellite SST. They do not directly characterize Permit thermal exposure on the deeper reef tract.
+
+### FWC-FWRI FLKEYS Array via SECOORA ERDDAP
+
+**Source portal:** https://erddap.secoora.org/erddap/index.html  
+**Provider:** Florida Fish and Wildlife Conservation Commission, Fish and Wildlife Research Institute (FWC-FWRI), distributed through SECOORA.  
+**Example station:** RHA54, https://erddap.secoora.org/erddap/tabledap/org_secoora_flkeys_rha54.html
+
+The station metadata exposes time, latitude, longitude, vertical coordinate (z, metres, positive up), water temperature, aggregate QARTOD quality flag and individual QC-test flags. The example RHA54 station metadata reports:
+
+- Position: 24.5056°N, 83.1305°W.
+- Sensor vertical coordinate: z = -43 m (43 m below the datum).
+- Available period in the inspected metadata: 2023-09-22 14:00 UTC to 2024-08-14 13:00 UTC.
+- Reported temperature range: 20.653–30.844 °C.
+- Aggregate quality flags include values 1–4. The ERDDAP metadata defines 1=PASS, 2=NOT_EVALUATED, 3=SUSPECT, 4=FAIL, and 9=MISSING. These flags must be applied before calculating any summary statistics; do not treat every returned value as valid.
+
+A second example, station HFA04, reports 24.6687°N, 82.8926°W and z = -11 m, with an available period from 2020-12-11 to 2022-08-12 and a reported temperature range of 20.561–31.217 °C. This is useful as a shallower comparison station, but its time coverage is older and should be checked before any comparison with current MUR fields.
+
+**Interpretation boundary:** RHA54 is deeper than the 15–40 m Permit reef-tract range documented by the telemetry study. It can contribute regional deep-water context, but it is not a direct habitat-matched proxy for every Permit reef site. Station HFA04 is much shallower. Station selection must be based on actual coordinates, sensor depth, temporal overlap and habitat context, not just a station's broad “Florida Keys” label.
+
+The ERDDAP pages expose a public tabledap interface for requesting timestamped rows and their QC flags. However, the row-level CSV request could not be retrieved in this research session. Therefore, the values above are metadata-reported station ranges and coverage, **not a claimed extraction of individual observations**. A row-level extract remains a required next validation step. A reproducible query should request at least:
+`time, latitude, longitude, z, sea_water_temperature, sea_water_temperature_qc_agg, sea_water_temperature_qc_tests`
+with a narrow time window and explicit QC filtering. Preserve raw timestamps and QC flags in the research extract.
+
+### Biscayne Bay Aquatic Preserves continuous monitoring
+
+**Program:** Florida DEP / Biscayne Bay Aquatic Preserves Continuous Water Quality Monitoring (SEACAR program 5077).  
+**Program page:** https://data.florida-seacar.org/programs/details/5077  
+**Data portal:** https://www.floridaapdata.org/
+
+- Five fixed stations: BBBB14, BBJT71, BBLR03, BBMRSC and BBMRDW.
+- 15-minute observations, beginning in 2019 and continuing.
+- Includes water temperature, depth, salinity, dissolved oxygen, pH, turbidity and other parameters.
+- Current methods use YSI EXO2 sondes, with earlier instrument models at some stations.
+- The program describes its habitat as water column and provides yearly CSV files through the Florida Aquatic Preserve Data Portal.
+- The portal requires a valid email for data download, so this is not as frictionless as the public ERDDAP source.
+
+This network is valuable for Biscayne Bay shallow-estuary context, especially where salinity and depth covary with temperature. It is not an offshore reef-tract substitute and must not be generalized to deeper Permit habitat.
+
+## 7. Source ranking and next data-validation step
+
+For the South Florida pilot, use the sources according to their actual sampling support:
+
+1. **FWC-FWRI FLKEYS Array / SECOORA ERDDAP:** best candidate for depth-labelled, timestamped bottom-temperature observations and QC-aware station extraction. Select stations only after matching their location and sensor depth to the target habitat context.
+2. **USGS CREST Version 9:** strong high-frequency in-water reference at shallow reef sites in Biscayne National Park and the Florida Keys. Particularly useful for comparing daily MUR surface SST with shallow reef logger temperature; it does not cover the 15–40 m reef depth band.
+3. **Biscayne Bay Aquatic Preserves:** useful 15-minute estuarine water-column temperature and co-variable context; data download requires portal registration/email and the network is not offshore reef habitat.
+
+The next validation extract should contain, for each selected station:
+
+- station identifier, provider and dataset version;
+- latitude, longitude, sensor vertical coordinate and documented sensor/deployment depth;
+- timestamp and timezone;
+- raw temperature and units;
+- aggregate and individual QC flags;
+- data coverage, missingness and temporal gaps;
+- distance to representative South Florida flats and reef-tract pilot sites;
+- concurrent MUR daily SST values and the exact MUR cell/time selected by LUPITA.
+
+Summaries should be calculated only from QC-passing observations, with non-passing and unevaluated counts reported separately. Compare seasonal distributions, daily ranges, diel variability and surface-to-bottom differences only where timestamps and locations support a valid match. Do not convert any of these environmental distributions into a Permit preference or tolerance curve.
+
+**Current extraction status:** source discovery and metadata-level station screening completed; individual-row CSV extraction and QC-aware statistical summaries remain pending. No production model or species profile values were changed.
