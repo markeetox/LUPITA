@@ -1,0 +1,108 @@
+{
+  "generated_at_utc": "2026-11-13T03:27:07.395555+00:00",
+  "status": "overlay_metrics_computed",
+  "output_crs_for_measurements": "EPSG:26917",
+  "sources": {
+    "noaa_cmp_projects": [
+      "https://www.fisheries.noaa.gov/inport/item/74866",
+      "https://www.fisheries.noaa.gov/inport/item/73241",
+      "https://www.fisheries.noaa.gov/inport/item/76789"
+    ],
+    "noaa_enc_named_water": "https://encdirect.noaa.gov/arcgis/rest/services/encdirect/enc_harbour/MapServer/237",
+    "fdep_aquatic_preserves": "https://ca.dep.state.fl.us/arcgis/rest/services/OpenData/AQUATIC_PRESERVES/MapServer/0"
+  },
+  "fdep_preserves": {
+    "Biscayne Bay": {
+      "objectid": 43,
+      "acres": 64607.580491
+    },
+    "Biscayne Bay-Cape Florida to Monroe County Line": {
+      "objectid": 25,
+      "acres": 4163.903858
+    }
+  },
+  "noaa_enc_biscayne_bay_charted_polygon_count": 37,
+  "noaa_enc_biscayne_bay_vs_fdep_objectid_43_area_overlay": {
+    "first_area_km2": 512.865,
+    "second_area_km2": 261.411,
+    "intersection_area_km2": 180.106,
+    "first_area_intersection_pct": 35.12,
+    "second_area_intersection_pct": 68.9
+  },
+  "project_mhw_line_overlays": {
+    "FL1808A-TB-N": {
+      "mhw_feature_count": 58,
+      "mhw_line_length_km": 39.44,
+      "overlays": {
+        "noaa_charted_biscayne_bay_named_water_union": {
+          "total_line_length_km": 39.44,
+          "inside_polygon_length_km": 12.315,
+          "outside_polygon_length_km": 27.125,
+          "inside_line_length_pct": 31.23,
+          "minimum_distance_to_polygon_boundary_m": 0.0
+        },
+        "fdep_biscayne_bay_aquatic_preserve_objectid_43": {
+          "total_line_length_km": 39.44,
+          "inside_polygon_length_km": 6.251,
+          "outside_polygon_length_km": 33.189,
+          "inside_line_length_pct": 15.85,
+          "minimum_distance_to_polygon_boundary_m": 0.0
+        },
+        "fdep_cape_florida_preserve_objectid_25": {
+          "total_line_length_km": 39.44,
+          "inside_polygon_length_km": 0.0,
+          "outside_polygon_length_km": 39.44,
+          "inside_line_length_pct": 0.0,
+          "minimum_distance_to_polygon_boundary_m": 24286.33
+        }
+      },
+      "status": "mhw_linework_retrieved"
+    },
+    "FL1808C-TB-N": {
+      "mhw_feature_count": 70,
+      "mhw_line_length_km": 18.029,
+      "overlays": {
+        "noaa_charted_biscayne_bay_named_water_union": {
+          "total_line_length_km": 18.029,
+          "inside_polygon_length_km": 2.624,
+          "outside_polygon_length_km": 15.406,
+          "inside_line_length_pct": 14.55,
+          "minimum_distance_to_polygon_boundary_m": 0.0
+        },
+        "fdep_biscayne_bay_aquatic_preserve_objectid_43": {
+          "total_line_length_km": 18.029,
+          "inside_polygon_length_km": 7.392,
+          "outside_polygon_length_km": 10.637,
+          "inside_line_length_pct": 41.0,
+          "minimum_distance_to_polygon_boundary_m": 0.0
+        },
+        "fdep_cape_florida_preserve_objectid_25": {
+          "total_line_length_km": 18.029,
+          "inside_polygon_length_km": 0.0,
+          "outside_polygon_length_km": 18.029,
+          "inside_line_length_pct": 0.0,
+          "minimum_distance_to_polygon_boundary_m": 8291.17
+        }
+      },
+      "status": "mhw_linework_retrieved"
+    },
+    "FL2317-CS-N": {
+      "mhw_feature_count": 0,
+      "mhw_line_length_km": 0,
+      "overlays": {},
+      "status": "no_natural_mhw_features_in_project"
+    }
+  },
+  "nearest_mhw_project_separations_km": {
+    "FL1808A-TB-N__FL1808C-TB-N": 17.691
+  },
+  "limitations": [
+    "NOAA ENC named-water polygons are charted named-water areas, not complete ecological or statutory boundaries.",
+    "FDEP Aquatic Preserve polygons are approximate management GIS geometries, not legal survey or enforcement geometry.",
+    "MHW project linework is source-specific shoreline evidence, but its segmented coverage does not establish a continuous bay boundary.",
+    "Line length inside a preserve or charted water polygon is a spatial overlay statistic, not a shoreline-accuracy score.",
+    "The MHHW screening product is not used in this MHW overlay.",
+    "No gaps are bridged, no lines are snapped, and separate FDEP preserve designations are not merged.",
+    "No production scoring, species profile values, or API v1 behavior is changed."
+  ]
+}
