@@ -25,8 +25,32 @@ CONTEXTS = {
     "Biscayne Flats": ("sf-biscayne-flats", "charted_named_mud_flat_source_polygon"),
     "Bear Cut": ("sf-bear-cut", "charted_named_water_area_polygon"),
     "Norris Cut": ("sf-norris-cut", "charted_named_water_area_polygon"),
+    "Black Ledge": ("sf-biscayne-black-ledge", "charted_ledge_source_polygon"),
+    "Featherbed Bank": ("sf-featherbed-bank", "charted_bank_source_polygon"),
+    "Lewis Cut": ("sf-lewis-cut", "charted_named_waterway_source_polygon"),
+    "Biscayne Channel": ("sf-biscayne-channel", "charted_sea_channel_source_polygon"),
+    "Sands Cut": ("sf-sands-cut", "charted_named_waterway_source_polygon"),
+    "Snapper Creek Canal": ("sf-snapper-creek-canal", "charted_canal_source_polygon"),
+    "Goulds Canal": ("sf-goulds-canal", "charted_canal_source_polygon"),
+    "Deering Channel": ("sf-deering-channel", "charted_sea_channel_source_polygon"),
+    "Cape Florida Channel": ("sf-cape-florida-channel", "charted_sea_channel_source_polygon"),
 }
-EXPECTED_COUNTS = {"Biscayne Bay": 37, "Safety Valve": 4, "Biscayne Flats": 3, "Bear Cut": 1, "Norris Cut": 1}
+EXPECTED_COUNTS = {
+    "Biscayne Bay": 37,
+    "Safety Valve": 4,
+    "Biscayne Flats": 3,
+    "Bear Cut": 1,
+    "Norris Cut": 1,
+    "Black Ledge": 3,
+    "Featherbed Bank": 1,
+    "Lewis Cut": 1,
+    "Biscayne Channel": 2,
+    "Sands Cut": 1,
+    "Snapper Creek Canal": 1,
+    "Goulds Canal": 1,
+    "Deering Channel": 1,
+    "Cape Florida Channel": 2,
+}
 
 
 def curate(source_path: Path, output_dir: Path) -> dict[str, Any]:
