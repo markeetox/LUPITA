@@ -15,20 +15,9 @@ from typing import Any
 
 import requests
 
-WFS_ENDPOINTS = [
-    "https://geodesy.noaa.gov/GeoServer/NSDE/ows",
-    "https://geodesy.noaa.gov/GeoServer/NSDE/wfs",
-    "https://www.ngs.noaa.gov/GeoServer/NSDE/ows",
-    "https://www.ngs.noaa.gov/GeoServer/NSDE/wfs",
-    "https://geodesy.noaa.gov/geoserver/NSDE/ows",
-]
-WMS_ENDPOINTS = [
-    "https://geodesy.noaa.gov/GeoServer/NSDE/ows",
-    "https://geodesy.noaa.gov/GeoServer/NSDE/wms",
-    "https://www.ngs.noaa.gov/GeoServer/NSDE/ows",
-    "https://www.ngs.noaa.gov/GeoServer/NSDE/wms",
-    "https://geodesy.noaa.gov/geoserver/NSDE/ows",
-]
+ARCGIS_CUSP_LAYER = "https://services.arcgis.com/rD2ylXRs80UroD90/ArcGIS/rest/services/NOAA_Coastal_Shoreline/FeatureServer/0"
+BBOX = (-80.45, 25.25, -80.05, 26.00)
+BATCH_SIZE = 500
 TIMEOUT = (15, 90)
 PROJECTS = [
     {
@@ -87,75 +76,130 @@ PROJECTS = [
 ]
 
 KEYWORDS = ("shoreline", "cusp", "national", "mhw", "mllw", "coastal")
-
-
-def local_name(tag: str) -> str:
-    return tag.rsplit("}", 1)[-1].split(":")[-1]
-
-
-def parse_feature_types(xml_text: str) -> list[dict[str, str]]:
-    root = ET.fromstring(xml_text)
-    result = []
-    for node in root.iter():
-        if local_name(node.tag) != "FeatureType":
-            continue
-        fields: dict[str, str] = {}
-        for child in node:
-            key = local_name(child.tag)
-            if key in {"Name", "Title", "Abstract", "DefaultCRS", "SRS", "DefaultSRS"}:
-                fields[key] = (child.text or "").strip()
-        if fields.get("Name"):
-            result.append(fields)
-    return result
-
-
-def parse_wms_layers(xml_text: str) -> list[dict[str, str]]:
-    root = ET.fromstring(xml_text)
-    result = []
-    for node in root.iter():
-        if local_name(node.tag) != "Layer":
-            continue
-        fields: dict[str, str] = {}
-        for child in node:
-            key = local_name(child.tag)
-            if key in {"Name", "Title", "Abstract"} and child.text:
-                fields[key] = child.text.strip()
-        if fields.get("Name"):
-            result.append(fields)
-    return result
-
-
 def is_candidate(layer: dict[str, str]) -> bool:
     text = " ".join(layer.values()).lower()
     return any(word in text for word in KEYWORDS)
 
 
-def request_capabilities(
-    session: requests.Session, service: str, version: str
-) -> tuple[str, str]:
-    endpoints = WFS_ENDPOINTS if service.upper() == "WFS" else WMS_ENDPOINTS
-    params = {"service": service, "request": "GetCapabilities", "version": version}
-    errors = []
-    for endpoint in endpoints:
-        for attempt in range(2):
-            try:
-                response = session.get(endpoint, params=params, timeout=TIMEOUT)
-                if response.status_code in {429, 500, 502, 503, 504} and attempt == 0:
-                    time.sleep(2)
-                    continue
-                response.raise_for_status()
-                # Parse before treating a 200 HTML error page as success.
-                ET.fromstring(response.text)
-                return response.url, response.text
-            except (requests.RequestException, ET.ParseError) as exc:
-                body = ""
-                if isinstance(exc, requests.HTTPError) and exc.response is not None:
-                    body = (exc.response.text or "")[:240].replace("\\n", " ")
-                errors.append(
-                    f"{endpoint} attempt {attempt + 1}: {type(exc).__name__}: {exc}; body={body!r}"
-                )
-                break
-    raise RuntimeError(f"{service} GetCapabilities failed: {'; '.join(errors)}")
+def validate_geojson_feature(feature: dict[str, Any]) -> None:
+    geometry = feature.get("geometry")
+    if not isinstance(geometry, dict) or geometry.get("type") not in {
+        "LineString", "MultiLineString"
+    }:
+        raise ValueError(f"Expected shoreline line geometry, got {geometry!r}")
+    coords = geometry.get("coordinates") or []
+    positions = coords if geometry["type"] == "LineString" else [
+        point for part in coords for point in part
+    ]
+    if not positions:
+        raise ValueError("Shoreline feature has empty coordinates")
+    for position in positions:
+        if len(position) < 2:
+            raise ValueError(f"Invalid coordinate position: {position!r}")
+        lon, lat = float(position[0]), float(position[1])
+        if not (-180 <= lon <= 180 and -90 <= lat <= 90):
+            raise ValueError(f"Coordinate outside EPSG:4326 bounds: {position!r}")
+
+
+def fetch_cusp_shoreline(
+    session: requests.Session, output_dir: Path
+) -> tuple[dict[str, Any], dict[str, Any]]:
+    metadata_response = session.get(
+        ARCGIS_CUSP_LAYER, params={"f": "pjson"}, timeout=TIMEOUT
+    )
+    metadata_response.raise_for_status()
+    metadata = metadata_response.json()
+    if metadata.get("error"):
+        raise RuntimeError(f"NOAA CUSP layer metadata error: {metadata['error']}")
+    if metadata.get("geometryType") != "esriGeometryPolyline":
+        raise RuntimeError(
+            f"NOAA CUSP layer is not a polyline layer: {metadata.get('geometryType')!r}"
+        )
+
+    xmin, ymin, xmax, ymax = BBOX
+    query_url = f"{ARCGIS_CUSP_LAYER}/query"
+    id_params = {
+        "where": "1=1",
+        "geometry": f"{xmin},{ymin},{xmax},{ymax}",
+        "geometryType": "esriGeometryEnvelope",
+        "inSR": 4326,
+        "spatialRel": "esriSpatialRelIntersects",
+        "returnIdsOnly": "true",
+        "f": "json",
+    }
+    ids_response = session.get(query_url, params=id_params, timeout=TIMEOUT)
+    ids_response.raise_for_status()
+    ids_payload = ids_response.json()
+    if ids_payload.get("error"):
+        raise RuntimeError(f"NOAA CUSP object-ID query error: {ids_payload['error']}")
+    object_ids = sorted(ids_payload.get("objectIds") or [])
+    features = []
+
+    for offset in range(0, len(object_ids), BATCH_SIZE):
+        batch = object_ids[offset : offset + BATCH_SIZE]
+        params = {
+            "objectIds": ",".join(str(value) for value in batch),
+            "outFields": "*",
+            "returnGeometry": "true",
+            "outSR": 4326,
+            "f": "geojson",
+        }
+        response = session.get(query_url, params=params, timeout=TIMEOUT)
+        response.raise_for_status()
+        payload = response.json()
+        if payload.get("error"):
+            raise RuntimeError(f"NOAA CUSP feature query error: {payload['error']}")
+        page = payload.get("features")
+        if not isinstance(page, list):
+            raise RuntimeError("NOAA CUSP feature response has no GeoJSON features array")
+        for feature in page:
+            validate_geojson_feature(feature)
+        features.extend(page)
+
+    if len(features) != len(object_ids):
+        raise RuntimeError(
+            f"NOAA CUSP returned {len(features)} features for {len(object_ids)} object IDs"
+        )
+
+    collection = {
+        "type": "FeatureCollection",
+        "name": "NOAA_CUSP_Biscayne_review_bbox",
+        "crs": {"type": "name", "properties": {"name": "EPSG:4326"}},
+        "features": features,
+    }
+    (output_dir / "noaa_cusp_biscayne_shoreline.geojson").write_text(
+        json.dumps(collection, separators=(",", ":")) + "\\n", encoding="utf-8"
+    )
+
+    source_counts: dict[str, int] = {}
+    date_counts: dict[str, int] = {}
+    attribute_counts: dict[str, int] = {}
+    for feature in features:
+        props = feature.get("properties") or {}
+        for counter, field in (
+            (source_counts, "SOURCE_ID"),
+            (date_counts, "SRC_DATE"),
+            (attribute_counts, "ATTRIBUTE"),
+        ):
+            value = str(props.get(field) or "unknown")
+            counter[value] = counter.get(value, 0) + 1
+
+    summary = {
+        "feature_count": len(features),
+        "object_id_count": len(object_ids),
+        "geometry_types": sorted({
+            feature["geometry"]["type"] for feature in features
+        }),
+        "source_id_counts": source_counts,
+        "source_date_counts": date_counts,
+        "attribute_counts": attribute_counts,
+        "bbox_wgs84": list(BBOX),
+        "output_crs": "EPSG:4326",
+        "source_fields": [field.get("name") for field in metadata.get("fields", [])],
+        "service_last_edit_date": metadata.get("editingInfo", {}).get("lastEditDate"),
+        "service_max_record_count": metadata.get("maxRecordCount"),
+    }
+    return metadata, summary
 
 
 def run_audit(output_dir: Path, session: requests.Session | None = None) -> dict[str, Any]:
@@ -163,69 +207,55 @@ def run_audit(output_dir: Path, session: requests.Session | None = None) -> dict
     session = session or requests.Session()
     session.headers.update({"User-Agent": "LUPITA-research-shoreline-audit/1.0 (research-only)"})
 
-    wfs_url, wfs_xml = request_capabilities(session, "WFS", "2.0.0")
-    (output_dir / "noaa_nsde_wfs_capabilities.xml").write_text(wfs_xml, encoding="utf-8")
-    feature_types = parse_feature_types(wfs_xml)
-    candidate_types = [item for item in feature_types if is_candidate(item)]
-
-    wms_url = None
-    wms_error = None
-    wms_layers: list[dict[str, str]] = []
-    try:
-        wms_url, wms_xml = request_capabilities(session, "WMS", "1.3.0")
-        (output_dir / "noaa_nsde_wms_capabilities.xml").write_text(wms_xml, encoding="utf-8")
-        wms_layers = parse_wms_layers(wms_xml)
-    except Exception as exc:  # WMS is supplementary; WFS is the required discovery source.
-        wms_error = f"{type(exc).__name__}: {exc}"
+    cusp_metadata, cusp_summary = fetch_cusp_shoreline(session, output_dir)
+    (output_dir / "noaa_cusp_layer_metadata.json").write_text(
+        json.dumps(cusp_metadata, indent=2) + "\\n", encoding="utf-8"
+    )
 
     report = {
-        "audit_version": 1,
+        "audit_version": 2,
         "generated_at_utc": datetime.now(timezone.utc).isoformat(),
-        "status": "service_inventory_retrieved",
-        "purpose": "Discover NOAA NGS shoreline service layers before selecting and downloading project-specific vectors.",
-        "wfs": {
-            "candidate_endpoints": WFS_ENDPOINTS,
-            "capabilities_url": wfs_url,
-            "version": "2.0.0",
-            "feature_type_count": len(feature_types),
-            "candidate_feature_types": candidate_types,
-        },
-        "wms": {
-            "candidate_endpoints": WMS_ENDPOINTS,
-            "capabilities_url": wms_url,
-            "layer_count": len(wms_layers),
-            "candidate_layers": [item for item in wms_layers if is_candidate(item)],
-            "error": wms_error,
+        "status": "cusp_comparison_geometry_retrieved",
+        "purpose": "Retrieve NOAA CUSP shoreline comparison geometry and preserve its source attribution before project-specific shoreline vector acquisition.",
+        "cusp": {
+            "layer_url": ARCGIS_CUSP_LAYER,
+            "service_item_id": "b5a2dc47497642029c2e387119f691ad",
+            "layer_name": cusp_metadata.get("name"),
+            "geometry_type": cusp_metadata.get("geometryType"),
+            "description": "NOAA Continually Updated Shoreline Product. Mean-high-water proxy shoreline; not equivalent to project-specific MHW and MLLW vectors.",
+            **cusp_summary,
+            "geojson_file": "noaa_cusp_biscayne_shoreline.geojson",
         },
         "project_metadata_candidates": PROJECTS,
+        "legacy_wfs_probe": {
+            "endpoint": "https://geodesy.noaa.gov/GeoServer/NSDE/ows",
+            "status": "http_404_from_github_actions_runner",
+            "interpretation": "Historical WFS endpoint documented in older NGS materials was unavailable from this runner; do not assume it is a current vector-download endpoint.",
+        },
         "limitations": [
-            "A service layer name or title does not prove it contains the project-specific shoreline vectors.",
-            "WMS imagery is not a substitute for source vector geometry.",
-            "MHW and MLLW features must remain separate and retain their vertical-datum metadata.",
+            "CUSP is a mean-high-water proxy and is not interchangeable with project-specific MHW and MLLW vectors.",
+            "CUSP is a comparison source with less stringent acquisition and QC than project-based National Shoreline products.",
+            "CUSP source attribution must be inspected before assigning features to FL1808A, FL1808C, or FL2317 projects.",
+            "A source-date field is not necessarily the date the CUSP service was last updated.",
             "Project metadata rectangles are not proof of complete surveyed coverage.",
             "No final Biscayne Bay boundary is created by this audit.",
-            "NOAA shoreline products are not navigation products and are not legal survey boundaries.",
+            "NOAA shoreline products are not navigation products or legal survey boundaries.",
         ],
     }
     (output_dir / "noaa_nsde_shoreline_service_inventory.json").write_text(
-        json.dumps(report, indent=2) + "\n", encoding="utf-8"
+        json.dumps(report, indent=2) + "\\n", encoding="utf-8"
     )
     return report
-
-
 def main() -> int:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--output-dir", type=Path, default=Path("artifacts/noaa-shoreline"))
     args = parser.parse_args()
     report = run_audit(args.output_dir)
     print(json.dumps({
-        "wfs_feature_type_count": report["wfs"]["feature_type_count"],
-        "wfs_candidate_count": len(report["wfs"]["candidate_feature_types"]),
-        "wms_candidate_count": len(report["wms"]["candidate_layers"]),
+        "cusp_feature_count": report["cusp"]["feature_count"],
+        "source_ids": report["cusp"]["source_id_counts"],
+        "source_dates": report["cusp"]["source_date_counts"],
         "output_dir": str(args.output_dir),
     }, indent=2))
     return 0
 
-
-if __name__ == "__main__":
-    raise SystemExit(main())
