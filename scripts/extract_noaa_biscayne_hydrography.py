@@ -32,6 +32,20 @@ LAYERS = {
         "publisher": "NOAA Office of Coast Survey; source data copyright USACE",
         "description": "USACE-maintained and surveyed coastal channels and waterways.",
     },
+    "harbor_named_water_area_points": {
+        "service": SERVICE,
+        "id": 41,
+        "name": "Harbor.Sea_Area_Named_Water_Area_point",
+        "publisher": "NOAA Office of Coast Survey",
+        "description": "Point features labeling named water areas in large-scale Harbour ENC compilation; labels only, not boundary geometry.",
+    },
+    "harbor_navigation_lines": {
+        "service": SERVICE,
+        "id": 132,
+        "name": "Harbor.Navigation_Line",
+        "publisher": "NOAA Office of Coast Survey",
+        "description": "Charted navigation-line features in large-scale Harbour ENC compilation; not necessarily channel centerlines.",
+    },
     "harbor_dredged_areas": {
         "service": SERVICE,
         "id": 228,
@@ -225,6 +239,8 @@ def run(output_dir: Path) -> dict[str, Any]:
             "ENC hydrographic objects are chart features; their presence does not establish ecological connectivity or fish movement.",
             "No Government Cut or Bear Cut identity is assigned unless source attributes and geometry support it.",
             "Named water-area polygons may not represent a complete bay or inlet boundary.",
+            "Named water-area point features are label anchors only, not boundaries.",
+            "Navigation lines are chart features and must not be treated as ecological corridors without independent evidence.",
             "The Harbour service is updated weekly and reflects the scale band of its source ENC cells.",
         ],
     }
