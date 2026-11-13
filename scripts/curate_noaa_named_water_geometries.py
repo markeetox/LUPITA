@@ -158,12 +158,12 @@ def curate(source_path: Path, output_dir: Path) -> dict[str, Any]:
                     "Geometry is retrieved and coordinate-validated; static geometry import and topology review remain pending.",
                     ""
                 )
-                note = note.split(" The original source polygon is now persisted")[0]
-                note = note.split(" The original source polygon is persisted in the curated GeoJSON and passed geometry validation.")[0]
-                feature["boundary_scope_note"] = note.rstrip() + (
-                    " The original source polygon is persisted in the curated GeoJSON and passed geometry validation. "
-                    "It remains a charted named-water area, not a surveyed centerline or depth boundary."
-                )
+                if "original source polygon is persisted in the curated GeoJSON" not in note.lower():
+                    note = note.rstrip() + (
+                        " The original source polygon is persisted in the curated GeoJSON and passed geometry validation. "
+                        "It remains a charted named-water area, not a surveyed centerline or depth boundary."
+                    )
+                feature["boundary_scope_note"] = note
             else:
                 feature["geometry_status"] = (
                     "source_chart_fragments_persisted_topology_precheck_passed_complete_boundary_unverified"
@@ -173,30 +173,27 @@ def curate(source_path: Path, output_dir: Path) -> dict[str, Any]:
                 feature["validation_status"] = "source_fragments_persisted_mosaic_not_promoted_to_boundary"
                 note = feature["boundary_scope_note"]
                 if name == "Biscayne Bay":
-                    anchor = (
-                        "NOAA Harbour ENC also contains 37 charted Biscayne Bay named-water polygons across 17 ENC cells."
-                    )
-                    prefix = note.split(anchor)[0]
-                    feature["boundary_scope_note"] = prefix + anchor + (
-                        " These are chart-cell fragments, not a complete ecological or statutory boundary. "
-                        "A first geometric topology precheck is complete: the union has two disconnected components, "
-                        "one a very small isolated fragment. Full boundary reconciliation remains pending. "
-                        "Original chart fragments are persisted individually; no dissolved or complete boundary is promoted."
-                    )
-                elif name == "Safety Valve":
-                    note = note.split(" Original chart fragments are persisted individually")[0]
-                    note = note.split(" A first geometric topology precheck found")[0]
-                    feature["boundary_scope_note"] = note + (
-                        " A first geometric topology precheck found one connected component and no material overlaps. "
-                        "Source polygons remain separate; this does not establish ecological connectivity or current habitat."
-                    )
-                else:
-                    note = note.split(" Original chart fragments are persisted individually")[0]
-                    note = note.split(" A first geometric topology precheck found")[0]
-                    feature["boundary_scope_note"] = note + (
-                        " A first geometric topology precheck found one connected component and no material overlaps. "
-                        "Source polygons remain separate; the charted mud-flat class does not establish current substrate or habitat."
-                    )
+                    if "A first geometric topology precheck is complete:" not in note:
+                        note = note.replace(
+                            "mosaic and topology review is pending.",
+                            "a first geometric topology precheck is complete: the union has two disconnected components, "
+                            "one a very small isolated fragment. Full boundary reconciliation remains pending."
+                        )
+                        note = note.rstrip() + (
+                            " Original chart fragments are persisted individually; no dissolved or complete boundary is promoted."
+                        )
+                elif "A first geometric topology precheck found one connected component" not in note:
+                    if name == "Safety Valve":
+                        note = note.rstrip() + (
+                            " A first geometric topology precheck found one connected component and no material overlaps. "
+                            "Source polygons remain separate; this does not establish ecological connectivity or current habitat."
+                        )
+                    else:
+                        note = note.rstrip() + (
+                            " A first geometric topology precheck found one connected component and no material overlaps. "
+                            "Source polygons remain separate; the charted mud-flat class does not establish current substrate or habitat."
+                        )
+                feature["boundary_scope_note"] = note
         catalog_path.write_text(json.dumps(catalog, indent=2, ensure_ascii=False) + "\n", encoding="utf-8")
 
     return audit
