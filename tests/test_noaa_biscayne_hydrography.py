@@ -73,3 +73,19 @@ def test_route_crosswalk_layers_are_included_as_navigation_context_only():
     }
     assert {key: LAYERS[key]["id"] for key in expected} == expected
     assert all("navigation" in LAYERS[key]["description"].lower() for key in expected)
+
+def test_coastline_bathymetry_and_habitat_layers_are_distinct_source_classes():
+    expected = {
+        "harbor_coastline_lines": (84, "coastline"),
+        "harbor_depth_contour_lines": (104, "depth-contour"),
+        "harbor_land_areas": (233, "land-area"),
+        "harbor_depth_areas": (227, "depth-area"),
+        "harbor_unsurveyed_areas": (230, "unsurveyed"),
+        "harbor_seabed_areas": (200, "seabed"),
+        "harbor_vegetation_areas": (239, "vegetation"),
+    }
+    for key, (layer_id, classification) in expected.items():
+        definition = LAYERS[key]
+        assert definition["id"] == layer_id
+        assert classification in definition["description"].lower()
+        assert definition["service"].endswith("/enc_harbour/MapServer")
