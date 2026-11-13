@@ -90,8 +90,9 @@ def load_layers(sources: dict, errors: list[str], fetch=erddap.fetch_csv, fetch_
               "closure_areas": [], "closure_cover": None, "closure_info": {}, "closure_checked": False,
               "structure_type": None, "structure_info": {}, "structure_cover": None, "structure_stats": None,
               "habitat_features": {}, "habitat_mapped_cover": None, "habitat_polygons": [], "habitat_info": {},
-              "times": {"sst": sst_time, "chlorophyll": None},
-              "datasets": {"sst": cfg["sst"]["dataset"]}}
+              "times": {"sst": sst_time, "chlorophyll": None, "currents": None, "stream_edge": None},
+              "datasets": {"sst": cfg["sst"]["dataset"]}, "currents_info": None,
+              "stream_edge_source": None}
 
     if places and places.get("places"):
         inlets = [p for p in places["places"] if p.get("kind") in ("inlet", "pass") or p.get("type") in ("inlet", "pass")]
@@ -195,22 +196,93 @@ def load_layers(sources: dict, errors: list[str], fetch=erddap.fetch_csv, fetch_
         except Exception as exc:
             errors.append(f"layers bathymetry: {exc}")
     cu = cfg.get("currents", {})
-    if cu.get("enabled"):
-        try:
-            clats, clons, g, ctime = _fetch_multi(cu, region, fetch)
-            u_name, v_name = cu["variables"]
-            u = resample(g[u_name], clats, clons, lats, lons, min_weight=0.5)
-            v = resample(g[v_name], clats, clons, lats, lons, min_weight=0.5)
+    cf = cfg.get("currents_fallback", {})
+    if cu.get("enabled") or cf.get("enabled"):
+        hfr_u = hfr_v = alt_u = alt_v = None
+        hfr_meta = {"dataset": cu.get("dataset"), "loaded": False, "time": None}
+        alt_meta = {"dataset": cf.get("dataset"), "loaded": False, "time": None}
+
+        if cu.get("enabled"):
+            try:
+                qregion = cu.get("query_region", region)
+                clats, clons, g, ctime = _fetch_multi(cu, qregion, fetch)
+                u_name, v_name = cu["variables"][:2]
+                raw_u, raw_v = np.asarray(g[u_name], float), np.asarray(g[v_name], float)
+                for variable, raw in ((u_name, raw_u), (v_name, raw_v)):
+                    for fill in cu.get("fill_values", {}).get(variable, []):
+                        raw[np.isclose(raw, float(fill))] = np.nan
+                vector_valid = np.isfinite(raw_u) & np.isfinite(raw_v)
+                if not vector_valid.any():
+                    raise ValueError("HF Radar returned no valid current vectors in the configured request region")
+                hfr_u = resample(raw_u, clats, clons, lats, lons, min_weight=0.5)
+                hfr_v = resample(raw_v, clats, clons, lats, lons, min_weight=0.5)
+                hfr_valid = np.isfinite(hfr_u) & np.isfinite(hfr_v)
+                hfr_meta.update({
+                    "loaded": True, "time": ctime,
+                    "source_grid_shape": [int(len(clats)), int(len(clons))],
+                    "source_valid_fraction": round(float(vector_valid.mean()), 6),
+                    "aligned_valid_fraction": round(float(hfr_valid.mean()), 6),
+                    "quality": {
+                        "hdop_median": round(float(np.nanmedian(g["hdop"])), 3) if "hdop" in g and np.isfinite(g["hdop"]).any() else None,
+                        "number_of_sites_median": round(float(np.nanmedian(g["number_of_sites"])), 2) if "number_of_sites" in g and np.isfinite(g["number_of_sites"]).any() else None,
+                        "number_of_radials_median": round(float(np.nanmedian(g["number_of_radials"])), 2) if "number_of_radials" in g and np.isfinite(g["number_of_radials"]).any() else None,
+                        "quality_fields_are_diagnostic_only": True
+                    }
+                })
+            except Exception as exc:
+                errors.append(f"layers currents primary: {exc}")
+
+        if cf.get("enabled"):
+            try:
+                alats, alons, ag, atime = _fetch_multi(cf, region, fetch)
+                au_name, av_name = cf["variables"][:2]
+                alt_u = resample(ag[au_name], alats, alons, lats, lons, min_weight=0.5)
+                alt_v = resample(ag[av_name], alats, alons, lats, lons, min_weight=0.5)
+                alt_valid = np.isfinite(alt_u) & np.isfinite(alt_v)
+                if not alt_valid.any():
+                    raise ValueError("satellite-altimetry fallback returned no valid current vectors")
+                alt_meta.update({
+                    "loaded": True, "time": atime,
+                    "source_grid_shape": [int(len(alats)), int(len(alons))],
+                    "aligned_valid_fraction": round(float(alt_valid.mean()), 6)
+                })
+                edge = currents.edge_on_grid(alats, currents.smooth(currents.edge_longitudes(alats, alons, ag[av_name])), lats)
+                if edge is not None:
+                    layers["stream_edge_lon"] = edge
+                    layers["gulf_stream_edge"] = currents.signed_km(edge, lats, lons)
+                    layers["times"]["stream_edge"] = atime
+                    layers["stream_edge_source"] = f"NOAA CoastWatch {cf['dataset']} satellite altimetry"
+            except Exception as exc:
+                errors.append(f"layers currents fallback: {exc}")
+
+        if hfr_u is not None and alt_u is not None:
+            hfr_valid = np.isfinite(hfr_u) & np.isfinite(hfr_v)
+            u = np.where(hfr_valid, hfr_u, alt_u)
+            v = np.where(hfr_valid, hfr_v, alt_v)
+            blend_mode = "HF Radar where valid; satellite altimetry elsewhere"
+        elif hfr_u is not None:
+            u, v = hfr_u, hfr_v
+            blend_mode = "HF Radar only; satellite-altimetry fallback unavailable"
+        elif alt_u is not None:
+            u, v = alt_u, alt_v
+            blend_mode = "Satellite altimetry fallback only; HF Radar unavailable"
+        else:
+            u = v = None
+            blend_mode = "No usable current source"
+
+        if u is not None:
             layers["current_speed"], layers["current_dir"] = currents.speed_dir(u, v)
             layers["current_convergence"] = derive.current_convergence(u, v, lats, lons)
-            edge = currents.edge_on_grid(clats, currents.smooth(currents.edge_longitudes(clats, clons, g[v_name])), lats)
-            if edge is not None:
-                layers["stream_edge_lon"] = edge
-                layers["gulf_stream_edge"] = currents.signed_km(edge, lats, lons)
-            layers["times"]["currents"] = ctime
-            layers["datasets"]["currents"] = cu["dataset"]
-        except Exception as exc:
-            errors.append(f"layers currents: {exc}")
+            layers["times"]["currents"] = hfr_meta["time"] if hfr_meta["loaded"] else alt_meta["time"]
+            layers["datasets"]["currents"] = "NOAA HF Radar + satellite-altimetry fallback" if hfr_meta["loaded"] and alt_meta["loaded"] else (cu.get("dataset") if hfr_meta["loaded"] else cf.get("dataset"))
+        combined_valid = (np.isfinite(u) & np.isfinite(v)) if u is not None else np.zeros((len(lats), len(lons)), dtype=bool)
+        layers["currents_info"] = {
+            "selected_source": "NOAA HF Radar" if hfr_meta["loaded"] else ("NOAA satellite altimetry fallback" if alt_meta["loaded"] else None),
+            "blend_mode": blend_mode,
+            "primary": hfr_meta,
+            "fallback": alt_meta,
+            "combined_aligned_valid_fraction": round(float(combined_valid.mean()), 6)
+        }
 
     a = sources.get("arcgis", {})
     art, nat = a.get("artificial_reefs", {}), a.get("natural_reef", {})

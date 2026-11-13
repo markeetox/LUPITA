@@ -1,5 +1,5 @@
 {
-  "note": "NOAA CoastWatch ERDDAP is the canonical host for the configured chlorophyll and ETOPO datasets. NOAA-20 daily chlorophyll latitude is a descending coordinate axis and must be requested north-to-south. ETOPO 15-arc-second data is sampled at stride 15 across the broad North America grid to keep requests bounded; this is regional context, not reef-scale bathymetry. The gap-filled chlorophyll product is disabled until its freshness and scientific suitability are independently validated; do not enable it merely because the primary source is unavailable.",
+  "note": "NOAA CoastWatch ERDDAP is the canonical host for the configured chlorophyll and ETOPO datasets. NOAA-20 daily chlorophyll latitude is a descending coordinate axis and must be requested north-to-south. ETOPO 15-arc-second data is sampled at stride 15 across the broad North America grid to keep requests bounded; this is regional context, not reef-scale bathymetry. The gap-filled chlorophyll product is disabled until its freshness and scientific suitability are independently validated; do not enable it merely because the primary source is unavailable. NOAA HF Radar 2 km currents are the primary near-surface coastal source for the South Florida request window; satellite-altimetry currents remain the broad-area spatial fallback and Gulf Stream-edge source.",
   "region": {
     "name": "north_america_coastlines",
     "lat": [
@@ -111,6 +111,55 @@
       "fallback_bases": [
         "https://upwell.pfeg.noaa.gov/erddap"
       ],
+      "dataset": "ucsdHfrE2",
+      "variables": [
+        "water_u",
+        "water_v",
+        "hdop",
+        "number_of_sites",
+        "number_of_radials"
+      ],
+      "dims": [
+        "time",
+        "latitude",
+        "longitude"
+      ],
+      "stride": {
+        "latitude": 1,
+        "longitude": 1
+      },
+      "query_region": {
+        "lat": [
+          24,
+          28.5
+        ],
+        "lon": [
+          -83.5,
+          -78
+        ]
+      },
+      "parameter": "current_speed",
+      "fill_values": {
+        "water_u": [
+          -327.67
+        ],
+        "water_v": [
+          -327.67
+        ]
+      },
+      "freshness": {
+        "warning_age_hours": 12,
+        "stale_age_hours": 24,
+        "basis": "Provisional operational thresholds for NOAA near-real-time hourly 2 km HF Radar surface-current vectors; calibrate against production observation latency."
+      },
+      "note": "NOAA/NESDIS HF Radar near-real-time hourly 2 km surface currents. water_u/east and water_v/north in m/s; hdop and contributing radar counts are reported as quality diagnostics, not yet used as hard gates. South Florida request window only. Represents near-surface coastal flow, not full-depth or offshore ocean circulation."
+    },
+    "currents_fallback": {
+      "enabled": true,
+      "base": "https://coastwatch.pfeg.noaa.gov/erddap",
+      "fallback_bases": [
+        "https://upwell.pfeg.noaa.gov/erddap"
+      ],
       "dataset": "nesdisSSH1day",
       "variables": [
         "ugos",
@@ -126,12 +175,12 @@
         "longitude": 1
       },
       "parameter": "current_speed",
-      "note": "NOAA CoastWatch geostrophic currents from satellite altimetry, daily, 25 km grid, listed as experimental. u = east, v = north, in m/s. Dimensions and variable names are from the ERDDAP listing and not yet verified here: run check_sources.",
       "freshness": {
         "warning_age_hours": 36,
         "stale_age_hours": 72,
-        "basis": "Provisional operational thresholds for a daily satellite-altimetry product; validate against observed ERDDAP latency."
-      }
+        "basis": "Provisional operational thresholds for daily satellite-altimetry geostrophic currents; broad-area fallback and Gulf Stream-edge context."
+      },
+      "note": "NOAA CoastWatch satellite-altimetry geostrophic currents, daily, 25 km grid; u east and v north in m/s. Retained for broad-area fallback and Gulf Stream-edge estimation when the product is available."
     }
   },
   "arcgis": {
