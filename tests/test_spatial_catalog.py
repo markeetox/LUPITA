@@ -53,3 +53,15 @@ def test_biscayne_gis_inventory_is_explicitly_source_coverage_not_bay_boundary()
     assert benthic["feature_count"] == 7222
     assert benthic["class_counts"]["Seagrass (Continuous)"] > 0
     assert inventory["first_spatial_qa"]["feature_footprint_nonintersection_count"] > 0
+
+
+def test_cape_florida_preserve_is_separate_from_biscayne_bay_preserve():
+    catalog = json.loads(CATALOG_PATH.read_text(encoding="utf-8"))
+    by_id = {feature["id"]: feature for feature in catalog["features"]}
+    biscayne = by_id["sf-biscayne-bay-aquatic-preserve"]
+    cape = by_id["sf-cape-florida-aquatic-preserve"]
+    assert biscayne["source_geometry"]["objectid"] == 43
+    assert cape["source_geometry"]["objectid"] == 25
+    assert cape["source_geometry"]["reported_acres"] < biscayne["source_geometry"]["reported_acres"]
+    assert "separate preserve" in cape["boundary_scope_note"].lower()
+    assert cape["id"] != biscayne["id"]
