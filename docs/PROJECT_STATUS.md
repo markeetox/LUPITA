@@ -81,12 +81,13 @@ PR #70 originated as a stacked branch on #69. Its resulting file tree is now in 
 4. Government Cut requires an exact source-feature crosswalk.
 5. Candidate subregions, flats, channels, and inlet connections must retain confidence/provenance and must not be promoted based on proximity alone.
 6. The Jewfish Creek shared-boundary test exposed projection-induced false zero measurements. The implementation now evaluates shared-edge topology in source coordinates and projects the resulting line only for metric length. A local reproduction returns a 100.763 m shared boundary for the synthetic fixture; the consolidated GitHub workflow still needs a successful run.
-7. Five expensive FWC/NOAA source-acquisition workflows have been changed to manual-only so PR synchronization cannot repeatedly trigger downloads and branch-write loops.
+7. Five expensive FWC/NOAA source-acquisition workflows and the in-situ temperature extraction workflow are manual-only so PR synchronization cannot repeatedly trigger downloads and branch-write loops.
+8. The first consolidated species-validator run failed during test collection because the full suite now includes GIS tests but the workflow installed only production requirements. Added `requirements-research.txt` and wired it into all full-suite CI workflows; rerun is pending.
 
 ## Next implementation milestones
 
 1. Finish the branch-by-branch audit, import only unique useful changes, and close/archive superseded branches.
-2. Run the full Python suite and focused GIS tests once on the consolidated staging branch; current PR #70 runs were blocked with `action_required` and had no jobs.
+2. Rerun the full Python suite and species validator with `requirements-research.txt`, then confirm the focused GIS test and manual-only source-acquisition policy.
 3. Confirm the production workflow can run from `main` and publish outputs to `data` without requiring the data branch for prediction execution.
 4. Open one consolidated PR from `integration/main-consolidation` to `main` after validation.
 5. Reconcile authoritative landmark references and candidate subregions without inventing separator lines.
