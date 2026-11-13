@@ -729,7 +729,19 @@
         ],
         "connected_component_count": 1,
         "positive_area_overlap_pairs": [],
-        "geojson_feature_id": "253447"
+        "geojson_feature_id": "253447",
+        "source_layer_id": 237,
+        "objectid": 253447,
+        "chart_cell": "US5MIACC.000",
+        "source_chart": "NOAA Chart 11468",
+        "source_date": "2004-01",
+        "geometry_type": "Polygon",
+        "bbox_wgs84": [
+          -80.1498818,
+          25.7503267,
+          -80.1396955,
+          25.7620415
+        ]
       },
       "relationships": [],
       "provenance": [
@@ -738,6 +750,12 @@
           "title": "U.S. Coast Pilot 4, Chapter 11, paragraph 38",
           "url": "https://nauticalcharts.noaa.gov/publications/coast-pilot/files/cp4/CPB4_WEB.pdf",
           "source_type": "official_hydrographic_publication"
+        },
+        {
+          "publisher": "NOAA Office of Coast Survey",
+          "title": "NOAA Harbour ENC named-water polygon, Norris Cut, OBJECTID 253447, Chart 11468",
+          "url": "https://encdirect.noaa.gov/arcgis/rest/services/encdirect/enc_harbour/MapServer/237",
+          "source_type": "charted_named_water_area_geometry"
         }
       ],
       "validation_status": "charted_named_water_geometry_persisted_topology_precheck_passed_not_navigation_boundary"
