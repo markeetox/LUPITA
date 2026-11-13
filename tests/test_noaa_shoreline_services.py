@@ -63,6 +63,9 @@ def test_fetch_cusp_shoreline_preserves_geometry_and_source_fields(tmp_path):
                     "editingInfo": {"lastEditDate": 123456},
                 })
             if params.get("returnIdsOnly") == "true":
+                envelope = json.loads(params["geometry"])
+                assert envelope["spatialReference"]["wkid"] == 4326
+                assert envelope["xmin"] == -80.45
                 return Response({"objectIds": [1, 2]})
             ids = [int(value) for value in params["objectIds"].split(",")]
             return Response({"features": [line_feature(value) for value in ids]})
