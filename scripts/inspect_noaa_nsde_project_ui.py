@@ -16,7 +16,6 @@ import shapefile
 from pyproj import CRS, Transformer
 from shapely.geometry import shape as make_shape, mapping
 from shapely.ops import transform as transform_geometry
-from playwright.async_api import async_playwright
 
 URL = "https://nsde.ngs.noaa.gov/cmp.html"
 PROJECT_IDS = ["FL1808C-TB-N", "FL1808A-TB-N", "FL2317-CS-N"]
@@ -269,6 +268,7 @@ def extract_project_archives(downloads: list[dict], output_dir: Path) -> dict:
 async def run(output_dir: Path) -> dict:
     output_dir.mkdir(parents=True, exist_ok=True)
     network_events = []
+    from playwright.async_api import async_playwright
     async with async_playwright() as p:
         browser = await p.chromium.launch(headless=True)
         page = await browser.new_page(accept_downloads=True, viewport={"width": 1600, "height": 1100})
