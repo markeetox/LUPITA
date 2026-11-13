@@ -160,7 +160,29 @@ def curate(source_path: Path, output_dir: Path) -> dict[str, Any]:
                     ""
                 )
                 if name == "Norris Cut":
-                    ref["review_status"] = "direct_named_water_area_polygon_persisted_channel_centerline_pending"
+                    ref.update({
+                        "review_status": "direct_named_water_area_polygon_persisted_channel_centerline_pending",
+                        "source_layer_id": 237,
+                        "objectid": 253447,
+                        "chart_cell": "US5MIACC.000",
+                        "source_chart": "NOAA Chart 11468",
+                        "source_date": "2004-01",
+                        "geometry_type": "Polygon",
+                        "bbox_wgs84": [-80.1498818, 25.7503267, -80.1396955, 25.7620415],
+                    })
+                    source_provenance = {
+                        "publisher": "NOAA Office of Coast Survey",
+                        "title": "NOAA Harbour ENC named-water polygon, Norris Cut, OBJECTID 253447, Chart 11468",
+                        "url": SOURCE_URL,
+                        "source_type": "charted_named_water_area_geometry",
+                    }
+                    provenance = feature.setdefault("provenance", [])
+                    if not any(
+                        item.get("source_type") == source_provenance["source_type"]
+                        and item.get("title") == source_provenance["title"]
+                        for item in provenance
+                    ):
+                        provenance.append(source_provenance)
                     note = note.replace(
                         "The current structured Harbour ENC extraction did not return a directly named Norris Cut geometry. Do not borrow geometry from nearby channel features.",
                         "NOAA Harbour ENC layer 237 directly returns a named-water polygon for Norris Cut (OBJECTID 253447, Chart 11468, source date 2004-01)."
