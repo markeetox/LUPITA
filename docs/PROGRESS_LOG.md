@@ -145,3 +145,42 @@ Run the focused Biscayne landmark evidence workflow once the commit is pushed, t
 1. Verify the new full-suite and species-validator runs pass on the updated PR #72 head.
 2. Confirm only lightweight validation workflows run automatically on PRs.
 3. Complete the final branch inventory, then merge PR #72 only after all required checks pass.
+
+
+## 2026-11-13 | Consolidated validation passes; data branch verified as export-only
+
+**Final PR:** [#72](https://github.com/markeetox/LUPITA/pull/72)  
+**Validated head:** `161e54781396970839a88f2393282ffd1d54121e`
+
+### Validation results
+
+- Full Python suite: **248 passed, 115 warnings**  
+  https://github.com/markeetox/LUPITA/actions/runs/43452687288
+- Species profile validator: **248 passed, 115 warnings**; inspected 130 profiles, 127 structurally valid, 0 model compatibility issues, 127 requiring additional research/model rebuilding  
+  https://github.com/markeetox/LUPITA/actions/runs/43452687083
+- Focused Biscayne landmark evidence: extraction and topology reconciliation succeeded; **4 topology tests passed, 50 warnings**  
+  https://github.com/markeetox/LUPITA/actions/runs/43452687098
+- The South Florida in-situ temperature audit completed successfully on the prior PR head. Its pull-request trigger has since been removed so future PRs do not repeat source downloads.
+
+### CI and workflow corrections
+
+- Added `requirements-research.txt` for Shapely, PyProj, and PyShp. These are optional research/test dependencies and are not added to production `requirements.txt`.
+- Updated Python tests, species validation, and the scheduled pipeline to install research dependencies before the full test suite.
+- Added pip caching to the scheduled workflow.
+- Made the in-situ temperature audit manual-only, alongside the five FWC/NOAA acquisition workflows.
+- The initial species-validator run failed because those packages were missing; the corrected workflow now passes.
+
+### Data branch verification
+
+- Inspected the current `data` branch tree: 725 paths.
+- Top-level contents are generated API/data outputs: `api/`, `species/`, `heat/`, and JSON exports such as `fish.json`, `latest.json`, `closures.json`, `stream.json`, and `species_catalog.json`.
+- No Python, JavaScript, TypeScript, YAML, or Markdown source files are present.
+- This confirms `data` is currently an export/publication branch, not a code branch. It remains excluded from PR #72.
+
+### Remaining external status
+
+- Vercel's PR preview status is red because the account is rate-limited for 24 hours. This is an external deployment quota, not a failing test or build result. No frontend source changes are included in this consolidation.
+
+### Next action
+
+Merge PR #72 into `main` after reviewing the Vercel preview limitation. Then archive/delete obsolete branches, leaving `main` and `data` as the active branch pair.
