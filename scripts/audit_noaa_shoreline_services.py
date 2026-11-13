@@ -1,24 +1,54 @@
-"""Research-only inventory of NOAA NGS shoreline web services.
+"""Research-only extraction of Florida shoreline comparison layers.
 
-This first pass discovers published WFS/WMS layers and records authoritative
-project metadata. It does not infer shoreline geometry or alter production data.
+The Florida DEP service republishes NOAA-derived MHW composite shoreline and
+NOAA MHHW screening linework. They are kept as separate source products and
+are not treated as project-specific FL1808A/FL1808C vectors.
 """
 from __future__ import annotations
 
 import argparse
 import json
-import time
-import xml.etree.ElementTree as ET
 from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any
 
 import requests
 
-ARCGIS_CUSP_LAYER = "https://services.arcgis.com/rD2ylXRs80UroD90/ArcGIS/rest/services/NOAA_Coastal_Shoreline/FeatureServer/0"
+SERVICE = "https://ca.dep.state.fl.us/arcgis/rest/services/Map_Direct/Program_Support/MapServer"
 BBOX = (-80.45, 25.25, -80.05, 26.00)
 BATCH_SIZE = 500
 TIMEOUT = (15, 90)
+
+LAYERS = {
+    "noaa_composite_shoreline_mhw": {
+        "id": 41,
+        "name": "NOAA Composite Shoreline",
+        "datum": "MHW",
+        "geometry_type": "esriGeometryPolyline",
+        "description": (
+            "NOAA Office for Coastal Management composite shoreline derived from "
+            "historic NOAA shoreline manuscripts (T-sheets); MHW shoreline context. "
+            "Shoreline may have changed since the source surveys."
+        ),
+        "publisher": "NOAA Office for Coastal Management; hosted by Florida DEP",
+        "output_file": "noaa_composite_shoreline_mhw_biscayne.geojson",
+        "metadata_url": "https://ca.dep.state.fl.us/arcgis/rest/services/Map_Direct/Program_Support/MapServer/41",
+    },
+    "noaa_mhhw_screening_line": {
+        "id": 40,
+        "name": "NOAA Mean Higher High Water (MHHW)",
+        "datum": "MHHW",
+        "geometry_type": "esriGeometryPolyline",
+        "description": (
+            "NOAA Office for Coastal Management screening-level predicted MHHW "
+            "extent derived from tidal and elevation data; not a surveyed MHW shoreline."
+        ),
+        "publisher": "NOAA Office for Coastal Management; hosted by Florida DEP",
+        "output_file": "noaa_mhhw_screening_line_biscayne.geojson",
+        "metadata_url": "https://ca.dep.state.fl.us/arcgis/rest/services/Map_Direct/Program_Support/MapServer/40",
+    },
+}
+
 PROJECTS = [
     {
         "project_id": "FL1808C-TB-N",
@@ -75,11 +105,6 @@ PROJECTS = [
     },
 ]
 
-KEYWORDS = ("shoreline", "cusp", "national", "mhw", "mllw", "coastal")
-def is_candidate(layer: dict[str, str]) -> bool:
-    text = " ".join(layer.values()).lower()
-    return any(word in text for word in KEYWORDS)
-
 
 def validate_geojson_feature(feature: dict[str, Any]) -> None:
     geometry = feature.get("geometry")
@@ -101,23 +126,25 @@ def validate_geojson_feature(feature: dict[str, Any]) -> None:
             raise ValueError(f"Coordinate outside EPSG:4326 bounds: {position!r}")
 
 
-def fetch_cusp_shoreline(
-    session: requests.Session, output_dir: Path
+def fetch_layer(
+    session: requests.Session, definition: dict[str, Any], output_dir: Path
 ) -> tuple[dict[str, Any], dict[str, Any]]:
+    layer_url = f"{SERVICE}/{definition['id']}"
     metadata_response = session.get(
-        ARCGIS_CUSP_LAYER, params={"f": "pjson"}, timeout=TIMEOUT
+        layer_url, params={"f": "pjson"}, timeout=TIMEOUT
     )
     metadata_response.raise_for_status()
     metadata = metadata_response.json()
     if metadata.get("error"):
-        raise RuntimeError(f"NOAA CUSP layer metadata error: {metadata['error']}")
-    if metadata.get("geometryType") != "esriGeometryPolyline":
+        raise RuntimeError(f"NOAA-derived layer metadata error: {metadata['error']}")
+    if metadata.get("geometryType") != definition["geometry_type"]:
         raise RuntimeError(
-            f"NOAA CUSP layer is not a polyline layer: {metadata.get('geometryType')!r}"
+            f"Unexpected geometry type for {definition['name']}: "
+            f"{metadata.get('geometryType')!r}"
         )
 
     xmin, ymin, xmax, ymax = BBOX
-    query_url = f"{ARCGIS_CUSP_LAYER}/query"
+    query_url = f"{layer_url}/query"
     id_params = {
         "where": "1=1",
         "geometry": json.dumps({
@@ -134,7 +161,7 @@ def fetch_cusp_shoreline(
     ids_response.raise_for_status()
     ids_payload = ids_response.json()
     if ids_payload.get("error"):
-        raise RuntimeError(f"NOAA CUSP object-ID query error: {ids_payload['error']}")
+        raise RuntimeError(f"NOAA-derived layer ID query error: {ids_payload['error']}")
     object_ids = sorted(ids_payload.get("objectIds") or [])
     features = []
 
@@ -151,57 +178,57 @@ def fetch_cusp_shoreline(
         response.raise_for_status()
         payload = response.json()
         if payload.get("error"):
-            raise RuntimeError(f"NOAA CUSP feature query error: {payload['error']}")
+            raise RuntimeError(f"NOAA-derived feature query error: {payload['error']}")
         page = payload.get("features")
         if not isinstance(page, list):
-            raise RuntimeError("NOAA CUSP feature response has no GeoJSON features array")
+            raise RuntimeError("NOAA-derived layer response has no GeoJSON features array")
         for feature in page:
             validate_geojson_feature(feature)
         features.extend(page)
 
     if len(features) != len(object_ids):
         raise RuntimeError(
-            f"NOAA CUSP returned {len(features)} features for {len(object_ids)} object IDs"
+            f"Layer {definition['id']} returned {len(features)} features "
+            f"for {len(object_ids)} object IDs"
         )
 
     collection = {
         "type": "FeatureCollection",
-        "name": "NOAA_CUSP_Biscayne_review_bbox",
+        "name": definition["name"].replace(" ", "_"),
         "crs": {"type": "name", "properties": {"name": "EPSG:4326"}},
         "features": features,
     }
-    (output_dir / "noaa_cusp_biscayne_shoreline.geojson").write_text(
+    (output_dir / definition["output_file"]).write_text(
         json.dumps(collection, separators=(",", ":")) + "\n", encoding="utf-8"
     )
 
-    source_counts: dict[str, int] = {}
-    date_counts: dict[str, int] = {}
     attribute_counts: dict[str, int] = {}
+    field_name = "F_NAME" if "F_NAME" in {
+        field.get("name") for field in metadata.get("fields", [])
+    } else "OBJECTID"
     for feature in features:
-        props = feature.get("properties") or {}
-        for counter, field in (
-            (source_counts, "SOURCE_ID"),
-            (date_counts, "SRC_DATE"),
-            (attribute_counts, "ATTRIBUTE"),
-        ):
-            value = str(props.get(field) or "unknown")
-            counter[value] = counter.get(value, 0) + 1
+        value = str((feature.get("properties") or {}).get(field_name) or "unknown")
+        attribute_counts[value] = attribute_counts.get(value, 0) + 1
 
     summary = {
+        "layer_id": definition["id"],
+        "layer_name": metadata.get("name"),
+        "datum_or_product": definition["datum"],
         "feature_count": len(features),
         "object_id_count": len(object_ids),
         "geometry_types": sorted({
             feature["geometry"]["type"] for feature in features
         }),
-        "source_id_counts": source_counts,
-        "source_date_counts": date_counts,
+        "attribute_field": field_name,
         "attribute_counts": attribute_counts,
         "bbox_wgs84": list(BBOX),
         "output_crs": "EPSG:4326",
-        "source_fields": [field.get("name") for field in metadata.get("fields", [])],
-        "service_last_edit_date": metadata.get("editingInfo", {}).get("lastEditDate"),
-        "service_max_record_count": metadata.get("maxRecordCount"),
-        "service_extent": metadata.get("extent"),
+        "source_spatial_reference": metadata.get("extent", {}).get("spatialReference"),
+        "source_extent": metadata.get("extent"),
+        "max_record_count": metadata.get("maxRecordCount"),
+        "output_file": definition["output_file"],
+        "metadata_url": definition["metadata_url"],
+        "description": definition["description"],
     }
     return metadata, summary
 
@@ -209,56 +236,64 @@ def fetch_cusp_shoreline(
 def run_audit(output_dir: Path, session: requests.Session | None = None) -> dict[str, Any]:
     output_dir.mkdir(parents=True, exist_ok=True)
     session = session or requests.Session()
-    session.headers.update({"User-Agent": "LUPITA-research-shoreline-audit/1.0 (research-only)"})
+    session.headers.update({
+        "User-Agent": "LUPITA-research-shoreline-audit/1.0 (research-only)"
+    })
 
-    cusp_metadata, cusp_summary = fetch_cusp_shoreline(session, output_dir)
-    (output_dir / "noaa_cusp_layer_metadata.json").write_text(
-        json.dumps(cusp_metadata, indent=2) + "\n", encoding="utf-8"
-    )
+    summaries = {}
+    for key, definition in LAYERS.items():
+        metadata, summary = fetch_layer(session, definition, output_dir)
+        (output_dir / f"{key}_metadata.json").write_text(
+            json.dumps(metadata, indent=2) + "\n", encoding="utf-8"
+        )
+        summaries[key] = summary
 
     report = {
-        "audit_version": 2,
+        "audit_version": 3,
         "generated_at_utc": datetime.now(timezone.utc).isoformat(),
-        "status": "cusp_comparison_geometry_retrieved",
-        "purpose": "Retrieve NOAA CUSP shoreline comparison geometry and preserve its source attribution before project-specific shoreline vector acquisition.",
-        "cusp": {
-            "layer_url": ARCGIS_CUSP_LAYER,
-            "service_item_id": "b5a2dc47497642029c2e387119f691ad",
-            "layer_name": cusp_metadata.get("name"),
-            "geometry_type": cusp_metadata.get("geometryType"),
-            "description": "NOAA Continually Updated Shoreline Product. Mean-high-water proxy shoreline; not equivalent to project-specific MHW and MLLW vectors.",
-            **cusp_summary,
-            "geojson_file": "noaa_cusp_biscayne_shoreline.geojson",
-        },
+        "status": "florida_noaa_shoreline_comparison_geometry_retrieved",
+        "service": SERVICE,
+        "query_bbox_wgs84": list(BBOX),
+        "shoreline_layers": summaries,
         "project_metadata_candidates": PROJECTS,
-        "legacy_wfs_probe": {
-            "endpoint": "https://geodesy.noaa.gov/GeoServer/NSDE/ows",
-            "status": "http_404_from_github_actions_runner",
-            "interpretation": "Historical WFS endpoint documented in older NGS materials was unavailable from this runner; do not assume it is a current vector-download endpoint.",
+        "rejected_cusp_candidate": {
+            "url": "https://services.arcgis.com/rD2ylXRs80UroD90/ArcGIS/rest/services/NOAA_Coastal_Shoreline/FeatureServer/0",
+            "declared_latest_wkid": 6416,
+            "declared_crs_name": "NAD83(2011) / California zone 1 (ftUS)",
+            "south_florida_query_feature_count": 0,
+            "status": "not_used_spatial_reference_and_extent_not_compatible_with_south_florida_aoi",
         },
         "limitations": [
-            "CUSP is a mean-high-water proxy and is not interchangeable with project-specific MHW and MLLW vectors.",
-            "CUSP is a comparison source with less stringent acquisition and QC than project-based National Shoreline products.",
-            "CUSP source attribution must be inspected before assigning features to FL1808A, FL1808C, or FL2317 projects.",
-            "A source-date field is not necessarily the date the CUSP service was last updated.",
+            "NOAA Composite Shoreline is derived from historic T-sheets and may not represent current shoreline position.",
+            "NOAA MHHW is a screening-level predicted tidal extent, not the MHW shoreline and not a legal boundary.",
+            "MHW and MHHW products are preserved as separate datums and must not be merged.",
+            "Neither Florida comparison layer is a substitute for the FL1808A/FL1808C project-specific MHW and MLLW vectors.",
+            "The NOAA Port of Miami FL2317 project remains the newer local project candidate; its actual vector download is still pending.",
             "Project metadata rectangles are not proof of complete surveyed coverage.",
             "No final Biscayne Bay boundary is created by this audit.",
-            "NOAA shoreline products are not navigation products or legal survey boundaries.",
+            "These shoreline layers are not navigation products or legal survey boundaries.",
         ],
     }
     (output_dir / "noaa_nsde_shoreline_service_inventory.json").write_text(
         json.dumps(report, indent=2) + "\n", encoding="utf-8"
     )
     return report
+
+
 def main() -> int:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--output-dir", type=Path, default=Path("artifacts/noaa-shoreline"))
     args = parser.parse_args()
     report = run_audit(args.output_dir)
     print(json.dumps({
-        "cusp_feature_count": report["cusp"]["feature_count"],
-        "source_ids": report["cusp"]["source_id_counts"],
-        "source_dates": report["cusp"]["source_date_counts"],
+        "layers": {
+            key: {
+                "feature_count": value["feature_count"],
+                "attribute_counts": value["attribute_counts"],
+                "output_file": value["output_file"],
+            }
+            for key, value in report["shoreline_layers"].items()
+        },
         "output_dir": str(args.output_dir),
     }, indent=2))
     return 0
