@@ -140,8 +140,10 @@ def build_data_quality(layers: dict | None, sources: dict, errors: list[str], no
     currents_state["time"] = layers.get("times", {}).get("currents")
     primary_loaded = bool(current_primary.get("loaded")) if current_info else current_present
     fallback_loaded = bool(current_fallback.get("loaded"))
-    selected_time = current_primary.get("time") if primary_loaded else (current_fallback.get("time") or currents_state["time"])
-    selected_policy = current_cfg.get("freshness") if primary_loaded or not fallback_loaded else current_fallback_cfg.get("freshness")
+    fallback_used = bool(current_fallback.get("used_for_currents"))
+    currents_state["fallback_used_for_currents"] = fallback_used
+    selected_time = current_primary.get("time") if primary_loaded else (current_fallback.get("time") if fallback_used else None)
+    selected_policy = current_cfg.get("freshness") if primary_loaded or not fallback_used else current_fallback_cfg.get("freshness")
     currents_state["freshness"] = _source_freshness(selected_time, selected_policy, now)
     if primary_loaded:
         currents_state["primary_freshness"] = _source_freshness(current_primary.get("time") or currents_state["time"], current_cfg.get("freshness"), now)
@@ -179,7 +181,7 @@ def build_pipeline_health(data_quality: dict, fish_updated: bool, errors: list[s
     for name in ("sst", "chlorophyll", "currents"):
         state = layer_states.get(name, {})
         checks = [("selected", state.get("freshness", {}))]
-        if name == "currents" and state.get("fallback_freshness"):
+        if name == "currents" and state.get("fallback_freshness") and state.get("fallback_used_for_currents", True):
             fallback_freshness = state["fallback_freshness"]
             selected_freshness = state.get("freshness", {})
             differs = any(fallback_freshness.get(key) != selected_freshness.get(key)

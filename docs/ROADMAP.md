@@ -26,24 +26,25 @@ This is the handoff record for future sessions. Read it with [Project Status](PR
 |---|---|---|---|
 | SST | NOAA CoastWatch `jplMURSST41` | ERDDAP host fallback | warning 36h, stale 72h |
 | Chlorophyll | NOAA-20 VIIRS `nesdisVHNnoaa20chlaDaily` | gap-filled product disabled | warning 72h, stale 120h |
-| Coastal currents | NOAA/NESDIS HF Radar `ucsdHfrE2`, hourly 2 km | `nesdisSSH1day` altimetry fills uncovered cells | warning 12h, stale 24h (provisional) |
+| Coastal currents | NOAA/NESDIS HF Radar `ucsdHfrE2`, hourly 2 km | `nesdisSSH1day` only when timestamp-qualified (max age 72h); NOAA RTOFS model ingestion is next | warning 12h, stale 24h (provisional) |
 | Gulf Stream edge | NOAA CoastWatch `nesdisSSH1day`, daily 25 km | no alternate model | warning 36h, stale 72h |
 | Bathymetry | NOAA NCEI ETOPO 2022 15s, stride 15 | none | static |
 
-HF Radar request window: 24.0-28.5°N, 83.5-78.0°W. It represents near-surface coastal flow, not full-depth or complete offshore circulation. `hdop`, contributing-site and radial-count metrics are reported but not hard quality gates. Altimetry supplies broad-area context and the approximate Gulf Stream edge. HF Radar is used where valid; altimetry fills remaining cells. Each source's timestamp and coverage are kept distinct.
+HF Radar request window: 24.0-28.5°N, 83.5-78.0°W. It represents near-surface coastal flow, not full-depth or complete offshore circulation. `hdop`, contributing-site and radial-count metrics are reported but not hard quality gates. Satellite altimetry supplies approximate Gulf Stream-edge context. It may fill current-vector gaps only when its timestamp is known, non-future, and no older than 72 hours; otherwise it is excluded from current vectors. HF Radar remains the observation overlay. NOAA RTOFS is the preferred broad-area model candidate, pending a verified HTTPS/GRIB subsetting implementation and live validation. Each source's timestamp, forecast lead, eligibility and coverage must remain distinct.
 
 ## Active milestone: validate regional currents and replace stale broad-area fallback
-**Status:** HFR live retrieval confirmed, but its spatial contribution is sparse. Production #203 loaded HFR at 7.85 hours old; only 2.006% of requested HFR source cells contained valid vectors. The 0.0123% aligned fraction is calculated against the entire North America grid and is not a useful local percentage. Satellite altimetry supplied most of the 53.4818% combined current coverage but was 1,121.85 hours old. Pipeline health correctly degraded.
+**Status:** HFR live retrieval confirmed, but its spatial contribution is sparse. Production #203 loaded HFR at 7.85 hours old; only 2.006% of requested HFR source cells contained valid vectors. The 0.0123% aligned fraction is calculated against the entire North America grid and is not a useful local percentage. Satellite altimetry supplied most of the 53.4818% combined current coverage but was 1,121.85 hours old. A new fail-closed age guard excludes altimetry older than 72 hours from current vectors while retaining its Gulf Stream-edge role. NOAA RTOFS is the preferred broad-area model candidate; direct NOMADS OPeNDAP was retired in February 2026, so production ingestion must use supported HTTPS model files or GRIB filtering.
 
 Acceptance criteria:
 1. Report HFR, fallback and combined valid fractions inside the South Florida HFR request window, alongside whole-grid fractions.
 2. Compare HFR 1 km, 2 km and 6 km products on the same South Florida window, including timestamps, valid-cell coverage and quality metrics.
 3. Identify a machine-readable broad-area current source with current observation/model initialization time, forecast lead, spatial coverage and units.
 4. Evaluate NOAA Global RTOFS NetCDF fields and USF EFCOM coastal FVCOM output. EFCOM is geographically relevant but its public interface currently exposes visual products and labels results research-grade; machine-readable access is not yet verified.
-5. Keep satellite altimetry as a labeled legacy fallback only until a replacement is verified. Do not silently present a stale fallback as current.
-6. Keep HF Radar as a high-value observation overlay where valid, not a full-coverage regional model.
-7. Keep Gulf Stream-edge provenance separate from the selected nearshore current source.
-8. Do not change scoring weights or biology during source evaluation.
+5. Keep satellite altimetry as Gulf Stream-edge context and permit current-vector fallback only when timestamp-qualified (<=72h); never silently present stale data as current.
+6. Implement NOAA RTOFS using its supported HTTPS model-file or GRIB-filter route; record model initialization time and forecast lead separately from observation age.
+7. Keep HF Radar as a high-value observation overlay where valid, not a full-coverage regional model.
+8. Keep Gulf Stream-edge provenance separate from the selected nearshore current source.
+9. Do not change scoring weights or biology during source evaluation.
 
 ## Next sequence
 1. Inspect the next production refresh for query-region coverage metrics.

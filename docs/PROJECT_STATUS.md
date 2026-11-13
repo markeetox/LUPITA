@@ -60,7 +60,7 @@ No inferred inlet connections, snapped seams, or synthetic channel centerlines a
 - The workflow runs from `main`, executes tests, catalog generation, and the prediction pipeline, then exports app-facing JSON to the `data` branch.
 - The optional checkout of the previous `data` publication is only a last-known-good export fallback; it is not required for prediction generation. The intended contract is that `main` can run without `data` and export to it when available.
 - The README's prediction, species, bite-timing, boat-condition, closures, and API sections describe the production pipeline. Changes to those processes must be reflected here and in the README.
-- Dynamic-source freshness diagnostics are live. NOAA HF Radar 2 km is now the primary coastal-current source over South Florida; satellite altimetry is retained as a spatial fallback and as the Gulf Stream-edge source. Production validation is pending on the next scheduled refresh.
+- Dynamic-source freshness diagnostics are live. NOAA HF Radar 2 km is the primary coastal-current observation source over South Florida. Satellite altimetry remains available for Gulf Stream-edge context, but is excluded from current-vector filling when its timestamp is missing, future-dated, or older than 72 hours. The broader RTOFS model feed is the next candidate for replacement of this limited fallback, pending a verified operational HTTPS/GRIB ingestion path.
 - Spatial research must not be described as affecting fish predictions until it is deliberately integrated, tested, and promoted.
 
 ## Open review dependencies
@@ -79,11 +79,11 @@ PR #70 originated as a stacked branch on #69. Its resulting file tree is now in 
 ## Current environmental-source quality
 
 - The 2026-11-13 production refresh completed and generated predictions, but the published current observation was about 1,121 hours old. Pipeline health correctly reported degraded rather than healthy.
-- NOAA/NESDIS HF Radar dataset `ucsdHfrE2` is configured as the primary near-surface coastal-current feed over 24.0-28.5°N, 83.5-78.0°W. Its hourly 2 km vectors are overlaid where valid; satellite altimetry fills cells outside HF Radar coverage.
-- Satellite altimetry remains necessary for broad-area context and the approximate Gulf Stream edge. The two feeds have separate timestamps and freshness diagnostics. HF Radar quality fields are reported but not yet used to reject vectors.
+- NOAA/NESDIS HF Radar dataset `ucsdHfrE2` is the primary near-surface coastal-current feed over 24.0-28.5°N, 83.5-78.0°W. Its hourly 2 km vectors are used only where valid.
+- Satellite altimetry `nesdisSSH1day` remains available for approximate Gulf Stream-edge context. Its current-vector fallback is age-gated at 72 hours and is not used when its timestamp is missing, future-dated, or stale. Source timestamps, eligibility, use, and coverage remain separately reported. HF Radar quality fields are diagnostic only and are not yet hard rejection gates.
 - The HF Radar endpoint has been verified against NOAA ERDDAP metadata, including its variables and dimensions. Python suite passed **255 tests** on [run #409](https://github.com/markeetox/LUPITA/actions/runs/43476053350).
 - First live production refresh [#203](https://github.com/markeetox/LUPITA/actions/runs/43476661499) succeeded with predictions refreshed and no pipeline errors. HF Radar timestamp was 2026-11-13 10:00 UTC (7.85 hours old), but raw valid fraction across its South Florida request window was only 2.006%; its aligned valid fraction over the entire North America prediction grid was 0.0123%. The latter denominator is misleading for regional coverage, so a follow-up code change adds explicit query-region coverage counts and fractions. The old satellite fallback was 1,121.85 hours old and chlorophyll was delayed at 77.85 hours. Health correctly remained degraded.
-- Live HF Radar retrieval is proven, but useful regional coverage is not yet proven. Do not call the current-source upgrade complete until query-region coverage and a fresher broad-area fallback are evaluated.
+- Live HF Radar retrieval is proven, but useful regional coverage is not yet proven. The stale altimetry current-vector fallback is now fail-closed: it cannot fill current cells beyond 72 hours. The production refresh after this guard must confirm that stale vectors are excluded while the Gulf Stream-edge provenance remains visible. NOAA RTOFS is the preferred broad-area model candidate, but its current supported HTTPS/GRIB retrieval path must be implemented and production-validated before it replaces the legacy fallback.
 - The SoFlo Fish Finder Render page could not be inspected from the available public response, so no assumptions about its implementation or data sources have been imported.
 
 ## Known limitations and blockers
@@ -99,8 +99,9 @@ PR #70 originated as a stacked branch on #69. Its resulting file tree is now in 
 
 ## Next implementation milestones
 
-1. Validate the NOAA HF Radar 2 km request in a production refresh; inspect South Florida valid-cell coverage, source timestamps, quality metrics, and the altimetry fallback before accepting the upgrade.
-2. Build a source-latency history from repeated production refreshes and calibrate provisional freshness thresholds against actual observation delays.
+1. Validate the HF Radar freshness guard in production; confirm stale altimetry no longer fills current vectors and inspect regional coverage and Gulf Stream-edge provenance.
+2. Implement a supported NOAA RTOFS HTTPS/GRIB subset downloader, including model initialization time and forecast lead, then compare it with HF Radar and local observations before enabling it as broad-area current guidance.
+3. Build a source-latency history from repeated production refreshes and calibrate provisional freshness thresholds against actual observation delays.
 3. Extend input-quality diagnostics into species-level prediction explanations, preserving the distinction between weighted habitat suitability scores and catch probability.
 4. Audit species profile evidence and scorer compatibility before changing any biological preferences or weights.
 5. Continue Biscayne boundary and inlet reconciliation within `main` using manual research workflows, without promoting unverified geometry.

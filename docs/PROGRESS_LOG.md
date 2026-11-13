@@ -328,3 +328,29 @@ Compare source age across multiple scheduled refreshes, then calibrate operation
 - NOAA HF Radar 1 km and 6 km alternatives have different spatial resolutions and latest observation times; compare their actual South Florida coverage before switching resolutions.
 
 **Next:** add query-region-specific coverage diagnostics, then investigate machine-readable EFCOM and NOAA RTOFS data access. Keep HFR as an observation layer and replace the stale broad-area fallback only after a real production data pull and coverage test. No scoring weights changed.
+
+
+## 2026-11-13 | Exclude stale satellite altimetry from current-vector fallback
+
+**Branch:** `main`  
+**Reason:** Production refresh #203 used satellite altimetry that was 1,121.85 hours old to fill most current-grid cells. A successful data download is not evidence that the vectors still represent current ocean conditions.
+
+### Changes
+
+- Added a fail-closed 72-hour maximum age for satellite-altimetry current-vector fallback. Missing, invalid, future-dated, or older timestamps make the feed ineligible for current-vector filling.
+- Retained satellite altimetry for the approximate Gulf Stream-edge calculation, with its timestamp and freshness metadata kept separate.
+- HF Radar remains the observation source wherever valid. When altimetry is stale, missing HF Radar cells remain unknown instead of being filled with old velocities.
+- Added explicit fallback eligibility/use metadata and ensured pipeline health only treats fallback freshness as a current-layer issue when the fallback was actually used.
+- Added regression tests for stale altimetry being excluded both from HF Radar gaps and from a current layer when HF Radar is unavailable.
+- Documented NOAA RTOFS as the preferred broad-area model candidate. NOAA retired NOMADS OPeNDAP in February 2026; implementation must use supported HTTPS model-file downloads or GRIB filtering. No unverified endpoint is enabled in production.
+
+### Validation
+
+- The prior regional coverage change passed **255 tests, 0 failures** on [run #410](https://github.com/markeetox/LUPITA/actions/runs/43483859099).
+- The new age-guard tests and full suite are pending CI on this commit.
+- No prediction weights or biological scoring rules changed.
+
+### Next
+
+- Inspect the next production refresh to verify stale altimetry is excluded from current vectors.
+- Implement and validate the NOAA RTOFS operational HTTPS/GRIB ingestion path, preserving model initialization time and forecast lead separately from observation age.

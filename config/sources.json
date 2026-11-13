@@ -1,5 +1,5 @@
 {
-  "note": "NOAA CoastWatch ERDDAP is the canonical host for the configured chlorophyll and ETOPO datasets. NOAA-20 daily chlorophyll latitude is a descending coordinate axis and must be requested north-to-south. ETOPO 15-arc-second data is sampled at stride 15 across the broad North America grid to keep requests bounded; this is regional context, not reef-scale bathymetry. The gap-filled chlorophyll product is disabled until its freshness and scientific suitability are independently validated; do not enable it merely because the primary source is unavailable. NOAA HF Radar 2 km currents are the primary near-surface coastal source for the South Florida request window; satellite-altimetry currents remain the broad-area spatial fallback and Gulf Stream-edge source.",
+  "note": "NOAA CoastWatch ERDDAP is the canonical host for the configured chlorophyll and ETOPO datasets. NOAA-20 daily chlorophyll latitude is a descending coordinate axis and must be requested north-to-south. ETOPO 15-arc-second data is sampled at stride 15 across the broad North America grid to keep requests bounded; this is regional context, not reef-scale bathymetry. The gap-filled chlorophyll product is disabled until its freshness and scientific suitability are independently validated; do not enable it merely because the primary source is unavailable. NOAA HF Radar 2 km currents are the primary near-surface coastal source for the South Florida request window; satellite-altimetry currents remain the broad-area spatial fallback and Gulf Stream-edge source. Satellite altimetry is retained for Gulf Stream-edge context, but may fill current vectors only when its timestamp is known, non-future, and no older than 72 hours; stale or undated values are excluded from the current field.",
   "region": {
     "name": "north_america_coastlines",
     "lat": [
@@ -180,7 +180,8 @@
         "stale_age_hours": 72,
         "basis": "Provisional operational thresholds for daily satellite-altimetry geostrophic currents; broad-area fallback and Gulf Stream-edge context."
       },
-      "note": "NOAA CoastWatch satellite-altimetry geostrophic currents, daily, 25 km grid; u east and v north in m/s. Retained for broad-area fallback and Gulf Stream-edge estimation when the product is available."
+      "note": "NOAA CoastWatch satellite-altimetry geostrophic currents, daily, 25 km grid; u east and v north in m/s. Retained for broad-area fallback and Gulf Stream-edge estimation when the product is available. It is not used to fill current vectors when its observation timestamp is missing, future-dated, or older than 72 hours; it remains available for the approximate Gulf Stream-edge calculation with its own freshness metadata.",
+      "max_current_age_hours": 72
     }
   },
   "arcgis": {

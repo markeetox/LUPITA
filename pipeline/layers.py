@@ -2,6 +2,7 @@
 from __future__ import annotations
 
 import numpy as np
+from datetime import datetime, timezone
 
 from pipeline import closures, currents, derive, grid, habitat, structure
 from pipeline.grid import resample
@@ -9,6 +10,23 @@ from pipeline.sources import arcgis, erddap
 
 
 EDGE_MARGIN_CELLS = 2
+
+
+def _timestamp_age_hours(timestamp: str | None, now: datetime | None = None) -> float | None:
+    """Return source age in hours; missing or invalid timestamps remain unknown."""
+    if not timestamp:
+        return None
+    try:
+        observed = datetime.fromisoformat(str(timestamp).replace("Z", "+00:00"))
+        if observed.tzinfo is None:
+            observed = observed.replace(tzinfo=timezone.utc)
+        current = now or datetime.now(timezone.utc)
+        if current.tzinfo is None:
+            current = current.replace(tzinfo=timezone.utc)
+        return (current - observed).total_seconds() / 3600.0
+    except (TypeError, ValueError):
+        return None
+
 FRONT_MIN_DEPTH_M = 30.0   # shallow banks and shelves heat up faster; their edges are not ocean fronts
 
 
@@ -253,10 +271,25 @@ def load_layers(sources: dict, errors: list[str], fetch=erddap.fetch_csv, fetch_
                 alt_valid = np.isfinite(alt_u) & np.isfinite(alt_v)
                 if not alt_valid.any():
                     raise ValueError("satellite-altimetry fallback returned no valid current vectors")
+                age_hours = _timestamp_age_hours(atime)
+                max_current_age = cf.get("max_current_age_hours", 72)
+                current_eligible = (
+                    age_hours is not None and max_current_age is not None
+                    and age_hours >= 0 and age_hours <= float(max_current_age)
+                )
                 alt_meta.update({
                     "loaded": True, "time": atime,
                     "source_grid_shape": [int(len(alats)), int(len(alons))],
-                    "aligned_valid_fraction": round(float(alt_valid.mean()), 6)
+                    "aligned_valid_fraction": round(float(alt_valid.mean()), 6),
+                    "age_hours_at_load": round(age_hours, 3) if age_hours is not None else None,
+                    "max_current_age_hours": max_current_age,
+                    "current_eligible": current_eligible,
+                    "used_for_currents": False,
+                    "current_exclusion_reason": None if current_eligible else (
+                        "missing or invalid timestamp" if age_hours is None else
+                        "future-dated observation" if age_hours < 0 else
+                        f"older than {max_current_age} hour current-use limit"
+                    )
                 })
                 edge = currents.edge_on_grid(alats, currents.smooth(currents.edge_longitudes(alats, alons, ag[av_name])), lats)
                 if edge is not None:
@@ -267,26 +300,29 @@ def load_layers(sources: dict, errors: list[str], fetch=erddap.fetch_csv, fetch_
             except Exception as exc:
                 errors.append(f"layers currents fallback: {exc}")
 
-        if hfr_u is not None and alt_u is not None:
+        alt_current_eligible = bool(alt_meta.get("current_eligible"))
+        if hfr_u is not None and alt_u is not None and alt_current_eligible:
             hfr_valid = np.isfinite(hfr_u) & np.isfinite(hfr_v)
             u = np.where(hfr_valid, hfr_u, alt_u)
             v = np.where(hfr_valid, hfr_v, alt_v)
-            blend_mode = "HF Radar where valid; satellite altimetry elsewhere"
+            alt_meta["used_for_currents"] = True
+            blend_mode = "HF Radar where valid; timestamp-qualified satellite altimetry elsewhere"
         elif hfr_u is not None:
             u, v = hfr_u, hfr_v
-            blend_mode = "HF Radar only; satellite-altimetry fallback unavailable"
-        elif alt_u is not None:
+            blend_mode = "HF Radar only; satellite altimetry excluded from current field" if alt_meta["loaded"] else "HF Radar only; satellite-altimetry fallback unavailable"
+        elif alt_u is not None and alt_current_eligible:
             u, v = alt_u, alt_v
-            blend_mode = "Satellite altimetry fallback only; HF Radar unavailable"
+            alt_meta["used_for_currents"] = True
+            blend_mode = "Timestamp-qualified satellite altimetry fallback only; HF Radar unavailable"
         else:
             u = v = None
-            blend_mode = "No usable current source"
+            blend_mode = "No usable current source; satellite altimetry is outside the current-use age limit or unavailable"
 
         if u is not None:
             layers["current_speed"], layers["current_dir"] = currents.speed_dir(u, v)
             layers["current_convergence"] = derive.current_convergence(u, v, lats, lons)
             layers["times"]["currents"] = hfr_meta["time"] if hfr_meta["loaded"] else alt_meta["time"]
-            layers["datasets"]["currents"] = "NOAA HF Radar + satellite-altimetry fallback" if hfr_meta["loaded"] and alt_meta["loaded"] else (cu.get("dataset") if hfr_meta["loaded"] else cf.get("dataset"))
+            layers["datasets"]["currents"] = "NOAA HF Radar + timestamp-qualified satellite-altimetry fallback" if hfr_meta["loaded"] and alt_meta["used_for_currents"] else (cu.get("dataset") if hfr_meta["loaded"] else cf.get("dataset"))
         combined_valid = (np.isfinite(u) & np.isfinite(v)) if u is not None else np.zeros((len(lats), len(lons)), dtype=bool)
         query_region = cu.get("query_region", region)
         query_mask = (
@@ -304,6 +340,7 @@ def load_layers(sources: dict, errors: list[str], fetch=erddap.fetch_csv, fetch_
             "blend_mode": blend_mode,
             "primary": hfr_meta,
             "fallback": alt_meta,
+            "fallback_used_for_currents": bool(alt_meta.get("used_for_currents")),
             "combined_aligned_valid_fraction": round(float(combined_valid.mean()), 6),
             "query_region_coverage": {
                 "region": query_region,

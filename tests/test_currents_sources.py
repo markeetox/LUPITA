@@ -28,7 +28,7 @@ def sources():
     return {"region":{"name":"test","lat":[25.0,25.3],"lon":[-80.3,-80.0]},"erddap":{
         "sst":{"enabled":True,"base":"https://example.test/erddap","dataset":"sst-test","variable":"analysed_sst","dims":["time","latitude","longitude"]},
         "currents":{"enabled":True,"base":"https://example.test/erddap","dataset":"hfr-test","variables":["water_u","water_v","hdop","number_of_sites","number_of_radials"],"dims":["time","latitude","longitude"],"query_region":{"lat":[25.0,25.3],"lon":[-80.3,-80.0]}},
-        "currents_fallback":{"enabled":True,"base":"https://example.test/erddap","dataset":"alt-test","variables":["ugos","vgos"],"dims":["time","latitude","longitude"]},
+        "currents_fallback":{"enabled":True,"base":"https://example.test/erddap","dataset":"alt-test","variables":["ugos","vgos"],"dims":["time","latitude","longitude"],"max_current_age_hours":72},
         "chlorophyll":{"enabled":False},"chlorophyll_gapfilled":{"enabled":False},"bathymetry":{"enabled":False}},
         "arcgis":{"artificial_reefs":{"enabled":False},"natural_reef":{"enabled":False},"unified_benthic":{"enabled":False}},"closures":{"enabled":False}}
 
@@ -66,3 +66,52 @@ def test_altimetry_still_loads_when_hf_radar_fails():
     assert layers["currents_info"]["selected_source"]=="NOAA satellite altimetry fallback"
     assert np.isfinite(layers["current_speed"]).any()
     assert any(e.startswith("layers currents primary:") for e in errors)
+
+
+
+def test_stale_altimetry_is_not_used_to_fill_hf_radar_gaps():
+    def fetch(url):
+        if "sst-test" in url:
+            return csv_data("sst-test")
+        if "hfr-test" in url:
+            return csv_data("hfr-test", True)
+        if "alt-test" in url:
+            rows = csv_data("alt-test").splitlines()
+            return "\n".join(rows[:2] + [row.replace("2026-11-13T11:00:00Z", "2026-09-28T00:00:00Z") for row in rows[2:]])
+        raise AssertionError(url)
+
+    layers = load_layers(sources(), [], fetch=fetch)
+    info = layers["currents_info"]
+    assert info["primary"]["loaded"]
+    assert info["fallback"]["loaded"]
+    assert info["fallback"]["current_eligible"] is False
+    assert info["fallback"]["used_for_currents"] is False
+    assert info["fallback_used_for_currents"] is False
+    assert "older than 72 hour" in info["fallback"]["current_exclusion_reason"]
+    assert np.isfinite(layers["current_speed"][0, 0])
+    assert np.isnan(layers["current_speed"][1, 1])
+    assert info["query_region_coverage"]["altimetry_valid_fraction"] == 1.0
+    assert info["query_region_coverage"]["combined_valid_fraction"] == 0.9375
+
+
+def test_stale_altimetry_alone_does_not_create_a_current_layer():
+    errors = []
+    def fetch(url):
+        if "sst-test" in url:
+            return csv_data("sst-test")
+        if "hfr-test" in url:
+            raise RuntimeError("HF Radar unavailable")
+        if "alt-test" in url:
+            rows = csv_data("alt-test").splitlines()
+            return "\n".join(rows[:2] + [row.replace("2026-11-13T11:00:00Z", "2026-09-28T00:00:00Z") for row in rows[2:]])
+        raise AssertionError(url)
+
+    layers = load_layers(sources(), errors, fetch=fetch)
+    info = layers["currents_info"]
+    assert info["fallback"]["loaded"]
+    assert info["fallback"]["current_eligible"] is False
+    assert info["fallback"]["used_for_currents"] is False
+    assert info["selected_source"] is None
+    assert layers["current_speed"] is None
+    assert layers["current_convergence"] is None
+    assert any(error.startswith("layers currents primary:") for error in errors)
