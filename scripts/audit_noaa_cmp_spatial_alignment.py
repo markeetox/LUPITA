@@ -183,7 +183,7 @@ def _feature_overlay(feature, charted_bay, preserve, named_water_metric) -> tupl
     return result, line
 
 
-def _project_pair_separation(first_features: list[tuple], second_features: list[tuple]]) -> dict:
+def _project_pair_separation(first_features: list[tuple], second_features: list[tuple]) -> dict:
     best_distance = float("inf")
     best_pair = None
     best_endpoint_distance = float("inf")
