@@ -1,0 +1,554 @@
+{
+  "generated_at_utc": "2026-11-13T15:16:38.241927+00:00",
+  "source": "NOAA National Geodetic Survey Coastal Mapping Program / NOAA Shoreline Data Explorer",
+  "source_download_pattern": "https://nsde.ngs.noaa.gov/downloads/{project_id}.zip",
+  "output_crs": "EPSG:4326",
+  "project_summaries": {
+    "FL1808C-TB-N": {
+      "status": "converted",
+      "metadata": {
+        "inport_id": 73241,
+        "inport_url": "https://www.fisheries.noaa.gov/inport/item/73241",
+        "source_dates": [
+          "2018-07-26",
+          "2019-04-13"
+        ],
+        "reported_horizontal_accuracy_95pct_m": "1.3-3.0",
+        "geographic_extent_wgs84": [
+          -80.3095,
+          25.6344886723368,
+          -80.16894,
+          25.7729300000031
+        ]
+      },
+      "archive_file": "FL1808C-TB-N.zip",
+      "source_crs": "NAD83 (EPSG:4269 per NOAA InPort metadata)",
+      "shapefiles": {
+        "FL1808C-TB-N_l1": {
+          "source_file": "FL1808C-TB-N_l1.shp",
+          "output_file": "geojson/FL1808C-TB-N_l1.geojson",
+          "feature_count": 969,
+          "geometry_types": [
+            "LineString"
+          ],
+          "class_counts": {
+            "ALONGSHORE FEATURE": 535,
+            "CONTOUR": 54,
+            "CULTURAL FEATURE MISCELLANEOUS": 21,
+            "NATURAL FEATURE MISCELLANEOUS": 24,
+            "CARTOGRAPHIC LIMIT": 4,
+            "SHORELINE": 247,
+            "TRANSPORTATION": 77,
+            "OBSTRUCTION LINEAR": 7
+          },
+          "attribute_counts": {
+            "Pier": 480,
+            "Pier.Floating": 15,
+            "Pier.Ruins": 14,
+            "Breakwater.Bare": 2,
+            "Bridge.Footbridge": 3,
+            "Bridge.Fixed": 18,
+            "Depth Contour": 54,
+            "Groin.Covers/Uncovers Or Submerged": 1,
+            "Building": 6,
+            "Cable.Overhead": 9,
+            "Pipeline.Overhead": 4,
+            "Stream.Perennial": 5,
+            "Mangrove Or Cypress.Extent": 19,
+            "Pipeline.Submerged Or Surface": 1,
+            "Groin.Bare": 1,
+            "Source Data Limit": 2,
+            "Feature Limit": 2,
+            "Natural.Mean High Water": 70,
+            "Man-made.Bulkhead Or Sea Wall": 84,
+            "Man-made.Bulkhead Or Sea Wall.Ruins": 2,
+            "Man-made.Rip Rap": 21,
+            "Man-made.Ramp": 7,
+            "Man-made.Canal.Navigable": 16,
+            "Natural.Apparent.Mangrove Or Cypress": 24,
+            "Natural.Great Lake Or Lake Or Pond": 18,
+            "Man-made.Canal.Non-navigable": 5,
+            "Road": 75,
+            "Railroad": 2,
+            "Ruins.Undetermined.Covers/Uncovers": 7,
+            "Breakwater.Covers/Uncovers Or Submerged": 1,
+            "Dam": 1
+          },
+          "source_date_counts": {
+            "20190412": 669,
+            "20190413": 134,
+            "20180726": 166
+          },
+          "horizontal_accuracy_m_counts": {
+            "1.3": 803,
+            "3.0": 54,
+            "2.3": 112
+          },
+          "data_source_counts": {
+            "D": 803,
+            "M": 166
+          },
+          "source_id_counts": {
+            "GC12023": 969
+          }
+        },
+        "FL1808C-TB-N_p1": {
+          "source_file": "FL1808C-TB-N_p1.shp",
+          "output_file": "geojson/FL1808C-TB-N_p1.geojson",
+          "feature_count": 215,
+          "geometry_types": [
+            "Point"
+          ],
+          "class_counts": {
+            "FREESTANDING MARINE FEATURE": 58,
+            "LANDMARK": 1,
+            "AID TO NAVIGATION": 156
+          },
+          "attribute_counts": {
+            "Pile.Bare": 56,
+            "Tripodal.Bare": 2,
+            "Other": 1,
+            "Daybeacon": 137,
+            "Marine Light.Pile": 18,
+            "Marine Light.Tower": 1
+          },
+          "source_date_counts": {
+            "20190412": 188,
+            "20190413": 27
+          },
+          "horizontal_accuracy_m_counts": {
+            "1.3": 215
+          },
+          "data_source_counts": {
+            "D": 215
+          },
+          "source_id_counts": {
+            "GC12023": 215
+          }
+        }
+      },
+      "line_feature_count": 969,
+      "point_feature_count": 215,
+      "mhw_feature_count": 70,
+      "mllw_depth_contour_count": 54,
+      "mhw_total_length_km": 18.029,
+      "mllw_depth_contour_total_length_km": 11.83,
+      "mhw_topology": {
+        "feature_count": 70,
+        "component_count_after_exact_union": 69,
+        "open_endpoint_coordinates": 128,
+        "shared_endpoint_coordinates": 6,
+        "branch_endpoint_coordinates": 0,
+        "sum_feature_length_km": 18.029,
+        "union_length_km": 18.029,
+        "overlap_length_km": 0.0,
+        "bounds_epsg26917_m": [
+          571872.04,
+          2837854.5,
+          581121.32,
+          2848412.27
+        ]
+      },
+      "mllw_depth_contour_topology": {
+        "feature_count": 54,
+        "component_count_after_exact_union": 53,
+        "open_endpoint_coordinates": 78,
+        "shared_endpoint_coordinates": 15,
+        "branch_endpoint_coordinates": 0,
+        "sum_feature_length_km": 11.83,
+        "union_length_km": 11.83,
+        "overlap_length_km": 0.0,
+        "bounds_epsg26917_m": [
+          573458.38,
+          2837612.36,
+          581135.77,
+          2848409.56
+        ]
+      }
+    },
+    "FL1808A-TB-N": {
+      "status": "converted",
+      "metadata": {
+        "inport_id": 74866,
+        "inport_url": "https://www.fisheries.noaa.gov/inport/item/74866",
+        "source_dates": [
+          "2018-07-26",
+          "2019-04-16"
+        ],
+        "reported_horizontal_accuracy_95pct_m": "1.3-3.0",
+        "geographic_extent_wgs84": [
+          -80.40325,
+          25.3252299521071,
+          -80.2171900246895,
+          25.5119399520435
+        ]
+      },
+      "archive_file": "FL1808A-TB-N.zip",
+      "source_crs": "NAD83 (EPSG:4269 per NOAA InPort metadata)",
+      "shapefiles": {
+        "FL1808A-TB-N_l1": {
+          "source_file": "FL1808A-TB-N_l1.shp",
+          "output_file": "geojson/FL1808A-TB-N_l1.geojson",
+          "feature_count": 680,
+          "geometry_types": [
+            "LineString"
+          ],
+          "class_counts": {
+            "CONTOUR": 118,
+            "SHORELINE": 433,
+            "CULTURAL FEATURE MISCELLANEOUS": 24,
+            "TRANSPORTATION": 25,
+            "ALONGSHORE FEATURE": 27,
+            "NATURAL FEATURE MISCELLANEOUS": 48,
+            "OBSTRUCTION LINEAR": 1,
+            "CARTOGRAPHIC LIMIT": 4
+          },
+          "attribute_counts": {
+            "Depth Contour": 118,
+            "Man-made.Rip Rap": 14,
+            "Man-made.Bulkhead Or Sea Wall": 31,
+            "Natural.Mean High Water": 58,
+            "Natural.Great Lake Or Lake Or Pond": 274,
+            "Man-made.Canal.Non-navigable": 18,
+            "Dam": 4,
+            "Road": 25,
+            "Pier": 16,
+            "Pier.Floating": 4,
+            "Mangrove Or Cypress.Extent": 42,
+            "Bridge.Fixed": 5,
+            "Obstruction.Bare": 1,
+            "Bridge.Footbridge": 2,
+            "Source Data Limit": 2,
+            "Natural.Apparent.Mangrove Or Cypress": 35,
+            "Man-made.Ramp": 3,
+            "Cable.Overhead": 15,
+            "Building": 2,
+            "Pipeline.Overhead": 3,
+            "Stream.Perennial": 6,
+            "Feature Limit": 2
+          },
+          "source_date_counts": {
+            "20180726": 254,
+            "20190413": 164,
+            "20190416": 262
+          },
+          "horizontal_accuracy_m_counts": {
+            "3.0": 118,
+            "1.3": 426,
+            "2.3": 136
+          },
+          "data_source_counts": {
+            "M": 254,
+            "D": 426
+          },
+          "source_id_counts": {
+            "GC12021": 680
+          }
+        },
+        "FL1808A-TB-N_p1": {
+          "source_file": "FL1808A-TB-N_p1.shp",
+          "output_file": "geojson/FL1808A-TB-N_p1.geojson",
+          "feature_count": 38,
+          "geometry_types": [
+            "Point"
+          ],
+          "class_counts": {
+            "OBSTRUCTION POINT": 9,
+            "FREESTANDING MARINE FEATURE": 1,
+            "LANDMARK": 3,
+            "AID TO NAVIGATION": 25
+          },
+          "attribute_counts": {
+            "Rock.Bare": 7,
+            "Obstruction.Bare": 2,
+            "Pile.Bare": 1,
+            "Mast": 1,
+            "Other": 2,
+            "Daybeacon": 18,
+            "Marine Light.Pile": 5,
+            "Marine Light.Tower": 2
+          },
+          "source_date_counts": {
+            "20190416": 7,
+            "20190413": 31
+          },
+          "horizontal_accuracy_m_counts": {
+            "1.3": 38
+          },
+          "data_source_counts": {
+            "D": 38
+          },
+          "source_id_counts": {
+            "GC12021": 38
+          }
+        }
+      },
+      "line_feature_count": 680,
+      "point_feature_count": 38,
+      "mhw_feature_count": 58,
+      "mllw_depth_contour_count": 118,
+      "mhw_total_length_km": 39.44,
+      "mllw_depth_contour_total_length_km": 13.989,
+      "mhw_topology": {
+        "feature_count": 58,
+        "component_count_after_exact_union": 51,
+        "open_endpoint_coordinates": 64,
+        "shared_endpoint_coordinates": 26,
+        "branch_endpoint_coordinates": 0,
+        "sum_feature_length_km": 39.44,
+        "union_length_km": 39.44,
+        "overlap_length_km": 0.0,
+        "bounds_epsg26917_m": [
+          565611.15,
+          2803357.93,
+          571883.37,
+          2821569.51
+        ]
+      },
+      "mllw_depth_contour_topology": {
+        "feature_count": 118,
+        "component_count_after_exact_union": 117,
+        "open_endpoint_coordinates": 102,
+        "shared_endpoint_coordinates": 67,
+        "branch_endpoint_coordinates": 0,
+        "sum_feature_length_km": 13.989,
+        "union_length_km": 13.989,
+        "overlap_length_km": 0.0,
+        "bounds_epsg26917_m": [
+          565910.05,
+          2804241.96,
+          571965.97,
+          2821070.04
+        ]
+      }
+    },
+    "FL2317-CS-N": {
+      "status": "converted",
+      "metadata": {
+        "inport_id": 76789,
+        "inport_url": "https://www.fisheries.noaa.gov/inport/item/76789",
+        "source_dates": [
+          "2023-10-21"
+        ],
+        "reported_horizontal_accuracy_95pct_m": "1.2",
+        "geographic_extent_wgs84": [
+          -80.2157448950401,
+          25.7342282449007,
+          -80.1074168708588,
+          25.8119979108154
+        ]
+      },
+      "archive_file": "FL2317-CS-N.zip",
+      "source_crs": "NAD83 (EPSG:4269 per NOAA InPort metadata)",
+      "shapefiles": {
+        "FL2317-CS-N_l1": {
+          "source_file": "FL2317-CS-N_l1.shp",
+          "output_file": "geojson/FL2317-CS-N_l1.geojson",
+          "feature_count": 19,
+          "geometry_types": [
+            "LineString"
+          ],
+          "class_counts": {
+            "ALONGSHORE FEATURE": 10,
+            "CARTOGRAPHIC LIMIT": 4,
+            "CULTURAL FEATURE MISCELLANEOUS": 1,
+            "SHORELINE": 4
+          },
+          "attribute_counts": {
+            "Fender": 6,
+            "Pier": 2,
+            "Pier.Floating": 2,
+            "Source Data Limit": 1,
+            "Feature Limit": 3,
+            "Building": 1,
+            "Man-made.Bulkhead Or Sea Wall": 3,
+            "Man-made.Wharf Or Quay": 1
+          },
+          "source_date_counts": {
+            "20231021": 19
+          },
+          "horizontal_accuracy_m_counts": {
+            "1.2": 19
+          },
+          "data_source_counts": {
+            "D": 19
+          },
+          "source_id_counts": {
+            "GC12001": 19
+          }
+        }
+      },
+      "line_feature_count": 19,
+      "point_feature_count": 0,
+      "mhw_feature_count": 0,
+      "mllw_depth_contour_count": 0,
+      "mhw_total_length_km": 0.0,
+      "mllw_depth_contour_total_length_km": 0.0,
+      "mhw_topology": {
+        "feature_count": 0,
+        "component_count_after_exact_union": 0,
+        "open_endpoint_coordinates": 0,
+        "shared_endpoint_coordinates": 0,
+        "branch_endpoint_coordinates": 0,
+        "sum_feature_length_km": 0.0,
+        "union_length_km": 0.0,
+        "overlap_length_km": 0.0
+      },
+      "mllw_depth_contour_topology": {
+        "feature_count": 0,
+        "component_count_after_exact_union": 0,
+        "open_endpoint_coordinates": 0,
+        "shared_endpoint_coordinates": 0,
+        "branch_endpoint_coordinates": 0,
+        "sum_feature_length_km": 0.0,
+        "union_length_km": 0.0,
+        "overlap_length_km": 0.0
+      }
+    },
+    "FL1603A-CM-N": {
+      "status": "converted",
+      "metadata": {
+        "inport_id": 61478,
+        "inport_url": "https://www.fisheries.noaa.gov/inport/item/61478",
+        "project_report_url": "https://www.ngs.noaa.gov/desc_reports/FL1603A-CM-N.PDF",
+        "geographic_cell": "GC11552",
+        "scope": "local Convoy Point shoreline comparison only; not bay-wide coverage",
+        "source_dates": [
+          "2017-03-19"
+        ],
+        "reported_horizontal_accuracy_95pct_m": "1.9",
+        "geographic_extent_wgs84": [
+          -80.3457198,
+          25.44636753,
+          -80.3168564,
+          25.47820684
+        ]
+      },
+      "archive_file": "FL1603A-CM-N.zip",
+      "source_crs": "NAD83 (EPSG:4269 per NOAA InPort metadata)",
+      "shapefiles": {
+        "projbnd": {
+          "source_file": "projbnd.shp",
+          "output_file": "geojson/FL1603A-CM-N_projbnd.geojson",
+          "feature_count": 1,
+          "geometry_types": [
+            "Polygon"
+          ],
+          "class_counts": {
+            "unknown": 1
+          },
+          "attribute_counts": {
+            "unknown": 1
+          },
+          "source_date_counts": {
+            "unknown": 1
+          },
+          "horizontal_accuracy_m_counts": {
+            "unknown": 1
+          },
+          "data_source_counts": {
+            "unknown": 1
+          },
+          "source_id_counts": {
+            "unknown": 1
+          }
+        },
+        "softcopyl1": {
+          "source_file": "softcopyl1.shp",
+          "output_file": "geojson/FL1603A-CM-N_softcopyl1.geojson",
+          "feature_count": 78,
+          "geometry_types": [
+            "LineString"
+          ],
+          "class_counts": {
+            "SHORELINE": 30,
+            "ALONGSHORE FEATURE": 26,
+            "CARTOGRAPHIC LIMIT": 2,
+            "CULTURAL FEATURE MISCELLANEOUS": 5,
+            "NATURAL FEATURE MISCELLANEOUS": 8,
+            "TRANSPORTATION": 7
+          },
+          "attribute_counts": {
+            "Natural.Apparent.Mangrove Or Cypress": 4,
+            "Natural.Mean High Water": 11,
+            "Jetty.Bare": 1,
+            "Man-made.Rip Rap": 6,
+            "Pier": 18,
+            "Pier.Floating": 6,
+            "Jetty.Covers/Uncovers Or Submerged": 1,
+            "Feature Limit": 1,
+            "Source Data Limit": 1,
+            "Cable.Overhead": 5,
+            "Mangrove Or Cypress.Extent": 6,
+            "Stream.Perennial": 2,
+            "Man-made.Bulkhead Or Sea Wall": 5,
+            "Man-made.Ramp": 2,
+            "Man-made.Wharf Or Quay": 1,
+            "Road": 7,
+            "Shoreline/Alongshore Feature Boundary": 1
+          },
+          "source_date_counts": {
+            "20170319": 78
+          },
+          "horizontal_accuracy_m_counts": {
+            "1.9": 78
+          },
+          "data_source_counts": {
+            "D": 78
+          },
+          "source_id_counts": {
+            "GC11552": 78
+          }
+        },
+        "softcopyp1": {
+          "source_file": "softcopyp1.shp",
+          "output_file": "geojson/FL1603A-CM-N_softcopyp1.geojson",
+          "feature_count": 20,
+          "geometry_types": [
+            "Point"
+          ],
+          "class_counts": {
+            "FREESTANDING MARINE FEATURE": 1,
+            "AID TO NAVIGATION": 19
+          },
+          "attribute_counts": {
+            "Pile.Bare": 1,
+            "Daybeacon": 16,
+            "Marine Light.Pile": 3
+          },
+          "source_date_counts": {
+            "20170319": 20
+          },
+          "horizontal_accuracy_m_counts": {
+            "1.9": 20
+          },
+          "data_source_counts": {
+            "D": 20
+          },
+          "source_id_counts": {
+            "GC11552": 20
+          }
+        }
+      },
+      "line_feature_count": 0,
+      "point_feature_count": 0,
+      "mhw_feature_count": 0,
+      "mllw_depth_contour_count": 0
+    }
+  },
+  "project_mhw_linework_comparisons": {
+    "FL1808A-TB-N__FL1808C-TB-N": {
+      "nearest_mhw_line_distance_km": 17.691,
+      "interpretation": "measured separation between retrieved MHW linework; not proof of a data gap or missing shoreline"
+    }
+  },
+  "topology_method": "exact geometric union and endpoint counting in EPSG:26917; no snapping, gap bridging, or dissolving of persisted source features",
+  "guardrails": [
+    "MHW subset includes only CLASS=SHORELINE and ATTRIBUTE=Natural.Mean High Water.",
+    "MLLW subset contains Depth Contour lines with INFORM=MLLW; it is not an MLLW shoreline and contains no numeric contour depth attribute.",
+    "Apparent mangrove lines, mangrove extents, man-made shoreline structures, alongshore features, and cartographic limits remain in the full source linework and are not merged into the MHW subset.",
+    "Project geographic rectangles are data-management extents and do not prove complete surveyed coverage.",
+    "FL2317 is a port-focused source; no Natural.Mean High Water shoreline features were present in its line shapefile.",
+    "No production scoring, species profiles, or API v1 fields are changed."
+  ]
+}

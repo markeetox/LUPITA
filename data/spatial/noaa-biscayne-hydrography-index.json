@@ -1,0 +1,571 @@
+{
+  "index_version": 1,
+  "generated_at_utc": "2026-11-13T04:06:49.915Z",
+  "purpose": "Persistent index of selected NOAA ENC named-water features and channel features extracted for research review. Curated original source geometries are persisted in the linked GeoJSON; chart fragments are not promoted to complete ecological, statutory, habitat, or navigation boundaries.",
+  "source": {
+    "publisher": "NOAA Office of Coast Survey",
+    "service": "https://encdirect.noaa.gov/arcgis/rest/services/encdirect/enc_harbour/MapServer",
+    "layer_id": 237,
+    "layer_name": "Harbor.Sea_Area_Named_Water_Area",
+    "geometry_type": "Polygon",
+    "source_scale_band": "Harbour ENC, nominal 1:5,000 to 1:50,000",
+    "source_refresh": "Weekly ENC service refresh",
+    "artifact_id": 14009386093,
+    "workflow_run_id": 43363005067
+  },
+  "named_water_features": {
+    "Biscayne Bay": {
+      "feature_count": 37,
+      "objectids": [
+        246262,
+        246278,
+        246285,
+        246286,
+        246287,
+        246288,
+        246293,
+        246298,
+        246299,
+        246303,
+        246306,
+        246307,
+        246308,
+        246309,
+        246310,
+        246311,
+        246312,
+        246313,
+        246314,
+        246315,
+        246320,
+        246321,
+        253418,
+        253419,
+        253422,
+        253425,
+        253428,
+        253429,
+        253430,
+        253435,
+        253438,
+        253448,
+        253449,
+        253460,
+        253462,
+        253475,
+        253477
+      ],
+      "chart_cells": [
+        "US5FL5JM.000",
+        "US5FL5JN.000",
+        "US5FL5KL.000",
+        "US5FL5KM.000",
+        "US5FL5KN.000",
+        "US5FL5LM.000",
+        "US5FL5LN.000",
+        "US5FL5MM.000",
+        "US5FL5MN.000",
+        "US5MIABA.000",
+        "US5MIABB.000",
+        "US5MIABC.000",
+        "US5MIACB.000",
+        "US5MIACC.000",
+        "US5MIADB.000",
+        "US5MIADC.000",
+        "US5MIAEC.000"
+      ],
+      "source_dates": [
+        "2002-10-05",
+        "2003-04",
+        "2008-06",
+        "2011-02"
+      ],
+      "status": "chart_cell_polygons_retrieved_mosaic_and_topology_review_pending",
+      "caveat": "These are charted named-water polygons partitioned across ENC cells, not a single statutory or ecological boundary. Do not dissolve into a final bay boundary without overlap, gap, and shoreline reconciliation."
+    },
+    "Card Sound": {
+      "feature_count": 6,
+      "objectids": [
+        246233,
+        246243,
+        246247,
+        246258,
+        246267,
+        246284
+      ],
+      "chart_cells": [
+        "US5FL5IL.000",
+        "US5FL5IM.000",
+        "US5FL5IN.000",
+        "US5FL5JM.000",
+        "US5FL5JN.000"
+      ],
+      "source_dates": [
+        "2003-04"
+      ],
+      "status": "chart_cell_polygons_retrieved_mosaic_review_pending"
+    },
+    "Safety Valve": {
+      "feature_count": 4,
+      "objectids": [
+        246300,
+        246319,
+        246322,
+        253421
+      ],
+      "chart_cells": [
+        "US5FL5LN.000",
+        "US5FL5MN.000",
+        "US5FL5MO.000",
+        "US5MIABB.000"
+      ],
+      "source_dates": [
+        "2002-10-05"
+      ],
+      "status": "named_water_area_polygons_retrieved_multi_cell_reconciliation_pending",
+      "caveat": "NOAA ENC classifies these as named water-area polygons, not as a flat or channel habitat classification."
+    },
+    "Biscayne Flats": {
+      "feature_count": 3,
+      "objectids": [
+        246316,
+        246317,
+        246323
+      ],
+      "chart_cells": [
+        "US5FL5MN.000",
+        "US5FL5MO.000"
+      ],
+      "source_dates": [
+        "2002-10-05"
+      ],
+      "charted_category": "mud flats",
+      "status": "named_mud_flat_polygons_retrieved_multi_cell_reconciliation_pending",
+      "caveat": "This is a charted mud-flat label/class, not proof of current substrate condition, seagrass, fish use, or ecological suitability."
+    },
+    "Bear Cut": {
+      "feature_count": 1,
+      "objectids": [
+        253451
+      ],
+      "chart_cells": [
+        "US5MIACC.000"
+      ],
+      "source_dates": [
+        "2002-10-05"
+      ],
+      "source_chart": "NOAA Chart 11465",
+      "geometry_type": "Polygon",
+      "bbox_wgs84": [
+        -80.1646204,
+        25.725,
+        -80.1506732,
+        25.7362954
+      ],
+      "status": "named_water_area_polygon_retrieved_and_geometry_validated",
+      "caveat": "The polygon represents a charted named-water area, not a surveyed channel centerline or current controlling-depth boundary."
+    },
+    "Norris Cut": {
+      "feature_count": 1,
+      "objectids": [
+        253447
+      ],
+      "chart_cells": [
+        "US5MIACC.000"
+      ],
+      "source_dates": [
+        "2004-01"
+      ],
+      "source_chart": "NOAA Chart 11468",
+      "geometry_type": "Polygon",
+      "bbox_wgs84": [
+        -80.1498818,
+        25.7503267,
+        -80.1396955,
+        25.7620415
+      ],
+      "status": "named_water_area_polygon_retrieved_and_geometry_validated",
+      "caveat": "This is a charted named-water area, not a surveyed channel centerline or current controlling-depth boundary."
+    },
+    "Black Ledge": {
+      "feature_count": 3,
+      "objectids": [
+        246297,
+        246304,
+        246318
+      ],
+      "chart_cells": [
+        "US5FL5LM.000",
+        "US5FL5MM.000",
+        "US5FL5MN.000"
+      ],
+      "source_dates": [
+        "2018-07-26"
+      ],
+      "geometry_type": "Polygon",
+      "connected_component_count": 1,
+      "positive_area_overlap_pairs": [],
+      "charted_category": "ledge",
+      "status": "charted_source_polygons_persisted_topology_precheck_passed_boundary_unverified",
+      "caveat": "Preserved NOAA chart polygons are source context only, not a surveyed ecological, statutory, habitat, or navigation boundary. A one-component topology result does not prove current water connectivity or fish habitat."
+    },
+    "Featherbed Bank": {
+      "feature_count": 1,
+      "objectids": [
+        246301
+      ],
+      "chart_cells": [
+        "US5FL5LN.000"
+      ],
+      "source_dates": [
+        "2002-10-05"
+      ],
+      "geometry_type": "Polygon",
+      "connected_component_count": 1,
+      "positive_area_overlap_pairs": [],
+      "charted_category": "bank",
+      "status": "charted_source_polygons_persisted_topology_precheck_passed_boundary_unverified",
+      "caveat": "Preserved NOAA chart polygons are source context only, not a surveyed ecological, statutory, habitat, or navigation boundary. A one-component topology result does not prove current water connectivity or fish habitat."
+    },
+    "Lewis Cut": {
+      "feature_count": 1,
+      "objectids": [
+        246302
+      ],
+      "chart_cells": [
+        "US5FL5LN.000"
+      ],
+      "source_dates": [
+        "2002-10-05"
+      ],
+      "geometry_type": "Polygon",
+      "connected_component_count": 1,
+      "positive_area_overlap_pairs": [],
+      "status": "charted_source_polygons_persisted_topology_precheck_passed_boundary_unverified",
+      "caveat": "Preserved NOAA chart polygons are source context only, not a surveyed ecological, statutory, habitat, or navigation boundary. A one-component topology result does not prove current water connectivity or fish habitat."
+    },
+    "Biscayne Channel": {
+      "feature_count": 2,
+      "objectids": [
+        253424,
+        253427
+      ],
+      "chart_cells": [
+        "US5MIABB.000",
+        "US5MIABC.000"
+      ],
+      "source_dates": [
+        "2002-10-05"
+      ],
+      "geometry_type": "Polygon",
+      "connected_component_count": 1,
+      "positive_area_overlap_pairs": [],
+      "charted_category": "sea channel",
+      "status": "charted_source_polygons_persisted_topology_precheck_passed_boundary_unverified",
+      "caveat": "Preserved NOAA chart polygons are source context only, not a surveyed ecological, statutory, habitat, or navigation boundary. A one-component topology result does not prove current water connectivity or fish habitat."
+    },
+    "Sands Cut": {
+      "feature_count": 1,
+      "objectids": [
+        246290
+      ],
+      "chart_cells": [
+        "US5FL5KN.000"
+      ],
+      "source_dates": [
+        "2002-10-05"
+      ],
+      "geometry_type": "Polygon",
+      "connected_component_count": 1,
+      "positive_area_overlap_pairs": [],
+      "status": "charted_source_polygons_persisted_topology_precheck_passed_boundary_unverified",
+      "caveat": "Preserved NOAA chart polygons are source context only, not a surveyed ecological, statutory, habitat, or navigation boundary. A one-component topology result does not prove current water connectivity or fish habitat."
+    },
+    "Snapper Creek Canal": {
+      "feature_count": 1,
+      "objectids": [
+        253417
+      ],
+      "chart_cells": [
+        "US5MIABA.000"
+      ],
+      "source_dates": [
+        "2004-11"
+      ],
+      "geometry_type": "Polygon",
+      "connected_component_count": 1,
+      "positive_area_overlap_pairs": [],
+      "charted_category": "canal",
+      "status": "charted_source_polygons_persisted_topology_precheck_passed_boundary_unverified",
+      "caveat": "Preserved NOAA chart polygons are source context only, not a surveyed ecological, statutory, habitat, or navigation boundary. A one-component topology result does not prove current water connectivity or fish habitat."
+    },
+    "Goulds Canal": {
+      "feature_count": 1,
+      "objectids": [
+        246296
+      ],
+      "chart_cells": [
+        "US5FL5LM.000"
+      ],
+      "source_dates": [
+        "2002-10-05"
+      ],
+      "geometry_type": "Polygon",
+      "connected_component_count": 1,
+      "positive_area_overlap_pairs": [],
+      "charted_category": "canal",
+      "status": "charted_source_polygons_persisted_topology_precheck_passed_boundary_unverified",
+      "caveat": "Preserved NOAA chart polygons are source context only, not a surveyed ecological, statutory, habitat, or navigation boundary. A one-component topology result does not prove current water connectivity or fish habitat."
+    },
+    "Deering Channel": {
+      "feature_count": 1,
+      "objectids": [
+        253446
+      ],
+      "chart_cells": [
+        "US5MIACB.000"
+      ],
+      "source_dates": [
+        "2002-10-05"
+      ],
+      "geometry_type": "Polygon",
+      "connected_component_count": 1,
+      "positive_area_overlap_pairs": [],
+      "charted_category": "sea channel",
+      "status": "charted_source_polygons_persisted_topology_precheck_passed_boundary_unverified",
+      "caveat": "Preserved NOAA chart polygons are source context only, not a surveyed ecological, statutory, habitat, or navigation boundary. A one-component topology result does not prove current water connectivity or fish habitat."
+    },
+    "Cape Florida Channel": {
+      "feature_count": 2,
+      "objectids": [
+        253420,
+        253432
+      ],
+      "chart_cells": [
+        "US5MIABB.000",
+        "US5MIABC.000"
+      ],
+      "source_dates": [
+        "2002-10-05"
+      ],
+      "geometry_type": "Polygon",
+      "connected_component_count": 1,
+      "positive_area_overlap_pairs": [],
+      "charted_category": "sea channel",
+      "status": "charted_source_polygons_persisted_topology_precheck_passed_boundary_unverified",
+      "caveat": "Preserved NOAA chart polygons are source context only, not a surveyed ecological, statutory, habitat, or navigation boundary. A one-component topology result does not prove current water connectivity or fish habitat."
+    }
+  },
+  "channel_features": {
+    "Miami Harbor Channel fairway": {
+      "feature_count": 44,
+      "objectids": [
+        2471282,
+        2471600,
+        2471994,
+        2472253,
+        2472754,
+        2472841,
+        2472871,
+        2472946,
+        2473271,
+        2473274,
+        2473322,
+        2473371,
+        2473591,
+        2473758,
+        2473837,
+        2473917,
+        2474654,
+        2474671,
+        2474831,
+        2475255,
+        2475341,
+        2475670,
+        2476853,
+        2477249,
+        2477496,
+        2477940,
+        2478999,
+        2479036,
+        2479049,
+        2479165,
+        2479225,
+        2479453,
+        2479530,
+        2479559,
+        2479579,
+        2480019,
+        2480671,
+        2480839,
+        2481045,
+        2481312,
+        2481942,
+        2481955,
+        2482095,
+        2482219
+      ],
+      "chart_cells": [
+        "US4FL2AI.000",
+        "US4FL2AJ.000",
+        "US5MIACB.000",
+        "US5MIACC.000",
+        "US5MIACD.000"
+      ],
+      "status": "maintained_channel_and_dredged_area_polygons_retrieved_review_pending",
+      "caveat": "Features share the Miami Harbor Channel fairway attribute but have distinct names including Cut-1 through Cut-4, Fisher Island Turning Basin, Fishermans Channel, and Dodge Island Cut. Do not label all of these as Government Cut.",
+      "fairway_layer_id": 208,
+      "fairway_layer_feature_count": 3,
+      "fairway_chart_cells": [
+        "US5MIACB.000",
+        "US5MIACC.000",
+        "US5MIACD.000"
+      ]
+    },
+    "Government Cut": {
+      "status": "name_documented_geometry_not_identified_as_a_named_feature_in_extracted_layers",
+      "evidence": [
+        "NOAA Coast Pilot 4, Chapter 10, paragraph 414 describes the federal project channel from the sea buoy to inside Government Cut.",
+        "NOAA chart 11468 labels Government Cut and Miami Harbor entrance features."
+      ],
+      "caveat": "Nearby Miami Harbor Channel fairway features are candidate spatial context only. Do not assign an individual Cut-N or fairway polygon to Government Cut without a defensible chart-feature crosswalk.",
+      "fairway_layer_id": 208,
+      "fairway_named_polygon_count": 3,
+      "fairway_chart_cells": [
+        "US5MIACB.000",
+        "US5MIACC.000",
+        "US5MIACD.000"
+      ],
+      "fairway_crosswalk_status": "Miami Harbor Channel fairway polygons retrieved; exact Government Cut subgeometry still not identified"
+    },
+    "Norris Cut": {
+      "status": "direct_named_water_area_polygon_found_channel_centerline_not_identified",
+      "source_layer_id": 237,
+      "source_objectid": 253447,
+      "chart_cell": "US5MIACC.000",
+      "source_chart": "NOAA Chart 11468",
+      "source_date": "2004-01",
+      "caveat": "The directly named source is a named-water polygon. It does not establish the full physical inlet channel, controlling depth, or ecological connectivity."
+    }
+  },
+  "workflow": {
+    "run_id": 43349431049,
+    "url": "https://github.com/markeetox/LUPITA/actions/runs/43349431049",
+    "artifact_id": 14002573361,
+    "artifact_name": "noaa-biscayne-hydrography-review"
+  },
+  "limitations": [
+    "NOAA ENC Direct to GIS is not certified for navigation.",
+    "Source dates on individual features are older than the current weekly service refresh; weekly refresh does not make the original source survey current.",
+    "Charted geographic names and classes are not proof of habitat condition or biological use.",
+    "No ecological connectivity, current, or fish movement is inferred from geometry alone."
+  ],
+  "route_layer_inventory": {
+    "harbor_fairway_areas": {
+      "layer_id": 208,
+      "feature_count": 62,
+      "geometry_type": "Polygon",
+      "miami_harbor_channel_feature_count": 3,
+      "miami_harbor_channel_objectids": [
+        42416,
+        42420,
+        42422
+      ],
+      "chart_cells": [
+        "US5MIACB.000",
+        "US5MIACC.000",
+        "US5MIACD.000"
+      ],
+      "source_dates": [
+        "20190124"
+      ],
+      "status": "broader_miami_harbor_channel_fairway_context_retrieved_exact_government_cut_subgeometry_unresolved"
+    },
+    "harbor_deep_water_route_parts": {
+      "layer_id": 207,
+      "feature_count": 0,
+      "status": "no_features_returned_within_query_bbox"
+    },
+    "harbor_two_way_route_parts": {
+      "layer_id": 216,
+      "feature_count": 0,
+      "status": "no_features_returned_within_query_bbox"
+    },
+    "harbor_recommended_route_centerlines": {
+      "layer_id": 133,
+      "feature_count": 0,
+      "status": "no_features_returned_within_query_bbox"
+    }
+  },
+  "charted_context_layer_inventory": {
+    "service": "https://encdirect.noaa.gov/arcgis/rest/services/encdirect/enc_harbour/MapServer",
+    "review_window_wgs84": [
+      -80.43,
+      25.49,
+      -80.1,
+      25.67
+    ],
+    "review_window_is_boundary": false,
+    "layers": {
+      "harbor_coastline_lines": {
+        "layer_id": 84,
+        "feature_count_full_extent": 1080,
+        "review_window_intersections": 47,
+        "geometry_type": "LineString",
+        "status": "chart_derived_coastline_context"
+      },
+      "harbor_depth_contour_lines": {
+        "layer_id": 104,
+        "feature_count_full_extent": 1894,
+        "review_window_intersections": 294,
+        "geometry_type": "LineString",
+        "status": "charted_depth_context_vertical_datum_review_required"
+      },
+      "harbor_depth_areas": {
+        "layer_id": 227,
+        "feature_count_full_extent": 1965,
+        "review_window_intersections": 320,
+        "geometry_type": "Polygon",
+        "status": "charted_depth_context_vertical_datum_review_required"
+      },
+      "harbor_unsurveyed_areas": {
+        "layer_id": 230,
+        "feature_count_full_extent": 41,
+        "review_window_intersections": 1,
+        "geometry_type": "Polygon",
+        "status": "chart_data_quality_context"
+      },
+      "harbor_land_areas": {
+        "layer_id": 233,
+        "feature_count_full_extent": 518,
+        "review_window_intersections": 27,
+        "geometry_type": "Polygon",
+        "status": "charted_land_context"
+      },
+      "harbor_vegetation_areas": {
+        "layer_id": 239,
+        "feature_count_full_extent": 143,
+        "review_window_intersections": 7,
+        "geometry_type": "Polygon",
+        "charted_category": "mangroves",
+        "status": "historical_charted_vegetation_not_current_habitat"
+      },
+      "harbor_seabed_areas": {
+        "layer_id": 200,
+        "feature_count_full_extent": 0,
+        "review_window_intersections": 0,
+        "geometry_type": null,
+        "status": "no_features_returned_not_evidence_of_absent_seabed_class"
+      }
+    },
+    "source_artifact_id": 14009386093,
+    "workflow_run_id": 43363005067,
+    "caveats": [
+      "The review window is an inventory envelope, not a shoreline or ecological boundary.",
+      "Chart source dates are older than the weekly service refresh; weekly refresh does not make source geometry current.",
+      "Depth contour and depth-area values must not be merged with other bathymetry until vertical datum and units are reconciled.",
+      "Charted vegetation features in the review window are mangroves, not seagrass.",
+      "NOAA ENC Direct to GIS is not certified for navigation."
+    ]
+  }
+}

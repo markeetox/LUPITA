@@ -1,0 +1,139 @@
+{
+  "manifest_version": 1,
+  "snapshot_commit": "7361b3320edad721b2d788c3a05946396fb5779d",
+  "branch": "research/biscayne-noaa-enc-hydrography",
+  "scope": "Research-only Biscayne Bay GIS evidence. Not production model input.",
+  "policy": {
+    "immutable_inputs": "Persisted source extracts are reused as versioned snapshots. Do not redownload unless the source version changes, a source is missing, or a documented QA issue requires replacement.",
+    "derived_outputs": "Regenerate only the outputs affected by a changed input or analysis script.",
+    "geometry": "Preserve source geometry and attributes. Do not snap, dissolve, bridge, or infer connectivity without an explicit evidence-backed operation.",
+    "promotion": "No feature becomes a legal boundary, ecological boundary, navigation boundary, current habitat condition, or species suitability score solely because it intersects another layer."
+  },
+  "datasets": [
+    {
+      "id": "noaa-enc-named-water",
+      "publisher": "NOAA Office of Coast Survey",
+      "source": "https://encdirect.noaa.gov/arcgis/rest/services/encdirect/enc_harbour/MapServer/237",
+      "role": "Charted named-water context",
+      "persisted_files": [
+        "data/spatial/noaa-biscayne-named-water-areas.geojson",
+        "data/spatial/noaa-biscayne-named-water-topology-audit.json",
+        "data/spatial/noaa-biscayne-hydrography-index.json"
+      ],
+      "snapshot_summary": "46 curated original polygons from 189 extracted source features; source polygons remain individually preserved.",
+      "limitations": [
+        "Chart context, not a complete ecological or statutory boundary.",
+        "Source chart dates vary; not a current habitat or navigation survey."
+      ]
+    },
+    {
+      "id": "noaa-cmp-mhw",
+      "publisher": "NOAA National Geodetic Survey",
+      "source": "https://geodesy.noaa.gov/",
+      "role": "Project-specific Mean High Water shoreline candidates",
+      "persisted_files": [
+        "data/spatial/research/noaa_cmp/geojson/FL1808A-TB-N_mhw.geojson",
+        "data/spatial/research/noaa_cmp/geojson/FL1808C-TB-N_mhw.geojson",
+        "data/spatial/research/noaa_cmp/geojson/FL2317-CS-N_mhw.geojson",
+        "data/spatial/research/noaa_cmp/noaa_cmp_project_geometry_audit.json",
+        "data/spatial/research/noaa_cmp/noaa_cmp_mhw_topology_audit.json",
+        "data/spatial/research/noaa_cmp/overlay/noaa_cmp_fdep_spatial_alignment_audit.json"
+      ],
+      "snapshot_summary": "FL1808A: 58 natural MHW features, 39.440 km. FL1808C: 70 features, 18.029 km. FL2317: no natural MHW features.",
+      "limitations": [
+        "Survey/project extents are not ecological bay boundaries.",
+        "MHW is not bathymetry, a channel centerline, or a fish-passage layer.",
+        "Project seams require source-aware review."
+      ]
+    },
+    {
+      "id": "fdep-aquatic-preserves",
+      "publisher": "Florida Department of Environmental Protection",
+      "source": "https://ca.dep.state.fl.us/arcgis/rest/services/OpenData/AQUATIC_PRESERVES/MapServer/0",
+      "role": "Separate management-boundary comparison geometry",
+      "persisted_files": [
+        "data/spatial/research/noaa_cmp/overlay/fdep_biscayne_aquatic_preserves.geojson",
+        "data/spatial/research/noaa_cmp/overlay/fdep_aquatic_preserves_layer_metadata.json"
+      ],
+      "snapshot_summary": "Two separate preserve features: Biscayne Bay OBJECTID 43 and Biscayne Bay-Cape Florida to Monroe County Line OBJECTID 25.",
+      "limitations": [
+        "Approximate management GIS geometry, not legal survey or enforcement geometry.",
+        "Do not merge the two preserve records or use them as ecological subregion boundaries."
+      ]
+    },
+    {
+      "id": "fwc-nps-tidal-flat-patches",
+      "publisher": "FWC / NPS Unified Reef Map",
+      "source": "https://gis.myfwc.com/hosting/rest/services/Projects_FWC/UnifiedReefMapProject_v2_2/MapServer/7",
+      "role": "Historical mapped tidal-flat source patches",
+      "persisted_files": [
+        "data/spatial/biscayne-tidal-flat-patches.geojson"
+      ],
+      "snapshot_summary": "219 individually preserved source patches within the source-map footprints; source polygons are not dissolved.",
+      "limitations": [
+        "Historical mapping, not current substrate or exposure.",
+        "Patch polygons are not named flat complexes or species-suitability evidence."
+      ]
+    },
+    {
+      "id": "noaa-shoreline-comparison",
+      "publisher": "NOAA",
+      "source": "NOAA composite shoreline and MHHW screening services; source metadata persisted alongside outputs.",
+      "role": "Independent shoreline comparison context",
+      "persisted_files": [
+        "data/spatial/research/noaa_composite_shoreline_mhw_biscayne.geojson",
+        "data/spatial/research/noaa_composite_shoreline_mhw_metadata.json",
+        "data/spatial/research/noaa_mhhw_screening_line_biscayne.geojson",
+        "data/spatial/research/noaa_mhhw_screening_line_metadata.json",
+        "data/spatial/research/noaa-shoreline-comparison-audit.json"
+      ],
+      "limitations": [
+        "Composite line classes are not interchangeable.",
+        "Predicted MHHW screening geometry is not surveyed MHW.",
+        "Keep MHW and MHHW separate."
+      ]
+    },
+    {
+      "id": "bridge-reference-inventory",
+      "publisher": "Miami-Dade County DTPW",
+      "source": "https://gisweb.miamidade.gov/arcgis/rest/services/EAMS/EAMS_Map/MapServer/1",
+      "role": "Bridge/causeway landmark crosswalk candidates",
+      "persisted_files": [
+        "data/spatial/research/transportation/miamidade_dtpw_bridge_lines.geojson",
+        "data/spatial/research/transportation/bridge_inventory_summary.json",
+        "data/spatial/research/noaa_enc/harbor_bridge_lines.geojson",
+        "data/spatial/research/noaa_enc/harbor_landmark_points.geojson"
+      ],
+      "limitations": [
+        "Cross-source matches remain unresolved unless exact source identifiers and geometry support them.",
+        "Unnamed NOAA bridge features must not be assigned names by proximity."
+      ]
+    }
+  ],
+  "refresh_triggers": [
+    "An upstream source publishes a newer version or corrected geometry.",
+    "A persisted source file is missing or fails integrity/geometry validation.",
+    "A documented source-specific QA issue requires re-extraction.",
+    "The analysis requires a field not present in the frozen snapshot."
+  ],
+  "next_research_task": {
+    "id": "biscayne-landmark-and-feature-reconciliation",
+    "objective": "Resolve published North/Central/South Biscayne Bay landmark locations and assess candidate cross-bay separators and feature memberships without fabricating boundary lines.",
+    "first_targets": [
+      "Dumfoundling Bay",
+      "Rickenbacker Causeway",
+      "Featherbed Bank / Black Point",
+      "Card Sound / Jewfish Creek"
+    ],
+    "required_outputs": [
+      "source-backed landmark inventory",
+      "feature-to-landmark spatial review",
+      "uncertainty and provenance records"
+    ],
+    "explicit_non_goals": [
+      "No automatic subregion polygons",
+      "No inferred inlet connectivity",
+      "No production species scoring changes"
+    ]
+  }
+}

@@ -1,0 +1,66 @@
+name: NOAA NSDE project download discovery
+
+on:
+  workflow_dispatch: {}
+
+permissions:
+  contents: write
+
+concurrency:
+  group: noaa-nsde-project-discovery
+  cancel-in-progress: false
+
+jobs:
+  inspect-project-download-ui:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Install Playwright
+        run: |
+          python -m pip install playwright pyshp pyproj shapely
+          python -m playwright install --with-deps chromium
+      - name: Inspect NOAA NSDE project filter and network endpoints
+        run: python scripts/inspect_noaa_nsde_project_ui.py
+      - name: Persist NOAA CMP source archives and derived GeoJSON on research branch
+        if: success() && github.event_name == 'pull_request'
+        env:
+          TARGET_BRANCH: ${{ github.head_ref }}
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git fetch origin "${TARGET_BRANCH}"
+          git reset --hard FETCH_HEAD
+          mkdir -p data/spatial/research/noaa_cmp/source data/spatial/research/noaa_cmp/geojson
+          cp artifacts/nsde-cmp-ui/FL1808A-TB-N.zip data/spatial/research/noaa_cmp/source/
+          cp artifacts/nsde-cmp-ui/FL1808C-TB-N.zip data/spatial/research/noaa_cmp/source/
+          cp artifacts/nsde-cmp-ui/FL2317-CS-N.zip data/spatial/research/noaa_cmp/source/
+          cp artifacts/nsde-cmp-ui/FL1603A-CM-N.zip data/spatial/research/noaa_cmp/source/
+          cp artifacts/nsde-cmp-ui/geojson/*.geojson data/spatial/research/noaa_cmp/geojson/
+          cp artifacts/nsde-cmp-ui/noaa_cmp_project_geometry_audit.json data/spatial/research/noaa_cmp/noaa_cmp_project_geometry_audit.json
+          git add data/spatial/research/noaa_cmp/
+          if git diff --cached --quiet; then
+            echo "No NOAA CMP source or GeoJSON outputs changed."
+            exit 0
+          fi
+          git commit -m "Persist NOAA Biscayne project shoreline vectors"
+          for attempt in 1 2 3; do
+            if git push origin "HEAD:${TARGET_BRANCH}"; then
+              exit 0
+            fi
+            echo "Push race detected; rebasing on latest research branch (attempt \${attempt}/3)."
+            git fetch origin "${TARGET_BRANCH}"
+            git rebase FETCH_HEAD
+          done
+          exit 1
+      - name: Upload NSDE UI inspection and NOAA CMP source archives
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: noaa-nsde-project-ui-discovery
+          path: artifacts/nsde-cmp-ui/
+          if-no-files-found: warn
+          retention-days: 14

@@ -6,11 +6,105 @@
   "default_crs": "EPSG:4326",
   "geometry_policy": {
     "allow_null_geometry": true,
-    "null_geometry_means": "Geometry has not yet been extracted or independently verified.",
+    "null_geometry_means": "A source geometry may be stored in a linked GeoJSON file; null here means no geometry has been promoted inline as a verified feature boundary.",
     "preserve_source_geometry": true,
-    "do_not_infer_connectivity_from_proximity": true
+    "do_not_infer_connectivity_from_proximity": true,
+    "parent_id_semantics": "parent_id is a catalog grouping relationship, not proof of geometric containment; spatial overlap or adjacency must be recorded explicitly in relationships with its evidence status."
   },
   "features": [
+    {
+      "id": "sf-atlantic-ocean",
+      "name": "Atlantic Ocean",
+      "feature_type": "adjacent_waterbody",
+      "region": "south_florida",
+      "parent_id": null,
+      "geometry": null,
+      "geometry_status": "not_in_this_pilot_catalog",
+      "boundary_basis": "reference_entity",
+      "boundary_scope_note": "Reference waterbody used for explicit connectivity relationships; no ocean polygon is defined in this pilot.",
+      "relationships": [],
+      "provenance": [],
+      "validation_status": "reference_entity_only"
+    },
+    {
+      "id": "sf-bear-cut",
+      "name": "Bear Cut",
+      "feature_type": "named_waterway_area",
+      "region": "south_florida",
+      "parent_id": "sf-biscayne-bay-ecological-context",
+      "geometry": null,
+      "geometry_status": "source_geometry_persisted_topology_precheck_passed_not_navigation_boundary",
+      "boundary_basis": "named_navigation_feature",
+      "boundary_scope_note": "NOAA ENC names this polygon Bear Cut. It is a charted named-water area, not a surveyed channel centerline or current controlling-depth boundary. NOAA Coast Pilot 4 also describes the Rickenbacker Causeway bridge over Bear Cut. The original source polygon is persisted in the curated GeoJSON and passed geometry validation. It remains a charted named-water area, not a surveyed centerline or depth boundary.",
+      "relationships": [
+        {
+          "type": "connects",
+          "target_id": "sf-atlantic-ocean",
+          "status": "connectivity_hypothesis_geometry_pending"
+        }
+      ],
+      "provenance": [
+        {
+          "publisher": "NOAA Office of Coast Survey",
+          "title": "NOAA ENC GIS Data and Services",
+          "url": "https://www.nauticalcharts.noaa.gov/data/gis-data-and-services.html",
+          "source_type": "hydrographic_navigation_data_catalog"
+        },
+        {
+          "publisher": "NOAA Office of Coast Survey",
+          "title": "Harbor.Sea_Area_Named_Water_Area, OBJECTID 253451, Chart 11465",
+          "url": "https://encdirect.noaa.gov/arcgis/rest/services/encdirect/enc_harbour/MapServer/237",
+          "source_type": "official_charted_named_water_area"
+        },
+        {
+          "publisher": "NOAA Office of Coast Survey",
+          "title": "U.S. Coast Pilot 4, Chapter 11, paragraph 39",
+          "url": "https://nauticalcharts.noaa.gov/publications/coast-pilot/files/cp4/CPB4_WEB.pdf",
+          "source_type": "official_hydrographic_publication"
+        }
+      ],
+      "validation_status": "charted_named_water_geometry_persisted_topology_precheck_passed_not_navigation_boundary",
+      "source_geometry_ref": {
+        "index_path": "data/spatial/noaa-biscayne-hydrography-index.json",
+        "source_layer_id": 237,
+        "objectid": 253451,
+        "chart_cell": "US5MIACC.000",
+        "source_chart": "NOAA Chart 11465",
+        "source_date": "2002-10-05",
+        "geometry_type": "Polygon",
+        "bbox_wgs84": [
+          -80.1646204,
+          25.725,
+          -80.1506732,
+          25.7362954
+        ],
+        "artifact_id": 14002573361,
+        "curated_geojson_path": "data/spatial/noaa-biscayne-named-water-areas.geojson",
+        "topology_audit_path": "data/spatial/noaa-biscayne-named-water-topology-audit.json",
+        "source_objectids": [
+          253451
+        ],
+        "source_feature_count": 1,
+        "geojson_feature_id": "253451",
+        "chart_cells": [
+          "US5MIACC.000"
+        ],
+        "source_dates": [
+          "20021005"
+        ],
+        "connected_component_count": 1,
+        "positive_area_overlap_pairs": []
+      },
+      "habitat_overlay_ref": {
+        "audit_path": "data/spatial/biscayne-subregion-habitat-audit.json",
+        "named_chart_context_name": "Bear Cut",
+        "source_feature_count": 1,
+        "intersecting_benthic_source_feature_count": 31,
+        "mapped_tidal_flat_source_feature_count": 7,
+        "status": "historical_source_overlay_not_current_habitat_or_species_suitability",
+        "note": "Source polygon intersections are evidence of mapped spatial overlap only. They do not establish current habitat condition, fish presence, water connectivity, or navigation limits."
+      }
+    },
     {
       "id": "sf-biscayne-bay-aquatic-preserve",
       "name": "Biscayne Bay Aquatic Preserve",
@@ -52,6 +146,388 @@
           25.96698446645934
         ],
         "review_artifact_id": 14003175396
+      }
+    },
+    {
+      "id": "sf-biscayne-bay-central-southern-context",
+      "name": "Central Biscayne Bay",
+      "feature_type": "bay_subregion",
+      "region": "south_florida",
+      "parent_id": "sf-biscayne-bay-ecological-context",
+      "geometry": null,
+      "geometry_status": "literature_landmarks_identified_cross_bay_boundary_geometry_pending",
+      "boundary_basis": "peer_reviewed_ecological_region_description",
+      "boundary_scope_note": "Published ecological segmentation places Central Biscayne Bay from the Rickenbacker Causeway to Featherbed Bank / Black Point. These are landmark limits, not a digitized cross-bay boundary line. Geometry remains pending GIS validation; this is not a legal or management boundary.",
+      "relationships": [
+        {
+          "type": "located_within",
+          "target_id": "sf-biscayne-bay-ecological-context",
+          "status": "literature_region_extent_supported_boundary_geometry_pending"
+        }
+      ],
+      "provenance": [
+        {
+          "publisher": "Frontiers in Marine Science",
+          "title": "Characterizing Nearshore Fish Assemblages From Intact and Altered Mangrove Shorelines in Biscayne Bay, Florida, United States",
+          "url": "https://doi.org/10.3389/fmars.2022.894663",
+          "source_type": "peer_reviewed_ecological_subregion_definition"
+        }
+      ],
+      "validation_status": "literature_extent_supported_boundary_geometry_pending",
+      "subregion_definition": {
+        "north_limit": "Rickenbacker Causeway",
+        "south_limit": "Featherbed Bank / Black Point",
+        "limit_geometry_status": "landmarks_referenced_not_digitized"
+      }
+    },
+    {
+      "id": "sf-biscayne-bay-ecological-context",
+      "name": "Biscayne Bay",
+      "feature_type": "ecological_waterbody",
+      "region": "south_florida",
+      "parent_id": null,
+      "geometry": null,
+      "geometry_status": "source_chart_fragments_persisted_topology_precheck_passed_complete_boundary_unverified",
+      "boundary_basis": "multi_source_ecological_context",
+      "boundary_scope_note": "This is the ecological waterbody entity, distinct from the statutory aquatic preserve and Biscayne National Park boundary. Its complete polygon must be assembled from authoritative shoreline, hydrographic, and tidal-connection evidence. NOAA Harbour ENC chart fragments are preserved individually and are not a complete ecological or statutory boundary. NOAA NGS projects FL1808A-TB-N / GC12021 and FL1808C-TB-N / GC12023 have now been retrieved and their MHW linework inspected. Their 17.691 km nearest-feature separation is diagonal across the bay between opposite-side shoreline features, not an alongshore gap measurement. The project linework does not justify bridging or interpolation. FL1603A provides local Convoy Point comparison only. FDEP preserve geometry remains a separate management overlay. Original chart fragments are persisted individually; no dissolved or complete boundary is promoted. Original chart fragments are persisted individually; no dissolved or complete boundary is promoted. Original chart fragments are persisted individually; no dissolved or complete boundary is promoted. Original chart fragments are persisted individually; no dissolved or complete boundary is promoted. Original chart fragments are persisted individually; no dissolved or complete boundary is promoted. Original chart fragments are persisted individually; no dissolved or complete boundary is promoted. Original chart fragments are persisted individually; no dissolved or complete boundary is promoted. Original chart fragments are persisted individually; no dissolved or complete boundary is promoted. Original chart fragments are persisted individually; no dissolved or complete boundary is promoted. Original chart fragments are persisted individually; no dissolved or complete boundary is promoted. Original chart fragments are persisted individually; no dissolved or complete boundary is promoted. Original chart fragments are persisted individually; no dissolved or complete boundary is promoted. Original chart fragments are persisted individually; no dissolved or complete boundary is promoted. Original chart fragments are persisted individually; no dissolved or complete boundary is promoted. Original chart fragments are persisted individually; no dissolved or complete boundary is promoted. Original chart fragments are persisted individually; no dissolved or complete boundary is promoted. Original chart fragments are persisted individually; no dissolved or complete boundary is promoted. Original chart fragments are persisted individually; no dissolved or complete boundary is promoted. Original chart fragments are persisted individually; no dissolved or complete boundary is promoted. Original chart fragments are persisted individually; no dissolved or complete boundary is promoted. Original chart fragments are persisted individually; no dissolved or complete boundary is promoted. Original chart fragments are persisted individually; no dissolved or complete boundary is promoted. Original chart fragments are persisted individually; no dissolved or complete boundary is promoted.",
+      "relationships": [
+        {
+          "type": "has_management_boundary",
+          "target_id": "sf-biscayne-bay-aquatic-preserve",
+          "status": "relationship_supported_geometry_pending"
+        }
+      ],
+      "provenance": [
+        {
+          "publisher": "NOAA Fisheries",
+          "title": "Biscayne Bay Stock Assessment",
+          "url": "https://www.fisheries.noaa.gov/s3/2026-04/biscayne-bay-stock-508gw.pdf",
+          "source_type": "ecological_waterbody_description"
+        },
+        {
+          "publisher": "NOAA National Geodetic Survey",
+          "title": "Coastal Mapping Program FL1808C-TB-N / GC12023, Rickenbacker Island to Snapper Creek Canal",
+          "url": "https://www.ngs.noaa.gov/desc_reports/FL1808C-TB-N.PDF",
+          "source_type": "high_accuracy_tidal_referenced_shoreline_candidate"
+        },
+        {
+          "publisher": "NOAA National Geodetic Survey",
+          "title": "Coastal Mapping Program FL1808A-TB-N / GC12021, Fender Point to Card Sound",
+          "url": "https://www.ngs.noaa.gov/desc_reports/FL1808A-TB-N.pdf",
+          "source_type": "high_accuracy_tidal_referenced_shoreline_candidate"
+        },
+        {
+          "publisher": "NOAA National Geodetic Survey",
+          "title": "NOAA Shoreline Data Explorer CUSP and National Shoreline product distinctions",
+          "url": "https://nsde.ngs.noaa.gov/more.html",
+          "source_type": "shoreline_product_quality_and_currency_reference"
+        },
+        {
+          "publisher": "NOAA National Geodetic Survey",
+          "title": "Shoreline Mapping Program FL1603A-CM-N, Convoy Point",
+          "url": "https://www.fisheries.noaa.gov/inport/item/61478",
+          "source_type": "local_high_accuracy_shoreline_candidate"
+        },
+        {
+          "publisher": "NOAA National Geodetic Survey",
+          "title": "Shoreline Data Rescue Project FL1934E, historical Biscayne Bay shoreline",
+          "url": "https://www.fisheries.noaa.gov/inport/item/63718",
+          "source_type": "historical_shoreline_change_reference"
+        }
+      ],
+      "validation_status": "source_fragments_persisted_mosaic_not_promoted_to_boundary",
+      "source_geometry_ref": {
+        "index_path": "data/spatial/noaa-biscayne-hydrography-index.json",
+        "source_layer_id": 237,
+        "source_layer_name": "Harbor.Sea_Area_Named_Water_Area",
+        "feature_count": 37,
+        "chart_cells": [
+          "US5FL5JM.000",
+          "US5FL5JN.000",
+          "US5FL5KL.000",
+          "US5FL5KM.000",
+          "US5FL5KN.000",
+          "US5FL5LM.000",
+          "US5FL5LN.000",
+          "US5FL5MM.000",
+          "US5FL5MN.000",
+          "US5MIABA.000",
+          "US5MIABB.000",
+          "US5MIABC.000",
+          "US5MIACB.000",
+          "US5MIACC.000",
+          "US5MIADB.000",
+          "US5MIADC.000",
+          "US5MIAEC.000"
+        ],
+        "source_dates": [
+          "20021005",
+          "200304",
+          "200806",
+          "201102"
+        ],
+        "artifact_id": 14002573361,
+        "curated_geojson_path": "data/spatial/noaa-biscayne-named-water-areas.geojson",
+        "topology_audit_path": "data/spatial/noaa-biscayne-named-water-topology-audit.json",
+        "source_objectids": [
+          246262,
+          246278,
+          246285,
+          246286,
+          246287,
+          246288,
+          246293,
+          246298,
+          246299,
+          246303,
+          246306,
+          246307,
+          246308,
+          246309,
+          246310,
+          246311,
+          246312,
+          246313,
+          246314,
+          246315,
+          246320,
+          246321,
+          253418,
+          253419,
+          253422,
+          253425,
+          253428,
+          253429,
+          253430,
+          253435,
+          253438,
+          253448,
+          253449,
+          253460,
+          253462,
+          253475,
+          253477
+        ],
+        "source_feature_count": 37,
+        "connected_component_count": 2,
+        "positive_area_overlap_pairs": [],
+        "shoreline_source_candidates": [
+          {
+            "project_id": "FL1808C-TB-N",
+            "geographic_cell": "GC12023",
+            "coverage": "Rickenbacker Island southward to Snapper Creek Canal",
+            "download_status": "retrieved_source_archive_extracted_and_mhw_geometry_audited"
+          },
+          {
+            "project_id": "FL1808A-TB-N",
+            "geographic_cell": "GC12021",
+            "coverage": "Fender Point to Card Sound",
+            "download_status": "retrieved_source_archive_extracted_and_mhw_geometry_audited"
+          },
+          {
+            "project_id": "FL1603A-CM-N",
+            "coverage": "Convoy Point local shoreline",
+            "source_imagery_date": "2017-03-19",
+            "reported_horizontal_accuracy_95pct_m": 1.9,
+            "download_status": "retrieved_source_archive_extracted_and_mhw_geometry_audited",
+            "role": "local_comparison_only"
+          },
+          {
+            "project_id": "FL1934E",
+            "coverage": "Biscayne Bay historical shoreline",
+            "source_dates": [
+              "1934-08-01",
+              "1935-01-25"
+            ],
+            "download_status": "available_through_noaa_shoreline_data_explorer_not_yet_retrieved",
+            "role": "historical_change_reference_only"
+          }
+        ],
+        "shoreline_coverage_caveat": {
+          "fl1808a_latitude_extent_north": 25.51193995,
+          "fl1808c_latitude_extent_south": 25.63448867,
+          "apparent_latitude_interval_between_project_extents": 0.12254872,
+          "status": "project_geometry_retrieved_nearest_feature_distance_not_an_alongshore_gap",
+          "note": "Actual project MHW geometries were retrieved and inspected. The 17.691 km nearest-feature distance is diagonal between opposite-side shoreline features, not evidence of a missing coastline segment or absent water connection."
+        }
+      },
+      "boundary_reconciliation": {
+        "method": "Area overlay in NAD83 / UTM zone 17N (EPSG:26917)",
+        "noaa_charted_named_water_union_km2": 512.865,
+        "fdep_biscayne_bay_preserve_km2": 261.411,
+        "intersection_km2": 180.106,
+        "noaa_union_outside_fdep_km2": 332.759,
+        "fdep_outside_noaa_union_km2": 81.306,
+        "intersection_as_fraction_of_fdep_area": 0.689,
+        "intersection_as_fraction_of_noaa_union_area": 0.351,
+        "interpretation": "These are geometric overlay statistics between distinct source semantics, not accuracy metrics. Neither source is promoted as the ecological bay boundary."
+      },
+      "habitat_overlay_ref": {
+        "audit_path": "data/spatial/biscayne-subregion-habitat-audit.json",
+        "named_chart_context_name": "Biscayne Bay",
+        "source_feature_count": 37,
+        "intersecting_benthic_source_feature_count": 1453,
+        "mapped_tidal_flat_source_feature_count": 186,
+        "status": "historical_source_overlay_not_current_habitat_or_species_suitability",
+        "note": "Source polygon intersections are evidence of mapped spatial overlap only. They do not establish current habitat condition, fish presence, water connectivity, or navigation limits."
+      }
+    },
+    {
+      "id": "sf-biscayne-bay-northern-context",
+      "name": "North Biscayne Bay",
+      "feature_type": "bay_subregion",
+      "region": "south_florida",
+      "parent_id": "sf-biscayne-bay-ecological-context",
+      "geometry": null,
+      "geometry_status": "literature_landmarks_identified_cross_bay_boundary_geometry_pending",
+      "boundary_basis": "peer_reviewed_ecological_region_description",
+      "boundary_scope_note": "Published ecological segmentation places North Biscayne Bay from Dumfoundling Bay to the Rickenbacker Causeway. These are landmark limits, not a digitized cross-bay boundary line. Geometry remains pending GIS validation; this is not a legal or management boundary.",
+      "relationships": [],
+      "provenance": [
+        {
+          "publisher": "Frontiers in Marine Science",
+          "title": "Characterizing Nearshore Fish Assemblages From Intact and Altered Mangrove Shorelines in Biscayne Bay, Florida, United States",
+          "url": "https://doi.org/10.3389/fmars.2022.894663",
+          "source_type": "peer_reviewed_ecological_subregion_definition"
+        }
+      ],
+      "validation_status": "literature_extent_supported_boundary_geometry_pending",
+      "subregion_definition": {
+        "north_limit": "Dumfoundling Bay",
+        "south_limit": "Rickenbacker Causeway",
+        "limit_geometry_status": "landmarks_referenced_not_digitized"
+      }
+    },
+    {
+      "id": "sf-biscayne-flats",
+      "name": "Biscayne Flats",
+      "feature_type": "named_mud_flat_complex",
+      "region": "south_florida",
+      "parent_id": "sf-biscayne-bay-ecological-context",
+      "geometry": null,
+      "geometry_status": "source_chart_fragments_persisted_topology_precheck_passed_boundary_unverified",
+      "boundary_scope_note": "NOAA Harbour ENC names three polygons Biscayne Flats and classifies them as mud flats. This is a charted feature classification, not evidence of current substrate condition, seagrass, fish use, or ecological suitability. The polygons span two ENC cells and require topology review before being assembled into one complex. A first geometric topology precheck found one connected component and no material overlaps. Source polygons remain separate; the charted mud-flat class does not establish current substrate or habitat. The 2005-2013 FWC/NPS unified benthic overlay found 35 discontinuous-seagrass polygons, 17 unconsolidated-sediment polygons, one continuous-seagrass polygon, and one artificial feature intersecting the three old chart polygons; no source polygons were classified as Tidal Flats. The chart name/class and later mapped benthic classes are distinct source concepts.",
+      "source_geometry_ref": {
+        "index_path": "data/spatial/noaa-biscayne-hydrography-index.json",
+        "source_layer_id": 237,
+        "objectids": [
+          246316,
+          246317,
+          246323
+        ],
+        "chart_cells": [
+          "US5FL5MN.000",
+          "US5FL5MO.000"
+        ],
+        "source_date": "2002-10-05",
+        "charted_category": "mud flats",
+        "artifact_id": 14002573361,
+        "curated_geojson_path": "data/spatial/noaa-biscayne-named-water-areas.geojson",
+        "topology_audit_path": "data/spatial/noaa-biscayne-named-water-topology-audit.json",
+        "source_objectids": [
+          246316,
+          246317,
+          246323
+        ],
+        "source_feature_count": 3,
+        "source_dates": [
+          "20021005"
+        ],
+        "connected_component_count": 1,
+        "positive_area_overlap_pairs": []
+      },
+      "relationships": [
+        {
+          "type": "located_within",
+          "target_id": "sf-biscayne-bay-ecological-context",
+          "status": "chart_geometry_context_supported_topology_review_pending"
+        }
+      ],
+      "provenance": [
+        {
+          "publisher": "NOAA Office of Coast Survey",
+          "title": "Harbor.Sea_Area_Named_Water_Area, Biscayne Flats chart features",
+          "url": "https://encdirect.noaa.gov/arcgis/rest/services/encdirect/enc_harbour/MapServer/237",
+          "source_type": "official_charted_named_water_area"
+        }
+      ],
+      "validation_status": "source_fragments_persisted_mosaic_not_promoted_to_boundary",
+      "habitat_overlay_ref": {
+        "audit_path": "data/spatial/biscayne-subregion-habitat-audit.json",
+        "named_chart_context_name": "Biscayne Flats",
+        "source_feature_count": 3,
+        "intersecting_benthic_source_feature_count": 54,
+        "mapped_tidal_flat_source_feature_count": 0,
+        "status": "historical_source_overlay_not_current_habitat_or_species_suitability",
+        "note": "Source polygon intersections are evidence of mapped spatial overlap only. They do not establish current habitat condition, fish presence, water connectivity, or navigation limits."
+      }
+    },
+    {
+      "id": "sf-biscayne-safety-valve-complex",
+      "name": "Safety Valve",
+      "feature_type": "named_water_area_complex",
+      "region": "south_florida",
+      "parent_id": "sf-biscayne-bay-central-southern-context",
+      "geometry": null,
+      "geometry_status": "source_chart_fragments_persisted_topology_precheck_passed_boundary_unverified",
+      "boundary_basis": "named_ecological_feature",
+      "boundary_scope_note": "NOAA describes a broad area of grass flats and tidal channels near the center of the bay that exchanges water with the Atlantic. It must not be reduced to a single point or a single flat polygon. NOAA ENC names four source polygons as Safety Valve. The source class is named water area, not flat or channel habitat. Preserve the four source features separately until multi-cell geometry reconciliation. A first geometric topology precheck found one connected component and no material overlaps. Source polygons remain separate; this does not establish ecological connectivity or current habitat.",
+      "relationships": [
+        {
+          "type": "water_exchange_area",
+          "target_id": "sf-atlantic-ocean",
+          "status": "concept_supported_geometry_pending"
+        }
+      ],
+      "provenance": [
+        {
+          "publisher": "NOAA Fisheries",
+          "title": "Biscayne Bay Stock Assessment",
+          "url": "https://www.fisheries.noaa.gov/s3/2026-04/biscayne-bay-stock-508gw.pdf",
+          "source_type": "ecological_feature_description"
+        }
+      ],
+      "validation_status": "source_fragments_persisted_mosaic_not_promoted_to_boundary",
+      "source_geometry_ref": {
+        "index_path": "data/spatial/noaa-biscayne-hydrography-index.json",
+        "source_layer_id": 237,
+        "objectids": [
+          246300,
+          246319,
+          246322,
+          253421
+        ],
+        "chart_cells": [
+          "US5FL5LN.000",
+          "US5FL5MN.000",
+          "US5FL5MO.000",
+          "US5MIABB.000"
+        ],
+        "source_date": "2002-10-05",
+        "artifact_id": 14002573361,
+        "curated_geojson_path": "data/spatial/noaa-biscayne-named-water-areas.geojson",
+        "topology_audit_path": "data/spatial/noaa-biscayne-named-water-topology-audit.json",
+        "source_objectids": [
+          246300,
+          246319,
+          246322,
+          253421
+        ],
+        "source_feature_count": 4,
+        "source_dates": [
+          "20021005"
+        ],
+        "connected_component_count": 1,
+        "positive_area_overlap_pairs": []
+      },
+      "habitat_overlay_ref": {
+        "audit_path": "data/spatial/biscayne-subregion-habitat-audit.json",
+        "named_chart_context_name": "Safety Valve",
+        "source_feature_count": 4,
+        "intersecting_benthic_source_feature_count": 219,
+        "mapped_tidal_flat_source_feature_count": 0,
+        "status": "historical_source_overlay_not_current_habitat_or_species_suitability",
+        "note": "Source polygon intersections are evidence of mapped spatial overlap only. They do not establish current habitat condition, fish presence, water connectivity, or navigation limits."
       }
     },
     {
@@ -110,100 +586,51 @@
       "validation_status": "separate_preserve_designation_and_official_approximate_gis_geometry_retrieved"
     },
     {
-      "id": "sf-biscayne-bay-ecological-context",
-      "name": "Biscayne Bay",
-      "feature_type": "ecological_waterbody",
+      "id": "sf-card-sound",
+      "name": "Card Sound",
+      "feature_type": "named_waterbody",
       "region": "south_florida",
       "parent_id": null,
       "geometry": null,
-      "geometry_status": "pending_ecological_boundary_review",
-      "boundary_basis": "multi_source_ecological_context",
-      "boundary_scope_note": "This is the ecological waterbody entity, distinct from the statutory aquatic preserve and the Biscayne National Park boundary. Its polygon must be assembled from authoritative shoreline, hydrographic, and tidal-connection evidence.",
+      "geometry_status": "NOAA_charted_named_water_polygons_retrieved_mosaic_review_pending",
+      "boundary_scope_note": "NOAA Harbour ENC returns six named-water polygons for Card Sound across five ENC cells. These chart fragments are not a single statutory or ecological boundary.",
+      "source_geometry_ref": {
+        "index_path": "data/spatial/noaa-biscayne-hydrography-index.json",
+        "source_layer_id": 237,
+        "objectids": [
+          246233,
+          246243,
+          246247,
+          246258,
+          246267,
+          246284
+        ],
+        "chart_cells": [
+          "US5FL5IL.000",
+          "US5FL5IM.000",
+          "US5FL5IN.000",
+          "US5FL5JM.000",
+          "US5FL5JN.000"
+        ],
+        "source_date": "2003-04",
+        "artifact_id": 14002573361
+      },
       "relationships": [
         {
-          "type": "has_management_boundary",
-          "target_id": "sf-biscayne-bay-aquatic-preserve",
-          "status": "relationship_supported_geometry_pending"
+          "type": "adjacent_to",
+          "target_id": "sf-biscayne-bay-ecological-context",
+          "status": "chart_context_supported_topology_review_pending"
         }
       ],
       "provenance": [
         {
-          "publisher": "NOAA Fisheries",
-          "title": "Biscayne Bay Stock Assessment",
-          "url": "https://www.fisheries.noaa.gov/s3/2026-04/biscayne-bay-stock-508gw.pdf",
-          "source_type": "ecological_waterbody_description"
+          "publisher": "NOAA Office of Coast Survey",
+          "title": "Harbor.Sea_Area_Named_Water_Area, Card Sound chart features",
+          "url": "https://encdirect.noaa.gov/arcgis/rest/services/encdirect/enc_harbour/MapServer/237",
+          "source_type": "official_charted_named_water_area"
         }
       ],
-      "validation_status": "ecological_entity_supported_boundary_pending"
-    },
-    {
-      "id": "sf-biscayne-bay-northern-context",
-      "name": "Northern Biscayne Bay",
-      "feature_type": "bay_subregion",
-      "region": "south_florida",
-      "parent_id": "sf-biscayne-bay-ecological-context",
-      "geometry": null,
-      "geometry_status": "not_yet_digitized",
-      "boundary_basis": "candidate_ecological_subregion",
-      "boundary_scope_note": "NOAA describes a distinct northern portion of the bay. Exact polygon limits are not supplied by the cited description.",
-      "relationships": [],
-      "provenance": [
-        {
-          "publisher": "NOAA Fisheries",
-          "title": "Biscayne Bay Stock Assessment",
-          "url": "https://www.fisheries.noaa.gov/s3/2026-04/biscayne-bay-stock-508gw.pdf",
-          "source_type": "ecological_region_description"
-        }
-      ],
-      "validation_status": "named_context_supported_boundary_pending"
-    },
-    {
-      "id": "sf-biscayne-bay-central-southern-context",
-      "name": "Central and Southern Biscayne Bay",
-      "feature_type": "bay_subregion",
-      "region": "south_florida",
-      "parent_id": "sf-biscayne-bay-ecological-context",
-      "geometry": null,
-      "geometry_status": "not_yet_digitized",
-      "boundary_basis": "candidate_ecological_subregion",
-      "boundary_scope_note": "NOAA distinguishes central and southern portions from the more developed northern portion. These remain one provisional context until source geometry supports separate boundaries.",
-      "relationships": [],
-      "provenance": [
-        {
-          "publisher": "NOAA Fisheries",
-          "title": "Biscayne Bay Stock Assessment",
-          "url": "https://www.fisheries.noaa.gov/s3/2026-04/biscayne-bay-stock-508gw.pdf",
-          "source_type": "ecological_region_description"
-        }
-      ],
-      "validation_status": "named_context_supported_boundary_pending"
-    },
-    {
-      "id": "sf-biscayne-safety-valve-complex",
-      "name": "Safety Valve",
-      "feature_type": "flat_channel_complex",
-      "region": "south_florida",
-      "parent_id": "sf-biscayne-bay-central-southern-context",
-      "geometry": null,
-      "geometry_status": "pending_hydrographic_and_habitat_geometry",
-      "boundary_basis": "named_ecological_feature",
-      "boundary_scope_note": "NOAA describes a broad area of grass flats and tidal channels near the center of the bay that exchanges water with the Atlantic. It must not be reduced to a single point or a single flat polygon.",
-      "relationships": [
-        {
-          "type": "water_exchange_area",
-          "target_id": "sf-atlantic-ocean",
-          "status": "concept_supported_geometry_pending"
-        }
-      ],
-      "provenance": [
-        {
-          "publisher": "NOAA Fisheries",
-          "title": "Biscayne Bay Stock Assessment",
-          "url": "https://www.fisheries.noaa.gov/s3/2026-04/biscayne-bay-stock-508gw.pdf",
-          "source_type": "ecological_feature_description"
-        }
-      ],
-      "validation_status": "named_feature_supported_geometry_pending"
+      "validation_status": "charted_name_and_polygons_retrieved_mosaic_review_pending"
     },
     {
       "id": "sf-government-cut",
@@ -212,9 +639,9 @@
       "region": "south_florida",
       "parent_id": "sf-biscayne-bay-ecological-context",
       "geometry": null,
-      "geometry_status": "pending_noaa_enc_geometry",
+      "geometry_status": "name_documented_no_direct_named_feature_geometry_identified_in_extracted_layers",
       "boundary_basis": "named_navigation_feature",
-      "boundary_scope_note": "The existing config/places.json point and display radius are approximate and are not an inlet polygon or channel centerline.",
+      "boundary_scope_note": "The existing config/places.json point and display radius are approximate and are not an inlet polygon or channel centerline. NOAA Harbour ENC extraction did not return a structured named-water polygon for Government Cut. The Miami Harbor Channel fairway includes nearby dredged/maintained features, but no segment is assigned to Government Cut until a chart-feature crosswalk is completed. NOAA Harbour layer 208 adds three named Miami Harbor Channel fairway polygons (OBJECTIDs 42416, 42420, 42422) across three ENC cells. These remain broader project-channel context; no polygon is assigned to Government Cut.",
       "relationships": [
         {
           "type": "connects",
@@ -228,50 +655,749 @@
           "title": "NOAA ENC GIS Data and Services",
           "url": "https://www.nauticalcharts.noaa.gov/data/gis-data-and-services.html",
           "source_type": "hydrographic_navigation_data_catalog"
-        }
-      ],
-      "validation_status": "named_feature_supported_geometry_pending"
-    },
-    {
-      "id": "sf-bear-cut",
-      "name": "Bear Cut",
-      "feature_type": "tidal_inlet_or_navigation_channel",
-      "region": "south_florida",
-      "parent_id": "sf-biscayne-bay-ecological-context",
-      "geometry": null,
-      "geometry_status": "pending_noaa_enc_geometry",
-      "boundary_basis": "named_navigation_feature",
-      "boundary_scope_note": "The existing config/places.json point is approximate and is not a validated channel or inlet geometry.",
-      "relationships": [
-        {
-          "type": "connects",
-          "target_id": "sf-atlantic-ocean",
-          "status": "connectivity_hypothesis_geometry_pending"
-        }
-      ],
-      "provenance": [
+        },
         {
           "publisher": "NOAA Office of Coast Survey",
-          "title": "NOAA ENC GIS Data and Services",
-          "url": "https://www.nauticalcharts.noaa.gov/data/gis-data-and-services.html",
-          "source_type": "hydrographic_navigation_data_catalog"
+          "title": "NOAA Harbour ENC Fairway Areas, Miami Harbor Channel",
+          "url": "https://encdirect.noaa.gov/arcgis/rest/services/encdirect/enc_harbour/MapServer/208",
+          "source_type": "candidate_navigation_context_not_direct_government_cut_geometry"
         }
       ],
-      "validation_status": "named_feature_supported_geometry_pending"
+      "validation_status": "named_feature_supported_candidate_fairway_context_geometry_pending",
+      "source_geometry_ref": {
+        "index_path": "data/spatial/noaa-biscayne-hydrography-index.json",
+        "review_status": "miami_harbor_fairway_context_found_exact_government_cut_subgeometry_pending",
+        "channel_fairway_feature_count": 44,
+        "chart_cells": [
+          "US4FL2AI.000",
+          "US4FL2AJ.000",
+          "US5MIACB.000",
+          "US5MIACC.000",
+          "US5MIACD.000"
+        ],
+        "artifact_id": 14004372911,
+        "fairway_layer_id": 208,
+        "fairway_objectids": [
+          42416,
+          42420,
+          42422
+        ],
+        "fairway_chart_cells": [
+          "US5MIACB.000",
+          "US5MIACC.000",
+          "US5MIACD.000"
+        ],
+        "fairway_source_dates": [
+          "20190124"
+        ],
+        "fairway_source_url": "https://encdirect.noaa.gov/arcgis/rest/services/encdirect/enc_harbour/MapServer/208"
+      }
     },
     {
-      "id": "sf-atlantic-ocean",
-      "name": "Atlantic Ocean",
-      "feature_type": "adjacent_waterbody",
+      "id": "sf-miami-harbor-channel-system",
+      "name": "Miami Harbor Channel fairway",
+      "feature_type": "navigation_channel_system",
       "region": "south_florida",
       "parent_id": null,
       "geometry": null,
-      "geometry_status": "not_in_this_pilot_catalog",
-      "boundary_basis": "reference_entity",
-      "boundary_scope_note": "Reference waterbody used for explicit connectivity relationships; no ocean polygon is defined in this pilot.",
+      "geometry_status": "44_noaa_usace_maintained_channel_features_retrieved_grouped_by_fairway_topology_review_pending",
+      "boundary_scope_note": "NOAA ENC Direct to GIS returned 44 maintained-channel features with FAIRWAY='Miami Harbor Channel' across five ENC cells. Features have distinct object names including Cut-1 through Cut-4, Fisher Island Turning Basin, Fishermans Channel, Dodge Island Cut, and Miami Harbor Channel. These must remain distinct source features. The fairway grouping does not identify every segment as Government Cut. A separate Harbour Fairway_area layer (208) returns three named Miami Harbor Channel polygons across three ENC cells; these are not a direct Government Cut subgeometry.",
+      "source_geometry_ref": {
+        "index_path": "data/spatial/noaa-biscayne-hydrography-index.json",
+        "source_layer": "NavigationChartData/MarineTransportation/MapServer/1",
+        "objectids": [
+          2471282,
+          2471600,
+          2471994,
+          2472253,
+          2472754,
+          2472841,
+          2472871,
+          2472946,
+          2473271,
+          2473274,
+          2473322,
+          2473371,
+          2473591,
+          2473758,
+          2473837,
+          2473917,
+          2474654,
+          2474671,
+          2474831,
+          2475255,
+          2475341,
+          2475670,
+          2476853,
+          2477249,
+          2477496,
+          2477940,
+          2478999,
+          2479036,
+          2479049,
+          2479165,
+          2479225,
+          2479453,
+          2479530,
+          2479559,
+          2479579,
+          2480019,
+          2480671,
+          2480839,
+          2481045,
+          2481312,
+          2481942,
+          2481955,
+          2482095,
+          2482219
+        ],
+        "chart_cells": [
+          "US4FL2AI.000",
+          "US4FL2AJ.000",
+          "US5MIACB.000",
+          "US5MIACC.000",
+          "US5MIACD.000"
+        ],
+        "artifact_id": 14002573361,
+        "harbor_fairway_layer_id": 208,
+        "harbor_fairway_feature_count": 3,
+        "harbor_fairway_objectids": [
+          42416,
+          42420,
+          42422
+        ],
+        "harbor_fairway_chart_cells": [
+          "US5MIACB.000",
+          "US5MIACC.000",
+          "US5MIACD.000"
+        ],
+        "harbor_fairway_source_dates": [
+          "20190124"
+        ]
+      },
+      "relationships": [
+        {
+          "type": "near_or_related_to",
+          "target_id": "sf-government-cut",
+          "status": "candidate_context_only_no_exact_segment_assignment"
+        }
+      ],
+      "provenance": [
+        {
+          "publisher": "NOAA Office of Coast Survey",
+          "title": "Coastal Maintained Channels, NOAA ENC Direct to GIS",
+          "url": "https://encdirect.noaa.gov/arcgis/rest/services/NavigationChartData/MarineTransportation/MapServer/1",
+          "source_type": "official_chart_derived_usace_maintained_channel_features"
+        },
+        {
+          "publisher": "NOAA Office of Coast Survey",
+          "title": "NOAA Harbour ENC Fairway Areas, Miami Harbor Channel",
+          "url": "https://encdirect.noaa.gov/arcgis/rest/services/encdirect/enc_harbour/MapServer/208",
+          "source_type": "charted_fairway_area_navigation_context"
+        }
+      ],
+      "validation_status": "source_features_retrieved_grouping_by_fairway_not_topologically_validated"
+    },
+    {
+      "id": "sf-norris-cut",
+      "name": "Norris Cut",
+      "feature_type": "tidal_inlet_or_navigation_channel",
+      "region": "south_florida",
+      "parent_id": null,
+      "geometry": null,
+      "geometry_status": "source_geometry_persisted_topology_precheck_passed_not_navigation_boundary",
+      "boundary_scope_note": "NOAA Coast Pilot 4, Chapter 11, paragraph 38 describes Norris Cut as a shallow inlet just south of the Main Channel to Miami Harbor between Fisher Island and Virginia Key. NOAA Harbour ENC layer 237 directly returns a named-water polygon for Norris Cut (OBJECTID 253447, Chart 11468, source date 2004-01). This is a charted named-water area, not a surveyed channel centerline or current controlling-depth boundary. The Norris Cut source polygon is persisted in the curated GeoJSON and passed geometry validation. The full inlet channel centerline and current controlling-depth boundary remain unverified.",
+      "source_geometry_ref": {
+        "index_path": "data/spatial/noaa-biscayne-hydrography-index.json",
+        "review_status": "direct_named_water_area_polygon_persisted_channel_centerline_pending",
+        "curated_geojson_path": "data/spatial/noaa-biscayne-named-water-areas.geojson",
+        "topology_audit_path": "data/spatial/noaa-biscayne-named-water-topology-audit.json",
+        "source_objectids": [
+          253447
+        ],
+        "source_feature_count": 1,
+        "chart_cells": [
+          "US5MIACC.000"
+        ],
+        "source_dates": [
+          "200401"
+        ],
+        "connected_component_count": 1,
+        "positive_area_overlap_pairs": [],
+        "geojson_feature_id": "253447",
+        "source_layer_id": 237,
+        "objectid": 253447,
+        "chart_cell": "US5MIACC.000",
+        "source_chart": "NOAA Chart 11468",
+        "source_date": "2004-01",
+        "geometry_type": "Polygon",
+        "bbox_wgs84": [
+          -80.1498818,
+          25.7503267,
+          -80.1396955,
+          25.7620415
+        ]
+      },
       "relationships": [],
-      "provenance": [],
-      "validation_status": "reference_entity_only"
+      "provenance": [
+        {
+          "publisher": "NOAA Office of Coast Survey",
+          "title": "U.S. Coast Pilot 4, Chapter 11, paragraph 38",
+          "url": "https://nauticalcharts.noaa.gov/publications/coast-pilot/files/cp4/CPB4_WEB.pdf",
+          "source_type": "official_hydrographic_publication"
+        },
+        {
+          "publisher": "NOAA Office of Coast Survey",
+          "title": "NOAA Harbour ENC named-water polygon, Norris Cut, OBJECTID 253447, Chart 11468",
+          "url": "https://encdirect.noaa.gov/arcgis/rest/services/encdirect/enc_harbour/MapServer/237",
+          "source_type": "charted_named_water_area_geometry"
+        }
+      ],
+      "validation_status": "charted_named_water_geometry_persisted_topology_precheck_passed_not_navigation_boundary",
+      "habitat_overlay_ref": {
+        "audit_path": "data/spatial/biscayne-subregion-habitat-audit.json",
+        "named_chart_context_name": "Norris Cut",
+        "source_feature_count": 1,
+        "intersecting_benthic_source_feature_count": 27,
+        "mapped_tidal_flat_source_feature_count": 6,
+        "status": "historical_source_overlay_not_current_habitat_or_species_suitability",
+        "note": "Source polygon intersections are evidence of mapped spatial overlap only. They do not establish current habitat condition, fish presence, water connectivity, or navigation limits."
+      }
+    },
+    {
+      "id": "sf-biscayne-black-ledge",
+      "name": "Black Ledge",
+      "feature_type": "charted_ledge",
+      "region": "south_florida",
+      "parent_id": "sf-biscayne-bay-ecological-context",
+      "geometry": null,
+      "geometry_status": "source_chart_fragments_persisted_topology_precheck_passed_boundary_unverified",
+      "boundary_basis": "NOAA ENC charted named-water area",
+      "boundary_scope_note": "NOAA Harbour ENC returns 3 charted source polygons named Black Ledge and classifies the feature as ledge. Source chart date: 20180726. These are charted source geometries, not surveyed ecological, legal, habitat, or navigation boundaries. Preserve source polygons individually; a connected-component result does not establish current water connectivity or fish habitat. A first geometric topology precheck found one connected component and no material overlaps. Source polygons remain separate; this does not establish current ecological connectivity, habitat condition, channel centerline, or navigation boundary.",
+      "relationships": [
+        {
+          "type": "located_within",
+          "target_id": "sf-biscayne-bay-ecological-context",
+          "status": "positive_area_overlap_with_noaa_charted_biscayne_bay_union_not_final_ecological_boundary"
+        }
+      ],
+      "provenance": [
+        {
+          "publisher": "NOAA Office of Coast Survey",
+          "title": "Harbor.Sea_Area_Named_Water_Area, Black Ledge chart features (OBJECTIDs 246297, 246304, 246318)",
+          "url": "https://encdirect.noaa.gov/arcgis/rest/services/encdirect/enc_harbour/MapServer/237",
+          "source_type": "official_charted_named_water_area"
+        }
+      ],
+      "validation_status": "source_fragments_persisted_mosaic_not_promoted_to_boundary",
+      "source_geometry_ref": {
+        "index_path": "data/spatial/noaa-biscayne-hydrography-index.json",
+        "source_layer_id": 237,
+        "source_objectids": [
+          246297,
+          246304,
+          246318
+        ],
+        "source_feature_count": 3,
+        "chart_cells": [
+          "US5FL5LM.000",
+          "US5FL5MM.000",
+          "US5FL5MN.000"
+        ],
+        "source_dates": [
+          "20180726"
+        ],
+        "charted_category": "ledge",
+        "connected_component_count": 1,
+        "positive_area_overlap_pairs": [],
+        "curated_geojson_path": "data/spatial/noaa-biscayne-named-water-areas.geojson",
+        "topology_audit_path": "data/spatial/noaa-biscayne-named-water-topology-audit.json"
+      },
+      "habitat_overlay_ref": {
+        "audit_path": "data/spatial/biscayne-subregion-habitat-audit.json",
+        "named_chart_context_name": "Black Ledge",
+        "source_feature_count": 3,
+        "intersecting_benthic_source_feature_count": 3,
+        "mapped_tidal_flat_source_feature_count": 0,
+        "status": "historical_source_overlay_not_current_habitat_or_species_suitability",
+        "note": "Source polygon intersections are evidence of mapped spatial overlap only. They do not establish current habitat condition, fish presence, water connectivity, or navigation limits."
+      }
+    },
+    {
+      "id": "sf-featherbed-bank",
+      "name": "Featherbed Bank",
+      "feature_type": "charted_bank",
+      "region": "south_florida",
+      "parent_id": "sf-biscayne-bay-ecological-context",
+      "geometry": null,
+      "geometry_status": "source_chart_fragments_persisted_topology_precheck_passed_boundary_unverified",
+      "boundary_basis": "NOAA ENC charted named-water area",
+      "boundary_scope_note": "NOAA Harbour ENC returns 1 charted source polygon named Featherbed Bank and classifies the feature as bank. Source chart date: 20021005. These are charted source geometries, not surveyed ecological, legal, habitat, or navigation boundaries. Preserve source polygons individually; a connected-component result does not establish current water connectivity or fish habitat. A first geometric topology precheck found one connected component and no material overlaps. Source polygons remain separate; this does not establish current ecological connectivity, habitat condition, channel centerline, or navigation boundary.",
+      "relationships": [
+        {
+          "type": "located_within",
+          "target_id": "sf-biscayne-bay-ecological-context",
+          "status": "positive_area_overlap_with_noaa_charted_biscayne_bay_union_not_final_ecological_boundary"
+        }
+      ],
+      "provenance": [
+        {
+          "publisher": "NOAA Office of Coast Survey",
+          "title": "Harbor.Sea_Area_Named_Water_Area, Featherbed Bank chart features (OBJECTIDs 246301)",
+          "url": "https://encdirect.noaa.gov/arcgis/rest/services/encdirect/enc_harbour/MapServer/237",
+          "source_type": "official_charted_named_water_area"
+        }
+      ],
+      "validation_status": "source_fragments_persisted_mosaic_not_promoted_to_boundary",
+      "source_geometry_ref": {
+        "index_path": "data/spatial/noaa-biscayne-hydrography-index.json",
+        "source_layer_id": 237,
+        "source_objectids": [
+          246301
+        ],
+        "source_feature_count": 1,
+        "chart_cells": [
+          "US5FL5LN.000"
+        ],
+        "source_dates": [
+          "20021005"
+        ],
+        "charted_category": "bank",
+        "connected_component_count": 1,
+        "positive_area_overlap_pairs": [],
+        "curated_geojson_path": "data/spatial/noaa-biscayne-named-water-areas.geojson",
+        "topology_audit_path": "data/spatial/noaa-biscayne-named-water-topology-audit.json"
+      },
+      "habitat_overlay_ref": {
+        "audit_path": "data/spatial/biscayne-subregion-habitat-audit.json",
+        "named_chart_context_name": "Featherbed Bank",
+        "source_feature_count": 1,
+        "intersecting_benthic_source_feature_count": 1,
+        "mapped_tidal_flat_source_feature_count": 0,
+        "status": "historical_source_overlay_not_current_habitat_or_species_suitability",
+        "note": "Source polygon intersections are evidence of mapped spatial overlap only. They do not establish current habitat condition, fish presence, water connectivity, or navigation limits."
+      }
+    },
+    {
+      "id": "sf-lewis-cut",
+      "name": "Lewis Cut",
+      "feature_type": "charted_named_waterway",
+      "region": "south_florida",
+      "parent_id": "sf-biscayne-bay-ecological-context",
+      "geometry": null,
+      "geometry_status": "source_chart_fragments_persisted_topology_precheck_passed_boundary_unverified",
+      "boundary_basis": "NOAA ENC charted named-water area",
+      "boundary_scope_note": "NOAA Harbour ENC returns 1 charted source polygon named Lewis Cut; the source category is blank. Source chart date: 20021005. These are charted source geometries, not surveyed ecological, legal, habitat, or navigation boundaries. Preserve source polygons individually; a connected-component result does not establish current water connectivity or fish habitat. The source polygon only touches the charted Biscayne Bay named-water union and has no positive-area overlap; do not infer a physical inlet or open-water connection from that contact. A first geometric topology precheck found one connected component and no material overlaps. Source polygons remain separate; this does not establish current ecological connectivity, habitat condition, channel centerline, or navigation boundary.",
+      "relationships": [
+        {
+          "type": "adjacent_to",
+          "target_id": "sf-biscayne-bay-ecological-context",
+          "status": "chart_polygon_touches_biscayne_bay_named_water_union_no_positive_area_overlap_physical_connection_unverified"
+        }
+      ],
+      "provenance": [
+        {
+          "publisher": "NOAA Office of Coast Survey",
+          "title": "Harbor.Sea_Area_Named_Water_Area, Lewis Cut chart features (OBJECTIDs 246302)",
+          "url": "https://encdirect.noaa.gov/arcgis/rest/services/encdirect/enc_harbour/MapServer/237",
+          "source_type": "official_charted_named_water_area"
+        }
+      ],
+      "validation_status": "source_fragments_persisted_mosaic_not_promoted_to_boundary",
+      "source_geometry_ref": {
+        "index_path": "data/spatial/noaa-biscayne-hydrography-index.json",
+        "source_layer_id": 237,
+        "source_objectids": [
+          246302
+        ],
+        "source_feature_count": 1,
+        "chart_cells": [
+          "US5FL5LN.000"
+        ],
+        "source_dates": [
+          "20021005"
+        ],
+        "charted_category": null,
+        "connected_component_count": 1,
+        "positive_area_overlap_pairs": [],
+        "curated_geojson_path": "data/spatial/noaa-biscayne-named-water-areas.geojson",
+        "topology_audit_path": "data/spatial/noaa-biscayne-named-water-topology-audit.json"
+      },
+      "habitat_overlay_ref": {
+        "audit_path": "data/spatial/biscayne-subregion-habitat-audit.json",
+        "named_chart_context_name": "Lewis Cut",
+        "source_feature_count": 1,
+        "intersecting_benthic_source_feature_count": 2,
+        "mapped_tidal_flat_source_feature_count": 0,
+        "status": "historical_source_overlay_not_current_habitat_or_species_suitability",
+        "note": "Source polygon intersections are evidence of mapped spatial overlap only. They do not establish current habitat condition, fish presence, water connectivity, or navigation limits."
+      }
+    },
+    {
+      "id": "sf-biscayne-channel",
+      "name": "Biscayne Channel",
+      "feature_type": "charted_sea_channel",
+      "region": "south_florida",
+      "parent_id": "sf-biscayne-bay-ecological-context",
+      "geometry": null,
+      "geometry_status": "source_chart_fragments_persisted_topology_precheck_passed_boundary_unverified",
+      "boundary_basis": "NOAA ENC charted named-water area",
+      "boundary_scope_note": "NOAA Harbour ENC returns 2 charted source polygons named Biscayne Channel and classifies the feature as sea channel. Source chart date: 20021005. These are charted source geometries, not surveyed ecological, legal, habitat, or navigation boundaries. Preserve source polygons individually; a connected-component result does not establish current water connectivity or fish habitat. A first geometric topology precheck found one connected component and no material overlaps. Source polygons remain separate; this does not establish current ecological connectivity, habitat condition, channel centerline, or navigation boundary. The current FWC/NPS unified benthic source extraction returned no mapped benthic polygons intersecting these chart polygons; this is a source-coverage result, not evidence of absent habitat.",
+      "relationships": [
+        {
+          "type": "overlaps",
+          "target_id": "sf-biscayne-bay-ecological-context",
+          "status": "approximately_94_percent_source_polygon_area_overlaps_charted_biscayne_bay_union_not_final_ecological_boundary"
+        }
+      ],
+      "provenance": [
+        {
+          "publisher": "NOAA Office of Coast Survey",
+          "title": "Harbor.Sea_Area_Named_Water_Area, Biscayne Channel chart features (OBJECTIDs 253424, 253427)",
+          "url": "https://encdirect.noaa.gov/arcgis/rest/services/encdirect/enc_harbour/MapServer/237",
+          "source_type": "official_charted_named_water_area"
+        }
+      ],
+      "validation_status": "source_fragments_persisted_mosaic_not_promoted_to_boundary",
+      "source_geometry_ref": {
+        "index_path": "data/spatial/noaa-biscayne-hydrography-index.json",
+        "source_layer_id": 237,
+        "source_objectids": [
+          253424,
+          253427
+        ],
+        "source_feature_count": 2,
+        "chart_cells": [
+          "US5MIABB.000",
+          "US5MIABC.000"
+        ],
+        "source_dates": [
+          "20021005"
+        ],
+        "charted_category": "sea channel",
+        "connected_component_count": 1,
+        "positive_area_overlap_pairs": [],
+        "curated_geojson_path": "data/spatial/noaa-biscayne-named-water-areas.geojson",
+        "topology_audit_path": "data/spatial/noaa-biscayne-named-water-topology-audit.json"
+      },
+      "habitat_overlay_ref": {
+        "audit_path": "data/spatial/biscayne-subregion-habitat-audit.json",
+        "named_chart_context_name": "Biscayne Channel",
+        "source_feature_count": 2,
+        "intersecting_benthic_source_feature_count": 0,
+        "mapped_tidal_flat_source_feature_count": 0,
+        "status": "historical_source_overlay_not_current_habitat_or_species_suitability",
+        "note": "Source polygon intersections are evidence of mapped spatial overlap only. They do not establish current habitat condition, fish presence, water connectivity, or navigation limits."
+      }
+    },
+    {
+      "id": "sf-sands-cut",
+      "name": "Sands Cut",
+      "feature_type": "charted_named_waterway",
+      "region": "south_florida",
+      "parent_id": "sf-biscayne-bay-ecological-context",
+      "geometry": null,
+      "geometry_status": "source_chart_fragments_persisted_topology_precheck_passed_boundary_unverified",
+      "boundary_basis": "NOAA ENC charted named-water area",
+      "boundary_scope_note": "NOAA Harbour ENC returns 1 charted source polygon named Sands Cut; the source category is blank. Source chart date: 20021005. These are charted source geometries, not surveyed ecological, legal, habitat, or navigation boundaries. Preserve source polygons individually; a connected-component result does not establish current water connectivity or fish habitat. The source polygon only touches the charted Biscayne Bay named-water union and has no positive-area overlap; do not infer a physical inlet or open-water connection from that contact. A first geometric topology precheck found one connected component and no material overlaps. Source polygons remain separate; this does not establish current ecological connectivity, habitat condition, channel centerline, or navigation boundary.",
+      "relationships": [
+        {
+          "type": "adjacent_to",
+          "target_id": "sf-biscayne-bay-ecological-context",
+          "status": "chart_polygon_touches_biscayne_bay_named_water_union_no_positive_area_overlap_physical_connection_unverified"
+        }
+      ],
+      "provenance": [
+        {
+          "publisher": "NOAA Office of Coast Survey",
+          "title": "Harbor.Sea_Area_Named_Water_Area, Sands Cut chart features (OBJECTIDs 246290)",
+          "url": "https://encdirect.noaa.gov/arcgis/rest/services/encdirect/enc_harbour/MapServer/237",
+          "source_type": "official_charted_named_water_area"
+        }
+      ],
+      "validation_status": "source_fragments_persisted_mosaic_not_promoted_to_boundary",
+      "source_geometry_ref": {
+        "index_path": "data/spatial/noaa-biscayne-hydrography-index.json",
+        "source_layer_id": 237,
+        "source_objectids": [
+          246290
+        ],
+        "source_feature_count": 1,
+        "chart_cells": [
+          "US5FL5KN.000"
+        ],
+        "source_dates": [
+          "20021005"
+        ],
+        "charted_category": null,
+        "connected_component_count": 1,
+        "positive_area_overlap_pairs": [],
+        "curated_geojson_path": "data/spatial/noaa-biscayne-named-water-areas.geojson",
+        "topology_audit_path": "data/spatial/noaa-biscayne-named-water-topology-audit.json"
+      },
+      "habitat_overlay_ref": {
+        "audit_path": "data/spatial/biscayne-subregion-habitat-audit.json",
+        "named_chart_context_name": "Sands Cut",
+        "source_feature_count": 1,
+        "intersecting_benthic_source_feature_count": 2,
+        "mapped_tidal_flat_source_feature_count": 0,
+        "status": "historical_source_overlay_not_current_habitat_or_species_suitability",
+        "note": "Source polygon intersections are evidence of mapped spatial overlap only. They do not establish current habitat condition, fish presence, water connectivity, or navigation limits."
+      }
+    },
+    {
+      "id": "sf-snapper-creek-canal",
+      "name": "Snapper Creek Canal",
+      "feature_type": "charted_canal",
+      "region": "south_florida",
+      "parent_id": "sf-biscayne-bay-ecological-context",
+      "geometry": null,
+      "geometry_status": "source_chart_fragments_persisted_topology_precheck_passed_boundary_unverified",
+      "boundary_basis": "NOAA ENC charted named-water area",
+      "boundary_scope_note": "NOAA Harbour ENC returns 1 charted source polygon named Snapper Creek Canal and classifies the feature as canal. Source chart date: 200411. These are charted source geometries, not surveyed ecological, legal, habitat, or navigation boundaries. Preserve source polygons individually; a connected-component result does not establish current water connectivity or fish habitat. The source polygon only touches the charted Biscayne Bay named-water union and has no positive-area overlap; do not infer a physical inlet or open-water connection from that contact. A first geometric topology precheck found one connected component and no material overlaps. Source polygons remain separate; this does not establish current ecological connectivity, habitat condition, channel centerline, or navigation boundary.",
+      "relationships": [
+        {
+          "type": "adjacent_to",
+          "target_id": "sf-biscayne-bay-ecological-context",
+          "status": "chart_polygon_touches_biscayne_bay_named_water_union_no_positive_area_overlap_mouth_connection_unverified"
+        }
+      ],
+      "provenance": [
+        {
+          "publisher": "NOAA Office of Coast Survey",
+          "title": "Harbor.Sea_Area_Named_Water_Area, Snapper Creek Canal chart features (OBJECTIDs 253417)",
+          "url": "https://encdirect.noaa.gov/arcgis/rest/services/encdirect/enc_harbour/MapServer/237",
+          "source_type": "official_charted_named_water_area"
+        }
+      ],
+      "validation_status": "source_fragments_persisted_mosaic_not_promoted_to_boundary",
+      "source_geometry_ref": {
+        "index_path": "data/spatial/noaa-biscayne-hydrography-index.json",
+        "source_layer_id": 237,
+        "source_objectids": [
+          253417
+        ],
+        "source_feature_count": 1,
+        "chart_cells": [
+          "US5MIABA.000"
+        ],
+        "source_dates": [
+          "200411"
+        ],
+        "charted_category": "canal",
+        "connected_component_count": 1,
+        "positive_area_overlap_pairs": [],
+        "curated_geojson_path": "data/spatial/noaa-biscayne-named-water-areas.geojson",
+        "topology_audit_path": "data/spatial/noaa-biscayne-named-water-topology-audit.json"
+      },
+      "habitat_overlay_ref": {
+        "audit_path": "data/spatial/biscayne-subregion-habitat-audit.json",
+        "named_chart_context_name": "Snapper Creek Canal",
+        "source_feature_count": 1,
+        "intersecting_benthic_source_feature_count": 1,
+        "mapped_tidal_flat_source_feature_count": 0,
+        "status": "historical_source_overlay_not_current_habitat_or_species_suitability",
+        "note": "Source polygon intersections are evidence of mapped spatial overlap only. They do not establish current habitat condition, fish presence, water connectivity, or navigation limits."
+      }
+    },
+    {
+      "id": "sf-goulds-canal",
+      "name": "Goulds Canal",
+      "feature_type": "charted_canal",
+      "region": "south_florida",
+      "parent_id": "sf-biscayne-bay-ecological-context",
+      "geometry": null,
+      "geometry_status": "source_chart_fragments_persisted_topology_precheck_passed_boundary_unverified",
+      "boundary_basis": "NOAA ENC charted named-water area",
+      "boundary_scope_note": "NOAA Harbour ENC returns 1 charted source polygon named Goulds Canal and classifies the feature as canal. Source chart date: 20021005. These are charted source geometries, not surveyed ecological, legal, habitat, or navigation boundaries. Preserve source polygons individually; a connected-component result does not establish current water connectivity or fish habitat. The source polygon only touches the charted Biscayne Bay named-water union and has no positive-area overlap; do not infer a physical inlet or open-water connection from that contact. A first geometric topology precheck found one connected component and no material overlaps. Source polygons remain separate; this does not establish current ecological connectivity, habitat condition, channel centerline, or navigation boundary.",
+      "relationships": [
+        {
+          "type": "adjacent_to",
+          "target_id": "sf-biscayne-bay-ecological-context",
+          "status": "chart_polygon_touches_biscayne_bay_named_water_union_no_positive_area_overlap_mouth_connection_unverified"
+        }
+      ],
+      "provenance": [
+        {
+          "publisher": "NOAA Office of Coast Survey",
+          "title": "Harbor.Sea_Area_Named_Water_Area, Goulds Canal chart features (OBJECTIDs 246296)",
+          "url": "https://encdirect.noaa.gov/arcgis/rest/services/encdirect/enc_harbour/MapServer/237",
+          "source_type": "official_charted_named_water_area"
+        }
+      ],
+      "validation_status": "source_fragments_persisted_mosaic_not_promoted_to_boundary",
+      "source_geometry_ref": {
+        "index_path": "data/spatial/noaa-biscayne-hydrography-index.json",
+        "source_layer_id": 237,
+        "source_objectids": [
+          246296
+        ],
+        "source_feature_count": 1,
+        "chart_cells": [
+          "US5FL5LM.000"
+        ],
+        "source_dates": [
+          "20021005"
+        ],
+        "charted_category": "canal",
+        "connected_component_count": 1,
+        "positive_area_overlap_pairs": [],
+        "curated_geojson_path": "data/spatial/noaa-biscayne-named-water-areas.geojson",
+        "topology_audit_path": "data/spatial/noaa-biscayne-named-water-topology-audit.json"
+      },
+      "habitat_overlay_ref": {
+        "audit_path": "data/spatial/biscayne-subregion-habitat-audit.json",
+        "named_chart_context_name": "Goulds Canal",
+        "source_feature_count": 1,
+        "intersecting_benthic_source_feature_count": 2,
+        "mapped_tidal_flat_source_feature_count": 0,
+        "status": "historical_source_overlay_not_current_habitat_or_species_suitability",
+        "note": "Source polygon intersections are evidence of mapped spatial overlap only. They do not establish current habitat condition, fish presence, water connectivity, or navigation limits."
+      }
+    },
+    {
+      "id": "sf-deering-channel",
+      "name": "Deering Channel",
+      "feature_type": "charted_sea_channel",
+      "region": "south_florida",
+      "parent_id": "sf-biscayne-bay-ecological-context",
+      "geometry": null,
+      "geometry_status": "source_chart_fragments_persisted_topology_precheck_passed_boundary_unverified",
+      "boundary_basis": "NOAA ENC charted named-water area",
+      "boundary_scope_note": "NOAA Harbour ENC returns 1 charted source polygon named Deering Channel and classifies the feature as sea channel. Source chart date: 20021005. These are charted source geometries, not surveyed ecological, legal, habitat, or navigation boundaries. Preserve source polygons individually; a connected-component result does not establish current water connectivity or fish habitat. A first geometric topology precheck found one connected component and no material overlaps. Source polygons remain separate; this does not establish current ecological connectivity, habitat condition, channel centerline, or navigation boundary.",
+      "relationships": [
+        {
+          "type": "located_within",
+          "target_id": "sf-biscayne-bay-ecological-context",
+          "status": "positive_area_overlap_with_noaa_charted_biscayne_bay_union_and_fdep_preserve_not_navigation_boundary"
+        }
+      ],
+      "provenance": [
+        {
+          "publisher": "NOAA Office of Coast Survey",
+          "title": "Harbor.Sea_Area_Named_Water_Area, Deering Channel chart features (OBJECTIDs 253446)",
+          "url": "https://encdirect.noaa.gov/arcgis/rest/services/encdirect/enc_harbour/MapServer/237",
+          "source_type": "official_charted_named_water_area"
+        }
+      ],
+      "validation_status": "source_fragments_persisted_mosaic_not_promoted_to_boundary",
+      "source_geometry_ref": {
+        "index_path": "data/spatial/noaa-biscayne-hydrography-index.json",
+        "source_layer_id": 237,
+        "source_objectids": [
+          253446
+        ],
+        "source_feature_count": 1,
+        "chart_cells": [
+          "US5MIACB.000"
+        ],
+        "source_dates": [
+          "20021005"
+        ],
+        "charted_category": "sea channel",
+        "connected_component_count": 1,
+        "positive_area_overlap_pairs": [],
+        "curated_geojson_path": "data/spatial/noaa-biscayne-named-water-areas.geojson",
+        "topology_audit_path": "data/spatial/noaa-biscayne-named-water-topology-audit.json"
+      },
+      "habitat_overlay_ref": {
+        "audit_path": "data/spatial/biscayne-subregion-habitat-audit.json",
+        "named_chart_context_name": "Deering Channel",
+        "source_feature_count": 1,
+        "intersecting_benthic_source_feature_count": 11,
+        "mapped_tidal_flat_source_feature_count": 0,
+        "status": "historical_source_overlay_not_current_habitat_or_species_suitability",
+        "note": "Source polygon intersections are evidence of mapped spatial overlap only. They do not establish current habitat condition, fish presence, water connectivity, or navigation limits."
+      }
+    },
+    {
+      "id": "sf-cape-florida-channel",
+      "name": "Cape Florida Channel",
+      "feature_type": "charted_sea_channel",
+      "region": "south_florida",
+      "parent_id": "sf-biscayne-bay-ecological-context",
+      "geometry": null,
+      "geometry_status": "source_chart_fragments_persisted_topology_precheck_passed_boundary_unverified",
+      "boundary_basis": "NOAA ENC charted named-water area",
+      "boundary_scope_note": "NOAA Harbour ENC returns 2 charted source polygons named Cape Florida Channel and classifies the feature as sea channel. Source chart date: 20021005. These are charted source geometries, not surveyed ecological, legal, habitat, or navigation boundaries. Preserve source polygons individually; a connected-component result does not establish current water connectivity or fish habitat. A first geometric topology precheck found one connected component and no material overlaps. Source polygons remain separate; this does not establish current ecological connectivity, habitat condition, channel centerline, or navigation boundary.",
+      "relationships": [
+        {
+          "type": "located_within",
+          "target_id": "sf-biscayne-bay-ecological-context",
+          "status": "positive_area_overlap_with_noaa_charted_biscayne_bay_union_and_fdep_preserve_not_navigation_boundary"
+        }
+      ],
+      "provenance": [
+        {
+          "publisher": "NOAA Office of Coast Survey",
+          "title": "Harbor.Sea_Area_Named_Water_Area, Cape Florida Channel chart features (OBJECTIDs 253420, 253432)",
+          "url": "https://encdirect.noaa.gov/arcgis/rest/services/encdirect/enc_harbour/MapServer/237",
+          "source_type": "official_charted_named_water_area"
+        }
+      ],
+      "validation_status": "source_fragments_persisted_mosaic_not_promoted_to_boundary",
+      "source_geometry_ref": {
+        "index_path": "data/spatial/noaa-biscayne-hydrography-index.json",
+        "source_layer_id": 237,
+        "source_objectids": [
+          253420,
+          253432
+        ],
+        "source_feature_count": 2,
+        "chart_cells": [
+          "US5MIABB.000",
+          "US5MIABC.000"
+        ],
+        "source_dates": [
+          "20021005"
+        ],
+        "charted_category": "sea channel",
+        "connected_component_count": 1,
+        "positive_area_overlap_pairs": [],
+        "curated_geojson_path": "data/spatial/noaa-biscayne-named-water-areas.geojson",
+        "topology_audit_path": "data/spatial/noaa-biscayne-named-water-topology-audit.json"
+      },
+      "habitat_overlay_ref": {
+        "audit_path": "data/spatial/biscayne-subregion-habitat-audit.json",
+        "named_chart_context_name": "Cape Florida Channel",
+        "source_feature_count": 2,
+        "intersecting_benthic_source_feature_count": 17,
+        "mapped_tidal_flat_source_feature_count": 1,
+        "status": "historical_source_overlay_not_current_habitat_or_species_suitability",
+        "note": "Source polygon intersections are evidence of mapped spatial overlap only. They do not establish current habitat condition, fish presence, water connectivity, or navigation limits."
+      }
+    },
+    {
+      "id": "sf-biscayne-bay-southern-context",
+      "name": "South Biscayne Bay",
+      "feature_type": "bay_subregion",
+      "region": "south_florida",
+      "parent_id": "sf-biscayne-bay-ecological-context",
+      "geometry": null,
+      "geometry_status": "literature_landmarks_identified_cross_bay_boundary_geometry_pending",
+      "boundary_basis": "peer_reviewed_ecological_region_description",
+      "boundary_scope_note": "Published ecological segmentation places South Biscayne Bay from Featherbed Bank / Black Point to Card Sound / Jewfish Creek. These are landmark limits, not a digitized cross-bay boundary line. Geometry remains pending GIS validation; this is not a legal or management boundary.",
+      "subregion_definition": {
+        "north_limit": "Featherbed Bank / Black Point",
+        "south_limit": "Card Sound / Jewfish Creek",
+        "limit_geometry_status": "landmarks_referenced_not_digitized"
+      },
+      "relationships": [
+        {
+          "type": "located_within",
+          "target_id": "sf-biscayne-bay-ecological-context",
+          "status": "literature_region_extent_supported_boundary_geometry_pending"
+        }
+      ],
+      "provenance": [
+        {
+          "publisher": "Frontiers in Marine Science",
+          "title": "Characterizing Nearshore Fish Assemblages From Intact and Altered Mangrove Shorelines in Biscayne Bay, Florida, United States",
+          "url": "https://doi.org/10.3389/fmars.2022.894663",
+          "source_type": "peer_reviewed_ecological_subregion_definition"
+        }
+      ],
+      "validation_status": "literature_extent_supported_boundary_geometry_pending"
     }
   ]
 }
