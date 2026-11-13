@@ -82,6 +82,11 @@ CURRENT_FN = QUIET_CURRENTS
 
 
 def fake_erddap(url):
+    if "ucsdHfrE2" in url:
+        lats = np.round(np.arange(24.5, 27.001, 0.25), 3)
+        lons = np.round(np.arange(-81.0, -78.499, 0.25), 3)
+        return _multi_csv(lats, lons, ["water_u", "water_v", "hdop", "number_of_sites", "number_of_radials"],
+                          lambda la, lo: (*CURRENT_FN(la, lo), 0.8, 3, 20))
     if "nesdisSSH1day" in url:
         return _multi_csv(np.round(np.arange(24.5, 27.001, 0.25), 3), np.round(np.arange(-81.0, -78.499, 0.25), 3), ["ugos", "vgos"], CURRENT_FN)
     if "jplMURSST41" in url:

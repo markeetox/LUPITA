@@ -69,7 +69,7 @@ def test_layers_carry_currents_and_the_edge(monkeypatch):
     monkeypatch.setattr(TS, "CURRENT_FN", stream)
     errs = []
     lay = TS.L.load_layers(TS._sources(), errs, fetch=TS.fake_erddap, fetch_arc=TS.fake_arcgis)
-    assert errs == [] and lay["datasets"]["currents"] == "nesdisSSH1day"
+    assert errs == [] and lay["datasets"]["currents"] == "NOAA HF Radar + satellite-altimetry fallback"
     ed = lay["gulf_stream_edge"]; j = int(np.argmin(abs(lay["lons"] - HALF_MAX_EDGE)))
     assert abs(ed[60, j]) < 3 and ed[60, j + 20] > 0 and ed[60, j - 20] < 0         # zero at the edge, east positive, west negative
     assert np.nanmax(lay["current_speed"]) > 2.5                                    # a 1.5 m/s stream is about 2.9 kn
@@ -89,7 +89,7 @@ def test_sailfish_gather_at_the_edge_and_the_popup_says_so(monkeypatch):
 
 def test_without_currents_the_fish_still_score_and_the_error_is_recorded():
     def fetch(url):
-        if "nesdisSSH1day" in url:
+        if "ucsdHfrE2" in url or "nesdisSSH1day" in url:
             raise RuntimeError("403 Client Error")
         return TS.fake_erddap(url)
     errs = []

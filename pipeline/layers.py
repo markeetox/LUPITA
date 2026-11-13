@@ -208,8 +208,8 @@ def load_layers(sources: dict, errors: list[str], fetch=erddap.fetch_csv, fetch_
                 clats, clons, g, ctime = _fetch_multi(cu, qregion, fetch)
                 u_name, v_name = cu["variables"][:2]
                 raw_u, raw_v = np.asarray(g[u_name], float), np.asarray(g[v_name], float)
-                for variable, raw in ((u_name, raw_u), (v_name, raw_v)):
-                    for fill in cu.get("fill_values", {}).get(variable, []):
+                for variable, raw in g.items():
+                    for fill in cu.get("fill_values", {}).get(variable, [-327.67]):
                         raw[np.isclose(raw, float(fill))] = np.nan
                 vector_valid = np.isfinite(raw_u) & np.isfinite(raw_v)
                 if not vector_valid.any():
