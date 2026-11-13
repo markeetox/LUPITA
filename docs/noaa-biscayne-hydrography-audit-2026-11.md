@@ -108,7 +108,15 @@ NOAA Coast Pilot 4, Chapter 10, paragraph 414 describes the federal project chan
 
 NOAA Coast Pilot 4, Chapter 11, paragraph 38 describes Norris Cut as a shallow inlet just south of the Main Channel to Miami Harbor between Fisher Island and Virginia Key.
 
-No directly named Norris Cut geometry was returned by the structured feature layers queried here. Keep its geometry null until an authoritative source feature is identified.
+The expanded NOAA Harbour ENC extraction found one directly named Norris Cut polygon in layer 237:
+
+- OBJECTID 253447.
+- Chart cell US5MIACC.000; source chart NOAA Chart 11468.
+- Source date 2004-01.
+- Geometry type Polygon; valid geometry.
+- Bounds: [-80.1498818, 25.7503267, -80.1396955, 25.7620415].
+
+This source polygon is now included in the curated named-water GeoJSON and feature catalog. It is a charted named-water area, not a surveyed channel centerline or current controlling-depth boundary. It establishes a directly attributable chart feature, not the full physical inlet channel or its ecological connectivity.
 
 ## Catalog changes in this PR
 
@@ -128,7 +136,7 @@ The source index is stored in `data/spatial/noaa-biscayne-hydrography-index.json
 
 The research workflow now runs scripts/curate_noaa_named_water_geometries.py after extraction and persists:
 
-- data/spatial/noaa-biscayne-named-water-areas.geojson: 45 original source polygons, preserving each NOAA OBJECTID and source attributes.
+- data/spatial/noaa-biscayne-named-water-areas.geojson: 46 original source polygons, preserving each NOAA OBJECTID and source attributes.
 - data/spatial/noaa-biscayne-named-water-topology-audit.json: source IDs, chart cells, source dates, geometry validity, overlap checks, union component counts, and bounds.
 - data/spatial/feature-catalog.json: links the four named-water contexts to the persisted source set and records the current validation state.
 
