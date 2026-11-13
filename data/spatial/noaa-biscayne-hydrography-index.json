@@ -1,0 +1,256 @@
+{
+  "index_version": 1,
+  "generated_at_utc": "2026-11-13T02:04:04Z",
+  "purpose": "Persistent index of selected NOAA ENC named-water features and channel features extracted for research review. Full source geometries remain in the linked workflow artifact until curated static geometry import.",
+  "source": {
+    "publisher": "NOAA Office of Coast Survey",
+    "service": "https://encdirect.noaa.gov/arcgis/rest/services/encdirect/enc_harbour/MapServer",
+    "layer_id": 237,
+    "layer_name": "Harbor.Sea_Area_Named_Water_Area",
+    "geometry_type": "Polygon",
+    "source_scale_band": "Harbour ENC, nominal 1:5,000 to 1:50,000",
+    "source_refresh": "Weekly ENC service refresh",
+    "artifact_id": 14002573361,
+    "workflow_run_id": 43349431049
+  },
+  "named_water_features": {
+    "Biscayne Bay": {
+      "feature_count": 37,
+      "objectids": [
+        246262,
+        246278,
+        246285,
+        246286,
+        246287,
+        246288,
+        246293,
+        246298,
+        246299,
+        246303,
+        246306,
+        246307,
+        246308,
+        246309,
+        246310,
+        246311,
+        246312,
+        246313,
+        246314,
+        246315,
+        246320,
+        246321,
+        253418,
+        253419,
+        253422,
+        253425,
+        253428,
+        253429,
+        253430,
+        253435,
+        253438,
+        253448,
+        253449,
+        253460,
+        253462,
+        253475,
+        253477
+      ],
+      "chart_cells": [
+        "US5FL5JM.000",
+        "US5FL5JN.000",
+        "US5FL5KL.000",
+        "US5FL5KM.000",
+        "US5FL5KN.000",
+        "US5FL5LM.000",
+        "US5FL5LN.000",
+        "US5FL5MM.000",
+        "US5FL5MN.000",
+        "US5MIABA.000",
+        "US5MIABB.000",
+        "US5MIABC.000",
+        "US5MIACB.000",
+        "US5MIACC.000",
+        "US5MIADB.000",
+        "US5MIADC.000",
+        "US5MIAEC.000"
+      ],
+      "source_dates": [
+        "2002-10-05",
+        "2003-04",
+        "2008-06",
+        "2011-02"
+      ],
+      "status": "chart_cell_polygons_retrieved_mosaic_and_topology_review_pending",
+      "caveat": "These are charted named-water polygons partitioned across ENC cells, not a single statutory or ecological boundary. Do not dissolve into a final bay boundary without overlap, gap, and shoreline reconciliation."
+    },
+    "Card Sound": {
+      "feature_count": 6,
+      "objectids": [
+        246233,
+        246243,
+        246247,
+        246258,
+        246267,
+        246284
+      ],
+      "chart_cells": [
+        "US5FL5IL.000",
+        "US5FL5IM.000",
+        "US5FL5IN.000",
+        "US5FL5JM.000",
+        "US5FL5JN.000"
+      ],
+      "source_dates": [
+        "2003-04"
+      ],
+      "status": "chart_cell_polygons_retrieved_mosaic_review_pending"
+    },
+    "Safety Valve": {
+      "feature_count": 4,
+      "objectids": [
+        246300,
+        246319,
+        246322,
+        253421
+      ],
+      "chart_cells": [
+        "US5FL5LN.000",
+        "US5FL5MN.000",
+        "US5FL5MO.000",
+        "US5MIABB.000"
+      ],
+      "source_dates": [
+        "2002-10-05"
+      ],
+      "status": "named_water_area_polygons_retrieved_multi_cell_reconciliation_pending",
+      "caveat": "NOAA ENC classifies these as named water-area polygons, not as a flat or channel habitat classification."
+    },
+    "Biscayne Flats": {
+      "feature_count": 3,
+      "objectids": [
+        246316,
+        246317,
+        246323
+      ],
+      "chart_cells": [
+        "US5FL5MN.000",
+        "US5FL5MO.000"
+      ],
+      "source_dates": [
+        "2002-10-05"
+      ],
+      "charted_category": "mud flats",
+      "status": "named_mud_flat_polygons_retrieved_multi_cell_reconciliation_pending",
+      "caveat": "This is a charted mud-flat label/class, not proof of current substrate condition, seagrass, fish use, or ecological suitability."
+    },
+    "Bear Cut": {
+      "feature_count": 1,
+      "objectids": [
+        253451
+      ],
+      "chart_cells": [
+        "US5MIACC.000"
+      ],
+      "source_dates": [
+        "2002-10-05"
+      ],
+      "source_chart": "NOAA Chart 11465",
+      "geometry_type": "Polygon",
+      "bbox_wgs84": [
+        -80.1646204,
+        25.725,
+        -80.1506732,
+        25.7362954
+      ],
+      "status": "named_water_area_polygon_retrieved_and_geometry_validated",
+      "caveat": "The polygon represents a charted named-water area, not a surveyed channel centerline or current controlling-depth boundary."
+    }
+  },
+  "channel_features": {
+    "Miami Harbor Channel fairway": {
+      "feature_count": 44,
+      "objectids": [
+        2471282,
+        2471600,
+        2471994,
+        2472253,
+        2472754,
+        2472841,
+        2472871,
+        2472946,
+        2473271,
+        2473274,
+        2473322,
+        2473371,
+        2473591,
+        2473758,
+        2473837,
+        2473917,
+        2474654,
+        2474671,
+        2474831,
+        2475255,
+        2475341,
+        2475670,
+        2476853,
+        2477249,
+        2477496,
+        2477940,
+        2478999,
+        2479036,
+        2479049,
+        2479165,
+        2479225,
+        2479453,
+        2479530,
+        2479559,
+        2479579,
+        2480019,
+        2480671,
+        2480839,
+        2481045,
+        2481312,
+        2481942,
+        2481955,
+        2482095,
+        2482219
+      ],
+      "chart_cells": [
+        "US4FL2AI.000",
+        "US4FL2AJ.000",
+        "US5MIACB.000",
+        "US5MIACC.000",
+        "US5MIACD.000"
+      ],
+      "status": "maintained_channel_and_dredged_area_polygons_retrieved_review_pending",
+      "caveat": "Features share the Miami Harbor Channel fairway attribute but have distinct names including Cut-1 through Cut-4, Fisher Island Turning Basin, Fishermans Channel, and Dodge Island Cut. Do not label all of these as Government Cut."
+    },
+    "Government Cut": {
+      "status": "name_documented_geometry_not_identified_as_a_named_feature_in_extracted_layers",
+      "evidence": [
+        "NOAA Coast Pilot 4, Chapter 10, paragraph 414 describes the federal project channel from the sea buoy to inside Government Cut.",
+        "NOAA chart 11468 labels Government Cut and Miami Harbor entrance features."
+      ],
+      "caveat": "Nearby Miami Harbor Channel fairway features are candidate spatial context only. Exact Government Cut geometry still needs a chart-feature crosswalk or independently verified digitization."
+    },
+    "Norris Cut": {
+      "status": "name_documented_geometry_not_identified_in_extracted_layers",
+      "evidence": [
+        "NOAA Coast Pilot 4, Chapter 11, paragraph 38 describes Norris Cut as a shallow inlet just south of the Main Channel to Miami Harbor between Fisher Island and Virginia Key."
+      ],
+      "caveat": "Do not assign geometry from nearby chart features without a direct source-feature match."
+    }
+  },
+  "workflow": {
+    "run_id": 43349431049,
+    "url": "https://github.com/markeetox/LUPITA/actions/runs/43349431049",
+    "artifact_id": 14002573361,
+    "artifact_name": "noaa-biscayne-hydrography-review"
+  },
+  "limitations": [
+    "NOAA ENC Direct to GIS is not certified for navigation.",
+    "Source dates on individual features are older than the current weekly service refresh; weekly refresh does not make the original source survey current.",
+    "Charted geographic names and classes are not proof of habitat condition or biological use.",
+    "No ecological connectivity, current, or fish movement is inferred from geometry alone."
+  ]
+}
