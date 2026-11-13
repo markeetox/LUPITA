@@ -250,16 +250,17 @@ def main():
             print(f"WARNING: {message}")
     all_rows = usgs + fwc
     locations = {}
-    # Pair MUR only at the four Biscayne logger sites. The full USGS archive
-    # remains preserved, but these are the most relevant South Florida sites
-    # for this first shallow-reef comparison.
-    selected_usgs_sites = {"brewster", "shadow", "bbnorth", "fowey"}
+    # Keep the first paired MUR test deliberately small: one shallow Biscayne
+    # logger and one depth-matched FWC reef station. The full in-situ records
+    # for every selected station remain in the artifact.
+    selected_usgs_sites = {"brewster"}
     for row in usgs:
         key = re.sub(r"\s+", " ", row["site"].strip()).lower()
         if key in selected_usgs_sites and row["latitude"] != "" and row["longitude"] != "":
             locations[row["site"]] = (float(row["latitude"]), float(row["longitude"]))
     for station, meta in FWC_STATIONS.items():
-        locations[station] = (meta["latitude"], meta["longitude"])
+        if station == "LKA57":
+            locations[station] = (meta["latitude"], meta["longitude"])
     mur = []
     for site, (lat, lon) in locations.items():
         site_rows = [r for r in all_rows if r["site"] == site]
@@ -316,7 +317,7 @@ def main():
             "USGS v9 release does not provide per-observation QARTOD flags; do not treat this as equivalent to FWC QC.",
             "FWC aggregate QC flag 1 (PASS) is used for primary summaries; all returned flags are retained and counted.",
             "MUR is daily analysed sea-surface foundation temperature in degree_C, queried at the nearest native 0.01-degree grid coordinate.",
-            "MUR point comparisons are limited to the four Biscayne USGS logger sites plus the selected FWC stations; the full USGS source archive remains included.",
+            "The initial paired MUR test is limited to one shallow USGS Biscayne logger (Brewster) and the 23 m FWC station LKA57; all downloaded in-situ stations remain in the artifact.",
             "MUR is sampled over the trailing 90-day overlap window per station for this first validation pass; it is not a multi-year climatology.",
             "MUR requests use 180-day windows and limited retries. If CoastWatch is unavailable, the same jplMURSST41 dataset is queried from verified USF, Brown RI Data Discovery Center, or EMODnet ERDDAP mirrors.",
             "Each MUR row records the ERDDAP host used; all mirrors expose the same NASA JPL dataset ID, variable and degree_C units.",
