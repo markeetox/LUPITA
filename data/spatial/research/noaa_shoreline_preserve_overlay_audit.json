@@ -1,0 +1,63 @@
+{
+  "audit_version": 1,
+  "generated_at_utc": "2026-11-13T12:14:00Z",
+  "status": "screening_complete_boundary_not_established",
+  "measurement_crs": "EPSG:26917",
+  "review_bbox_wgs84": [
+    -80.45,
+    25.25,
+    -80.05,
+    26
+  ],
+  "inputs": {
+    "mhw_composite": "data/spatial/research/noaa_composite_shoreline_mhw_biscayne.geojson",
+    "mhhw_screening": "data/spatial/research/noaa_mhhw_screening_line_biscayne.geojson",
+    "fdep_preserves": "data/spatial/research/noaa_cmp/overlay/fdep_biscayne_aquatic_preserves.geojson"
+  },
+  "source_geometry_summary": {
+    "mhw_composite": {
+      "features": 7,
+      "parts": 2480,
+      "geodesic_length_km": 1207.139897,
+      "valid_features": 7
+    },
+    "mhhw_screening": {
+      "features": 2,
+      "parts": 13314,
+      "geodesic_length_km": 2780.629791,
+      "valid_features": 2
+    }
+  },
+  "fdep_preserve_overlays": [
+    {
+      "objectid": 43,
+      "name": "Biscayne Bay",
+      "area_km2": 261.411398,
+      "mhw_composite_inside_km_by_class": {
+        "Apparent shore": 69.305878,
+        "Approx. Shore": 3.11422,
+        "Gen. manmade object": 139.531865,
+        "SPOR": 93.620264,
+        "User added line": 0.052067
+      },
+      "mhw_composite_inside_total_km": 305.624294,
+      "mhhw_screening_inside_km": 377.168539
+    },
+    {
+      "objectid": 25,
+      "name": "Biscayne Bay-Cape Florida to Monroe County Line",
+      "area_km2": 16.840442,
+      "mhw_composite_inside_total_km": 0.008748,
+      "mhhw_screening_inside_km": 0.94237
+    }
+  ],
+  "interpretation": {
+    "mhw_classes_must_remain_separate": true,
+    "mhhw_is_screening_extent_not_mhw_shoreline": true,
+    "fdep_polygons_are_management_boundaries_not_ecological_boundary": true,
+    "review_bbox_is_not_biscayne_bay_boundary": true,
+    "no_final_bay_boundary_created": true,
+    "no_inlet_connectivity_inferred": true,
+    "production_scoring_changed": false
+  }
+}
