@@ -1,0 +1,118 @@
+{
+  "generated_at_utc": "2026-11-13T03:58:40.961468+00:00",
+  "status": "computed_research_topology_audit",
+  "source": "NOAA National Geodetic Survey Coastal Mapping Program project GeoJSON persisted on research branch",
+  "measurement_crs": "EPSG:26917",
+  "method": "exact source endpoint coordinate matching; pairwise Shapely line geometry distance; no snapping or gap bridging",
+  "projects": {
+    "FL1603A-CM-N": {
+      "source_id": "GC11552",
+      "feature_count": 11,
+      "total_feature_length_km": 3.006,
+      "component_count_by_exact_shared_endpoints": 11,
+      "source_dates": [
+        "20170319"
+      ],
+      "reported_horizontal_accuracy_m": [
+        "1.9"
+      ]
+    },
+    "FL1808A-TB-N": {
+      "source_id": "GC12021",
+      "feature_count": 58,
+      "total_feature_length_km": 39.44,
+      "component_count_by_exact_shared_endpoints": 51,
+      "source_dates": [
+        "20180726"
+      ],
+      "reported_horizontal_accuracy_m": [
+        "2.3"
+      ]
+    },
+    "FL1808C-TB-N": {
+      "source_id": "GC12023",
+      "feature_count": 70,
+      "total_feature_length_km": 18.029,
+      "component_count_by_exact_shared_endpoints": 69,
+      "source_dates": [
+        "20180726",
+        "20190412",
+        "20190413"
+      ],
+      "reported_horizontal_accuracy_m": [
+        "1.3",
+        "2.3"
+      ]
+    },
+    "FL2317-CS-N": {
+      "source_id": "GC12001",
+      "feature_count": 0,
+      "total_feature_length_km": 0,
+      "component_count_by_exact_shared_endpoints": 0,
+      "note": "The source project has 19 non-MHW line features; no Natural.Mean High Water features were extracted."
+    }
+  },
+  "pairwise_project_relationships": {
+    "FL1603A-CM-N__FL1808A-TB-N": {
+      "minimum_line_geometry_distance_m": 0,
+      "minimum_line_geometry_feature_ids": [
+        1442038,
+        2077580
+      ],
+      "minimum_endpoint_to_endpoint_distance_m": 0.18,
+      "minimum_endpoint_feature_ids": [
+        1442040,
+        2077583
+      ],
+      "status": "candidate_local_seam_requires_manual_review"
+    },
+    "FL1603A-CM-N__FL1808C-TB-N": {
+      "minimum_line_geometry_distance_m": 21793.35,
+      "minimum_line_geometry_feature_ids": [
+        1442033,
+        1983664
+      ],
+      "minimum_endpoint_to_endpoint_distance_m": 21825.45,
+      "minimum_endpoint_feature_ids": [
+        1442033,
+        1983664
+      ],
+      "status": "separate_extracted_coverage"
+    },
+    "FL1808A-TB-N__FL1808C-TB-N": {
+      "minimum_line_geometry_distance_m": 17690.77,
+      "minimum_line_geometry_feature_ids": [
+        2077140,
+        1983664
+      ],
+      "minimum_endpoint_to_endpoint_distance_m": 17690.77,
+      "minimum_endpoint_feature_ids": [
+        2077140,
+        1983664
+      ],
+      "status": "uncovered_interval_in_extracted_mhw"
+    },
+    "FL1603A-CM-N__FL2317-CS-N": {
+      "status": "not_comparable_no_mhw_features"
+    },
+    "FL1808A-TB-N__FL2317-CS-N": {
+      "status": "not_comparable_no_mhw_features"
+    },
+    "FL1808C-TB-N__FL2317-CS-N": {
+      "status": "not_comparable_no_mhw_features"
+    }
+  },
+  "fl1603_project_boundary_comparison": {
+    "boundary_area_km2": 10.233,
+    "mhw_line_length_inside_project_boundary_km": 3.006,
+    "mhw_line_length_outside_project_boundary_km": 0,
+    "minimum_mhw_distance_to_project_boundary_m": 187.18,
+    "note": "FL1603 project boundary is a survey-project extent, not a Biscayne Bay boundary"
+  },
+  "limitations": [
+    "A gap between project linework is a data-coverage separation, not proof that a physical shoreline or inlet is absent.",
+    "Exact endpoint matches are coordinate topology only; near matches are reported separately and never snapped.",
+    "MHW shoreline, apparent mangrove edges, structures, and depth contours are different feature types and must not be merged.",
+    "No production scoring, species files, API contracts, or production spatial data are modified."
+  ]
+}
