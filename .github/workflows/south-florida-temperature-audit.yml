@@ -1,10 +1,6 @@
 name: South Florida in-situ temperature audit
 
 on:
-  pull_request:
-    paths:
-      - "scripts/audit_south_florida_temperatures.py"
-      - ".github/workflows/south-florida-temperature-audit.yml"
   workflow_dispatch: {}
 
 concurrency:
