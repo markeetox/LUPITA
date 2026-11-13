@@ -66,7 +66,7 @@ async def download_project_archives(page, output_dir: Path) -> list[dict]:
                 "downloaded_bytes": len(body),
                 "final_url": response.url,
             })
-            if response.status == 200 and body[:4] == b"PK\\x03\\x04":
+            if response.status == 200 and body[:4] == b"PK\x03\x04":
                 archive_path = output_dir / f"{project_id}.zip"
                 archive_path.write_bytes(body)
                 with zipfile.ZipFile(BytesIO(body)) as archive:
