@@ -147,7 +147,7 @@ def run(folder: Path):
     return {"report_version": 1, "status": "research_only", "measurement_crs": "EPSG:26917",
         "source": "NOAA ENC Harbour MapServer; source attributes retained in input GeoJSON",
         "jewfish_creek": analyze_jewfish(folder),
-        "jewfish_creek_depth_context": analyze_jewfish_depth(folder, unary_union([projected(f) for f in load_features(folder, "jewfish_creek_layer_237.geojson") if properties(f).get("OBJNAM") == "Jewfish Creek"]))),
+        "jewfish_creek_depth_context": analyze_jewfish_depth(folder, unary_union([projected(f) for f in load_features(folder, "jewfish_creek_layer_237.geojson") if properties(f).get("OBJNAM") == "Jewfish Creek"])),
         "card_sound": analyze_card_sound(folder),
         "rickenbacker_causeway": analyze_rickenbacker(folder),
         "limitations": ["ENC geometry is chart context, not certified navigation data.",

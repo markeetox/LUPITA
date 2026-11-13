@@ -41,6 +41,7 @@ Keep production changes separate from research-only work. Do not promote candida
 3. Make one coherent implementation batch on a research or feature branch. Do not work directly on `main` for experimental GIS interpretation.
 4. Run targeted syntax checks and unit tests before expensive extraction or spatial audits.
 5. Run only the workflows affected by the change. Use the full Python suite for broad integration milestones or pre-merge validation, not every research iteration.
+   - The focused Biscayne landmark workflow is `.github/workflows/biscayne-landmark-evidence.yml`; it compiles its extraction/reconciliation scripts and tests before tests or network extraction.
 6. Record outputs, source provenance, uncertainty, and limitations. Keep candidate and verified states explicit.
 7. Update this README, Project Status, and Progress Log in the same commit as each implementation batch.
 

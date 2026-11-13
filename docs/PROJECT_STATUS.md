@@ -78,7 +78,7 @@ PR #70 is stacked on the #69 branch. The PR list and branch heads must be rechec
 3. The 17.691 km nearest separation between FL1808A and FL1808C MHW linework is a measured separation between project vectors, not proof of a missing coastline or permission to interpolate.
 4. Government Cut requires an exact source-feature crosswalk.
 5. Candidate subregions, flats, channels, and inlet connections must retain confidence/provenance and must not be promoted based on proximity alone.
-6. The latest topology workflow failure exposed a missing syntax preflight and a malformed Jewfish Creek expression/test block. The fix and focused validation are being recorded in the progress log; current-head CI must be checked before treating the repair as complete.
+6. The latest topology workflow failure exposed a missing syntax preflight and a malformed Jewfish Creek expression/test block. The first correction was incomplete and failed the compile preflight before extraction. A follow-up correction removes the remaining extra parenthesis; current-head focused validation is still required.
 
 ## Next implementation milestones
 
