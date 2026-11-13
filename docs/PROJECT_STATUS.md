@@ -141,3 +141,9 @@ See [Biscayne research pipeline policy](biscayne-research-pipeline-policy-2026-1
 - The first test run found one compatibility regression in the new `not_attempted` state: a test fixture uses `layers=None` without an SST error to mean no layer report. The implementation was narrowed so downstream layers are marked not attempted only when an actual `layers sst:` error is present.
 - Corrected full Python suite: **262 passed, 0 failed, 115 warnings** on [run #43493987730](https://github.com/markeetox/LUPITA/actions/runs/43493987730), commit `735f888b02ab3ddb8065277c4758e00097778ce6`.
 - Code and regression coverage are validated. A manual Pull Ocean Data run is still required to verify that the live `upwell` mirror returns a current MUR scene and that the publication step preserves the previous API snapshot correctly.
+
+
+### Final source-provenance validation
+- The selected ERDDAP host is now recorded in SST diagnostics as `source_endpoint`, so the next production run will show whether CoastWatch or the upwell mirror supplied the grid.
+- Latest full Python suite: **262 passed, 0 failed, 115 warnings** on [run #43494256052](https://github.com/markeetox/LUPITA/actions/runs/43494256052), commit `5da0dc56470975216e032b98b0f230a586d8102c`.
+- Remaining validation is live only: dispatch Pull Ocean Data and inspect the source endpoint, SST timestamp, HF Radar request result, and published refresh/snapshot metadata.
