@@ -14,6 +14,10 @@ Extract chart-derived hydrographic geometries for the South Florida pilot and de
 - NOAA Harbour ENC tideway areas: layer 205, polygon geometry.
 - NOAA Harbour ENC named-water label points: layer 41, point geometry.
 - NOAA Harbour ENC navigation lines: layer 132, line geometry.
+- NOAA Harbour ENC fairway areas: layer 208, polygon geometry.
+- NOAA Harbour ENC deep-water route parts: layer 207, polygon geometry.
+- NOAA Harbour ENC two-way route parts: layer 216, polygon geometry.
+- NOAA Harbour ENC recommended-route centerlines: layer 133, line geometry.
 - NOAA Coastal Maintained Channels theme layer: https://encdirect.noaa.gov/arcgis/rest/services/NavigationChartData/MarineTransportation/MapServer/1
 
 NOAA documentation explains that the GIS service is derived from NOAA ENCs, organized by S-57 object classes, refreshed weekly, and not certified for navigation:
@@ -23,10 +27,10 @@ https://www.nauticalcharts.noaa.gov/learn/encdirect/
 
 Query envelope (EPSG:4326): longitude -80.55 to -80.05, latitude 25.20 to 26.10.
 
-Successful current-head workflow:
-https://github.com/markeetox/LUPITA/actions/runs/43349431049
+Successful expanded extraction and persistence workflow:
+https://github.com/markeetox/LUPITA/actions/runs/43353615332
 
-Artifact ID: 14002573361  
+Artifact ID: 14004372911  
 Artifact name: `noaa-biscayne-hydrography-review`
 
 All extracted geometries passed coordinate-range and geometry-type validation.
@@ -104,7 +108,7 @@ Some returned features carry source information warning that the depiction is mi
 
 ### Government Cut
 
-The structured feature layers queried here did not return a directly named Government Cut polygon or line. NOAA Harbour layer 208 returns three named Miami Harbor Channel fairway polygons across cells US5MIACB.000, US5MIACC.000, and US5MIACD.000. The maintained-channel theme also returns 44 features with FAIRWAY = Miami Harbor Channel across five ENC cells. These are project-channel context, not a direct Government Cut feature crosswalk.
+The structured feature layers queried here did not return a directly named Government Cut polygon or line. NOAA Harbour layer 208 returns three named Miami Harbor Channel fairway polygons across cells US5MIACB.000, US5MIACC.000, and US5MIACD.000. The maintained-channel theme also returns 44 features with FAIRWAY = Miami Harbor Channel across five ENC cells. These are project-channel context, not a direct Government Cut feature crosswalk. The expanded route-layer query returned no deep-water route-part, two-way route-part, or recommended-route centerline features in the query area.
 
 NOAA Coast Pilot 4, Chapter 10, paragraph 414 describes the federal project channel from the sea buoy to inside Government Cut, then onward to Fisher Island Turning Basin and Fishermans Channel. This provides a textual crosswalk target, but the exact ENC feature-to-Government-Cut assignment still needs review.
 
@@ -131,8 +135,9 @@ The research feature catalog now records:
 - Four Safety Valve named-water polygons, correctly typed as a named-water complex rather than a validated flat/channel complex.
 - Three Biscayne Flats mud-flat polygons as a candidate named flat complex.
 - Bear Cut and Norris Cut as directly named NOAA charted water-area features, with source OBJECTIDs, chart cells, source dates, and bounds.
-- The 44-feature Miami Harbor Channel fairway group, preserving all source object IDs and chart cells.
-- Government Cut and Norris Cut as named features with geometry still pending, rather than assigning nearby polygons by guesswork.
+- The 44 maintained-channel features carrying FAIRWAY = Miami Harbor Channel, plus three separately named Miami Harbor Channel fairway polygons from Harbour layer 208.
+- Norris Cut as a directly named charted named-water polygon, OBJECTID 253447, with channel-centerline and current controlling-depth status still unverified.
+- Government Cut as a named feature with its exact subgeometry still pending; nearby Miami Harbor Channel features are not assigned to it by guesswork.
 
 The source index is stored in `data/spatial/noaa-biscayne-hydrography-index.json`.
 
@@ -142,7 +147,7 @@ The research workflow now runs scripts/curate_noaa_named_water_geometries.py aft
 
 - data/spatial/noaa-biscayne-named-water-areas.geojson: 46 original source polygons, preserving each NOAA OBJECTID and source attributes.
 - data/spatial/noaa-biscayne-named-water-topology-audit.json: source IDs, chart cells, source dates, geometry validity, overlap checks, union component counts, and bounds.
-- data/spatial/feature-catalog.json: links the four named-water contexts to the persisted source set and records the current validation state.
+- data/spatial/feature-catalog.json: links five named-water contexts (Biscayne Bay, Safety Valve, Biscayne Flats, Bear Cut, and Norris Cut) to the persisted source set and records the current validation state.
 
 The initial topology precheck found:
 
@@ -152,13 +157,16 @@ The initial topology precheck found:
 | Safety Valve | 4 | 1 | 0 |
 | Biscayne Flats | 3 | 1 | 0 |
 | Bear Cut | 1 | 1 | 0 |
+| Norris Cut | 1 | 1 | 0 |
 
 The Biscayne Bay union's second component is a very small isolated chart fragment (bounds approximately -80.3250 to -80.3239 longitude and 25.5342 to 25.5355 latitude). It is retained as a source feature and is not bridged to the main component.
 
 Safety Valve and Biscayne Flats each form one connected component, but that does not prove ecological connectivity, current habitat condition, or a complete boundary. All source polygons remain separate in the GeoJSON; no dissolved geometry is persisted.
 
-The curator and topology precheck ran successfully in NOAA hydrography workflow run:
-https://github.com/markeetox/LUPITA/actions/runs/43351815848
+The curator, persisted-catalog validation, and branch persistence ran successfully in NOAA hydrography workflow run:
+https://github.com/markeetox/LUPITA/actions/runs/43353615332
+
+The workflow ran 5 NOAA extraction/curation tests and 8 post-curation spatial-catalog tests successfully. The repository-wide Python test workflow passed 201 tests, with 1 optional Shapely-dependent test skipped and 54 warnings.
 
 ## Limitations and next review
 
@@ -166,12 +174,13 @@ https://github.com/markeetox/LUPITA/actions/runs/43351815848
 2. NOAA ENC Direct to GIS is not a navigation product. Use current official ENC products and local authorities for navigation.
 3. Named chart polygons do not establish habitat, salinity, flow, tidal exchange, fish movement, or ecological suitability.
 4. The charted Biscayne Bay fragments do not form a complete ecological or statutory boundary. Reconcile them against FDEP management geometry, authoritative shoreline, and tidal connections.
-5. Government Cut and Norris Cut need exact chart-feature crosswalks or independently sourced geometry.
+5. Government Cut still needs an exact chart-feature crosswalk. Norris Cut now has a directly named charted polygon, but its full inlet channel centerline and current controlling-depth boundary remain unverified.
 6. No production scores, thresholds, weights, species profiles, or API v1 contracts were changed.
 
 ## Immediate next milestone
 
 - Reconcile the 37 Biscayne Bay fragments against the FDEP preserve geometry and authoritative shoreline evidence, without conflating ecological and statutory boundaries.
 - Review Safety Valve and Biscayne Flats against benthic habitat and bathymetry sources before assigning ecological feature types.
-- Crosswalk Government Cut and Norris Cut to exact charted feature geometries; keep them unverified until the source mapping is defensible.
+- Crosswalk the Miami Harbor Channel fairway and maintained-channel features to Government Cut without assigning segments by proximity.
+- For Norris Cut, retain the named-water polygon and investigate separate centerline/depth evidence if those attributes are needed.
 - Then connect verified spatial feature IDs to Bonefish and Permit species context without changing production scoring.
