@@ -169,7 +169,7 @@ def validate_profile(profile: Any, registry: dict[str, dict], filename: str = ""
         sources = factor.get("sources")
         if not isinstance(sources, list) or not sources or not all(isinstance(x, str) and x.strip() for x in sources):
             findings.append(finding("WARNING", "missing_factor_sources", f"'{param}' has no usable source references.", param))
-        if status in {"provisional", "estimated", "unsourced"}:
+        if isinstance(status, str) and status in {"provisional", "estimated", "unsourced"}:
             findings.append(finding("WARNING", "provisional_factor", f"'{param}' is marked {status}; its contribution is provisional.", param))
 
         if kind == "range":
