@@ -97,6 +97,10 @@ def validate_profile(profile: Any, registry: dict[str, dict], filename: str = ""
         if bounds is not None and (not valid_pair(bounds) or bounds[0] > bounds[1]):
             findings.append(finding("ERROR", "invalid_geographic_range", f"{key} must contain two finite ascending bounds."))
 
+    min_coverage = profile.get("min_coverage", 0.7)
+    if not is_number(min_coverage) or not 0 <= float(min_coverage) <= 1:
+        findings.append(finding("ERROR", "invalid_min_coverage", "min_coverage must be a finite number from 0 to 1."))
+
     factors = profile.get("factors")
     if not isinstance(factors, list):
         findings.append(finding("ERROR", "invalid_factors", "factors must be an array."))
@@ -108,6 +112,8 @@ def validate_profile(profile: Any, registry: dict[str, dict], filename: str = ""
     active_weight = supported_weight = sourced_weight = 0.0
     registry_keys = set(registry)
     evidence_statuses = Counter()
+    active_evidence_weights = Counter()
+    active_missing_source_weight = 0.0
     engine = SITE_FACTORS if model == "sites" else GRID_FACTORS
 
     for index, factor in enumerate(factors):
@@ -129,9 +135,21 @@ def validate_profile(profile: Any, registry: dict[str, dict], filename: str = ""
         if not is_number(weight) or weight < 0:
             findings.append(finding("ERROR", "invalid_weight", f"'{param}' weight must be finite and non-negative.", param))
             weight = 0.0
+        for flag_name in ("active", "required", "gate"):
+            if flag_name in factor and not isinstance(factor[flag_name], bool):
+                findings.append(finding("ERROR", "invalid_factor_flag", f"'{param}' {flag_name} must be true or false.", param))
+        if model == "grid" and factor.get("required") is True:
+            findings.append(finding("WARNING", "required_ignored_by_grid", f"'{param}' is marked required, but the grid scorer does not read the required flag; use gate for grid-wide missing-data behavior.", param))
+        if model == "sites" and factor.get("gate") is True and factor.get("required") is not True:
+            findings.append(finding("WARNING", "site_gate_missing_required", f"'{param}' is a site gate but is not required; a missing value is skipped rather than making the site unavailable.", param))
         if factor.get("active") is True:
             active.append(factor)
             active_weight += float(weight)
+            status_for_weight = factor.get("value_status") if factor.get("value_status") in VALID_VALUE_STATUSES else "missing_or_unknown"
+            active_evidence_weights[status_for_weight] += float(weight)
+            usable_sources = isinstance(factor.get("sources"), list) and bool(factor.get("sources")) and all(isinstance(x, str) and x.strip() for x in factor.get("sources", []))
+            if not usable_sources:
+                active_missing_source_weight += float(weight)
             if weight <= 0:
                 findings.append(finding("ERROR", "active_nonpositive_weight", f"Active factor '{param}' must have positive weight.", param))
             if kind in engine.get(param, set()):
@@ -176,18 +194,39 @@ def validate_profile(profile: Any, registry: dict[str, dict], filename: str = ""
                 findings.append(finding("ERROR", "invalid_peak_months", f"'{param}' peak_months must be a subset of months.", param))
         if kind == "category":
             preferred = factor.get("preferred")
-            if not isinstance(preferred, list) or not preferred:
-                findings.append(finding("WARNING", "missing_preferred_categories", f"'{param}' has no preferred category values.", param))
+            category_map = factor.get("map")
             values = registry.get(param, {}).get("values")
-            if values and isinstance(preferred, list):
-                unknown = sorted(set(preferred) - set(values))
-                if unknown:
-                    findings.append(finding("WARNING", "category_registry_mismatch", f"'{param}' uses values absent from the registry: {', '.join(unknown)}.", param))
+            if category_map is not None:
+                if not isinstance(category_map, dict) or not category_map:
+                    findings.append(finding("ERROR", "invalid_category_map", f"'{param}' map must be a non-empty object.", param))
+                else:
+                    invalid_values = [key for key, value in category_map.items() if not is_number(value) or not 0 <= float(value) <= 1]
+                    if invalid_values:
+                        findings.append(finding("ERROR", "invalid_category_map_score", f"'{param}' map scores must be finite numbers from 0 to 1 for: {', '.join(sorted(invalid_values))}.", param))
+                    if values:
+                        unknown = sorted(set(category_map) - set(values))
+                        if unknown:
+                            findings.append(finding("WARNING", "category_registry_mismatch", f"'{param}' map uses values absent from the registry: {', '.join(unknown)}.", param))
+            elif not isinstance(preferred, list) or not preferred:
+                findings.append(finding("WARNING", "missing_preferred_categories", f"'{param}' needs either a non-empty map or preferred category values.", param))
+            if preferred is not None:
+                if not isinstance(preferred, list):
+                    findings.append(finding("ERROR", "invalid_preferred_categories", f"'{param}' preferred values must be an array.", param))
+                elif values:
+                    unknown = sorted(set(preferred) - set(values))
+                    if unknown:
+                        findings.append(finding("WARNING", "category_registry_mismatch", f"'{param}' preferred values are absent from the registry: {', '.join(unknown)}.", param))
 
     if active_weight <= 0:
         findings.append(finding("ERROR", "no_active_weight", "Profile has no positive active factor weight."))
     if active_weight > 1.000001:
         findings.append(finding("ERROR", "active_weight_overflow", f"Active weights sum to {active_weight:.3f}, above 1.0."))
+    uncertain_weight = sum(active_evidence_weights.get(key, 0.0) for key in ("provisional", "estimated", "unsourced", "missing_or_unknown")) + active_missing_source_weight
+    partly_sourced_weight = active_evidence_weights.get("partly_sourced", 0.0)
+    if uncertain_weight > 0:
+        findings.append(finding("WARNING", "active_evidence_uncertainty", f"{uncertain_weight:.3f} of {active_weight:.3f} active factor weight has provisional/estimated/unsourced or incomplete source metadata."))
+    if partly_sourced_weight > 0:
+        findings.append(finding("WARNING", "active_partly_sourced_evidence", f"{partly_sourced_weight:.3f} of {active_weight:.3f} active factor weight is marked partly_sourced."))
     if len(active) == 1:
         findings.append(finding("WARNING", "single_factor_model", "Only one active factor; full input coverage does not imply biological completeness."))
 
@@ -276,6 +315,12 @@ def validate_profile(profile: Any, registry: dict[str, dict], filename: str = ""
         "biological_dimensions": represented, "evidence_quality": evidence,
         "active_factor_count": len(active), "active_weight_sum": round(active_weight, 6),
         "active_supported_weight": round(supported_weight, 6), "active_sourced_weight": round(sourced_weight, 6),
+        "active_evidence_status_weight": {key: round(value, 6) for key, value in sorted(active_evidence_weights.items())},
+        "active_uncertain_weight": round(uncertain_weight, 6),
+        "active_partly_sourced_weight": round(partly_sourced_weight, 6),
+        "evidence_risk": "elevated" if uncertain_weight > 0 else "partial" if partly_sourced_weight > 0 else "documented",
+        "min_coverage": round(float(min_coverage), 4) if is_number(min_coverage) and 0 <= float(min_coverage) <= 1 else None,
+        "model_scope": "temperature_only_pilot" if model == "sites" and [f.get("param") for f in active] == ["sst_c"] else "single_factor_other" if len(active) == 1 else "multi_factor",
         "timing_status": timing_status,
         "finding_counts": {"error": errors, "warning": warnings, "info": len(findings) - errors - warnings},
         "findings": findings,
