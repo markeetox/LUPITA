@@ -464,3 +464,29 @@ Continue the audit with additional South Florida species, prioritizing profiles 
 - Each changed file was parsed as JSON before update and fetched/parsed again after commit. The six records retain their existing factor arrays and prediction model configuration; no active scoring weight or threshold was intentionally modified.
 - The dedicated species audit and Python test suite have not been run for this JSON-only batch. No Actions workflow was dispatched and no NOAA endpoint was contacted.
 - These six species are now marked reviewed in the catalog. Do not repeat this batch in future work; continue with unreviewed South Florida species, keeping a per-species record here and in `docs/PROJECT_STATUS.md`.
+
+
+## 2026-11-14 | Full species catalog and scoring audit
+
+**Branch:** `main`  
+**Scope:** read-only inspection of all 130 `data/species/*.json` profiles, the parameter registry, species validator, grid scorer, site scorer, and prediction confidence logic.
+
+### Results
+- Fetched and parsed all 130 species profiles: 105 grid models and 25 site models.
+- Static cross-check found no missing core identity/model fields, duplicate factor parameters within a profile, unregistered parameters, unsupported active parameter/kind combinations, or active weight overflow.
+- Default minimum coverage is 0.70; mahi-mahi is the only observed explicit override at 0.60.
+- Twelve profiles contain 33 active factors marked provisional, estimated, or unsourced. Eight active factors have no source references across six profiles.
+- Twenty-three of 25 site models currently have only one active factor (SST). Snook and tarpon are the two five-factor site models. These single-factor scores are normalized over SST alone and are temperature-screening outputs, not multi-factor habitat assessments.
+- Confidence output does not directly account for active factor evidence status. High environmental coverage can coexist with provisional biological inputs without those inputs lowering confidence.
+- Grid and site engines differ in how they interpret missing `required` and `gate` factors. Both skip optional missing inputs and enforce minimum coverage, but their gate/required contracts are not identical.
+- The existing validator does not yet validate coverage bounds, full category-map shape/registry alignment, or evidence-aware confidence behavior.
+
+### Validation limits and boundary
+- This was a static GitHub file inspection and cross-check. `python scripts/validate_species.py` and the Python test suite were not executed because no local checkout was available in this session.
+- No NOAA endpoint was contacted, no Pull Ocean Data workflow was run, and no prediction weights, thresholds, factor activation flags, or scoring behavior were changed.
+
+### Audit report
+- Full findings and prioritized recommendations: [Species Catalog Audit](SPECIES_CATALOG_AUDIT_2026-11-14.md).
+
+### Next action
+Extend the validator and tests for coverage bounds, category maps, evidence diagnostics, and required/gate semantics. Agree on evidence-aware confidence policy before changing prediction output. Then label and prioritize the 23 temperature-only site pilots for evidence-backed expansion. NOAA ingestion work remains paused pending explicit clearance.
