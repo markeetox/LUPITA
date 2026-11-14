@@ -13,7 +13,7 @@ ROOT = Path(__file__).resolve().parent.parent
 VALID_MODELS = {"grid", "sites"}
 VALID_KINDS = {"range", "higher_is_better", "category", "season", "flag", "flag_penalty", "presence", "proximity", "closer_is_better"}
 TIMING_COMPONENTS = {"light", "tide", "moon", "front"}
-VALID_VALUE_STATUSES = {"sourced", "partly_sourced", "provisional", "unsourced", "estimated"}
+VALID_VALUE_STATUSES = {"sourced", "partly_sourced", "provisional", "unsourced", "estimated", "needs_source"}
 
 # These maps reflect executable code, not registry labels. Update them when
 # pipeline/scoring.py, sites.py, or layers.py changes.
@@ -149,7 +149,7 @@ def validate_profile(profile: Any, registry: dict[str, dict], filename: str = ""
             status_for_weight = raw_status if isinstance(raw_status, str) and raw_status in VALID_VALUE_STATUSES else "missing_or_unknown"
             active_evidence_weights[status_for_weight] += float(weight)
             usable_sources = isinstance(factor.get("sources"), list) and bool(factor.get("sources")) and all(isinstance(x, str) and x.strip() for x in factor.get("sources", []))
-            if status_for_weight in {"provisional", "estimated", "unsourced", "missing_or_unknown"} or not usable_sources:
+            if status_for_weight in {"provisional", "estimated", "unsourced", "needs_source", "missing_or_unknown"} or not usable_sources:
                 active_uncertain_weight += float(weight)
             if weight <= 0:
                 findings.append(finding("ERROR", "active_nonpositive_weight", f"Active factor '{param}' must have positive weight.", param))
@@ -174,19 +174,20 @@ def validate_profile(profile: Any, registry: dict[str, dict], filename: str = ""
 
         if kind == "range":
             rng, ideal = factor.get("range"), factor.get("ideal")
+            shape_severity = "ERROR" if factor.get("active") is True else "WARNING"
             if not valid_pair(rng, nullable=True):
-                findings.append(finding("ERROR", "invalid_range", f"'{param}' requires a two-value range; null bounds are allowed.", param))
+                findings.append(finding(shape_severity, "invalid_range", f"'{param}' requires a two-value range; null bounds are allowed.", param))
             elif rng[0] is not None and rng[1] is not None and rng[0] > rng[1]:
-                findings.append(finding("ERROR", "reversed_range", f"'{param}' has reversed range bounds.", param))
+                findings.append(finding(shape_severity, "reversed_range", f"'{param}' has reversed range bounds.", param))
             if not valid_pair(ideal, nullable=True):
-                findings.append(finding("ERROR", "invalid_ideal", f"'{param}' requires a two-value ideal range.", param))
+                findings.append(finding(shape_severity, "invalid_ideal", f"'{param}' requires a two-value ideal range.", param))
             elif valid_pair(rng, nullable=True):
                 lo, hi = rng
                 ilo, ihi = ideal
                 if ilo is not None and ihi is not None and ilo > ihi:
-                    findings.append(finding("ERROR", "reversed_ideal", f"'{param}' has reversed ideal bounds.", param))
+                    findings.append(finding(shape_severity, "reversed_ideal", f"'{param}' has reversed ideal bounds.", param))
                 if (lo is not None and ilo is not None and ilo < lo) or (hi is not None and ihi is not None and ihi > hi):
-                    findings.append(finding("ERROR", "ideal_outside_range", f"'{param}' ideal range falls outside its allowed range.", param))
+                    findings.append(finding(shape_severity, "ideal_outside_range", f"'{param}' ideal range falls outside its allowed range.", param))
         if kind == "season":
             months, peaks = factor.get("months", []), factor.get("peak_months", [])
             if not isinstance(months, list) or not months or any(not isinstance(m, int) or isinstance(m, bool) or not 1 <= m <= 12 for m in months):
