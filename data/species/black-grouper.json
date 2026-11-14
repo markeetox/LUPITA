@@ -11,7 +11,7 @@
   "display": {
     "color": "#36d887"
   },
-  "review_status": "draft v1 - reef predator profile",
+  "review_status": "reviewed 2026-11-14 - biology checked against NOAA Fisheries; Atlantic/Monroe recreational rules checked against current FWC guidance",
   "image": {
     "status": "placeholder",
     "kind": "illustration",
@@ -21,13 +21,17 @@
     "plan": "web/fish/black-grouper.png placeholder illustration."
   },
   "profile": {
-    "size": "Common 10-40 lb; up to 100+ lb",
-    "diet": "Fishes, squids, and crustaceans",
-    "swimming_depth": "Near bottom; 15 to 110 m",
-    "behavior": "Solitary apex reef predator that holds tight to high-relief coral structures, drop-offs, and deep ledges.",
-    "regulations_link": "https://myfwc.com/",
+    "size": "Large reef grouper; adults commonly reach several feet. NOAA describes fish occurring to about 200 m depth.",
+    "diet": "Juveniles feed mainly on crustaceans, especially shrimp. Adults primarily eat fishes and squid.",
+    "swimming_depth": "Near-bottom reef habitat from shallow water to about 200 m; adults move into progressively deeper water as they grow.",
+    "behavior": "Generally solitary and relatively site-attached outside spawning. Adults occupy rocky bottoms, drop-off walls, ledges, caves, crevices, coral reefs and artificial reefs. Juveniles use seagrass and oyster-rubble habitat in parts of the range; Florida Keys juveniles also use reef habitat.",
+    "life_history": "Protogynous hermaphrodite: fish begin life as females and some change to males as they grow. Adults aggregate to spawn; fertilized eggs are pelagic.",
+    "regulations_link": "https://myfwc.com/fishing/saltwater/recreational/groupers/",
     "sources": [
-      "https://myfwc.com/"
+      "https://www.fisheries.noaa.gov/species/black-grouper",
+      "https://myfwc.com/fishing/saltwater/recreational/groupers/",
+      "https://myfwc.com/news/all-news/grouper-regs-1026/",
+      "https://www.nps.gov/bisc/planyourvisit/fishing.htm"
     ]
   },
   "factors": [
@@ -66,7 +70,7 @@
         "https://myfwc.com/"
       ],
       "map": {
-        "natural_reef": 1.0,
+        "natural_reef": 1,
         "artificial_reef": 0.9,
         "wreck": 0.9,
         "ledge": 0.8
@@ -98,8 +102,8 @@
     "status": "angler_lore",
     "light": {
       "map": {
-        "dawn": 1.0,
-        "dusk": 1.0,
+        "dawn": 1,
+        "dusk": 1,
         "day": 0.7,
         "night": 0.5
       },
@@ -114,17 +118,23 @@
     ]
   },
   "regulations": {
-    "summary": "Regulated species - See MyFWC/NOAA guidelines",
-    "min_size": "Check MyFWC/NOAA rules",
+    "summary": "Atlantic/Monroe County: 24 in total length; 1 gag or black grouper per person per day combined, within the 3-fish grouper/tilefish aggregate; combined gag/black vessel limit 2. Open May 1-Dec. 31.",
+    "min_size": "24 inches total length (Atlantic, including all Monroe County waters)",
     "max_size": "None",
-    "bag_limit": "Varies by region / state",
-    "season": "Open year-round (subject to local quota/closures)",
-    "jurisdiction": "Atlantic & Gulf State/Federal Waters",
-    "source_name": "MyFWC Saltwater Regulations",
-    "source_url": "https://myfwc.com/fishing/saltwater/recreational/"
+    "bag_limit": "Atlantic/Monroe: 1 gag or black grouper per person per day combined; 2 combined gag/black grouper per vessel per day; within 3-fish grouper/tilefish aggregate. For-hire captain and crew may not retain.",
+    "season": "Atlantic/Monroe: May 1-December 31. Gulf rules differ; federal depth-area closures also apply.",
+    "jurisdiction": "Florida Atlantic state and federal waters, including Monroe County; separate Gulf rules apply",
+    "source_name": "Florida Fish and Wildlife Conservation Commission",
+    "source_url": "https://myfwc.com/fishing/saltwater/recreational/groupers/",
+    "effective_date": "2026-10-28",
+    "notes": "FWC states the Atlantic rules include all Monroe County waters. Gulf black grouper rules differ. Special regulations apply inside Biscayne National Park; consult the park-specific FWC rules before harvest. Reef-fish gear and landing requirements also apply."
   },
   "lon_range": [
-    -100.0,
-    -50.0
+    -100,
+    -50
+  ],
+  "open_items": [
+    "The legacy SST range and ideal band are not supported by a species-specific thermal-preference study in the current record; treat them as provisional screening values, not a validated optimum.",
+    "Biscayne National Park species-specific size and bag restrictions need separate encoding before this record can provide park-level harvest advice."
   ]
 }
