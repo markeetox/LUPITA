@@ -186,7 +186,7 @@ Full audit: [Species Catalog Audit](SPECIES_CATALOG_AUDIT_2026-11-14.md). Histor
 
 ## Species validator follow-up | 2026-11-14
 
-**Status:** implementation committed; current full-suite and species-audit CI validation pending.
+**Status:** implementation committed and validated on 2026-11-14.
 
 - Validator now checks `min_coverage` bounds, category map values/keys, boolean factor flags, and grid/site `required` / `gate` semantics.
 - Active evidence weight is reported separately from environmental coverage, including uncertain and partly sourced weight.
@@ -196,3 +196,13 @@ Full audit: [Species Catalog Audit](SPECIES_CATALOG_AUDIT_2026-11-14.md). Histor
 - Proposed confidence policy is in [Species Model Confidence Policy](SPECIES_MODEL_CONFIDENCE_POLICY.md). It is not active. Prediction confidence and scoring remain unchanged pending review.
 
 Current validation run: [#43621667713](https://github.com/markeetox/LUPITA/actions/runs/43621667713). NOAA ingestion remains paused.
+
+
+### Final validation
+- Full Python suite: **272 passed, 0 failed, 115 warnings**.
+- Species validator: **130 profiles parsed, 130 structurally valid, 0 active model compatibility issues, 0 validator errors**.
+- Model scope: 23 temperature-only site pilots, 27 other single-factor models, 80 multi-factor models.
+- Evidence diagnostics: 12 profiles have elevated active evidence risk.
+- CI run and report artifact: [#43622006765](https://github.com/markeetox/LUPITA/actions/runs/43622006765).
+
+The 130 profiles classified as needing research or model rebuilding reflect a structural review proxy, not an empirical finding that every profile is scientifically invalid. The proposed confidence policy remains inactive pending review. Prediction scoring and confidence output are unchanged.
