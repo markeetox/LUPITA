@@ -412,7 +412,7 @@ Compare source age across multiple scheduled refreshes, then calibrate operation
 - Regulatory summaries are region-specific. Atlantic state waters, federal waters, Gulf waters, Monroe County and Biscayne National Park are not interchangeable.
 - Profile source URLs point to FWC, NOAA Fisheries, NPS or regional fisheries science sources. Angler guidance is not promoted to scientific fact.
 - Legacy scoring weights, active flags, factor ranges and prediction logic were not changed. The barracuda SST evidence label was changed to `provisional`; its numeric bounds and scoring weight remain untouched.
-- Species JSON updates were committed individually: `8a2021914ae84bc104416d689de74eb3e79e9071`, `646fe74762ebceda4efad8faaddea0789e50814b`, `428ecd69232e1446941c3211f225159e96d4a281`, `55df25cce8afb503c8fe144a682d80bc519c3868`.
+- Species JSON updates were committed individually: initial commits: `8a2021914ae84bc104416d689de74eb3e79e9071`, `646fe74762ebceda4efad8faaddea0789e50814b`, `428ecd69232e1446941c3211f225159e96d4a281`, `55df25cce8afb503c8fe144a682d80bc519c3868`; final regulation-date metadata corrections: `d8505620b8ecc3b38a75baff228ec0d1b58c1235`, `902afe9e1f007a9401d01951f0ee54a3a34f87db`, `479f8bbe3ac6ea883d6310a58aea3773a3efe206`, `8edaea60a6ecb150490ec423160ecaf7126617ce`.
 
 ### Validation
 - Each changed record was parsed as JSON before its update was committed; the four committed files were then fetched again and parsed for a post-commit integrity check.
