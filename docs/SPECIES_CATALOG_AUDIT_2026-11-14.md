@@ -179,3 +179,12 @@ The eight active factors that previously lacked factor-level source references h
 Detailed species-by-species findings: [Active Factor Evidence Review](ACTIVE_FACTOR_EVIDENCE_REVIEW_2026-11-14.md).
 
 The six updated JSON profiles parsed successfully after commit. The final full-suite and validator run for these profile changes is pending. No factor values, weights, active flags, gates, required flags, or NOAA configuration changed.
+
+
+## Final evidence-review validation
+
+After the six-profile source/notes update, the validator still reports 130 profiles parsed, 130 structurally valid, 0 active model compatibility issues, and 0 errors. Catalog warnings decreased from 406 to **398**. The eight reviewed active factors no longer produce missing-source findings; remaining missing-source warnings include inactive/planned factors.
+
+The catalog still reports 12 profiles with elevated active evidence risk and 5.70 total uncertain active factor weight across profiles. This is expected: the reviewed factors remain provisional. Source references document context and limitations; they do not validate the configured numerical preferences.
+
+Final full suite and species audit: [run #43622573953](https://github.com/markeetox/LUPITA/actions/runs/43622573953), **272 passed, 0 failed, 115 warnings**.
