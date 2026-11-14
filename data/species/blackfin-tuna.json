@@ -57,7 +57,13 @@
       "weight": 0.2,
       "active": true,
       "value_status": "provisional",
-      "reason_template": "Temperature break strength is {per10km} C per 10 km, attracting baitfish and hungry tuna."
+      "reason_template": "Temperature break strength is {per10km} C per 10 km, attracting baitfish and hungry tuna.",
+      "sources": [
+        "https://www.floridamuseum.ufl.edu/discover-fish/species-profiles/blackfin-tuna/",
+        "https://academic.oup.com/icesjms/article/80/4/941/7058011",
+        "https://www.fao.org/4/ap895e/ap895e.pdf"
+      ],
+      "value_notes": "Blackfin literature supports warm-water distribution and associations with plankton-rich/upwelling conditions, but does not calibrate a preferred SST-gradient magnitude or this factor's weight. Treat this as a provisional frontal-edge proxy, not a validated species-specific gradient preference."
     },
     {
       "param": "chl_gradient",
@@ -65,7 +71,13 @@
       "weight": 0.15,
       "active": true,
       "value_status": "provisional",
-      "reason_template": "Water color edge concentrates plankton and bait."
+      "reason_template": "Water color edge concentrates plankton and bait.",
+      "sources": [
+        "https://www.floridamuseum.ufl.edu/discover-fish/species-profiles/blackfin-tuna/",
+        "https://academic.oup.com/icesjms/article/80/4/941/7058011",
+        "https://www.fao.org/4/ap895e/ap895e.pdf"
+      ],
+      "value_notes": "Blackfin literature links distribution to plankton concentrations and upwelling/runoff, but does not validate remotely sensed chlorophyll-gradient strength as a direct feeding predictor or calibrate this factor's weight. Provisional proxy only."
     },
     {
       "param": "bottom_slope",
@@ -112,15 +124,21 @@
       "weight": 0.15,
       "active": true,
       "value_status": "provisional",
-      "reason_template": "Inshore edge of the Gulf Stream is {abs_value} km {side}."
+      "reason_template": "Inshore edge of the Gulf Stream is {abs_value} km {side}.",
+      "sources": [
+        "https://www.floridamuseum.ufl.edu/discover-fish/species-profiles/blackfin-tuna/",
+        "https://academic.oup.com/icesjms/article/80/4/941/7058011",
+        "https://www.fao.org/4/ap895e/ap895e.pdf"
+      ],
+      "value_notes": "Sources describe blackfin as a warm-water, oceanic/blue-water tuna and discuss the Florida Current, but do not establish a preferred distance from the Gulf Stream edge or validate the configured distance band. Provisional geographic proxy only."
     }
   ],
   "timing": {
     "status": "angler_lore",
     "light": {
       "map": {
-        "dawn": 1.0,
-        "dusk": 1.0,
+        "dawn": 1,
+        "dusk": 1,
         "night": 0.8,
         "day": 0.6
       },
@@ -146,7 +164,7 @@
     "source_url": "https://myfwc.com/fishing/saltwater/recreational/"
   },
   "lon_range": [
-    -100.0,
-    -50.0
+    -100,
+    -50
   ]
 }
