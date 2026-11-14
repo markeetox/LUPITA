@@ -512,3 +512,22 @@ Extend the validator and tests for coverage bounds, category maps, evidence diag
 - Final full Python suite and species-validator workflow passed: **272 passed, 0 failed, 115 warnings** on [run #43622006765](https://github.com/markeetox/LUPITA/actions/runs/43622006765). The validator parsed all 130 profiles, marked all 130 structurally valid, and reported 0 active model compatibility issues and 0 validator errors.
 - Executed species audit: **130 profiles parsed, 130 structurally valid, 0 active model compatibility issues, 0 validator errors**. It reports 23 temperature-only site pilots, 27 other one-factor models, 80 multi-factor models, and 12 profiles with elevated active evidence risk. Audit artifact was uploaded by CI.
 - No NOAA endpoint was contacted and no Pull Ocean Data workflow was run. No prediction scoring or confidence output was changed.
+
+
+## 2026-11-14 | Review of eight active factor evidence gaps
+
+Reviewed the eight active factors that had no factor-level source references across six species: blackfin tuna (3), bonefish (1), hogfish (1), mutton snapper (1), Permit (1), and tarpon (1).
+
+- Added source references and explicit evidence limitations to all eight factors.
+- Blackfin references support warm-water distribution and broad plankton/upwelling associations, but do not validate the configured SST-gradient, chlorophyll-gradient, or Gulf Stream distance relationships.
+- Bonefish thermal physiology studies provide performance optima around 26.7–28.0 °C in Bahamas adults, but do not validate the existing South Florida screening band.
+- Hogfish sources describe distribution/habitat but no species-specific thermal preference band was identified in this review.
+- Mutton snapper telemetry found no evidence of selection for specific temperature ranges in the St. Thomas study population; this is negative evidence, not support for the existing SST range.
+- Permit FishBase preferred-temperature output is model-derived (23.2–28.0 °C based on 624 cells), not a controlled thermal-preference experiment.
+- Tarpon diel evidence is from four juvenile fish in St. Thomas; it does not establish adult feeding-time preference in South Florida.
+
+All eight factors remain marked `provisional`. No numeric ranges, ideal ranges, weights, active flags, gate/required flags, or scoring logic changed. Explanatory text was made more explicit about uncertainty.
+
+Full review: [Active Factor Evidence Review](ACTIVE_FACTOR_EVIDENCE_REVIEW_2026-11-14.md).
+
+All six JSON profiles parsed after update and all eight previously source-missing active factors now have source references. Final full-suite and species-audit CI is pending for the profile batch: [latest run #43622375109](https://github.com/markeetox/LUPITA/actions/runs/43622375109).
