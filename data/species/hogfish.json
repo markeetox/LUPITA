@@ -49,9 +49,14 @@
       "weight": 0.35,
       "active": true,
       "value_status": "provisional",
-      "sources": [],
-      "reason_template": "Water is {value} C, in comfortable range for hogfish.",
-      "value_notes": "The legacy numeric temperature range is not supported by a species-specific thermal-preference or tolerance source in this record. Retained unchanged for compatibility only; do not interpret as a validated hogfish optimum."
+      "sources": [
+        "https://myfwc.com/wildlifehabitats/profiles/saltwater/hogfish/",
+        "https://myfwc.com/research/saltwater/hogfish/",
+        "https://myfwc.com/fishing/saltwater/recreational/hogfish/",
+        "https://www.fishbase.org/summary/1071"
+      ],
+      "reason_template": "Water is {value} C, within the currently configured provisional screening band for hogfish; this is not a validated thermal preference.",
+      "value_notes": "The linked FWC/species-account references describe hogfish distribution and habitat, but do not establish a species-specific thermal preference or tolerance band. The configured 22–30 °C range and 24–28 °C ideal remain unsupported numeric screening values, retained for compatibility only."
     },
     {
       "param": "structure_type",
