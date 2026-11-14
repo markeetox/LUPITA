@@ -210,7 +210,7 @@ The 130 profiles classified as needing research or model rebuilding reflect a st
 
 ## Active factor evidence review | 2026-11-14
 
-**Status:** source review and profile annotations committed; final CI validation pending.
+**Status:** source review and profile annotations committed; final CI validation passed on 2026-11-14.
 
 - Eight previously source-missing active factors across six species now have factor-level source references and explicit limitations.
 - All remain marked `provisional`. Sources that are contextual, model-derived, age-specific, or geographically limited were not treated as numeric validation.
@@ -219,3 +219,11 @@ The 130 profiles classified as needing research or model rebuilding reflect a st
 - Latest validation run: [#43622375109](https://github.com/markeetox/LUPITA/actions/runs/43622375109).
 
 NOAA remains paused.
+
+
+### Final validation
+- Full Python suite: **272 passed, 0 failed, 115 warnings**.
+- Species validator: 130 parsed, 130 structurally valid, 0 active compatibility issues, 0 validator errors.
+- All eight reviewed active factors now have factor-level source references. No missing-source findings remain for those eight; inactive/planned factors elsewhere may still lack references.
+- All eight factors remain provisional and the catalog-wide active evidence risk remains elevated for 12 profiles.
+- Final CI run: [#43622573953](https://github.com/markeetox/LUPITA/actions/runs/43622573953).
