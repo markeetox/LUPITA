@@ -161,8 +161,10 @@
       "weight": 0.1,
       "active": true,
       "value_status": "provisional",
-      "value_notes": "Angler guidance only: tarpon are fished day and night at passes and bridges, with low light and night often rated well. The mapping is a judgment call.",
-      "sources": [],
+      "value_notes": "An acoustic-telemetry study of four juvenile tarpon (80–95 cm fork length) in Brewers Bay, St. Thomas found greater daytime activity with crepuscular peaks and distinct day/night space use. This does not establish an adult feeding-time preference or validate the current day/dawn/dusk/night scores for South Florida. Retain as provisional context only.",
+      "sources": [
+        "https://link.springer.com/article/10.1186/s40317-021-00239-x"
+      ],
       "preferred": [
         "night",
         "dusk",
