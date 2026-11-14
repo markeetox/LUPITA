@@ -421,3 +421,46 @@ Compare source age across multiple scheduled refreshes, then calibrate operation
 
 ### Next action
 Continue the audit with additional South Florida species, prioritizing profiles with generic regulation placeholders or unsupported biological claims. Keep park-specific rules explicit and leave prediction scoring unchanged until evidence is independently reviewed.
+
+
+## 2026-11-14 | South Florida species profile accuracy batch 2
+
+**Branch:** `main`  
+**Scope:** six static species JSON records only. No NOAA ingestion, workflow, prediction weights, scoring logic, or data-branch publication changes.
+
+### Species records completed
+- `data/species/snook.json`: refreshed size, diet, estuarine habitat, ontogenetic sex change, spawning ecology and overwintering movement using FWC biology/research. Replaced generic harvest notes with Southeast Management Region limits: 28-32 in total length, one per person, closed Dec. 15-Jan. 31 and June 1-Aug. 31. Explicitly separated Southwest-region dates and Biscayne National Park caveats.
+- `data/species/tarpon.json`: corrected statewide spawning window to May-September and separated that from the South Florida/Keys seasonal adult concentration. Added FWC size, habitat, diet and migration context. Replaced vague regulations with Florida catch-and-release rules, the narrow state/world-record tag exception, 40-inch in-water handling rule and gear restrictions.
+- `data/species/permit.json`: completed size, benthic diet, flats/reef habitat use and maturity/life-history context using Florida Museum and FWC. Added the South Florida Special Permit Zone limits: 22 in fork length, one per harvester, two per vessel, closed April 1-July 31. Documented the distinct general statewide limits and exact zone caveats.
+- `data/species/bonefish.json`: completed FWC-supported size, flats habitat, prey, schooling and spawning information. Added Florida catch-and-release-only regulations and handling/temporary-possession constraints. Bahamas telemetry findings remain explicitly non-transferable without South Florida validation.
+- `data/species/hogfish.json`: replaced generic profile with FWC life history, ontogenetic habitat shift, benthic feeding and protogynous sex change. Added Atlantic waters south of Cape Sable rules, including the Florida Keys: 16 in fork length, one per harvester, May 1-Oct. 31 season. Marked unsupported legacy SST and depth scoring ranges provisional without changing numeric values or weights.
+- `data/species/mutton-snapper.json`: corrected maximum size and spawning summary using FWC; added documented Florida Keys spawning aggregation context and its spatial caveats. Corrected current harvest rule to 18 in total length and five per person within the 10-snapper aggregate. Documented Western Dry Rocks closure (April 1-July 31). Legacy SST and depth scoring bands remain unchanged but are marked provisional.
+
+### Evidence standards applied
+- FWC recreational rules were checked as displayed on 2026-11-14. Regulation fields now use `verified_date`; this is the verification date, not a claim that every rule became effective on that date.
+- South Florida-specific management areas are kept distinct: snook management regions, the Permit Special Permit Zone, Atlantic hogfish waters south of Cape Sable, Biscayne National Park and Florida Keys protected/closed areas.
+- Tarpon and bonefish are documented as catch-and-release fisheries, not generic year-round harvest species.
+- Mutton snapper spawning aggregations are spatially discrete. A generic reef map cell is not evidence that an aggregation is present.
+- Unsupported legacy numeric SST/depth preferences for hogfish and mutton snapper are labelled provisional. Existing scoring values, active flags, weights and model logic were not changed. Permit and bonefish pilot scoring values likewise remain unchanged and provisional.
+- Sources are recorded in each profile. Primary agency and research sources take priority; angler guidance is not promoted to scientific fact.
+
+### Source references
+- FWC snook biology and regulations: https://myfwc.com/wildlifehabitats/profiles/saltwater/snook/snook/ ; https://myfwc.com/research/saltwater/fish/snook/sketch-common-snook/ ; https://myfwc.com/fishing/saltwater/recreational/snook/
+- FWC and Florida Museum tarpon biology/regulations: https://myfwc.com/wildlifehabitats/profiles/saltwater/tarpon/tarpon/ ; https://www.floridamuseum.ufl.edu/discover-fish/species-profiles/tarpon/ ; https://myfwc.com/fishing/saltwater/recreational/tarpon/
+- Permit biology and SPZ: https://www.floridamuseum.ufl.edu/discover-fish/species-profiles/permit/ ; https://myfwc.com/research/saltwater/fish/permit/fishery/ ; https://myfwc.com/fishing/saltwater/recreational/permit/
+- Bonefish biology and catch-and-release rules: https://myfwc.com/wildlifehabitats/profiles/saltwater/bonefish/ ; https://myfwc.com/fishing/saltwater/recreational/bonefish/
+- Hogfish biology/research and Atlantic rules: https://myfwc.com/wildlifehabitats/profiles/saltwater/hogfish/ ; https://myfwc.com/research/saltwater/hogfish/ ; https://myfwc.com/fishing/saltwater/recreational/hogfish/
+- Mutton snapper biology, harvest limits and spawning-site protection: https://myfwc.com/wildlifehabitats/profiles/saltwater/snapper/mutton-snapper/ ; https://myfwc.com/fishing/saltwater/recreational/snappers/ ; https://myfwc.com/research/saltwater/wdr/ ; https://www.sciencedirect.com/science/article/abs/pii/S0165783618300560
+
+### Commits
+- Snook: `8a752d8fe83978a0b1c210d40eab4cb6aa47aecc`
+- Tarpon: `1a55a94d3af6eff9bb88ce7c94559d9066ddef10`
+- Permit: `44e9e0eebd503087e054365ed72d0eebe8eeeb15`
+- Bonefish: `8c157e82db749405a282f72f5a044746bc102770`
+- Hogfish: `10b4d8cf2802b9873f6302435aa59dd021625f16`
+- Mutton snapper: `46152ec2c5750c8b9fa6a3c85d1eaa45801ee530`
+
+### Validation and next action
+- Each changed file was parsed as JSON before update and fetched/parsed again after commit. The six records retain their existing factor arrays and prediction model configuration; no active scoring weight or threshold was intentionally modified.
+- The dedicated species audit and Python test suite have not been run for this JSON-only batch. No Actions workflow was dispatched and no NOAA endpoint was contacted.
+- These six species are now marked reviewed in the catalog. Do not repeat this batch in future work; continue with unreviewed South Florida species, keeping a per-species record here and in `docs/PROJECT_STATUS.md`.
