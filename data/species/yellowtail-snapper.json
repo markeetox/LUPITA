@@ -192,8 +192,8 @@
     "jurisdiction": "Florida Atlantic state and federal waters; special rules apply in Biscayne National Park",
     "source_name": "Florida Fish and Wildlife Conservation Commission",
     "source_url": "https://myfwc.com/fishing/saltwater/recreational/snappers/",
-    "effective_date": "2026-11-14",
-    "notes": "Reef-fish gear requirements apply. Special yellowtail snapper regulations apply inside Biscayne National Park; verify park-specific limits before harvest."
+    "notes": "Reef-fish gear requirements apply. Special yellowtail snapper regulations apply inside Biscayne National Park; verify park-specific limits before harvest.",
+    "verified_date": "2026-11-14"
   },
   "lon_range": [
     -100,
