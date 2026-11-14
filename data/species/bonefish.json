@@ -46,9 +46,12 @@
       "weight": 0.35,
       "active": true,
       "value_status": "provisional",
-      "value_notes": "The configured temperature bounds are legacy screening values, not a validated adult Bonefish preference or physiological tolerance range. The cited telemetry and spawning studies do not establish these numeric SST thresholds. Preserve them only for compatibility until a suitable temperature study and independent local validation are available.",
+      "value_notes": "Adult Bonefish thermal studies in the Bahamas measured performance optima around 26.7–28.0 °C and critical thermal limits, but these are not a direct habitat-preference band and do not validate the configured 20–35 °C range or 25–31 °C ideal for South Florida. Retained as provisional screening values only; independent local validation is still required.",
       "reason_template": "Water is {value} C, within the currently configured provisional screening band for Bonefish; this is not a validated thermal preference.",
-      "sources": [],
+      "sources": [
+        "https://doi.org/10.1016/j.jtherbio.2010.10.005",
+        "https://doi.org/10.1007/s10641-015-0420-6"
+      ],
       "gate": true,
       "required": true
     }
