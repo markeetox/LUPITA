@@ -170,3 +170,12 @@ The validator classifies 127 profiles as **NEEDS MODEL REBUILD** and 3 as **NEED
 The follow-up also recognized `needs_source` as a valid evidence workflow status and downgraded incomplete numeric definitions on inactive factors to warnings. Active factors with incomplete range/ideal definitions remain errors. This preserves incomplete future/planned factors without pretending they are ready for scoring.
 
 **Final executed run:** [Python tests and species audit #43622006765](https://github.com/markeetox/LUPITA/actions/runs/43622006765): **272 passed, 0 failed, 115 warnings**. The species validator completed successfully and uploaded the `lupita-species-audit` artifact. The final validator summary was 130 profiles parsed, 130 structurally valid, 0 active model compatibility issues, and 0 validator errors.
+
+
+## Active factor source review | 2026-11-14
+
+The eight active factors that previously lacked factor-level source references have now been reviewed across six profiles. Each now has source references and explicit limitations in `value_notes` or the reason text. All eight remain `provisional`; no source was treated as proof that its configured numeric values are validated.
+
+Detailed species-by-species findings: [Active Factor Evidence Review](ACTIVE_FACTOR_EVIDENCE_REVIEW_2026-11-14.md).
+
+The six updated JSON profiles parsed successfully after commit. The final full-suite and validator run for these profile changes is pending. No factor values, weights, active flags, gates, required flags, or NOAA configuration changed.
