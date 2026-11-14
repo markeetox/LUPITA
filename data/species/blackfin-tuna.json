@@ -57,7 +57,7 @@
       "weight": 0.2,
       "active": true,
       "value_status": "provisional",
-      "reason_template": "Temperature break strength is {per10km} C per 10 km, attracting baitfish and hungry tuna.",
+      "reason_template": "Temperature break strength is {per10km} C per 10 km; this is a provisional water-mass boundary proxy, not a validated blackfin preference.",
       "sources": [
         "https://www.floridamuseum.ufl.edu/discover-fish/species-profiles/blackfin-tuna/",
         "https://academic.oup.com/icesjms/article/80/4/941/7058011",
@@ -71,7 +71,7 @@
       "weight": 0.15,
       "active": true,
       "value_status": "provisional",
-      "reason_template": "Water color edge concentrates plankton and bait.",
+      "reason_template": "A chlorophyll edge may indicate a productivity boundary; its value as a blackfin feeding predictor remains provisional.",
       "sources": [
         "https://www.floridamuseum.ufl.edu/discover-fish/species-profiles/blackfin-tuna/",
         "https://academic.oup.com/icesjms/article/80/4/941/7058011",
@@ -124,7 +124,7 @@
       "weight": 0.15,
       "active": true,
       "value_status": "provisional",
-      "reason_template": "Inshore edge of the Gulf Stream is {abs_value} km {side}.",
+      "reason_template": "The inshore Gulf Stream edge is {abs_value} km {side}; this is a provisional proximity indicator, not a validated blackfin distance preference.",
       "sources": [
         "https://www.floridamuseum.ufl.edu/discover-fish/species-profiles/blackfin-tuna/",
         "https://academic.oup.com/icesjms/article/80/4/941/7058011",
