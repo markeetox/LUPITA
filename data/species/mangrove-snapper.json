@@ -12,7 +12,7 @@
   "display": {
     "color": "#1dd80a"
   },
-  "review_status": "draft v1 - versatile inshore and reef snapper",
+  "review_status": "reviewed 2026-11-14 - profile checked against FWC species biology; Atlantic state/federal limits checked against current FWC snapper guidance",
   "image": {
     "status": "placeholder",
     "kind": "illustration",
@@ -22,13 +22,17 @@
     "plan": "web/fish/mangrove-snapper.png placeholder illustration."
   },
   "profile": {
-    "size": "Inshore 1-3 lb; offshore up to 10+ lb",
-    "diet": "Shrimp, crabs, pilchards, and small reef fishes",
-    "swimming_depth": "0.5 to 50 m",
-    "behavior": "Juveniles inhabit mangrove edges and docks; adults move offshore to reef structures and spawn in summer.",
-    "regulations_link": "https://myfwc.com/",
+    "size": "Commonly reaches about 24 inches and 10 lb; larger fish occur offshore.",
+    "diet": "Crustaceans and small fishes.",
+    "swimming_depth": "Occurs from shallow coastal and estuarine habitat to offshore reef and shelf waters; documented depth range extends to about 180 m.",
+    "behavior": "Uses a broad range of coastal structure, including mangroves, seagrass, reefs and artificial structure. Juveniles commonly occupy estuarine nursery habitat and may enter freshwater; adults also occur offshore around reefs. Spawning occurs offshore during summer.",
+    "spawning": "June through August according to FWC's Florida species profile.",
+    "habitat": "Coastal, estuarine and shelf waters; mangrove shorelines, seagrass beds, reefs and artificial structure.",
+    "regulations_link": "https://myfwc.com/fishing/saltwater/recreational/snappers/",
     "sources": [
-      "https://myfwc.com/"
+      "https://myfwc.com/wildlifehabitats/profiles/saltwater/snapper/gray-snapper/",
+      "https://myfwc.com/fishing/saltwater/recreational/snappers/",
+      "https://www.fisheries.noaa.gov/s3//2024-05/Red-gray-snapper-12-20-23-final-wRevRFA.pdf"
     ]
   },
   "factors": [
@@ -68,8 +72,8 @@
         "https://myfwc.com/"
       ],
       "map": {
-        "natural_reef": 1.0,
-        "artificial_reef": 1.0,
+        "natural_reef": 1,
+        "artificial_reef": 1,
         "wreck": 0.9,
         "hardbottom": 0.8,
         "mangrove_edge": 0.8
@@ -100,7 +104,7 @@
     "status": "angler_lore",
     "light": {
       "map": {
-        "night": 1.0,
+        "night": 1,
         "dusk": 0.9,
         "dawn": 0.9,
         "day": 0.5
@@ -113,7 +117,7 @@
     },
     "tide": {
       "map": {
-        "rising": 1.0,
+        "rising": 1,
         "falling": 0.9,
         "slack_high": 0.5,
         "slack_low": 0.4
@@ -129,17 +133,19 @@
     ]
   },
   "regulations": {
-    "summary": "Regulated species - See MyFWC/NOAA guidelines",
-    "min_size": "Check MyFWC/NOAA rules",
+    "summary": "Atlantic Florida: 10 in total length in state waters and 12 in in federal waters; 5 per person in state waters or 10 per person in federal waters, within the 10-snapper aggregate; open year-round.",
+    "min_size": "10 inches total length (Atlantic state waters); 12 inches total length (federal waters)",
     "max_size": "None",
-    "bag_limit": "Varies by region / state",
-    "season": "Open year-round (subject to local quota/closures)",
-    "jurisdiction": "Atlantic & Gulf State/Federal Waters",
-    "source_name": "MyFWC Saltwater Regulations",
-    "source_url": "https://myfwc.com/fishing/saltwater/recreational/"
+    "bag_limit": "5 per person per day in Atlantic state waters; 10 per person per day in federal waters; counts toward the 10-snapper aggregate",
+    "season": "Open year-round",
+    "jurisdiction": "Florida Atlantic state waters and adjacent federal waters; special rules apply in Biscayne National Park",
+    "source_name": "Florida Fish and Wildlife Conservation Commission",
+    "source_url": "https://myfwc.com/fishing/saltwater/recreational/snappers/",
+    "effective_date": "2026-11-14",
+    "notes": "Atlantic state-water size and bag limits differ from federal-water limits. Biscayne National Park has additional species-specific rules; verify park limits before harvest."
   },
   "lon_range": [
-    -100.0,
-    -50.0
+    -100,
+    -50
   ]
 }
