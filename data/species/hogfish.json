@@ -11,7 +11,7 @@
   "display": {
     "color": "#d80a84"
   },
-  "review_status": "draft v1 - coral reef benthic wrasse",
+  "review_status": "reviewed 2026-11-14 - biology checked against FWC species and research profiles; Atlantic South Florida harvest rules checked against current FWC regulations",
   "image": {
     "status": "placeholder",
     "kind": "illustration",
@@ -21,13 +21,17 @@
     "plan": "web/fish/hogfish.png placeholder illustration."
   },
   "profile": {
-    "size": "Common 2-8 lb; up to 20 lb",
-    "diet": "Crabs, mollusks, sea urchins, and hermit crabs",
-    "swimming_depth": "Bottom substrate; 3 to 30 m",
-    "behavior": "Roots through open sandy patches adjacent to coral reefs and hardbottom ledges searching for benthic invertebrates.",
-    "regulations_link": "https://myfwc.com/",
+    "size": "Can reach about 36 inches; FWC reports a Florida state record of 19 lb 8 oz.",
+    "diet": "Benthic invertebrates including mollusks, crabs and other small crustaceans. Uses its elongated snout to root through sand and sediment.",
+    "swimming_depth": "Juveniles settle in shallow inshore nursery habitat such as seagrass beds. As they mature, hogfish move toward deeper rocky bottoms, ledges and offshore reefs. The current FWC profile does not establish a single preferred depth band.",
+    "behavior": "Reef-associated wrasse that forages by rooting through sand and sediment, often around reefs, ledges and hard bottom. Adults may associate with gorgonian-rich reef habitat. Juveniles use shallow inshore nursery areas before moving deeper with growth.",
+    "life_history": "Sequential protogynous hermaphrodite: all begin life as females and some larger/older individuals transition to males. FWC reports a breeding season from November through June, with peaks in March and April; territorial males maintain harems and spawning commonly occurs in late afternoon.",
+    "spawning": "Breeding season can extend November-June, peaking around March-April according to FWC. Spawning is typically in late afternoon; do not treat the full breeding window as a precise daily or local aggregation forecast.",
+    "regulations_link": "https://myfwc.com/fishing/saltwater/recreational/hogfish/",
     "sources": [
-      "https://myfwc.com/"
+      "https://myfwc.com/wildlifehabitats/profiles/saltwater/hogfish/",
+      "https://myfwc.com/research/saltwater/hogfish/",
+      "https://myfwc.com/fishing/saltwater/recreational/hogfish/"
     ]
   },
   "factors": [
@@ -44,11 +48,10 @@
       ],
       "weight": 0.35,
       "active": true,
-      "value_status": "sourced",
-      "sources": [
-        "https://myfwc.com/"
-      ],
-      "reason_template": "Water is {value} C, in comfortable range for hogfish."
+      "value_status": "provisional",
+      "sources": [],
+      "reason_template": "Water is {value} C, in comfortable range for hogfish.",
+      "value_notes": "The legacy numeric temperature range is not supported by a species-specific thermal-preference or tolerance source in this record. Retained unchanged for compatibility only; do not interpret as a validated hogfish optimum."
     },
     {
       "param": "structure_type",
@@ -60,16 +63,18 @@
       ],
       "weight": 0.35,
       "active": true,
-      "value_status": "sourced",
+      "value_status": "partly_sourced",
       "sources": [
-        "https://myfwc.com/"
+        "https://myfwc.com/wildlifehabitats/profiles/saltwater/hogfish/",
+        "https://myfwc.com/research/saltwater/hogfish/"
       ],
       "map": {
-        "natural_reef": 1.0,
+        "natural_reef": 1,
         "hardbottom": 0.9,
         "open_sand": 0.7
       },
-      "reason_template": "Structure is {value}, where hogfish forage for mollusks and crabs."
+      "reason_template": "Structure is {value}, where hogfish forage for mollusks and crabs.",
+      "value_notes": "FWC documents mature hogfish on rocky bottoms, ledges and offshore reefs, and FWC research describes reef association and foraging around gorgonians. The current map classes are habitat proxies; they do not establish occupancy at an individual polygon."
     },
     {
       "param": "depth_m",
@@ -84,19 +89,20 @@
       ],
       "weight": 0.3,
       "active": true,
-      "value_status": "sourced",
+      "value_status": "provisional",
       "sources": [
-        "https://myfwc.com/"
+        "https://myfwc.com/wildlifehabitats/profiles/saltwater/hogfish/"
       ],
       "gate": true,
-      "reason_template": "Depth is {value} m, in shallow patch reef depth."
+      "reason_template": "Depth is {value} m, in shallow patch reef depth.",
+      "value_notes": "The configured 3-30 m range is a legacy screening band. FWC documents an ontogenetic shift from shallow nursery habitat to deeper reefs but does not validate this numeric adult depth preference."
     }
   ],
   "timing": {
     "status": "angler_lore",
     "light": {
       "map": {
-        "day": 1.0,
+        "day": 1,
         "dawn": 0.8,
         "dusk": 0.8,
         "night": 0.2
@@ -113,21 +119,28 @@
     ]
   },
   "lat_range": [
-    15.0,
-    36.0
+    15,
+    36
   ],
   "regulations": {
-    "summary": "Regulated species - See MyFWC/NOAA guidelines",
-    "min_size": "Check MyFWC/NOAA rules",
+    "summary": "Atlantic waters south of Cape Sable, including the Florida Keys: 16 inches fork length minimum; 1 per harvester per day; open May 1-October 31. Special Biscayne National Park rules apply.",
+    "min_size": "16 inches fork length",
     "max_size": "None",
-    "bag_limit": "Varies by region / state",
-    "season": "Open year-round (subject to local quota/closures)",
-    "jurisdiction": "Atlantic & Gulf State/Federal Waters",
-    "source_name": "MyFWC Saltwater Regulations",
-    "source_url": "https://myfwc.com/fishing/saltwater/recreational/"
+    "bag_limit": "1 per harvester per day",
+    "season": "Open May 1-October 31; closed November 1-April 30",
+    "jurisdiction": "Atlantic state waters and all state/federal waters south of Cape Sable, including the Florida Keys",
+    "source_name": "Florida Fish and Wildlife Conservation Commission",
+    "source_url": "https://myfwc.com/fishing/saltwater/recreational/hogfish/",
+    "verified_date": "2026-11-14",
+    "notes": "Gulf waters north of Cape Sable have different rules (14-inch fork length, 5 per harvester, year-round). South Florida Atlantic rules apply south of Cape Sable, including the Keys. Special regulations apply inside Biscayne National Park. Reef-fish gear requirements apply."
   },
   "lon_range": [
-    -100.0,
-    -50.0
+    -100,
+    -50
+  ],
+  "open_items": [
+    "The configured SST numeric band and adult depth band remain provisional; locate species-specific thermal/depth studies before treating them as validated preferences.",
+    "Keep juvenile seagrass nursery habitat distinct from adult reef habitat; the current structure score is a broad habitat proxy.",
+    "Verify Biscayne National Park-specific hogfish harvest rules before providing park-level harvest advice."
   ]
 }
