@@ -167,3 +167,22 @@ def test_active_evidence_risk_is_reported_separately_from_data_coverage():
     assert result["active_uncertain_weight"] == 0.4
     assert result["evidence_risk"] == "elevated"
     assert "active_evidence_uncertainty" in {x["code"] for x in result["findings"]}
+
+
+def test_active_evidence_uncertainty_is_not_double_counted_when_sources_are_missing():
+    bad = profile(factors=[{
+        "param": "sst_c", "kind": "range", "range": [10, 30], "ideal": [20, 25],
+        "weight": 1.0, "active": True, "value_status": "provisional",
+    }])
+    result = validate_profile(bad, REGISTRY)
+    assert result["active_uncertain_weight"] == 1.0
+    assert result["active_uncertain_weight"] <= result["active_weight_sum"]
+
+
+def test_malformed_evidence_status_is_reported_without_crashing():
+    bad = profile(factors=[{
+        "param": "sst_c", "kind": "range", "range": [10, 30], "ideal": [20, 25],
+        "weight": 1.0, "active": True, "value_status": ["not", "a", "status"],
+    }])
+    codes = {x["code"] for x in validate_profile(bad, REGISTRY)["findings"]}
+    assert "missing_or_unknown_evidence_status" in codes
