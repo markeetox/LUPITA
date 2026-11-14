@@ -1,6 +1,6 @@
 # LUPITA project status
 
-**Last reviewed:** 2026-11-13  
+**Last reviewed:** 2026-11-14  
 **Production branch:** `main`  
 **Canonical application branch:** `main`  
 **Generated export branch:** `data`  
@@ -163,3 +163,22 @@ See `docs/PROGRESS_LOG.md` for source links, commit SHAs and validation limits. 
 **Status:** six additional South Florida species records reviewed and committed to `main`: common snook, Atlantic tarpon, Permit, bonefish, hogfish and mutton snapper. Biology and harvest summaries now use current FWC and relevant Florida Museum/research sources. Region-specific rules and protected-area caveats are explicit. Unsupported hogfish and mutton snapper numeric SST/depth settings are marked provisional; no numeric scoring configuration, weights, active flags or prediction logic were changed.
 
 Together with batch 1, **10 species records have been reviewed**: black grouper, great barracuda, mangrove snapper, yellowtail snapper, common snook, Atlantic tarpon, Permit, bonefish, hogfish and mutton snapper. See `docs/PROGRESS_LOG.md` for per-species scope, source links, commit SHAs and validation limits. All ten records have been fetched and parsed as JSON after commit. The dedicated species audit and Python suite remain pending; no NOAA workflow or endpoint was used.
+
+
+## 4. Species catalog and scoring integrity
+
+**Status:** full static catalog audit completed on 2026-11-14; follow-up validator and confidence work remains.
+
+- All 130 species JSON profiles were fetched and parsed: 105 grid models and 25 named-site models.
+- No missing core identity/model fields, duplicate factor parameters within a profile, unregistered factor parameters, unsupported active parameter/kind combinations, or active-weight overflow were found in the static cross-check.
+- Twelve profiles contain 33 active factors marked provisional, estimated, or unsourced. Eight active factors lack source references across six profiles.
+- Twenty-three of the 25 site models are currently temperature-only (one active SST factor). Snook and tarpon are the only five-factor site models. Scores are normalized over available active weights, so a single-factor score is entirely an SST score, not 35% of a larger model.
+- Prediction confidence does not directly incorporate active factor evidence status. Evidence-aware confidence policy needs to be defined before changing output labels.
+- Grid and site scoring differ in missing `required` / `gate` behavior. Both skip optional missing factors and enforce minimum coverage, but their contracts need explicit documentation and tests.
+- The existing validator needs coverage-bound, category-map, and missing-data semantics checks.
+
+Full audit: [Species Catalog Audit](SPECIES_CATALOG_AUDIT_2026-11-14.md). Historical decisions and the static inspection boundary are in [Progress Log](PROGRESS_LOG.md).
+
+**Next:** strengthen the read-only validator and tests, define evidence-aware confidence policy, then prioritize South Florida temperature-only site pilots for evidence-backed expansion. No scoring weights or prediction behavior are changed by the audit.
+
+**NOAA boundary:** environmental ingestion/source troubleshooting remains paused until explicit project-owner clearance. This catalog audit did not contact NOAA or run data workflows.
