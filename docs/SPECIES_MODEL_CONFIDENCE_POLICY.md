@@ -20,7 +20,7 @@ The species validator reports active factor evidence by configured weight:
 
 - `sourced`: the factor is explicitly marked sourced and has usable source references.
 - `partly_sourced`: the profile explicitly says the evidence is partial.
-- `provisional`, `estimated`, or `unsourced`: the active factor is not established strongly enough to treat its numeric setting as a validated species preference.
+- `provisional`, `estimated`, `unsourced`, or `needs_source`: the active factor is not established strongly enough to treat its numeric setting as a validated species preference.
 - Missing or unrecognized evidence status, or missing/invalid source references: incomplete evidence metadata.
 
 The audit reports uncertain active weight and partly sourced active weight separately. These are diagnostic weight totals, not probabilities or estimates of scientific accuracy. A source URL is not proof that the source supports the exact numeric value or local population.
@@ -28,7 +28,7 @@ The audit reports uncertain active weight and partly sourced active weight separ
 ## Proposed confidence policy (not yet active)
 
 1. Preserve environmental coverage as its own numeric field. Do not fold evidence status into coverage.
-2. A prediction should not receive Medium confidence if any active factor with material weight is marked provisional, estimated, unsourced, or lacks usable source references. The conservative default proposal is to cap such a result at Low until the project owner approves a more nuanced threshold.
+2. A prediction should not receive Medium confidence if any positive-weight active factor is marked provisional, estimated, unsourced, needs_source, or lacks usable source references. The conservative default proposal is to cap such a result at Low until the project owner approves a more nuanced threshold.
 3. Partly sourced factors must be surfaced as a caveat. They should not automatically be treated as fully sourced.
 4. Existing profile-level Low caps and existing Low-confidence conditions remain in force.
 5. A single-factor site model must remain explicitly identified as a temperature-only pilot and Low confidence. It must not be described as validated habitat suitability.
