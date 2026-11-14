@@ -156,3 +156,10 @@ See [Biscayne research pipeline policy](biscayne-research-pipeline-policy-2026-1
 Four records were improved: black grouper, great barracuda, gray/mangrove snapper and yellowtail snapper. Profiles now use species-specific FWC/NOAA/regional evidence, and Florida recreational regulation summaries distinguish Atlantic state waters, federal waters, county-specific rules and Biscayne National Park caveats. The barracuda SST evidence label is now provisional; no numeric factor, weight, active flag, prediction logic or ocean-data source was changed.
 
 See `docs/PROGRESS_LOG.md` for source links, commit SHAs and validation limits. The JSON records were parsed before and after commit. The dedicated species audit and test suite remain pending; no Actions workflow or NOAA request was run.
+
+
+## Species profile accuracy work | batch 2 | 2026-11-14
+
+**Status:** six additional South Florida species records reviewed and committed to `main`: common snook, Atlantic tarpon, Permit, bonefish, hogfish and mutton snapper. Biology and harvest summaries now use current FWC and relevant Florida Museum/research sources. Region-specific rules and protected-area caveats are explicit. Unsupported hogfish and mutton snapper numeric SST/depth settings are marked provisional; no numeric scoring configuration, weights, active flags or prediction logic were changed.
+
+Together with batch 1, **10 species records have been reviewed**: black grouper, great barracuda, mangrove snapper, yellowtail snapper, common snook, Atlantic tarpon, Permit, bonefish, hogfish and mutton snapper. See `docs/PROGRESS_LOG.md` for per-species scope, source links, commit SHAs and validation limits. All ten records have been fetched and parsed as JSON after commit. The dedicated species audit and Python suite remain pending; no NOAA workflow or endpoint was used.
