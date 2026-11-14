@@ -169,4 +169,4 @@ The validator classifies 127 profiles as **NEEDS MODEL REBUILD** and 3 as **NEED
 
 The follow-up also recognized `needs_source` as a valid evidence workflow status and downgraded incomplete numeric definitions on inactive factors to warnings. Active factors with incomplete range/ideal definitions remain errors. This preserves incomplete future/planned factors without pretending they are ready for scoring.
 
-**Executed run:** [Python tests and species audit #43621922625](https://github.com/markeetox/LUPITA/actions/runs/43621922625). The audit artifact was uploaded as `lupita-species-audit`. A later full-suite run includes the final additional regression test correction and is being tracked separately.
+**Final executed run:** [Python tests and species audit #43622006765](https://github.com/markeetox/LUPITA/actions/runs/43622006765): **272 passed, 0 failed, 115 warnings**. The species validator completed successfully and uploaded the `lupita-species-audit` artifact. The final validator summary was 130 profiles parsed, 130 structurally valid, 0 active model compatibility issues, and 0 validator errors.
