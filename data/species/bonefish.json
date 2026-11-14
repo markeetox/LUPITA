@@ -7,7 +7,7 @@
     "gray ghost"
   ],
   "habitat_zone": "inshore",
-  "review_status": "South Florida pilot draft; descriptive ecology is source-documented, but thermal scoring and feeding timing are not validated.",
+  "review_status": "reviewed 2026-11-14 - habitat and life history checked against FWC; catch-and-release rules checked against current FWC regulations",
   "image": {
     "status": "placeholder",
     "kind": "illustration",
@@ -17,16 +17,18 @@
     "plan": "web/fish/placeholder.png is a transparent placeholder image."
   },
   "profile": {
-    "size": "Not specified in this pilot profile; size is not used by the current model.",
-    "diet": "Not characterized in this pilot profile; diet is not used by the current model.",
-    "behavior": "A shallow-water flats-associated species. Northern Florida Keys acoustic telemetry documents use of shallow foraging areas and deeper channels that may provide thermal refuge. These findings describe habitat use, not a real-time fish location.",
-    "life_history": "This pilot distinguishes shallow-flat foraging habitat from seasonal offshore spawning movement. The two should not be collapsed into one habitat score.",
-    "regulations_link": "https://myfwc.com/fishing/saltwater/recreational/",
+    "size": "Can reach about 3 feet and 15-18 lb, though fish over 10 lb are uncommon. FWC reports typical Florida catches averaging roughly 3-5 lb.",
+    "diet": "Feeds primarily on benthic invertebrates including shrimp, crabs and other small crustaceans found in seagrass and sand-flat sediments.",
+    "behavior": "Shallow-water flats specialist, often in less than one foot of water over seagrass and sometimes white sand. Small schools move across grass and sand flats searching for shrimp, crabs and other invertebrates. Fish are wary and rely on speed and a deeply forked tail. Northern Florida Keys telemetry also documents use of deeper channels that may provide refuge; this does not locate fish in real time.",
+    "life_history": "Matures at approximately 3-4 years and 17-18 inches total length; can live more than 23 years. Spawning occurs offshore, with seasonal movements between home ranges and spawning sites documented in some regional populations. Bahamas migration findings should not automatically be transferred to South Florida.",
+    "regulations_link": "https://myfwc.com/fishing/saltwater/recreational/bonefish/",
     "sources": [
       "https://doi.org/10.3354/meps291237",
-      "https://www.fisheries.noaa.gov/resource/peer-reviewed-research/bonefish-albula-vulpes-home-range-spawning-site-linkages-support"
+      "https://www.fisheries.noaa.gov/resource/peer-reviewed-research/bonefish-albula-vulpes-home-range-spawning-site-linkages-support",
+      "https://myfwc.com/wildlifehabitats/profiles/saltwater/bonefish/",
+      "https://myfwc.com/fishing/saltwater/recreational/bonefish/"
     ],
-    "spawning": "Seasonal offshore spawning migrations and links between home ranges and spawning sites have been documented for Bahamas bonefish. The timing, routes, and transferability of those findings to South Florida require local validation.",
+    "spawning": "FWC reports spawning from November through May, probably in deep or offshore water. The timing and routes of individual South Florida spawning migrations remain incompletely understood.",
     "overwintering": "No South Florida overwintering route or seasonal refuge rule is encoded in this pilot profile."
   },
   "factors": [
@@ -126,14 +128,16 @@
     27
   ],
   "regulations": {
-    "summary": "Regulated species - See MyFWC/NOAA guidelines",
-    "min_size": "Check MyFWC/NOAA rules",
-    "max_size": "None",
-    "bag_limit": "Varies by region / state",
-    "season": "Open year-round (subject to local quota/closures)",
-    "jurisdiction": "Atlantic & Gulf State/Federal Waters",
-    "source_name": "MyFWC Saltwater Regulations",
-    "source_url": "https://myfwc.com/fishing/saltwater/recreational/"
+    "summary": "Florida bonefish are a catch-and-release-only fishery. Harvest is prohibited; temporary possession at the capture site for photography, measuring and weighing is allowed under FWC handling rules.",
+    "min_size": "No harvest size limit because harvest is prohibited",
+    "max_size": "No harvest size limit because harvest is prohibited",
+    "bag_limit": "Catch-and-release only; no harvest bag limit",
+    "season": "Open year-round for catch-and-release",
+    "jurisdiction": "Florida bonefish management rules extend into adjacent federal waters",
+    "source_name": "Florida Fish and Wildlife Conservation Commission",
+    "source_url": "https://myfwc.com/fishing/saltwater/recreational/bonefish/",
+    "verified_date": "2026-11-14",
+    "notes": "Harvest is prohibited. Multiple hooks used with live or dead natural bait to harvest or attempt harvest are prohibited. Temporary possession of one fish at a time for photography, measuring and weighing is allowed at the site of capture. Handle carefully and release promptly."
   },
   "lon_range": [
     -100,
