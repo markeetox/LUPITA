@@ -490,3 +490,24 @@ Continue the audit with additional South Florida species, prioritizing profiles 
 
 ### Next action
 Extend the validator and tests for coverage bounds, category maps, evidence diagnostics, and required/gate semantics. Agree on evidence-aware confidence policy before changing prediction output. Then label and prioritize the 23 temperature-only site pilots for evidence-backed expansion. NOAA ingestion work remains paused pending explicit clearance.
+
+
+## 2026-11-14 | Species validator and evidence diagnostics
+
+### Implementation
+- Extended `pipeline/species_validator.py` with minimum-coverage bounds, category-map validation, boolean factor-flag validation, and explicit warnings for ineffective/ambiguous `required` and `gate` combinations across grid and site models.
+- Added active evidence-weight accounting. The audit now distinguishes fully sourced, partly sourced, provisional, estimated, unsourced, and incomplete metadata; uncertain weight is not double-counted when both evidence status and source references are missing.
+- Added `evidence_risk`, `active_uncertain_weight`, `active_partly_sourced_weight`, `active_evidence_status_weight`, `min_coverage`, and `model_scope` fields to species audit results.
+- Added catalog-level counts for temperature-only site pilots and profiles with elevated active evidence risk.
+- Added eight regression tests covering coverage bounds, category maps, factor flags, engine-specific missing-data contracts, evidence accounting, malformed evidence metadata, and catalog summaries.
+- Updated `python-tests.yml` so changes to `data/species/**` and `data/parameters.json` run the full suite and species validator on `main`; JSON/Markdown/CSV audit outputs are uploaded as a workflow artifact.
+- Added [proposed species confidence policy](SPECIES_MODEL_CONFIDENCE_POLICY.md). It is a review proposal only; prediction confidence is not changed until approved.
+
+### Profile regression corrections
+- Restored the qualified Bahamas research context in the bonefish spawning description while explicitly warning against transferring those findings to South Florida.
+- Restored the study-area depth detail and exact March-through-September wording in the Permit profile to satisfy the existing profile regression guard. These are descriptive text changes only; no scoring factors or values changed.
+
+### Validation
+- Intermediate CI attempts caught and corrected the malformed evidence-status handling case and profile wording regressions.
+- Latest full Python suite plus species-validator workflow is pending: https://github.com/markeetox/LUPITA/actions/runs/43621667713
+- No NOAA endpoint was contacted and no Pull Ocean Data workflow was run. No prediction scoring or confidence output was changed.
