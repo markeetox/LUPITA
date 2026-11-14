@@ -182,3 +182,17 @@ Full audit: [Species Catalog Audit](SPECIES_CATALOG_AUDIT_2026-11-14.md). Histor
 **Next:** strengthen the read-only validator and tests, define evidence-aware confidence policy, then prioritize South Florida temperature-only site pilots for evidence-backed expansion. No scoring weights or prediction behavior are changed by the audit.
 
 **NOAA boundary:** environmental ingestion/source troubleshooting remains paused until explicit project-owner clearance. This catalog audit did not contact NOAA or run data workflows.
+
+
+## Species validator follow-up | 2026-11-14
+
+**Status:** implementation committed; current full-suite and species-audit CI validation pending.
+
+- Validator now checks `min_coverage` bounds, category map values/keys, boolean factor flags, and grid/site `required` / `gate` semantics.
+- Active evidence weight is reported separately from environmental coverage, including uncertain and partly sourced weight.
+- Audit output explicitly labels SST-only site profiles as `temperature_only_pilot`.
+- Eight new regression tests cover the added checks and evidence summaries.
+- Main-branch Python CI now runs the species validator after tests when species profiles or the parameter registry change, and uploads the generated audit files.
+- Proposed confidence policy is in [Species Model Confidence Policy](SPECIES_MODEL_CONFIDENCE_POLICY.md). It is not active. Prediction confidence and scoring remain unchanged pending review.
+
+Current validation run: [#43621667713](https://github.com/markeetox/LUPITA/actions/runs/43621667713). NOAA ingestion remains paused.
