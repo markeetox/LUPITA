@@ -106,3 +106,64 @@ def test_reports_are_written(tmp_path: Path):
               "species": [row]}
     write_reports(report, tmp_path)
     assert all((tmp_path / f"species-audit.{ext}").exists() for ext in ("json", "md", "csv"))
+
+
+def test_min_coverage_must_be_between_zero_and_one():
+    result = validate_profile(profile(min_coverage=1.2), REGISTRY)
+    assert "invalid_min_coverage" in {x["code"] for x in result["findings"]}
+
+
+def test_category_map_is_valid_without_preferred_and_checks_scores_and_keys():
+    good = profile(factors=[{
+        "param": "structure_type", "kind": "category", "map": {"reef": 1.0, "seagrass": 0.4},
+        "weight": 1.0, "active": True, "value_status": "sourced",
+        "sources": ["https://example.org/habitat"],
+    }])
+    result = validate_profile(good, REGISTRY)
+    codes = {x["code"] for x in result["findings"]}
+    assert "missing_preferred_categories" not in codes
+    assert "invalid_category_map" not in codes
+
+    bad = profile(factors=[{
+        "param": "structure_type", "kind": "category", "map": {"reef": 1.4, "unknown_bottom": 0.2},
+        "weight": 1.0, "active": True,
+    }])
+    codes = {x["code"] for x in validate_profile(bad, REGISTRY)["findings"]}
+    assert {"invalid_category_map_score", "category_registry_mismatch"} <= codes
+
+
+def test_grid_required_flag_and_site_gate_contract_are_reported():
+    grid = profile(factors=[{
+        "param": "sst_c", "kind": "range", "range": [10, 30], "ideal": [20, 25],
+        "weight": 1.0, "active": True, "required": True,
+    }])
+    assert "required_ignored_by_grid" in {x["code"] for x in validate_profile(grid, REGISTRY)["findings"]}
+
+    site = profile(model="sites", factors=[{
+        "param": "sst_c", "kind": "range", "range": [10, 30], "ideal": [20, 25],
+        "weight": 1.0, "active": True, "gate": True,
+    }])
+    assert "site_gate_missing_required" in {x["code"] for x in validate_profile(site, REGISTRY)["findings"]}
+
+
+def test_factor_flags_must_be_booleans():
+    bad = profile(factors=[{
+        "param": "sst_c", "kind": "range", "range": [10, 30], "ideal": [20, 25],
+        "weight": 1.0, "active": True, "required": "yes",
+    }])
+    assert "invalid_factor_flag" in {x["code"] for x in validate_profile(bad, REGISTRY)["findings"]}
+
+
+def test_active_evidence_risk_is_reported_separately_from_data_coverage():
+    bad = profile(factors=[
+        {"param": "sst_c", "kind": "range", "range": [10, 30], "ideal": [20, 25],
+         "weight": 0.6, "active": True, "value_status": "sourced",
+         "sources": ["https://example.org/temp"]},
+        {"param": "spawning_season", "kind": "season", "months": [4, 5, 6], "peak_months": [5],
+         "weight": 0.4, "active": True, "value_status": "provisional",
+         "sources": ["https://example.org/season"]},
+    ])
+    result = validate_profile(bad, REGISTRY)
+    assert result["active_uncertain_weight"] == 0.4
+    assert result["evidence_risk"] == "elevated"
+    assert "active_evidence_uncertainty" in {x["code"] for x in result["findings"]}
