@@ -4,6 +4,8 @@ on:
   pull_request:
     paths:
       - "**.py"
+      - "data/species/**"
+      - "data/parameters.json"
       - "requirements.txt"
       - ".github/workflows/python-tests.yml"
   push:
@@ -34,3 +36,9 @@ jobs:
         run: python -m pip install -r requirements-research.txt
       - name: Run test suite
         run: python -m pytest -q
+      - name: Generate species profile audit
+        run: python scripts/validate_species.py --output-dir reports
+      - uses: actions/upload-artifact@v4
+        with:
+          name: lupita-species-audit
+          path: reports/species-audit.*
