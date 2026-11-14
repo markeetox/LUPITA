@@ -141,8 +141,8 @@
     "jurisdiction": "Florida Atlantic state waters and adjacent federal waters; special rules apply in Biscayne National Park",
     "source_name": "Florida Fish and Wildlife Conservation Commission",
     "source_url": "https://myfwc.com/fishing/saltwater/recreational/snappers/",
-    "effective_date": "2026-11-14",
-    "notes": "Atlantic state-water size and bag limits differ from federal-water limits. Biscayne National Park has additional species-specific rules; verify park limits before harvest."
+    "notes": "Atlantic state-water size and bag limits differ from federal-water limits. Biscayne National Park has additional species-specific rules; verify park limits before harvest.",
+    "verified_date": "2026-11-14"
   },
   "lon_range": [
     -100,
