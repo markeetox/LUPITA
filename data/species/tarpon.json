@@ -177,10 +177,10 @@
         "day": 0.6
       },
       "value_text": {
-        "night": "It is night, a favored time for tarpon around passes and bridges.",
-        "dusk": "It is dusk, a low-light time tarpon feed actively.",
-        "dawn": "It is dawn, a low-light time tarpon feed actively.",
-        "day": "It is daylight, when tarpon fishing is usually slower."
+        "night": "It is night; the configured tarpon time-of-day preference is provisional.",
+        "dusk": "It is dusk, a crepuscular period; the configured tarpon time-of-day preference is provisional.",
+        "dawn": "It is dawn, a crepuscular period; the configured tarpon time-of-day preference is provisional.",
+        "day": "It is daylight; the configured tarpon time-of-day score is provisional."
       }
     },
     {
