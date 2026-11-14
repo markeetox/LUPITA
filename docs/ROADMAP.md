@@ -77,3 +77,14 @@ A metadata check is not a substitute for inspecting the actual production CSV pu
 
 
 **Latest validation:** **262 passed, 0 failed, 115 warnings** on [run #43494256052](https://github.com/markeetox/LUPITA/actions/runs/43494256052). SST diagnostics now expose the selected ERDDAP endpoint. Only the live production pull remains before closing this resilience milestone.
+
+
+## Active milestone: South Florida species profile accuracy
+**Status:** batch 1 committed on 2026-11-14. Updated black grouper, great barracuda, gray/mangrove snapper and yellowtail snapper profiles and regional regulation summaries using FWC, NOAA Fisheries, NPS and regional fisheries references.
+
+Next:
+1. Continue species-by-species review, prioritizing generic or weakly sourced records.
+2. Keep Atlantic/Gulf, state/federal, Monroe County and Biscayne National Park rules distinct.
+3. Preserve unknowns and mark unsupported numeric biology as provisional rather than inventing precision.
+4. Run `python scripts/validate_species.py` and focused/full tests at the next authorized validation checkpoint; no NOAA ingestion workflow is required for this work.
+5. Do not change prediction weights or active scoring factors without separate evidence and explicit review.
