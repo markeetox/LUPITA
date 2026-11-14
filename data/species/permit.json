@@ -5,7 +5,7 @@
   "scientific_name": "Trachinotus falcatus",
   "aliases": [],
   "habitat_zone": "inshore",
-  "review_status": "South Florida pilot draft; descriptive ecology is source-documented, but thermal scoring and feeding timing are not validated.",
+  "review_status": "reviewed 2026-11-14 - biology checked against Florida Museum and FWC; South Florida Special Permit Zone rules checked against current FWC regulations",
   "image": {
     "status": "placeholder",
     "kind": "illustration",
@@ -15,16 +15,18 @@
     "plan": "web/fish/placeholder.png is a transparent placeholder image."
   },
   "profile": {
-    "size": "Not specified in this pilot profile; size is not used by the current model.",
-    "diet": "Not characterized in this pilot profile; diet is not used by the current model.",
-    "behavior": "Lower Florida Keys acoustic telemetry documents Permit using both shallow nearshore flats (less than 3 m) and deeper Florida Reef Tract habitat (approximately 15–40 m). The study reported that many tagged fish used both habitat types, supporting a connected flats-and-reef framing rather than a flats-only profile.",
-    "life_history": "This pilot separates flats-foraging context from deeper reef occupancy and spawning context. The available telemetry evidence does not justify treating every hard-bottom map polygon as spawning habitat.",
-    "regulations_link": "https://myfwc.com/fishing/saltwater/recreational/",
+    "size": "Can reach at least 48 inches and 79 lb; sexual maturity is reported around 19 inches for males and 21.5 inches for females. These are maximum/biological reference values, not typical catch sizes.",
+    "diet": "Benthic feeder that roots through sand and seagrass flats for crabs, shrimp, mollusks and other crustaceans; also takes polychaetes, small fishes and other invertebrates.",
+    "behavior": "Uses shallow sandy and seagrass flats and intertidal areas to forage, often moving onto flats with incoming tides from adjacent channels and basins. Smaller fish commonly school; larger adults are more solitary or occur in pairs. Adults also use wrecks and deeper reef structures. Lower Florida Keys telemetry documents use of both shallow flats and deeper Florida Reef Tract habitat.",
+    "life_history": "Permit mature at roughly 2-3 years depending on sex and can live at least 23 years. Adults use both shallow flats and deeper reef habitat; the lower Florida Keys telemetry study documented seasonal reef occupancy, but it does not establish that every mapped reef is a spawning site.",
+    "regulations_link": "https://myfwc.com/fishing/saltwater/recreational/permit/",
     "sources": [
       "https://pubmed.ncbi.nlm.nih.gov/31823365/",
-      "https://www.floridamuseum.ufl.edu/discover-fish/species-profiles/permit/"
+      "https://www.floridamuseum.ufl.edu/discover-fish/species-profiles/permit/",
+      "https://myfwc.com/research/saltwater/fish/permit/fishery/",
+      "https://myfwc.com/fishing/saltwater/recreational/permit/"
     ],
-    "spawning": "The lower Florida Keys telemetry study reported reef occupancy peaking from March through September, especially April–May, and interpreted reef use as associated with spawning. Treat this as study-region evidence, not a fully validated South Florida-wide seasonal rule.",
+    "spawning": "Lower Florida Keys telemetry reported reef occupancy peaking March-September, especially April-May, and interpreted this pattern as associated with spawning. Treat this as study-area evidence, not a statewide calendar or proof that every reef polygon is spawning habitat.",
     "overwintering": "No South Florida overwintering route or seasonal refuge rule is encoded in this pilot profile."
   },
   "factors": [
@@ -125,14 +127,16 @@
     30
   ],
   "regulations": {
-    "summary": "Regulated species - See MyFWC/NOAA guidelines",
-    "min_size": "Check MyFWC/NOAA rules",
+    "summary": "South Florida Special Permit Zone: 22 inches fork length minimum; 1 per harvester per day; maximum 2 per vessel; closed April 1-July 31. Outside the SPZ, the general Florida rule is 24 inches fork length, 2 per harvester, 2 per vessel, open year-round.",
+    "min_size": "22 inches fork length in the Special Permit Zone; 24 inches fork length outside the SPZ",
     "max_size": "None",
-    "bag_limit": "Varies by region / state",
-    "season": "Open year-round (subject to local quota/closures)",
-    "jurisdiction": "Atlantic & Gulf State/Federal Waters",
-    "source_name": "MyFWC Saltwater Regulations",
-    "source_url": "https://myfwc.com/fishing/saltwater/recreational/"
+    "bag_limit": "Special Permit Zone: 1 per harvester per day, maximum 2 per vessel. Outside SPZ: 2 per harvester per day, maximum 2 per vessel.",
+    "season": "Special Permit Zone: closed April 1-July 31; open August 1-March 31. Outside SPZ: open year-round.",
+    "jurisdiction": "Special Permit Zone includes state and adjacent federal waters south of Cape Florida in the Atlantic, Biscayne Bay south of Rickenbacker Causeway, and waters south of Cape Sable at the defined Gulf boundary.",
+    "source_name": "Florida Fish and Wildlife Conservation Commission",
+    "source_url": "https://myfwc.com/fishing/saltwater/recreational/permit/",
+    "verified_date": "2026-11-14",
+    "notes": "South Florida anglers must determine whether the exact location falls inside the Special Permit Zone. Separate Biscayne National Park regulations may apply. State waters: hook and line only; additional gear prohibitions apply. Do not apply the general statewide limits inside the SPZ."
   },
   "lon_range": [
     -100,
