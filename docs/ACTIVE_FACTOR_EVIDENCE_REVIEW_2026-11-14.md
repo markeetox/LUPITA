@@ -92,3 +92,10 @@ All six updated JSON files were parsed after commit. All eight previously source
 The current main-branch full-suite and species-validator workflow is validating the final profile updates: https://github.com/markeetox/LUPITA/actions/workflows/python-tests.yml
 
 No NOAA endpoint was contacted. No Pull Ocean Data workflow was run. No scoring logic, numeric factor values, weights, active flags, gates, required flags, or minimum coverage thresholds were changed.
+
+
+## Final validation
+
+Final CI run: [#43622573953](https://github.com/markeetox/LUPITA/actions/runs/43622573953) completed successfully with **272 passed, 0 failed, 115 warnings**. The species validator parsed all 130 profiles, marked all 130 structurally valid, and found zero active model compatibility issues or validator errors.
+
+The final audit artifact confirms no missing-source findings for the eight active factors reviewed here. Some inactive/planned factors elsewhere in the catalog still carry missing-source warnings. The catalog-wide active evidence risk remains elevated for 12 profiles because source references do not convert provisional numerical settings into validated preferences.
