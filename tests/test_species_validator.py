@@ -208,14 +208,15 @@ def test_catalog_summary_counts_temperature_only_site_pilots_and_evidence_risk(t
 
 
 def test_inactive_incomplete_range_is_a_warning_not_a_scoring_error():
-    incomplete = profile(factors=[{
-        "param": "sst_c", "kind": "range", "range": None, "ideal": None,
+    incomplete = profile()
+    incomplete["factors"].append({
+        "param": "spawning_season", "kind": "range", "range": None, "ideal": None,
         "weight": 0.0, "active": False, "value_status": "needs_source", "sources": [],
-    }])
+    })
     result = validate_profile(incomplete, REGISTRY)
-    findings = {x["code"]: x for x in result["findings"]}
-    assert findings["invalid_range"]["severity"] == "WARNING"
-    assert findings["invalid_ideal"]["severity"] == "WARNING"
+    findings = [x for x in result["findings"] if x.get("factor") == "spawning_season"]
+    assert {x["code"]: x["severity"] for x in findings}["invalid_range"] == "WARNING"
+    assert {x["code"]: x["severity"] for x in findings}["invalid_ideal"] == "WARNING"
     assert result["schema_valid"] is True
 
 
