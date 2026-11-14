@@ -1,0 +1,111 @@
+{
+  "schema_version": 1,
+  "id": "bocaccio-rockfish",
+  "common_name": "Bocaccio rockfish",
+  "scientific_name": "Sebastes paucispinis",
+  "aliases": [
+    "bocaccio rockfish"
+  ],
+  "habitat_zone": "reef",
+  "display": {
+    "color": "#206dd8"
+  },
+  "review_status": "v1 - West Coast Pacific habitat profile",
+  "image": {
+    "status": "placeholder",
+    "kind": "illustration",
+    "url": "fish/bocaccio-rockfish.png",
+    "credit": "Original illustration",
+    "license": "",
+    "plan": "web/fish/bocaccio-rockfish.png placeholder illustration."
+  },
+  "profile": {
+    "size": "Min limit None / Bag limit 10 per day (rockfish sublimit)",
+    "diet": "Small fish, crustaceans, squids, and pelagic prey",
+    "swimming_depth": "20 to 200 m",
+    "behavior": "Navigates West Coast kelp forests, rocky reefs, and coastal upwelling zones.",
+    "regulations_link": "https://wildlife.ca.gov/Fishing/Ocean/Regulations/Sport-Fishing",
+    "sources": [
+      "https://wildlife.ca.gov/Fishing/Ocean/Regulations/Sport-Fishing"
+    ]
+  },
+  "lat_range": [
+    30.0,
+    52.0
+  ],
+  "factors": [
+    {
+      "param": "sst_c",
+      "kind": "range",
+      "range": [
+        8,
+        16
+      ],
+      "ideal": [
+        10,
+        14
+      ],
+      "weight": 0.5,
+      "active": true,
+      "value_status": "sourced",
+      "sources": [
+        "https://wildlife.ca.gov/Fishing/Ocean/Regulations/Sport-Fishing"
+      ],
+      "reason_template": "Water is {value} C, inside preferred Pacific temperature range for bocaccio rockfish."
+    },
+    {
+      "param": "depth_m",
+      "kind": "range",
+      "range": [
+        20,
+        200
+      ],
+      "ideal": [
+        22,
+        195
+      ],
+      "weight": 0.5,
+      "active": true,
+      "value_status": "sourced",
+      "sources": [
+        "https://wildlife.ca.gov/Fishing/Ocean/Regulations/Sport-Fishing"
+      ],
+      "gate": true,
+      "reason_template": "Depth is {value} m, within prime Pacific depth zone for bocaccio rockfish."
+    }
+  ],
+  "timing": {
+    "status": "angler_lore",
+    "light": {
+      "map": {
+        "day": 1.0,
+        "dawn": 0.9,
+        "dusk": 0.9,
+        "night": 0.5
+      },
+      "text": {
+        "day": "Full daylight when Pacific gamefish actively hunt.",
+        "dawn": "Dawn low-light feeding window.",
+        "dusk": "Dusk feeding window."
+      }
+    },
+    "note": "West Coast captain reports and biological upwelling patterns.",
+    "sources": [
+      "https://wildlife.ca.gov/Fishing/Ocean/Regulations/Sport-Fishing"
+    ]
+  },
+  "regulations": {
+    "summary": "CDFW: Included in rockfish 10-bag sub-limit",
+    "min_size": "None",
+    "max_size": "None",
+    "bag_limit": "10 per day (rockfish sublimit)",
+    "season": "Seasonal groundfish window",
+    "jurisdiction": "CDFW / NOAA",
+    "source_name": "West Coast State Regulations (CDFW/WDFW/ODFW/NOAA)",
+    "source_url": "https://wildlife.ca.gov/Fishing/Ocean/Regulations/Sport-Fishing"
+  },
+  "lon_range": [
+    -138.0,
+    -110.0
+  ]
+}

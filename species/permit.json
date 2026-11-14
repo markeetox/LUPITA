@@ -1,0 +1,198 @@
+{
+  "schema_version": 1,
+  "id": "permit",
+  "common_name": "Permit",
+  "scientific_name": "Trachinotus falcatus",
+  "aliases": [],
+  "habitat_zone": "inshore",
+  "review_status": "South Florida pilot draft; descriptive ecology is source-documented, but thermal scoring and feeding timing are not validated.",
+  "image": {
+    "status": "placeholder",
+    "kind": "illustration",
+    "url": "fish/placeholder.png",
+    "credit": "Placeholder graphic",
+    "license": "",
+    "plan": "web/fish/placeholder.png is a transparent placeholder image."
+  },
+  "profile": {
+    "size": "Not specified in this pilot profile; size is not used by the current model.",
+    "diet": "Not characterized in this pilot profile; diet is not used by the current model.",
+    "behavior": "Lower Florida Keys acoustic telemetry documents Permit using both shallow nearshore flats (less than 3 m) and deeper Florida Reef Tract habitat (approximately 15–40 m). The study reported that many tagged fish used both habitat types, supporting a connected flats-and-reef framing rather than a flats-only profile.",
+    "life_history": "This pilot separates flats-foraging context from deeper reef occupancy and spawning context. The available telemetry evidence does not justify treating every hard-bottom map polygon as spawning habitat.",
+    "regulations_link": "https://myfwc.com/fishing/saltwater/recreational/",
+    "sources": [
+      "https://pubmed.ncbi.nlm.nih.gov/31823365/",
+      "https://www.floridamuseum.ufl.edu/discover-fish/species-profiles/permit/"
+    ],
+    "spawning": "The lower Florida Keys telemetry study reported reef occupancy peaking from March through September, especially April–May, and interpreted reef use as associated with spawning. Treat this as study-region evidence, not a fully validated South Florida-wide seasonal rule.",
+    "overwintering": "No South Florida overwintering route or seasonal refuge rule is encoded in this pilot profile."
+  },
+  "factors": [
+    {
+      "param": "sst_c",
+      "kind": "range",
+      "range": [
+        20,
+        34
+      ],
+      "ideal": [
+        24,
+        30
+      ],
+      "weight": 0.35,
+      "active": true,
+      "value_status": "provisional",
+      "value_notes": "The configured temperature bounds are legacy screening values, not a validated adult Permit preference or physiological tolerance range. The cited flats-to-reef telemetry study supports habitat use and seasonal reef occupancy, not these numeric SST thresholds. Preserve them only for compatibility until a suitable temperature study and independent local validation are available.",
+      "reason_template": "Water is {value} C, within the currently configured provisional screening band for Permit; this is not a validated thermal preference.",
+      "sources": [],
+      "gate": true,
+      "required": true
+    }
+  ],
+  "open_items": [
+    "Find a primary study supporting adult Trachinotus falcatus thermal tolerance or preferred temperature; do not infer SST thresholds from habitat-use telemetry.",
+    "Add a distinct South Florida reef-tract validation sample set representing the documented deeper habitat range; retain flats as a separate habitat role.",
+    "Verify bathymetry source resolution, vertical datum, spatial coverage, and freshness before classifying reef-tract depth.",
+    "Validate March–September reef occupancy and April–May peak timing against independent observations outside the original telemetry sample.",
+    "Separate flats-foraging, reef occupancy/spawning context, seasonal presence, and flats-to-reef connectivity in candidate model dimensions.",
+    "Do not treat generic hard-bottom or artificial-reef map classes as confirmed Permit spawning habitat.",
+    "Keep current SST range, weight, active state, gate, and required flag unchanged until evidence and validation justify a model change."
+  ],
+  "display": {
+    "color": "#0c77f2"
+  },
+  "model": "sites",
+  "site_kinds": [
+    "inlet",
+    "flat",
+    "cut"
+  ],
+  "min_score_report": 0.35,
+  "max_spots": 15,
+  "confidence_cap": "Medium",
+  "timing": {
+    "status": "angler_lore",
+    "note": "Angler-derived timing hypotheses only. The numeric light, tide, and front maps are legacy uncalibrated settings, not demonstrated Permit feeding probabilities. Calibrate against timestamped, effort-aware observations before using them as biological claims.",
+    "sources": [],
+    "weights": {
+      "light": 0.5,
+      "tide": 0.3,
+      "front": 0.2
+    },
+    "light": {
+      "map": {
+        "dusk": 1,
+        "night": 0.8,
+        "dawn": 0.9,
+        "day": 0.6
+      },
+      "text": {
+        "dusk": "Dusk activity peak for Permit.",
+        "night": "Night feeding period for Permit.",
+        "dawn": "Dawn activity peak for Permit.",
+        "day": "Daytime feeding period for Permit."
+      }
+    },
+    "tide": {
+      "map": {
+        "falling": 1,
+        "slack_low": 0.6,
+        "rising": 0.7,
+        "slack_high": 0.5
+      },
+      "text": {
+        "falling": "Outgoing tide flushes food for Permit.",
+        "slack_low": "Slack low tide for Permit.",
+        "rising": "Incoming tide brings bait for Permit.",
+        "slack_high": "Slack high tide for Permit."
+      }
+    },
+    "front": {
+      "map": {
+        "approaching": 0.8,
+        "just_passed": 0.4,
+        "lull": 0.5
+      },
+      "text": {
+        "approaching": "Pre-front feeding spree for Permit.",
+        "just_passed": "Post-front slow period for Permit.",
+        "lull": "Stable weather pattern for Permit."
+      }
+    }
+  },
+  "lat_range": [
+    15,
+    30
+  ],
+  "regulations": {
+    "summary": "Regulated species - See MyFWC/NOAA guidelines",
+    "min_size": "Check MyFWC/NOAA rules",
+    "max_size": "None",
+    "bag_limit": "Varies by region / state",
+    "season": "Open year-round (subject to local quota/closures)",
+    "jurisdiction": "Atlantic & Gulf State/Federal Waters",
+    "source_name": "MyFWC Saltwater Regulations",
+    "source_url": "https://myfwc.com/fishing/saltwater/recreational/"
+  },
+  "lon_range": [
+    -100,
+    -50
+  ],
+  "habitat_contexts": {
+    "schema_version": 1,
+    "contexts": [
+      {
+        "id": "shallow-flat-use",
+        "feature_types": [
+          "flat",
+          "bay_subregion",
+          "nearshore_zone"
+        ],
+        "habitat_roles": [
+          "foraging",
+          "occupancy"
+        ],
+        "evidence_status": "supported_general_association",
+        "local_validation": "required",
+        "sources": [
+          "https://pubmed.ncbi.nlm.nih.gov/31823365/"
+        ],
+        "notes": "Lower Florida Keys telemetry documents use of nearshore flats shallower than 3 m. Validate transfer to individual South Florida flats."
+      },
+      {
+        "id": "reef-tract-use",
+        "feature_types": [
+          "reef",
+          "reef_tract"
+        ],
+        "habitat_roles": [
+          "occupancy",
+          "spawning_context"
+        ],
+        "evidence_status": "supported_general_association",
+        "local_validation": "required",
+        "sources": [
+          "https://pubmed.ncbi.nlm.nih.gov/31823365/"
+        ],
+        "notes": "The study documents use of Florida Reef Tract habitat at approximately 15–40 m and seasonal reef occupancy. This does not make every hard-bottom polygon confirmed spawning habitat."
+      },
+      {
+        "id": "flats-to-reef-connectivity",
+        "feature_types": [
+          "flat",
+          "reef_tract"
+        ],
+        "habitat_roles": [
+          "movement",
+          "connectivity"
+        ],
+        "evidence_status": "supported_general_association",
+        "local_validation": "required",
+        "sources": [
+          "https://pubmed.ncbi.nlm.nih.gov/31823365/"
+        ],
+        "notes": "Tagged fish used both nearshore flats and deeper reef habitat. Connectivity is an ecological context, not a route prediction."
+      }
+    ]
+  }
+}

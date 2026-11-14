@@ -1,0 +1,23 @@
+{
+  "api_version": 1,
+  "generated_utc": "2026-11-14T10:08:58.287373+00:00",
+  "status": "degraded",
+  "prediction_refreshed": true,
+  "prediction_snapshot": {
+    "status": "refreshed",
+    "generated_utc": "2026-11-14T10:08:58.287373+00:00",
+    "source": "current_refresh"
+  },
+  "critical_issues": [],
+  "optional_layer_issues": [
+    "currents: failed"
+  ],
+  "freshness_issues": [
+    "sst: delayed (49.1 hours old)",
+    "chlorophyll: delayed (94.2 hours old)",
+    "currents: unknown"
+  ],
+  "errors": [
+    "layers currents primary: HTTP 404 for https://upwell.pfeg.noaa.gov/erddap/griddap/ucsdHfrE2.csv?water_u[(last)][(24):1:(28.5)][(-83.5):1:(-78)],water_v[(last)][(24):1:(28.5)][(-83.5):1:(-78)],hdop[(last)][(24):1:(28.5)][(-83.5):1:(-78)],number_of_sites[(last)][(24):1:(28.5)][(-83.5):1:(-78)],number_of_radials[(last)][(24):1:(28.5)][(-83.5):1:(-78)] (attempt 1/4); headers={'date': 'Sat, 14 Nov 2026 10:11:05 GMT', 'server': 'Apache', 'content-type': 'text/plain;charset=UTF-8'}; body='Error { code=404; message=\"Not Found: Currently unknown datasetID=ucsdHfrE2\"; }'"
+  ]
+}

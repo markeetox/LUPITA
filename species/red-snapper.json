@@ -1,0 +1,130 @@
+{
+  "schema_version": 1,
+  "id": "red-snapper",
+  "common_name": "Red snapper",
+  "scientific_name": "Lutjanus campechanus",
+  "aliases": [
+    "red snapper"
+  ],
+  "habitat_zone": "reef",
+  "display": {
+    "color": "#d83689"
+  },
+  "review_status": "draft v1 - deep reef and wreck snapper",
+  "image": {
+    "status": "placeholder",
+    "kind": "illustration",
+    "url": "fish/red-snapper.png",
+    "credit": "Original illustration",
+    "license": "",
+    "plan": "web/fish/red-snapper.png placeholder illustration."
+  },
+  "profile": {
+    "size": "Common 5-15 lb; up to 35+ lb",
+    "diet": "Fish, squids, crabs, and octopus",
+    "swimming_depth": "15 to 90 m",
+    "behavior": "Aggregates over offshore artificial reefs, deep wrecks, rocky ledges, and hardbottom structures.",
+    "regulations_link": "https://myfwc.com/",
+    "sources": [
+      "https://myfwc.com/"
+    ]
+  },
+  "factors": [
+    {
+      "param": "sst_c",
+      "kind": "range",
+      "range": [
+        16,
+        26
+      ],
+      "ideal": [
+        19,
+        23
+      ],
+      "weight": 0.35,
+      "active": true,
+      "value_status": "sourced",
+      "sources": [
+        "https://myfwc.com/"
+      ],
+      "reason_template": "Water is {value} C, inside preferred temperature range for red snapper."
+    },
+    {
+      "param": "structure_type",
+      "kind": "category",
+      "preferred": [
+        "artificial_reef",
+        "wreck",
+        "natural_reef",
+        "ledge"
+      ],
+      "weight": 0.35,
+      "active": true,
+      "value_status": "sourced",
+      "sources": [
+        "https://myfwc.com/"
+      ],
+      "map": {
+        "artificial_reef": 1.0,
+        "wreck": 1.0,
+        "natural_reef": 0.8,
+        "ledge": 0.8
+      },
+      "reason_template": "Structure is {value}, highly favored by red snapper."
+    },
+    {
+      "param": "depth_m",
+      "kind": "range",
+      "range": [
+        15,
+        90
+      ],
+      "ideal": [
+        30,
+        60
+      ],
+      "weight": 0.3,
+      "active": true,
+      "value_status": "sourced",
+      "sources": [
+        "https://myfwc.com/"
+      ],
+      "gate": true,
+      "reason_template": "Depth is {value} m, in prime red snapper depth zone."
+    }
+  ],
+  "timing": {
+    "status": "angler_lore",
+    "light": {
+      "map": {
+        "day": 1.0,
+        "dawn": 0.9,
+        "dusk": 0.9,
+        "night": 0.5
+      },
+      "text": {
+        "day": "It is full daylight, when fish feed actively.",
+        "dawn": "It is dawn, a low-light time when fish feed actively.",
+        "dusk": "It is dusk, a low-light time when fish feed actively."
+      }
+    },
+    "note": "Patterns reported by local captains and fishing writers, not tested by studies.",
+    "sources": [
+      "https://myfwc.com/"
+    ]
+  },
+  "regulations": {
+    "summary": "16\" min total length; 2 per harvester / day",
+    "min_size": "16 inches total length",
+    "max_size": "None",
+    "bag_limit": "2 per harvester / day (Atlantic state waters)",
+    "season": "Open during state/federal designated harvest days",
+    "jurisdiction": "Florida State & Federal SAFMC",
+    "source_name": "MyFWC Red Snapper Regulations",
+    "source_url": "https://myfwc.com/fishing/saltwater/recreational/snappers/"
+  },
+  "lon_range": [
+    -100.0,
+    -50.0
+  ]
+}

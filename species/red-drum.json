@@ -1,0 +1,150 @@
+{
+  "schema_version": 1,
+  "id": "red-drum",
+  "common_name": "Red drum (redfish)",
+  "scientific_name": "Sciaenops ocellatus",
+  "aliases": [
+    "redfish",
+    "channel bass",
+    "red drum"
+  ],
+  "habitat_zone": "inshore",
+  "display": {
+    "color": "#2d20d8"
+  },
+  "review_status": "draft v1 - shallow inshore drum profile",
+  "image": {
+    "status": "placeholder",
+    "kind": "illustration",
+    "url": "fish/red-drum.png",
+    "credit": "Original illustration",
+    "license": "",
+    "plan": "web/fish/red-drum.png placeholder illustration."
+  },
+  "profile": {
+    "size": "Common 3-15 lb; bull reds over 30 lb",
+    "diet": "Crabs, shrimp, mullet, and pinfish",
+    "swimming_depth": "Shallow flats and channels; 0.3 to 15 m",
+    "behavior": "Forages over shallow oyster bars, seagrass flats, and muddy estuarine channels. Adult bull reds form fall spawning runs in inlet passes.",
+    "regulations_link": "https://myfwc.com/",
+    "sources": [
+      "https://myfwc.com/"
+    ]
+  },
+  "factors": [
+    {
+      "param": "sst_c",
+      "kind": "range",
+      "range": [
+        15,
+        32
+      ],
+      "ideal": [
+        22,
+        28
+      ],
+      "weight": 0.4,
+      "active": true,
+      "value_status": "sourced",
+      "sources": [
+        "https://myfwc.com/"
+      ],
+      "reason_template": "Water is {value} C, favorable for foraging red drum."
+    },
+    {
+      "param": "depth_m",
+      "kind": "range",
+      "range": [
+        0.3,
+        15
+      ],
+      "ideal": [
+        0.5,
+        5
+      ],
+      "weight": 0.3,
+      "active": true,
+      "value_status": "sourced",
+      "sources": [
+        "https://myfwc.com/"
+      ],
+      "gate": true,
+      "reason_template": "Depth is {value} m, in shallow flats and channel habitat."
+    },
+    {
+      "param": "season_presence",
+      "kind": "season",
+      "weight": 0.3,
+      "active": true,
+      "value_status": "sourced",
+      "sources": [
+        "https://myfwc.com/"
+      ],
+      "months": [
+        8,
+        9,
+        10,
+        11,
+        12
+      ],
+      "peak_months": [
+        9,
+        10,
+        11
+      ],
+      "in_score": 0.8,
+      "off_score": 0.5,
+      "value_text": {
+        "peak": "It is peak fall red drum run season.",
+        "in_season": "It is red drum season.",
+        "off": "Outside peak fall run, but red drum are present year-round."
+      }
+    }
+  ],
+  "timing": {
+    "status": "angler_lore",
+    "light": {
+      "map": {
+        "dawn": 1.0,
+        "dusk": 0.9,
+        "day": 0.8,
+        "night": 0.5
+      },
+      "text": {
+        "dawn": "It is dawn, a low-light time when fish feed actively.",
+        "dusk": "It is dusk, a low-light time when fish feed actively.",
+        "day": "It is full daylight, when fish feed actively."
+      }
+    },
+    "tide": {
+      "map": {
+        "rising": 1.0,
+        "falling": 0.9,
+        "slack_high": 0.5,
+        "slack_low": 0.4
+      },
+      "text": {
+        "rising": "The tide is rising, bringing in fresh water and bait.",
+        "falling": "The tide is falling, flushing bait out through structure."
+      }
+    },
+    "note": "Patterns reported by local captains and fishing writers, not tested by studies.",
+    "sources": [
+      "https://myfwc.com/"
+    ]
+  },
+  "regulations": {
+    "summary": "18\" - 27\" slot limit; 1 per harvester",
+    "min_size": "18 inches total length",
+    "max_size": "27 inches total length",
+    "bag_limit": "1 per harvester / day (FL Atlantic)",
+    "season": "Open year-round",
+    "jurisdiction": "Florida State Waters (FWC)",
+    "source_name": "MyFWC Red Drum Regulations",
+    "source_url": "https://myfwc.com/fishing/saltwater/recreational/red-drum/"
+  },
+  "lon_range": [
+    -100.0,
+    -50.0
+  ]
+}
