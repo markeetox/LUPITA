@@ -206,3 +206,16 @@ Current validation run: [#43621667713](https://github.com/markeetox/LUPITA/actio
 - CI run and report artifact: [#43622006765](https://github.com/markeetox/LUPITA/actions/runs/43622006765).
 
 The 130 profiles classified as needing research or model rebuilding reflect a structural review proxy, not an empirical finding that every profile is scientifically invalid. The proposed confidence policy remains inactive pending review. Prediction scoring and confidence output are unchanged.
+
+
+## Active factor evidence review | 2026-11-14
+
+**Status:** source review and profile annotations committed; final CI validation pending.
+
+- Eight previously source-missing active factors across six species now have factor-level source references and explicit limitations.
+- All remain marked `provisional`. Sources that are contextual, model-derived, age-specific, or geographically limited were not treated as numeric validation.
+- No factor values, weights, active flags, gates, required flags, or scoring behavior changed.
+- Full review: [Active Factor Evidence Review](ACTIVE_FACTOR_EVIDENCE_REVIEW_2026-11-14.md).
+- Latest validation run: [#43622375109](https://github.com/markeetox/LUPITA/actions/runs/43622375109).
+
+NOAA remains paused.
