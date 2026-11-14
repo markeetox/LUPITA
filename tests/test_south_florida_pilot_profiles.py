@@ -32,8 +32,8 @@ def test_numeric_sst_thresholds_are_explicitly_provisional_not_mislabelled_as_so
         profile = load(species_id)
         factor = next(f for f in profile["factors"] if f["param"] == "sst_c")
         assert factor["value_status"] == "provisional"
-        assert factor["sources"] == []
-        assert "not a validated thermal preference" in factor["reason_template"]
+        assert factor["sources"]  # contextual/model-derived sources do not validate the numeric band
+        assert "provisional" in factor["reason_template"].lower()
         assert "not a validated" in factor["value_notes"].lower()
 
 
