@@ -134,8 +134,8 @@
     "jurisdiction": "Florida state and federal waters off Collier, Monroe, Miami-Dade, Broward, Palm Beach and Martin counties; other Florida counties have different/no barracuda-specific limits",
     "source_name": "Florida Fish and Wildlife Conservation Commission",
     "source_url": "https://myfwc.com/fishing/saltwater/recreational/barracuda/",
-    "effective_date": "2026-11-14",
-    "notes": "Special regulations apply inside Biscayne National Park. These South Florida county rules should not be generalized to the rest of Florida."
+    "notes": "Special regulations apply inside Biscayne National Park. These South Florida county rules should not be generalized to the rest of Florida.",
+    "verified_date": "2026-11-14"
   },
   "lon_range": [
     -100,
