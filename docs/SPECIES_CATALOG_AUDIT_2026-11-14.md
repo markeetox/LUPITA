@@ -89,7 +89,7 @@ The current validator does not fully check:
 
 The validator's supported-factor tables are manually maintained copies of scorer capabilities. They should be regression-tested against the actual scoring dispatch so they cannot silently drift.
 
-The validator and its unit tests were inspected, but the validator command and Python test suite were **not run** in this audit because no local repository checkout was available in the session. The GitHub file inspection and static cross-check are not a substitute for executing the repository test suite.
+The validator and its unit tests were inspected during the initial static review. A subsequent follow-up added validator coverage and ran the full suite plus the validator in GitHub Actions; the executed results are recorded below.
 
 ## Missing-data behavior confirmed from code
 
@@ -141,3 +141,32 @@ A proposed confidence policy is documented separately in [Species Model Confiden
 The main Python workflow now runs the species validator after the test suite whenever Python code, species profiles, or the parameter registry changes, and uploads the JSON/Markdown/CSV audit reports as a workflow artifact.
 
 **Validation:** full CI run is pending on the current profile-fix commit. Earlier runs exposed a malformed evidence-status handling bug in the new validator and stale phrase assertions in the existing bonefish/permit profile regression test. Both were corrected; the current run must pass before this milestone is marked validated.
+
+
+## Executed validator results | 2026-11-14
+
+The updated validator ran against the complete repository catalog in GitHub Actions and generated JSON, Markdown, and CSV reports.
+
+| Metric | Result |
+|---|---:|
+| Profiles inspected | 130 |
+| Profiles parsed | 130 |
+| JSON parse errors | 0 |
+| Structurally valid under active/inactive factor rules | 130 |
+| Active model compatibility issues | 0 |
+| Validator errors | 0 |
+| Validator warnings | 406 |
+| Validator informational findings | 123 |
+| Temperature-only named-site pilots | 23 |
+| Other one-factor models | 27 |
+| Multi-factor models | 80 |
+| Profiles with elevated active evidence risk | 12 |
+| Combined uncertain active factor weight across profiles | 5.70 |
+
+The 5.70 value is the sum of uncertain active factor weights across species profiles. It is not a probability, a coverage percentage, or a single model's score.
+
+The validator classifies 127 profiles as **NEEDS MODEL REBUILD** and 3 as **NEEDS RESEARCH**. This classification is driven partly by the validator's six-dimension structural review proxy and single-factor warnings. It is a prioritization signal for further research and model design, not an independent scientific finding that every one of those species profiles is unusable.
+
+The follow-up also recognized `needs_source` as a valid evidence workflow status and downgraded incomplete numeric definitions on inactive factors to warnings. Active factors with incomplete range/ideal definitions remain errors. This preserves incomplete future/planned factors without pretending they are ready for scoring.
+
+**Executed run:** [Python tests and species audit #43621922625](https://github.com/markeetox/LUPITA/actions/runs/43621922625). The audit artifact was uploaded as `lupita-species-audit`. A later full-suite run includes the final additional regression test correction and is being tracked separately.
