@@ -88,3 +88,9 @@ Next:
 3. Preserve unknowns and mark unsupported numeric biology as provisional rather than inventing precision.
 4. Run `python scripts/validate_species.py` and focused/full tests at the next authorized validation checkpoint; no NOAA ingestion workflow is required for this work.
 5. Do not change prediction weights or active scoring factors without separate evidence and explicit review.
+
+
+## Species profile accuracy milestone | progress update 2026-11-14
+**Completed:** 10 South Florida species records across two batches: black grouper, great barracuda, mangrove snapper, yellowtail snapper, common snook, Atlantic tarpon, Permit, bonefish, hogfish and mutton snapper. Biology, habitat, life history and regional harvest guidance were reviewed against FWC, NOAA/Florida Museum and relevant research sources. Unsupported numeric habitat preferences are labelled provisional; scoring configuration remains unchanged.
+
+**Next:** continue with unreviewed South Florida species, prioritizing generic/placeholder regulations and weak biological evidence. Maintain a reviewed-species list in `docs/PROGRESS_LOG.md` and do not repeat completed records. Run the species audit and relevant tests at a dedicated validation checkpoint. This work remains independent of the paused NOAA ingestion troubleshooting.
