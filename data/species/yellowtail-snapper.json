@@ -8,7 +8,7 @@
     "yellowtail"
   ],
   "habitat_zone": "reef",
-  "review_status": "draft v4 - reef areas split into patches; shallow bay bottom excluded by a depth gate",
+  "review_status": "reviewed 2026-11-14 - biology checked against FWC and NOAA Fisheries; Florida Atlantic regulations checked against current FWC snapper guidance",
   "image": {
     "status": "placeholder",
     "kind": "illustration",
@@ -18,24 +18,21 @@
     "plan": "web/fish/yellowtail-snapper.png is a transparent placeholder illustration. To use a real photo: replace that file with a transparent PNG of the same name (cropped tight to the fish, facing left looks best), then set kind to \"photo\" and fill in credit and license here. Only use images you have the right to show: NOAA Fisheries species pages and Wikimedia Commons are good places to look; FWC illustrations are copyrighted."
   },
   "profile": {
-    "size": "Typically 2 to 5 lb and 8 to 14 in; up to about 34 in and 11 lb (NOAA Fisheries). Florida state record 8 lb 9 oz.",
-    "diet": "Fish and invertebrates",
-    "range": "North Carolina to southeastern Brazil; most abundant around the Bahamas, south Florida and the Caribbean",
-    "behavior": "Reef fish found around coral heads, patch reefs and high-profile artificial structure. Often swarms up a steady chum slick. Juveniles use seagrass and mangrove nursery habitat.",
-    "spawning": "April through August in the southeast U.S. (SAFMC); FishBase notes spawning occurs year-round in parts of the range with different peaks by area",
-    "regulations_link": "https://myfwc.com/",
+    "size": "Commonly 2-5 lb; FWC reports a maximum around 30 inches and 5 lb. Florida state record: 8 lb 9 oz.",
+    "diet": "Small fishes and invertebrates.",
+    "range": "Western Atlantic tropical waters; especially common around South Florida, the Florida Keys, the Bahamas and the Caribbean.",
+    "behavior": "A reef-associated schooling snapper, commonly found over or near coral reefs and other hard structure. Adults feed on fishes and invertebrates and often rise into the water column to feed. Juveniles use seagrass, mangroves and back-reef nursery habitat.",
+    "spawning": "FWC describes spawning in mid-summer; regional fisheries sources report a broader April-August spawning period in the southeastern United States.",
+    "lifespan": "NOAA Fisheries reports a typical lifespan of 6-14 years, with older individuals documented.",
+    "depth": "Adults are commonly associated with offshore reef habitat; NOAA Fisheries and stock-assessment sources describe adult use of roughly 10-70 m, while juveniles use shallower nursery habitats.",
+    "regulations_link": "https://myfwc.com/fishing/saltwater/recreational/snappers/",
     "sources": [
-      "https://myfwc.com/wildlifehabitats/profiles/saltwater/snapper/yellowtail-snapper",
-      "https://safmc.net/species/snapper-yellowtail/",
-      "https://www.floridasportfishing.com/offshore/never-fail-yellowtail/article_9f210b53-25ed-5d2e-bd7c-8832fccd3676.html",
-      "https://sedarweb.org/documents/sedar-64-dw-08-abundance-and-distribution-of-juvenile-yellowtail-snapper-in-nearshore-seagrass-habitat-in-the-middle-florida-keys",
+      "https://myfwc.com/wildlifehabitats/profiles/saltwater/snapper/yellowtail-snapper/",
+      "https://myfwc.com/fishing/saltwater/recreational/snappers/",
       "https://www.fisheries.noaa.gov/species/yellowtail-snapper/science",
-      "https://www.fishbase.org/summary/188",
-      "https://reeflifesurvey.com/species/ocyurus-chrysurus/",
+      "https://safmc.net/species/snapper-yellowtail/",
       "https://sedarweb.org/documents/s8dw04-the-biology-of-yellowtail-snapper-ocyurus-chrysurus-with-emphasis-on-populations-in-the-caribbean/"
-    ],
-    "lifespan": "6 to 14 years typical; up to 28 years (NOAA Fisheries)",
-    "depth": "Adults mostly 10-70 m over sandy areas near offshore reefs (NOAA Fisheries); commercial handline catch mainly 20-60 m; overall depth range 0-180 m (FishBase). Juveniles use seagrass, mangroves and back reefs."
+    ]
   },
   "factors": [
     {
@@ -105,7 +102,7 @@
       "kind": "range",
       "range": null,
       "ideal": null,
-      "weight": 0.0,
+      "weight": 0,
       "active": false,
       "value_status": "needs_source",
       "value_notes": "Anglers fish a steady-flowing chum slick, but no numeric current preference was found. Switched off until a source is found.",
@@ -136,7 +133,7 @@
     {
       "param": "life_stage",
       "kind": "category",
-      "weight": 0.0,
+      "weight": 0,
       "active": false,
       "value_status": "sourced",
       "value_notes": "Juveniles use seagrass and mangroves as nurseries; adults use reefs. Needed so nursery habitat is not scored as adult fishing habitat.",
@@ -147,9 +144,9 @@
     }
   ],
   "open_items": [
-    "Current speed preference has no source, so the factor is switched off",
-    "Feeding time is unclear (FishBase says mainly at night, another source says diurnal)",
-    "Image still needed"
+    "The configured SST range and ideal band are sourced partly from FishBase and observational records, not a controlled species-specific thermal-preference experiment.",
+    "Juvenile nursery habitat and adult reef habitat should remain distinct; the inactive life_stage factor is not being activated in this data-only update.",
+    "Biscayne National Park-specific harvest limits need separate encoding before park-level regulation advice."
   ],
   "display": {
     "color": "#7d3cf2"
@@ -171,8 +168,8 @@
     ],
     "light": {
       "map": {
-        "night": 1.0,
-        "dusk": 1.0,
+        "night": 1,
+        "dusk": 1,
         "dawn": 0.75,
         "day": 0.7
       },
@@ -183,21 +180,23 @@
     }
   },
   "lat_range": [
-    15.0,
-    35.0
+    15,
+    35
   ],
   "regulations": {
-    "summary": "Regulated species - See MyFWC/NOAA guidelines",
-    "min_size": "Check MyFWC/NOAA rules",
+    "summary": "12 inches total length; up to 10 per person per day within the 10-snapper aggregate; open year-round in Atlantic state and federal waters.",
+    "min_size": "12 inches total length",
     "max_size": "None",
-    "bag_limit": "Varies by region / state",
-    "season": "Open year-round (subject to local quota/closures)",
-    "jurisdiction": "Atlantic & Gulf State/Federal Waters",
-    "source_name": "MyFWC Saltwater Regulations",
-    "source_url": "https://myfwc.com/fishing/saltwater/recreational/"
+    "bag_limit": "Up to 10 per person per day within the 10-snapper aggregate",
+    "season": "Open year-round",
+    "jurisdiction": "Florida Atlantic state and federal waters; special rules apply in Biscayne National Park",
+    "source_name": "Florida Fish and Wildlife Conservation Commission",
+    "source_url": "https://myfwc.com/fishing/saltwater/recreational/snappers/",
+    "effective_date": "2026-11-14",
+    "notes": "Reef-fish gear requirements apply. Special yellowtail snapper regulations apply inside Biscayne National Park; verify park-specific limits before harvest."
   },
   "lon_range": [
-    -100.0,
-    -50.0
+    -100,
+    -50
   ]
 }
