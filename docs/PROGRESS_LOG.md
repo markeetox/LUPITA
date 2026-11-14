@@ -499,7 +499,7 @@ Extend the validator and tests for coverage bounds, category maps, evidence diag
 - Added active evidence-weight accounting. The audit now distinguishes fully sourced, partly sourced, provisional, estimated, unsourced, and incomplete metadata; uncertain weight is not double-counted when both evidence status and source references are missing.
 - Added `evidence_risk`, `active_uncertain_weight`, `active_partly_sourced_weight`, `active_evidence_status_weight`, `min_coverage`, and `model_scope` fields to species audit results.
 - Added catalog-level counts for temperature-only site pilots and profiles with elevated active evidence risk.
-- Added eight regression tests covering coverage bounds, category maps, factor flags, engine-specific missing-data contracts, evidence accounting, malformed evidence metadata, and catalog summaries.
+- Added ten regression tests covering coverage bounds, category maps, factor flags, engine-specific missing-data contracts, evidence accounting, malformed evidence metadata, inactive incomplete factors, `needs_source` status, and catalog summaries.
 - Updated `python-tests.yml` so changes to `data/species/**` and `data/parameters.json` run the full suite and species validator on `main`; JSON/Markdown/CSV audit outputs are uploaded as a workflow artifact.
 - Added [proposed species confidence policy](SPECIES_MODEL_CONFIDENCE_POLICY.md). It is a review proposal only; prediction confidence is not changed until approved.
 
