@@ -89,7 +89,7 @@ def validate_profile(profile: Any, registry: dict[str, dict], filename: str = ""
         findings.append(finding("WARNING", "missing_display_color", "display.color is missing; catalog rendering may use a fallback."))
 
     model = profile.get("model", "grid")
-    if model not in VALID_MODELS:
+    if not isinstance(model, str) or model not in VALID_MODELS:
         findings.append(finding("ERROR", "unknown_model", f"Unsupported model '{model}'; expected grid or sites."))
         model = "grid"
     for key in ("lat_range", "lon_range"):
@@ -129,7 +129,7 @@ def validate_profile(profile: Any, registry: dict[str, dict], filename: str = ""
         factor_params.add(param)
         if param not in registry_keys:
             findings.append(finding("ERROR", "unknown_parameter", f"'{param}' is not registered in data/parameters.json.", param))
-        if kind not in VALID_KINDS:
+        if not isinstance(kind, str) or kind not in VALID_KINDS:
             findings.append(finding("ERROR", "unknown_factor_kind", f"'{param}' uses unknown kind '{kind}'.", param))
         weight = factor.get("weight", 0)
         if not is_number(weight) or weight < 0:
@@ -153,7 +153,7 @@ def validate_profile(profile: Any, registry: dict[str, dict], filename: str = ""
                 active_uncertain_weight += float(weight)
             if weight <= 0:
                 findings.append(finding("ERROR", "active_nonpositive_weight", f"Active factor '{param}' must have positive weight.", param))
-            if kind in engine.get(param, set()):
+            if isinstance(kind, str) and kind in engine.get(param, set()):
                 supported_weight += float(weight)
             else:
                 findings.append(finding("ERROR", "unsupported_active_factor", f"The {model} scorer cannot evaluate active factor '{param}' with kind '{kind}'.", param))
@@ -204,7 +204,7 @@ def validate_profile(profile: Any, registry: dict[str, dict], filename: str = ""
                     invalid_values = [key for key, value in category_map.items() if not is_number(value) or not 0 <= float(value) <= 1]
                     if invalid_values:
                         findings.append(finding("ERROR", "invalid_category_map_score", f"'{param}' map scores must be finite numbers from 0 to 1 for: {', '.join(sorted(invalid_values))}.", param))
-                    if values:
+                    if isinstance(values, list):
                         unknown = sorted(set(category_map) - set(values))
                         if unknown:
                             findings.append(finding("WARNING", "category_registry_mismatch", f"'{param}' map uses values absent from the registry: {', '.join(unknown)}.", param))
@@ -213,7 +213,7 @@ def validate_profile(profile: Any, registry: dict[str, dict], filename: str = ""
             if preferred is not None:
                 if not isinstance(preferred, list):
                     findings.append(finding("ERROR", "invalid_preferred_categories", f"'{param}' preferred values must be an array.", param))
-                elif values:
+                elif isinstance(values, list):
                     unknown = sorted(set(preferred) - set(values))
                     if unknown:
                         findings.append(finding("WARNING", "category_registry_mismatch", f"'{param}' preferred values are absent from the registry: {', '.join(unknown)}.", param))
