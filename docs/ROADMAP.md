@@ -118,3 +118,16 @@ Key findings:
 6. Keep NOAA ingestion/source troubleshooting paused until explicit clearance.
 
 **Audit boundary:** no NOAA endpoint, data workflow, prediction weight, threshold, or scoring behavior was changed or tested.
+
+
+## Species validator follow-up | 2026-11-14
+
+**Implementation committed; CI validation pending.**
+
+- Validate coverage thresholds, category maps, and factor flags.
+- Explicitly report model-specific `required` / `gate` behavior.
+- Report active evidence risk separately from environmental coverage.
+- Label one-factor SST-only site models as temperature-only pilots in audit output.
+- Run the full test suite and species validator on main whenever species profiles or the parameter registry change; publish audit reports as workflow artifacts.
+- Review [proposed confidence policy](SPECIES_MODEL_CONFIDENCE_POLICY.md) before changing user-facing confidence. No prediction scoring or confidence output is changed yet.
+- NOAA ingestion/source troubleshooting remains paused pending explicit clearance.
