@@ -9,7 +9,7 @@
     "robalo"
   ],
   "habitat_zone": "inshore",
-  "review_status": "draft v2 - inlet sites scored from buoy temperature, tide predictions, light and season; weights for tide and light are angler guidance, not studies",
+  "review_status": "reviewed 2026-11-14 - biology and spawning ecology checked against FWC; Southeast region harvest rules checked against current FWC regulations",
   "image": {
     "status": "placeholder",
     "kind": "illustration",
@@ -19,11 +19,11 @@
     "plan": "web/fish/snook.png is a transparent placeholder illustration. To use a real photo: replace that file with a transparent PNG of the same name (cropped tight to the fish, facing left looks best), then set kind to \"photo\" and fill in credit and license here. Only use images you have the right to show: NOAA Fisheries species pages and Wikimedia Commons are good places to look; FWC illustrations are copyrighted."
   },
   "profile": {
-    "size": "Up to about 48 in (50 lb) per FWC; Florida state record 45 lb 12 oz",
-    "diet": "Fish and large crustaceans; pinfish, anchovies and shrimp are major prey in one diet study",
-    "behavior": "Ambush predator that faces moving water and waits for prey to be carried down the current. Uses mangrove shorelines, seagrass, beaches, river mouths, docks and other structure. Retreats to deeper channels, backcountry bays and rivers during cold fronts.",
-    "life_history": "Born male; some change to female between roughly 18 and 22 in. Forms schools during the spawning season.",
-    "regulations_link": "https://myfwc.com/",
+    "size": "Up to about 48 inches and 50 lb; Florida state record 45 lb 12 oz (FWC).",
+    "diet": "Primarily fishes and large crustaceans. FWC lists live pinfish, small mullet, shrimp and sardines among effective baits; diet studies document fishes and crustaceans.",
+    "behavior": "Inshore coastal fish using mangrove shorelines, seagrass beds, beaches, channels, river mouths and other structure. Snook orient into moving water and ambush prey carried by the current. Juveniles use sheltered mangrove-lined swamps, bayous, rivers and creeks; adults use broad estuarine habitat and move between upper-estuary overwintering areas and higher-salinity spawning sites.",
+    "life_history": "Protandrous hermaphrodite: snook begin life as males and some change to females, commonly around 18-22 inches. Spawning in Florida generally occurs April/May through September/October depending on annual climate and water temperature. Schools form at major inlets and coastal river mouths; gamete release is commonly late afternoon or early evening.",
+    "regulations_link": "https://myfwc.com/fishing/saltwater/recreational/snook/",
     "sources": [
       "https://myfwc.com/wildlifehabitats/profiles/saltwater/snook/snook/",
       "https://www.floridamuseum.ufl.edu/discover-fish/species-profiles/common-snook/",
@@ -31,10 +31,11 @@
       "https://scholarscommons.fgcu.edu/esploro/outputs/journalArticle/Increased-Cold-Tolerance-of-a-Tropical/99384113521706570",
       "https://myfwc.com/research/saltwater/fish/snook/sketch-common-snook/",
       "https://pmc.ncbi.nlm.nih.gov/articles/PMC4084985/",
-      "https://animaldiversity.org/accounts/Centropomus_undecimalis/"
+      "https://animaldiversity.org/accounts/Centropomus_undecimalis/",
+      "https://myfwc.com/fishing/saltwater/recreational/snook/"
     ],
-    "spawning": "April through October in Florida, with peaks around June to September. Spawning aggregations form at inlets, passes, river mouths and nearshore reefs, with eggs released in the late afternoon and early evening on all tides. Atlantic-coast examples named by FWC include Jupiter and Lake Worth inlets.",
-    "overwintering": "Adults overwinter in low-salinity upper estuaries and rivers, then move to higher-salinity spawning areas in late spring and early summer."
+    "spawning": "Florida spawning generally runs April/May through September/October. Major inlets and coastal river mouths are documented spawning locations. Exact annual timing varies with climate and temperature.",
+    "overwintering": "Mature fish commonly move into lower-salinity upper-estuary areas for colder months, then move toward inlets and other higher-salinity spawning areas in late spring and summer. Movement distances vary by coast and individual."
   },
   "factors": [
     {
@@ -80,7 +81,7 @@
         "https://www.yellowdogflyfishing.com/blogs/back-stage-pass/fly-fishing-snook"
       ],
       "map": {
-        "inlet": 1.0
+        "inlet": 1
       },
       "value_text": {
         "inlet": "This is an inlet. Snook gather in inlets and passes to ambush bait on the tide, and to spawn in summer."
@@ -102,7 +103,7 @@
         "https://myfwc.com/wildlifehabitats/profiles/saltwater/snook/snook/"
       ],
       "map": {
-        "falling": 1.0,
+        "falling": 1,
         "slack_low": 0.6,
         "rising": 0.5,
         "slack_high": 0.4
@@ -151,7 +152,7 @@
         "https://www.yellowdogflyfishing.com/blogs/back-stage-pass/fly-fishing-snook"
       ],
       "map": {
-        "dusk": 1.0,
+        "dusk": 1,
         "night": 0.9,
         "dawn": 0.9,
         "day": 0.5
@@ -294,7 +295,7 @@
     },
     "light": {
       "map": {
-        "dusk": 1.0,
+        "dusk": 1,
         "night": 0.9,
         "dawn": 0.9,
         "day": 0.5
@@ -308,7 +309,7 @@
     },
     "tide": {
       "map": {
-        "falling": 1.0,
+        "falling": 1,
         "slack_low": 0.6,
         "rising": 0.5,
         "slack_high": 0.4
@@ -334,21 +335,23 @@
     }
   },
   "lat_range": [
-    15.0,
-    31.0
+    15,
+    31
   ],
   "regulations": {
-    "summary": "28\" - 32\" slot limit (Atlantic); 1 per harvester",
+    "summary": "Southeast management region (Martin-Palm Beach county line south to Miami-Dade/Monroe county line): 28-32 inches total length; 1 per person per day; closed Dec. 15-Jan. 31 and June 1-Aug. 31. Special Biscayne National Park rules apply.",
     "min_size": "28 inches total length",
     "max_size": "32 inches total length",
-    "bag_limit": "1 per harvester / day",
-    "season": "Closed Dec 15 - Jan 31 & Jun 1 - Aug 31 (Atlantic)",
-    "jurisdiction": "Florida State Waters (FWC)",
-    "source_name": "MyFWC Snook Regulations",
-    "source_url": "https://myfwc.com/fishing/saltwater/recreational/snook/"
+    "bag_limit": "1 fish per person per day; for-hire captain and crew may not retain a bag limit",
+    "season": "Open Feb. 1-May 31 and Sept. 1-Dec. 14 in the Southeast region; closed Dec. 15-Jan. 31 and June 1-Aug. 31",
+    "jurisdiction": "Florida Southeast Snook Management Region; regulations apply in inland, state and adjacent federal waters. Does not include Biscayne National Park special rules.",
+    "source_name": "Florida Fish and Wildlife Conservation Commission",
+    "source_url": "https://myfwc.com/fishing/saltwater/recreational/snook/",
+    "verified_date": "2026-11-14",
+    "notes": "The Southwest region includes Everglades National Park and the Florida Keys west of the Miami-Dade/Monroe county line and has different seasonal closure dates. Confirm the management region and Biscayne National Park rules for the exact fishing location. Snook permit and recreational saltwater license required unless exempt."
   },
   "lon_range": [
-    -100.0,
-    -50.0
+    -100,
+    -50
   ]
 }
