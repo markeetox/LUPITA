@@ -1,6 +1,6 @@
 # LUPITA engineering roadmap
 
-**Last updated:** 2026-11-13 | **Code:** `main` | **Generated-data export:** `data` only
+**Last updated:** 2026-11-14 | **Code:** `main` | **Generated-data export:** `data` only
 
 This is the handoff record for future sessions. Read it with [Project Status](PROJECT_STATUS.md) and [Progress Log](PROGRESS_LOG.md). Do not restart completed work or repeat expensive research workflows without a specific reason.
 
@@ -94,3 +94,27 @@ Next:
 **Completed:** 10 South Florida species records across two batches: black grouper, great barracuda, mangrove snapper, yellowtail snapper, common snook, Atlantic tarpon, Permit, bonefish, hogfish and mutton snapper. Biology, habitat, life history and regional harvest guidance were reviewed against FWC, NOAA/Florida Museum and relevant research sources. Unsupported numeric habitat preferences are labelled provisional; scoring configuration remains unchanged.
 
 **Next:** continue with unreviewed South Florida species, prioritizing generic/placeholder regulations and weak biological evidence. Maintain a reviewed-species list in `docs/PROGRESS_LOG.md` and do not repeat completed records. Run the species audit and relevant tests at a dedicated validation checkpoint. This work remains independent of the paused NOAA ingestion troubleshooting.
+
+
+## Species catalog audit | 2026-11-14
+
+**Status:** static audit of all 130 species profiles completed. See [full audit report](SPECIES_CATALOG_AUDIT_2026-11-14.md).
+
+Key findings:
+- 130 profiles parsed; 105 grid models and 25 site models.
+- No unsupported active parameter/kind combinations, unknown registry parameters, duplicate factor parameters within profiles, or active weight overflow found in the static cross-check.
+- Twelve profiles have 33 active provisional/estimated/unsourced factors; eight active factors lack source references.
+- 23 of 25 site models are temperature-only, with one active SST factor.
+- Confidence calculation does not incorporate active biological evidence status.
+- Grid and site scorers have different missing `required` / `gate` semantics.
+- The existing validator needs additional checks for coverage bounds, category maps, evidence diagnostics, and flag behavior.
+
+### Next acceptance criteria
+1. Extend the species validator and tests without changing prediction scoring semantics.
+2. Validate `min_coverage` bounds, category map values/keys, and required/gate combinations against both engines.
+3. Add an evidence-aware confidence diagnostic and agree on the policy before changing user-facing confidence.
+4. Explicitly label the 23 one-factor site models as temperature-only pilots; expand only with evidence-backed site inputs.
+5. Run the species validator and focused tests from a local checkout or authorized non-NOAA test path.
+6. Keep NOAA ingestion/source troubleshooting paused until explicit clearance.
+
+**Audit boundary:** no NOAA endpoint, data workflow, prediction weight, threshold, or scoring behavior was changed or tested.
