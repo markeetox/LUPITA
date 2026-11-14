@@ -122,7 +122,7 @@ Key findings:
 
 ## Species validator follow-up | 2026-11-14
 
-**Implementation committed; CI validation pending.**
+**Implementation committed and validated on 2026-11-14.** Full Python suite: **272 passed, 0 failed, 115 warnings**. Species validator: **130 profiles parsed, 130 structurally valid, 0 active compatibility issues, 0 validator errors**. See [run #43622006765](https://github.com/markeetox/LUPITA/actions/runs/43622006765) and the [full audit](SPECIES_CATALOG_AUDIT_2026-11-14.md).**
 
 - Validate coverage thresholds, category maps, and factor flags.
 - Explicitly report model-specific `required` / `gate` behavior.
