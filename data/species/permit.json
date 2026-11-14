@@ -44,7 +44,7 @@
       "weight": 0.35,
       "active": true,
       "value_status": "provisional",
-      "value_notes": "FishBase reports a modeled preferred-temperature estimate of 23.2–28.0 °C based on 624 cells; this is a model-derived association, not a controlled thermal-preference or tolerance experiment. The cited Lower Florida Keys telemetry supports habitat use and seasonal reef occupancy, not the configured 20–34 °C screening range or 24–30 °C ideal. Keep these values provisional pending direct thermal evidence and local validation.",
+      "value_notes": "FishBase reports a model-derived preferred-temperature estimate of 23.2–28.0 °C based on 624 cells; this is not a validated species-specific thermal preference curve or a controlled thermal-preference experiment. The cited Lower Florida Keys telemetry supports habitat use and seasonal reef occupancy, not the configured 20–34 °C screening range or 24–30 °C ideal. Keep these values provisional pending direct thermal evidence and local validation.",
       "reason_template": "Water is {value} C, within the currently configured provisional screening band for Permit; this is not a validated thermal preference.",
       "sources": [
         "https://www.fishbase.se/country/CountrySpeciesSummary.php?c_code=660&genusname=Trachinotus&speciesname=falcatus",
