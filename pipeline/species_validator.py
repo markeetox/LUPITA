@@ -356,11 +356,14 @@ def audit_species(species_dir: Path, parameters_file: Path, generated_utc: str |
         "structurally_valid": sum(bool(x["schema_valid"]) for x in results),
         "model_compatibility_issues": sum(not x["model_compatible"] for x in results),
         "needs_biological_research_or_rebuild": sum(x["classification"] in {"NEEDS RESEARCH", "NEEDS MODEL REBUILD"} for x in results),
+        "temperature_only_site_pilots": sum(x.get("model_scope") == "temperature_only_pilot" for x in results),
+        "elevated_active_evidence_profiles": sum(x.get("evidence_risk") == "elevated" for x in results),
+        "active_uncertain_weight_total": round(sum(x.get("active_uncertain_weight", 0.0) for x in results), 6),
         "classification_counts": dict(sorted(classes.items())),
         "severity_counts": {level: sum(x["finding_counts"].get(level, 0) for x in results) for level in ("error", "warning", "info")},
     }
     return {
-        "report_version": 1,
+        "report_version": 2,
         "generated_utc": generated_utc or datetime.now(timezone.utc).replace(microsecond=0).isoformat(),
         "source": {"species_directory": "data/species", "parameter_registry": "data/parameters.json"},
         "interpretation": {
@@ -392,6 +395,9 @@ def write_reports(report: dict[str, Any], output_dir: Path) -> None:
              f"- Structurally valid: **{summary['structurally_valid']}**",
              f"- Model compatibility issues: **{summary['model_compatibility_issues']}**",
              f"- Need research or model rebuilding: **{summary['needs_biological_research_or_rebuild']}**",
+             f"- Temperature-only site pilots: **{summary.get('temperature_only_site_pilots', 0)}**",
+             f"- Profiles with elevated active evidence risk: **{summary.get('elevated_active_evidence_profiles', 0)}**",
+             f"- Total uncertain active factor weight (not a probability): **{summary.get('active_uncertain_weight_total', 0.0):.3f}**",
              "", "| Classification | Count |", "|---|---:|"]
     lines.extend(f"| {key} | {value} |" for key, value in summary["classification_counts"].items())
     lines += ["", "## Interpretation", "",
