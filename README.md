@@ -9,7 +9,7 @@ The project has two connected workstreams:
 - **Prediction platform:** maintain the production habitat and bite-timing pipeline, environmental inputs, species profiles, API contract, and map client.
 - **Spatial intelligence research:** build a defensible South Florida geographic model from NOAA, FWC, FDEP, county, and other authoritative sources. Research geometry is not production geometry until it passes source review, topology checks, and explicit promotion.
 
-The active Biscayne Bay GIS work is tracked in [Project Status](docs/PROJECT_STATUS.md), with decisions and historical milestones in the [Progress Log](docs/PROGRESS_LOG.md). The current engineering handoff and next acceptance criteria are in [Roadmap](docs/ROADMAP.md). The 2026-11-14 [Species Catalog Audit](docs/SPECIES_CATALOG_AUDIT_2026-11-14.md) records the full 130-profile static review and scoring-engine findings. Source acquisition and validation policy is documented in [Biscayne research pipeline policy](docs/biscayne-research-pipeline-policy-2026-11.md).
+The active Biscayne Bay GIS work is tracked in [Project Status](docs/PROJECT_STATUS.md), with decisions and historical milestones in the [Progress Log](docs/PROGRESS_LOG.md). The current engineering handoff and next acceptance criteria are in [Roadmap](docs/ROADMAP.md). The 2026-11-14 [Species Catalog Audit](docs/SPECIES_CATALOG_AUDIT_2026-11-14.md) records the full 130-profile static review and scoring-engine findings. The [Species Model Confidence Policy](docs/SPECIES_MODEL_CONFIDENCE_POLICY.md) defines the proposed evidence-aware confidence approach, pending approval. Source acquisition and validation policy is documented in [Biscayne research pipeline policy](docs/biscayne-research-pipeline-policy-2026-11.md).
 
 ## Repository records and change discipline
 
@@ -17,6 +17,7 @@ Every implementation batch must update this README and the relevant project reco
 
 - [Project Status](docs/PROJECT_STATUS.md): current branch/PR state, completed work, blockers, and next milestone.
 - [Species Catalog Audit](docs/SPECIES_CATALOG_AUDIT_2026-11-14.md): static review of all species profiles, scoring compatibility, evidence quality, coverage, and missing-data behavior.
+- [Species Model Confidence Policy](docs/SPECIES_MODEL_CONFIDENCE_POLICY.md): proposed rules for separating biological evidence quality from environmental coverage and prediction confidence.
 - [Progress Log](docs/PROGRESS_LOG.md): dated, chronological record of changes, commits, decisions, and validation outcomes.
 - [Biscayne research pipeline policy](docs/biscayne-research-pipeline-policy-2026-11.md): source-freeze, provenance, and targeted-validation rules.
 
