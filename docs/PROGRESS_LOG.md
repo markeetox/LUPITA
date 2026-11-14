@@ -395,3 +395,29 @@ Compare source age across multiple scheduled refreshes, then calibrate operation
 - Added `source_endpoint` to SST diagnostics and verified the fallback loader records the actual selected host.
 - Latest full Python suite: **262 passed, 0 failed, 115 warnings** on [run #43494256052](https://github.com/markeetox/LUPITA/actions/runs/43494256052), commit `5da0dc56470975216e032b98b0f230a586d8102c`.
 - Live Pull Ocean Data verification remains outstanding. Inspect `latest.json` for `sst.source_endpoint` and `data_quality.layers.sst.source_endpoint`, and `api/v1/refresh.json` for refresh health and the prediction snapshot timestamp.
+
+
+## 2026-11-14 | South Florida species profile accuracy batch 1
+
+**Branch:** `main`  
+**Scope:** static species JSON only; no NOAA ingestion, workflow, prediction-weight, scoring, or publication changes.
+
+### Species records updated
+- `data/species/black-grouper.json`: replaced generic profile text with NOAA Fisheries life history, diet, habitat and depth context. Replaced placeholder regulation text with current FWC Atlantic/Monroe rules, including the 24-inch total-length minimum, combined gag/black daily and vessel limits, May 1-December 31 season, and for-hire captain/crew restriction. Added explicit Biscayne National Park caveat.
+- `data/species/great-barracuda.json`: replaced generic profile and unsupported spawning/migration claims with FWC-documented appearance-independent biology, habitat and diet. Added the South Florida county slot and bag limits. Retained the existing SST numeric bounds and scoring configuration but downgraded their evidence status to provisional because no traceable species-specific thermal-preference source was present.
+- `data/species/mangrove-snapper.json`: added FWC-supported size, habitat, diet and June-August spawning information. Added separate Atlantic state and federal size/bag limits and the Biscayne National Park caveat.
+- `data/species/yellowtail-snapper.json`: refreshed the profile against FWC/NOAA/South Atlantic Council sources and replaced generic regulations with the 12-inch total-length minimum, 10-fish snapper aggregate limit and year-round season, with the Biscayne National Park caveat.
+
+### Evidence and interpretation rules
+- Regulatory summaries are region-specific. Atlantic state waters, federal waters, Gulf waters, Monroe County and Biscayne National Park are not interchangeable.
+- Profile source URLs point to FWC, NOAA Fisheries, NPS or regional fisheries science sources. Angler guidance is not promoted to scientific fact.
+- Legacy scoring weights, active flags, factor ranges and prediction logic were not changed. The barracuda SST evidence label was changed to `provisional`; its numeric bounds and scoring weight remain untouched.
+- Species JSON updates were committed individually: `8a2021914ae84bc104416d689de74eb3e79e9071`, `646fe74762ebceda4efad8faaddea0789e50814b`, `428ecd69232e1446941c3211f225159e96d4a281`, `55df25cce8afb503c8fe144a682d80bc519c3868`.
+
+### Validation
+- Each changed record was parsed as JSON before its update was committed; the four committed files were then fetched again and parsed for a post-commit integrity check.
+- The repository's `scripts/validate_species.py` audit and Python test suite have **not** been run in this batch. No workflow was dispatched.
+- No NOAA endpoint was contacted or tested as part of this species-data work.
+
+### Next action
+Continue the audit with additional South Florida species, prioritizing profiles with generic regulation placeholders or unsupported biological claims. Keep park-specific rules explicit and leave prediction scoring unchanged until evidence is independently reviewed.
