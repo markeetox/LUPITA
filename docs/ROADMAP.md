@@ -131,3 +131,10 @@ Key findings:
 - Run the full test suite and species validator on main whenever species profiles or the parameter registry change; publish audit reports as workflow artifacts.
 - Review [proposed confidence policy](SPECIES_MODEL_CONFIDENCE_POLICY.md) before changing user-facing confidence. No prediction scoring or confidence output is changed yet.
 - NOAA ingestion/source troubleshooting remains paused pending explicit clearance.
+
+
+## Active factor evidence review | 2026-11-14
+
+Eight active factors across six profiles previously lacked factor-level source references. They now have sources and explicit caveats. All remain `provisional`; no numeric values, weights, activation flags, or scoring behavior changed. See [Active Factor Evidence Review](ACTIVE_FACTOR_EVIDENCE_REVIEW_2026-11-14.md).
+
+**Next:** await final full-suite and species-audit CI for the profile batch, then review the proposed evidence-aware confidence policy before making any user-facing confidence changes. NOAA ingestion remains paused.
