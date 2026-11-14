@@ -13,6 +13,8 @@ on:
       - main
     paths:
       - "**.py"
+      - "data/species/**"
+      - "data/parameters.json"
       - "requirements.txt"
       - ".github/workflows/python-tests.yml"
   workflow_dispatch: {}
