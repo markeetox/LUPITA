@@ -376,9 +376,10 @@ def audit_species(species_dir: Path, parameters_file: Path, generated_utc: str |
 def write_reports(report: dict[str, Any], output_dir: Path) -> None:
     output_dir.mkdir(parents=True, exist_ok=True)
     (output_dir / "species-audit.json").write_text(json.dumps(report, indent=2, ensure_ascii=False) + "\n", encoding="utf-8")
-    fields = ["id", "common_name", "scientific_name", "model", "classification", "schema_valid", "model_compatible",
-              "environmental_data_coverage", "biological_completeness", "evidence_quality", "active_factor_count",
-              "active_weight_sum", "active_supported_weight", "active_sourced_weight", "timing_status"]
+    fields = ["id", "common_name", "scientific_name", "model", "model_scope", "classification", "schema_valid", "model_compatible",
+              "environmental_data_coverage", "biological_completeness", "evidence_quality", "evidence_risk", "min_coverage",
+              "active_factor_count", "active_weight_sum", "active_supported_weight", "active_sourced_weight",
+              "active_uncertain_weight", "active_partly_sourced_weight", "timing_status"]
     with (output_dir / "species-audit.csv").open("w", encoding="utf-8-sig", newline="") as stream:
         writer = csv.DictWriter(stream, fieldnames=fields, extrasaction="ignore")
         writer.writeheader()
@@ -398,12 +399,15 @@ def write_reports(report: dict[str, Any], output_dir: Path) -> None:
               "- Environmental input availability is separate from biological model completeness.",
               "- Biological dimensions are a review aid, not a completeness score.",
               "- Source metadata does not prove source credibility or correct interpretation.",
+              "- Active evidence risk is a diagnostic only; it does not automatically alter prediction confidence or scoring.",
+              "- A temperature-only site pilot is not a multi-factor habitat assessment.",
               "- Prediction scores and confidence are not calibrated probabilities of fish presence.",
               "", "## Species findings", ""]
     for row in report["species"]:
         lines.append(f"### {row['common_name'] or row['id']} ({row['id']})")
         lines.append(f"- {row['classification']} | model: {row['model']} | active factors: {row['active_factor_count']} | weight: {row['active_weight_sum']:.3f}")
-        lines.append(f"- Data: {row['environmental_data_coverage']} | Biology: {row['biological_completeness']} | Evidence: {row['evidence_quality']}")
+        lines.append(f"- Scope: {row.get('model_scope', 'not_assessed')} | minimum coverage: {row.get('min_coverage', 'not_assessed')} | data: {row['environmental_data_coverage']} | biology: {row['biological_completeness']}")
+        lines.append(f"- Evidence: {row['evidence_quality']} | active evidence risk: {row.get('evidence_risk', 'not_assessed')} | uncertain active weight: {row.get('active_uncertain_weight', 0.0):.3f} | partly sourced weight: {row.get('active_partly_sourced_weight', 0.0):.3f}")
         lines.extend(f"- **{item['severity']} / {item['code']}**: {item['message']}" for item in row["findings"])
         lines.append("")
     lines += ["## Limitations", "",
