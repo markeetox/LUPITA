@@ -205,3 +205,26 @@ def test_catalog_summary_counts_temperature_only_site_pilots_and_evidence_risk(t
     assert report["summary"]["temperature_only_site_pilots"] == 1
     assert report["summary"]["elevated_active_evidence_profiles"] == 1
     assert report["species"][0]["model_scope"] == "temperature_only_pilot"
+
+
+def test_inactive_incomplete_range_is_a_warning_not_a_scoring_error():
+    incomplete = profile(factors=[{
+        "param": "sst_c", "kind": "range", "range": None, "ideal": None,
+        "weight": 0.0, "active": False, "value_status": "needs_source", "sources": [],
+    }])
+    result = validate_profile(incomplete, REGISTRY)
+    findings = {x["code"]: x for x in result["findings"]}
+    assert findings["invalid_range"]["severity"] == "WARNING"
+    assert findings["invalid_ideal"]["severity"] == "WARNING"
+    assert result["schema_valid"] is True
+
+
+def test_needs_source_is_recognized_and_counts_as_uncertain_when_active():
+    incomplete = profile(factors=[{
+        "param": "sst_c", "kind": "range", "range": [10, 30], "ideal": [20, 25],
+        "weight": 1.0, "active": True, "value_status": "needs_source", "sources": [],
+    }])
+    result = validate_profile(incomplete, REGISTRY)
+    assert "missing_or_unknown_evidence_status" not in {x["code"] for x in result["findings"]}
+    assert result["active_uncertain_weight"] == 1.0
+    assert result["evidence_risk"] == "elevated"
