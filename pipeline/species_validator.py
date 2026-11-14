@@ -113,7 +113,7 @@ def validate_profile(profile: Any, registry: dict[str, dict], filename: str = ""
     registry_keys = set(registry)
     evidence_statuses = Counter()
     active_evidence_weights = Counter()
-    active_missing_source_weight = 0.0
+    active_uncertain_weight = 0.0
     engine = SITE_FACTORS if model == "sites" else GRID_FACTORS
 
     for index, factor in enumerate(factors):
@@ -145,11 +145,12 @@ def validate_profile(profile: Any, registry: dict[str, dict], filename: str = ""
         if factor.get("active") is True:
             active.append(factor)
             active_weight += float(weight)
-            status_for_weight = factor.get("value_status") if factor.get("value_status") in VALID_VALUE_STATUSES else "missing_or_unknown"
+            raw_status = factor.get("value_status")
+            status_for_weight = raw_status if isinstance(raw_status, str) and raw_status in VALID_VALUE_STATUSES else "missing_or_unknown"
             active_evidence_weights[status_for_weight] += float(weight)
             usable_sources = isinstance(factor.get("sources"), list) and bool(factor.get("sources")) and all(isinstance(x, str) and x.strip() for x in factor.get("sources", []))
-            if not usable_sources:
-                active_missing_source_weight += float(weight)
+            if status_for_weight in {"provisional", "estimated", "unsourced", "missing_or_unknown"} or not usable_sources:
+                active_uncertain_weight += float(weight)
             if weight <= 0:
                 findings.append(finding("ERROR", "active_nonpositive_weight", f"Active factor '{param}' must have positive weight.", param))
             if kind in engine.get(param, set()):
@@ -158,12 +159,12 @@ def validate_profile(profile: Any, registry: dict[str, dict], filename: str = ""
                 findings.append(finding("ERROR", "unsupported_active_factor", f"The {model} scorer cannot evaluate active factor '{param}' with kind '{kind}'.", param))
             if registry.get(param, {}).get("status") == "planned":
                 findings.append(finding("WARNING", "planned_parameter_active", f"'{param}' is marked planned in the registry but active in this profile.", param))
-            if factor.get("value_status") == "sourced" and factor.get("sources"):
+            if status_for_weight == "sourced" and usable_sources:
                 sourced_weight += float(weight)
 
         status = factor.get("value_status")
         evidence_statuses[status if isinstance(status, str) else "missing"] += 1
-        if status not in VALID_VALUE_STATUSES:
+        if not isinstance(status, str) or status not in VALID_VALUE_STATUSES:
             findings.append(finding("WARNING", "missing_or_unknown_evidence_status", f"'{param}' has no recognized value_status.", param))
         sources = factor.get("sources")
         if not isinstance(sources, list) or not sources or not all(isinstance(x, str) and x.strip() for x in sources):
@@ -221,7 +222,7 @@ def validate_profile(profile: Any, registry: dict[str, dict], filename: str = ""
         findings.append(finding("ERROR", "no_active_weight", "Profile has no positive active factor weight."))
     if active_weight > 1.000001:
         findings.append(finding("ERROR", "active_weight_overflow", f"Active weights sum to {active_weight:.3f}, above 1.0."))
-    uncertain_weight = sum(active_evidence_weights.get(key, 0.0) for key in ("provisional", "estimated", "unsourced", "missing_or_unknown")) + active_missing_source_weight
+    uncertain_weight = active_uncertain_weight
     partly_sourced_weight = active_evidence_weights.get("partly_sourced", 0.0)
     if uncertain_weight > 0:
         findings.append(finding("WARNING", "active_evidence_uncertainty", f"{uncertain_weight:.3f} of {active_weight:.3f} active factor weight has provisional/estimated/unsourced or incomplete source metadata."))
