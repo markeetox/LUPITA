@@ -509,6 +509,6 @@ Extend the validator and tests for coverage bounds, category maps, evidence diag
 
 ### Validation
 - Intermediate CI attempts caught and corrected malformed evidence-status handling, inactive-factor validation severity, and stale bonefish/Permit wording assertions.
-- Latest full Python suite plus species-validator workflow is pending: https://github.com/markeetox/LUPITA/actions/runs/43621667713
+- Final full Python suite and species-validator workflow passed: **272 passed, 0 failed, 115 warnings** on [run #43622006765](https://github.com/markeetox/LUPITA/actions/runs/43622006765). The validator parsed all 130 profiles, marked all 130 structurally valid, and reported 0 active model compatibility issues and 0 validator errors.
 - Executed species audit: **130 profiles parsed, 130 structurally valid, 0 active model compatibility issues, 0 validator errors**. It reports 23 temperature-only site pilots, 27 other one-factor models, 80 multi-factor models, and 12 profiles with elevated active evidence risk. Audit artifact was uploaded by CI.
 - No NOAA endpoint was contacted and no Pull Ocean Data workflow was run. No prediction scoring or confidence output was changed.
