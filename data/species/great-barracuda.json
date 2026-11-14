@@ -7,7 +7,7 @@
     "cuda"
   ],
   "habitat_zone": "inshore",
-  "review_status": "draft v1 - compiled from NOAA Fisheries and regional fisheries management guidelines",
+  "review_status": "reviewed 2026-11-14 - profile and South Florida recreational regulations checked against FWC",
   "image": {
     "status": "placeholder",
     "kind": "illustration",
@@ -17,42 +17,46 @@
     "plan": "web/fish/great-barracuda.png placeholder illustration."
   },
   "profile": {
-    "size": "Variable per NOAA / regional guidelines",
-    "diet": "Small fish, crustaceans, and cephalopods.",
-    "behavior": "Active predator along coastal, shelf, or offshore environments.",
-    "life_history": "Spawns seasonally along coastal or shelf waters.",
-    "regulations_link": "https://www.fisheries.noaa.gov/",
+    "size": "Up to about 106 lb (FWC).",
+    "diet": "Predatory fish; feeds on other fishes, squid and shrimp.",
+    "behavior": "Large, fast predator occurring from inshore coastal waters to offshore reef areas. Young barracuda are commonly found inshore in seagrass beds. Adults are top predators around reef habitat.",
+    "habitat": "Inshore to offshore; juveniles use seagrass beds, while larger fish range through coastal and reef environments.",
+    "life_history": "Native Florida species. The current FWC profile supports the habitat and feeding summary but does not establish a precise South Florida spawning calendar.",
+    "regulations_link": "https://myfwc.com/fishing/saltwater/recreational/barracuda/",
     "sources": [
-      "https://www.fisheries.noaa.gov/"
-    ],
-    "spawning": "Spawns seasonally based on water temperature and regional climate.",
-    "overwintering": "Migrates to warmer or deeper waters depending on season."
+      "https://myfwc.com/wildlifehabitats/profiles/saltwater/barracuda/",
+      "https://myfwc.com/fishing/saltwater/recreational/barracuda/",
+      "https://myfwc.com/fishing/saltwater/recreational/full-rule/"
+    ]
   },
   "factors": [
     {
       "param": "sst_c",
       "kind": "range",
       "range": [
-        20.0,
-        32.0
+        20,
+        32
       ],
       "ideal": [
-        24.0,
-        30.0
+        24,
+        30
       ],
       "weight": 0.35,
       "active": true,
-      "value_status": "sourced",
-      "value_notes": "NOAA oceanographic temperature profile for Great barracuda.",
+      "value_status": "provisional",
+      "value_notes": "The previous numeric temperature bounds were not supported by a traceable species-specific thermal-preference source. They are retained unchanged for compatibility but should not be interpreted as a validated preferred range.",
       "reason_template": "Water is {value} C, within the preferred thermal range for Great barracuda.",
       "sources": [
-        "https://www.fisheries.noaa.gov/"
+        "https://myfwc.com/wildlifehabitats/profiles/saltwater/barracuda/"
       ],
       "gate": true,
       "required": true
     }
   ],
-  "open_items": [],
+  "open_items": [
+    "Species-specific preferred and limiting temperature ranges are not established by the cited FWC profile; current SST factor bounds remain provisional and unchanged.",
+    "Do not encode a precise spawning season without a primary life-history source."
+  ],
   "display": {
     "color": "#da3cf2"
   },
@@ -78,7 +82,7 @@
     },
     "light": {
       "map": {
-        "dusk": 1.0,
+        "dusk": 1,
         "night": 0.8,
         "dawn": 0.9,
         "day": 0.6
@@ -92,7 +96,7 @@
     },
     "tide": {
       "map": {
-        "falling": 1.0,
+        "falling": 1,
         "slack_low": 0.6,
         "rising": 0.7,
         "slack_high": 0.5
@@ -118,21 +122,23 @@
     }
   },
   "lat_range": [
-    15.0,
-    32.0
+    15,
+    32
   ],
   "regulations": {
-    "summary": "Regulated species - See MyFWC/NOAA guidelines",
-    "min_size": "Check MyFWC/NOAA rules",
-    "max_size": "None",
-    "bag_limit": "Varies by region / state",
-    "season": "Open year-round (subject to local quota/closures)",
-    "jurisdiction": "Atlantic & Gulf State/Federal Waters",
-    "source_name": "MyFWC Saltwater Regulations",
-    "source_url": "https://myfwc.com/fishing/saltwater/recreational/"
+    "summary": "Collier through Martin counties, including Monroe, Miami-Dade and Broward: 15-36 in fork-length slot; one fish over 36 in allowed per person or vessel per day; 2 per person per day, maximum 6 per vessel; open year-round.",
+    "min_size": "15 inches fork length (Collier through Martin counties)",
+    "max_size": "36 inches fork length, with one fish greater than 36 inches allowed per person or vessel per day",
+    "bag_limit": "2 per person per day, maximum 6 per vessel per day; one fish over 36 inches may be retained per person or vessel per day",
+    "season": "Open year-round",
+    "jurisdiction": "Florida state and federal waters off Collier, Monroe, Miami-Dade, Broward, Palm Beach and Martin counties; other Florida counties have different/no barracuda-specific limits",
+    "source_name": "Florida Fish and Wildlife Conservation Commission",
+    "source_url": "https://myfwc.com/fishing/saltwater/recreational/barracuda/",
+    "effective_date": "2026-11-14",
+    "notes": "Special regulations apply inside Biscayne National Park. These South Florida county rules should not be generalized to the rest of Florida."
   },
   "lon_range": [
-    -100.0,
-    -50.0
+    -100,
+    -50
   ]
 }
