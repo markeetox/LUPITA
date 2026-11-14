@@ -137,4 +137,4 @@ Key findings:
 
 Eight active factors across six profiles previously lacked factor-level source references. They now have sources and explicit caveats. All remain `provisional`; no numeric values, weights, activation flags, or scoring behavior changed. See [Active Factor Evidence Review](ACTIVE_FACTOR_EVIDENCE_REVIEW_2026-11-14.md).
 
-**Next:** await final full-suite and species-audit CI for the profile batch, then review the proposed evidence-aware confidence policy before making any user-facing confidence changes. NOAA ingestion remains paused.
+**Validated:** final full suite passed (272 passed, 0 failed, 115 warnings) and the species audit completed successfully on [run #43622573953](https://github.com/markeetox/LUPITA/actions/runs/43622573953). All eight reviewed active factors have source references but remain provisional. **Next:** review and approve the proposed evidence-aware confidence policy before making user-facing confidence changes. NOAA ingestion remains paused.
