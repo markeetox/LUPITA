@@ -147,3 +147,12 @@ See [Biscayne research pipeline policy](biscayne-research-pipeline-policy-2026-1
 - The selected ERDDAP host is now recorded in SST diagnostics as `source_endpoint`, so the next production run will show whether CoastWatch or the upwell mirror supplied the grid.
 - Latest full Python suite: **262 passed, 0 failed, 115 warnings** on [run #43494256052](https://github.com/markeetox/LUPITA/actions/runs/43494256052), commit `5da0dc56470975216e032b98b0f230a586d8102c`.
 - Remaining validation is live only: dispatch Pull Ocean Data and inspect the source endpoint, SST timestamp, HF Radar request result, and published refresh/snapshot metadata.
+
+
+## Species profile accuracy work | 2026-11-14
+
+**Status:** first South Florida accuracy batch committed to `main`; NOAA source troubleshooting remains paused by user direction.
+
+Four records were improved: black grouper, great barracuda, gray/mangrove snapper and yellowtail snapper. Profiles now use species-specific FWC/NOAA/regional evidence, and Florida recreational regulation summaries distinguish Atlantic state waters, federal waters, county-specific rules and Biscayne National Park caveats. The barracuda SST evidence label is now provisional; no numeric factor, weight, active flag, prediction logic or ocean-data source was changed.
+
+See `docs/PROGRESS_LOG.md` for source links, commit SHAs and validation limits. The JSON records were parsed before and after commit. The dedicated species audit and test suite remain pending; no Actions workflow or NOAA request was run.
