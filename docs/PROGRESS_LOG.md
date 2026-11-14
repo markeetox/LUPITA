@@ -508,6 +508,7 @@ Extend the validator and tests for coverage bounds, category maps, evidence diag
 - Restored the study-area depth detail and exact March-through-September wording in the Permit profile to satisfy the existing profile regression guard. These are descriptive text changes only; no scoring factors or values changed.
 
 ### Validation
-- Intermediate CI attempts caught and corrected the malformed evidence-status handling case and profile wording regressions.
+- Intermediate CI attempts caught and corrected malformed evidence-status handling, inactive-factor validation severity, and stale bonefish/Permit wording assertions.
 - Latest full Python suite plus species-validator workflow is pending: https://github.com/markeetox/LUPITA/actions/runs/43621667713
+- Executed species audit: **130 profiles parsed, 130 structurally valid, 0 active model compatibility issues, 0 validator errors**. It reports 23 temperature-only site pilots, 27 other one-factor models, 80 multi-factor models, and 12 profiles with elevated active evidence risk. Audit artifact was uploaded by CI.
 - No NOAA endpoint was contacted and no Pull Ocean Data workflow was run. No prediction scoring or confidence output was changed.
