@@ -62,7 +62,7 @@ been checked against catch reports. The versioned app API exposes these outputs 
 
 ## Layout
 - `data/parameters.json`: registry of every factor (key, unit, source, tier, status)
-- `data/species/*.json`: one profile per fish (factors, weights, sources, display color)
+- `data/species/*.json`: one profile per fish (biology, habitat factors, weights, sources, display color and regional regulation notes). Treat species evidence and harvest rules as region-specific; Atlantic/Gulf, state/federal and Biscayne National Park rules are not interchangeable. Unsupported numeric preferences remain provisional rather than being presented as established biology.
 - `config/`: buoy stations and ERDDAP dataset settings
 - `pipeline/`: data pulls (`sources/`), `layers.py` (common grid), `scoring.py`, `predict.py`, `run.py`
 - `web/index.html`: map viewer (deployed on Vercel, root directory `web`)
