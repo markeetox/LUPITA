@@ -108,9 +108,11 @@
       "weight": 0.15,
       "active": true,
       "value_status": "provisional",
-      "value_notes": "Legacy numeric temperature band is not validated by the cited FWC species profile or spawning-aggregation studies. Retained unchanged for compatibility only; do not present it as a measured thermal preference.",
-      "sources": [],
-      "reason_template": "Water is {value} C, inside the {ideal_min}-{ideal_max} C range mutton snapper tolerate.",
+      "value_notes": "Acoustic telemetry of adult mutton snapper in St. Thomas found no evidence of selection for specific temperature ranges; tagged fish used available temperatures equitably. This is useful negative evidence, not support for the configured 19–31 °C range or 22–29.5 °C ideal. Keep both values provisional and do not present them as validated thermal tolerance.",
+      "sources": [
+        "https://link.springer.com/article/10.1186/s40317-021-00237-z"
+      ],
+      "reason_template": "Water is {value} C, within the currently configured provisional screening band for mutton snapper; this is not a validated thermal tolerance.",
       "range": [
         19,
         31
