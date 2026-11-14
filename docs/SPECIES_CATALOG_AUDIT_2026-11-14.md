@@ -120,3 +120,24 @@ The validator and its unit tests were inspected, but the validator command and P
 - `tests/test_species_validator.py`
 
 **Boundary:** this was a static catalog and scoring-code audit. No NOAA endpoint was contacted, no Pull Ocean Data workflow was run, and no production scoring behavior was changed.
+
+
+## Validator follow-up implementation | 2026-11-14
+
+The read-only validator and its tests were strengthened after the catalog review:
+
+- Validates `min_coverage` as a finite number from 0 through 1.
+- Validates category `map` shape, finite 0–1 scores, and registry category keys. A valid `map` no longer incorrectly requires a separate `preferred` list.
+- Validates `active`, `required`, and `gate` as booleans.
+- Warns when grid profiles use `required`, which the grid scorer does not read, and when a site gate is not also required, meaning a missing site value is skipped.
+- Reports active evidence weight by status, uncertain active weight, partly sourced active weight, and an evidence-risk diagnostic.
+- Labels one-factor SST-only site models as `temperature_only_pilot` in audit output and summarizes their count.
+- Adds regression tests for each new validator behavior and for evidence-weight aggregation.
+
+These evidence and model-scope fields are diagnostics only. Prediction confidence, score calculation, factor weights, thresholds, and active flags remain unchanged.
+
+A proposed confidence policy is documented separately in [Species Model Confidence Policy](SPECIES_MODEL_CONFIDENCE_POLICY.md). It is explicitly not active; user-facing confidence changes require review and approval.
+
+The main Python workflow now runs the species validator after the test suite whenever Python code, species profiles, or the parameter registry changes, and uploads the JSON/Markdown/CSV audit reports as a workflow artifact.
+
+**Validation:** full CI run is pending on the current profile-fix commit. Earlier runs exposed a malformed evidence-status handling bug in the new validator and stale phrase assertions in the existing bonefish/permit profile regression test. Both were corrected; the current run must pass before this milestone is marked validated.
