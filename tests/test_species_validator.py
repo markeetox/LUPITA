@@ -186,3 +186,22 @@ def test_malformed_evidence_status_is_reported_without_crashing():
     }])
     codes = {x["code"] for x in validate_profile(bad, REGISTRY)["findings"]}
     assert "missing_or_unknown_evidence_status" in codes
+
+
+def test_catalog_summary_counts_temperature_only_site_pilots_and_evidence_risk(tmp_path: Path):
+    species = tmp_path / "species"
+    species.mkdir()
+    pilot = profile(model="sites", factors=[{
+        "param": "sst_c", "kind": "range", "range": [10, 30], "ideal": [20, 25],
+        "weight": 1.0, "active": True, "value_status": "provisional",
+        "sources": ["https://example.org/temperature"],
+    }])
+    (species / "test-fish.json").write_text(json.dumps(pilot), encoding="utf-8")
+    params = tmp_path / "parameters.json"
+    params.write_text(json.dumps({"parameters": list(REGISTRY.values())}), encoding="utf-8")
+
+    report = audit_species(species, params)
+    assert report["report_version"] == 2
+    assert report["summary"]["temperature_only_site_pilots"] == 1
+    assert report["summary"]["elevated_active_evidence_profiles"] == 1
+    assert report["species"][0]["model_scope"] == "temperature_only_pilot"
