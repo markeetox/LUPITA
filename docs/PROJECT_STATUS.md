@@ -273,3 +273,17 @@ Full diagnostics are recorded in [Progress Log](PROGRESS_LOG.md), including per-
 - No ingestion run, code change, source-config change, biological change, or scoring change was made during this inspection.
 
 Detailed findings and NOAA references: [Progress Log](PROGRESS_LOG.md#2026-11-15--hf-radar-coverage-diagnosis-and-ci-verification).
+
+
+## NOAA HF Radar comparison utility | 2026-11-15
+
+**Status:** read-only comparison utility and manual workflow implemented; numerical NOAA comparison has not yet been run.
+
+- Added scripts/compare_hfr_products.py for the 1 km (ucsdHfrE1), 2 km (ucsdHfrE2), and 6 km (ucsdHfrE6) products.
+- The diagnostic requests the same exact UTC timestamp and South Florida bounds (24.0–28.5°N, 83.5–78.0°W), then measures paired finite water_u/water_v vectors on each product's native grid.
+- Reports native-grid coverage, returned coordinate pairs, half-degree spatial tile occupancy, approximate Florida Keys/Biscayne Bay/offshore subregion coverage, and median hdop, contributing-site, and radial counts.
+- Product depth/resolution metadata is retained (nominal 1/2/6 km grids; representative depths approximately 0.5/1.0/2.4 m). No cross-product regridding or nearest-time substitution is allowed.
+- Added focused parser/metric tests and manual-only workflow .github/workflows/hfr-product-comparison.yml. The workflow is read-only and uploads JSON/Markdown reports as a 30-day artifact. It does not run Pull Ocean Data or write to the data branch.
+- Default timestamp is 2026-11-13T04:00:00Z; it must exist exactly in all three products. If one product cannot provide that timestamp, the run reports the failure rather than silently comparing different times.
+
+**Boundary:** production source configuration, ingestion, prediction logic, species biology, and weights are unchanged. The comparison results remain pending until the manual diagnostic workflow or local script is run successfully.
