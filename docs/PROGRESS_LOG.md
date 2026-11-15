@@ -584,6 +584,7 @@ All six JSON profiles parsed after update and all eight previously source-missin
 - `229f021`, `582c3ea`: flag constant-distance placeholder and test it.
 - `d68a393`, `93cb030`: reject active use of the constant-distance placeholder and assert the model is incompatible.
 - `1eec34e`, `da84cab`, `f8ae658`: warn when active site structure categories cannot be returned by the site's allowed kinds or allowed kinds fall through to zero.
+- `dac1ddd`, `ee25d79`: make the new structure check resilient to malformed preferred-category values and add a regression test.
 - `fc64cf6`: add named-site triage report.
 
 ### Validation
