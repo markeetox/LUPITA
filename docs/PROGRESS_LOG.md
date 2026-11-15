@@ -592,3 +592,35 @@ The automatic Python workflow should run for the validator and test commits. Ful
 
 ### Boundaries
 No NOAA endpoints, data workflows, production refreshes, species values, factor weights, active flags, gates, or prediction confidence were changed.
+
+
+## 2026-11-15 | Production refresh #211 confirms pipeline recovery
+
+**Workflow:** [Pull Ocean Data #211](https://github.com/markeetox/LUPITA/actions/runs/43664658831)  
+**Run ID:** `43664658831`  
+**Branch / commit:** `main` / `16ae66cd6247ce8eb30b05770f16f605423cc16c`  
+**Event:** scheduled  
+**Result:** workflow and publication succeeded; pipeline health is `degraded`, not `healthy`.
+
+### Execution and publication
+- All workflow steps completed successfully, including the full `python -m pytest -q` suite, catalog generation, `pipeline.run`, publication preparation, data-branch publish, and the final health evaluation.
+- The generated `latest.json` was published to the `data` branch at `2026-11-15T01:47:27Z`; the data branch head advanced to `3cdc4ea26817eff5e321868f7c66190aab625b11`.
+- Predictions refreshed from the current run; `errors=[]` and `critical_issues=[]`.
+
+### Observed layer health
+- SST: loaded from CoastWatch `jplMURSST41`, observation time `2026-11-13T09:00Z`, 40.79 hours old at load; classified delayed against the provisional 36h warning / 72h stale thresholds.
+- Chlorophyll: loaded from NOAA-20 `nesdisVHNnoaa20chlaDaily`, observation time `2026-11-12T12:00Z`, 61.79 hours old; classified fresh against the provisional 72h / 120h thresholds. Valid source fraction was 15.8%; cloud/data gaps remain material.
+- HF Radar: loaded from `ucsdHfrE2`, observation time `2026-11-14T20:00Z`, 5.79 hours old; classified fresh. However, only 94 of 10,101 cells in the configured South Florida query window were valid (0.9306%). This is a major coverage limitation despite successful retrieval.
+- Altimetry fallback `nesdisSSH1day` was 1,153.8 hours old, exceeded the 72h current-use limit, and was correctly excluded from current vectors. HF Radar remained the selected current source.
+- ETOPO bathymetry, reef structure, FWC benthic habitat, closures, and buoy observations were loaded. The snapshot contains 4,548 artificial reef records, 25,362 natural reef polygons, 49,903 habitat features, and 199 closure areas.
+
+### Health interpretation
+- `pipeline_health.status=degraded` solely reports the SST delayed freshness issue; there are no critical issues, optional-layer issues, or recorded errors.
+- `prediction_refreshed=true`; `prediction_snapshot.status=refreshed` and source is `current_refresh`.
+- A successful workflow is not proof of complete or uniformly high-quality coverage. In particular, HFR coverage is sparse and chlorophyll coverage is limited.
+- This is the first inspected successful scheduled production refresh after the NOAA service interruption. It confirms the actual ingestion/publication path works again, while retaining the source-quality caveats above.
+
+### Boundary and next actions
+- This run was scheduled, not manually dispatched. No additional ingestion run was triggered for this review.
+- No code, configuration, species biology, scoring weights, or prediction logic changed as part of this inspection.
+- Continue monitoring subsequent scheduled refreshes. Compare SST latency and HFR query-window valid coverage across runs before declaring sustained recovery or adjusting any source/quality policy.
