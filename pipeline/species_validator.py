@@ -8,6 +8,7 @@ from collections import Counter
 from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any
+from urllib.parse import urlsplit
 
 ROOT = Path(__file__).resolve().parent.parent
 VALID_MODELS = {"grid", "sites"}
@@ -56,6 +57,24 @@ def finding(severity: str, code: str, message: str, factor: str | None = None) -
 
 def is_number(value: Any) -> bool:
     return isinstance(value, (int, float)) and not isinstance(value, bool) and math.isfinite(float(value))
+
+
+def has_specific_source_reference(sources: Any) -> bool:
+    """Return true only when at least one reference points beyond a bare site homepage."""
+    if not isinstance(sources, list):
+        return False
+    for source in sources:
+        if not isinstance(source, str) or not source.strip():
+            continue
+        value = source.strip()
+        parsed = urlsplit(value)
+        if parsed.scheme in {"http", "https"} and parsed.netloc:
+            if parsed.path not in {"", "/"} or parsed.query or parsed.fragment:
+                return True
+        elif "://" not in value:
+            # Preserve human-readable citations such as author/year references.
+            return True
+    return False
 
 
 def valid_pair(value: Any, nullable: bool = False) -> bool:
@@ -148,7 +167,7 @@ def validate_profile(profile: Any, registry: dict[str, dict], filename: str = ""
             raw_status = factor.get("value_status")
             status_for_weight = raw_status if isinstance(raw_status, str) and raw_status in VALID_VALUE_STATUSES else "missing_or_unknown"
             active_evidence_weights[status_for_weight] += float(weight)
-            usable_sources = isinstance(factor.get("sources"), list) and bool(factor.get("sources")) and all(isinstance(x, str) and x.strip() for x in factor.get("sources", []))
+            usable_sources = has_specific_source_reference(factor.get("sources"))
             if status_for_weight in {"provisional", "estimated", "unsourced", "needs_source", "missing_or_unknown"} or not usable_sources:
                 active_uncertain_weight += float(weight)
             if weight <= 0:
@@ -169,6 +188,8 @@ def validate_profile(profile: Any, registry: dict[str, dict], filename: str = ""
         sources = factor.get("sources")
         if not isinstance(sources, list) or not sources or not all(isinstance(x, str) and x.strip() for x in sources):
             findings.append(finding("WARNING", "missing_factor_sources", f"'{param}' has no usable source references.", param))
+        elif not has_specific_source_reference(sources):
+            findings.append(finding("WARNING", "generic_source_reference", f"'{param}' cites only a generic website homepage; add a traceable species page, study, dataset, or other specific reference.", param))
         if isinstance(status, str) and status in {"provisional", "estimated", "unsourced"}:
             findings.append(finding("WARNING", "provisional_factor", f"'{param}' is marked {status}; its contribution is provisional.", param))
 
