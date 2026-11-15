@@ -691,6 +691,6 @@ Obtain the same-time bounded `water_u`, `water_v`, `hdop`, `number_of_sites`, an
 - The manual workflow has read-only repository permissions and uploads JSON/Markdown output as a 30-day artifact. It does not invoke Pull Ocean Data, alter config/sources.json, or publish to data.
 - README, Project Status, and Roadmap were updated with the run instructions and acceptance criteria.
 
-**Validation boundary:** focused tests were added, but their CI result is pending. The NOAA comparison itself has not yet run, so no numerical ranking or source recommendation is claimed. Production source selection, data ingestion, species biology, prediction weights, and scoring behavior remain unchanged.
+**Validation:** Python CI [run #43725728118](https://github.com/markeetox/LUPITA/actions/runs/43725728118) passed on code/test commit 3112bbb2a830960e1d032e9f2f57ab4463addae1. The NOAA comparison itself has not yet run, so no numerical ranking or source recommendation is claimed. Production source selection, data ingestion, species biology, prediction weights, and scoring behavior remain unchanged.
 
 **Next:** run Actions → Compare NOAA HF Radar products using the default exact timestamp. Review all three products' retrieval status, native-grid coverage, quality diagnostics, and subregion distribution before proposing any production change.
