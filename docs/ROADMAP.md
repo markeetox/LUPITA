@@ -149,3 +149,17 @@ Eight active factors across six profiles previously lacked factor-level source r
 - Keep missing grid values as NaN and unmapped categories at score 0 when an explicit map exists.
 - Validate with the automatic Python suite before considering the fix complete.
 - No NOAA work or biological profile changes are part of this item.
+
+
+## Named-site model quality | 2026-11-15
+
+**Status:** static triage completed; validator improvements and tests committed; CI pending.
+
+1. Inspect updated full catalog audit for generic homepage-only source references and active placeholder factors.
+2. Review the 20 homepage-only SST factors species by species; only retain `sourced` when a specific reference supports the configured biological claim.
+3. Keep bonefish, great barracuda, and Permit SST bands provisional pending direct species-specific evidence.
+4. Review snook/tarpon structure-kind scoring across inlet, cut, channel-bridge, and flat sites.
+5. Keep `distance_to_inlet` inactive until a real input is implemented and tested.
+6. Assess tide-station distance/local-regime suitability without changing NOAA ingestion during the current pause.
+
+Full findings: [Named-site model triage](SITE_MODEL_TRIAGE_2026-11-15.md). NOAA remains paused.
