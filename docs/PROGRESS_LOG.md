@@ -531,3 +531,28 @@ All eight factors remain marked `provisional`. No numeric ranges, ideal ranges, 
 Full review: [Active Factor Evidence Review](ACTIVE_FACTOR_EVIDENCE_REVIEW_2026-11-14.md).
 
 All six JSON profiles parsed after update and all eight previously source-missing active factors now have source references. Final full-suite and species-audit CI is pending for the profile batch: [latest run #43622375109](https://github.com/markeetox/LUPITA/actions/runs/43622375109).
+
+
+## 2026-11-14 | Align grid category-map scoring with validator contract
+
+**Branch:** `main`  
+**Commits:** `8cabaa7c9dab8034388980fd096d471cb6aff21a` (scorer); `e0c0512643b68ed703d22d914a9d4ab34fcc58a5` (tests)
+
+### Finding
+- The species validator accepts a non-empty category `map` as a complete scoring definition without requiring a redundant `preferred` list.
+- The site scorer already evaluates map-only category factors.
+- The grid scorer previously returned no score when `preferred` was absent, even when a valid `map` was supplied. This contradicted the validator contract and site scorer behavior.
+
+### Correction
+- Grid category scoring now uses an explicit map directly; categories absent from the map score 0, and missing grid values remain NaN.
+- Preferred-list-only category factors retain their existing behavior.
+- Added regression tests for map-only factors and preferred-list factors.
+- No species profile, active factor, weight, biological range, or current prediction output was intentionally changed. Existing profiles were not edited.
+
+### Validation
+- The commits trigger the `Python tests` workflow on push to `main`.
+- Full-suite and species-audit result: **pending verification**. Do not treat this fix as CI-validated until the run completes.
+
+### Boundaries
+- No NOAA endpoints or ingestion workflows were contacted or run.
+- The proposed evidence-aware confidence policy remains inactive.
