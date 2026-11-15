@@ -236,7 +236,7 @@ def test_generic_homepage_reference_does_not_count_as_specific_evidence():
     bad = profile(factors=[{
         "param": "sst_c", "kind": "range", "range": [10, 30], "ideal": [20, 25],
         "weight": 1.0, "active": True, "value_status": "sourced",
-        "sources": ["https://www.fisheries.noaa.gov/"],
+        "sources": ["https://www.fisheries.noaa.gov/?utm_source=generic-homepage-test"],
     }])
     result = validate_profile(bad, REGISTRY)
     codes = {x["code"] for x in result["findings"]}
