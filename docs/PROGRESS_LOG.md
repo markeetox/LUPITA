@@ -624,3 +624,32 @@ No NOAA endpoints, data workflows, production refreshes, species values, factor 
 - This run was scheduled, not manually dispatched. No additional ingestion run was triggered for this review.
 - No code, configuration, species biology, scoring weights, or prediction logic changed as part of this inspection.
 - Continue monitoring subsequent scheduled refreshes. Compare SST latency and HFR query-window valid coverage across runs before declaring sustained recovery or adjusting any source/quality policy.
+
+
+## 2026-11-15 | HF Radar coverage diagnosis and CI verification
+
+**Scope:** read-only source/configuration inspection. No NOAA ingestion workflow was started; no code, source configuration, prediction logic, biology, or scoring weights were changed.
+
+### Code validation
+- Python Actions run [#462](https://github.com/markeetox/LUPITA/actions/runs/43669158015), commit `ee25d79c163323f5fa17b35471a147730e22a7ff`, completed successfully. This run includes the latest species-validator hardening and its tests.
+- The Vercel status is separate from Python CI and is not used as evidence of Python test success.
+
+### HF Radar findings from production refresh #211
+- Published `latest.json` reports NOAA/NESDIS HF Radar `ucsdHfrE2` loaded at `2026-11-14T20:00:00Z`, with freshness age 5.79 hours.
+- The configured request window is 24.0-28.5°N, 83.5-78.0°W. It contains 10,101 cells on LUPITA's target grid; 94 had valid aligned HF Radar vectors (0.9306%).
+- The fetched HFR source grid was 251 x 285 with 0.9059% valid vector cells. The aligned valid fraction over the entire North America grid was 0.0059%; this whole-grid denominator must not be confused with local query-window coverage.
+- Source and aligned valid fractions are close (0.9059% vs 0.9306% within the regional window), so the observed sparsity is not currently pointing to a major resampling-loss bug. The main limitation appears to originate in the valid spatial footprint of the upstream HFR field for this broad request window.
+- NOAA metadata identifies `ucsdHfrE2` as an hourly 2 km HFR product assembled from available coastal radar radial measurements. Its global bounding rectangle is not a promise of continuous ocean coverage. NOAA IOOS explains that HFR coverage is coastal and spatially variable; its coverage maps distinguish occasional availability from typical coverage.
+- A NOAA 6 km hourly product, `ucsdHfrE6`, is publicly exposed with the same broad East/Gulf Coast network footprint and coarser grid. Its existence makes it a valid comparison candidate, not evidence that it will improve South Florida coverage. No product switch or source request was made.
+
+### Fallback and safety behavior
+- Satellite altimetry `nesdisSSH1day` had 76% valid cells in the same query window but was 1,153.8 hours old, beyond the configured 72-hour current-use limit. The pipeline correctly excluded it from current-vector filling.
+- Keep stale altimetry excluded. Its broader footprint must not be used to disguise missing current observations.
+
+### Next checks
+1. Compare NOAA 1 km, 2 km, and 6 km HFR products over the identical South Florida region and same observation times, recording valid vector coverage and quality diagnostics.
+2. Separate nearshore HFR coverage from offshore gaps; do not treat the full bounding rectangle as an expected continuous coverage area.
+3. Evaluate a timestamped broad-area model-current source separately from observed HFR vectors. NOAA RTOFS remains a candidate already documented in the roadmap.
+4. Keep all source changes, data pulls, scoring gates, biology, and prediction weights unchanged until evidence is reviewed.
+
+**Sources:** [NOAA 2 km HFR dataset](https://upwell.pfeg.noaa.gov/erddap/griddap/ucsdHfrE2.html); [NOAA 6 km HFR dataset](https://coastwatch.pfeg.noaa.gov/erddap/griddap/ucsdHfrE6.html); [NOAA IOOS HF Radar coverage and program notes](https://ioos.noaa.gov/project/hf-radar/).
