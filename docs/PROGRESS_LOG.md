@@ -694,3 +694,36 @@ Obtain the same-time bounded `water_u`, `water_v`, `hdop`, `number_of_sites`, an
 **Validation:** Python CI [run #43725728118](https://github.com/markeetox/LUPITA/actions/runs/43725728118) passed on code/test commit 3112bbb2a830960e1d032e9f2f57ab4463addae1. The NOAA comparison itself has not yet run, so no numerical ranking or source recommendation is claimed. Production source selection, data ingestion, species biology, prediction weights, and scoring behavior remain unchanged.
 
 **Next:** run Actions → Compare NOAA HF Radar products using the default exact timestamp. Review all three products' retrieval status, native-grid coverage, quality diagnostics, and subregion distribution before proposing any production change.
+
+## 2026-11-15 | First same-time NOAA HF Radar comparison completed
+
+Manual diagnostic workflow [#43727859776](https://github.com/markeetox/LUPITA/actions/runs/43727859776) completed successfully for exact timestamp 2026-11-13T04:00:00Z. The [JSON/Markdown artifact](https://github.com/markeetox/LUPITA/actions/runs/43727859776/artifacts/14166714348) was retrieved and reviewed. All three datasets returned the exact timestamp and all requested grid coordinates; no retrieval failures were recorded.
+
+### Results
+
+| Product | Native grid cells | Valid paired u/v | Native-grid valid fraction | Median HDOP | Median sites | Median radials |
+|---|---:|---:|---:|---:|---:|---:|
+| 1 km (`ucsdHfrE1`) | 285,069 | 0 | 0.000% | n/a | n/a | n/a |
+| 2 km (`ucsdHfrE2`) | 71,535 | 1,640 | 2.293% | 0.56 | 2 | 35 |
+| 6 km (`ucsdHfrE6`) | 7,980 | 753 | 9.436% | 0.30 | 2 | 100 |
+
+Approximate subregion results:
+
+| Product | Florida Keys | Biscayne Bay | Offshore grounds |
+|---|---:|---:|---:|
+| 1 km | 0.000% | 0.000% | 0.000% |
+| 2 km | 0.000% | 10.732% | 5.701% |
+| 6 km | 0.337% | 24.554% | 10.811% |
+
+The 6 km product has the strongest apparent spatial availability in this snapshot, especially in Biscayne Bay and the offshore box. Both 2 km and 6 km have very sparse Keys coverage. The 1 km product returned no valid paired vectors anywhere in the requested region at this time; this must be checked at another common timestamp before treating it as a persistent product limitation.
+
+### Interpretation limits and follow-up
+
+- Native-grid valid fractions are descriptive. Their denominators include all coordinate cells in the rectangular request, including cells with no radar coverage; they are not direct ocean-area coverage estimates.
+- Products have different nominal depths (about 0.5 m, 1.0 m, 2.4 m for 1/2/6 km). They are not interchangeable vertical observations.
+- Median HDOP/site/radial values are descriptive only. No new quality thresholds have been adopted.
+- The first artifact's half-degree tile denominator varied with native coordinate edges. Fixed-region binning was corrected in commit `0ad8726`, with a regression test in `57fe6d7`. The first artifact predates this correction; rerun the manual diagnostic before using tile-occupancy comparisons.
+- Next: rerun after the fixed-bin correction, and perform a second exact-common-time comparison to check whether the 1 km zero-coverage result is persistent. Consider adding an ocean-only denominator using a shared coastline/mask before making any cross-product area-coverage claim.
+- No Pull Ocean Data run, source/configuration change, production data publication, biology edit, or prediction-weight change was made.
+
+**Artifact:** `hfr-comparison-20261113T040000Z.json` and `.md`, GitHub Actions artifact ID `14166714348`.
