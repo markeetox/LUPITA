@@ -653,3 +653,26 @@ No NOAA endpoints, data workflows, production refreshes, species values, factor 
 4. Keep all source changes, data pulls, scoring gates, biology, and prediction weights unchanged until evidence is reviewed.
 
 **Sources:** [NOAA 2 km HFR dataset](https://upwell.pfeg.noaa.gov/erddap/griddap/ucsdHfrE2.html); [NOAA 6 km HFR dataset](https://coastwatch.pfeg.noaa.gov/erddap/griddap/ucsdHfrE6.html); [NOAA IOOS HF Radar coverage and program notes](https://ioos.noaa.gov/project/hf-radar/).
+
+
+## 2026-11-15 | NOAA HF Radar resolution comparison: metadata reconnaissance
+
+**Status:** metadata comparison completed; same-time spatial coverage comparison remains incomplete. Read-only public catalog inspection only. No raw data was ingested, no Pull Ocean Data workflow was started, and no source/configuration/code/prediction changes were made.
+
+### Product metadata
+NOAA CoastWatch ERDDAP currently lists three East Coast/Gulf of Mexico hourly HF Radar products:
+- 1 km: `ucsdHfrE1`, nominal grid spacing 0.00899° latitude / 0.0096792° longitude; latest catalog observation reported as 2026-11-13 10:00 UTC.
+- 2 km: `ucsdHfrE2`, nominal grid spacing 0.01798° / 0.0193584°; latest catalog observation reported as 2026-11-13 04:00 UTC.
+- 6 km: `ucsdHfrE6`, nominal grid spacing 0.05394° / 0.0580752°; latest catalog observation reported as 2026-11-14 05:00 UTC.
+
+The metadata snapshots therefore show different update times. The 6 km product is newest in this snapshot, but that does not establish better South Florida spatial coverage. The three products have a common historical time range, so a fair test should request one exact common timestamp and the identical 24.0-28.5°N, 83.5-78.0°W region, then compare valid paired u/v vectors, source-grid coverage, and quality fields. Do not compare different timestamps or infer better coverage from nominal grid spacing.
+
+### Important comparison caveat
+- NOAA describes these products as near-real-time coastal radar surface-current solutions assembled from available radar radial measurements. The 1 km, 2 km and 6 km products represent different grid resolutions and nominal surface depths (about 0.5 m, 1.0 m and 2.4 m respectively); they are not interchangeable measurements at identical depth.
+- Metadata pages and time-coverage fields were accessible, but this inspection environment could not retrieve the bounded griddap vector subsets needed to calculate same-time South Florida valid-cell fractions. Therefore no 1 km vs 2 km vs 6 km coverage ranking is claimed.
+- NOAA's metadata also shows source radial-file lists differ between product snapshots. That is another reason to compare exact common timestamps and inspect the contributing station/radial diagnostics rather than assume the grids are identical apart from resolution.
+
+### Next action
+Obtain the same-time bounded `water_u`, `water_v`, `hdop`, `number_of_sites`, and `number_of_radials` subsets for all three datasets, calculate paired-vector valid fractions inside the same South Florida window, and inspect where valid cells cluster. Only then recommend a source or resolution change. Keep current production configuration unchanged.
+
+**NOAA references:** [1 km dataset](https://coastwatch.pfeg.noaa.gov/erddap/griddap/ucsdHfrE1.html), [2 km dataset](https://coastwatch.pfeg.noaa.gov/erddap/griddap/ucsdHfrE2.html), [6 km dataset](https://coastwatch.pfeg.noaa.gov/erddap/griddap/ucsdHfrE6.html), [griddap request documentation](https://coastwatch.pfeg.noaa.gov/erddap/griddap/documentation.html).
