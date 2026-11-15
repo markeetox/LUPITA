@@ -236,3 +236,12 @@ A mismatch was found between the species validator contract and the grid scorer:
 Commits: `8cabaa7c9dab8034388980fd096d471cb6aff21a`, `e0c0512643b68ed703d22d914a9d4ab34fcc58a5`.
 
 **Validation:** automatic Python test workflow triggered by the pushes; result pending. No NOAA activity, species profile edits, biological parameter changes, or confidence-policy activation.
+
+
+## Named-site model triage | 2026-11-15
+
+Static review of all 25 site-model profiles identified 23 temperature-only pilots. Three South Florida pilots (bonefish, great barracuda, Permit) retain provisional SST bands; 20 other one-factor profiles mark SST sourced but cite only the generic NOAA Fisheries homepage. Snook and tarpon are the only five-factor site models, with structure-kind mapping questions requiring review. The site engine's `distance_to_inlet` function is currently a constant-zero placeholder.
+
+The validator now flags homepage-only references and active use of the placeholder distance factor. Regression tests were added. See [Named-site model triage](SITE_MODEL_TRIAGE_2026-11-15.md).
+
+**Validation:** automatic Python CI result pending. No prediction behavior, species numeric values, or NOAA ingestion was changed.
