@@ -88,11 +88,18 @@ def factor_score(f: dict, layers: dict, ref_cache: dict):
             ideal = [None if x is None else float(np.log10(x)) for x in ideal]
         return trapezoid(v, rng, ideal)
     if f["kind"] == "category":
+        weights = f.get("map")
+        if weights is not None:
+            # An explicit category map is a complete scoring definition. This
+            # matches the site scorer and the validator, both of which allow
+            # map-only factors without a redundant preferred list.
+            return np.vectorize(lambda x: float(weights.get(x, 0.0)) if x is not None else np.nan,
+                                otypes=[float])(grid)
         preferred = set(f.get("preferred") or [])
         if not preferred:
             return None
-        weights = f.get("map") or {}
-        return np.vectorize(lambda x: float(weights.get(x, 1.0 if x in preferred else 0.0)) if x is not None else np.nan, otypes=[float])(grid)
+        return np.vectorize(lambda x: 1.0 if x in preferred else 0.0 if x is not None else np.nan,
+                            otypes=[float])(grid)
     if f["kind"] == "higher_is_better":
         if p not in ref_cache:
             ref_cache[p] = offshore_reference(grid, layers.get("depth_m"))
