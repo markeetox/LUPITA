@@ -223,3 +223,24 @@ The read-only comparison utility and manual workflow are implemented. First same
 5. Keep production source selection unchanged until results across more than one timestamp are reviewed and a separate decision is made.
 
 The manual workflow remains read-only and separate from Pull Ocean Data. No ingestion, source configuration, production data, biology, scoring, or prediction weights changed.
+
+
+## HF Radar comparison | corrected run completed | 2026-11-15
+
+The corrected shared-bin comparison completed successfully: [workflow #43731442828](https://github.com/markeetox/LUPITA/actions/runs/43731442828), [artifact 14168636243](https://github.com/markeetox/LUPITA/actions/runs/43731442828/artifacts/14168636243). All three products returned the exact requested time `2026-11-13T04:00:00Z`.
+
+| Product | Valid paired vectors | Native-grid fraction | Shared half-degree bins |
+|---|---:|---:|---:|
+| 1 km | 0 / 285,069 | 0.000% | 0 / 99 |
+| 2 km | 1,640 / 71,535 | 2.293% | 6 / 99 |
+| 6 km | 753 / 7,980 | 9.436% | 19 / 99 |
+
+The 6 km product leads on apparent availability in this snapshot. It also has higher reported median radial count (100 vs 35) and lower median HDOP (0.30 vs 0.56) than 2 km. Approximate Keys coverage remains negligible for all products. Native-grid percentages are not ocean-area coverage; each product has a different grid and representative depth.
+
+**Remaining acceptance checks:**
+1. Run a second exact common timestamp to test whether the 1 km zero result and 2 km/6 km pattern persist.
+2. Compare a shared ocean-only mask or coastline-aware denominator before interpreting coverage as area.
+3. Review the intended fishing-area footprint, spatial clustering, and quality diagnostics together.
+4. Keep production source selection and all prediction/scoring behavior unchanged until multi-time evidence is reviewed and separately approved.
+
+The comparison workflow is read-only and does not touch Pull Ocean Data or the `data` branch.
