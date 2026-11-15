@@ -155,8 +155,19 @@ def summarize(grid: Grid) -> dict[str, Any]:
             "valid_vector_fraction": round(available / len(candidate), 6) if candidate else None,
         }
 
-    occupied_tiles = {(math.floor(lat * 2) / 2, math.floor(lon * 2) / 2) for lat, lon, _, _ in valid}
-    possible_tiles = {(math.floor(lat * 2) / 2, math.floor(lon * 2) / 2) for lat in lats for lon in lons}
+    # Clamp tiny coordinate rounding excursions to the requested bounds before
+    # binning. Use one fixed set of half-degree bins for every product so a
+    # product's native grid edge cannot change the denominator.
+    lat_min, lat_max = REGION["lat"]
+    lon_min, lon_max = REGION["lon"]
+    occupied_tiles = {
+        (math.floor(min(max(lat, lat_min), lat_max) * 2) / 2,
+         math.floor(min(max(lon, lon_min), lon_max) * 2) / 2)
+        for lat, lon, _, _ in valid
+    }
+    lat_tile_starts = range(math.floor(lat_min * 2), math.ceil(lat_max * 2))
+    lon_tile_starts = range(math.floor(lon_min * 2), math.ceil(lon_max * 2))
+    possible_tiles = {(lat_i / 2, lon_i / 2) for lat_i in lat_tile_starts for lon_i in lon_tile_starts}
     return {
         "product": grid.product,
         "dataset": grid.product["dataset"],
@@ -186,6 +197,7 @@ def summarize(grid: Grid) -> dict[str, Any]:
             "possible_half_degree_tiles": len(possible_tiles),
             "occupied_tile_fraction": round(len(occupied_tiles) / len(possible_tiles), 6) if possible_tiles else None,
             "tile_size_degrees": 0.5,
+            "denominator_scope": "fixed requested region, shared by all products",
         },
         "native_grid": {
             "latitude_min": min(lats), "latitude_max": max(lats),
@@ -242,12 +254,12 @@ def render_markdown(report: dict[str, Any]) -> str:
         "- Products are compared at the same requested timestamp and geographic bounds, but each retains its native grid. Coverage percentages use each product's own native grid-cell denominator.",
         "- Nominal resolution and representative depth differ. These products are not interchangeable measurements of the same vertical layer.",
         "- A valid paired vector is not automatically a high-quality vector. Review HDOP and contributing site/radial diagnostics before interpreting coverage.",
-        "- A grid cell's presence does not prove continuous coverage between cells. Half-degree occupied-tile counts expose broad clustering but are not a continuous-area estimate.",
+        "- A grid cell's presence does not prove continuous coverage between cells. Half-degree occupied-tile counts use a fixed requested-region denominator shared by all products; they expose broad clustering but are not a continuous-area estimate.",
         "- Missing or unavailable products are reported as failures; the script never silently substitutes a nearby timestamp.", "", "## Per-product detail", ""]
     for item in report["products"]:
         lines += [f"### {item['product']['id']} (\`{item['dataset']}\`)", "",
             f"- Source: \`{item['source_url']}\`", f"- Returned time: \`{', '.join(item['observed_times'])}\`",
-            f"- Spatial tiles occupied: {item['spatial_distribution']['occupied_half_degree_tiles']} / {item['spatial_distribution']['possible_half_degree_tiles']}", ""]
+            f"- Spatial tiles occupied: {item['spatial_distribution']['occupied_half_degree_tiles']} / {item['spatial_distribution']['possible_half_degree_tiles']} (shared fixed region)", ""]
     if report.get("failures"):
         lines += ["## Retrieval failures", ""] + [f"- {failure}" for failure in report["failures"]] + [""]
     return "\n".join(lines)
