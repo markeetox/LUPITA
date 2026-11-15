@@ -275,15 +275,19 @@ Full diagnostics are recorded in [Progress Log](PROGRESS_LOG.md), including per-
 Detailed findings and NOAA references: [Progress Log](PROGRESS_LOG.md#2026-11-15--hf-radar-coverage-diagnosis-and-ci-verification).
 
 
-## NOAA HF Radar comparison utility | 2026-11-15
+## NOAA HF Radar comparison utility and first numerical result | 2026-11-15
 
-**Status:** read-only comparison utility and manual workflow implemented; numerical NOAA comparison has not yet been run.
+**Status:** read-only diagnostic implemented and first same-time NOAA comparison completed. Workflow [run #43727859776](https://github.com/markeetox/LUPITA/actions/runs/43727859776) succeeded; artifact [hfr-product-comparison](https://github.com/markeetox/LUPITA/actions/runs/43727859776/artifacts/14166714348) was retrieved and reviewed.
 
-- Added scripts/compare_hfr_products.py for the 1 km (ucsdHfrE1), 2 km (ucsdHfrE2), and 6 km (ucsdHfrE6) products.
-- The diagnostic requests the same exact UTC timestamp and South Florida bounds (24.0–28.5°N, 83.5–78.0°W), then measures paired finite water_u/water_v vectors on each product's native grid.
-- Reports native-grid coverage, returned coordinate pairs, half-degree spatial tile occupancy, approximate Florida Keys/Biscayne Bay/offshore subregion coverage, and median hdop, contributing-site, and radial counts.
-- Product depth/resolution metadata is retained (nominal 1/2/6 km grids; representative depths approximately 0.5/1.0/2.4 m). No cross-product regridding or nearest-time substitution is allowed.
-- Added focused parser/metric tests and manual-only workflow .github/workflows/hfr-product-comparison.yml. Python CI [run #43725728118](https://github.com/markeetox/LUPITA/actions/runs/43725728118) passed on test commit 3112bbb2a830960e1d032e9f2f57ab4463addae1. The workflow is read-only and uploads JSON/Markdown reports as a 30-day artifact. It does not run Pull Ocean Data or write to the data branch.
-- Default timestamp is 2026-11-13T04:00:00Z; it must exist exactly in all three products. If one product cannot provide that timestamp, the run reports the failure rather than silently comparing different times.
+- Added scripts/compare_hfr_products.py for 1 km (ucsdHfrE1), 2 km (ucsdHfrE2), and 6 km (ucsdHfrE6), plus focused tests and manual-only workflow .github/workflows/hfr-product-comparison.yml.
+- All three datasets returned the exact common timestamp 2026-11-13T04:00:00Z over 24.0–28.5°N, 83.5–78.0°W. No nearest-time substitution occurred and no product retrieval failures were reported.
+- Native-grid paired-vector counts: 1 km 0/285,069 (0.000%); 2 km 1,640/71,535 (2.293%); 6 km 753/7,980 (9.436%). These are native-grid valid-cell fractions, not directly comparable ocean-area estimates; the rectangular denominators include cells without radar coverage and products have different native grid spacings.
+- Approximate subregion results: 2 km Keys 0%, Biscayne Bay 10.732%, offshore 5.701%; 6 km Keys 0.337%, Biscayne Bay 24.554%, offshore 10.811%. 1 km returned no paired vectors in any of the three boxes.
+- Median quality diagnostics over valid vectors: 2 km HDOP 0.56, sites 2, radials 35; 6 km HDOP 0.30, sites 2, radials 100. These are descriptive medians, not proof that 6 km is more accurate. The 1 km product has no valid vectors to summarize.
+- Product depths differ (approximately 0.5/1.0/2.4 m for 1/2/6 km). The results therefore compare distinct surface layers as well as distinct grid resolutions.
+- The first report's half-degree denominator varied with each product's returned coordinate edges. This was corrected in commit 0ad8726 to use a fixed shared set of 99 half-degree bins across the requested region; a regression test was added in commit 57fe6d7. The first artifact predates this correction, so its tile-occupancy denominator should not be used for cross-product comparison. Rerun the manual diagnostic to obtain corrected shared-bin counts.
+- Python CI [run #43725728118](https://github.com/markeetox/LUPITA/actions/runs/43725728118) passed the initial utility tests. The subsequent shared-bin test change triggers the normal Python CI workflow separately.
 
-**Boundary:** production source configuration, ingestion, prediction logic, species biology, and weights are unchanged. The comparison results remain pending until the manual diagnostic workflow or local script is run successfully.
+**Interpretation:** 6 km has the strongest apparent spatial availability in this one timestamp, especially around Biscayne Bay and offshore, while both 2 km and 6 km have almost no valid Keys coverage. This is a promising candidate for further evaluation, not grounds to switch production sources. The 1 km zero result needs a second-time check before concluding that the dataset is generally unavailable in South Florida.
+
+**Boundary:** no production source configuration, Pull Ocean Data run, prediction logic, species biology, or weights were changed.
