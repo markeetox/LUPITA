@@ -219,4 +219,4 @@ See [Progress Log](PROGRESS_LOG.md) for detailed caveats and NOAA links.
 5. Interpret nominal resolution and representative depth separately; do not treat 1/2/6 km products as identical vertical measurements.
 6. Do not change production source selection until the report is reviewed and a separate decision is made.
 
-**Current state:** utility implemented; numerical comparison pending. No ingestion, source configuration, biology, scoring, or production data changed.
+**Validation:** Python CI [run #43725728118](https://github.com/markeetox/LUPITA/actions/runs/43725728118) passed on the implementation/test commit. **Current state:** utility implemented; numerical comparison pending. No ingestion, source configuration, biology, scoring, or production data changed.
