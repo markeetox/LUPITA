@@ -161,6 +161,17 @@ def validate_profile(profile: Any, registry: dict[str, dict], filename: str = ""
             findings.append(finding("WARNING", "required_ignored_by_grid", f"'{param}' is marked required, but the grid scorer does not read the required flag; use gate for grid-wide missing-data behavior.", param))
         if model == "sites" and factor.get("gate") is True and factor.get("required") is not True:
             findings.append(finding("WARNING", "site_gate_missing_required", f"'{param}' is a site gate but is not required; a missing value is skipped rather than making the site unavailable.", param))
+        if model == "sites" and param == "structure_type" and factor.get("active") is True:
+            site_kinds = profile.get("site_kinds")
+            if isinstance(site_kinds, list) and all(isinstance(x, str) for x in site_kinds):
+                reachable = set(site_kinds)
+                configured = set((factor.get("map") or {}).keys()) if isinstance(factor.get("map"), dict) else set(factor.get("preferred") or [])
+                unreachable = sorted(configured - reachable)
+                unmapped = sorted(reachable - configured)
+                if unreachable:
+                    findings.append(finding("WARNING", "site_structure_categories_unreachable", f"'{param}' configures categories that the site engine cannot currently return from site.kind: {', '.join(unreachable)}.", param))
+                if unmapped:
+                    findings.append(finding("WARNING", "site_structure_kinds_unmapped", f"These allowed site kinds receive the category fallback score (usually zero): {', '.join(unmapped)}. Confirm this is intentional.", param))
         if factor.get("active") is True:
             active.append(factor)
             active_weight += float(weight)
