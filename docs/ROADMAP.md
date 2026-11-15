@@ -194,3 +194,12 @@ The NOAA ingestion pause is cleared for normal scheduled operation and explicitl
 **Next:** read-only comparison of 1 km/2 km/6 km product availability and a controlled same-window data-quality comparison when explicitly authorized. Evaluate a timestamped broad-area model-current product separately. No prediction weights, biology, or scoring gates change during this work.
 
 Validation: Python CI [run #462](https://github.com/markeetox/LUPITA/actions/runs/43669158015), **279 passed, 0 failed, 115 warnings**.
+
+
+### HFR resolution comparison | metadata reconnaissance 2026-11-15
+
+NOAA metadata lists East/Gulf Coast hourly products at 1 km (`ucsdHfrE1`), 2 km (`ucsdHfrE2`) and 6 km (`ucsdHfrE6`). Latest catalog observation times in the inspected snapshots were 2026-11-13 10:00Z, 2026-11-13 04:00Z and 2026-11-14 05:00Z respectively. These unequal timestamps cannot support a coverage ranking. The products also represent nominal depths of approximately 0.5 m, 1.0 m and 2.4 m, so resolution changes also change the measured surface layer.
+
+**Still required:** retrieve exact common-time bounded u/v and quality subsets over 24.0-28.5°N, 83.5-78.0°W; compute paired-vector valid coverage and inspect spatial distribution. The current research environment exposed metadata but could not retrieve those griddap subsets, so no resolution is recommended yet. Production source configuration remains unchanged.
+
+See [Progress Log](PROGRESS_LOG.md) for detailed caveats and NOAA links.
