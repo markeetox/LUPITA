@@ -18,17 +18,18 @@ A high environmental coverage value must never be interpreted as proof that the 
 
 The species validator reports active factor evidence by configured weight:
 
-- `sourced`: the factor is explicitly marked sourced and has usable source references.
+- `sourced`: the factor is explicitly marked sourced and has at least one specific, traceable source reference. A bare organization or website homepage (including a homepage with tracking/query parameters) is not a usable factor-level reference.
 - `partly_sourced`: the profile explicitly says the evidence is partial.
 - `provisional`, `estimated`, `unsourced`, or `needs_source`: the active factor is not established strongly enough to treat its numeric setting as a validated species preference.
-- Missing or unrecognized evidence status, or missing/invalid source references: incomplete evidence metadata.
+- Missing or unrecognized evidence status, missing/invalid references, or homepage-only references: incomplete evidence metadata.
+- A site `distance_to_inlet` factor is currently a constant-zero placeholder, not a real input. The validator rejects it if activated.
 
 The audit reports uncertain active weight and partly sourced active weight separately. These are diagnostic weight totals, not probabilities or estimates of scientific accuracy. A source URL is not proof that the source supports the exact numeric value or local population.
 
 ## Proposed confidence policy (not yet active)
 
 1. Preserve environmental coverage as its own numeric field. Do not fold evidence status into coverage.
-2. A prediction should not receive Medium confidence if any positive-weight active factor is marked provisional, estimated, unsourced, needs_source, or lacks usable source references. The conservative default proposal is to cap such a result at Low until the project owner approves a more nuanced threshold.
+2. A prediction should not receive Medium confidence if any positive-weight active factor is marked provisional, estimated, unsourced, needs_source, or lacks a specific, traceable source reference. The conservative default proposal is to cap such a result at Low until the project owner approves a more nuanced threshold.
 3. Partly sourced factors must be surfaced as a caveat. They should not automatically be treated as fully sourced.
 4. Existing profile-level Low caps and existing Low-confidence conditions remain in force.
 5. A single-factor site model must remain explicitly identified as a temperature-only pilot and Low confidence. It must not be described as validated habitat suitability.
@@ -47,7 +48,7 @@ This policy is **not wired into prediction output yet**. Before changing user-fa
 
 ## Current implementation
 
-The read-only species validator now emits `evidence_risk`, `active_evidence_status_weight`, `active_uncertain_weight`, `active_partly_sourced_weight`, `model_scope`, and `min_coverage`. These fields are audit diagnostics only. No production score or confidence label is changed by this policy document.
+The read-only species validator now emits `evidence_risk`, `active_evidence_status_weight`, `active_uncertain_weight`, `active_partly_sourced_weight`, `model_scope`, and `min_coverage`. It also flags generic homepage-only source references and rejects active use of the constant-zero site distance placeholder. These fields are audit diagnostics only. No production score or confidence label is changed by this policy document.
 
 ## Boundaries
 
