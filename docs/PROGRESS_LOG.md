@@ -676,3 +676,21 @@ The metadata snapshots therefore show different update times. The 6 km product i
 Obtain the same-time bounded `water_u`, `water_v`, `hdop`, `number_of_sites`, and `number_of_radials` subsets for all three datasets, calculate paired-vector valid fractions inside the same South Florida window, and inspect where valid cells cluster. Only then recommend a source or resolution change. Keep current production configuration unchanged.
 
 **NOAA references:** [1 km dataset](https://coastwatch.pfeg.noaa.gov/erddap/griddap/ucsdHfrE1.html), [2 km dataset](https://coastwatch.pfeg.noaa.gov/erddap/griddap/ucsdHfrE2.html), [6 km dataset](https://coastwatch.pfeg.noaa.gov/erddap/griddap/ucsdHfrE6.html), [griddap request documentation](https://coastwatch.pfeg.noaa.gov/erddap/griddap/documentation.html).
+
+
+## 2026-11-15 | Implement standalone HF Radar product comparison
+
+**Implementation:** added scripts/compare_hfr_products.py, tests/test_hfr_product_comparison.py, and manual-only workflow .github/workflows/hfr-product-comparison.yml.
+
+- Requests NOAA CoastWatch HF Radar products ucsdHfrE1 (1 km), ucsdHfrE2 (2 km), and ucsdHfrE6 (6 km) over the identical 24.0–28.5°N, 83.5–78.0°W window.
+- Uses a single exact timestamp, defaulting to 2026-11-13T04:00:00Z. The parser rejects returned timestamps that differ from the requested time; no nearest-time substitution is permitted.
+- Measures valid vectors only when both eastward water_u and northward water_v are finite and not known fill values. Reports each native grid's cell denominator and actual returned coordinate-pair count.
+- Reports median HDOP, number of contributing sites, number of radials, diagnostic-field availability, 0.5-degree occupied-tile distribution, and approximate Florida Keys, Biscayne Bay, and offshore subregion coverage.
+- Preserves each product's nominal grid spacing and representative depth metadata. No regridding is performed because the products differ in both resolution and represented surface depth.
+- CoastWatch is tried first, with the documented Upwell ERDDAP host as fallback. Each product is handled independently so one unavailable product does not erase successful results.
+- The manual workflow has read-only repository permissions and uploads JSON/Markdown output as a 30-day artifact. It does not invoke Pull Ocean Data, alter config/sources.json, or publish to data.
+- README, Project Status, and Roadmap were updated with the run instructions and acceptance criteria.
+
+**Validation boundary:** focused tests were added, but their CI result is pending. The NOAA comparison itself has not yet run, so no numerical ranking or source recommendation is claimed. Production source selection, data ingestion, species biology, prediction weights, and scoring behavior remain unchanged.
+
+**Next:** run Actions → Compare NOAA HF Radar products using the default exact timestamp. Review all three products' retrieval status, native-grid coverage, quality diagnostics, and subregion distribution before proposing any production change.
