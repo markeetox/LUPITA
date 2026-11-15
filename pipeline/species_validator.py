@@ -165,9 +165,10 @@ def validate_profile(profile: Any, registry: dict[str, dict], filename: str = ""
             site_kinds = profile.get("site_kinds")
             if isinstance(site_kinds, list) and all(isinstance(x, str) for x in site_kinds):
                 reachable = set(site_kinds)
-                configured = set((factor.get("map") or {}).keys()) if isinstance(factor.get("map"), dict) else set(factor.get("preferred") or [])
-                unreachable = sorted(configured - reachable)
-                unmapped = sorted(reachable - configured)
+                mapped = set(factor.get("map", {}).keys()) if isinstance(factor.get("map"), dict) else set(factor.get("preferred") or [])
+                preferred = set(factor.get("preferred") or [])
+                unreachable = sorted((mapped | preferred) - reachable)
+                unmapped = sorted(reachable - mapped)
                 if unreachable:
                     findings.append(finding("WARNING", "site_structure_categories_unreachable", f"'{param}' configures categories that the site engine cannot currently return from site.kind: {', '.join(unreachable)}.", param))
                 if unmapped:
