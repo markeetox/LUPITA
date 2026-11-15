@@ -69,7 +69,7 @@ def has_specific_source_reference(sources: Any) -> bool:
         value = source.strip()
         parsed = urlsplit(value)
         if parsed.scheme in {"http", "https"} and parsed.netloc:
-            if parsed.path not in {"", "/"} or parsed.query or parsed.fragment:
+            if parsed.path not in {"", "/"}:
                 return True
         elif "://" not in value:
             # Preserve human-readable citations such as author/year references.
