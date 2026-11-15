@@ -582,6 +582,7 @@ All six JSON profiles parsed after update and all eight previously source-missin
 - `1b805ef`, `37e4eb5`: source-reference regression tests.
 - `3578e27`: ensure query-string homepages remain generic.
 - `229f021`, `582c3ea`: flag constant-distance placeholder and test it.
+- `d68a393`, `93cb030`: reject active use of the constant-distance placeholder and assert the model is incompatible.
 - `fc64cf6`: add named-site triage report.
 
 ### Validation
