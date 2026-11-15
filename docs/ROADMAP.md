@@ -179,3 +179,18 @@ Full findings: [Named-site model triage](SITE_MODEL_TRIAGE_2026-11-15.md). NOAA 
 5. Do not change prediction weights, species biology, or scoring gates based on this one run.
 
 The NOAA ingestion pause is cleared for normal scheduled operation and explicitly authorized checks. No additional run was triggered during this inspection.
+
+
+## HF Radar spatial coverage investigation | 2026-11-15
+
+**Status:** first-pass diagnosis complete; source comparison remains open. No source/configuration change or ingestion run was performed.
+
+- Production #211: `ucsdHfrE2` was fresh (5.79h) but yielded 94 valid aligned vectors from 10,101 target cells in the South Florida request window (0.9306%). Raw source-grid valid fraction was 0.9059%, so the initial evidence points to limited upstream valid spatial footprint rather than substantial loss during alignment.
+- The 2 km HFR product is derived from coastal radar radial measurements; its rectangular geographic bounds do not imply continuous coverage throughout the box. Treat HFR as a coastal observation layer, not a broad-area ocean-current field.
+- NOAA's 6 km hourly product `ucsdHfrE6` is available and should be compared with the 2 km product. NOAA's THREDDS catalog also lists 1 km, 2 km, and 6 km East/Gulf Coast hourly products. Compare exact same time/window and retain valid-vector coverage, observation timestamp, and quality fields.
+- Do not promote a coarser product simply because its grid is coarser; it must demonstrate better useful coverage and acceptable quality in the intended South Florida fishing areas.
+- Stale satellite altimetry remains excluded from current-vector filling. Keep Gulf Stream-edge context separate from nearshore observed-current coverage.
+
+**Next:** read-only comparison of 1 km/2 km/6 km product availability and a controlled same-window data-quality comparison when explicitly authorized. Evaluate a timestamped broad-area model-current product separately. No prediction weights, biology, or scoring gates change during this work.
+
+Validation: Python CI [run #462](https://github.com/markeetox/LUPITA/actions/runs/43669158015), **279 passed, 0 failed, 115 warnings**.
