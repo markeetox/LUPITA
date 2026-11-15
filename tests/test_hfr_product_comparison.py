@@ -9,10 +9,10 @@ def _csv(dataset_time="2026-11-13T04:00:00Z"):
     rows = [
         "time,latitude,longitude,water_u,water_v,hdop,number_of_sites,number_of_radials",
         "UTC,degrees_north,degrees_east,m s-1,m s-1,1,count,count",
-        f"{dataset_time},25.0,-80.0,0.2,0.4,0.8,3,18",
-        f"{dataset_time},25.0,-79.9,NaN,0.3,1.2,2,9",
-        f"{dataset_time},25.1,-80.0,-327.67,0.1,0.9,3,12",
-        f"{dataset_time},25.1,-79.9,0.1,0.2,0.7,4,20",
+        f"{dataset_time},25.5,-80.0,0.2,0.4,0.8,3,18",
+        f"{dataset_time},25.5,-79.9,NaN,0.3,1.2,2,9",
+        f"{dataset_time},25.6,-80.0,-327.67,0.1,0.9,3,12",
+        f"{dataset_time},25.6,-79.9,0.1,0.2,0.7,4,20",
     ]
     return "\n".join(rows)
 
