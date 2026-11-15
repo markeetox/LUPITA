@@ -291,3 +291,14 @@ Detailed findings and NOAA references: [Progress Log](PROGRESS_LOG.md#2026-11-15
 **Interpretation:** 6 km has the strongest apparent spatial availability in this one timestamp, especially around Biscayne Bay and offshore, while both 2 km and 6 km have almost no valid Keys coverage. This is a promising candidate for further evaluation, not grounds to switch production sources. The 1 km zero result needs a second-time check before concluding that the dataset is generally unavailable in South Florida.
 
 **Boundary:** no production source configuration, Pull Ocean Data run, prediction logic, species biology, or weights were changed.
+
+
+## HF Radar comparison validation | 2026-11-15 | corrected spatial bins
+
+The corrected read-only comparison workflow completed successfully on [run #43731442828](https://github.com/markeetox/LUPITA/actions/runs/43731442828); artifact [14168636243](https://github.com/markeetox/LUPITA/actions/runs/43731442828/artifacts/14168636243) was retrieved and inspected. This run includes the shared fixed half-degree geographic-bin denominator introduced in commits `0ad8726` and `57fe6d7`.
+
+At the exact common timestamp `2026-11-13T04:00:00Z`, the 1 km product had 0 paired vectors (0/285,069 native cells; 0/99 shared half-degree tiles), 2 km had 1,640 (2.293%; 6/99 tiles), and 6 km had 753 (9.436%; 19/99 tiles). Approximate subregion results for 2 km vs 6 km: Florida Keys 0% vs 0.337%, Biscayne Bay 10.732% vs 24.554%, offshore 5.701% vs 10.811%. Median HDOP was 0.56 for 2 km and 0.30 for 6 km; median radial counts were 35 and 100. The 1 km product returned the full grid but no valid paired vectors.
+
+This is one timestamp, and native-grid percentages are not ocean-area coverage estimates. The products represent different nominal resolutions and depths (1/2/6 km; approximately 0.5/1.0/2.4 m). The 6 km product is the leading availability candidate for this snapshot only; no production source change is approved or implied.
+
+**Next:** run a second exact timestamp shared by all three products, then compare temporal consistency. Evaluate a common ocean-only mask before making area-coverage claims. Keep source selection, ingestion configuration, scoring, and biology unchanged.
