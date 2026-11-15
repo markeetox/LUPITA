@@ -172,7 +172,7 @@ def validate_profile(profile: Any, registry: dict[str, dict], filename: str = ""
             if status_for_weight in {"provisional", "estimated", "unsourced", "needs_source", "missing_or_unknown"} or not usable_sources or placeholder_site_input:
                 active_uncertain_weight += float(weight)
             if placeholder_site_input:
-                findings.append(finding("WARNING", "placeholder_site_factor", "'distance_to_inlet' currently returns a constant zero for every site; it is not a measured distance and must not be activated until a real site-distance input is implemented.", param))
+                findings.append(finding("ERROR", "placeholder_site_factor", "'distance_to_inlet' currently returns a constant zero for every site; it is not a measured distance and cannot be activated until a real site-distance input is implemented.", param))
             if weight <= 0:
                 findings.append(finding("ERROR", "active_nonpositive_weight", f"Active factor '{param}' must have positive weight.", param))
             if isinstance(kind, str) and kind in engine.get(param, set()):
@@ -319,7 +319,7 @@ def validate_profile(profile: Any, registry: dict[str, dict], filename: str = ""
 
     errors = sum(x["severity"] == "ERROR" for x in findings)
     warnings = sum(x["severity"] == "WARNING" for x in findings)
-    compatible = not any(x["code"] == "unsupported_active_factor" for x in findings)
+    compatible = not any(x["code"] in {"unsupported_active_factor", "placeholder_site_factor"} for x in findings)
     if errors:
         classification = "INVALID / UNSUPPORTED"
     elif any(x["code"] in {"single_factor_model", "limited_biological_dimensions", "partial_biological_dimensions", "category_registry_mismatch"} for x in findings):
