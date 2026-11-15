@@ -32,7 +32,7 @@ Keep production changes separate from research-only work. Do not promote candida
 - `pipeline/`: environmental data ingestion, grid construction, scoring, prediction, and API generation.
 - `data/spatial/`: curated spatial catalog and named-water source geometry.
 - `data/spatial/research/`: source-preserving NOAA/FWC/FDEP/county research datasets, derived comparison layers, and audit outputs.
-- `scripts/`: repeatable GIS extraction, curation, and topology/audit tools.
+- `scripts/`: repeatable GIS extraction, curation, topology/audit tools, and read-only NOAA HF Radar product comparisons.
 - `tests/`: prediction, data-contract, extraction, and spatial QA tests.
 - `web/`: map client.
 - `.github/workflows/`: scheduled production refresh/export, lightweight PR validation, and manual-only source-acquisition workflows.
@@ -81,6 +81,12 @@ python -m pipeline.check_sources     # confirms stations, dataset IDs, dimension
 python -m pipeline.run               # writes data/live/latest.json and data/live/fish.json
 ```
 Helpers: `python -m pipeline.find_stations`, `python -m pipeline.find_datasets "search words"`.
+
+Read-only HF Radar comparison (no production ingestion):
+
+    python scripts/compare_hfr_products.py --time 2026-11-13T04:00:00Z
+
+This compares NOAA 1 km, 2 km and 6 km native grids at one exact UTC timestamp, writes JSON/Markdown under `artifacts/hfr-comparison/`, and exits nonzero if any product cannot be retrieved at that exact time. A manual-only GitHub Actions workflow can run the same diagnostic and retain its report as an artifact.
 
 ## How a score is made
 Each map cell gets 0-1 per factor from the species profile (ideal band, allowed range), weighted
