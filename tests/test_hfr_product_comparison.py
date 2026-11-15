@@ -44,6 +44,8 @@ def test_summary_uses_paired_vectors_and_native_grid_denominator():
     assert summary["grid"]["valid_vector_fraction"] == 0.5
     assert summary["quality"]["hdop_median_valid_vectors"] == 0.75
     assert summary["quality"]["number_of_sites_median_valid_vectors"] == 3.5
+    assert summary["spatial_distribution"]["possible_half_degree_tiles"] == 99
+    assert summary["spatial_distribution"]["denominator_scope"] == "fixed requested region, shared by all products"
 
 
 def test_summary_includes_keys_biscayne_and_offshore_boxes():
