@@ -727,3 +727,18 @@ The 6 km product has the strongest apparent spatial availability in this snapsho
 - No Pull Ocean Data run, source/configuration change, production data publication, biology edit, or prediction-weight change was made.
 
 **Artifact:** `hfr-comparison-20261113T040000Z.json` and `.md`, GitHub Actions artifact ID `14166714348`.
+
+
+## 2026-11-15 | Corrected HF Radar product comparison
+
+- User reran the manual read-only comparison after the shared geographic-bin correction.
+- Workflow [#43731442828](https://github.com/markeetox/LUPITA/actions/runs/43731442828) completed successfully on main; artifact [14168636243](https://github.com/markeetox/LUPITA/actions/runs/43731442828/artifacts/14168636243) was downloaded and reviewed.
+- Requested and returned timestamp for all three products: `2026-11-13T04:00:00Z`. Region: 24.0-28.5°N, 83.5-78.0°W. Native grids retained; paired finite `water_u` and `water_v` required. No interpolation or regridding.
+- 1 km `ucsdHfrE1`: 0/285,069 valid vectors (0.000%); 0/99 shared half-degree tiles.
+- 2 km `ucsdHfrE2`: 1,640/71,535 (2.293%); 6/99 shared tiles. Median HDOP 0.56; median sites 2; median radials 35.
+- 6 km `ucsdHfrE6`: 753/7,980 (9.436%); 19/99 shared tiles. Median HDOP 0.30; median sites 2; median radials 100.
+- Approximate subregion coverage: Keys 0/0.337%, Biscayne Bay 0/10.732% vs 6 km 24.554%, offshore 5.701% vs 10.811% (2 km vs 6 km). Keys remain effectively uncovered by both coarser products in this snapshot.
+- The corrected half-degree denominator is fixed at 99 geographic bins across all products. This is a broad clustering diagnostic, not continuous coverage or an ocean-only area fraction.
+- Interpretation: 6 km has the strongest apparent availability and diagnostic quality in this one snapshot, but the 1 km zero result and 2 km/6 km pattern need a second common timestamp. Different representative depths (0.5/1.0/2.4 m) prevent treating the products as interchangeable.
+- Next: perform a second exact common-time comparison; then consider a shared ocean-only mask/coastline denominator. Do not change production source selection, source configuration, scoring, or species biology based on one snapshot.
+- Validation of corrected code: Python CI runs [#43730941774](https://github.com/markeetox/LUPITA/actions/runs/43730941774) and [#43730946716](https://github.com/markeetox/LUPITA/actions/runs/43730946716) succeeded before the manual comparison.
