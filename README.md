@@ -186,3 +186,6 @@ When SST cannot load, downstream layers are marked `not_attempted`. HF Radar is 
 
 
 The selected SST ERDDAP host is exposed as `source_endpoint` in `latest.json` and `data_quality.layers.sst`, making primary-versus-mirror selection auditable after each production refresh.
+
+
+Named-site model limitations and evidence gaps are tracked in [the 2026-11-15 site-model triage](docs/SITE_MODEL_TRIAGE_2026-11-15.md).
