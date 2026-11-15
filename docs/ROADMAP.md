@@ -203,3 +203,20 @@ NOAA metadata lists East/Gulf Coast hourly products at 1 km (`ucsdHfrE1`), 2 km 
 **Still required:** retrieve exact common-time bounded u/v and quality subsets over 24.0-28.5°N, 83.5-78.0°W; compute paired-vector valid coverage and inspect spatial distribution. The current research environment exposed metadata but could not retrieve those griddap subsets, so no resolution is recommended yet. Production source configuration remains unchanged.
 
 See [Progress Log](PROGRESS_LOG.md) for detailed caveats and NOAA links.
+
+
+## HF Radar product comparison utility | 2026-11-15
+
+**Implementation:** read-only script, focused tests, and manual-only GitHub Actions workflow are committed. See scripts/compare_hfr_products.py and .github/workflows/hfr-product-comparison.yml.
+
+**Run:** Actions → Compare NOAA HF Radar products → Run workflow. Use the exact common timestamp 2026-11-13T04:00:00Z initially. The job uploads JSON and Markdown reports as the hfr-product-comparison artifact. It is separate from Pull Ocean Data and has read-only repository permissions. It can also be run locally with: python scripts/compare_hfr_products.py --time 2026-11-13T04:00:00Z
+
+**Acceptance criteria after retrieval:**
+1. All three products return the exact requested timestamp; no nearest-time fallback.
+2. Compare paired-vector valid fractions on each native grid, while also reporting returned coordinate pairs so sparse/missing coordinate output is visible.
+3. Review HDOP, contributing-site and radial-count distributions alongside coverage; do not invent hard quality cutoffs.
+4. Inspect Florida Keys, Biscayne Bay and offshore diagnostic boxes plus half-degree spatial clustering. These boxes are approximate analysis windows, not official NOAA coverage polygons.
+5. Interpret nominal resolution and representative depth separately; do not treat 1/2/6 km products as identical vertical measurements.
+6. Do not change production source selection until the report is reviewed and a separate decision is made.
+
+**Current state:** utility implemented; numerical comparison pending. No ingestion, source configuration, biology, scoring, or production data changed.
