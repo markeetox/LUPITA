@@ -227,3 +227,12 @@ NOAA remains paused.
 - All eight reviewed active factors now have factor-level source references. No missing-source findings remain for those eight; inactive/planned factors elsewhere may still lack references.
 - All eight factors remain provisional and the catalog-wide active evidence risk remains elevated for 12 profiles.
 - Final CI run: [#43622573953](https://github.com/markeetox/LUPITA/actions/runs/43622573953).
+
+
+## 2026-11-14 | Category-map scorer compatibility fix
+
+A mismatch was found between the species validator contract and the grid scorer: a valid category map without a `preferred` list passed validation but produced no grid score. The grid scorer now evaluates map-only category factors consistently with the site scorer. Regression tests cover map-only and preferred-list configurations.
+
+Commits: `8cabaa7c9dab8034388980fd096d471cb6aff21a`, `e0c0512643b68ed703d22d914a9d4ab34fcc58a5`.
+
+**Validation:** automatic Python test workflow triggered by the pushes; result pending. No NOAA activity, species profile edits, biological parameter changes, or confidence-policy activation.
