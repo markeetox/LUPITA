@@ -48,7 +48,7 @@ Five active factors:
 - time of day (provisional)
 - spawning season (sourced)
 
-The structure factor maps only `inlet` to a positive score, while the profile allows `inlet`, `cut`, `channel_bridge`, and `flat` site kinds. The scorer uses the site's `kind` as the structure value. Consequently, non-inlet site kinds currently receive zero for this factor. This may be an intentional inlet preference, but it should be made explicit and reviewed against the intended role of each site kind. The profile's preferred list also includes habitat categories that the current named-site catalog does not directly supply.
+The structure factor maps only `inlet` to a positive score, while the profile allows `inlet`, `cut`, `channel_bridge`, and `flat` site kinds. The scorer uses the site's `kind` as the structure value. Consequently, non-inlet site kinds currently receive zero for this factor. This may be an intentional inlet preference, but it should be made explicit and reviewed against the intended role of each site kind. The profile's preferred list also includes habitat categories that the current named-site catalog does not directly supply. The validator now warns about both unreachable preferred categories and allowed site kinds that fall through to the default zero score.
 
 ### Atlantic tarpon
 
@@ -59,7 +59,7 @@ Five active factors:
 - structure type (partly sourced)
 - time of day (provisional)
 
-The structure factor likewise awards a positive score only to `inlet`, although the profile also permits cuts, channel bridges, and flats. The time-of-day evidence is a small juvenile telemetry study outside South Florida; the profile correctly retains this factor as provisional and does not treat it as validated adult feeding preference.
+The structure factor likewise awards a positive score only to `inlet`, although the profile also permits cuts, channel bridges, and flats. The validator now reports those unmapped site kinds. The time-of-day evidence is a small juvenile telemetry study outside South Florida; the profile correctly retains this factor as provisional and does not treat it as validated adult feeding preference.
 
 ## Site-engine input capabilities and limitations
 
@@ -82,7 +82,7 @@ The 120 km tide-station search radius is also broad. A nearest station can be fa
 - Homepage URLs with query strings or fragments remain generic; adding tracking parameters does not turn a homepage into a scientific citation.
 - Active factors whose only source is a homepage count as uncertain for evidence-risk diagnostics.
 - A site `distance_to_inlet` factor is an error if active because the current input is a constant-zero placeholder; the model is marked incompatible and its active weight is counted as uncertain.
-- Regression tests cover generic homepages, specific species/source pages, query-string homepages, and the constant-distance placeholder.
+- Regression tests cover generic homepages, specific species/source pages, query-string homepages, the constant-distance placeholder, and unreachable/unmapped site structure categories.
 
 These are validator/reporting changes only. They do not alter scoring, prediction confidence, source ingestion, species values, or weights.
 
