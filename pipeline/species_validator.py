@@ -168,8 +168,11 @@ def validate_profile(profile: Any, registry: dict[str, dict], filename: str = ""
             status_for_weight = raw_status if isinstance(raw_status, str) and raw_status in VALID_VALUE_STATUSES else "missing_or_unknown"
             active_evidence_weights[status_for_weight] += float(weight)
             usable_sources = has_specific_source_reference(factor.get("sources"))
-            if status_for_weight in {"provisional", "estimated", "unsourced", "needs_source", "missing_or_unknown"} or not usable_sources:
+            placeholder_site_input = model == "sites" and param == "distance_to_inlet"
+            if status_for_weight in {"provisional", "estimated", "unsourced", "needs_source", "missing_or_unknown"} or not usable_sources or placeholder_site_input:
                 active_uncertain_weight += float(weight)
+            if placeholder_site_input:
+                findings.append(finding("WARNING", "placeholder_site_factor", "'distance_to_inlet' currently returns a constant zero for every site; it is not a measured distance and must not be activated until a real site-distance input is implemented.", param))
             if weight <= 0:
                 findings.append(finding("ERROR", "active_nonpositive_weight", f"Active factor '{param}' must have positive weight.", param))
             if isinstance(kind, str) and kind in engine.get(param, set()):
