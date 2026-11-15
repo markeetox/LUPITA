@@ -1,6 +1,6 @@
 # LUPITA engineering roadmap
 
-**Last updated:** 2026-11-14 | **Code:** `main` | **Generated-data export:** `data` only
+**Last updated:** 2026-11-15 | **Code:** `main` | **Generated-data export:** `data` only
 
 This is the handoff record for future sessions. Read it with [Project Status](PROJECT_STATUS.md) and [Progress Log](PROGRESS_LOG.md). Do not restart completed work or repeat expensive research workflows without a specific reason.
 
@@ -163,3 +163,19 @@ Eight active factors across six profiles previously lacked factor-level source r
 6. Assess tide-station distance/local-regime suitability without changing NOAA ingestion during the current pause.
 
 Full findings: [Named-site model triage](SITE_MODEL_TRIAGE_2026-11-15.md). NOAA remains paused.
+
+
+## Production refresh recovery | 2026-11-15
+
+**Latest inspected run:** [Pull Ocean Data #211](https://github.com/markeetox/LUPITA/actions/runs/43664658831). The scheduled run on `main` completed the full test step, catalog, pipeline, and publication to `data`. Predictions refreshed from the current run with no recorded errors or critical issues.
+
+**Health is degraded, not fully healthy:** SST was delayed at 40.8h (warning threshold 36h, stale threshold 72h); chlorophyll was 61.8h old with 15.8% valid source coverage; HF Radar was 5.8h old but covered only 0.93% of its South Florida query window (94/10,101 cells). Stale altimetry (1,153.8h) was correctly excluded from current vectors. Other inspected layers, including buoy observations, ETOPO, reef structure, benthic habitat and closures, loaded.
+
+### Next acceptance checks
+1. Compare SST freshness across subsequent scheduled runs before calibrating its provisional thresholds.
+2. Investigate HF Radar's very low regional valid-cell coverage; do not interpret successful retrieval as adequate coverage.
+3. Continue tracking chlorophyll valid fraction and scene age; retain cloud/missing cells as unknown.
+4. Keep stale altimetry excluded from current vectors until a timestamp-qualified observation is available.
+5. Do not change prediction weights, species biology, or scoring gates based on this one run.
+
+The NOAA ingestion pause is cleared for normal scheduled operation and explicitly authorized checks. No additional run was triggered during this inspection.
