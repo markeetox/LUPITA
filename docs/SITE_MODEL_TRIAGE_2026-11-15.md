@@ -71,7 +71,7 @@ The site engine currently exposes:
 - `structure_type`: the site's static `kind`.
 - `distance_to_inlet`: currently a placeholder that returns constant `0.0` for every site.
 
-The constant distance placeholder is especially important: activating it would make every site appear to be at zero distance from an inlet. The validator now emits a warning and counts its active weight as uncertain if a site profile attempts to activate it. It must not be used until a real distance dataset/calculation is implemented and tested.
+The constant distance placeholder is especially important: activating it would make every site appear to be at zero distance from an inlet. The validator now rejects an active use as an error, marks the model incompatible, and counts its active weight as uncertain if a site profile attempts to activate it. It must not be used until a real distance dataset/calculation is implemented and tested.
 
 The 120 km tide-station search radius is also broad. A nearest station can be far from a site or represent a different local tidal regime. A future site-quality review should expose station distance and reject or qualify inappropriate matches before treating the tide value as locally representative. This review does not change tide retrieval or any NOAA-related workflow.
 
@@ -81,7 +81,7 @@ The 120 km tide-station search radius is also broad. A nearest station can be fa
 - The validator emits `generic_source_reference` when a factor cites only a generic homepage.
 - Homepage URLs with query strings or fragments remain generic; adding tracking parameters does not turn a homepage into a scientific citation.
 - Active factors whose only source is a homepage count as uncertain for evidence-risk diagnostics.
-- A site `distance_to_inlet` factor is explicitly flagged as a placeholder input and its active weight is counted as uncertain.
+- A site `distance_to_inlet` factor is an error if active because the current input is a constant-zero placeholder; the model is marked incompatible and its active weight is counted as uncertain.
 - Regression tests cover generic homepages, specific species/source pages, query-string homepages, and the constant-distance placeholder.
 
 These are validator/reporting changes only. They do not alter scoring, prediction confidence, source ingestion, species values, or weights.
