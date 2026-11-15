@@ -245,3 +245,19 @@ Static review of all 25 site-model profiles identified 23 temperature-only pilot
 The validator now warns on homepage-only references, rejects active use of the placeholder distance factor as model-incompatible, and reports site structure categories that are unreachable or fall through to zero for allowed site kinds. Regression tests were added. See [Named-site model triage](SITE_MODEL_TRIAGE_2026-11-15.md).
 
 **Validation:** automatic Python CI result pending. No prediction behavior, species numeric values, or NOAA ingestion was changed.
+
+
+## Production data refresh recovery check | 2026-11-15
+
+**Latest inspected run:** [Pull Ocean Data #211](https://github.com/markeetox/LUPITA/actions/runs/43664658831), scheduled on `main` at commit `16ae66cd6247ce8eb30b05770f16f605423cc16c`.
+
+- Workflow, full Python test step, catalog generation, production pipeline, and publication to `data` all completed successfully.
+- `latest.json` generated at `2026-11-15T01:47:27Z`; prediction snapshot refreshed from the current run; no recorded errors or critical issues.
+- Overall health is **degraded**, not healthy, because SST was 40.8 hours old and crossed its provisional 36-hour warning threshold (but not its 72-hour stale threshold).
+- Chlorophyll loaded at 61.8 hours old (fresh by configured thresholds), but valid source coverage was only 15.8%.
+- HF Radar loaded at 5.8 hours old, but South Florida query-window coverage was only 94/10,101 cells (0.93%). Stale altimetry (1,153.8 hours old) was correctly excluded from current vectors.
+- Bathymetry, reef structure, benthic habitat, closures, and buoy observations loaded successfully.
+
+**Interpretation:** this confirms that the live production ingestion and publication path is operating again. It does not establish sustained NOAA recovery or adequate spatial coverage. Monitor later scheduled runs and compare freshness/coverage before changing thresholds, sources, or prediction behavior. No code or configuration changes were made during this validation.
+
+Full diagnostics are recorded in [Progress Log](PROGRESS_LOG.md), including per-layer timestamps and coverage.
