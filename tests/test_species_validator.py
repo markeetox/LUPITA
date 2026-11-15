@@ -293,3 +293,18 @@ def test_site_structure_factor_flags_unreachable_and_unmapped_site_kinds():
     assert "site_structure_kinds_unmapped" in findings
     assert "cut" in findings["site_structure_kinds_unmapped"]
     assert "flat" in findings["site_structure_kinds_unmapped"]
+
+
+def test_malformed_site_structure_preferred_values_do_not_crash_validator():
+    malformed = profile(
+        model="sites",
+        site_kinds=["inlet"],
+        factors=[{
+            "param": "structure_type", "kind": "category",
+            "preferred": 123, "map": {"inlet": 1.0},
+            "weight": 1.0, "active": True, "value_status": "sourced",
+            "sources": ["https://example.org/site-structure"],
+        }],
+    )
+    result = validate_profile(malformed, REGISTRY)
+    assert "invalid_preferred_categories" in {x["code"] for x in result["findings"]}
