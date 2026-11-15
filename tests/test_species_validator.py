@@ -8,7 +8,7 @@ from pipeline.species_validator import audit_species, validate_profile, write_re
 REGISTRY = {
     "sst_c": {"key": "sst_c", "status": "active"},
     "tide_stage": {"key": "tide_stage", "status": "active", "values": ["rising", "falling"]},
-    "structure_type": {"key": "structure_type", "status": "active", "values": ["reef", "seagrass"]},
+    "structure_type": {"key": "structure_type", "status": "active", "values": ["reef", "seagrass", "inlet", "cut", "flat", "mangrove_edge"]},
     "spawning_season": {"key": "spawning_season", "status": "planned"},
     "unknown_planned": {"key": "unknown_planned", "status": "planned"},
     "distance_to_inlet": {"key": "distance_to_inlet", "status": "active"},
@@ -272,3 +272,24 @@ def test_site_distance_to_inlet_placeholder_is_not_treated_as_reliable_input():
     assert result["model_compatible"] is False
     assert result["active_uncertain_weight"] == 1.0
     assert result["evidence_risk"] == "elevated"
+
+
+def test_site_structure_factor_flags_unreachable_and_unmapped_site_kinds():
+    pilot = profile(
+        model="sites",
+        site_kinds=["inlet", "cut", "flat"],
+        factors=[{
+            "param": "structure_type", "kind": "category",
+            "preferred": ["inlet", "mangrove_edge", "seagrass"],
+            "map": {"inlet": 1.0},
+            "weight": 1.0, "active": True, "value_status": "sourced",
+            "sources": ["https://example.org/site-structure"],
+        }],
+    )
+    result = validate_profile(pilot, REGISTRY)
+    findings = {x["code"]: x["message"] for x in result["findings"]}
+    assert "site_structure_categories_unreachable" in findings
+    assert "mangrove_edge" in findings["site_structure_categories_unreachable"]
+    assert "site_structure_kinds_unmapped" in findings
+    assert "cut" in findings["site_structure_kinds_unmapped"]
+    assert "flat" in findings["site_structure_kinds_unmapped"]
