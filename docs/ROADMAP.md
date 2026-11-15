@@ -205,18 +205,21 @@ NOAA metadata lists East/Gulf Coast hourly products at 1 km (`ucsdHfrE1`), 2 km 
 See [Progress Log](PROGRESS_LOG.md) for detailed caveats and NOAA links.
 
 
-## HF Radar product comparison utility | 2026-11-15
+## HF Radar product comparison | first result and next validation | 2026-11-15
 
-**Implementation:** read-only script, focused tests, and manual-only GitHub Actions workflow are committed. See scripts/compare_hfr_products.py and .github/workflows/hfr-product-comparison.yml.
+The read-only comparison utility and manual workflow are implemented. First same-time comparison [run #43727859776](https://github.com/markeetox/LUPITA/actions/runs/43727859776) succeeded; its [artifact](https://github.com/markeetox/LUPITA/actions/runs/43727859776/artifacts/14166714348) was retrieved.
 
-**Run:** Actions → Compare NOAA HF Radar products → Run workflow. Use the exact common timestamp 2026-11-13T04:00:00Z initially. The job uploads JSON and Markdown reports as the hfr-product-comparison artifact. It is separate from Pull Ocean Data and has read-only repository permissions. It can also be run locally with: python scripts/compare_hfr_products.py --time 2026-11-13T04:00:00Z
+**First result at 2026-11-13T04:00:00Z:** 1 km returned 0 valid paired vectors; 2 km returned 1,640/71,535 (2.293%); 6 km returned 753/7,980 (9.436%). Approximate subregion coverage for 2 km vs 6 km was Keys 0% vs 0.337%, Biscayne Bay 10.732% vs 24.554%, and offshore 5.701% vs 10.811%. Median HDOP was 0.56 for 2 km and 0.30 for 6 km; median radial counts were 35 and 100 respectively. These are descriptive results, not an accuracy verdict.
 
-**Acceptance criteria after retrieval:**
-1. All three products return the exact requested timestamp; no nearest-time fallback.
-2. Compare paired-vector valid fractions on each native grid, while also reporting returned coordinate pairs so sparse/missing coordinate output is visible.
-3. Review HDOP, contributing-site and radial-count distributions alongside coverage; do not invent hard quality cutoffs.
-4. Inspect Florida Keys, Biscayne Bay and offshore diagnostic boxes plus half-degree spatial clustering. These boxes are approximate analysis windows, not official NOAA coverage polygons.
-5. Interpret nominal resolution and representative depth separately; do not treat 1/2/6 km products as identical vertical measurements.
-6. Do not change production source selection until the report is reviewed and a separate decision is made.
+**Important limitations:** native-grid fractions include all cells in each rectangular bounding grid, including areas with no radar coverage. They are not ocean-area coverage estimates. Products represent different depths (about 0.5/1.0/2.4 m), so they are not interchangeable. The 1 km zero result needs another common timestamp before it can be treated as a persistent limitation.
 
-**Validation:** Python CI [run #43725728118](https://github.com/markeetox/LUPITA/actions/runs/43725728118) passed on the implementation/test commit. **Current state:** utility implemented; numerical comparison pending. No ingestion, source configuration, biology, scoring, or production data changed.
+**Diagnostic correction:** the first report's half-degree occupied-tile denominator varied with product coordinate edges. Commit 0ad8726 corrected this to a fixed shared set of bins across the requested region; commit 57fe6d7 added a regression test. The existing artifact predates this correction, so rerun the manual workflow before using tile occupancy as a cross-product comparison.
+
+**Next acceptance checks:**
+1. Verify the new shared-bin calculation in the next artifact.
+2. Run a second exact common timestamp supported by all three products to test whether 1 km remains empty and whether the 2 km/6 km pattern persists.
+3. Evaluate a shared ocean-only mask/coastline denominator before making cross-product area-coverage claims.
+4. Review spatial distribution and HDOP/site/radial diagnostics together; do not create hard quality thresholds from one snapshot.
+5. Keep production source selection unchanged until results across more than one timestamp are reviewed and a separate decision is made.
+
+The manual workflow remains read-only and separate from Pull Ocean Data. No ingestion, source configuration, production data, biology, scoring, or prediction weights changed.
