@@ -72,9 +72,9 @@ def test_active_unsupported_factor_is_flagged():
 def test_site_engine_compatibility_and_planned_registry_warning():
     good = profile(model="sites", factors=[
         {"param": "sst_c", "kind": "range", "range": [10, 30], "ideal": [20, 25], "weight": 0.5,
-         "active": True, "value_status": "sourced", "sources": ["https://example.org"]},
+         "active": True, "value_status": "sourced", "sources": ["https://example.org/source"]},
         {"param": "spawning_season", "kind": "season", "months": [4, 5, 6], "peak_months": [5], "weight": 0.5,
-         "active": True, "value_status": "provisional", "sources": ["https://example.org"]},
+         "active": True, "value_status": "provisional", "sources": ["https://example.org/source"]},
     ])
     result = validate_profile(good, REGISTRY)
     codes = {x["code"] for x in result["findings"]}
@@ -229,3 +229,30 @@ def test_needs_source_is_recognized_and_counts_as_uncertain_when_active():
     assert "missing_or_unknown_evidence_status" not in {x["code"] for x in result["findings"]}
     assert result["active_uncertain_weight"] == 1.0
     assert result["evidence_risk"] == "elevated"
+
+
+def test_generic_homepage_reference_does_not_count_as_specific_evidence():
+    bad = profile(factors=[{
+        "param": "sst_c", "kind": "range", "range": [10, 30], "ideal": [20, 25],
+        "weight": 1.0, "active": True, "value_status": "sourced",
+        "sources": ["https://www.fisheries.noaa.gov/"],
+    }])
+    result = validate_profile(bad, REGISTRY)
+    codes = {x["code"] for x in result["findings"]}
+    assert "generic_source_reference" in codes
+    assert result["active_sourced_weight"] == 0.0
+    assert result["active_uncertain_weight"] == 1.0
+    assert result["evidence_risk"] == "elevated"
+
+
+def test_specific_source_page_counts_as_evidence_reference():
+    good = profile(factors=[{
+        "param": "sst_c", "kind": "range", "range": [10, 30], "ideal": [20, 25],
+        "weight": 1.0, "active": True, "value_status": "sourced",
+        "sources": ["https://www.fisheries.noaa.gov/species/test-fish"],
+    }])
+    result = validate_profile(good, REGISTRY)
+    codes = {x["code"] for x in result["findings"]}
+    assert "generic_source_reference" not in codes
+    assert result["active_sourced_weight"] == 1.0
+    assert result["active_uncertain_weight"] == 0.0
