@@ -574,7 +574,7 @@ All six JSON profiles parsed after update and all eight previously source-missin
 ### Validator changes
 - Generic homepage-only URLs now produce `generic_source_reference` warnings and do not count as specific source metadata for active evidence accounting.
 - Homepage query strings/fragments do not make a generic homepage specific.
-- Active `distance_to_inlet` site factors produce `placeholder_site_factor` warnings and count as uncertain active weight.
+- Active `distance_to_inlet` site factors produce a `placeholder_site_factor` error, mark the model incompatible, and count as uncertain active weight.
 - Regression tests cover these behaviors.
 
 ### Commits
