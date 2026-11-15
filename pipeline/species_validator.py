@@ -165,8 +165,9 @@ def validate_profile(profile: Any, registry: dict[str, dict], filename: str = ""
             site_kinds = profile.get("site_kinds")
             if isinstance(site_kinds, list) and all(isinstance(x, str) for x in site_kinds):
                 reachable = set(site_kinds)
-                mapped = set(factor.get("map", {}).keys()) if isinstance(factor.get("map"), dict) else set(factor.get("preferred") or [])
-                preferred = set(factor.get("preferred") or [])
+                raw_preferred = factor.get("preferred")
+                preferred = set(raw_preferred) if isinstance(raw_preferred, list) else set()
+                mapped = set(factor.get("map", {}).keys()) if isinstance(factor.get("map"), dict) else preferred
                 unreachable = sorted((mapped | preferred) - reachable)
                 unmapped = sorted(reachable - mapped)
                 if unreachable:
