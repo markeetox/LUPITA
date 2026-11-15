@@ -11,6 +11,7 @@ REGISTRY = {
     "structure_type": {"key": "structure_type", "status": "active", "values": ["reef", "seagrass"]},
     "spawning_season": {"key": "spawning_season", "status": "planned"},
     "unknown_planned": {"key": "unknown_planned", "status": "planned"},
+    "distance_to_inlet": {"key": "distance_to_inlet", "status": "active"},
 }
 
 
@@ -256,3 +257,16 @@ def test_specific_source_page_counts_as_evidence_reference():
     assert "generic_source_reference" not in codes
     assert result["active_sourced_weight"] == 1.0
     assert result["active_uncertain_weight"] == 0.0
+
+
+def test_site_distance_to_inlet_placeholder_is_not_treated_as_reliable_input():
+    pilot = profile(model="sites", factors=[{
+        "param": "distance_to_inlet", "kind": "range", "range": [0, 25], "ideal": [0, 5],
+        "weight": 1.0, "active": True, "value_status": "sourced",
+        "sources": ["https://example.org/distance-method"],
+    }])
+    result = validate_profile(pilot, REGISTRY)
+    codes = {x["code"] for x in result["findings"]}
+    assert "placeholder_site_factor" in codes
+    assert result["active_uncertain_weight"] == 1.0
+    assert result["evidence_risk"] == "elevated"
