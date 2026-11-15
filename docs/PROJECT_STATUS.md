@@ -261,3 +261,15 @@ The validator now warns on homepage-only references, rejects active use of the p
 **Interpretation:** this confirms that the live production ingestion and publication path is operating again. It does not establish sustained NOAA recovery or adequate spatial coverage. Monitor later scheduled runs and compare freshness/coverage before changing thresholds, sources, or prediction behavior. No code or configuration changes were made during this validation.
 
 Full diagnostics are recorded in [Progress Log](PROGRESS_LOG.md), including per-layer timestamps and coverage.
+
+
+## 2026-11-15 | HF Radar coverage and latest CI check
+
+- Python CI run [#462](https://github.com/markeetox/LUPITA/actions/runs/43669158015) passed **279 tests, 0 failures** on the latest code-changing commit `ee25d79c163323f5fa17b35471a147730e22a7ff`. The later documentation-only commits do not alter that tested code.
+- Production refresh #211 reports HF Radar `ucsdHfrE2` fresh at 5.79 hours old, but only **94/10,101 cells (0.9306%)** in the configured South Florida window have valid aligned vectors.
+- The raw HFR source grid valid-vector fraction was 0.9059%, close to the aligned regional fraction. Current evidence therefore points to sparse upstream spatial availability, not a major interpolation loss in LUPITA. This remains a diagnosis, not a final root-cause determination.
+- NOAA also publishes a 6 km hourly East/Gulf Coast HFR product (`ucsdHfrE6`). It is a comparison candidate only; no source change has been made. Compare 1 km/2 km/6 km products over the same region and times before choosing one.
+- Stale altimetry remains excluded from current-vector filling. Do not widen or alter the current source policy to make coverage percentages look better.
+- No ingestion run, code change, source-config change, biological change, or scoring change was made during this inspection.
+
+Detailed findings and NOAA references: [Progress Log](PROGRESS_LOG.md#2026-11-15--hf-radar-coverage-diagnosis-and-ci-verification).
