@@ -556,3 +556,36 @@ All six JSON profiles parsed after update and all eight previously source-missin
 ### Boundaries
 - No NOAA endpoints or ingestion workflows were contacted or run.
 - The proposed evidence-aware confidence policy remains inactive.
+
+
+## 2026-11-15 | Named-site model triage and source-reference validator hardening
+
+**Branch:** `main`  
+**Scope:** static review of all 25 named-site species profiles, `pipeline/sites.py`, and evidence-reference handling.  
+**Full review:** [Named-site model triage](SITE_MODEL_TRIAGE_2026-11-15.md).
+
+### Findings
+- 23 of 25 site models have only one active factor: SST.
+- Three South Florida pilots (bonefish, great barracuda, Permit) have explicitly provisional SST bands.
+- Twenty other temperature-only profiles mark SST as sourced but cite only the generic NOAA Fisheries homepage. This is not a traceable species-specific evidence reference.
+- Snook and tarpon are the only five-factor site models. Their structure maps score only `inlet` positively even though their site-kind lists also include cuts, channel bridges, and flats; this needs explicit design review.
+- `distance_to_inlet_value` currently returns constant 0.0 for every site. It is a placeholder, not a measured distance.
+
+### Validator changes
+- Generic homepage-only URLs now produce `generic_source_reference` warnings and do not count as specific source metadata for active evidence accounting.
+- Homepage query strings/fragments do not make a generic homepage specific.
+- Active `distance_to_inlet` site factors produce `placeholder_site_factor` warnings and count as uncertain active weight.
+- Regression tests cover these behaviors.
+
+### Commits
+- `2de3ceb`: detect homepage-only source references.
+- `1b805ef`, `37e4eb5`: source-reference regression tests.
+- `3578e27`: ensure query-string homepages remain generic.
+- `229f021`, `582c3ea`: flag constant-distance placeholder and test it.
+- `fc64cf6`: add named-site triage report.
+
+### Validation
+The automatic Python workflow should run for the validator and test commits. Full suite and updated 130-profile audit results remain pending verification. Do not treat the new checks as CI-validated until the run is inspected.
+
+### Boundaries
+No NOAA endpoints, data workflows, production refreshes, species values, factor weights, active flags, gates, or prediction confidence were changed.
