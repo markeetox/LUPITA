@@ -268,5 +268,7 @@ def test_site_distance_to_inlet_placeholder_is_not_treated_as_reliable_input():
     result = validate_profile(pilot, REGISTRY)
     codes = {x["code"] for x in result["findings"]}
     assert "placeholder_site_factor" in codes
+    assert result["schema_valid"] is False
+    assert result["model_compatible"] is False
     assert result["active_uncertain_weight"] == 1.0
     assert result["evidence_risk"] == "elevated"
