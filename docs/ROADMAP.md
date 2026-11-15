@@ -158,7 +158,7 @@ Eight active factors across six profiles previously lacked factor-level source r
 1. Inspect updated full catalog audit for generic homepage-only source references and active placeholder factors.
 2. Review the 20 homepage-only SST factors species by species; only retain `sourced` when a specific reference supports the configured biological claim.
 3. Keep bonefish, great barracuda, and Permit SST bands provisional pending direct species-specific evidence.
-4. Review snook/tarpon structure-kind scoring across inlet, cut, channel-bridge, and flat sites.
+4. Review snook/tarpon structure-kind scoring across inlet, cut, channel-bridge, and flat sites; the validator now reports unreachable preferred categories and allowed kinds that receive the fallback zero score.
 5. The validator now blocks active `distance_to_inlet` use until a real input is implemented and tested.
 6. Assess tide-station distance/local-regime suitability without changing NOAA ingestion during the current pause.
 
