@@ -84,7 +84,7 @@ def season_value(site, ctx):
 
 
 def structure_value(site, ctx):
-    return site["kind"], "static", {}
+    return site["kind"], "static", {"source_type": "site catalog", "site_kind": site.get("kind")}
 
 
 def distance_to_inlet_value(site, ctx):
