@@ -311,3 +311,14 @@ Completed static audit: [MODEL_TO_DATA_AUDIT_2026-11-16.md](MODEL_TO_DATA_AUDIT_
 ## Runtime model/data contract tests | 2026-11-16
 
 Completed regression coverage for grid/site missing-data semantics and active profile factor dispatch/input contracts. See [MODEL_TO_DATA_AUDIT_2026-11-16.md](MODEL_TO_DATA_AUDIT_2026-11-16.md). Final test commit `909fad3` passed CI and species-profile audit. Next milestone: build prediction-level diagnostics that report factor availability, environmental coverage, source freshness, and evidence quality separately. Keep scoring semantics unchanged until a separately reviewed design is approved.
+
+
+## Prediction-level environmental source lineage | 2026-11-16
+
+**Completed:** prediction diagnostics now carry factor-level environmental source lineage for all active species factors. Grid and named-site factors identify source type, availability at the prediction, source/layer status, dataset and observation metadata, and freshness when operational thresholds exist. Actual species-profile source references are preserved and exposed through API v1.
+
+**Validation:** [Python CI #43944587159](https://github.com/markeetox/LUPITA/actions/runs/43944587159) passed **304 tests, 0 failures, 115 warnings**. The species profile audit and artifact upload succeeded. Regression coverage includes source map completeness across all active factors, composite-current limitations, satellite-altimetry attribution for Gulf Stream edge, primary/gap-filled chlorophyll, NDBC water-temperature observation timestamps, tide station/prediction metadata, and unknown/unconfigured freshness.
+
+**Boundaries preserved:** no scores, confidence labels, biological assumptions, weights, source selection, missing-data semantics, ingestion, or data publication changed. NOAA ERDDAP HFR comparison remains paused due to the runner IP blacklist.
+
+**Next milestone: evidence-quality summary.** Build a transparent per-factor classification from the actual profile evidence metadata and references. It must distinguish specific, relevant support from generic/homepage citations, provisional assumptions, and unsupported factors. It must not infer scientific support from URL count, and it must remain separate from source freshness and environmental coverage. Keep score/confidence behavior unchanged.
