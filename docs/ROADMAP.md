@@ -335,3 +335,12 @@ The summary aggregates configured active-factor weight by evidence status and re
 **Boundaries preserved:** no score, confidence, species status, numeric band, weight, active flag, gate, minimum coverage, source selection, ingestion, or publication behavior changed.
 
 **Next milestone: source-by-source biological evidence review.** Prioritize the 20 homepage-only named-site SST references and the 12 profiles with elevated active evidence risk. Verify whether each citation actually supports the configured claim for the relevant species, population, life stage, region, and numeric range. Only then decide whether to replace a reference, keep a factor provisional/partly sourced, mark it weak, or leave it as needs-source.
+
+
+## Source-by-source review of 20 named-site SST factors | 2026-11-16
+
+**Completed:** reviewed all 20 homepage-only named-site SST factors against species-specific fisheries, research, and regional sources. Full findings: `docs/NAMED_SITE_SST_EVIDENCE_REVIEW_2026-11-16.md`.
+
+**Result:** Spanish mackerel is the only profile in this batch whose cited evidence closely supports both its configured outer range and ideal interval. Eleven profiles have partial support but important limitations. Eight do not yet have evidence supporting their configured numeric band. The report separates observed occurrence, migration cues, spawning/juvenile temperatures, model-derived associations, and adult thermal preference rather than treating them as interchangeable.
+
+**Next:** owner review of recommended evidence statuses, then update approved references and value notes. Do not change numeric ranges, ideal bands, weights, gates, required flags, or scoring in this step.
