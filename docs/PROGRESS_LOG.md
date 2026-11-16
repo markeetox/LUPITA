@@ -768,3 +768,12 @@ The 6 km product has the strongest apparent spatial availability in this snapsho
 - Fixed report Markdown generation by removing unnecessary backslashes before backticks (commit `cd3fbf0`) and added a regression test (commit `dd38768`). These are formatting/test-only changes; comparison and failure semantics are unchanged.
 - No production source configuration, ingestion, data publication, prediction logic, biology, or weights changed.
 - Next: read-only investigation of current NOAA metadata and endpoint behavior for `ucsdHfrE6`; no source promotion or production edits pending evidence and explicit review.
+
+
+### 2026-11-16 | NOAA metadata explains the 6 km November 12 retrieval failure
+
+- Live read-only [Upwell 6 km dataset metadata](https://upwell.pfeg.noaa.gov/erddap/griddap/ucsdHfrE6.html) confirms `ucsdHfrE6` still exists. Its time-axis `actual_range` converts to 2026-08-10 21:00Z through 2026-11-10 08:00Z; metadata `date_created` is 2026-11-10 09:00Z.
+- The failed comparison requested 2026-11-12 04:00Z, which is after the 6 km dataset's published latest time. The 404 is therefore consistent with an out-of-range timestamp, not a missing/removed dataset ID. The earlier interpretation that the two host attempts established an endpoint/dataset outage is superseded by this metadata evidence.
+- Upwell's 1 km dataset form currently reports a time-axis end of 2026-11-14 21:00Z. Its 2 km HTML page appears cached/stale relative to the successful November 12 CSV retrieval, so do not use its metadata snapshot to infer current range.
+- Candidate next exact common time: `2026-11-10T04:00:00Z`, within the 6 km published range. This remains a candidate until all three bounded CSV requests return that exact time.
+- Sources: [Upwell 6 km metadata](https://upwell.pfeg.noaa.gov/erddap/griddap/ucsdHfrE6.html), [Upwell 1 km metadata](https://upwell.pfeg.noaa.gov/erddap/griddap/ucsdHfrE1.html). No production source change or ingestion run was made.
