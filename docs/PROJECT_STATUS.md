@@ -399,3 +399,16 @@ Validation: [Python CI #43944587159](https://github.com/markeetox/LUPITA/actions
 No prediction scores, confidence labels, biology, weights, source selection, missing-data behavior, ingestion, or publication logic changed.
 
 **Next:** implement a separate evidence-quality summary. It must assess the strength and specificity of biological support, not merely count URLs or conflate source freshness with evidence quality. HFR comparison remains paused while NOAA ERDDAP blocks the comparison runner.
+
+
+## Prediction-level evidence quality diagnostics | 2026-11-16
+
+Added per-factor `evidence_diagnostics` and per-spot `evidence_summary`, both passed through API v1. These fields report the species profile's declared evidence status separately from the quality of its references. Homepage-only, specific path-based, missing, and malformed references are distinguished. A specific citation paired with `sourced` is labeled `declared_sourced_unverified`, not scientifically validated. Profile `value_notes` are included so limitations remain visible.
+
+Per-spot summaries aggregate active factor weights by declared status and reference quality independently. These are configuration weight totals, not probabilities or scientific-confidence scores. No factor was automatically upgraded/downgraded, and no proposed confidence cap was activated.
+
+Validation: [Python CI #43945487955](https://github.com/markeetox/LUPITA/actions/runs/43945487955) passed **307 tests, 0 failures, 115 warnings**; species audit and artifact upload succeeded.
+
+No scores, confidence labels, biological values, weights, active flags, gates, minimum coverage, source selection, ingestion, or publication behavior changed.
+
+**Next:** manually review the 20 homepage-only site SST factors and the 12 profiles with elevated active evidence risk. Replace references or change declared statuses only after checking whether the cited source supports the exact factor claim, numeric band, population, and life stage.
