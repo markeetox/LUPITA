@@ -344,3 +344,8 @@ The summary aggregates configured active-factor weight by evidence status and re
 **Result:** Spanish mackerel is the only profile in this batch whose cited evidence closely supports both its configured outer range and ideal interval. Eleven profiles have partial support but important limitations. Eight do not yet have evidence supporting their configured numeric band. The report separates observed occurrence, migration cues, spawning/juvenile temperatures, model-derived associations, and adult thermal preference rather than treating them as interchangeable.
 
 **Next:** owner review of recommended evidence statuses, then update approved references and value notes. Do not change numeric ranges, ideal bands, weights, gates, required flags, or scoring in this step.
+
+
+### Apply reviewed named-site SST evidence metadata | completed 2026-11-16
+
+Completed the owner-approved metadata-only update across all 20 named-site SST profiles. Specific source references and conservative evidence statuses are now recorded, with factor notes explaining limitations. Classification: 1 sourced, 11 partly sourced, 5 provisional, 3 needs-source. Next work should prioritize a separate evidence search for the three needs-source profiles and regional/life-stage validation for provisional profiles. Do not adjust numeric bands, weights, gates, or scoring without a separate evidence review and approval. Details: [named-site SST evidence review](NAMED_SITE_SST_EVIDENCE_REVIEW_2026-11-16.md).

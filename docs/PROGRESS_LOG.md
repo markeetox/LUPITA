@@ -860,3 +860,8 @@ The 6 km product has the strongest apparent spatial availability in this snapsho
 - All 20 profiles are single-factor SST models with `gate: true` and `required: true`; SST determines site eligibility.
 - No profile or prediction behavior was changed. Status and reference updates await owner approval.
 - Next: apply only the accepted evidence-status, source-reference, and explanatory-note changes. Keep all numeric ranges, ideal bands, weights, gates, and required flags unchanged in that pass.
+
+
+## Owner-approved named-site SST evidence metadata update | 2026-11-16
+
+Applied the source-by-source review to all 20 named-site SST profiles. Replaced generic NOAA homepage references in each profile-level and active `sst_c` source list with species-specific references, assigned conservative evidence statuses, and rewrote factor `value_notes` to state exactly what the evidence supports and where it does not transfer. Final classification: 1 sourced, 11 partly sourced, 5 provisional, 3 needs-source. No numeric values, model structure, weights, gates, required flags, timing, scoring, confidence behavior, ingestion, or data publication changed. See [review report](NAMED_SITE_SST_EVIDENCE_REVIEW_2026-11-16.md).

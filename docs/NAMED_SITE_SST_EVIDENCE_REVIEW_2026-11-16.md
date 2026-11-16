@@ -122,3 +122,17 @@ These are not automatic edits. The project owner should decide whether `partly_s
 ## Final disposition
 
 This review improves traceability but does not justify automatic numerical changes. The next owner-approved action should be to update only the source references and evidence notes/statuses that the owner accepts. Numeric ranges, ideal bands, gates, and weights should be reviewed separately with stronger life-stage and geographic alignment.
+
+
+## Owner approval and profile metadata implementation | 2026-11-16
+
+The project owner approved applying the conservative source-by-source recommendations. The 20 named-site SST profiles were updated on `main` with species-specific source references, evidence statuses, and explanatory `value_notes`:
+
+- **Retained `sourced`:** Spanish mackerel.
+- **Set to `partly_sourced`:** Atlantic croaker, blacktip shark, bluefish, bull shark, ladyfish, lane snapper, scup, spotted seatrout, striped bass, summer flounder, and winter flounder.
+- **Set to `provisional`:** American shad, false albacore, spinner shark, tautog, and tripletail.
+- **Set to `needs_source`:** spot, weakfish, and white grunt.
+
+Both the profile-level biological `sources` list and active `sst_c` factor `sources` list now contain the reviewed species-specific references. Explanatory notes distinguish occurrence from preference and record depth, life-stage, region, or model-derived limitations. The original source-review findings above remain the evidence basis for these decisions.
+
+**Scope boundary:** no temperature range or ideal interval, factor weight, active flag, gate, required flag, reason template, timing model, scoring behavior, confidence policy, ingestion, or published data was changed. `needs_source` and `provisional` remain explicitly uncertain; adding a URL does not promote a factor to scientifically validated.

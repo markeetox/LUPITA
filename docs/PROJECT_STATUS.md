@@ -423,3 +423,8 @@ The review found one profile with close support for both the configured outer ra
 Important limitations include bottom-vs-surface temperature mismatch, life-stage/stock differences, regional transferability, modeled vs observed temperature associations, and occurrence vs preference. All 20 are single-factor site pilots with SST both required and a gate, so the quality of this one input controls site eligibility.
 
 No species profile, source list, status, numeric range, ideal band, weight, active flag, gate, required flag, score, confidence, or ingestion behavior changed. The report contains recommendations for owner approval only. Next: agree on the conservative evidence-status recommendations, then apply approved source/reference/note changes without changing numerical biology.
+
+
+### Named-site SST evidence metadata updated | 2026-11-16
+
+Owner-approved source review was applied to all 20 homepage-only named-site SST profiles. Statuses: 1 `sourced` (Spanish mackerel), 11 `partly_sourced`, 5 `provisional`, and 3 `needs_source`. Profile and active-factor references now point to species-specific sources; `value_notes` document claim-fit limitations. No numeric bands, ideal intervals, weights, gates, required flags, timing, scoring, confidence behavior, ingestion, or data publication changed. See [named-site SST evidence review](NAMED_SITE_SST_EVIDENCE_REVIEW_2026-11-16.md).
