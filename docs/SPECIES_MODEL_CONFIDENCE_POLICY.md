@@ -48,7 +48,11 @@ This policy is **not wired into prediction output yet**. Before changing user-fa
 
 ## Current implementation
 
-The read-only species validator now emits `evidence_risk`, `active_evidence_status_weight`, `active_uncertain_weight`, `active_partly_sourced_weight`, `model_scope`, and `min_coverage`. It also flags generic homepage-only source references and rejects active use of the constant-zero site distance placeholder. These fields are audit diagnostics only. No production score or confidence label is changed by this policy document.
+The read-only species validator emits `evidence_risk`, `active_evidence_status_weight`, `active_uncertain_weight`, `active_partly_sourced_weight`, `model_scope`, and `min_coverage`. It flags generic homepage-only source references and rejects active use of the constant-zero site distance placeholder.
+
+Prediction output now also includes additive `evidence_diagnostics` per factor and an `evidence_summary` per recommended spot. These report the profile's declared status, whether references are specific paths, generic homepages, missing, or invalid, the factor's `value_notes`, and active factor-weight totals grouped independently by declared status and reference quality. A factor marked `sourced` with a specific reference is deliberately labeled **declared sourced, unverified**. The system does not fetch or independently evaluate the cited study at prediction time.
+
+This implementation is diagnostic only. The proposed confidence cap above remains **inactive**. No score, confidence label, factor weight, biological range, gate, active flag, or minimum coverage threshold is changed.
 
 ## Boundaries
 
