@@ -205,7 +205,7 @@ _FACTOR_SOURCE_SPECS = {
     "spawning_season": ("calendar_model", [], "Calendar lookup; biological month ranges are model assumptions."),
     "season_presence": ("calendar_model", [], "Calendar lookup; biological month ranges are model assumptions."),
     "time_of_day": ("astronomical_model", [], "Calculated from timestamp and site coordinates."),
-    "tide_stage": ("tide_prediction", [], "Modeled from the selected CO-OPS tide station; station-specific observation age is not currently retained."),
+    "tide_stage": ("tide_prediction", [], "Modeled from the selected CO-OPS tide station; prediction event times are retained, but request retrieval time is not yet tracked."),
 }
 
 
@@ -255,6 +255,10 @@ def attach_factor_source_diagnostics(fish: dict, data_quality: dict) -> None:
                 kind = "observed_grid"
                 explanation = "Satellite SST grid sampled near the named site."
                 layer_names = ["sst"]
+            elif details.get("source_type") == "placeholder constant":
+                kind = "placeholder"
+                explanation = details.get("warning", "Placeholder input; not a measurement.")
+                layer_names = []
             elif factor.get("input_tag") == "static" and param == "structure_type":
                 kind = "static_site_catalog"
                 explanation = "Static site-kind metadata from the configured fishing-site catalog."
