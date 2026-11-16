@@ -54,6 +54,14 @@ def test_mahi_only_in_deep_cool_water():
         assert all(len(r) == 2 for r in s["reasons"]) and s["reasons"]
     assert any("Water is" in r[1] for r in mahi[0]["reasons"])
     assert any(r[0] == "measured" for r in mahi[0]["reasons"])      # nearest buoy
+    diagnostics = mahi[0]["factor_diagnostics"]
+    assert diagnostics
+    assert {row["param"] for row in diagnostics} == {
+        factor["param"] for factor in PROFILES[[p["id"] for p in PROFILES].index("mahi-mahi")]["factors"]
+        if factor.get("active") and factor.get("weight", 0) > 0
+    }
+    assert all("available" in row and "value_status" in row and "source_count" in row for row in diagnostics)
+    assert any(row["available"] for row in diagnostics)
 
 
 def test_too_warm_means_no_favorable_areas():
