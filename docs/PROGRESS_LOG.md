@@ -742,3 +742,16 @@ The 6 km product has the strongest apparent spatial availability in this snapsho
 - Interpretation: 6 km has the strongest apparent availability and diagnostic quality in this one snapshot, but the 1 km zero result and 2 km/6 km pattern need a second common timestamp. Different representative depths (0.5/1.0/2.4 m) prevent treating the products as interchangeable.
 - Next: perform a second exact common-time comparison; then consider a shared ocean-only mask/coastline denominator. Do not change production source selection, source configuration, scoring, or species biology based on one snapshot.
 - Validation of corrected code: Python CI runs [#43730941774](https://github.com/markeetox/LUPITA/actions/runs/43730941774) and [#43730946716](https://github.com/markeetox/LUPITA/actions/runs/43730946716) succeeded before the manual comparison.
+
+
+## 2026-11-16 | Scheduled production refresh inspection
+
+- Inspected scheduled [Pull Ocean Data #43840037456](https://github.com/markeetox/LUPITA/actions/runs/43840037456), run on main commit `57cb230045be2fddc3f49aa74208907006ddc334`.
+- Full test step, catalog generation, prediction pipeline, data publication and health evaluation all completed. Prediction snapshot refreshed at `2026-11-16T09:29:14Z`; health remained degraded with no critical issues.
+- SST: `jplMURSST41`, `2026-11-14T09:00Z`, 48.49h old (delayed); aligned valid fraction about 55.2%.
+- Chlorophyll: `nesdisVHNnoaa20chlaDaily`, `2026-11-13T12:00Z`, 69.49h old (fresh under provisional 72h warning); source valid fraction 7.94%; gap-filled dataset remains disabled.
+- HF Radar `ucsdHfrE2`: failed on the Upwell fallback with HTTP 404, response says the dataset ID is currently unknown. HFR valid cells 0/10,101; no current source selected; freshness unknown.
+- Altimetry `nesdisSSH1day` was about 1,185.5h old and correctly excluded from current vectors despite 75.9% aligned valid fraction in the request region. This verifies the stale-current fail-closed guard remains effective.
+- Do not infer that NOAA as a whole is down from this response; the inspected evidence identifies the Upwell fallback's dataset lookup failure. Need separately verify CoastWatch response and current dataset catalog availability before diagnosing root cause or changing configuration.
+- No production code, source configuration, data, prediction weights, or species biology changed during this inspection.
+- The separate HF Radar product comparison still needs a second exact common timestamp. No newer run of the manual comparison workflow was present in the inspected latest 20 workflow runs.
