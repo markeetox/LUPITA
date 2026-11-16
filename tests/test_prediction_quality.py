@@ -81,3 +81,21 @@ def test_api_v1_exposes_confidence_basis_and_input_timestamps():
     index = json.loads(files["index.json"])
     assert index["data_quality"]["input_times"]["sst"] == "2026-11-10T09:00:00Z"
     assert index["data_quality"]["datasets"]["sst"] == "example-dataset"
+
+
+
+def test_named_site_sst_reports_water_temperature_specific_buoy_time():
+    site = {"name": "Test Flat", "kind": "flat", "lat": 25.0, "lon": -80.0}
+    buoy = {
+        "ok": True, "station": "42001", "name": "Test Buoy",
+        "lat": 25.0, "lon": -80.0, "water_temp_c": 27.5,
+        "water_temp_time_utc": "2026-11-16T18:00:00+00:00",
+    }
+
+    value, tag, details = sites.sst_value(site, {"buoys": [buoy], "layers": {}})
+
+    assert value == 27.5
+    assert tag == "measured"
+    assert details["source_type"] == "NDBC buoy"
+    assert details["station"] == "42001"
+    assert details["observed_at"] == "2026-11-16T18:00:00+00:00"
