@@ -113,6 +113,7 @@ def _area(spot: dict) -> dict:
             "data_coverage": spot.get("data_coverage"),
             "environmental_data_coverage": spot.get("environmental_data_coverage", spot.get("data_coverage")),
             "factor_diagnostics": spot.get("factor_diagnostics", []),
+            "evidence_summary": spot.get("evidence_summary"),
             "coords": spot["coords"], "zone": zone_geometry(spot),
             "reasons": [{"tag": r[0], "text": r[1]} for r in spot.get("reasons", [])],
             "details": [{"label": r[0], "value": r[1]} for r in spot.get("location", [])],
