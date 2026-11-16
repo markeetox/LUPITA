@@ -9,6 +9,7 @@ import numpy as np
 from pathlib import Path
 
 from pipeline.layers import load_layers
+from pipeline.run import _FACTOR_SOURCE_SPECS
 from pipeline.scoring import factor_score
 from pipeline.sites import VALUE_FUNCS, score_value
 from pipeline.species_validator import GRID_FACTORS, SITE_FACTORS
@@ -104,3 +105,17 @@ def test_grid_layer_builder_exposes_every_declared_factor_input():
     missing = sorted(param for param in declared - {"spawning_season", "season_presence"}
                      if param not in layers)
     assert not missing, f"Grid factors without a layer-builder output: {missing}"
+
+
+
+def test_every_active_species_factor_has_environmental_source_lineage_mapping():
+    profiles = _profiles()
+    active = [
+        (profile["id"], factor["param"])
+        for profile in profiles
+        for factor in profile["factors"]
+        if factor.get("active") and factor.get("weight", 0) > 0
+    ]
+    assert active
+    missing = sorted({param for _, param in active if param not in _FACTOR_SOURCE_SPECS})
+    assert not missing, f"Active factors without source lineage mapping: {missing}"
