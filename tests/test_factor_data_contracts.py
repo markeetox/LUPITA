@@ -19,6 +19,14 @@ SUPPORTED_GRID_KINDS = {"range", "category", "higher_is_better", "season"}
 SUPPORTED_SITE_KINDS = {"range", "category", "season"}
 
 
+def _range_value(factor):
+    values = [float(value) for value in factor.get("ideal", []) if value is not None]
+    if values:
+        return sum(values) / len(values)
+    values = [float(value) for value in factor.get("range", []) if value is not None]
+    return sum(values) / len(values) if values else 25.0
+
+
 def test_every_active_grid_factor_has_engine_dispatch_and_layer_input():
     profiles = [p for p in _profiles() if p.get("model", "grid") == "grid"]
     assert profiles
@@ -75,7 +83,7 @@ def test_every_active_site_factor_has_engine_dispatch_and_a_real_value_function(
         assert param in VALUE_FUNCS, f"{species_id}: {param} has no site input function"
         assert callable(VALUE_FUNCS[param])
         if kind == "range":
-            value = sum(factor["ideal"]) / 2
+            value = _range_value(factor)
         elif kind == "category":
             value = next(iter(factor.get("map") or {}), None)
             if value is None:
