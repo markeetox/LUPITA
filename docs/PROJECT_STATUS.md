@@ -359,3 +359,6 @@ The read-only comparison utility now records HTTP redirect chains, final respons
 Python CI runs exposed two age-sensitive tests in `tests/test_currents_sources.py`: the fixture hard-coded satellite altimetry at 2026-11-13 11:00 UTC, which crossed the production 72-hour eligibility limit on November 16. The tests incorrectly assumed it remained eligible. The fixture now uses a timestamp one hour before test execution, while stale-fallback cases still explicitly use 2026-09-28 (commit `4b9e6b3`). Production current-source logic was not changed. CI must be rerun to confirm the fixture correction and diagnostic regression.
 
 No Pull Ocean Data run, production source change, data publication, scoring, prediction, or biology change was made.
+
+
+The final stale-fixture correction is commit `afb59bc`: one remaining stale-fallback test still replaced the old literal timestamp rather than the new relative fixture timestamp. That test now explicitly rewrites `ALT_TIME` to the September 28 stale observation. The resulting full-suite run [#43897319861](https://github.com/markeetox/LUPITA/actions/runs/43897319861) is pending at last inspection.
