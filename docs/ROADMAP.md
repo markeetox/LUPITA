@@ -279,3 +279,14 @@ The report-formatting SyntaxWarnings were fixed in commits `cd3fbf0` and `dd3876
 The 6 km dataset ID is still present on Upwell. Its live metadata time range ends at 2026-11-10 08:00Z, so the failed November 12 04:00Z request was outside the available time axis. This is not evidence that the dataset was removed. See [Upwell 6 km metadata](https://upwell.pfeg.noaa.gov/erddap/griddap/ucsdHfrE6.html).
 
 Next comparison candidate is `2026-11-10T04:00:00Z`; run only after confirming the exact time is returned by all three products. A candidate timestamp is not itself a successful comparison. Production source configuration remains unchanged.
+
+
+### HF Radar retrieval and test-fixture update | 2026-11-16
+
+The retry [#43894680887](https://github.com/markeetox/LUPITA/actions/runs/43894680887) at `2026-11-10T04:00:00Z` returned 1 km 0/285,069, 2 km 1,614/71,535 (2.256%, 10/99 shared tiles), and 6 km HTTP 404. A newer live Upwell metadata page reports 6 km observations through 2026-11-16 13:00Z, so the requested Nov 10 time was within the currently published range. The previous Nov 10 endpoint snapshot was stale. The 404 root cause remains unresolved.
+
+The comparison utility now captures redirect chains and response excerpts for the next diagnostic attempt. Production source selection is unchanged.
+
+Two CI failures were caused by hard-coded Nov 13 altimetry test data aging past the existing 72-hour eligibility threshold. Tests now use a recent relative timestamp for eligible fallback cases and a deliberately stale timestamp for stale cases; production logic is unchanged.
+
+**Next:** confirm Python CI passes, then rerun one read-only HFR comparison to capture the 6 km redirect chain and response body. Do not change production endpoints or source selection until the failure is explained.
