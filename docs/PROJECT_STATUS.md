@@ -322,3 +322,20 @@ The separate read-only 1/2/6 km comparison remains open. Its corrected first sna
 ### HF Radar endpoint metadata cross-check | 2026-11-16
 
 A read-only public metadata check after production run #43840037456 found that NOAA's Upwell ERDDAP still serves a page identifying `ucsdHfrE2` as the 2 km East/Gulf Coast HF Radar product. However, the inspected Upwell metadata snapshot reports `time_coverage_end=2026-11-10T17:00:00Z` and `date_created=2026-11-10T17:35:18Z`, several days before the production 404 on 2026-11-16. CoastWatch's public page also identifies the same dataset, but its inspected metadata snapshot is older (2026-09-30). These public pages are not proof that the exact bounded CSV endpoint was healthy at the time of the production request. The production 404 ("Currently unknown datasetID") and older metadata pages conflict; root cause remains unresolved. Verify live `.das`/dataset catalog and bounded CSV access on both hosts before changing source configuration.
+
+
+## HF Radar second timestamp comparison | 2026-11-16
+
+The manual read-only comparison [run #43893775875](https://github.com/markeetox/LUPITA/actions/runs/43893775875) requested the exact common timestamp `2026-11-12T04:00:00Z` but completed with an incomplete-product failure. The report artifact was generated before the nonzero exit:
+
+- 1 km `ucsdHfrE1`: 0 valid paired vectors across 285,069 native-grid cells; 0/99 shared half-degree tiles.
+- 2 km `ucsdHfrE2`: 1,201 valid paired vectors across 71,535 cells (1.679%); 8/99 shared tiles. Median HDOP 0.46, median sites 2, median radials 40.
+- 6 km `ucsdHfrE6`: unavailable. Both configured ERDDAP attempts returned HTTP 404. The Upwell attempt's error reports a CoastWatch final response URL, indicating a redirect; this is not proof of two independent backend failures.
+
+The diagnostic intentionally exits nonzero unless all three products are retrieved. This preserves the distinction between a complete comparison and a partial report. The workflow's artifact-upload step runs even after comparison failure, so the partial JSON/Markdown report remains available. No nearest-time substitution occurred.
+
+**Interpretation:** the 2 km product is available at this second timestamp, with lower valid fraction than its November 13 sample (1.679% vs 2.293%). The 1 km product again has zero valid vectors. The 6 km product cannot be ranked at this timestamp because retrieval failed. The 6 km result from November 13 remains a single-snapshot observation, not a source-selection basis.
+
+The report generator's invalid Python escape sequences before Markdown backticks were cleaned up in commit `cd3fbf0`, with a regression test in `dd38768`. This removes noisy SyntaxWarnings; it does not change retrieval, comparison, or exit behavior. Production HFR configuration, Pull Ocean Data, data publication, predictions, biology, and scoring remain unchanged.
+
+**Next:** investigate the 6 km dataset ID and endpoint metadata using read-only checks; separately determine whether the 404 is a removed dataset, stale catalog, redirect/backend issue, or endpoint-specific behavior. Do not change production source selection until this is established.
