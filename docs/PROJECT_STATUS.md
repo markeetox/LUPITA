@@ -317,3 +317,8 @@ Latest inspected scheduled run: [Pull Ocean Data #43840037456](https://github.co
 This confirms the stale-altimetry guard is working, but the configured fallback host currently cannot resolve the HFR dataset ID. Treat this as a source-endpoint/dataset-availability issue requiring read-only verification before any code/configuration change. Do not substitute stale altimetry, alter source selection, or change prediction/scoring behavior without explicit review.
 
 The separate read-only 1/2/6 km comparison remains open. Its corrected first snapshot was at `2026-11-13T04:00:00Z`; a second exact common timestamp is still required. No second comparison run was present in the inspected workflow history as of this review.
+
+
+### HF Radar endpoint metadata cross-check | 2026-11-16
+
+A read-only public metadata check after production run #43840037456 found that NOAA's Upwell ERDDAP still serves a page identifying `ucsdHfrE2` as the 2 km East/Gulf Coast HF Radar product. However, the inspected Upwell metadata snapshot reports `time_coverage_end=2026-11-10T17:00:00Z` and `date_created=2026-11-10T17:35:18Z`, several days before the production 404 on 2026-11-16. CoastWatch's public page also identifies the same dataset, but its inspected metadata snapshot is older (2026-09-30). These public pages are not proof that the exact bounded CSV endpoint was healthy at the time of the production request. The production 404 ("Currently unknown datasetID") and older metadata pages conflict; root cause remains unresolved. Verify live `.das`/dataset catalog and bounded CSV access on both hosts before changing source configuration.
