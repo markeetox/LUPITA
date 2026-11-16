@@ -362,3 +362,6 @@ No Pull Ocean Data run, production source change, data publication, scoring, pre
 
 
 The final stale-fixture correction is commit `afb59bc`: one remaining stale-fallback test still replaced the old literal timestamp rather than the new relative fixture timestamp. That test now explicitly rewrites `ALT_TIME` to the September 28 stale observation. The resulting full-suite run [#43897319861](https://github.com/markeetox/LUPITA/actions/runs/43897319861) is pending at last inspection.
+
+
+**Validation complete:** Python CI [#43897319861](https://github.com/markeetox/LUPITA/actions/runs/43897319861), commit `afb59bc7ae6e23f48b05f3a6c700ff86dbdd5ded`, passed **286 tests, 0 failures, 115 warnings**. Species profile audit and artifact upload also succeeded.
