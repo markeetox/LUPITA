@@ -258,3 +258,17 @@ Scheduled [Pull Ocean Data #43840037456](https://github.com/markeetox/LUPITA/act
 **Next source-health checks:** verify the CoastWatch and Upwell dataset catalogs/endpoints read-only; establish whether the 404 is host-specific, catalog availability, or a dataset identifier issue. Do not change endpoints, production source configuration, stale-data rules, or scoring until the cause is established and explicitly reviewed.
 
 **HF Radar comparison remains open:** corrected common-time snapshot at `2026-11-13T04:00:00Z` favors 6 km availability in that one sample. Run a second exact common timestamp before any source-selection recommendation. The manual workflow has not yet been rerun for the second timestamp.
+
+
+## HF Radar comparison update | 2026-11-16
+
+Second timestamp `2026-11-12T04:00:00Z` produced a partial report in [workflow #43893775875](https://github.com/markeetox/LUPITA/actions/runs/43893775875): 1 km 0/285,069 vectors (0.000%, 0/99 shared tiles); 2 km 1,201/71,535 (1.679%, 8/99 tiles; median HDOP 0.46, sites 2, radials 40); 6 km unavailable due HTTP 404. The workflow correctly remained failed because a three-product comparison was incomplete, while still uploading its partial artifact.
+
+The 1 km zero-vector result has repeated across two timestamps. The 2 km fraction is lower at the second timestamp than the first. The 6 km product has no second-time measurement, so the first timestamp's apparent advantage cannot be treated as a robust ranking.
+
+**Next acceptance checks:**
+1. Verify current `ucsdHfrE6` dataset metadata and endpoint behavior read-only, including redirect destinations and whether the dataset is currently served.
+2. Keep 1 km, 2 km and 6 km production selection unchanged until retrieval is stable and comparable multi-time evidence exists.
+3. Consider a common ocean-only mask only after the retrieval problem is understood.
+
+The report-formatting SyntaxWarnings were fixed in commits `cd3fbf0` and `dd38768`; no retrieval or production behavior changed.
