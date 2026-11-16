@@ -412,3 +412,14 @@ Validation: [Python CI #43945487955](https://github.com/markeetox/LUPITA/actions
 No scores, confidence labels, biological values, weights, active flags, gates, minimum coverage, source selection, ingestion, or publication behavior changed.
 
 **Next:** manually review the 20 homepage-only site SST factors and the 12 profiles with elevated active evidence risk. Replace references or change declared statuses only after checking whether the cited source supports the exact factor claim, numeric band, population, and life stage.
+
+
+## Named-site SST evidence review | 2026-11-16
+
+Completed source discovery and claim-fit review for all 20 named-site profiles whose active SST factor previously cited only the generic NOAA Fisheries homepage. Findings and source register: `docs/NAMED_SITE_SST_EVIDENCE_REVIEW_2026-11-16.md`.
+
+The review found one profile with close support for both the configured outer range and ideal interval (Spanish mackerel). Eleven profiles have useful but incomplete evidence that supports broad occurrence, migration, or selected life stages without validating the exact ideal band (Atlantic croaker, blacktip shark, bluefish, bull shark, ladyfish, lane snapper, scup, spotted seatrout, striped bass, summer flounder, winter flounder). Eight remain provisional/needs-source candidates because the available material does not support the configured numeric band (American shad, false albacore, spinner shark, spot, tautog, tripletail, weakfish, white grunt).
+
+Important limitations include bottom-vs-surface temperature mismatch, life-stage/stock differences, regional transferability, modeled vs observed temperature associations, and occurrence vs preference. All 20 are single-factor site pilots with SST both required and a gate, so the quality of this one input controls site eligibility.
+
+No species profile, source list, status, numeric range, ideal band, weight, active flag, gate, required flag, score, confidence, or ingestion behavior changed. The report contains recommendations for owner approval only. Next: agree on the conservative evidence-status recommendations, then apply approved source/reference/note changes without changing numerical biology.
