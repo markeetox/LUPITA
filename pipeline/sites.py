@@ -138,6 +138,7 @@ def score_site(profile, site, ctx, reg):
     active = [f for f in profile["factors"] if f.get("active") and f.get("weight", 0) > 0]
     total = sum(f["weight"] for f in active)
     got, missing = [], []
+    factor_diagnostics = []
     for f in active:
         fn = VALUE_FUNCS.get(f["param"])
         res = fn(site, ctx) if fn else None
@@ -151,6 +152,10 @@ def score_site(profile, site, ctx, reg):
             label = reg.get(f["param"], {}).get("label", f["param"])
             return {"gated": f"{label} is {float(res[0]):.1f}, outside the range this fish tolerates."}
         got.append((f, res[0], s, res[1], res[2]))
+        factor_diagnostics.append({"param": f["param"], "weight": float(f["weight"]),
+                                   "available": True, "factor_score": round(float(s), 4),
+                                   "value_status": f.get("value_status", "unspecified"),
+                                   "source_count": len(f.get("sources") or []), "input_tag": res[1]})
     avail = sum(f["weight"] for f, *_ in got)
     if not avail:
         return None
@@ -171,8 +176,14 @@ def score_site(profile, site, ctx, reg):
         reasons.append(["modeled", "Tide predictions could not be loaded in this update, so the score leaves the tide out."])
     rows = [[{"sst_c": "Water temp", "tide_stage": "Tide", "time_of_day": "Light"}[f["param"]], info["text"]]
             for f, v, s, tag, info in got if f["param"] in ("sst_c", "tide_stage", "time_of_day") and info.get("text")]
+    for f in missing:
+        factor_diagnostics.append({"param": f["param"], "weight": float(f["weight"]),
+                                   "available": False, "factor_score": None,
+                                   "value_status": f.get("value_status", "unspecified"),
+                                   "source_count": len(f.get("sources") or []), "input_tag": None})
     return {"score": sum(f["weight"] * s for f, v, s, *_ in got) / avail, "coverage": avail / total,
             "active_factor_count": len(active), "evaluated_factor_count": len(got),
+            "factor_diagnostics": factor_diagnostics,
             "reasons": reasons, "rows": rows, "missing": missing}
 
 
@@ -242,5 +253,6 @@ def score_sites(profile, sites, ctx, reg, closure_rows_fn=None) -> dict:
                       "data_coverage": round(r["coverage"], 2), "environmental_data_coverage": round(r["coverage"], 2),
                       "coords": [site["lon"], site["lat"]],
                       "ring": _ring(site["lat"], site["lon"], site.get("radius_km", 1.5)),
+                      "factor_diagnostics": r.get("factor_diagnostics", []),
                       "reasons": r["reasons"], "location": rows, "habitat": site_habitat})
     return {"items": items, "best": best, "unavailable": "", "note": ""}
