@@ -307,3 +307,7 @@ The latest comparison [run #43935416361](https://github.com/markeetox/LUPITA/act
 ## Species model-to-data audit | 2026-11-16
 
 Completed static audit: [MODEL_TO_DATA_AUDIT_2026-11-16.md](MODEL_TO_DATA_AUDIT_2026-11-16.md). The immediate engineering priority is to make existing contracts executable as tests: grid/site missing, `required`, `gate`, coverage, normalization, and factor-to-layer dispatch. Keep environmental coverage, source freshness, and biological evidence quality separate in prediction explanations. Do not activate the site `distance_to_inlet` placeholder or expand models with unsupported factors. No scoring or biology changes were made. HF Radar product comparison remains paused while the GitHub runner is blocked by NOAA ERDDAP.
+
+## Runtime model/data contract tests | 2026-11-16
+
+Completed regression coverage for grid/site missing-data semantics and active profile factor dispatch/input contracts. See [MODEL_TO_DATA_AUDIT_2026-11-16.md](MODEL_TO_DATA_AUDIT_2026-11-16.md). Final test commit `909fad3` passed CI and species-profile audit. Next milestone: build prediction-level diagnostics that report factor availability, environmental coverage, source freshness, and evidence quality separately. Keep scoring semantics unchanged until a separately reviewed design is approved.
