@@ -803,3 +803,13 @@ The 6 km product has the strongest apparent spatial availability in this snapsho
 - Most likely scope is the GitHub-hosted workflow runner egress IP, not an individual HFR product. This is an access restriction, not proof of dataset removal, missing vectors, or bad product coverage.
 - Stop repeated manual comparisons from the same runner while the block is active. Do not rotate hosts or issue more identical requests as a workaround. Resume only after access is restored or a low-rate, approved retrieval route is established.
 - No production endpoint/configuration, Pull Ocean Data workflow, data branch publication, prediction logic, species biology, scoring, or weights changed. Python CI remains green: [run #43897319861](https://github.com/markeetox/LUPITA/actions/runs/43897319861), 286 passed, 0 failed, 115 warnings.
+
+## 2026-11-16 | Species model-to-data audit
+
+- Completed static review of `config/sources.json`, layer construction, grid/site scoring, derived layers, source handling, validator mappings, and validator tests.
+- Added [MODEL_TO_DATA_AUDIT_2026-11-16.md](MODEL_TO_DATA_AUDIT_2026-11-16.md), documenting factor-to-input mappings, availability limits, and missing-data behavior.
+- Confirmed grid and site engines have different contracts: grid `required` is not read by the scorer; site `required` makes a missing factor unscorable; site gate without `required` can be skipped when missing. Both engines renormalize over available weights subject to minimum coverage.
+- Confirmed grid SST is foundational; chlorophyll, bathymetry, currents, structures and derived factors are conditional; seasonal factors are calendar lookups. Site SST uses buoy/grid fallback, tide uses a station within 120 km, light is astronomical, structure is static site kind, and site `distance_to_inlet` is still constant zero.
+- Carried forward the existing 130-profile audit results and 25-site-model findings without claiming a new catalog validator run.
+- No NOAA endpoint contacted, no Pull Ocean Data run, no data publication, and no changes to scoring, biology, weights, profile flags, or source configuration.
+- Next: add regression tests around runtime missing-data contracts and factor-to-layer dispatch without changing scoring semantics.
