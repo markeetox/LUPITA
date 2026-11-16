@@ -21,7 +21,8 @@
     "life_history": "Spawns seasonally along coastal or shelf waters.",
     "regulations_link": "https://www.fisheries.noaa.gov/",
     "sources": [
-      "https://www.fisheries.noaa.gov/"
+      "https://sharkresearch.earth.miami.edu/wp-content/uploads/2021/03/Rider-et-al_2021_Bull-Shark-Movements_Aquatic-Ecology.pdf",
+      "https://pmc.ncbi.nlm.nih.gov/articles/PMC10940676/"
     ],
     "spawning": "Spawns seasonally based on water temperature and regional climate.",
     "overwintering": "Migrates to warmer or deeper waters depending on season."
@@ -31,20 +32,21 @@
       "param": "sst_c",
       "kind": "range",
       "range": [
-        18.0,
-        34.0
+        18,
+        34
       ],
       "ideal": [
-        22.0,
-        31.0
+        22,
+        31
       ],
       "weight": 0.35,
       "active": true,
-      "value_status": "sourced",
-      "value_notes": "NOAA oceanographic temperature profile for Bull shark.",
+      "value_status": "partly_sourced",
+      "value_notes": "Partly sourced with important life-stage limits. A University of Miami Biscayne Bay telemetry study reports a local 24–26°C association/preference for tagged bull sharks; a separate juvenile study describes different high-temperature habitat associations. Adult/subadult and juvenile results are not interchangeable. The configured 22–31°C ideal interval is broader than the local telemetry result and is not a calibrated catch or suitability curve.",
       "reason_template": "Water is {value} C, within the preferred thermal range for Bull shark.",
       "sources": [
-        "https://www.fisheries.noaa.gov/"
+        "https://sharkresearch.earth.miami.edu/wp-content/uploads/2021/03/Rider-et-al_2021_Bull-Shark-Movements_Aquatic-Ecology.pdf",
+        "https://pmc.ncbi.nlm.nih.gov/articles/PMC10940676/"
       ],
       "gate": true,
       "required": true
@@ -74,7 +76,7 @@
     },
     "light": {
       "map": {
-        "dusk": 1.0,
+        "dusk": 1,
         "night": 0.8,
         "dawn": 0.9,
         "day": 0.6
@@ -88,7 +90,7 @@
     },
     "tide": {
       "map": {
-        "falling": 1.0,
+        "falling": 1,
         "slack_low": 0.6,
         "rising": 0.7,
         "slack_high": 0.5
@@ -114,8 +116,8 @@
     }
   },
   "lat_range": [
-    15.0,
-    38.0
+    15,
+    38
   ],
   "regulations": {
     "summary": "Regulated species - See MyFWC/NOAA guidelines",
@@ -128,7 +130,7 @@
     "source_url": "https://myfwc.com/fishing/saltwater/recreational/"
   },
   "lon_range": [
-    -100.0,
-    -50.0
+    -100,
+    -50
   ]
 }
