@@ -22,6 +22,7 @@ def test_parse_handles_missing_and_order():
 def test_summary_values_and_conversions():
     s = ndbc.summarize(STATION, ndbc.parse_realtime2(SAMPLE))
     assert s["water_temp_c"] == 27.5
+    assert s["water_temp_time_utc"] == "2026-10-09T12:00:00+00:00"
     assert s["wind_kn"] == round(5.0 * 1.943844, 1)
     assert s["wave_height_m"] == 1.2
     # pressure 3 h earlier (09:00) was 1014.0, now 1012.0
