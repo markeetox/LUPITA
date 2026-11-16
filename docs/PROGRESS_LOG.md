@@ -849,3 +849,14 @@ The 6 km product has the strongest apparent spatial availability in this snapsho
 - Tests cover generic homepage vs specific reference, sourced-but-unverified vs provisional, partly sourced, missing/invalid evidence metadata, malformed URLs, active weight aggregation, and API v1 serialization.
 - Final code/test commit `d46fbcae9cbf9343d0490cb5cf05d08a0cd77dd5` passed [Python CI #43945487955](https://github.com/markeetox/LUPITA/actions/runs/43945487955): **307 passed, 0 failed, 115 warnings**. Species audit and artifact upload succeeded.
 - Next: manually review homepage-only source references and elevated-risk profiles against their exact species, life stage, region, and configured numeric claim before changing any evidence status.
+
+
+## 2026-11-16 | Source-by-source review of 20 named-site SST factors
+
+- Reviewed the 20 named-site profiles previously marked `sourced` while citing only the generic NOAA Fisheries homepage.
+- Created `docs/NAMED_SITE_SST_EVIDENCE_REVIEW_2026-11-16.md` with configured range/ideal values, species-specific sources, life-stage and regional caveats, claim-fit assessments, recommended statuses, and a source register.
+- Found close support for configured range and ideal interval for Spanish mackerel; partial but incomplete support for 11 profiles; and insufficient numeric support for 8 profiles.
+- Key mismatches documented: bottom temperature vs site SST; spawning or juvenile evidence vs year-round adult suitability; broad observed occurrence vs preferred interval; model-derived vs measured evidence; and regional populations not transferable without qualification.
+- All 20 profiles are single-factor SST models with `gate: true` and `required: true`; SST determines site eligibility.
+- No profile or prediction behavior was changed. Status and reference updates await owner approval.
+- Next: apply only the accepted evidence-status, source-reference, and explanatory-note changes. Keep all numeric ranges, ideal bands, weights, gates, and required flags unchanged in that pass.
