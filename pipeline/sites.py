@@ -65,6 +65,10 @@ def tide_value(site, ctx):
     stage = tides.stage_at(t["events"], cond["now"])
     nxt = ", ".join(f"{'High' if e['type'] == 'H' else 'Low'} {_clock(e['time'])}" for e in tides.next_events(t["events"], cond["now"], 3))
     return stage, "modeled", {"station": t["station"]["name"],
+                              "source_type": "NOAA CO-OPS tide predictions",
+                              "station_id": t["station"].get("id"),
+                              "distance_km": round(d, 2),
+                              "prediction_event_times": [e["time"].isoformat() for e in tides.next_events(t["events"], cond["now"], 3)],
                               "text": f"{stage.replace('_', ' ').capitalize()} at {t['station']['name']}. Next: {nxt}"}
 
 
@@ -75,12 +79,12 @@ def light_value(site, ctx):
     phase = astro.light_phase(now, site["lat"], site["lon"])
     sr, ss = astro.sun_times(now.astimezone(LOCAL).date(), site["lat"], site["lon"])
     sun = f" Sunrise {_clock(sr)}, sunset {_clock(ss)}." if sr else ""
-    return phase, "modeled", {"text": f"Now: {phase}.{sun}"}
+    return phase, "modeled", {"text": f"Now: {phase}.{sun}", "source_type": "astronomical calculation"}
 
 
 def season_value(site, ctx):
     now = ctx["conditions"]["now"] if ctx.get("conditions") else None
-    return None if now is None else (now.astimezone(LOCAL).month, "seasonal", {})
+    return None if now is None else (now.astimezone(LOCAL).month, "seasonal", {"source_type": "calendar lookup"})
 
 
 def structure_value(site, ctx):
@@ -88,7 +92,7 @@ def structure_value(site, ctx):
 
 
 def distance_to_inlet_value(site, ctx):
-    return 0.0, "static", {}
+    return 0.0, "static", {"source_type": "placeholder constant", "warning": "Not a measured site distance."}
 
 
 VALUE_FUNCS = {"sst_c": sst_value, "tide_stage": tide_value, "time_of_day": light_value,
