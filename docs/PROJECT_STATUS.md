@@ -376,3 +376,9 @@ All three products (`ucsdHfrE1`, `ucsdHfrE2`, `ucsdHfrE6`) returned HTTP 403 fro
 **Interpretation:** the comparison workflow's GitHub-hosted runner IP appears to have been blocked by NOAA ERDDAP. This is an access/rate-limit condition, not evidence that the three datasets are missing or that any product has zero coverage. Do not keep retrying identical requests from the same runner; that risks extending the block. Pause manual comparison runs and do not alter production source selection or endpoints based on this artifact. Resume only after NOAA access is restored or an approved, low-rate retrieval path is established.
 
 No production ingestion, data publication, source configuration, prediction, biology, scoring, or weights changed. Python CI remains green at 286 passed, 0 failed, 115 warnings on run #43897319861.
+
+## Species model-to-data audit | 2026-11-16
+
+Completed a static end-to-end review of grid/site factor dispatch, source/layer construction, missing-data semantics, and confidence/evidence handling. The report is [MODEL_TO_DATA_AUDIT_2026-11-16.md](MODEL_TO_DATA_AUDIT_2026-11-16.md). Key confirmed contracts: grid scoring skips missing optional factors and renormalizes available weights; its scorer does not enforce factor-level `required`; site scoring does enforce `required`; and a site gate without `required` can be skipped when missing. Grid SST is foundational. Site `distance_to_inlet` remains a constant-zero placeholder and must stay inactive. Environmental coverage, source freshness, and biological evidence quality remain distinct. No scoring, biology, weights, source configuration, ingestion, or published data changed.
+
+**Next:** add regression tests for existing runtime contracts and a factor-to-layer dispatch contract. Keep HFR comparison paused while the NOAA ERDDAP runner blacklist is active.
