@@ -290,3 +290,6 @@ The comparison utility now captures redirect chains and response excerpts for th
 Two CI failures were caused by hard-coded Nov 13 altimetry test data aging past the existing 72-hour eligibility threshold. Tests now use a recent relative timestamp for eligible fallback cases and a deliberately stale timestamp for stale cases; production logic is unchanged.
 
 **Next:** confirm Python CI passes, then rerun one read-only HFR comparison to capture the 6 km redirect chain and response body. Do not change production endpoints or source selection until the failure is explained.
+
+
+The relative-time test fixture was corrected once more in commit `afb59bc` so the stale-only case converts the generated `ALT_TIME` rather than the former fixed date. Full CI [#43897319861](https://github.com/markeetox/LUPITA/actions/runs/43897319861) is pending; confirm before considering the test cleanup complete.
