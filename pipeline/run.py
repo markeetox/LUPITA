@@ -7,6 +7,7 @@ import logging
 import numpy as np
 from datetime import datetime, timezone
 from pathlib import Path
+from urllib.parse import urlsplit
 
 from pipeline import catalog
 from pipeline import closures as closures_mod
@@ -227,6 +228,85 @@ def _layer_source_snapshot(name: str, state: dict) -> dict:
     return snapshot
 
 
+def _evidence_diagnostics(factor: dict) -> dict:
+    """Summarize declared evidence metadata without claiming independent scientific validation."""
+    raw_sources = factor.get("sources")
+    references = raw_sources if isinstance(raw_sources, list) else []
+    reference_details = []
+    for raw in references:
+        value = raw.strip() if isinstance(raw, str) else ""
+        classification = "invalid_reference"
+        if value:
+            parsed = urlsplit(value)
+            if parsed.scheme in {"http", "https"} and parsed.netloc:
+                classification = "generic_homepage" if parsed.path in {"", "/"} else "specific_path_reference"
+            elif "://" not in value:
+                classification = "human_readable_citation"
+        reference_details.append({"reference": raw, "classification": classification})
+
+    if not references:
+        reference_status = "missing"
+    elif any(row["classification"] in {"specific_path_reference", "human_readable_citation"} for row in reference_details):
+        reference_status = "specific_reference_present"
+    elif any(row["classification"] == "generic_homepage" for row in reference_details):
+        reference_status = "homepage_only"
+    else:
+        reference_status = "invalid"
+
+    status = factor.get("value_status") or "unspecified"
+    if status in {"provisional", "estimated", "unsourced", "needs_source"}:
+        classification = "provisional_or_unvalidated"
+    elif status == "weak_factor":
+        classification = "weak_factor"
+    elif status == "partly_sourced":
+        classification = "partly_sourced"
+    elif status == "sourced" and reference_status == "specific_reference_present":
+        classification = "declared_sourced_unverified"
+    elif status == "sourced" and reference_status == "homepage_only":
+        classification = "generic_reference_only"
+    elif status == "sourced":
+        classification = "sourced_without_traceable_reference"
+    else:
+        classification = "unknown_or_unrecognized"
+
+    return {
+        "declared_status": status,
+        "classification": classification,
+        "reference_status": reference_status,
+        "reference_details": reference_details,
+        "value_notes": factor.get("value_notes"),
+        "interpretation": "Profile metadata is a declared evidence assessment. A specific citation is not proof that it supports the exact numeric value, life stage, population, or region.",
+    }
+
+
+def _evidence_summary(factors: list[dict]) -> dict:
+    """Aggregate configured factor weights by declared status and reference quality."""
+    declared = {}
+    references = {
+        "specific_reference_present": 0.0,
+        "homepage_only": 0.0,
+        "missing_or_invalid": 0.0,
+    }
+    total = 0.0
+    for factor in factors:
+        weight = float(factor.get("weight") or 0.0)
+        total += weight
+        evidence = factor.get("evidence_diagnostics") or {}
+        status = str(evidence.get("declared_status", "unspecified"))
+        declared[status] = declared.get(status, 0.0) + weight
+        reference_status = evidence.get("reference_status")
+        bucket = ("specific_reference_present" if reference_status == "specific_reference_present"
+                  else "homepage_only" if reference_status == "homepage_only" else "missing_or_invalid")
+        references[bucket] += weight
+    return {
+        "active_factor_count": len(factors),
+        "active_factor_weight": round(total, 4),
+        "declared_status_weight": {key: round(value, 4) for key, value in sorted(declared.items())},
+        "reference_quality_weight": {key: round(value, 4) for key, value in references.items()},
+        "interpretation": "Configured active-factor weight totals, not probabilities or calibrated scientific-quality scores. Declared sourced status with a specific citation remains unverified until the citation is checked against the exact factor claim.",
+    }
+
+
 def attach_factor_source_diagnostics(fish: dict, data_quality: dict) -> None:
     """Attach source lineage/freshness to each spot without altering its score or confidence."""
     layer_states = data_quality.get("layers", {})
@@ -281,6 +361,7 @@ def attach_factor_source_diagnostics(fish: dict, data_quality: dict) -> None:
                         "time": fallback.get("time"),
                         "freshness": current_state.get("fallback_freshness"),
                     }]
+            factor["evidence_diagnostics"] = _evidence_diagnostics(factor)
             factor["environmental_source"] = {
                 "kind": kind,
                 "available_at_prediction": bool(factor.get("available")),
@@ -297,6 +378,7 @@ def attach_factor_source_diagnostics(fish: dict, data_quality: dict) -> None:
                 factor["environmental_source"]["input_details"] = details
             elif details:
                 factor["environmental_source"]["input_details"] = details
+        spot["evidence_summary"] = _evidence_summary(spot.get("factor_diagnostics", []))
 
 
 def build_pipeline_health(data_quality: dict, fish_updated: bool, errors: list[str]) -> dict:
