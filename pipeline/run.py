@@ -211,7 +211,7 @@ _FACTOR_SOURCE_SPECS = {
 
 def _layer_source_snapshot(name: str, state: dict) -> dict:
     snapshot = {"layer": name, "status": state.get("status", "unknown")}
-    for key in ("dataset", "final_dataset", "primary_dataset", "time", "primary_time",
+    for key in ("dataset", "source_endpoint", "final_dataset", "primary_dataset", "time", "primary_time",
                 "gapfilled_time", "freshness", "primary_freshness", "gapfilled_freshness",
                 "gapfilled_used", "valid_fraction", "final_valid_fraction",
                 "depth_valid_fraction", "static", "query_region_coverage", "blend_mode"):
@@ -239,14 +239,16 @@ def attach_factor_source_diagnostics(fish: dict, data_quality: dict) -> None:
             # Named-site SST can come from a measured NDBC buoy or the satellite SST grid.
             source = None
             if details.get("source_type") == "NDBC buoy":
+                observed_at = details.get("observed_at")
                 source = {
                     "kind": "measured_buoy",
                     "station": details.get("station"),
                     "station_name": details.get("station_name"),
                     "observed_at": details.get("observed_at"),
                     "distance_km": details.get("distance_km"),
-                    "freshness": {"status": "unconfigured", "observed_at": details.get("observed_at"),
-                                  "age_hours": None, "reason": "No NDBC operational freshness threshold is configured."}
+                    "freshness": {"status": "unconfigured" if observed_at else "unknown", "observed_at": observed_at,
+                                  "age_hours": None, "reason": ("No NDBC operational freshness threshold is configured."
+                                                               if observed_at else "No water-temperature observation timestamp was supplied.")}
                 }
                 kind = "measured_buoy"
                 explanation = "Measured NDBC buoy temperature; observation time is shown, but no freshness threshold is configured."
