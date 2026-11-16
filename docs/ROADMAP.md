@@ -244,3 +244,17 @@ The 6 km product leads on apparent availability in this snapshot. It also has hi
 4. Keep production source selection and all prediction/scoring behavior unchanged until multi-time evidence is reviewed and separately approved.
 
 The comparison workflow is read-only and does not touch Pull Ocean Data or the `data` branch.
+
+
+## Production source health update | 2026-11-16
+
+Scheduled [Pull Ocean Data #43840037456](https://github.com/markeetox/LUPITA/actions/runs/43840037456) completed tests, catalog, prediction generation and publication. Prediction snapshot refreshed, but health is degraded:
+
+- SST is delayed at 48.5h (provisional warning 36h).
+- Chlorophyll is 69.5h old and technically within its 72h warning limit, but only 7.94% of the source grid is valid; gap-filled input remains disabled.
+- HF Radar `ucsdHfrE2` failed on the Upwell fallback with HTTP 404 / unknown dataset ID. No current vectors were available.
+- Altimetry is about 1,185.5h old and remains correctly excluded from current-vector use.
+
+**Next source-health checks:** verify the CoastWatch and Upwell dataset catalogs/endpoints read-only; establish whether the 404 is host-specific, catalog availability, or a dataset identifier issue. Do not change endpoints, production source configuration, stale-data rules, or scoring until the cause is established and explicitly reviewed.
+
+**HF Radar comparison remains open:** corrected common-time snapshot at `2026-11-13T04:00:00Z` favors 6 km availability in that one sample. Run a second exact common timestamp before any source-selection recommendation. The manual workflow has not yet been rerun for the second timestamp.
