@@ -304,3 +304,6 @@ The latest comparison [run #43935416361](https://github.com/markeetox/LUPITA/act
 
 **Decision:** pause further manual comparison runs from the same GitHub-hosted runner. Do not interpret this as a dataset-specific failure or a coverage result. Do not change production HFR source selection, endpoints, or ingestion behavior. Resume only when NOAA access is restored or an approved low-rate retrieval path is available.
 
+## Species model-to-data audit | 2026-11-16
+
+Completed static audit: [MODEL_TO_DATA_AUDIT_2026-11-16.md](MODEL_TO_DATA_AUDIT_2026-11-16.md). The immediate engineering priority is to make existing contracts executable as tests: grid/site missing, `required`, `gate`, coverage, normalization, and factor-to-layer dispatch. Keep environmental coverage, source freshness, and biological evidence quality separate in prediction explanations. Do not activate the site `distance_to_inlet` placeholder or expand models with unsupported factors. No scoring or biology changes were made. HF Radar product comparison remains paused while the GitHub runner is blocked by NOAA ERDDAP.
