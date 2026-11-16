@@ -187,6 +187,94 @@ def build_data_quality(layers: dict | None, sources: dict, errors: list[str], no
     }}
 
 
+_FACTOR_SOURCE_SPECS = {
+    "sst_c": ("observed_grid", ["sst"], "Satellite sea-surface temperature observation."),
+    "sst_gradient": ("derived_grid", ["sst"], "Derived from the SST grid; not an independent observation."),
+    "chlorophyll": ("satellite_grid", ["chlorophyll"], "Satellite chlorophyll; primary and gap-filled provenance are reported separately."),
+    "chl_gradient": ("derived_grid", ["chlorophyll"], "Derived from the chlorophyll grid; not an independent observation."),
+    "depth_m": ("static_dataset", ["bathymetry"], "Static ETOPO bathymetry; regional context, not reef-scale navigation data."),
+    "bottom_slope": ("derived_static_grid", ["bathymetry"], "Derived from static ETOPO bathymetry."),
+    "bottom_curvature": ("derived_static_grid", ["bathymetry"], "Derived from static ETOPO bathymetry."),
+    "current_speed": ("composite_observation", ["currents"], "Current vectors may blend HF Radar and satellite altimetry; the exact provider for this cell is not retained."),
+    "current_dir": ("composite_observation", ["currents"], "Current vectors may blend HF Radar and satellite altimetry; the exact provider for this cell is not retained."),
+    "current_convergence": ("derived_composite_grid", ["currents"], "Derived from the composite current vectors; exact per-cell provider is not retained."),
+    "gulf_stream_edge": ("derived_satellite_grid", ["currents"], "Derived from satellite-altimetry geostrophic flow; see fallback freshness."),
+    "structure_type": ("static_spatial_dataset", ["reef_structure"], "FWC reef and hard-bottom mapping; unmapped does not prove absence."),
+    "distance_to_inlet": ("computed_from_configuration", [], "Calculated from configured inlet/pass coordinates; no live environmental source."),
+    "spawning_season": ("calendar_model", [], "Calendar lookup; biological month ranges are model assumptions."),
+    "season_presence": ("calendar_model", [], "Calendar lookup; biological month ranges are model assumptions."),
+    "time_of_day": ("astronomical_model", [], "Calculated from timestamp and site coordinates."),
+    "tide_stage": ("tide_prediction", [], "Modeled from the selected CO-OPS tide station; station-specific observation age is not currently retained."),
+}
+
+
+def _layer_source_snapshot(name: str, state: dict) -> dict:
+    snapshot = {"layer": name, "status": state.get("status", "unknown")}
+    for key in ("dataset", "final_dataset", "primary_dataset", "time", "primary_time",
+                "gapfilled_time", "freshness", "primary_freshness", "gapfilled_freshness",
+                "gapfilled_used", "valid_fraction", "final_valid_fraction",
+                "depth_valid_fraction", "static", "query_region_coverage", "blend_mode"):
+        if key in state and state[key] is not None:
+            snapshot[key] = state[key]
+    for source_key in ("primary", "fallback"):
+        source = state.get(source_key)
+        if isinstance(source, dict):
+            snapshot[source_key] = {key: source.get(key) for key in ("dataset", "loaded", "time", "used_for_currents", "current_eligible") if key in source}
+            freshness_key = f"{source_key}_freshness"
+            if state.get(freshness_key) is not None:
+                snapshot[source_key]["freshness"] = state[freshness_key]
+    return snapshot
+
+
+def attach_factor_source_diagnostics(fish: dict, data_quality: dict) -> None:
+    """Attach source lineage/freshness to each spot without altering its score or confidence."""
+    layer_states = data_quality.get("layers", {})
+    for spot in fish.get("spots", []):
+        for factor in spot.get("factor_diagnostics", []):
+            param = factor.get("param")
+            kind, layer_names, explanation = _FACTOR_SOURCE_SPECS.get(
+                param, ("unmapped", [], "No factor-to-source mapping is registered."))
+            details = factor.get("input_details") or {}
+            # Named-site SST can come from a measured NDBC buoy or the satellite SST grid.
+            if details.get("source_type") == "NDBC buoy":
+                source = {
+                    "kind": "measured_buoy",
+                    "station": details.get("station"),
+                    "station_name": details.get("station_name"),
+                    "observed_at": details.get("observed_at"),
+                    "distance_km": details.get("distance_km"),
+                    "freshness": {"status": "unconfigured", "observed_at": details.get("observed_at"),
+                                  "age_hours": None, "reason": "No NDBC operational freshness threshold is configured."}
+                }
+                kind = "measured_buoy"
+                explanation = "Measured NDBC buoy temperature; observation time is shown, but no freshness threshold is configured."
+                layer_names = []
+            elif details.get("source_type") == "satellite SST grid":
+                kind = "observed_grid"
+                explanation = "Satellite SST grid sampled near the named site."
+                layer_names = ["sst"]
+            elif factor.get("input_tag") == "static" and param == "structure_type":
+                kind = "static_site_catalog"
+                explanation = "Static site-kind metadata from the configured fishing-site catalog."
+                layer_names = []
+            layers = [_layer_source_snapshot(name, layer_states.get(name, {})) for name in layer_names]
+            if param == "chlorophyll" or param == "chl_gradient":
+                # Primary and gap-filled timestamps may differ; do not imply a single cell provider.
+                pass
+            factor["environmental_source"] = {
+                "kind": kind,
+                "available_at_prediction": bool(factor.get("available")),
+                "layers": layers,
+                "explanation": explanation,
+            }
+            if source if False else False:
+                pass
+            if kind == "measured_buoy":
+                factor["environmental_source"]["source"] = source
+            elif details:
+                factor["environmental_source"]["input_details"] = details
+
+
 def build_pipeline_health(data_quality: dict, fish_updated: bool, errors: list[str]) -> dict:
     """Classify a refresh without confusing successful execution with fresh predictions."""
     layer_states = data_quality.get("layers", {})
@@ -293,7 +381,9 @@ def main() -> None:
                 chl = _grid_report(cfg["chlorophyll"], layers["times"]["chlorophyll"], clats, clons, cgrid)
             heat: dict = {}
             fish = build_fish_json(layers, buoys, profiles, registry, now, places, conditions, heat)
-            freshness_layers = build_data_quality(layers, sources, errors, now_dt).get("layers", {})
+            prediction_data_quality = build_data_quality(layers, sources, errors, now_dt)
+            freshness_layers = prediction_data_quality.get("layers", {})
+            attach_factor_source_diagnostics(fish, prediction_data_quality)
             fish["layers"]["freshness"] = {key: freshness_layers[key].get("freshness") for key in ("sst", "chlorophyll", "currents") if key in freshness_layers}
             current_state = freshness_layers.get("currents", {})
             fish["layers"]["current_sources"] = {
@@ -303,6 +393,7 @@ def main() -> None:
                 "selected_freshness": current_state.get("freshness")
             }
             fish["layers"]["times"]["stream_edge"] = (layers or {}).get("times", {}).get("stream_edge")
+            fish["layers"]["stream_edge_source"] = (layers or {}).get("stream_edge_source")
             la, lo = layers["lats"], layers["lons"]
             dlat, dlon = float(la[1] - la[0]), float(lo[1] - lo[0])
             heat_json = {"version": 1, "generated_utc": now, "width": int(len(lo)), "height": int(len(la)),
