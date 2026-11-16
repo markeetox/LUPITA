@@ -52,18 +52,24 @@ def test_single_factor_site_model_has_low_confidence_even_with_full_input_covera
     assert item["confidence"] == "Low"
     assert "limited_model_inputs" in item["confidence_basis"]
     assert item["active_factor_count"] == 1
+    assert item["factor_diagnostics"] == [{
+        "param": "sst_c", "weight": 0.4, "available": True, "factor_score": 1.0,
+        "value_status": "unspecified", "source_count": 0, "input_tag": "measured"
+    }]
 
 
 def test_api_v1_exposes_confidence_basis_and_input_timestamps():
     spot = {"id": "snook-1", "title": "Test cut", "score": 0.8,
             "confidence": "Low", "confidence_basis": ["limited_model_inputs"],
             "active_factor_count": 1, "data_coverage": 1.0,
-            "environmental_data_coverage": 1.0, "coords": [-80.2, 25.3],
-            "ring": [], "reasons": [], "location": []}
+            "environmental_data_coverage": 1.0,
+            "factor_diagnostics": [{"param": "sst_c", "available": True, "factor_score": 1.0}],
+            "coords": [-80.2, 25.3], "ring": [], "reasons": [], "location": []}
     area = api._area(spot)
     assert area["confidence_basis"] == ["limited_model_inputs"]
     assert area["active_factor_count"] == 1
     assert area["environmental_data_coverage"] == 1.0
+    assert area["factor_diagnostics"][0]["param"] == "sst_c"
 
     fish = {"generated_utc": "2026-11-12T18:00:00+00:00",
             "layers": {"times": {"sst": "2026-11-10T09:00:00Z"},
