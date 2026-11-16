@@ -272,3 +272,10 @@ The 1 km zero-vector result has repeated across two timestamps. The 2 km fractio
 3. Consider a common ocean-only mask only after the retrieval problem is understood.
 
 The report-formatting SyntaxWarnings were fixed in commits `cd3fbf0` and `dd38768`; no retrieval or production behavior changed.
+
+
+### 2026-11-16 | 6 km timestamp-range clarification
+
+The 6 km dataset ID is still present on Upwell. Its live metadata time range ends at 2026-11-10 08:00Z, so the failed November 12 04:00Z request was outside the available time axis. This is not evidence that the dataset was removed. See [Upwell 6 km metadata](https://upwell.pfeg.noaa.gov/erddap/griddap/ucsdHfrE6.html).
+
+Next comparison candidate is `2026-11-10T04:00:00Z`; run only after confirming the exact time is returned by all three products. A candidate timestamp is not itself a successful comparison. Production source configuration remains unchanged.
