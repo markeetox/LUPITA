@@ -302,3 +302,18 @@ At the exact common timestamp `2026-11-13T04:00:00Z`, the 1 km product had 0 pai
 This is one timestamp, and native-grid percentages are not ocean-area coverage estimates. The products represent different nominal resolutions and depths (1/2/6 km; approximately 0.5/1.0/2.4 m). The 6 km product is the leading availability candidate for this snapshot only; no production source change is approved or implied.
 
 **Next:** run a second exact timestamp shared by all three products, then compare temporal consistency. Evaluate a common ocean-only mask before making area-coverage claims. Keep source selection, ingestion configuration, scoring, and biology unchanged.
+
+
+## Production refresh check | 2026-11-16
+
+Latest inspected scheduled run: [Pull Ocean Data #43840037456](https://github.com/markeetox/LUPITA/actions/runs/43840037456), generated at `2026-11-16T09:29:14Z`. The full test step, catalog generation, prediction pipeline, publication, and final health evaluation completed. Predictions were refreshed and published; pipeline health is **degraded**, not healthy.
+
+- SST `jplMURSST41`: observation `2026-11-14T09:00Z`, age 48.5h, delayed against the provisional 36h warning threshold; 55.2% valid aligned cells.
+- Chlorophyll `nesdisVHNnoaa20chlaDaily`: observation `2026-11-13T12:00Z`, age 69.5h, still within the provisional 72h warning threshold; valid source fraction 7.94% (aligned 7.93%). Gap-filled source remains disabled.
+- HF Radar `ucsdHfrE2`: failed with HTTP 404 from the Upwell ERDDAP fallback: `Currently unknown datasetID=ucsdHfrE2`. No current vectors were selected; query-region HFR coverage 0/10,101. The primary observation time is unknown.
+- Satellite altimetry `nesdisSSH1day`: observation `2026-09-28T00:00Z`, age about 1,185.5h, correctly excluded from current-vector use by the 72h guard despite 75.9% aligned validity in the query region.
+- No critical issues were recorded; optional currents layer failed. The published prediction snapshot was refreshed from this run.
+
+This confirms the stale-altimetry guard is working, but the configured fallback host currently cannot resolve the HFR dataset ID. Treat this as a source-endpoint/dataset-availability issue requiring read-only verification before any code/configuration change. Do not substitute stale altimetry, alter source selection, or change prediction/scoring behavior without explicit review.
+
+The separate read-only 1/2/6 km comparison remains open. Its corrected first snapshot was at `2026-11-13T04:00:00Z`; a second exact common timestamp is still required. No second comparison run was present in the inspected workflow history as of this review.
