@@ -2,7 +2,7 @@ import math
 
 import pytest
 
-from scripts.compare_hfr_products import PRODUCTS, build_url, parse_csv, summarize
+from scripts.compare_hfr_products import PRODUCTS, build_url, parse_csv, render_markdown, summarize
 
 
 def _csv(dataset_time="2026-11-13T04:00:00Z"):
@@ -59,3 +59,15 @@ def test_timestamp_must_include_timezone():
     from scripts.compare_hfr_products import compare
     with pytest.raises(ValueError, match="timezone"):
         compare("2026-11-13T04:00:00")
+
+
+def test_markdown_report_uses_valid_code_spans_without_escape_warnings():
+    grid = parse_csv(_csv(), PRODUCTS[1], "2026-11-13T04:00:00Z", "https://example.test")
+    report = {
+        "requested_time": "2026-11-13T04:00:00Z",
+        "products": [summarize(grid)],
+        "failures": [],
+    }
+    markdown = render_markdown(report)
+    assert "\\`" not in markdown
+    assert "`2026-11-13T04:00:00Z`" in markdown
