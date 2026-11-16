@@ -365,3 +365,14 @@ The final stale-fixture correction is commit `afb59bc`: one remaining stale-fall
 
 
 **Validation complete:** Python CI [#43897319861](https://github.com/markeetox/LUPITA/actions/runs/43897319861), commit `afb59bc7ae6e23f48b05f3a6c700ff86dbdd5ded`, passed **286 tests, 0 failures, 115 warnings**. Species profile audit and artifact upload also succeeded.
+
+
+## HF Radar comparison blocked by NOAA ERDDAP request blacklist | 2026-11-16
+
+The updated read-only comparison [workflow #43935416361](https://github.com/markeetox/LUPITA/actions/runs/43935416361) retried the previously successful common timestamp `2026-11-13T04:00:00Z`. It failed before producing any product measurements. The uploaded [artifact 14258784849](https://github.com/markeetox/LUPITA/actions/runs/43935416361/artifacts/14258784849) was retrieved and inspected.
+
+All three products (`ucsdHfrE1`, `ucsdHfrE2`, `ucsdHfrE6`) returned HTTP 403 from both CoastWatch and Upwell ERDDAP hosts. The response body explicitly states that the requesting IP address is on the ERDDAP request blacklist and suggests excessive concurrent, repeated-identical, or invalid requests as possible triggers. The same 403 occurred on both hosts for all three products. This supersedes the current working theory that the latest failure is a 6 km-only HTTP 404 or timestamp issue. The diagnostic run provides no new coverage comparison values.
+
+**Interpretation:** the comparison workflow's GitHub-hosted runner IP appears to have been blocked by NOAA ERDDAP. This is an access/rate-limit condition, not evidence that the three datasets are missing or that any product has zero coverage. Do not keep retrying identical requests from the same runner; that risks extending the block. Pause manual comparison runs and do not alter production source selection or endpoints based on this artifact. Resume only after NOAA access is restored or an approved, low-rate retrieval path is established.
+
+No production ingestion, data publication, source configuration, prediction, biology, scoring, or weights changed. Python CI remains green at 286 passed, 0 failed, 115 warnings on run #43897319861.
