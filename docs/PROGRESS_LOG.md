@@ -793,3 +793,13 @@ The 6 km product has the strongest apparent spatial availability in this snapsho
 
 
 - Final Python CI [#43897319861](https://github.com/markeetox/LUPITA/actions/runs/43897319861) passed on commit `afb59bc7ae6e23f48b05f3a6c700ff86dbdd5ded`: **286 passed, 0 failed, 115 warnings**. Species profile audit and artifact upload both succeeded. This validates the age-relative fixtures and the new ERDDAP redirect-diagnostic regression test.
+
+
+## 2026-11-16 | NOAA ERDDAP request blacklist confirmed by comparison artifact
+
+- User reran the read-only comparison at the known-good timestamp `2026-11-13T04:00:00Z`. [Workflow #43935416361](https://github.com/markeetox/LUPITA/actions/runs/43935416361) failed and uploaded [artifact 14258784849](https://github.com/markeetox/LUPITA/actions/runs/43935416361/artifacts/14258784849); the JSON and Markdown reports were downloaded and reviewed.
+- This is no longer a 6 km-only 404: all three products (`ucsdHfrE1`, `ucsdHfrE2`, `ucsdHfrE6`) returned HTTP 403 on both CoastWatch and Upwell ERDDAP hosts. NOAA's response body explicitly says the requesting IP is on the ERDDAP request blacklist, with excessive concurrent requests, repeated identical requests, or invalid requests listed as possible causes.
+- No product measurements were returned. The previous 2026-11-13 04:00Z comparison results remain historical results from the earlier successful artifact; this latest run does not invalidate them, but it also adds no new evidence.
+- Most likely scope is the GitHub-hosted workflow runner egress IP, not an individual HFR product. This is an access restriction, not proof of dataset removal, missing vectors, or bad product coverage.
+- Stop repeated manual comparisons from the same runner while the block is active. Do not rotate hosts or issue more identical requests as a workaround. Resume only after access is restored or a low-rate, approved retrieval route is established.
+- No production endpoint/configuration, Pull Ocean Data workflow, data branch publication, prediction logic, species biology, scoring, or weights changed. Python CI remains green: [run #43897319861](https://github.com/markeetox/LUPITA/actions/runs/43897319861), 286 passed, 0 failed, 115 warnings.
