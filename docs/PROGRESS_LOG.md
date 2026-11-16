@@ -790,3 +790,6 @@ The 6 km product has the strongest apparent spatial availability in this snapsho
 
 
 - Follow-up test-fixture correction: one stale-only test still replaced the old literal timestamp after the initial relative-time conversion. Updated it to replace `ALT_TIME` consistently (commit `afb59bc`). Full Python CI [#43897319861](https://github.com/markeetox/LUPITA/actions/runs/43897319861) was still running at last inspection; no passing result is claimed yet.
+
+
+- Final Python CI [#43897319861](https://github.com/markeetox/LUPITA/actions/runs/43897319861) passed on commit `afb59bc7ae6e23f48b05f3a6c700ff86dbdd5ded`: **286 passed, 0 failed, 115 warnings**. Species profile audit and artifact upload both succeeded. This validates the age-relative fixtures and the new ERDDAP redirect-diagnostic regression test.
