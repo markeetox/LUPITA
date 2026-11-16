@@ -251,6 +251,10 @@ def attach_factor_source_diagnostics(fish: dict, data_quality: dict) -> None:
                 kind = "measured_buoy"
                 explanation = "Measured NDBC buoy temperature; observation time is shown, but no freshness threshold is configured."
                 layer_names = []
+            elif details.get("source_type") == "NOAA CO-OPS tide predictions":
+                kind = "tide_prediction"
+                explanation = "CO-OPS tide prediction for the selected station; event times are retained, but retrieval freshness is not yet measured."
+                layer_names = []
             elif details.get("source_type") == "satellite SST grid":
                 kind = "observed_grid"
                 explanation = "Satellite SST grid sampled near the named site."
@@ -283,6 +287,12 @@ def attach_factor_source_diagnostics(fish: dict, data_quality: dict) -> None:
             }
             if source is not None:
                 factor["environmental_source"]["source"] = source
+            elif details.get("source_type") == "NOAA CO-OPS tide predictions":
+                factor["environmental_source"]["freshness"] = {
+                    "status": "not_assessed", "observed_at": None, "age_hours": None,
+                    "reason": "Tide prediction request retrieval time is not currently recorded."
+                }
+                factor["environmental_source"]["input_details"] = details
             elif details:
                 factor["environmental_source"]["input_details"] = details
 
