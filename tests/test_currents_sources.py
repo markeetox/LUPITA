@@ -107,7 +107,7 @@ def test_stale_altimetry_alone_does_not_create_a_current_layer():
             raise RuntimeError("HF Radar unavailable")
         if "alt-test" in url:
             rows = csv_data("alt-test").splitlines()
-            return "\n".join(rows[:2] + [row.replace("2026-11-13T11:00:00Z", "2026-09-28T00:00:00Z") for row in rows[2:]])
+            return "\n".join(rows[:2] + [row.replace(ALT_TIME, "2026-09-28T00:00:00Z") for row in rows[2:]])
         raise AssertionError(url)
 
     layers = load_layers(sources(), errors, fetch=fetch)
