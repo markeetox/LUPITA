@@ -332,6 +332,27 @@ def _cold_hint(profile, scored, layers) -> str:
     return ""
 
 
+def _factor_diagnostics(profile, scored, cell):
+    """Explain which active grid factors contributed at a cell without implying catch probability."""
+    i, j = cell
+    rows = []
+    for factor in profile.get("factors", []):
+        if not factor.get("active") or factor.get("weight", 0) <= 0:
+            continue
+        param = factor["param"]
+        values = scored.get("scores", {}).get(param)
+        value_score = float(values[i, j]) if values is not None and np.isfinite(values[i, j]) else None
+        rows.append({
+            "param": param,
+            "weight": float(factor["weight"]),
+            "available": value_score is not None,
+            "factor_score": round(value_score, 4) if value_score is not None else None,
+            "value_status": factor.get("value_status", "unspecified"),
+            "source_count": len(factor.get("sources") or []),
+        })
+    return rows
+
+
 def build_fish_json(layers, buoys, profiles, registry, generated_utc, places=None, conditions=None, heat=None):
     reg = {p["key"]: p for p in registry["parameters"]}
     if conditions:
@@ -413,6 +434,7 @@ def build_fish_json(layers, buoys, profiles, registry, generated_utc, places=Non
                 "confidence": "Low" if confidence_basis else "Medium",
                 "confidence_basis": confidence_basis, "active_factor_count": active_factor_count,
                 "data_coverage": round(cov, 2), "environmental_data_coverage": round(cov, 2),
+                "factor_diagnostics": _factor_diagnostics(profile, scored, (i, j)),
                 "coords": [round(lon, 4), round(lat, 4)],
                 "reasons": build_reasons(profile, name, scored, layers, (i, j), buoys, reg, lat, lon, sp["members"]),
                 "location": build_location(layers, scored, (i, j), buoys, lat, lon, sp["members"], places)}
