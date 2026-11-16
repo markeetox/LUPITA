@@ -60,7 +60,7 @@ def test_mahi_only_in_deep_cool_water():
         factor["param"] for factor in PROFILES[[p["id"] for p in PROFILES].index("mahi-mahi")]["factors"]
         if factor.get("active") and factor.get("weight", 0) > 0
     }
-    assert all("available" in row and "value_status" in row and "source_count" in row for row in diagnostics)
+    assert all("available" in row and "value_status" in row and "source_count" in row and "sources" in row for row in diagnostics)
     assert any(row["available"] for row in diagnostics)
 
 
