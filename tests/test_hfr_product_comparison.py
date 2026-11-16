@@ -2,7 +2,9 @@ import math
 
 import pytest
 
-from requests import HTTPError, Response\n\nfrom scripts.compare_hfr_products import PRODUCTS, _describe_request_failure, build_url, parse_csv, render_markdown, summarize
+from requests import HTTPError, Response
+
+from scripts.compare_hfr_products import PRODUCTS, _describe_request_failure, build_url, parse_csv, render_markdown, summarize
 
 
 def _csv(dataset_time="2026-11-13T04:00:00Z"):
