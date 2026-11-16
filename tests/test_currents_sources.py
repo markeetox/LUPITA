@@ -1,4 +1,8 @@
+from datetime import datetime, timedelta, timezone
+
 import numpy as np
+
+ALT_TIME = (datetime.now(timezone.utc) - timedelta(hours=1)).replace(minute=0, second=0, microsecond=0).strftime("%Y-%m-%dT%H:%M:%SZ")
 
 from pipeline.layers import load_layers
 
@@ -21,7 +25,7 @@ def csv_data(dataset, missing=False):
     else:
         header="time,latitude,longitude,ugos,vgos"; units="UTC,degrees_north,degrees_east,m s-1,m s-1"
         for la in LATS:
-            for lo in LONS: rows.append(f"2026-11-13T11:00:00Z,{la},{lo},0.1,0.4")
+            for lo in LONS: rows.append(f"{ALT_TIME},{la},{lo},0.1,0.4")
     return "\n".join([header,units,*rows])
 
 def sources():
@@ -51,7 +55,7 @@ def test_hfr_vectors_overlay_altimetry_and_report_provenance():
     assert np.isclose(layers["current_speed"][0,0],np.hypot(1.0,0.2)*1.943844)
     assert np.isclose(layers["current_speed"][1,1],np.hypot(0.1,0.4)*1.943844)
     assert layers["times"]["currents"]=="2026-11-13T12:00:00Z"
-    assert layers["times"]["stream_edge"]=="2026-11-13T11:00:00Z"
+    assert layers["times"]["stream_edge"] == ALT_TIME
 
 def test_altimetry_still_loads_when_hf_radar_fails():
     errors=[]
@@ -77,7 +81,7 @@ def test_stale_altimetry_is_not_used_to_fill_hf_radar_gaps():
             return csv_data("hfr-test", True)
         if "alt-test" in url:
             rows = csv_data("alt-test").splitlines()
-            return "\n".join(rows[:2] + [row.replace("2026-11-13T11:00:00Z", "2026-09-28T00:00:00Z") for row in rows[2:]])
+            return "\n".join(rows[:2] + [row.replace(ALT_TIME, "2026-09-28T00:00:00Z") for row in rows[2:]])
         raise AssertionError(url)
 
     layers = load_layers(sources(), [], fetch=fetch)
