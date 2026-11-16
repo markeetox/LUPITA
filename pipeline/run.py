@@ -237,8 +237,11 @@ def _evidence_diagnostics(factor: dict) -> dict:
         value = raw.strip() if isinstance(raw, str) else ""
         classification = "invalid_reference"
         if value:
-            parsed = urlsplit(value)
-            if parsed.scheme in {"http", "https"} and parsed.netloc:
+            try:
+                parsed = urlsplit(value)
+            except ValueError:
+                parsed = None
+            if parsed and parsed.scheme in {"http", "https"} and parsed.netloc:
                 classification = "generic_homepage" if parsed.path in {"", "/"} else "specific_path_reference"
             elif "://" not in value:
                 classification = "human_readable_citation"
