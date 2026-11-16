@@ -140,3 +140,18 @@ def test_placeholder_site_factor_is_not_described_as_a_measurement():
 
     assert source["kind"] == "placeholder"
     assert "Not a measured" in source["explanation"]
+
+
+
+def test_buoy_without_observation_time_has_unknown_freshness():
+    fish = {"spots": [{"factor_diagnostics": [{
+        "param": "sst_c", "available": True, "input_details": {
+            "source_type": "NDBC buoy", "station": "42001", "observed_at": None,
+        },
+    }]}]}
+
+    attach_factor_source_diagnostics(fish, {"layers": {}})
+    freshness = fish["spots"][0]["factor_diagnostics"][0]["environmental_source"]["source"]["freshness"]
+
+    assert freshness["status"] == "unknown"
+    assert freshness["age_hours"] is None
