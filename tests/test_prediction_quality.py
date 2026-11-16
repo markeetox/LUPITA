@@ -54,7 +54,7 @@ def test_single_factor_site_model_has_low_confidence_even_with_full_input_covera
     assert item["active_factor_count"] == 1
     assert item["factor_diagnostics"] == [{
         "param": "sst_c", "weight": 0.4, "available": True, "factor_score": 1.0,
-        "value_status": "unspecified", "sources": [], "source_count": 0,
+        "value_status": "unspecified", "value_notes": None, "sources": [], "source_count": 0,
         "input_tag": "measured", "input_details": {}
     }]
 
