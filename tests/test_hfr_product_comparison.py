@@ -2,7 +2,7 @@ import math
 
 import pytest
 
-from scripts.compare_hfr_products import PRODUCTS, build_url, parse_csv, render_markdown, summarize
+from requests import HTTPError, Response\n\nfrom scripts.compare_hfr_products import PRODUCTS, _describe_request_failure, build_url, parse_csv, render_markdown, summarize
 
 
 def _csv(dataset_time="2026-11-13T04:00:00Z"):
@@ -71,3 +71,21 @@ def test_markdown_report_uses_valid_code_spans_without_escape_warnings():
     markdown = render_markdown(report)
     assert "\\`" not in markdown
     assert "`2026-11-13T04:00:00Z`" in markdown
+
+
+def test_http_failure_report_includes_redirect_chain_and_response_body():
+    first = Response()
+    first.status_code = 302
+    first.url = "https://upwell.example/request"
+    first.headers["Location"] = "https://coastwatch.example/request"
+    final = Response()
+    final.status_code = 404
+    final.url = "https://coastwatch.example/request"
+    final._content = b"dataset ID not found"
+    final.history = [first]
+    error = HTTPError("404 Client Error", response=final)
+
+    detail = _describe_request_failure("https://upwell.example", error)
+    assert "302 https://upwell.example/request -> https://coastwatch.example/request" in detail
+    assert "404 https://coastwatch.example/request" in detail
+    assert "dataset ID not found" in detail
