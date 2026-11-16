@@ -54,7 +54,8 @@ def test_single_factor_site_model_has_low_confidence_even_with_full_input_covera
     assert item["active_factor_count"] == 1
     assert item["factor_diagnostics"] == [{
         "param": "sst_c", "weight": 0.4, "available": True, "factor_score": 1.0,
-        "value_status": "unspecified", "source_count": 0, "input_tag": "measured"
+        "value_status": "unspecified", "sources": [], "source_count": 0,
+        "input_tag": "measured", "input_details": {}
     }]
 
 
@@ -63,7 +64,7 @@ def test_api_v1_exposes_confidence_basis_and_input_timestamps():
             "confidence": "Low", "confidence_basis": ["limited_model_inputs"],
             "active_factor_count": 1, "data_coverage": 1.0,
             "environmental_data_coverage": 1.0,
-            "factor_diagnostics": [{"param": "sst_c", "available": True, "factor_score": 1.0}],
+            "factor_diagnostics": [{"param": "sst_c", "available": True, "factor_score": 1.0,\n                                  "environmental_source": {"kind": "observed_grid"}}],
             "coords": [-80.2, 25.3], "ring": [], "reasons": [], "location": []}
     area = api._area(spot)
     assert area["confidence_basis"] == ["limited_model_inputs"]
