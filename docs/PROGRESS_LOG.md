@@ -755,3 +755,16 @@ The 6 km product has the strongest apparent spatial availability in this snapsho
 - Do not infer that NOAA as a whole is down from this response; the inspected evidence identifies the Upwell fallback's dataset lookup failure. Need separately verify CoastWatch response and current dataset catalog availability before diagnosing root cause or changing configuration.
 - No production code, source configuration, data, prediction weights, or species biology changed during this inspection.
 - The separate HF Radar product comparison still needs a second exact common timestamp. No newer run of the manual comparison workflow was present in the inspected latest 20 workflow runs.
+
+
+## 2026-11-16 | Second HF Radar timestamp: partial report, 6 km retrieval failure
+
+- User ran the manual comparison for exact requested timestamp `2026-11-12T04:00:00Z`. Workflow [#43893775875](https://github.com/markeetox/LUPITA/actions/runs/43893775875) ended with failure because not all three products were retrieved; JSON and Markdown reports were still written and uploaded by the workflow's unconditional artifact step.
+- 1 km `ucsdHfrE1`: 0/285,069 valid paired vectors (0.000%); 0/99 fixed shared half-degree tiles.
+- 2 km `ucsdHfrE2`: 1,201/71,535 valid paired vectors (1.679%); 8/99 shared tiles. Median HDOP 0.46, median sites 2, median radials 40.
+- 6 km `ucsdHfrE6`: failed with HTTP 404 on both configured host attempts. The Upwell attempt's requests error identifies a CoastWatch final URL, consistent with a redirect; do not treat these as proven independent backend failures.
+- The script returns exit code 1 when any product is missing by design. This prevents an incomplete three-product comparison from being marked successful; the artifact remains available for partial-result inspection. No timestamp substitution occurred.
+- Compared with the November 13 sample, the 2 km valid fraction decreased from 2.293% to 1.679%; its valid-vector count changed from 1,640 to 1,201. This is descriptive and should not be interpreted as a persistent trend from two snapshots. The 1 km zero-vector result has now repeated at two timestamps. 6 km cannot be compared at the second timestamp.
+- Fixed report Markdown generation by removing unnecessary backslashes before backticks (commit `cd3fbf0`) and added a regression test (commit `dd38768`). These are formatting/test-only changes; comparison and failure semantics are unchanged.
+- No production source configuration, ingestion, data publication, prediction logic, biology, or weights changed.
+- Next: read-only investigation of current NOAA metadata and endpoint behavior for `ucsdHfrE6`; no source promotion or production edits pending evidence and explicit review.
