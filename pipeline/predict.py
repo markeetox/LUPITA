@@ -348,6 +348,7 @@ def _factor_diagnostics(profile, scored, cell):
             "available": value_score is not None,
             "factor_score": round(value_score, 4) if value_score is not None else None,
             "value_status": factor.get("value_status", "unspecified"),
+            "sources": list(factor.get("sources") or []),
             "source_count": len(factor.get("sources") or []),
         })
     return rows
