@@ -296,3 +296,11 @@ The relative-time test fixture was corrected once more in commit `afb59bc` so th
 
 
 Validation complete: Python CI [#43897319861](https://github.com/markeetox/LUPITA/actions/runs/43897319861) passed **286 tests, 0 failures, 115 warnings** on commit `afb59bc7ae6e23f48b05f3a6c700ff86dbdd5ded`; species profile audit and artifact upload succeeded. Next step remains a read-only comparison rerun to capture the 6 km endpoint redirect chain and response body.
+
+
+## HF Radar comparison paused | NOAA ERDDAP request blacklist | 2026-11-16
+
+The latest comparison [run #43935416361](https://github.com/markeetox/LUPITA/actions/runs/43935416361), at the previously successful exact timestamp `2026-11-13T04:00:00Z`, returned HTTP 403 for all three HFR products on both CoastWatch and Upwell. The response body explicitly reports that the requesting IP address is on NOAA ERDDAP's request blacklist. [Artifact 14258784849](https://github.com/markeetox/LUPITA/actions/runs/43935416361/artifacts/14258784849) confirms this across 1 km, 2 km, and 6 km.
+
+**Decision:** pause further manual comparison runs from the same GitHub-hosted runner. Do not interpret this as a dataset-specific failure or a coverage result. Do not change production HFR source selection, endpoints, or ingestion behavior. Resume only when NOAA access is restored or an approved low-rate retrieval path is available.
+
