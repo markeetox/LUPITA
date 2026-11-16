@@ -200,3 +200,17 @@ def test_missing_evidence_metadata_is_unknown_not_sourced():
     assert factor["evidence_diagnostics"]["classification"] == "unknown_or_unrecognized"
     assert factor["evidence_diagnostics"]["reference_status"] == "missing"
     assert factor["evidence_diagnostics"]["value_notes"] is None
+
+
+
+def test_malformed_evidence_url_is_classified_without_crashing():
+    fish = {"spots": [{"factor_diagnostics": [{
+        "param": "sst_c", "weight": 1.0, "available": True,
+        "value_status": "sourced", "sources": ["https://[broken"],
+    }]}]}
+
+    attach_factor_source_diagnostics(fish, {"layers": {}})
+    evidence = fish["spots"][0]["factor_diagnostics"][0]["evidence_diagnostics"]
+
+    assert evidence["reference_status"] == "invalid"
+    assert evidence["classification"] == "sourced_without_traceable_reference"
