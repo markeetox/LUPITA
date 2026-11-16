@@ -836,3 +836,16 @@ The 6 km product has the strongest apparent spatial availability in this snapsho
 - Final code/test commit `49fb892686be1675325c47b5c593610215b7513b` passed [Python CI #43944587159](https://github.com/markeetox/LUPITA/actions/runs/43944587159): **304 passed, 0 failed, 115 warnings**. Species audit and artifact upload succeeded.
 - No score, confidence, biology, weight, source-selection, ingestion, or publication behavior changed.
 - Next: build an evidence-quality summary that evaluates biological support separately from environmental freshness and data availability. Do not treat the presence of a URL as proof of support for the exact factor value.
+
+
+## 2026-11-16 | Per-prediction biological evidence diagnostics
+
+- Added `value_notes` to grid and named-site factor diagnostics so the profile's actual caveats travel with the prediction.
+- Added `evidence_diagnostics` per active factor: declared profile status, per-reference classification, reference-quality category, explanatory notes, and a warning that source presence does not establish the exact numeric claim.
+- Added `evidence_summary` per recommended spot. It aggregates configured active-factor weight independently by declared evidence status and reference quality. The values are not probabilities or calibrated scientific-quality scores.
+- Classification distinguishes declared-sourced-but-unverified, generic-homepage-only, partly sourced, provisional/estimated/unsourced/needs-source, weak factor, missing/invalid references, and unknown statuses.
+- API v1 exposes both the per-factor and per-spot evidence diagnostics.
+- No profile status or source was automatically upgraded/downgraded. No confidence cap, score, weight, range, active flag, gate, or minimum coverage changed.
+- Tests cover generic homepage vs specific reference, sourced-but-unverified vs provisional, partly sourced, missing/invalid evidence metadata, malformed URLs, active weight aggregation, and API v1 serialization.
+- Final code/test commit `d46fbcae9cbf9343d0490cb5cf05d08a0cd77dd5` passed [Python CI #43945487955](https://github.com/markeetox/LUPITA/actions/runs/43945487955): **307 passed, 0 failed, 115 warnings**. Species audit and artifact upload succeeded.
+- Next: manually review homepage-only source references and elevated-risk profiles against their exact species, life stage, region, and configured numeric claim before changing any evidence status.
