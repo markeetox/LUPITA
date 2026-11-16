@@ -224,10 +224,10 @@ def fetch_product(session: requests.Session, product: dict, timestamp: str, time
 def render_markdown(report: dict[str, Any]) -> str:
     lines = [
         "# NOAA HF Radar same-time South Florida comparison", "",
-        f"- Requested timestamp: \`{report['requested_time']}\`",
-        f"- Region: \`{REGION['lat'][0]}–{REGION['lat'][1]}°N\`, \`{abs(REGION['lon'][1])}–{abs(REGION['lon'][0])}°W\`",
-        "- Method: native-grid paired \`water_u\` + \`water_v\` validity; no interpolation or regridding.",
-        "- Quality fields: \`hdop\`, \`number_of_sites\`, \`number_of_radials\`; diagnostics only, no hard rejection thresholds.", "",
+        f"- Requested timestamp: `{report['requested_time']}`",
+        f"- Region: `{REGION['lat'][0]}–{REGION['lat'][1]}°N`, `{abs(REGION['lon'][1])}–{abs(REGION['lon'][0])}°W`",
+        "- Method: native-grid paired `water_u` + `water_v` validity; no interpolation or regridding.",
+        "- Quality fields: `hdop`, `number_of_sites`, `number_of_radials`; diagnostics only, no hard rejection thresholds.", "",
         "## Product comparison", "",
         "| Product | Nominal spacing | Representative depth | Grid cells | Returned pairs | Valid vectors | Coverage | Median HDOP | Median sites | Median radials |",
         "|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|",
@@ -257,8 +257,8 @@ def render_markdown(report: dict[str, Any]) -> str:
         "- A grid cell's presence does not prove continuous coverage between cells. Half-degree occupied-tile counts use a fixed requested-region denominator shared by all products; they expose broad clustering but are not a continuous-area estimate.",
         "- Missing or unavailable products are reported as failures; the script never silently substitutes a nearby timestamp.", "", "## Per-product detail", ""]
     for item in report["products"]:
-        lines += [f"### {item['product']['id']} (\`{item['dataset']}\`)", "",
-            f"- Source: \`{item['source_url']}\`", f"- Returned time: \`{', '.join(item['observed_times'])}\`",
+        lines += [f"### {item['product']['id']} (`{item['dataset']}`)", "",
+            f"- Source: `{item['source_url']}`", f"- Returned time: `{', '.join(item['observed_times'])}`",
             f"- Spatial tiles occupied: {item['spatial_distribution']['occupied_half_degree_tiles']} / {item['spatial_distribution']['possible_half_degree_tiles']} (shared fixed region)", ""]
     if report.get("failures"):
         lines += ["## Retrieval failures", ""] + [f"- {failure}" for failure in report["failures"]] + [""]
