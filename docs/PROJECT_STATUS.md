@@ -428,3 +428,8 @@ No species profile, source list, status, numeric range, ideal band, weight, acti
 ### Named-site SST evidence metadata updated | 2026-11-16
 
 Owner-approved source review was applied to all 20 homepage-only named-site SST profiles. Statuses: 1 `sourced` (Spanish mackerel), 11 `partly_sourced`, 5 `provisional`, and 3 `needs_source`. Profile and active-factor references now point to species-specific sources; `value_notes` document claim-fit limitations. No numeric bands, ideal intervals, weights, gates, required flags, timing, scoring, confidence behavior, ingestion, or data publication changed. See [named-site SST evidence review](NAMED_SITE_SST_EVIDENCE_REVIEW_2026-11-16.md).
+
+
+### Follow-up SST evidence review | 2026-11-16
+
+Completed a second source review for spot, weakfish, and white grunt. Each now has species-specific references and conservative `partly_sourced` evidence status with explicit caveats. Updated totals for the 20 named-site SST profiles: 1 sourced, 14 partly sourced, 5 provisional, 0 needs-source. No numeric bands, ideal intervals, weights, gates, required flags, timing, scoring, confidence behavior, ingestion, or publication changed. See [review report](NAMED_SITE_SST_EVIDENCE_REVIEW_2026-11-16.md).

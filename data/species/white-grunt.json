@@ -23,8 +23,10 @@
     "life_history": "Spawns seasonally along coastal or shelf waters.",
     "regulations_link": "https://www.fisheries.noaa.gov/",
     "sources": [
-      "https://safmc.net/species/grunt-white/",
-      "https://www.floridamuseum.ufl.edu/discover-fish/species-profiles/white-grunt/"
+      "https://www.vliz.be/imisdocs/publications/ocrd/232275.pdf",
+      "https://www.fishbase.se/Country/CountrySpeciesSummary.php?c_code=780&id=1140",
+      "https://www.floridamuseum.ufl.edu/discover-fish/species-profiles/white-grunt/",
+      "https://safmc.net/species/grunt-white/"
     ],
     "spawning": "Spawns seasonally based on water temperature and regional climate.",
     "overwintering": "Migrates to warmer or deeper waters depending on season."
@@ -43,12 +45,14 @@
       ],
       "weight": 0.35,
       "active": true,
-      "value_status": "needs_source",
-      "value_notes": "Needs source for the configured numeric SST band. SAFMC and Florida Museum describe warm-temperate/tropical reef habitat and species ecology, but the reviewed references do not establish a numeric adult thermal preference or validate the configured 22–29°C ideal interval.",
+      "value_status": "partly_sourced",
+      "value_notes": "Partly sourced. The U.S. Fish and Wildlife Service's 1978 Mid-Atlantic Bight atlas records adult white grunt at 15–33.6°C, with occasional records in 35°C water but notes fish do not remain long at that extreme; it also describes Florida reef/flat habitat at roughly 6–24 m. This is a broad recorded occurrence range, not a preferred SST band. FishBase reports a model-derived preferred-temperature estimate of 23.4–28°C (mean 25.9°C; 342 spatial cells), which overlaps the configured 22–29°C ideal interval, but it is a distribution/model association rather than a controlled physiological preference or local South Florida catch-response curve. Florida Museum and SAFMC provide species/habitat context but no independent numeric optimum.",
       "reason_template": "Water is {value} C, within the preferred thermal range for White grunt.",
       "sources": [
-        "https://safmc.net/species/grunt-white/",
-        "https://www.floridamuseum.ufl.edu/discover-fish/species-profiles/white-grunt/"
+        "https://www.vliz.be/imisdocs/publications/ocrd/232275.pdf",
+        "https://www.fishbase.se/Country/CountrySpeciesSummary.php?c_code=780&id=1140",
+        "https://www.floridamuseum.ufl.edu/discover-fish/species-profiles/white-grunt/",
+        "https://safmc.net/species/grunt-white/"
       ],
       "gate": true,
       "required": true

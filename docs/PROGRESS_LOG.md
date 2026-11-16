@@ -865,3 +865,8 @@ The 6 km product has the strongest apparent spatial availability in this snapsho
 ## Owner-approved named-site SST evidence metadata update | 2026-11-16
 
 Applied the source-by-source review to all 20 named-site SST profiles. Replaced generic NOAA homepage references in each profile-level and active `sst_c` source list with species-specific references, assigned conservative evidence statuses, and rewrote factor `value_notes` to state exactly what the evidence supports and where it does not transfer. Final classification: 1 sourced, 11 partly sourced, 5 provisional, 3 needs-source. No numeric values, model structure, weights, gates, required flags, timing, scoring, confidence behavior, ingestion, or data publication changed. See [review report](NAMED_SITE_SST_EVIDENCE_REVIEW_2026-11-16.md).
+
+
+## Follow-up review of spot, weakfish, and white grunt | 2026-11-16
+
+Found species-specific evidence for all three previously needs-source named-site SST profiles and applied conservative metadata updates. All three are now `partly_sourced`, not `sourced`: spot has Mississippi bottom-temperature/catch evidence but conflicting South Florida distribution references; weakfish has ASMFC occurrence/migration evidence but southern Florida hybridization/identity concerns; white grunt has adult occurrence temperatures and a FishBase model-derived preferred-temperature estimate. Updated overall 20-profile totals: 1 sourced, 14 partly sourced, 5 provisional, 0 needs-source. Numeric settings and all prediction behavior remain unchanged. Details and references: [evidence review](NAMED_SITE_SST_EVIDENCE_REVIEW_2026-11-16.md).

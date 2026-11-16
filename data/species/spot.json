@@ -21,9 +21,11 @@
     "life_history": "Spawns seasonally along coastal or shelf waters.",
     "regulations_link": "https://www.fisheries.noaa.gov/",
     "sources": [
-      "https://www.epa.gov/sites/default/files/2020-08/documents/uaa-vol123.pdf",
+      "https://repository.library.noaa.gov/view/noaa/5876/noaa_5876_DS1.pdf",
+      "https://aquila.usm.edu/gcr/vol4/iss1/1/",
       "https://asmfc.org/species/spot/",
-      "https://www.fishbase.se/Fieldguide/FieldGuideSummary.php?c_code=840&genusname=Leiostomus&speciesname=xanthurus"
+      "https://www.floridamuseum.ufl.edu/discover-fish/florida-fishes-gallery/spot/",
+      "https://nas.er.usgs.gov/queries/factsheet.aspx?SpeciesID=953"
     ],
     "spawning": "Spawns seasonally based on water temperature and regional climate.",
     "overwintering": "Migrates to warmer or deeper waters depending on season."
@@ -42,13 +44,15 @@
       ],
       "weight": 0.35,
       "active": true,
-      "value_status": "needs_source",
-      "value_notes": "Needs source for the configured numeric SST band. Reviewed life-history sources describe seasonal movement as temperatures change but do not establish a numeric thermal preference or validate the 16–26°C ideal interval. FishBase also notes spot are absent from southern Florida, raising a geographic applicability concern for these named sites.",
+      "value_status": "partly_sourced",
+      "value_notes": "Partly sourced for broad occurrence and a regional bottom-temperature association, not for a locally calibrated SST suitability curve. A 1967–1969 offshore Mississippi study recorded 6,457 spot, observed specimens at bottom temperatures of about 14.1–29.5°C, and reported greatest apparent temperature preference/catch association around 19.0–21.9°C. This is useful evidence that overlaps the configured 16–26°C ideal interval, but it is old, offshore, Mississippi-specific, and based on bottom rather than surface temperature. NOAA's southeastern U.S. coastal survey and the Florida Museum collection profile document a broader Florida distribution, including South Florida, while USGS/FishBase summaries repeat an older statement that spot are absent from southern Florida. Treat southern Florida site applicability as uncertain and verify local occurrence before relying on this factor.",
       "reason_template": "Water is {value} C, within the preferred thermal range for Spot.",
       "sources": [
-        "https://www.epa.gov/sites/default/files/2020-08/documents/uaa-vol123.pdf",
+        "https://repository.library.noaa.gov/view/noaa/5876/noaa_5876_DS1.pdf",
+        "https://aquila.usm.edu/gcr/vol4/iss1/1/",
         "https://asmfc.org/species/spot/",
-        "https://www.fishbase.se/Fieldguide/FieldGuideSummary.php?c_code=840&genusname=Leiostomus&speciesname=xanthurus"
+        "https://www.floridamuseum.ufl.edu/discover-fish/florida-fishes-gallery/spot/",
+        "https://nas.er.usgs.gov/queries/factsheet.aspx?SpeciesID=953"
       ],
       "gate": true,
       "required": true

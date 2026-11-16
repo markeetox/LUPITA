@@ -24,8 +24,9 @@
     "life_history": "Spawns seasonally along coastal or shelf waters.",
     "regulations_link": "https://www.fisheries.noaa.gov/",
     "sources": [
-      "https://www.epa.gov/sites/default/files/2020-08/documents/uaa-vol123.pdf",
-      "https://repository.library.noaa.gov/view/noaa/3488/noaa_3488_DS1.pdf"
+      "https://asmfc.org/wp-content/uploads/2025/01/2016WeakfishStockAssessment_PeerReviewReport_May2016.pdf",
+      "https://repository.library.noaa.gov/view/noaa/33312/noaa_33312_DS1.pdf",
+      "https://www.vims.edu/research/units/programs/multispecies_fisheries_research/speciesofinterest/weakfish.php"
     ],
     "spawning": "Spawns seasonally based on water temperature and regional climate.",
     "overwintering": "Migrates to warmer or deeper waters depending on season."
@@ -44,12 +45,13 @@
       ],
       "weight": 0.35,
       "active": true,
-      "value_status": "needs_source",
-      "value_notes": "Needs source for the configured numeric SST band. Reviewed EPA life-history material describes seasonal movement and habitat but does not provide a numeric thermal preference; the NOAA Newark Bay survey provides environmental observations, not a species-specific temperature-preference curve. The configured 16–24°C ideal interval remains unsupported.",
+      "value_status": "partly_sourced",
+      "value_notes": "Partly sourced. The 2016 ASMFC benchmark assessment reports weakfish in shallow marine/estuarine waters at about 17–26.5°C and describes seasonal migration associated with the 16–24°C isotherms; this overlaps the configured 16–24°C ideal interval but describes observed habitat and migration, not a validated thermal optimum. A NOAA technical report describes a small adult aquarium study acclimated at 19–20°C; gradual warming toward 29°C initially increased activity consistent with avoidance, followed by acclimation. That experiment does not establish 29°C as preferred. Geographic identity is a major caveat: ASMFC documents Florida Atlantic Coast hybridization with sand seatrout and reports pure weakfish are rare southward; VIMS describes Florida occurrence as uncommon. Do not interpret this broad coastal evidence as a South Florida local abundance or catch curve.",
       "reason_template": "Water is {value} C, within the preferred thermal range for Weakfish.",
       "sources": [
-        "https://www.epa.gov/sites/default/files/2020-08/documents/uaa-vol123.pdf",
-        "https://repository.library.noaa.gov/view/noaa/3488/noaa_3488_DS1.pdf"
+        "https://asmfc.org/wp-content/uploads/2025/01/2016WeakfishStockAssessment_PeerReviewReport_May2016.pdf",
+        "https://repository.library.noaa.gov/view/noaa/33312/noaa_33312_DS1.pdf",
+        "https://www.vims.edu/research/units/programs/multispecies_fisheries_research/speciesofinterest/weakfish.php"
       ],
       "gate": true,
       "required": true
