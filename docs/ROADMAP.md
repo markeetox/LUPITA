@@ -322,3 +322,16 @@ Completed regression coverage for grid/site missing-data semantics and active pr
 **Boundaries preserved:** no scores, confidence labels, biological assumptions, weights, source selection, missing-data semantics, ingestion, or data publication changed. NOAA ERDDAP HFR comparison remains paused due to the runner IP blacklist.
 
 **Next milestone: evidence-quality summary.** Build a transparent per-factor classification from the actual profile evidence metadata and references. It must distinguish specific, relevant support from generic/homepage citations, provisional assumptions, and unsupported factors. It must not infer scientific support from URL count, and it must remain separate from source freshness and environmental coverage. Keep score/confidence behavior unchanged.
+
+
+## Per-prediction biological evidence diagnostics | 2026-11-16
+
+**Completed:** predictions now expose per-factor `evidence_diagnostics` and per-spot `evidence_summary`. Declared status and reference quality are separate. Specific citations with a `sourced` declaration are still labeled unverified; homepage-only references do not masquerade as species-specific evidence. Factor notes and per-reference classifications are retained through API v1.
+
+The summary aggregates configured active-factor weight by evidence status and reference quality. It is diagnostic only, not a probability or calibrated scientific-quality score. The proposed confidence policy remains inactive.
+
+**Validation:** [Python CI #43945487955](https://github.com/markeetox/LUPITA/actions/runs/43945487955) passed **307 tests, 0 failures, 115 warnings**. Species audit and artifact upload succeeded.
+
+**Boundaries preserved:** no score, confidence, species status, numeric band, weight, active flag, gate, minimum coverage, source selection, ingestion, or publication behavior changed.
+
+**Next milestone: source-by-source biological evidence review.** Prioritize the 20 homepage-only named-site SST references and the 12 profiles with elevated active evidence risk. Verify whether each citation actually supports the configured claim for the relevant species, population, life stage, region, and numeric range. Only then decide whether to replace a reference, keep a factor provisional/partly sourced, mark it weak, or leave it as needs-source.
