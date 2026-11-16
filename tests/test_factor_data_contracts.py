@@ -4,6 +4,8 @@ The goal is to catch drift between the species catalog, factor dispatch, and lay
 This test inspects layer availability using deterministic fake source responses; it makes no network calls.
 """
 import json
+
+import numpy as np
 from pathlib import Path
 
 from pipeline.layers import load_layers
@@ -41,7 +43,7 @@ def test_every_active_grid_factor_has_engine_dispatch_and_layer_input():
 
         # Exercise the real grid scorer with a deterministic synthetic value,
         # independently of whether today's optional source layer is populated.
-        synthetic = {"sst_c": __import__("numpy").full((5, 5), 25.0),
+        synthetic = {"sst_c": np.full((5, 5), 25.0),
                      "depth_m": __import__("numpy").full((5, 5), 100.0),
                      "month": 6}
         if kind == "season":
