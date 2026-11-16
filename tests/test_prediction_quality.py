@@ -66,6 +66,7 @@ def test_api_v1_exposes_confidence_basis_and_input_timestamps():
             "environmental_data_coverage": 1.0,
             "factor_diagnostics": [{"param": "sst_c", "available": True, "factor_score": 1.0,
                                   "environmental_source": {"kind": "observed_grid"}}],
+            "evidence_summary": {"active_factor_weight": 1.0},
             "coords": [-80.2, 25.3], "ring": [], "reasons": [], "location": []}
     area = api._area(spot)
     assert area["confidence_basis"] == ["limited_model_inputs"]
