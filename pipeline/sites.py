@@ -159,6 +159,7 @@ def score_site(profile, site, ctx, reg):
         factor_diagnostics.append({"param": f["param"], "weight": float(f["weight"]),
                                    "available": True, "factor_score": round(float(s), 4),
                                    "value_status": f.get("value_status", "unspecified"),
+                                   "value_notes": f.get("value_notes"),
                                    "sources": list(f.get("sources") or []),
                                    "source_count": len(f.get("sources") or []), "input_tag": res[1],
                                    "input_details": {k: v for k, v in (res[2] or {}).items() if k != "text"}})
@@ -186,6 +187,7 @@ def score_site(profile, site, ctx, reg):
         factor_diagnostics.append({"param": f["param"], "weight": float(f["weight"]),
                                    "available": False, "factor_score": None,
                                    "value_status": f.get("value_status", "unspecified"),
+                                   "value_notes": f.get("value_notes"),
                                    "sources": list(f.get("sources") or []),
                                    "source_count": len(f.get("sources") or []), "input_tag": None, "input_details": {}})
     return {"score": sum(f["weight"] * s for f, v, s, *_ in got) / avail, "coverage": avail / total,
