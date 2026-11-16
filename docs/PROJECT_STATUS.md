@@ -339,3 +339,10 @@ The diagnostic intentionally exits nonzero unless all three products are retriev
 The report generator's invalid Python escape sequences before Markdown backticks were cleaned up in commit `cd3fbf0`, with a regression test in `dd38768`. This removes noisy SyntaxWarnings; it does not change retrieval, comparison, or exit behavior. Production HFR configuration, Pull Ocean Data, data publication, predictions, biology, and scoring remain unchanged.
 
 **Next:** investigate the 6 km dataset ID and endpoint metadata using read-only checks; separately determine whether the 404 is a removed dataset, stale catalog, redirect/backend issue, or endpoint-specific behavior. Do not change production source selection until this is established.
+
+
+### NOAA metadata clarification | 2026-11-16
+
+A live read-only inspection of the [Upwell 6 km dataset form](https://upwell.pfeg.noaa.gov/erddap/griddap/ucsdHfrE6.html) clarifies the November 12 HTTP 404: the dataset ID `ucsdHfrE6` still exists on Upwell, but its current time-axis metadata ends at `2026-11-10T08:00:00Z` (time-axis `actual_range` 1786395600-1794297600 seconds since 1970-01-01). The requested `2026-11-12T04:00:00Z` is outside the published 6 km time range. The Upwell page identifies the expected variables and confirms 6 km grid spacing; its metadata says last dataset creation was 2026-11-10 09:00Z. Therefore the November 12 404 is consistent with an out-of-range timestamp, not evidence that the dataset ID was removed. A successful bounded CSV retrieval at an in-range time has not yet been confirmed.
+
+The 1 km Upwell metadata currently reports a time-axis end of 2026-11-14 21:00Z. The 2 km HTML metadata snapshot is stale, so use actual successful bounded retrievals rather than that cached time range. Next comparison candidate: `2026-11-10T04:00:00Z`, which is within the 6 km published time range and earlier than its endpoint. Confirm all three products return that exact time before interpreting it as a valid three-way comparison. Production source selection remains unchanged.
