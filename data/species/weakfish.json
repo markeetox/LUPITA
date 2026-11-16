@@ -24,7 +24,8 @@
     "life_history": "Spawns seasonally along coastal or shelf waters.",
     "regulations_link": "https://www.fisheries.noaa.gov/",
     "sources": [
-      "https://www.fisheries.noaa.gov/"
+      "https://www.epa.gov/sites/default/files/2020-08/documents/uaa-vol123.pdf",
+      "https://repository.library.noaa.gov/view/noaa/3488/noaa_3488_DS1.pdf"
     ],
     "spawning": "Spawns seasonally based on water temperature and regional climate.",
     "overwintering": "Migrates to warmer or deeper waters depending on season."
@@ -34,20 +35,21 @@
       "param": "sst_c",
       "kind": "range",
       "range": [
-        10.0,
-        28.0
+        10,
+        28
       ],
       "ideal": [
-        16.0,
-        24.0
+        16,
+        24
       ],
       "weight": 0.35,
       "active": true,
-      "value_status": "sourced",
-      "value_notes": "NOAA oceanographic temperature profile for Weakfish.",
+      "value_status": "needs_source",
+      "value_notes": "Needs source for the configured numeric SST band. Reviewed EPA life-history material describes seasonal movement and habitat but does not provide a numeric thermal preference; the NOAA Newark Bay survey provides environmental observations, not a species-specific temperature-preference curve. The configured 16–24°C ideal interval remains unsupported.",
       "reason_template": "Water is {value} C, within the preferred thermal range for Weakfish.",
       "sources": [
-        "https://www.fisheries.noaa.gov/"
+        "https://www.epa.gov/sites/default/files/2020-08/documents/uaa-vol123.pdf",
+        "https://repository.library.noaa.gov/view/noaa/3488/noaa_3488_DS1.pdf"
       ],
       "gate": true,
       "required": true
@@ -77,7 +79,7 @@
     },
     "light": {
       "map": {
-        "dusk": 1.0,
+        "dusk": 1,
         "night": 0.8,
         "dawn": 0.9,
         "day": 0.6
@@ -91,7 +93,7 @@
     },
     "tide": {
       "map": {
-        "falling": 1.0,
+        "falling": 1,
         "slack_low": 0.6,
         "rising": 0.7,
         "slack_high": 0.5
@@ -117,8 +119,8 @@
     }
   },
   "lat_range": [
-    28.0,
-    42.0
+    28,
+    42
   ],
   "regulations": {
     "summary": "Regulated species - See MyFWC/NOAA guidelines",
@@ -131,7 +133,7 @@
     "source_url": "https://myfwc.com/fishing/saltwater/recreational/"
   },
   "lon_range": [
-    -100.0,
-    -50.0
+    -100,
+    -50
   ]
 }

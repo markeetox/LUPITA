@@ -23,7 +23,9 @@
     "life_history": "Spawns seasonally along coastal or shelf waters.",
     "regulations_link": "https://www.fisheries.noaa.gov/",
     "sources": [
-      "https://www.fisheries.noaa.gov/"
+      "https://www.fisheries.noaa.gov/species/summer-flounder/science",
+      "https://animaldiversity.org/accounts/Paralichthys_dentatus/",
+      "https://repository.library.noaa.gov/view/noaa/3149/noaa_3149_DS1.pdf"
     ],
     "spawning": "Spawns seasonally based on water temperature and regional climate.",
     "overwintering": "Migrates to warmer or deeper waters depending on season."
@@ -33,20 +35,22 @@
       "param": "sst_c",
       "kind": "range",
       "range": [
-        8.0,
-        26.0
+        8,
+        26
       ],
       "ideal": [
-        14.0,
-        22.0
+        14,
+        22
       ],
       "weight": 0.35,
       "active": true,
-      "value_status": "sourced",
-      "value_notes": "NOAA oceanographic temperature profile for Summer flounder.",
+      "value_status": "partly_sourced",
+      "value_notes": "Partly sourced for seasonal occupancy, not preference. NOAA describes temperature-associated inshore/offshore migration; a species synthesis reports inshore occurrence around 9–27°C and offshore winter occurrence around 4–13°C. These seasonal observations do not validate the configured 14–22°C ideal interval as a general preference or local catch curve.",
       "reason_template": "Water is {value} C, within the preferred thermal range for Summer flounder.",
       "sources": [
-        "https://www.fisheries.noaa.gov/"
+        "https://www.fisheries.noaa.gov/species/summer-flounder/science",
+        "https://animaldiversity.org/accounts/Paralichthys_dentatus/",
+        "https://repository.library.noaa.gov/view/noaa/3149/noaa_3149_DS1.pdf"
       ],
       "gate": true,
       "required": true
@@ -76,7 +80,7 @@
     },
     "light": {
       "map": {
-        "dusk": 1.0,
+        "dusk": 1,
         "night": 0.8,
         "dawn": 0.9,
         "day": 0.6
@@ -90,7 +94,7 @@
     },
     "tide": {
       "map": {
-        "falling": 1.0,
+        "falling": 1,
         "slack_low": 0.6,
         "rising": 0.7,
         "slack_high": 0.5
@@ -116,8 +120,8 @@
     }
   },
   "lat_range": [
-    30.0,
-    44.0
+    30,
+    44
   ],
   "regulations": {
     "summary": "Regulated species - See MyFWC/NOAA guidelines",
@@ -130,7 +134,7 @@
     "source_url": "https://myfwc.com/fishing/saltwater/recreational/"
   },
   "lon_range": [
-    -100.0,
-    -50.0
+    -100,
+    -50
   ]
 }

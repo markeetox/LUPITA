@@ -23,7 +23,7 @@
     "life_history": "Spawns seasonally along coastal or shelf waters.",
     "regulations_link": "https://www.fisheries.noaa.gov/",
     "sources": [
-      "https://www.fisheries.noaa.gov/"
+      "https://www.mass.gov/info-details/learn-about-tautog"
     ],
     "spawning": "Spawns seasonally based on water temperature and regional climate.",
     "overwintering": "Migrates to warmer or deeper waters depending on season."
@@ -33,20 +33,20 @@
       "param": "sst_c",
       "kind": "range",
       "range": [
-        6.0,
-        24.0
+        6,
+        24
       ],
       "ideal": [
-        10.0,
-        18.0
+        10,
+        18
       ],
       "weight": 0.35,
       "active": true,
-      "value_status": "sourced",
-      "value_notes": "NOAA oceanographic temperature profile for Tautog.",
+      "value_status": "provisional",
+      "value_notes": "Provisional. Massachusetts DMF describes inshore/offshore migration cues near 8.9°C and 11.1°C; these are seasonal movement thresholds, not a preferred or optimal thermal range. Tautog abundance is strongly northern, and this source does not validate the configured SST band for South Florida named sites.",
       "reason_template": "Water is {value} C, within the preferred thermal range for Tautog.",
       "sources": [
-        "https://www.fisheries.noaa.gov/"
+        "https://www.mass.gov/info-details/learn-about-tautog"
       ],
       "gate": true,
       "required": true
@@ -76,7 +76,7 @@
     },
     "light": {
       "map": {
-        "dusk": 1.0,
+        "dusk": 1,
         "night": 0.8,
         "dawn": 0.9,
         "day": 0.6
@@ -90,7 +90,7 @@
     },
     "tide": {
       "map": {
-        "falling": 1.0,
+        "falling": 1,
         "slack_low": 0.6,
         "rising": 0.7,
         "slack_high": 0.5
@@ -116,8 +116,8 @@
     }
   },
   "lat_range": [
-    35.0,
-    44.0
+    35,
+    44
   ],
   "regulations": {
     "summary": "Regulated species - See MyFWC/NOAA guidelines",
@@ -130,7 +130,7 @@
     "source_url": "https://myfwc.com/fishing/saltwater/recreational/"
   },
   "lon_range": [
-    -100.0,
-    -50.0
+    -100,
+    -50
   ]
 }
