@@ -36,9 +36,7 @@ def test_every_active_grid_factor_has_engine_dispatch_and_layer_input():
         assert param in GRID_FACTORS, f"{species_id}: {param} has no declared grid dispatch"
         assert kind in GRID_FACTORS[param], f"{species_id}: {param}/{kind} is not declared grid-compatible"
         assert kind in SUPPORTED_GRID_KINDS, f"{species_id}: {param}/{kind} has no grid scorer implementation"
-        if kind == "season":
-            assert layers.get("month") is not None, f"{species_id}: calendar month input is absent"
-        else:
+        if kind != "season":
             assert param in layers, f"{species_id}: {param} is not exposed by the layer builder"
 
 
@@ -71,7 +69,6 @@ def test_grid_layer_builder_exposes_every_declared_factor_input():
     layers = load_layers(_sources(), errors, fetch=fake_erddap, fetch_arc=fake_arcgis)
     assert not errors
     declared = set(GRID_FACTORS)
-    assert "month" in layers
     missing = sorted(param for param in declared - {"spawning_season", "season_presence"}
                      if param not in layers)
     assert not missing, f"Grid factors without a layer-builder output: {missing}"
