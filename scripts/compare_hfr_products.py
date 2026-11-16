@@ -208,6 +208,22 @@ def summarize(grid: Grid) -> dict[str, Any]:
     }
 
 
+def _describe_request_failure(base: str, exc: requests.RequestException | ValueError) -> str:
+    """Retain redirect and server-response details needed to diagnose ERDDAP failures."""
+    response = getattr(exc, "response", None)
+    if response is None:
+        return f"{base}: {exc}"
+    route = [
+        f"{item.status_code} {item.url} -> {item.headers.get('Location', '')}"
+        for item in [*response.history, response]
+    ]
+    body = " ".join((response.text or "").split())[:400]
+    return (
+        f"{base}: {exc}; response_route={' | '.join(route)}; "
+        f"response_body={body!r}"
+    )
+
+
 def fetch_product(session: requests.Session, product: dict, timestamp: str, timeout: int) -> Grid:
     failures = []
     for base in BASES:
@@ -217,7 +233,7 @@ def fetch_product(session: requests.Session, product: dict, timestamp: str, time
             response.raise_for_status()
             return parse_csv(response.text, product, timestamp, url)
         except (requests.RequestException, ValueError) as exc:
-            failures.append(f"{base}: {exc}")
+            failures.append(_describe_request_failure(base, exc))
     raise RuntimeError(f"{product['id']} ({product['dataset']}) failed on all ERDDAP hosts: " + " | ".join(failures))
 
 
