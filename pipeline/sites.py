@@ -34,7 +34,7 @@ def sst_value(site, ctx):
                 best = (d, b)
     if best:
         d, b = best
-        return b["water_temp_c"], "measured", {"text": f"{b['water_temp_c']:.1f} C ({b.get('name') or b['station']} buoy, {d:.0f} km away)"}
+        return b["water_temp_c"], "measured", {"text": f"{b['water_temp_c']:.1f} C ({b.get('name') or b['station']} buoy, {d:.0f} km away)", "source_type": "NDBC buoy", "station": b.get("station"), "station_name": b.get("name"), "observed_at": b.get("time_utc"), "distance_km": round(d, 2)}
     L = ctx["layers"]
     if L.get("sst_c") is not None:
         lats, lons, g = L["lats"], L["lons"], L["sst_c"]
@@ -48,7 +48,7 @@ def sst_value(site, ctx):
                         cand.append((d, float(g[i, j])))
         if cand:
             d, v = min(cand)
-            return v, "modeled", {"text": f"{v:.1f} C (satellite, {d:.0f} km away)"}
+            return v, "modeled", {"text": f"{v:.1f} C (satellite, {d:.0f} km away)", "source_type": "satellite SST grid", "dataset": L.get("datasets", {}).get("sst"), "observed_at": L.get("times", {}).get("sst"), "distance_km": round(d, 2)}
     return None
 
 
@@ -155,7 +155,9 @@ def score_site(profile, site, ctx, reg):
         factor_diagnostics.append({"param": f["param"], "weight": float(f["weight"]),
                                    "available": True, "factor_score": round(float(s), 4),
                                    "value_status": f.get("value_status", "unspecified"),
-                                   "source_count": len(f.get("sources") or []), "input_tag": res[1]})
+                                   "sources": list(f.get("sources") or []),
+                                   "source_count": len(f.get("sources") or []), "input_tag": res[1],
+                                   "input_details": {k: v for k, v in (res[2] or {}).items() if k != "text"}})
     avail = sum(f["weight"] for f, *_ in got)
     if not avail:
         return None
@@ -180,7 +182,8 @@ def score_site(profile, site, ctx, reg):
         factor_diagnostics.append({"param": f["param"], "weight": float(f["weight"]),
                                    "available": False, "factor_score": None,
                                    "value_status": f.get("value_status", "unspecified"),
-                                   "source_count": len(f.get("sources") or []), "input_tag": None})
+                                   "sources": list(f.get("sources") or []),
+                                   "source_count": len(f.get("sources") or []), "input_tag": None, "input_details": {}})
     return {"score": sum(f["weight"] * s for f, v, s, *_ in got) / avail, "coverage": avail / total,
             "active_factor_count": len(active), "evaluated_factor_count": len(got),
             "factor_diagnostics": factor_diagnostics,
