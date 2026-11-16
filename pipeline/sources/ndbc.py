@@ -74,6 +74,7 @@ def summarize(station: dict, rows: list[dict]) -> dict:
 
     wtmp, t_w = _latest(rows, "WTMP")
     out["water_temp_c"] = wtmp
+    out["water_temp_time_utc"] = t_w.isoformat() if t_w else None
     out["air_temp_c"], _ = _latest(rows, "ATMP")
     wspd, _ = _latest(rows, "WSPD")
     gst, _ = _latest(rows, "GST")
