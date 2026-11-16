@@ -386,3 +386,16 @@ Completed a static end-to-end review of grid/site factor dispatch, source/layer 
 ## Runtime model/data contract tests | 2026-11-16
 
 Added regression coverage for grid/site missing-data semantics and catalog-to-runtime factor contracts. Tests exercise actual grid/site factor scoring with deterministic synthetic values and validate layer-builder keys using fake NOAA/FWC fixtures. Seasonal month context is injected by `build_fish_json`, so tests check it at the prediction boundary rather than expecting it from `load_layers`. Final commit `909fad3` passed Python CI, species-profile audit, and artifact upload: [run #43941668108](https://github.com/markeetox/LUPITA/actions/runs/43941668108). No production behavior, scoring, biology, weights, source configuration, ingestion, or publication changed.
+
+
+## Prediction-level source lineage diagnostics | 2026-11-16
+
+Added factor-level environmental source lineage to every generated prediction. Each active factor now reports source kind, location-level availability, mapped layer status, dataset/observation metadata, freshness where configured, and the species profile's evidence references. The mapping is regression-tested against every active factor in the species catalog. API v1 passes the extended diagnostics through unchanged.
+
+Grid and named-site models are both covered. Named-site SST records the actual NDBC water-temperature observation time; tide diagnostics include station and prediction event times. Static layers remain static rather than receiving fake ages. HF Radar/altimetry and primary/gap-filled chlorophyll are explicitly reported as composite or multi-source where cell-level source attribution is not retained. NDBC freshness remains unconfigured, and tide retrieval freshness remains not assessed.
+
+Validation: [Python CI #43944587159](https://github.com/markeetox/LUPITA/actions/runs/43944587159) passed **304 tests, 0 failures, 115 warnings**; species profile audit and artifact upload succeeded.
+
+No prediction scores, confidence labels, biology, weights, source selection, missing-data behavior, ingestion, or publication logic changed.
+
+**Next:** implement a separate evidence-quality summary. It must assess the strength and specificity of biological support, not merely count URLs or conflate source freshness with evidence quality. HFR comparison remains paused while NOAA ERDDAP blocks the comparison runner.
