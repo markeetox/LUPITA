@@ -155,3 +155,48 @@ def test_buoy_without_observation_time_has_unknown_freshness():
 
     assert freshness["status"] == "unknown"
     assert freshness["age_hours"] is None
+
+
+
+def test_evidence_diagnostics_separate_declared_status_from_reference_quality():
+    fish = {"spots": [{"factor_diagnostics": [
+        {"param": "sst_c", "weight": 0.4, "available": True, "value_status": "sourced",
+         "sources": ["https://myfwc.com/"], "value_notes": "Generic homepage only."},
+        {"param": "sst_gradient", "weight": 0.3, "available": True, "value_status": "provisional",
+         "sources": ["https://example.org/study/thermal-ecology"], "value_notes": "Numeric threshold needs calibration."},
+        {"param": "chlorophyll", "weight": 0.2, "available": False, "value_status": "partly_sourced",
+         "sources": ["https://doi.org/10.1234/example"], "value_notes": "Partial species support."},
+        {"param": "depth_m", "weight": 0.1, "available": True, "value_status": "sourced",
+         "sources": ["https://www.fisheries.noaa.gov/species/example"], "value_notes": "Specific page; numeric claim unverified."},
+    ]}]}
+
+    attach_factor_source_diagnostics(fish, {"layers": {}})
+    factors = {row["param"]: row for row in fish["spots"][0]["factor_diagnostics"]}
+    summary = fish["spots"][0]["evidence_summary"]
+
+    assert factors["sst_c"]["evidence_diagnostics"]["classification"] == "generic_reference_only"
+    assert factors["sst_c"]["evidence_diagnostics"]["reference_status"] == "homepage_only"
+    assert factors["sst_gradient"]["evidence_diagnostics"]["classification"] == "provisional_or_unvalidated"
+    assert factors["chlorophyll"]["evidence_diagnostics"]["classification"] == "partly_sourced"
+    assert factors["depth_m"]["evidence_diagnostics"]["classification"] == "declared_sourced_unverified"
+    assert summary["active_factor_weight"] == 1.0
+    assert summary["declared_status_weight"]["sourced"] == 0.5
+    assert summary["declared_status_weight"]["provisional"] == 0.3
+    assert summary["declared_status_weight"]["partly_sourced"] == 0.2
+    assert summary["reference_quality_weight"]["homepage_only"] == 0.4
+    assert summary["reference_quality_weight"]["specific_reference_present"] == 0.6
+    assert "not probabilities" in summary["interpretation"]
+
+
+def test_missing_evidence_metadata_is_unknown_not_sourced():
+    fish = {"spots": [{"factor_diagnostics": [{
+        "param": "sst_c", "weight": 1.0, "available": True, "sources": [],
+    }]}]}
+
+    attach_factor_source_diagnostics(fish, {"layers": {}})
+    factor = fish["spots"][0]["factor_diagnostics"][0]
+
+    assert factor["evidence_diagnostics"]["declared_status"] == "unspecified"
+    assert factor["evidence_diagnostics"]["classification"] == "unknown_or_unrecognized"
+    assert factor["evidence_diagnostics"]["reference_status"] == "missing"
+    assert factor["evidence_diagnostics"]["value_notes"] is None
