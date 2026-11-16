@@ -34,7 +34,7 @@ def sst_value(site, ctx):
                 best = (d, b)
     if best:
         d, b = best
-        return b["water_temp_c"], "measured", {"text": f"{b['water_temp_c']:.1f} C ({b.get('name') or b['station']} buoy, {d:.0f} km away)", "source_type": "NDBC buoy", "station": b.get("station"), "station_name": b.get("name"), "observed_at": b.get("time_utc"), "distance_km": round(d, 2)}
+        return b["water_temp_c"], "measured", {"text": f"{b['water_temp_c']:.1f} C ({b.get('name') or b['station']} buoy, {d:.0f} km away)", "source_type": "NDBC buoy", "station": b.get("station"), "station_name": b.get("name"), "observed_at": b.get("water_temp_time_utc") or b.get("time_utc"), "distance_km": round(d, 2)}
     L = ctx["layers"]
     if L.get("sst_c") is not None:
         lats, lons, g = L["lats"], L["lons"], L["sst_c"]
