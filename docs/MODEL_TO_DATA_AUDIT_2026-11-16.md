@@ -93,3 +93,9 @@ The previously executed 130-profile audit remains the catalog baseline, not a ne
 `config/sources.json`, `pipeline/layers.py`, `pipeline/scoring.py`, `pipeline/sites.py`, `pipeline/derive.py`, `pipeline/currents.py`, `pipeline/structure.py`, `pipeline/predict.py`, `pipeline/species_validator.py`, `docs/SITE_MODEL_TRIAGE_2026-11-15.md`, `docs/SPECIES_CATALOG_AUDIT_2026-11-14.md`, and `tests/test_species_validator.py`.
 
 **Conclusion:** the next safe engineering step is tests and diagnostics around existing contracts, not more active factors or changed biological weights. No external NOAA access was attempted during this audit.
+
+## 6. Runtime contract tests added
+
+Added `tests/test_model_data_contracts.py` to lock down the existing grid/site missing, required, gate, coverage, and normalization behavior. Added `tests/test_factor_data_contracts.py` to compare all active species factors against grid/site dispatch maps, exercise the actual grid and site factor scorers with deterministic synthetic inputs, and verify the grid layer builder exposes every declared non-calendar factor input using fake NOAA/FWC responses. Seasonal month context is correctly tested at the prediction/scoring boundary because `build_fish_json` injects it; it is not a raw layer-loader output.
+
+The final test run for commit `909fad31b635b3a0c65a3256fdfcd7203d526f45` completed successfully, including the species profile audit and artifact upload: [Python tests run #43941668108](https://github.com/markeetox/LUPITA/actions/runs/43941668108). An earlier successful run on the same test set before the open-ended range fixture hardening reported **294 passed, 115 warnings**. No production code or model behavior was changed.
