@@ -85,9 +85,9 @@ The previously executed 130-profile audit remains the catalog baseline, not a ne
 2. **Completed:** factor-to-layer and factor-to-source lineage coverage for every active species factor.
 3. **Completed:** per-prediction factor availability, evidence references, source identity, and environmental freshness diagnostics.
 4. Next: build a transparent evidence-quality summary from profile metadata and traceable references, without treating a URL's presence as proof that it supports the configured biological value.
-5. Review site tide-station distance/local regime, snook/tarpon site-kind mappings, and the three provisional South Florida SST bands.
-6. Do not activate site `distance_to_inlet` until a real input is implemented and tested.
-7. Keep HFR comparison paused while NOAA ERDDAP blocks the comparison runner. Do not use the access failure as evidence for a product switch.
+6. Review site tide-station distance/local regime, snook/tarpon site-kind mappings, and the three provisional South Florida SST bands.
+7. Do not activate site `distance_to_inlet` until a real input is implemented and tested.
+8. Keep HFR comparison paused while NOAA ERDDAP blocks the comparison runner. Do not use the access failure as evidence for a product switch.
 
 ## Files inspected
 
@@ -119,3 +119,26 @@ Important limitations are explicit rather than papered over:
 The implementation is additive. It does not alter scores, weights, confidence labels, species biology, source selection, or missing-data semantics. New tests cover source freshness, composite-current limitations, altimetry attribution, buoy observation timestamps, tide prediction metadata, static site metadata, missing timestamps, and source-lineage mapping coverage.
 
 Final validation: [Python tests run #43944587159](https://github.com/markeetox/LUPITA/actions/runs/43944587159), **304 passed, 0 failed, 115 warnings**. Species profile audit and artifact upload also succeeded.
+
+## 8. Prediction-level biological evidence diagnostics | 2026-11-16
+
+Added `evidence_diagnostics` to each factor and `evidence_summary` to each recommended spot. API v1 exposes both fields. The diagnostics keep two independent dimensions:
+
+**Declared profile status:** sourced, partly sourced, provisional, estimated, unsourced, needs-source, weak-factor, or unknown/unrecognized.
+
+**Reference quality:** at least one specific path-based citation or human-readable citation, homepage-only references, missing references, or invalid references. Each reference is classified individually for transparency.
+
+The conservative classification intentionally distinguishes:
+- `declared_sourced_unverified`: the profile says sourced and contains a specific reference, but the claim has not been independently checked against the exact configured value, life stage, population, and region.
+- `generic_reference_only`: the profile says sourced but references only a generic homepage.
+- `provisional_or_unvalidated`: the declared status is provisional, estimated, unsourced, or needs-source, regardless of whether contextual URLs exist.
+- `partly_sourced` and `weak_factor`: preserved as their own classifications.
+- `sourced_without_traceable_reference` and `unknown_or_unrecognized`: missing or invalid metadata is not silently promoted.
+
+The per-spot summary reports active factor-weight totals by declared status and reference quality as separate maps. These are configured model-weight totals, not probabilities, percentages of scientific certainty, or a calibrated evidence score. A specific URL does not prove that the paper supports the factor's numeric value.
+
+Examples from inspected profiles show why this distinction matters: red drum's active factors are labeled `sourced` but cite only the generic MyFWC homepage; mahi-mahi's SST factor has specific references and detailed notes, while its gradient and Gulf Stream proxies remain provisional and bottom depth is explicitly a weak factor; blackfin tuna's SST factor cites the generic FWC homepage while its gradient/edge factors are provisional despite more specific contextual sources.
+
+No evidence status was automatically upgraded or downgraded. No source was fetched at prediction time. No confidence cap was activated, and no score, confidence label, weight, numeric biological band, active flag, gate, or minimum-coverage rule changed.
+
+Regression coverage includes homepage-only vs specific references, sourced-but-unverified vs provisional status, partly sourced factors, missing metadata, malformed URLs, weight aggregation, and API v1 serialization. Final validation: [Python tests run #43945487955](https://github.com/markeetox/LUPITA/actions/runs/43945487955), **307 passed, 0 failed, 115 warnings**. Species profile audit and artifact upload succeeded.
