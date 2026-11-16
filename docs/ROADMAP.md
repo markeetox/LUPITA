@@ -293,3 +293,6 @@ Two CI failures were caused by hard-coded Nov 13 altimetry test data aging past 
 
 
 The relative-time test fixture was corrected once more in commit `afb59bc` so the stale-only case converts the generated `ALT_TIME` rather than the former fixed date. Full CI [#43897319861](https://github.com/markeetox/LUPITA/actions/runs/43897319861) is pending; confirm before considering the test cleanup complete.
+
+
+Validation complete: Python CI [#43897319861](https://github.com/markeetox/LUPITA/actions/runs/43897319861) passed **286 tests, 0 failures, 115 warnings** on commit `afb59bc7ae6e23f48b05f3a6c700ff86dbdd5ded`; species profile audit and artifact upload succeeded. Next step remains a read-only comparison rerun to capture the 6 km endpoint redirect chain and response body.
