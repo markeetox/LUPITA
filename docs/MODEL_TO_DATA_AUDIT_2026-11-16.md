@@ -81,12 +81,13 @@ The previously executed 130-profile audit remains the catalog baseline, not a ne
 
 ## 5. Prioritized next actions
 
-1. Add runtime contract tests for grid/site missing, required, gate, coverage, and normalization combinations without changing current semantics.
-2. Add a factor-to-layer contract test comparing active profile parameters against engine dispatch and layer construction, preventing validator/runtime drift.
-3. Expose per-prediction factor availability and evidence separately. Environmental coverage, source freshness, and biological evidence are not interchangeable.
-4. Review site tide-station distance/local regime, snook/tarpon site-kind mappings, and the three provisional South Florida SST bands.
-5. Do not activate site `distance_to_inlet` until a real input is implemented and tested.
-6. Keep HFR comparison paused while NOAA ERDDAP blocks the comparison runner. Do not use the access failure as evidence for a product switch.
+1. **Completed:** runtime contract tests for grid/site missing, required, gate, coverage, and normalization behavior.
+2. **Completed:** factor-to-layer and factor-to-source lineage coverage for every active species factor.
+3. **Completed:** per-prediction factor availability, evidence references, source identity, and environmental freshness diagnostics.
+4. Next: build a transparent evidence-quality summary from profile metadata and traceable references, without treating a URL's presence as proof that it supports the configured biological value.
+5. Review site tide-station distance/local regime, snook/tarpon site-kind mappings, and the three provisional South Florida SST bands.
+6. Do not activate site `distance_to_inlet` until a real input is implemented and tested.
+7. Keep HFR comparison paused while NOAA ERDDAP blocks the comparison runner. Do not use the access failure as evidence for a product switch.
 
 ## Files inspected
 
@@ -99,3 +100,22 @@ The previously executed 130-profile audit remains the catalog baseline, not a ne
 Added `tests/test_model_data_contracts.py` to lock down the existing grid/site missing, required, gate, coverage, and normalization behavior. Added `tests/test_factor_data_contracts.py` to compare all active species factors against grid/site dispatch maps, exercise the actual grid and site factor scorers with deterministic synthetic inputs, and verify the grid layer builder exposes every declared non-calendar factor input using fake NOAA/FWC responses. Seasonal month context is correctly tested at the prediction/scoring boundary because `build_fish_json` injects it; it is not a raw layer-loader output.
 
 The final test run for commit `909fad31b635b3a0c65a3256fdfcd7203d526f45` completed successfully, including the species profile audit and artifact upload: [Python tests run #43941668108](https://github.com/markeetox/LUPITA/actions/runs/43941668108). An earlier successful run on the same test set before the open-ended range fixture hardening reported **294 passed, 115 warnings**. No production code or model behavior was changed.
+
+## 7. Prediction-level environmental source lineage | 2026-11-16
+
+Added an additive `environmental_source` object to each factor diagnostic at prediction time. It identifies the source kind, whether the factor input was available at that prediction, relevant layer status, dataset, observation time, configured freshness, and available coverage metadata. Factor diagnostics also retain the profile's actual source references, rather than only reporting a reference count. API v1 already serializes the complete factor diagnostic object, so the new lineage fields flow through without a separate API schema change.
+
+The mapping covers every active factor in the species catalog and is guarded by a regression test. It distinguishes direct satellite observations, derived layers, static datasets, reef mapping, calendar lookups, astronomical calculations, configured inlet-distance calculations, site catalog metadata, measured buoy inputs, and tide predictions.
+
+Important limitations are explicit rather than papered over:
+
+- Current speed/direction and convergence may use HF Radar and satellite-altimetry fallback. The source timestamps and freshness are reported separately, but the exact provider selected for an individual grid cell is not retained. The diagnostic says so.
+- Chlorophyll may combine primary and gap-filled sources. Primary and gap-filled timestamps/freshness are retained separately; no unsupported claim is made about which source supplied a particular cell.
+- Gulf Stream edge is attributed to satellite altimetry specifically, not to whichever source happened to supply the current field.
+- Named-site SST from NDBC now carries the timestamp of the actual water-temperature measurement, not merely the newest row in the buoy file. No freshness threshold is configured for NDBC yet, so the diagnostic reports freshness as unconfigured (or unknown if no timestamp exists).
+- Named-site tide diagnostics retain station identity, distance, and prediction event times. Retrieval freshness is marked not assessed because the request time is not currently recorded.
+- Static ETOPO and FWC layers are not assigned invented observation ages.
+
+The implementation is additive. It does not alter scores, weights, confidence labels, species biology, source selection, or missing-data semantics. New tests cover source freshness, composite-current limitations, altimetry attribution, buoy observation timestamps, tide prediction metadata, static site metadata, missing timestamps, and source-lineage mapping coverage.
+
+Final validation: [Python tests run #43944587159](https://github.com/markeetox/LUPITA/actions/runs/43944587159), **304 passed, 0 failed, 115 warnings**. Species profile audit and artifact upload also succeeded.
