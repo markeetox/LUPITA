@@ -107,3 +107,35 @@ def test_gulf_stream_edge_uses_altimetry_freshness_not_selected_current_freshnes
     assert source["layers"][0]["layer"] == "satellite_altimetry"
     assert source["layers"][0]["freshness"]["status"] == "stale"
     assert source["layers"][0]["dataset"] == "alt-test"
+
+
+
+def test_tide_factor_retains_station_and_prediction_event_times():
+    fish = {"spots": [{"factor_diagnostics": [{
+        "param": "tide_stage", "available": True, "input_tag": "modeled",
+        "input_details": {
+            "source_type": "NOAA CO-OPS tide predictions", "station": "Virginia Key",
+            "station_id": "8723214", "distance_km": 18.2,
+            "prediction_event_times": ["2026-11-16T20:00:00+00:00"],
+        },
+    }]}]}
+
+    attach_factor_source_diagnostics(fish, {"layers": {}})
+    source = fish["spots"][0]["factor_diagnostics"][0]["environmental_source"]
+
+    assert source["kind"] == "tide_prediction"
+    assert source["input_details"]["station_id"] == "8723214"
+    assert source["input_details"]["prediction_event_times"] == ["2026-11-16T20:00:00+00:00"]
+
+
+def test_placeholder_site_factor_is_not_described_as_a_measurement():
+    fish = {"spots": [{"factor_diagnostics": [{
+        "param": "distance_to_inlet", "available": True, "input_tag": "static",
+        "input_details": {"source_type": "placeholder constant", "warning": "Not a measured site distance."},
+    }]}]}
+
+    attach_factor_source_diagnostics(fish, {"layers": {}})
+    source = fish["spots"][0]["factor_diagnostics"][0]["environmental_source"]
+
+    assert source["kind"] == "placeholder"
+    assert "Not a measured" in source["explanation"]
