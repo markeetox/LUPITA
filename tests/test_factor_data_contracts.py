@@ -39,6 +39,21 @@ def test_every_active_grid_factor_has_engine_dispatch_and_layer_input():
         if kind != "season":
             assert param in layers, f"{species_id}: {param} is not exposed by the layer builder"
 
+        # Exercise the real grid scorer with a deterministic synthetic value,
+        # independently of whether today's optional source layer is populated.
+        synthetic = {"sst_c": __import__("numpy").full((5, 5), 25.0),
+                     "depth_m": __import__("numpy").full((5, 5), 100.0),
+                     "month": 6}
+        if kind == "season":
+            pass
+        elif kind == "category":
+            categories = list((factor.get("map") or {}).keys()) or factor.get("preferred") or ["reef"]
+            synthetic[param] = __import__("numpy").full((5, 5), categories[0], dtype=object)
+        else:
+            synthetic[param] = __import__("numpy").full((5, 5), 25.0)
+        result = factor_score(factor, synthetic, {})
+        assert result is not None, f"{species_id}: real grid scorer did not dispatch {param}/{kind}"
+
 
 def test_every_active_site_factor_has_engine_dispatch_and_a_real_value_function():
     profiles = [p for p in _profiles() if p.get("model") == "sites"]
@@ -57,8 +72,15 @@ def test_every_active_site_factor_has_engine_dispatch_and_a_real_value_function(
         assert kind in SUPPORTED_SITE_KINDS, f"{species_id}: {param}/{kind} has no site scorer implementation"
         assert param in VALUE_FUNCS, f"{species_id}: {param} has no site input function"
         assert callable(VALUE_FUNCS[param])
-        if kind == "season":
-            assert score_value(factor, 6) is not None, f"{species_id}: {param} has no site season scorer"
+        if kind == "range":
+            value = sum(factor["ideal"]) / 2
+        elif kind == "category":
+            value = next(iter(factor.get("map") or {}), None)
+            if value is None:
+                value = (factor.get("preferred") or [""])[0]
+        else:
+            value = 6
+        assert score_value(factor, value) is not None, f"{species_id}: real site scorer did not dispatch {param}/{kind}"
         if param == "distance_to_inlet":
             raise AssertionError(f"{species_id}: placeholder distance_to_inlet must not be active")
 
