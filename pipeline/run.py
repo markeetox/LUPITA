@@ -167,6 +167,7 @@ def build_data_quality(layers: dict | None, sources: dict, errors: list[str], no
     if downstream_not_attempted:
         structure_state.update(status="not_attempted", not_attempted_reason="Required SST grid unavailable; spatial layers were not requested.")
     structure_state.update(layers.get("structure_stats") or {})
+    structure_state["dataset"] = layers.get("datasets", {}).get("structure")
     habitat_state = _layer_state(bool(arc.get("unified_benthic", {}).get("enabled")), habitat_present, errors, "layers benthic_habitat:")
     if downstream_not_attempted:
         habitat_state.update(status="not_attempted", not_attempted_reason="Required SST grid unavailable; spatial layers were not requested.")
@@ -259,6 +260,17 @@ def attach_factor_source_diagnostics(fish: dict, data_quality: dict) -> None:
                 explanation = "Static site-kind metadata from the configured fishing-site catalog."
                 layer_names = []
             layers = [_layer_source_snapshot(name, layer_states.get(name, {})) for name in layer_names]
+            if param == "gulf_stream_edge":
+                current_state = layer_states.get("currents", {})
+                fallback = current_state.get("fallback") or {}
+                if fallback:
+                    layers = [{
+                        "layer": "satellite_altimetry",
+                        "status": "loaded" if fallback.get("loaded") else "unavailable",
+                        "dataset": fallback.get("dataset"),
+                        "time": fallback.get("time"),
+                        "freshness": current_state.get("fallback_freshness"),
+                    }]
             factor["environmental_source"] = {
                 "kind": kind,
                 "available_at_prediction": bool(factor.get("available")),
