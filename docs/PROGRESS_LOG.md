@@ -821,3 +821,18 @@ The 6 km product has the strongest apparent spatial availability in this snapsho
 - Corrected the seasonal test boundary: month is added by `build_fish_json` when current conditions are provided, not by the raw layer loader.
 - Final test commit `909fad31b635b3a0c65a3256fdfcd7203d526f45` passed CI, species audit, and artifact upload in [run #43941668108](https://github.com/markeetox/LUPITA/actions/runs/43941668108). An earlier successful contract-test run reported 294 passed and 115 warnings; final run conclusion is success.
 - No production scoring, biology, weights, source configuration, ingestion, or data publication changed.
+
+
+## 2026-11-16 | Prediction-level environmental source lineage
+
+- Added `environmental_source` to each active factor diagnostic. The object identifies source kind, whether the input was available at the prediction, mapped layer status, dataset and observation metadata, configured freshness, and relevant coverage information.
+- Retained each factor's actual `sources` references as well as `source_count`, so clients can inspect the cited evidence rather than seeing only a count.
+- Added a source map covering every active grid and site factor in the species catalog, with a regression test to prevent unmapped active factors.
+- Explicitly documented composite-source limits: current fields can blend HF Radar and satellite altimetry without retaining exact per-cell provider attribution; chlorophyll can combine primary and gap-filled products without retaining exact per-cell origin. Both source timelines are reported separately.
+- Gulf Stream edge is attributed to satellite altimetry specifically. Static ETOPO/FWC layers are identified as static, not assigned fabricated freshness ages.
+- Named-site SST now retains the exact NDBC water-temperature measurement timestamp, not simply the newest buoy row. NDBC freshness is marked unconfigured until an operational threshold is established.
+- Named-site tide diagnostics now retain station identity, distance, and predicted event times; retrieval freshness remains explicitly not assessed.
+- Added regression coverage for source lineage, layer freshness, altimetry attribution, site catalog metadata, tide prediction metadata, buoy timestamps, and unknown timestamps.
+- Final code/test commit `49fb892686be1675325c47b5c593610215b7513b` passed [Python CI #43944587159](https://github.com/markeetox/LUPITA/actions/runs/43944587159): **304 passed, 0 failed, 115 warnings**. Species audit and artifact upload succeeded.
+- No score, confidence, biology, weight, source-selection, ingestion, or publication behavior changed.
+- Next: build an evidence-quality summary that evaluates biological support separately from environmental freshness and data availability. Do not treat the presence of a URL as proof of support for the exact factor value.
