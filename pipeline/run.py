@@ -236,6 +236,7 @@ def attach_factor_source_diagnostics(fish: dict, data_quality: dict) -> None:
                 param, ("unmapped", [], "No factor-to-source mapping is registered."))
             details = factor.get("input_details") or {}
             # Named-site SST can come from a measured NDBC buoy or the satellite SST grid.
+            source = None
             if details.get("source_type") == "NDBC buoy":
                 source = {
                     "kind": "measured_buoy",
@@ -258,18 +259,13 @@ def attach_factor_source_diagnostics(fish: dict, data_quality: dict) -> None:
                 explanation = "Static site-kind metadata from the configured fishing-site catalog."
                 layer_names = []
             layers = [_layer_source_snapshot(name, layer_states.get(name, {})) for name in layer_names]
-            if param == "chlorophyll" or param == "chl_gradient":
-                # Primary and gap-filled timestamps may differ; do not imply a single cell provider.
-                pass
             factor["environmental_source"] = {
                 "kind": kind,
                 "available_at_prediction": bool(factor.get("available")),
                 "layers": layers,
                 "explanation": explanation,
             }
-            if source if False else False:
-                pass
-            if kind == "measured_buoy":
+            if source is not None:
                 factor["environmental_source"]["source"] = source
             elif details:
                 factor["environmental_source"]["input_details"] = details
