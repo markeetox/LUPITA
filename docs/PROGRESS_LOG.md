@@ -813,3 +813,11 @@ The 6 km product has the strongest apparent spatial availability in this snapsho
 - Carried forward the existing 130-profile audit results and 25-site-model findings without claiming a new catalog validator run.
 - No NOAA endpoint contacted, no Pull Ocean Data run, no data publication, and no changes to scoring, biology, weights, profile flags, or source configuration.
 - Next: add regression tests around runtime missing-data contracts and factor-to-layer dispatch without changing scoring semantics.
+
+## 2026-11-16 | Runtime factor contract tests
+
+- Added `tests/test_model_data_contracts.py` for grid/site missing, required, gate, coverage, and normalization semantics.
+- Added `tests/test_factor_data_contracts.py` to cross-check every active profile factor against grid/site dispatch maps, call the actual scoring functions using synthetic values, and verify all declared non-calendar grid inputs are exposed by `load_layers` using fake source responses.
+- Corrected the seasonal test boundary: month is added by `build_fish_json` when current conditions are provided, not by the raw layer loader.
+- Final test commit `909fad31b635b3a0c65a3256fdfcd7203d526f45` passed CI, species audit, and artifact upload in [run #43941668108](https://github.com/markeetox/LUPITA/actions/runs/43941668108). An earlier successful contract-test run reported 294 passed and 115 warnings; final run conclusion is success.
+- No production scoring, biology, weights, source configuration, ingestion, or data publication changed.
