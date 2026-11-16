@@ -126,6 +126,7 @@ def test_tide_factor_retains_station_and_prediction_event_times():
     assert source["kind"] == "tide_prediction"
     assert source["input_details"]["station_id"] == "8723214"
     assert source["input_details"]["prediction_event_times"] == ["2026-11-16T20:00:00+00:00"]
+    assert source["freshness"]["status"] == "not_assessed"
 
 
 def test_placeholder_site_factor_is_not_described_as_a_measurement():
