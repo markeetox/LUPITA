@@ -497,3 +497,8 @@ Reviewed blackfin tuna, cobia, common snook, and Florida pompano. Updated eviden
 
 Applied metadata-only source/status/note updates to all 30 remaining single-factor profiles. Great barracuda moved from provisional to partly_sourced; bonefish and Permit remain provisional because available evidence does not validate their numeric SST bands. Of the 27 other single-factor grid profiles, 20 are now partly_sourced, three provisional, and four needs_source. The four needs_source profiles retain no factor-level SST references because available habitat sources do not validate numeric surface-temperature claims. No numeric model settings or runtime behavior changed. CI validation is running in [#44124511157](https://github.com/markeetox/LUPITA/actions/runs/44124511157). Details: [all-species evidence audit](SPECIES_EVIDENCE_AUDIT_2026-11-17.md).
 
+
+
+## Batch C evidence review | 2026-11-17
+
+Reviewed Hogfish, Jack crevalle, King mackerel, and Red drum across 13 active factors. Added specific sources and conservative claim-fit notes. Hogfish SST and king mackerel SST-gradient factors are needs_source; the remaining reviewed factors are partly_sourced. Broad thermal occurrence, depth/habitat records, spawning timing, and migration evidence were not treated as validated preferred-value or catch-response curves. No numeric model settings or runtime behavior changed. Details: [all-species evidence audit](SPECIES_EVIDENCE_AUDIT_2026-11-17.md).
