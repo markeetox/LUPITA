@@ -375,3 +375,10 @@ Use [SPECIES_EVIDENCE_AUDIT_2026-11-17.md](SPECIES_EVIDENCE_AUDIT_2026-11-17.md)
 Reviewed bonefish, great barracuda, and Permit, the three remaining temperature-only site pilots. Recommended bonefish and great barracuda move to `partly_sourced` with explicit physiological-performance, N=2 telemetry, and model-derived limitations; Permit remains `provisional` because available support is juvenile occurrence/model association rather than adult South Florida preference. Research findings and sources are recorded in the master evidence audit. No species JSON or numeric/model setting changed. Apply metadata only after review.
 
 Next: Batch B, the 27 other single-factor profiles, prioritized by gate/required semantics and traceability of their active factor sources.
+
+
+### Batch B research complete | 2026-11-17
+
+Reviewed the 27 other single-factor grid SST profiles. Research recommendations: 20 partly_sourced, 3 provisional, and 4 needs_source for the active SST claim. The most important finding is that several deep demersal species have bottom-temperature evidence while the model gates on satellite SST. This is a model-to-data design issue to assess separately; no SST values or scoring were changed. Full review is in the master evidence audit.
+
+Next: review metadata recommendations for Batches A and B, then continue with the 80 multi-factor profiles grouped by parameter family and elevated active-evidence risk. Start with factors whose source references are generic or absent and whose weights/gates materially affect eligibility.
