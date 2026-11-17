@@ -4,9 +4,9 @@ on:
   workflow_dispatch:
     inputs:
       source_run_id:
-        description: "Successful Copernicus pilot run ID containing the source artifact"
+        description: "Enter the numeric run ID from the successful read-only pilot workflow"
         required: true
-        default: "44144656207"
+        default: "44160953510"
 
 permissions:
   actions: read
@@ -24,6 +24,15 @@ jobs:
         uses: actions/setup-python@v5
         with:
           python-version: "3.12"
+
+      - name: Validate source pilot run ID
+        env:
+          SOURCE_RUN_ID: ${{ inputs.source_run_id }}
+        run: |
+          if [[ ! "$SOURCE_RUN_ID" =~ ^[0-9]+$ ]]; then
+            echo "::error::source_run_id must be the numeric GitHub Actions run ID from the successful Copernicus pilot. Example: 44160953510"
+            exit 1
+          fi
 
       - name: Download the existing read-only pilot artifact
         uses: actions/download-artifact@v4
