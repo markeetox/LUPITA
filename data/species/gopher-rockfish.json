@@ -10,7 +10,7 @@
   "display": {
     "color": "#2495f2"
   },
-  "review_status": "v1 - West Coast Pacific habitat profile",
+  "review_status": "Evidence reviewed 2026-11-17. CDFW/ODFW habitat and depth sources replace the generic regulation citation; no numeric preferred SST evidence found.",
   "image": {
     "status": "placeholder",
     "kind": "illustration",
@@ -26,12 +26,15 @@
     "behavior": "Navigates West Coast kelp forests, rocky reefs, and coastal upwelling zones.",
     "regulations_link": "https://wildlife.ca.gov/Fishing/Ocean/Regulations/Sport-Fishing",
     "sources": [
-      "https://wildlife.ca.gov/Fishing/Ocean/Regulations/Sport-Fishing"
+      "https://wildlife.ca.gov/Fishing/Ocean/Regulations/Sport-Fishing",
+      "https://nrm.dfg.ca.gov/FileHandler.ashx?DocumentID=33871",
+      "https://nrimp.dfw.state.or.us/MRP/default.aspx?p=113",
+      "https://www.fishbase.org/summary/3956"
     ]
   },
   "lat_range": [
-    28.0,
-    38.0
+    28,
+    38
   ],
   "factors": [
     {
@@ -47,11 +50,14 @@
       ],
       "weight": 0.5,
       "active": true,
-      "value_status": "sourced",
+      "value_status": "needs_source",
       "sources": [
-        "https://wildlife.ca.gov/Fishing/Ocean/Regulations/Sport-Fishing"
+        "https://wildlife.ca.gov/Fishing/Ocean/Regulations/Sport-Fishing",
+        "https://nrm.dfg.ca.gov/FileHandler.ashx?DocumentID=33871",
+        "https://nrimp.dfw.state.or.us/MRP/default.aspx?p=113"
       ],
-      "reason_template": "Water is {value} C, inside preferred Pacific temperature range for gopher rockfish."
+      "reason_template": "Water is {value} C, inside preferred Pacific temperature range for gopher rockfish.",
+      "value_notes": "The reviewed CDFW/ODFW species accounts document rocky-reef habitat and geographic range but do not establish a numeric preferred sea-surface-temperature interval. No species-specific adult SST preference or catch-response evidence was found to validate the configured 10-17 °C range or 12-16 °C ideal. Keep values unchanged and mark needs_source."
     },
     {
       "param": "depth_m",
@@ -66,19 +72,23 @@
       ],
       "weight": 0.5,
       "active": true,
-      "value_status": "sourced",
+      "value_status": "partly_sourced",
       "sources": [
-        "https://wildlife.ca.gov/Fishing/Ocean/Regulations/Sport-Fishing"
+        "https://wildlife.ca.gov/Fishing/Ocean/Regulations/Sport-Fishing",
+        "https://nrm.dfg.ca.gov/FileHandler.ashx?DocumentID=33871",
+        "https://nrimp.dfw.state.or.us/MRP/default.aspx?p=113",
+        "https://www.fishbase.org/summary/3956"
       ],
       "gate": true,
-      "reason_template": "Depth is {value} m, within prime Pacific depth zone for gopher rockfish."
+      "reason_template": "Depth is {value} m, within prime Pacific depth zone for gopher rockfish.",
+      "value_notes": "A CDFW distribution account reports adults to about 80 m, most commonly 10-35 m; ODFW describes rocky areas to 40 fathoms and notes common occurrence in shallower water. This supports the broad 2-50 m outer band, but not the 4-45 m ideal as a measured preference curve."
     }
   ],
   "timing": {
     "status": "angler_lore",
     "light": {
       "map": {
-        "day": 1.0,
+        "day": 1,
         "dawn": 0.9,
         "dusk": 0.9,
         "night": 0.5
@@ -105,7 +115,7 @@
     "source_url": "https://wildlife.ca.gov/Fishing/Ocean/Regulations/Sport-Fishing"
   },
   "lon_range": [
-    -138.0,
-    -110.0
+    -138,
+    -110
   ]
 }

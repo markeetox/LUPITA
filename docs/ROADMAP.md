@@ -445,3 +445,8 @@ Batch C is complete and validated by CI #44127699186 (307 passed, 0 failed). The
 ## 2026-11-17 | Documented multi-factor review underway
 
 The first five of 51 documented multi-factor profiles have been reviewed: Black rockfish, Blue rockfish, Bocaccio rockfish, Canary rockfish, and Copper rockfish (11 active factors). Source-reference presence was not treated as scientific validation; SST, bottom-temperature, life-stage and depth-proxy mismatches were recorded. Continue the remaining documented profiles by ecological/factor family. No numeric or runtime changes. See SPECIES_EVIDENCE_AUDIT_2026-11-17.md.
+
+
+## 2026-11-17 | Documented Pacific nearshore review, batch 2
+
+Reviewed Gopher rockfish, Kelp rockfish, Olive rockfish, Treefish, and Halfmoon (10 active factors). Species-specific habitat and depth sources support broad occurrence, but no reviewed source validated their numeric SST suitability bands. Those factors are now marked needs_source; depth remains partly_sourced with regional/life-stage caveats. Progress: 10/51 profiles, 21 active factors. No numeric or runtime changes.

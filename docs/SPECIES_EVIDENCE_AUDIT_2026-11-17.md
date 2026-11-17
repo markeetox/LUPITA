@@ -571,3 +571,36 @@ Reviewed five Pacific rockfish profiles across 11 active factors. Replaced gener
 
 ### Documented-profile review progress
 Five of 51 documented multi-factor profiles reviewed across 11 active factors. This first batch shows why source-path validation alone is not enough: species-specific depth and habitat evidence can coexist with unsupported SST bands, bottom-temperature/SST mismatches, or unvalidated ideal intervals. Continue by ecological/factor family; preserve numeric and runtime behavior until separately reviewed and approved.
+
+
+## Documented multi-factor review: second Pacific nearshore batch | 2026-11-17
+
+Reviewed Gopher rockfish, Kelp rockfish, Olive rockfish, Treefish, and Halfmoon across 10 active factors. Replaced generic CDFW sport-regulations citations with species-specific CDFW, ODFW, NOAA, Smithsonian Tropical Research Institute, FishBase and aquarium species accounts. No numeric ranges, ideal intervals, weights, active flags, gates, required flags, scoring, confidence or runtime behavior changed.
+
+### Gopher rockfish (*Sebastes carnatus*)
+- SST: needs_source. Species/habitat sources do not establish a numeric preferred SST range.
+- Depth: partly_sourced. CDFW reports adults up to about 80 m, most common at 10-35 m; ODFW reports rocky areas to 40 fathoms. This supports broad occurrence, not the 4-45 m ideal.
+- Sources: [CDFW distribution account](https://nrm.dfg.ca.gov/FileHandler.ashx?DocumentID=33871); [ODFW species account](https://nrimp.dfw.state.or.us/MRP/default.aspx?p=113).
+
+### Kelp rockfish (*Sebastes atrovirens*)
+- SST: needs_source. Reviewed sources do not establish numeric adult SST preference.
+- Depth: partly_sourced. FishBase reports demersal occurrence 9-46 m in kelp beds and rocky areas; California coastal survey appendix reports 0-46 m. This supports the broad configured range, not the ideal interval.
+- Sources: [FishBase species summary](https://fishbase.org/FieldGuide/FieldGuideSummary.php?GenusName=Sebastes&SpeciesName=atrovirens&pda=1&sps=); [California Water Boards coastal survey appendix](https://www.waterboards.ca.gov/water_issues/programs/swamp/docs/coast_study/bog2012may/apx1.pdf).
+
+### Olive rockfish (*Sebastes serranoides*)
+- SST: needs_source. Reviewed sources document habitat and depth but no numeric preferred SST curve.
+- Depth: partly_sourced. NOAA's 2026 groundfish synthesis reports all life stages in kelp forests to 172 m; AFSC guide reports common 0-16 fathoms and maximum around 146 m. The configured 5-80 m band is not a complete species depth envelope.
+- Sources: [NOAA Pacific groundfish amendment analysis](https://www.fisheries.noaa.gov/s3/2026-02/am-37-fpa-analysis-01-2026.pdf); [NOAA AFSC guide to Northeast Pacific rockfishes](https://apps-afsc.fisheries.noaa.gov/Publications/AFSC-TM/NOAA-TM-AFSC-117.pdf).
+
+### Treefish (*Sebastes serriceps*)
+- SST: needs_source. A subtropical climate label is not a measured thermal preference and does not validate the configured SST band.
+- Depth: partly_sourced. NOAA describes high-relief habitat shallower than 60 m; California accounts describe shallow rocky reefs/caves to about 46 m and limited home ranges. The outer band is plausible but the ideal is not a quantified preference.
+- Sources: [NOAA Pacific groundfish amendment analysis](https://www.fisheries.noaa.gov/s3/2026-02/am-37-fpa-analysis-01-2026.pdf); [California Department of Fish and Game species account](https://nrm.dfg.ca.gov/FileHandler.ashx?DocumentID=33928); [NOAA AFSC guide](https://apps-afsc.fisheries.noaa.gov/Publications/AFSC-TM/NOAA-TM-AFSC-95.pdf).
+
+### Halfmoon (*Medialuna californiensis*)
+- SST: needs_source. Species sources describe warm-region distribution and seasonal occurrence but no numeric preferred SST or validated thermal-response curve; historical warm-period range expansion is not a preference band.
+- Depth: partly_sourced. STRI reports 0-44 m over rocky bottoms/algal beds; Aquarium of the Pacific describes use high in the water column over rocks and at mid-depth over kelp. The configured 1-30 m range excludes some reported depth and ideal is not a measured preference.
+- Sources: [Smithsonian Tropical Research Institute species account](https://biogeodb.stri.si.edu/sftep/en/thefishes/species/1579); [Aquarium of the Pacific](https://www.aquariumofpacific.org/onlinelearningcenter/species/halfmoon); [Georgia Aquarium](https://www.georgiaaquarium.org/animal/halfmoon/).
+
+### Documented-profile review progress
+Ten of 51 profiles reviewed across 21 active factors. The second batch reinforces the same distinction: specific species sources often support habitat and depth occurrence, but do not establish numeric SST preference or ideal intervals. “Documented” source metadata is not equivalent to a validated numeric suitability curve.

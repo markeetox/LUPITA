@@ -1041,3 +1041,8 @@ Reviewed Black rockfish, Blue rockfish, Bocaccio rockfish, Canary rockfish, and 
 - No numeric ranges, ideal intervals, weights, active flags, gates, required flags, or runtime behavior changed.
 
 Progress: 5 of 51 documented multi-factor profiles reviewed across 11 active factors. See the master evidence audit.
+
+
+## 2026-11-17 | Second documented Pacific nearshore batch
+
+Reviewed Gopher rockfish, Kelp rockfish, Olive rockfish, Treefish, and Halfmoon across 10 active factors. Replaced generic regulations citations with specific species/habitat sources. SST claims are needs_source across all five; depth factors are partly_sourced, with outer-range and ideal-interval caveats documented. No numeric or runtime changes. Progress: 10 of 51 documented multi-factor profiles reviewed across 21 active factors.

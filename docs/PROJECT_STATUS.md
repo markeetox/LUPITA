@@ -523,3 +523,8 @@ The 29 originally elevated-risk multi-factor profiles have all been source-revie
 ## Documented multi-factor evidence review started | 2026-11-17
 
 Started claim-fit review of the 51 multi-factor profiles currently classified as documented by the validator. First batch: Black rockfish, Blue rockfish, Bocaccio rockfish, Canary rockfish, and Copper rockfish across 11 active factors. Specific species/habitat references replaced generic regulations pages. Important findings include unsupported numeric SST claims, life-stage limitations, and bottom-temperature evidence that cannot validate satellite SST. Five of 51 documented multi-factor profiles reviewed. No numeric or runtime behavior changed. See [species evidence audit](SPECIES_EVIDENCE_AUDIT_2026-11-17.md).
+
+
+## Documented multi-factor review | second Pacific nearshore batch
+
+Reviewed Gopher rockfish, Kelp rockfish, Olive rockfish, Treefish, and Halfmoon across 10 active factors. Replaced generic regulation-page references with specific CDFW, ODFW, NOAA, Smithsonian Tropical Research Institute, FishBase and aquarium sources. All five SST bands are now marked needs_source because the reviewed evidence did not substantiate the configured numeric SST preferences; depth/habitat evidence is partly_sourced with range and life-stage caveats. No numeric or runtime changes. Total documented multi-factor review progress: 10 of 51 profiles across 21 active factors. See [species evidence audit](SPECIES_EVIDENCE_AUDIT_2026-11-17.md).
