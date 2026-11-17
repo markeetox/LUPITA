@@ -17,7 +17,7 @@ A global product extent is not evidence of valid coastal coverage or scientific 
 - Product: `GLOBAL_ANALYSISFORECAST_PHY_001_024`
 - Dataset: `cmems_mod_glo_phy_anfc_0.083deg_P1D-m`
 - Candidate physical field: sea-water potential temperature at the sea floor.
-- Variable identifier: **not yet locked**. The original product-manual review identified `tob`, while current Copernicus guidance for the reanalysis product describes the sea-floor field as `bottomT`. These identifiers must not be assumed interchangeable across products/dataset versions. The exact variable short name, standard name, units, and dimensions must be read from each dataset's live catalogue metadata before extraction.
+- Forecast variable: `tob`; reanalysis variable: `bottomT`. Both live catalogue records identify the standard name `sea_water_potential_temperature_at_sea_floor`, units `degrees_C`, and coordinates `time`, `latitude`, `longitude`. These identifiers are dataset-specific and must remain separate in extraction code.
 - Horizontal resolution: 0.083° (approximately 8 km)
 - Temporal resolution: daily mean
 - Operational time coverage: rolling archive, with daily analysis/forecast updates and a 10-day forecast
@@ -67,13 +67,14 @@ Potential duplicate CTD records across NCEI/GTSPP and agency archives must be de
 
 ## Sampling and pairing design
 
-1. Inspect live metadata for the daily forecast and reanalysis datasets, confirm the sea-floor variable identifier separately for each, then query a recent operational date and historical dates overlapping independent observations.
-2. Inspect returned metadata before interpreting values: variable name, units, coordinate names, time axis, grid spacing, fill values, and product/version.
-3. Build regional observation inventories first. Pair each eligible observation to the nearest valid Copernicus wet grid cell, retaining horizontal separation and bathymetric mismatch.
-4. Stratify results by region and shelf-depth class. Initial classes: inner shelf (10-50 m), middle shelf (50-200 m), and outer shelf (200-500 m). These are validation strata, not claims that every region has all classes.
-5. Use time-matched daily means. Report observation-to-model time difference and reject pairs outside the predeclared tolerance; do not compare a CTD cast to an unrelated forecast day.
-6. Report both all-valid coverage and observation-paired coverage. A global wet-cell fraction must not conceal missing nearshore shelf cells.
-7. Keep South Florida shallow bays/reef flats separate from the open continental shelf. An 8 km model cell cannot resolve many local channels, reefs, or shallow flats.
+1. Live catalogue metadata has now confirmed `tob` for the forecast dataset and `bottomT` for the reanalysis dataset. Their standard name, units, and horizontal/time coordinates agree.
+2. Forecast catalogue time coordinates span 2022-06-01 through 2026-11-26; reanalysis spans 1993-01-01 through 2026-10-06. These are catalogue coordinate extrema, not a claim that all cells/dates contain valid values. The forecast endpoint extends into the forecast horizon; it must not be mistaken for the latest observed/analysis date.
+3. The `geoseries` and `timeseries` services expose explicit coordinate metadata. The native-file and WMTS service records list variables but do not expose coordinate arrays in this response. Use a supported Toolbox subset path and inspect the returned file's actual dimensions and fill values.
+4. Build regional observation inventories first. Pair each eligible observation to the nearest valid Copernicus wet grid cell, retaining horizontal separation and bathymetric mismatch.
+5. Stratify results by region and shelf-depth class. Initial classes: inner shelf (10-50 m), middle shelf (50-200 m), and outer shelf (200-500 m). These are validation strata, not claims that every region has all classes.
+6. Use time-matched daily means. Report observation-to-model time difference and reject pairs outside the predeclared tolerance; do not compare a CTD cast to an unrelated forecast day.
+7. Report both all-valid coverage and observation-paired coverage. A global wet-cell fraction must not conceal missing nearshore shelf cells.
+8. Keep South Florida shallow bays/reef flats separate from the open continental shelf. An 8 km model cell cannot resolve many local channels, reefs, or shallow flats.
 
 ## Metrics to report
 
@@ -111,13 +112,13 @@ Even a successful source validation would not validate existing species temperat
 
 ## Current findings and limits
 
-- The earlier product-manual review identified a sea-floor temperature field in the daily forecast product, but the exact variable identifier still requires live dataset metadata confirmation. Current Copernicus guidance explicitly describes `bottomT` as sea-water potential temperature at the sea floor and states that it has no vertical depth dimension; that guidance must be mapped to the exact dataset/version before use.
+- Live metadata retrieved on 2026-11-17 confirms the forecast daily dataset exposes `tob` and the reanalysis daily dataset exposes `bottomT`. Both use standard name `sea_water_potential_temperature_at_sea_floor` and units `degrees_C`; both are three-dimensional in `time`, `latitude`, and `longitude`, with no vertical depth coordinate for these bottom fields.
 - The service catalog lists the daily dataset's operational temporal extent and daily availability.
 - NOAA AOML provides relevant South Florida survey and mooring programs. Its survey description distinguishes underway surface thermosalinograph measurements from CTD casts; only qualifying near-bottom CTD/sensor records can validate the sea-floor temperature field.
 - NOAA SEFSC's GoMMAPPS CTD archive provides an independent Gulf/Southeast profile collection from summer 2017, with a stated maximum profile depth of 500 m.
 - NOAA GTSPP is the strongest initial global profile archive candidate for Atlantic and Pacific coverage; individual profile quality, depth, and bottom proximity still require filtering.
 - NOAA NEFSC's near-bottom observations are useful for the northern Atlantic shelf but do not represent the entire Atlantic coast.
-- No Copernicus subset has yet been downloaded or sampled in this phase. No coverage fraction, freshness result, or model-vs-observation error statistic is claimed.
+- The metadata-only workflow passed and its artifact was inspected on 2026-11-17. Forecast coordinate extrema are 2022-06-01 to 2026-11-26; reanalysis extrema are 1993-01-01 to 2026-10-06. No Copernicus temperature subset has yet been downloaded or sampled. No coverage fraction, freshness result, or model-vs-observation error statistic is claimed.
 
 ## Access prerequisite
 
@@ -125,7 +126,7 @@ Copernicus Marine Toolbox subsetting requires a free Copernicus Marine account a
 
 ## Next execution step
 
-After credentials are configured, retrieve live metadata for the daily forecast and reanalysis datasets, confirm the exact sea-floor variable identifier and dimensions, then run a small, read-only pilot extraction for one recent date and one historical date using compact bounding boxes around the four regional observation inventories. Confirm actual response variables and coordinates, fill-value semantics, and wet-cell behavior. Then acquire and quality-filter matching independent profiles. Do not add a recurring workflow or production ingestion path at this stage.
+With credentials and live metadata now confirmed, the next step is to add a manual-only, read-only subset pilot using `tob` for forecast and `bottomT` for reanalysis. Select dates within each dataset's confirmed time extent and compact bounding boxes around the four regional observation inventories. Inspect actual returned variables, coordinates, fill-value semantics, wet-cell behavior, and data-file metadata. Then acquire and quality-filter matching independent profiles. Do not add a recurring workflow or production ingestion path at this stage.
 
 ## Change-control boundary
 
@@ -144,3 +145,19 @@ The workflow was dispatched on 2026-11-17 and passed, confirming that the config
 Before downloading samples, variable naming was rechecked against current Copernicus documentation. Copernicus explicitly documents `bottomT` as sea-water potential temperature at the sea floor and states that it is independent of the vertical depth coordinate. The earlier protocol's `tob` identifier is therefore provisional, not assumed correct for both products. Live dataset metadata must decide the exact short name and dimensions for forecast and reanalysis separately.
 
 Added the manual-only workflow `.github/workflows/copernicus-bottom-temperature-metadata.yml` to retrieve complete live metadata JSON for the daily forecast and reanalysis dataset IDs and upload the files as a seven-day artifact. This is metadata-only: no temperature data is downloaded and no production behavior changes. The workflow has been committed but not yet run.
+
+
+## Live metadata inspection completed | 2026-11-17
+
+The manual workflow `.github/workflows/copernicus-bottom-temperature-metadata.yml` passed. Its artifact contained valid catalogue JSON for both requested datasets.
+
+| Dataset | Version | Bottom-temperature variable | Standard name | Units | Catalogue time-coordinate extrema |
+|---|---|---|---|---|---|
+| `cmems_mod_glo_phy_anfc_0.083deg_P1D-m` | `202406` | `tob` | `sea_water_potential_temperature_at_sea_floor` | `degrees_C` | 2022-06-01 to 2026-11-26 |
+| `cmems_mod_glo_phy_my_0.083deg_P1D-m` | `202311` | `bottomT` | `sea_water_potential_temperature_at_sea_floor` | `degrees_C` | 1993-01-01 to 2026-10-06 |
+
+Both bottom fields expose `time`, `latitude`, and `longitude` coordinates, with no vertical depth coordinate. The horizontal increment is approximately 0.0833333 degrees. The catalogue reports global coordinate bounds, which do not establish valid coastal coverage or non-missing values.
+
+The forecast catalogue maximum is a future forecast-horizon coordinate and must not be reported as the latest observation/analysis time. Actual per-cell validity, fill values, and the analysis-versus-forecast time semantics remain to be checked in subset output. The reanalysis time maximum is the catalogue coordinate endpoint, not a measured freshness result.
+
+The metadata artifact also lists `geoseries` and `timeseries` Zarr services with explicit coordinate metadata; native-file and WMTS entries list variables but no coordinate arrays in this response. No temperature samples were downloaded. No model, species, scoring, ingestion, or publication behavior changed.
