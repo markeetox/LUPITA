@@ -893,3 +893,13 @@ Found species-specific evidence for all three previously needs-source named-site
 - Permit: FishBase modeled estimate 23.2–28.0 °C; 2026 Texas juvenile study associates presence with >25 °C; 1972 South Carolina survey observed 26 juvenile fish at 12.8–38.5 °C. These do not establish adult South Florida thermal preference. Retain provisional.
 - Added complete source-fit review to `docs/SPECIES_EVIDENCE_AUDIT_2026-11-17.md`.
 - No species JSON or prediction settings changed. Proposed status/source/note updates await review.
+
+
+## 2026-11-17 | Batch B: 27 other single-factor grid SST profiles
+
+- Reviewed all 27 single-factor grid profiles, each with one active SST factor, `gate: true`, `required: true`, and a generic NOAA Fisheries homepage-only citation.
+- Research recommendations: 20 partly_sourced, 3 provisional (great hammerhead, ocean triggerfish, pollock), and 4 needs_source for the active SST claim (misty grouper, rainbow runner, Warsaw grouper, yellowedge grouper).
+- Key findings include species-specific temperature ranges for albacore, cod, halibut, bigeye, cusk, tilefish, haddock, mako, tuna, billfish, swordfish, thresher shark, and snapper species. Several sources report bottom temperatures for deep demersal fish, not surface temperature.
+- Identified a systematic model-to-data concern: SST is being used as the sole gating input for some species whose documented habitat is deep bottom water. Surface and bottom temperature must not be treated as interchangeable.
+- Full per-profile configured intervals, evidence, caveats, sources, and recommendations are in `docs/SPECIES_EVIDENCE_AUDIT_2026-11-17.md`.
+- No species JSON, numeric interval, weight, active flag, gate, required flag, scoring, confidence, source configuration, ingestion, or publication behavior changed. Metadata recommendations await review.
