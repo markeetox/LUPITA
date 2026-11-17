@@ -2,7 +2,7 @@
 
 **Started:** 2026-11-17  
 **Branch:** `main`  
-**Status:** source inventory and validation design; no Copernicus samples downloaded yet  
+**Status:** read-only extraction pilot completed; independent observation validation pending  
 **Scope:** read-only research and validation only  
 **Guardrail:** do not modify production source configuration, MUR SST, species profiles, numeric bands, weights, gates, scoring, confidence, ingestion, or publication behavior.
 
@@ -171,4 +171,48 @@ The workflow performs eight small requests: four regional boxes from the forecas
 
 Regions: South Florida/Florida Keys, Gulf shelf, Atlantic shelf, and Pacific West Coast shelf. The script writes the NetCDF subsets and a JSON summary containing dimensions, coordinate extents, valid/missing counts, valid fraction, value range, units/standard name, fill-value encoding, and available global metadata. This is a coverage/structure smoke test only, not a model-accuracy comparison. The bounding boxes are broad sampling windows, not approved ecological regions or observation-matched stations.
 
-The workflow is manual-only, read-only, does not commit artifacts, does not run on a schedule, and does not change production ingestion or model behavior. It has been committed but **has not yet been dispatched**. After it passes, inspect the artifact before making any coverage or quality claims.
+The workflow is manual-only, read-only, does not commit artifacts, does not run on a schedule, and does not change production ingestion or model behavior. It was dispatched on 2026-11-17 (run 44144656207) and passed. The uploaded artifact was downloaded and inspected; results and limitations are recorded below.
+
+
+## Read-only subset pilot inspected | 2026-11-17
+
+GitHub Actions run [44144656207](https://github.com/markeetox/LUPITA/actions/runs/44144656207) completed successfully on `main` (commit `1a45bab6bab75355b6e28f657679d7c953be0f79`). All eight subset requests and the artifact-upload step passed. Artifact: `copernicus-bottom-temperature-pilot` (8 NetCDF files plus `pilot-summary.json`).
+
+### Extraction and data-file checks
+
+- All eight files were present: four regions from forecast `tob` on 2026-11-17 and the same four from reanalysis `bottomT` on 2017-07-15.
+- Each file contains the expected bottom-temperature variable and `time`, `latitude`, and `longitude` dimensions; no vertical depth axis is present.
+- Decoded time coordinates match the requested dates (00:00 UTC): forecast 2026-11-17 and reanalysis 2017-07-15.
+- Both variables use standard name `sea_water_potential_temperature_at_sea_floor` and units `degrees_C`.
+- Forecast NetCDF values are stored as float32 with fill value approximately `9.96921e36`; reanalysis values are packed int16 with fill value `-32767`, `scale_factor=0.00073244`, and `add_offset=21`. The packed reanalysis values must be decoded before physical interpretation. After decoding and excluding fill values, the recomputed counts and statistics match the pilot JSON summary.
+- No obvious out-of-range values were found in the decoded samples relative to the product metadata's broad valid ranges. This is a basic sanity check, not independent validation.
+
+### Valid grid-cell counts
+
+| Region | Forecast `tob` | Reanalysis `bottomT` |
+|---|---:|---:|
+| South Florida / Florida Keys | 321 / 475 (67.6%) | 321 / 475 (67.6%) |
+| Gulf shelf | 325 / 325 (100%) | 325 / 325 (100%) |
+| Atlantic shelf | 625 / 625 (100%) | 625 / 625 (100%) |
+| Pacific West Coast | 132 / 625 (21.1%) | 132 / 625 (21.1%) |
+
+These percentages are valid cells divided by all grid cells in each rectangular bounding box. They are **not ocean-only coverage rates**. Missing values may represent land masking, coastal geometry, or missing ocean data. The pilot does not include an independent wet-cell mask or bathymetric classification, so no claim about ocean-only coverage or coastal completeness is justified.
+
+### Decoded sample ranges
+
+| Region | Forecast 2026-11-17 min–max °C | Reanalysis 2017-07-15 min–max °C |
+|---|---:|---:|
+| South Florida / Keys | 5.75–27.70 | 5.28–30.89 |
+| Gulf shelf | 4.07–26.20 | 4.02–30.18 |
+| Atlantic shelf | 1.76–21.01 | 1.85–21.37 |
+| Pacific West Coast | 2.16–18.79 | 2.15–18.36 |
+
+The ranges are broad because each request covers a rectangular region with mixed depths and potentially offshore cells. The forecast and reanalysis samples are from different dates and different model products; their values must not be treated as a matched inter-product comparison or accuracy test. The low Atlantic means/ranges warrant spatial inspection against the actual bathymetry and station locations before interpreting them as shelf conditions.
+
+### What this pilot establishes, and what it does not
+
+Established: authentication, dataset access, dataset-specific variable identifiers, successful small-area extraction, coordinate/time decoding, fill-value handling, packed-value decoding, and basic numerical plausibility.
+
+Not established: ocean-only valid coverage, nearshore completeness, operational freshness/update latency, forecast lead-time semantics beyond the returned daily timestamp, accuracy against observations, suitability for any species, or usefulness as a fishing-prediction factor.
+
+Next: create a wet-cell/bathymetry-aware coverage assessment for the four boxes, then assemble quality-controlled independent CTD and mooring observations with documented near-bottom sample/sensor depth. Pair only time- and location-eligible observations and report regional bias/MAE/RMSE with sample counts. Keep the workflow manual-only and preserve the production change-control boundary.
