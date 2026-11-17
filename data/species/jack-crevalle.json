@@ -27,7 +27,10 @@
     "behavior": "Aggressive, fast-swimming schooling predator that blitzes bait in inlets, bays, surf lines, and coastal beaches.",
     "regulations_link": "https://myfwc.com/",
     "sources": [
-      "https://myfwc.com/"
+      "https://myfwc.com/",
+      "https://myfwc.com/wildlifehabitats/profiles/saltwater/jacks/crevalle-jack/",
+      "https://www.floridamuseum.ufl.edu/discover-fish/species-profiles/crevalle-jack/",
+      "https://www.dnr.sc.gov/marine/species/crevallejack.html"
     ]
   },
   "factors": [
@@ -44,11 +47,12 @@
       ],
       "weight": 0.4,
       "active": true,
-      "value_status": "sourced",
+      "value_status": "partly_sourced",
       "sources": [
-        "https://myfwc.com/"
+        "https://www.floridamuseum.ufl.edu/discover-fish/species-profiles/crevalle-jack/"
       ],
-      "reason_template": "Water is {value} C, in warm tropical range favored by jack crevalle."
+      "reason_template": "Water is {value} C, in warm tropical range favored by jack crevalle.",
+      "value_notes": "The Florida Museum species account reports adult occurrence at approximately 18–33.6 °C and larval occurrence at 20.4–29.4 °C. This provides species-specific thermal context, but occurrence is not a preferred-temperature or catch-response curve and the configured 20–32 °C range / 24–30 °C ideal are not directly validated."
     },
     {
       "param": "depth_m",
@@ -63,21 +67,24 @@
       ],
       "weight": 0.35,
       "active": true,
-      "value_status": "sourced",
+      "value_status": "partly_sourced",
       "sources": [
-        "https://myfwc.com/"
+        "https://www.floridamuseum.ufl.edu/discover-fish/species-profiles/crevalle-jack/",
+        "https://www.dnr.sc.gov/marine/species/crevallejack.html"
       ],
       "gate": true,
-      "reason_template": "Depth is {value} m, in shallow coastal and inlet waters."
+      "reason_template": "Depth is {value} m, in shallow coastal and inlet waters.",
+      "value_notes": "The Florida Museum account reports occurrence along the continental shelf and depths to about 100 m, with habitat varying by life stage; SCDNR describes both offshore and estuarine use. This supports broad coastal depth context but does not validate the configured 0.5–30 m range or 1–15 m ideal as a universal preference."
     },
     {
       "param": "season_presence",
       "kind": "season",
       "weight": 0.25,
       "active": true,
-      "value_status": "sourced",
+      "value_status": "partly_sourced",
       "sources": [
-        "https://myfwc.com/"
+        "https://myfwc.com/wildlifehabitats/profiles/saltwater/jacks/crevalle-jack/",
+        "https://www.dnr.sc.gov/marine/species/crevallejack.html"
       ],
       "months": [
         3,
@@ -102,14 +109,15 @@
         "peak": "It is peak jack crevalle run season.",
         "in_season": "It is jack crevalle season.",
         "off": "Outside main jack crevalle runs."
-      }
+      },
+      "value_notes": "FWC reports peak offshore spawning from March through September in subtropical waters; SCDNR describes seasonal north/south movement and summer occurrence in South Carolina. These sources support seasonal reproductive and migration context, not the configured March–November presence window or April–May/September–October peak catch scores in South Florida. Retain the monthly map as a provisional seasonal screening proxy."
     }
   ],
   "timing": {
     "status": "angler_lore",
     "light": {
       "map": {
-        "day": 1.0,
+        "day": 1,
         "dawn": 0.9,
         "dusk": 0.9,
         "night": 0.4
@@ -122,8 +130,8 @@
     },
     "tide": {
       "map": {
-        "rising": 1.0,
-        "falling": 1.0,
+        "rising": 1,
+        "falling": 1,
         "slack_high": 0.5,
         "slack_low": 0.4
       },
@@ -148,7 +156,7 @@
     "source_url": "https://myfwc.com/fishing/saltwater/recreational/"
   },
   "lon_range": [
-    -100.0,
-    -50.0
+    -100,
+    -50
   ]
 }
