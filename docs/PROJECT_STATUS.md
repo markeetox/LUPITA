@@ -586,3 +586,7 @@ Phase 0 identified a geographic eligibility issue: 25 of 130 grid profiles have 
 Taxonomy metadata was normalized for Eastern North Pacific opah (`Lampris incognitus`, supported by the 2018 revision and NOAA Monterey Bay checklist) and Dungeness crab (`Metacarcinus magister`, accepted name; `Cancer magister` retained as synonym). Southern flounder has a discontinuous Florida distribution; white sturgeon is primarily riverine/estuarine and only occasionally marine. Both need explicit scope decisions.
 
 The plan separates surface SST from bottom temperature and ETOPO seafloor bathymetry from fish vertical depth. No prediction formulas, numeric bands, weights, gates, active flags, environmental source selection, ingestion or publication behavior changed. See [MODEL_REBUILD_PLAN_2026-11-17.md](MODEL_REBUILD_PLAN_2026-11-17.md).
+
+## Geographic scope research update | 2026-11-17
+
+Completed a first source pass for all 25 grid profiles that lack latitude bounds. NOAA, state, council, museum, VIMS, WoRMS and FishBase sources now document range statements in the model-rebuild plan. These are not yet translated into numeric bounds: several include stock boundaries, seasonal migration, island absences or disjoint Florida distribution. Black sea bass, king mackerel, cobia, sheepshead and southern flounder need regional treatment rather than a guessed rectangle. No geographic bounds or scoring behavior changed.

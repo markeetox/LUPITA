@@ -502,3 +502,7 @@ Next work is to resolve scope/taxonomy first (Southern flounder, Pacific Opah, D
 ## 2026-11-17 | Model-rebuild plan, Phase 0 underway
 
 Started scope/identity before factor recalibration. Found 25 grid profiles without latitude bounds; missing `lat_range` means no latitude eligibility filter in the grid scorer. Corrected opah and Dungeness crab accepted taxonomic metadata. Flagged Southern flounder's discontinuous Florida distribution and White sturgeon's freshwater/estuarine scope. The next work is a source-backed geographic register, followed by measurement alignment (SST vs bottom temperature; seafloor depth vs fish vertical depth). No score, numeric band, weight, gate, active flag, or runtime change.
+
+## 2026-11-17 | Phase 0 geographic source pass
+
+Located traceable distribution sources for all 25 grid profiles missing latitude bounds. Do not translate textual endpoints into guessed coordinates; review stock splits, seasonal migration, island absences and disjoint distributions before choosing rectangular bounds or masks. See the geographic register in `docs/MODEL_REBUILD_PLAN_2026-11-17.md`. No model or runtime changes.

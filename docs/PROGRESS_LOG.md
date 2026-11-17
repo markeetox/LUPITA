@@ -1106,3 +1106,7 @@ Inspected the production grid envelope and scorer. The configured North America 
 Resolved two taxonomy metadata items: Eastern North Pacific opah is assigned to `Lampris incognitus` based on the 2018 revision and NOAA Monterey Bay checklist; Dungeness crab uses accepted name `Metacarcinus magister`, retaining `Cancer magister` as synonym. Clarified southern flounder's discontinuous Florida distribution and white sturgeon's primarily riverine/estuarine ecology. No numeric or runtime model behavior changed.
 
 Next: source-backed geographic-scope review of the 25 profiles without latitude bounds, then review of rectangular range mismatches. See `docs/MODEL_REBUILD_PLAN_2026-11-17.md`.
+
+## 2026-11-17 | Geographic range evidence pass
+
+Located source-backed range statements for all 25 grid profiles missing `lat_range`. Sources include NOAA Fisheries, state/council agencies, Florida Museum, VIMS, WoRMS and FishBase. Recorded the actual source statements and caveats in `docs/MODEL_REBUILD_PLAN_2026-11-17.md`. No decimal bounds were inferred: several species have stock splits, seasonal migration, regional absences or disjoint ranges. No profile ranges or runtime behavior changed.

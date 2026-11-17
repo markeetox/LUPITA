@@ -127,3 +127,44 @@ Not allowed without separate approval: changing numeric ranges/ideals, factor we
 - CDFW white sturgeon distribution: https://wildlife.ca.gov/Conservation/Fishes/Sturgeon/White-Sturgeon
 - Production region and layer definitions: `config/sources.json`
 - Geographic scoring behavior: `pipeline/scoring.py::score_species`
+
+
+## Phase 0.5: source-backed geographic review of the 25 missing latitude bounds
+
+The first source pass located distribution evidence for all 25 profiles. These statements are retained as source summaries, not converted directly into latitude coordinates. Named endpoints such as Massachusetts, Nova Scotia, Brazil, or the Yucatan are not exact coordinate boundaries, and some species have separate stocks, seasonal movements, or disjoint distributions.
+
+| Profile | Source-backed range statement | Scope caveat / source |
+|---|---|---|
+| African pompano | Western Atlantic from North Truro, Massachusetts to Santos, Brazil; Gulf and Caribbean included. | WoRMS distribution record: https://www.marinespecies.org/aphia.php?id=159629&p=taxdetails |
+| Almaco jack | Western Atlantic from Massachusetts to Brazil; rarely caught north of the Carolinas. | South Atlantic Fishery Management Council: https://safmc.net/species/jack-almaco/ |
+| Black grouper | Western Atlantic Massachusetts to Brazil; Gulf and Caribbean; U.S. stock primarily Florida Keys. | NOAA Fisheries: https://www.fisheries.noaa.gov/species/black-grouper/seafood |
+| Black sea bass | U.S. East Coast from Cape Cod to Gulf of Mexico. | NOAA identifies Mid-Atlantic and South Atlantic stocks, divided at Cape Hatteras; separate assessment and management contexts. South Florida occurrence is exceptional in some accounts, not a simple continuous range. https://www.fisheries.noaa.gov/species/black-sea-bass and https://www.fisheries.noaa.gov/s3/2026-04/sg_regam37_202604_final.pdf |
+| Blackfin tuna | Western Atlantic from Cape Cod to Brazil, including Gulf and Caribbean. | NOAA western Atlantic tuna guide: https://media.fisheries.noaa.gov/dam-migration/guide-to-tunas-of-the-western-atlantic-ocean.pdf |
+| Blue marlin | Atlantic occurrence reported approximately 44°N to 30°S. | Florida Museum: https://www.floridamuseum.ufl.edu/discover-fish/species-profiles/blue-marlin/ |
+| Bluefin tuna | Western Atlantic Labrador to northern Brazil, including Gulf; the species also occurs in the eastern Atlantic and Pacific. | Florida Museum: https://www.floridamuseum.ufl.edu/discover-fish/species-profiles/bluefin-tuna/ |
+| Cobia | Western Atlantic Nova Scotia to Argentina; U.S. waters most abundant Virginia south through Gulf; seasonal movement into South Florida in winter. | NOAA Fisheries: https://www.fisheries.noaa.gov/species/cobia |
+| Florida pompano | Western Atlantic Massachusetts to Brazil. | Virginia Institute of Marine Science species page: https://www.vims.edu/research/departments/fisheries/programs/mrg_draft/speciesofinterest/species_gridpages/florida-pompano.php |
+| Gag grouper | Western Atlantic primarily North Carolina to Yucatan Peninsula, including Gulf. | NOAA Fisheries: https://www.fisheries.noaa.gov/species/gag-grouper/overview |
+| Gray triggerfish | Western Atlantic Nova Scotia to Argentina, including Bermuda and Gulf. | NOAA Fisheries: https://www.fisheries.noaa.gov/species/gray-triggerfish |
+| Jack crevalle | Western Atlantic Nova Scotia to Uruguay; also throughout Gulf. | Florida Museum: https://www.floridamuseum.ufl.edu/discover-fish/species-profiles/crevalle-jack/ |
+| King mackerel | Western Atlantic Massachusetts to Rio de Janeiro, including Gulf and Caribbean. | NOAA/Florida Museum report two stocks that mix in South Florida; stock boundary and season matter. https://www.fisheries.noaa.gov/species/king-mackerel/seafood and https://www.floridamuseum.ufl.edu/discover-fish/species-profiles/king-mackerel/ |
+| Mahi-mahi | Atlantic, Gulf, and Caribbean; NOAA reports U.S. catch from Massachusetts to Texas. | This is the U.S. fishery range, not the species' full tropical/subtropical global range. https://www.fisheries.noaa.gov/species/atlantic-mahi-mahi |
+| Mangrove snapper | FishBase gives 42°N–9°N and 98°W–59°W; Brazilian records are flagged as possible misidentifications. | Do not extend to Brazil on older broad range claims without taxonomic/record validation. https://www.fishbase.org/summary/Lutjanus-griseus |
+| Mutton snapper | Western Atlantic Massachusetts to Brazil; Gulf included; most common in tropical Florida, Bahamas and Caribbean. | Florida Museum: https://www.floridamuseum.ufl.edu/discover-fish/species-profiles/mutton-snapper/ |
+| Red drum | Atlantic historic range Massachusetts through Florida; Gulf range Florida to northern Mexico. | Atlantic and Gulf stocks are managed separately; recent Atlantic distribution/catch differs from historic range. https://asmfc.org/species/red-drum/ and https://gulfcouncil.org/species/drum-red/ |
+| Red grouper | Western Atlantic Massachusetts through Gulf and south to Brazil. | NOAA Fisheries: https://www.fisheries.noaa.gov/species/red-grouper |
+| Red snapper | Western Atlantic New England to Yucatan Peninsula, throughout Gulf. | NOAA NCEI atlas: https://www.ncei.noaa.gov/waf/data-atlas-waf/products/originalAtlas/lmrPlates/RedSnapper-3_36.pdf |
+| Sailfish | Western Atlantic approximately 40°N to 40°S; highest abundance in Gulf, Atlantic Florida, and Caribbean. | Florida Museum: https://www.floridamuseum.ufl.edu/discover-fish/species-profiles/sailfish/ |
+| Scamp grouper | Continental shelf from Campeche Banks to Florida and north along East Coast to North Carolina. | South Atlantic Fishery Management Council: https://safmc.net/species/grouper-scamp/ |
+| Sheepshead | Western Atlantic Nova Scotia through Gulf, with records south to Brazil; densest populations off southwest Florida. | Florida Museum reports absences in Bahamas, West Indies, Grenada and Bermuda, so a simple continuous envelope overstates occurrence. https://www.floridamuseum.ufl.edu/discover-fish/species-profiles/sheepshead/ |
+| Snowy grouper | Western Atlantic Massachusetts to Brazil, including Gulf, Lesser Antilles and northern Cuba. | South Atlantic Fishery Management Council: https://safmc.net/species/grouper-snowy/ |
+| Southern flounder | Atlantic range Albemarle Sound to Loxahatchee River; absent south of Loxahatchee and around Florida peninsula tip, but occurs in Caloosahatchee River Estuary; Gulf range extends to northern Mexico. | Disjoint Florida distribution; keep regional mask/profile-split decision open. https://www.dnr.sc.gov/marine/species/assets/SpeciesProfileSouthernGulfSummerFlounder.pdf |
+| Wahoo | Western Atlantic from about 35°N to 38°S; Gulf included; abundance is seasonal in the Carolinas and Bermuda. | Florida Museum: https://www.floridamuseum.ufl.edu/discover-fish/species-profiles/wahoo/ |
+
+### What this source pass does and does not establish
+
+- It establishes that all 25 missing-latitude profiles have traceable distribution references to guide a formal geographic review.
+- It does **not** establish that a single min/max latitude rectangle is the correct model mask for every species.
+- Stock boundaries, seasonal migration, discontinuous Florida distribution, island absences, and life-stage differences must be preserved.
+- Do not automatically convert city/country endpoints into arbitrary decimal degrees. If the source provides coordinates or a mapped polygon, use that. Otherwise keep the evidence as a documented range statement and decide whether a coarse box is defensible.
+- The strongest regional-scope flags from this pass are black sea bass (separate Mid-Atlantic/South Atlantic stocks), king mackerel (Atlantic/Gulf stock mixing in South Florida), cobia (seasonal migration), sheepshead (documented regional absences), and southern flounder (discontinuous Florida distribution).
