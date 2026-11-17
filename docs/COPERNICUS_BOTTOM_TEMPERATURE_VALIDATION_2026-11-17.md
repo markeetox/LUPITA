@@ -257,3 +257,37 @@ The assessment also flags valid Copernicus temperatures at ETOPO-classified land
 Important sampling-design finding: the box labeled Atlantic shelf is not shelf-dominated. 572/625 cells (91.5%) are deeper than 2,000 m; only 26 cells are in the 10–200 m classes. Its all-cell mean near 2.86°C is therefore dominated by abyssal water and must not be interpreted as an Atlantic shelf temperature. The Gulf sample also includes substantial slope/deep-water area (37 cells >2,000 m and 186 cells at 500–2,000 m). The regional boxes need refinement/renaming before regional shelf statistics are used.
 
 Forecast samples are dated 2026-11-17 and reanalysis samples 2017-07-15. They are separate product/date snapshots, not a matched forecast-vs-reanalysis comparison. Results establish preliminary data availability and depth context only; they do not establish accuracy, freshness, or suitability for species scoring. Next: inspect spatial patterns and revise the regional sampling boxes, especially the Atlantic shelf box; then inventory qualifying independent CTD and mooring observations. No production behavior changed.
+
+
+## Spatial review and refined candidate sampling boxes | 2026-11-17
+
+Inspected all eight per-cell CSV grids from bathymetry assessment run [44158655908](https://github.com/markeetox/LUPITA/actions/runs/44158655908), not only the aggregate JSON.
+
+### Pacific shallow-gap diagnosis
+
+The 15 missing ocean-classified cells are all 0–10 m deep and cluster at approximately 37.83–38.25°N, 121.42–122.08°W. Their coordinates lie in the Sacramento–San Joaquin Delta / upper San Francisco Bay estuarine system, not on the exposed Pacific continental shelf. The original `pacific_west_coast` rectangle therefore mixed open-coast, bay, delta, and land cells. Its 86.7% ocean-only coverage is not a defensible Pacific shelf coverage estimate.
+
+The 32 valid temperature values at ETOPO-classified land points are concentrated around the San Francisco Bay/coastal grid transition, with several ETOPO elevations from only about 1–30 m and some higher terrain values. This points to a model-vs-bathymetry wet-mask/resolution disagreement that needs a local mask comparison; it does not establish that the Copernicus values are valid over land. Exclude these cells from ocean coverage pending resolution.
+
+### South Florida mask disagreement
+
+The four valid Copernicus cells classified as ETOPO land occur near 25.58°N, 80.33°W and 26.33–26.50°N, 80.08°W. ETOPO elevations are approximately 2.0–4.5 m. These are coastal-grid disagreements, not verified ocean observations. Keep them excluded from ocean-only coverage and inspect the local shoreline/mask before any later use.
+
+### Revised exploratory boxes
+
+Updated the pilot's four regional requests while retaining the South Florida reference box:
+
+| Sample | Longitude | Latitude | Reason |
+|---|---:|---:|---|
+| South Florida / Keys | -81.0 to -79.5 | 24.5 to 26.5 | Retain as existing reference |
+| Gulf shelf candidate | -89.0 to -87.5 | 29.0 to 30.0 | Shift north/east toward the northern Gulf shelf and away from the previous deep-water-heavy rectangle |
+| Atlantic shelf candidate | -75.5 to -74.5 | 35.0 to 36.0 | Narrow around the shallow western edge of the previous box; verify depth mix before calling it shelf-representative |
+| Pacific outer-shelf candidate | -124.5 to -123.5 | 37.0 to 39.0 | Move west of San Francisco Bay/Delta to sample exposed Pacific coast rather than estuarine cells |
+
+These are hypotheses for a second coverage pass, not approved ecological boundaries. The next manual pilot will produce eight new subsets (four regions x forecast/reanalysis); the bathymetry workflow will classify them against ETOPO. Retain the original artifacts as the baseline rather than overwriting them.
+
+### Guardrails and next step
+
+The existing ETOPO classification is coarse (30-arc-second relief sampled at approximately the Copernicus grid spacing) and the ±1 m coast-ambiguous band is not a substitute for a high-resolution wet mask. No land-classified temperature is accepted as ocean data. No accuracy, freshness, or species relevance is inferred from these diagnostics.
+
+Next: run the revised manual pilot, inspect the depth distribution and coastal-mask mismatches again, then select qualifying NOAA CTD/mooring profiles for independent matched validation. All work remains read-only; no production ingestion, MUR SST, species profiles, factors, weights, gates, scoring, confidence, or publication behavior changes.
