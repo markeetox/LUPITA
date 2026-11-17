@@ -435,3 +435,8 @@ Reviewed Hogfish, Jack crevalle, King mackerel, and Red drum across 13 active fa
 Completed source-by-source review of all 29 originally elevated-risk multi-factor profiles. The final five were Mahi-mahi, Mutton snapper, Sheepshead, Southern flounder, and Wahoo (26 active factors). Source/status/value-note metadata only; all numerical and runtime behavior remains unchanged.
 
 Next: run/inspect the refreshed species-profile validator, then review remaining partial-risk and documented multi-factor profiles. Resolve the southern flounder South Florida distribution caveat separately before any model-scope or activation decision. See [SPECIES_EVIDENCE_AUDIT_2026-11-17.md](SPECIES_EVIDENCE_AUDIT_2026-11-17.md).
+
+
+## 2026-11-17 | Validator checkpoint and next evidence queue
+
+Batch C is complete and validated by CI #44127699186 (307 passed, 0 failed). The species audit reports 130 structurally valid profiles and zero compatibility issues. Current evidence risk: 30 elevated, 48 partial, 52 documented; multi-factor subset: 16 elevated, 13 partial, 51 documented. The previously elevated/partial multi-factor profiles have already received source-by-source review. Next focus is the 51 documented multi-factor profiles, verifying actual claim fit rather than treating the validator's documented category as scientific validation. No numerical or runtime changes.

@@ -1020,3 +1020,10 @@ Reviewed Mahi-mahi, Mutton snapper, Sheepshead, Southern flounder, and Wahoo acr
 - No numeric ranges, ideal intervals, weights, active flags, gates, required flags, month lists, scoring, confidence, ingestion, or publication behavior changed.
 
 All 29 originally elevated-risk multi-factor profiles have now been reviewed. Next: validate the metadata batch, reconcile the refreshed audit artifact, then proceed to remaining partial-risk and documented multi-factor profiles.
+
+
+## 2026-11-17 | Batch C validation and queue reconciliation
+
+CI #44127699186 passed: 307 tests, 0 failures, 115 warnings. Species audit: 130 parsed and structurally valid, 0 model-compatibility issues, 0 JSON parse errors; 0 errors, 488 warnings, 122 informational findings. Current evidence risk is 30 elevated, 48 partial, 52 documented; multi-factor distribution is 16 elevated, 13 partial, 51 documented. Combined active uncertain factor weight is 10.34 (not probability).
+
+All 29 originally elevated-risk multi-factor profiles have been reviewed. Current elevated/partial classifications reflect evidence limitations and are not an unreviewed queue. Next: source-by-source claim-fit review of the 51 documented multi-factor profiles. Specific reference metadata is not proof that numeric biological claims or runtime response curves are validated. Preserve model behavior during this review.

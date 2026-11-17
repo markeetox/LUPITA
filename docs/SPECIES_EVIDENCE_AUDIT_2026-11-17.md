@@ -515,3 +515,23 @@ Reviewed Mahi-mahi, Mutton snapper, Sheepshead, Southern flounder, and Wahoo acr
 
 ### Batch C cumulative disposition
 All 29 of the originally elevated-risk multi-factor profiles have now received source-by-source review. Across the five profiles in this final batch, 26 active factors were examined. The 29-profile review is complete; the next step is to reconcile the refreshed validator artifact and proceed to the remaining partial-risk and documented multi-factor profiles. Southern flounder's regional distribution conflict must remain an explicit open issue until separately resolved.
+
+
+## Validator reconciliation after Batch C | 2026-11-17
+
+Python CI [#44127699186](https://github.com/markeetox/LUPITA/actions/runs/44127699186) passed **307 tests, 0 failures, 115 warnings**. The species validator inspected 130 profiles: 130 parsed, 130 structurally valid, 0 model-compatibility issues, 0 JSON parse errors. The audit artifact is [lupita-species-audit #14347289280](https://github.com/markeetox/LUPITA/actions/runs/44127699186/artifacts/14347289280).
+
+Current validator distribution:
+- Evidence risk: 30 elevated, 48 partial, 52 documented.
+- Multi-factor subset: 16 elevated, 13 partial, 51 documented.
+- Other single-factor subset: 7 elevated, 20 partial, 0 documented.
+- Temperature-only site subset: 7 elevated, 15 partial, 1 documented.
+- Combined active uncertain factor weight: 10.34 (weight sum, not probability or percentage).
+- Classification: 127 NEEDS MODEL REBUILD and 3 NEEDS RESEARCH. This is the validator's biological-completeness prioritization, not a count of malformed profiles or runtime incompatibilities.
+- Findings: 0 errors, 488 warnings, 122 informational findings.
+
+The 16 currently elevated multi-factor profiles are African pompano, Almaco jack, Atlantic blue marlin, Atlantic sailfish, Atlantic tarpon, Blackfin tuna, Cobia, Common snook, Hogfish, King mackerel, Mahi-mahi, Mutton snapper, Sheepshead, Snowy grouper, Southern flounder, and Wahoo. They are already included in the completed 29-profile source review; their remaining elevated classification reflects unresolved evidence limits, not an unreviewed queue.
+
+The 13 partial-risk multi-factor profiles are Atlantic bluefin tuna, Black grouper, Black sea bass, Cubera snapper, Florida pompano, Gag grouper, Gray (mangrove) snapper, Gray triggerfish, Jack crevalle, Red drum, Red grouper, Red snapper, and Scamp grouper. These are also already covered by the earlier source-by-source reviews.
+
+**Next review queue:** the 51 documented multi-factor profiles. “Documented” means the current metadata passes the validator's source-reference/documentation criteria; it does not mean every biological claim or numeric response curve has been independently validated. Continue checking factor-by-factor claim fit, region, life stage, runtime-variable match, and whether occurrence/tolerance is being mistaken for preference. Keep numerical model behavior unchanged.

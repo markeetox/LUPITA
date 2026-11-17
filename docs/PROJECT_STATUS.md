@@ -511,3 +511,10 @@ Completed source-by-source review of all 29 profiles originally classified as el
 Important open issue: a 2023 fisheries assessment cites southern flounder as absent from southern Florida between the Loxahatchee and Caloosahatchee rivers. The profile now carries a regional-applicability warning; no factor was disabled and no prediction behavior changed. See [SPECIES_EVIDENCE_AUDIT_2026-11-17.md](SPECIES_EVIDENCE_AUDIT_2026-11-17.md) for source-by-source findings.
 
 Next: refresh/review the validator artifact after these metadata updates, then continue the remaining partial-risk multi-factor profiles and documented profiles. Keep regional species applicability, biological evidence, environmental source freshness, and prediction confidence as separate concerns.
+
+
+## Validator reconciliation | 2026-11-17
+
+Batch C validation [#44127699186](https://github.com/markeetox/LUPITA/actions/runs/44127699186) passed 307 tests, with 0 failures and 115 warnings. The species audit inspected 130 profiles: 130 structurally valid, 0 compatibility issues, 0 JSON parse errors. Current evidence-risk counts are 30 elevated, 48 partial, and 52 documented; among multi-factor models, 16 are elevated, 13 partial, and 51 documented. Combined active uncertain factor weight is 10.34, not a probability or percentage.
+
+The 29 originally elevated-risk multi-factor profiles have all been source-reviewed. The current elevated and partial classifications do not mean those profiles are unreviewed; they reflect the conservative status of the evidence. Next queue: source-by-source claim-fit review of the 51 documented multi-factor profiles. “Documented” is a validator metadata category, not proof that every numeric biological claim is scientifically validated. Keep the southern flounder South Florida distribution caveat open. Details: [species evidence audit](SPECIES_EVIDENCE_AUDIT_2026-11-17.md).
