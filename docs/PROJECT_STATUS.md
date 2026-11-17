@@ -1,6 +1,6 @@
 # LUPITA project status
 
-**Last reviewed:** 2026-11-14  
+**Last reviewed:** 2026-11-17  
 **Production branch:** `main`  
 **Canonical application branch:** `main`  
 **Generated export branch:** `data`  
@@ -433,3 +433,14 @@ Owner-approved source review was applied to all 20 homepage-only named-site SST 
 ### Follow-up SST evidence review | 2026-11-16
 
 Completed a second source review for spot, weakfish, and white grunt. Each now has species-specific references and conservative `partly_sourced` evidence status with explicit caveats. Updated totals for the 20 named-site SST profiles: 1 sourced, 14 partly sourced, 5 provisional, 0 needs-source. No numeric bands, ideal intervals, weights, gates, required flags, timing, scoring, confidence behavior, ingestion, or publication changed. See [review report](NAMED_SITE_SST_EVIDENCE_REVIEW_2026-11-16.md).
+
+
+## All-species evidence audit inventory | 2026-11-17
+
+Completed a master inventory of all 130 profiles using the species audit artifact from [Python CI #43952010312](https://github.com/markeetox/LUPITA/actions/runs/43952010312). All 130 JSON files parsed and were structurally valid, with zero model-compatibility issues. The catalog contains 105 grid models and 25 site models: 23 temperature-only site pilots, 27 other single-factor models, and 80 multi-factor models.
+
+The audit identifies 64 profiles with elevated active-evidence risk, 14 with partial risk, and 52 with no active uncertain weight under current metadata checks. Combined active uncertain factor weight is 37.4 across profiles; this is not a probability or calibrated evidence score. The validator recorded 96 generic-homepage source findings across 48 profiles and 3 missing factor-source findings across two profiles (sailfish and tarpon). It also flagged 27 grid profiles whose `required` flag is ignored by the grid scorer. These are prioritization signals, not proof of biological invalidity.
+
+The 20 reviewed named-site SST profiles are now 1 sourced, 14 partly sourced, and 5 provisional. Three temperature-only site pilots remain for source-by-source review: bonefish, great barracuda, and Permit. Next sequence: finish those three; review all 27 other single-factor profiles; then review the 80 multi-factor profiles by factor family, prioritizing the 29 with elevated active-evidence risk. Timing claims and profile-level biological narratives will be audited separately.
+
+Full scope, counts, review standard, and guardrails: [all-species evidence audit](SPECIES_EVIDENCE_AUDIT_2026-11-17.md). No species values, weights, gates, required flags, scoring, confidence, source selection, ingestion, or publication behavior changed.
