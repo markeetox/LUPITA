@@ -707,3 +707,12 @@ Ocean-only coverage: South Florida/Keys 302/302 (100%); Gulf 246/246 (100%); Atl
 Depth composition confirms the Gulf as the strongest broad shelf candidate (178/246 cells at 10–200 m). Atlantic v2 is focused shallow shelf (78/88 at 10–200 m), but has only two 0–10 m cells and one of those is missing temperature. Pacific v2 has 43/65 cells at 50–500 m, making it a provisional shelf/slope-transition sample, though the sample is small. South Florida remains a broad shelf/slope reference, not shallow-only.
 
 The dates differ (forecast 2026-11-17; reanalysis 2017-07-15), so no accuracy or direct forecast/reanalysis comparison is supported. Next: inventory independent near-bottom NOAA CTD/profile observations and verify regional station coverage, actual sensor/sample depth, QC, and date availability before any model-observation pairing. No production behavior changed.
+
+
+## Independent bottom-temperature observation inventory | 2026-11-17
+
+Initial NOAA source discovery is documented in the Copernicus validation protocol. Primary profile archives are NOAA NCEI WOD23 and GTSPP. WODSelect supports regional/date/variable/deepest-measurement/QC filtering and CSV/NetCDF output; GTSPP provides a 1990-present geographic/date interface and a quality-controlled best-copy archive.
+
+NOAA SEFSC/NCEI GoMMAPPS GU1703 CTD accession 0243654 is the first regional archive to inspect: processed and unprocessed vertical profiles, maximum depth 500 m, 2017-06-29 through 2017-08-17, spatial extent approximately 23.823–29.955°N and 96.472–81.839°W. This overlaps much of the Gulf candidate and part of South Florida and includes the reanalysis pilot date 2017-07-15. Cast counts and near-bottom eligibility are not yet known.
+
+Next: inspect the GoMMAPPS CTD directory, processed-file format, readme/data dictionary, and cast-level metadata; then inventory WOD/GTSPP profiles for all four regions. No observations have yet been accepted or paired, and no accuracy statistics are claimed. Surface-only observations remain ineligible. No production behavior changed.
