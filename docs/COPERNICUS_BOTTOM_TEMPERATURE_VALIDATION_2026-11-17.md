@@ -327,3 +327,14 @@ Forecast subset date is 2026-11-17; reanalysis subset date is 2017-07-15. These 
 ### Next step
 
 Refine the Atlantic and especially Pacific sampling geometry using the per-cell depth coordinates, aiming for explicit bathymetric strata rather than rectangular regions that accidentally include abyssal water. Keep Gulf as the best current shelf candidate and retain South Florida as a broad regional reference. Then build the independent NOAA CTD/mooring observation inventory and matched validation design. Continue to keep all work read-only: no production ingestion, MUR SST, species profiles, factors, weights, gates, scoring, confidence, or publication behavior changes.
+
+
+## Candidate box refinement v2 | 2026-11-17
+
+Inspected the successful assessment's per-cell CSVs rather than relying only on regional aggregate percentages. The prior Atlantic rectangle showed a strong west-to-east depth transition: its western longitudes are predominantly 10–200 m, while the eastern edge quickly transitions through 200–500 m into 500–2000 m and abyssal depths. The Pacific rectangle was overwhelmingly abyssal; the easternmost sampled longitudes and northern latitudes showed the only meaningful approach to the continental margin, but the existing rectangle did not extend far enough east to map a shelf-oriented sample.
+
+Updated `scripts/copernicus_bottom_temperature_pilot.py` with two exploratory candidate v2 boxes:
+- Atlantic: longitude -75.5 to -75.0°W, latitude 35.0 to 36.0°N (narrowed to the shallower western portion).
+- Pacific: longitude -123.75 to -123.25°W, latitude 38.0 to 39.0°N (shifted east/north toward the continental margin).
+
+These are sampling hypotheses, not validated shelf strata. The next manual pilot must be followed by the ETOPO bathymetry assessment. Land and coast-ambiguous cells must remain excluded from ocean coverage; depth composition, valid coverage, and mask disagreement must all be reviewed before accepting either box. Gulf and South Florida boxes remain unchanged. No production data or scoring behavior changed.
