@@ -29,12 +29,12 @@ def fetch_etopo(region, bbox):
     lon0 = lon360(float(bbox["minimum_longitude"]))
     lon1 = lon360(float(bbox["maximum_longitude"]))
     query = f"z[({lat0}):{STRIDE}:({lat1})][({lon0}):{STRIDE}:({lon1})]"
-    url = f"{ETOPO_BASE}.csv0?{quote(query, safe='[]():.')}"
+    url = f"{ETOPO_BASE}.csv?{quote(query, safe='[]():.')}"
     print(f"Fetching ETOPO for {region}: {url}", flush=True)
     response = requests.get(url, timeout=120)
     response.raise_for_status()
     try:
-        frame = pd.read_csv(StringIO(response.text))
+        frame = pd.read_csv(StringIO(response.text), skiprows=[1])
     except Exception as exc:
         raise RuntimeError(f"{region}: ETOPO CSV parse failed: {response.text[:500]}") from exc
     frame.columns = [str(c).strip().lower() for c in frame.columns]
