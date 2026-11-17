@@ -33,7 +33,6 @@
       "https://nsuworks.nova.edu/mako/vol2021/iss1/1",
       "https://www.iccat.int/Documents/CVSP/CV065_2010/n_5/CV065051740.pdf",
       "https://scholars.nova.edu/en/publications/sailfish-istiophorus-platypterus-habitat-utilization-in-the-south-2/",
-      "https://flylifemagazine.com/?p=22679",
       "https://floridasportsman.com/editorial/features_florida_sailfish_fishing_basics/397320",
       "https://www.gameandfishmag.com/editorial/sailfish-season-less-than-stellar/348168"
     ]
@@ -164,22 +163,26 @@
     {
       "param": "cold_front",
       "kind": "flag",
-      "weight": 0.0,
+      "weight": 0,
       "active": false,
-      "value_status": "needs_source",
-      "value_notes": "Cold fronts concentrate sailfish. Not yet detected by the pipeline (planned).",
-      "sources": []
+      "value_status": "provisional",
+      "value_notes": "South Florida angler accounts report sailfish concentrations around cold-front passages. This is local fishing guidance rather than a controlled or independently validated response study. The factor is inactive and not currently detected by the pipeline.",
+      "sources": [
+        "https://floridasportsman.com/editorial/features_florida_sailfish_fishing_basics/397320",
+        "https://www.gameandfishmag.com/editorial/sailfish-season-less-than-stellar/348168"
+      ]
     },
     {
       "param": "current_convergence",
       "kind": "higher_is_better",
       "weight": 0.06,
       "active": true,
-      "value_status": "sourced",
-      "value_notes": "Converging currents push bait and weed lines along shelf edges where sailfish hunt.",
+      "value_status": "partly_sourced",
+      "value_notes": "Florida fishing accounts describe sailfish using bait and weed lines along shelf edges, while South Florida habitat research documents offshore habitat use. This supports a plausible association with convergent current features, but the source evidence does not directly measure convergence or validate the current higher-is-better score.",
       "reason_template": "Converging surface currents accumulate bait and weed lines.",
       "sources": [
-        "https://floridasportsman.com/editorial/features_florida_sailfish_fishing_basics/397320"
+        "https://floridasportsman.com/editorial/features_florida_sailfish_fishing_basics/397320",
+        "https://nsuworks.nova.edu/mako/vol2021/iss1/1"
       ]
     },
     {
@@ -193,7 +196,7 @@
         -8,
         12
       ],
-      "weight": 0.10,
+      "weight": 0.1,
       "active": true,
       "value_status": "provisional",
       "value_notes": "Florida accounts put winter sailfish along the western (inshore) edge of the Gulf Stream, where green water meets blue. The edge is estimated from 25 km satellite altimetry, so it is good to roughly 20 km. The band is an estimate.",
@@ -214,7 +217,7 @@
     "front": {
       "map": {
         "approaching": 0.85,
-        "just_passed": 1.0,
+        "just_passed": 1,
         "lull": 0.9
       },
       "text": {
@@ -235,7 +238,7 @@
     "source_url": "https://myfwc.com/fishing/saltwater/recreational/"
   },
   "lon_range": [
-    -100.0,
-    -50.0
+    -100,
+    -50
   ]
 }

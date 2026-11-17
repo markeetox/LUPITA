@@ -42,12 +42,7 @@
       "https://news.miami.edu/rosenstiel/stories/2020/01/new-study-reveals-international-movements-of-atlantic-tarpon-need-for-protection.html",
       "https://www.floridamuseum.ufl.edu/discover-fish/species-profiles/tarpon",
       "https://www.ncbi.nlm.nih.gov/pmc/articles/PMC12710809/",
-      "https://anglersjournal.com/saltwater/spring-tarpon-fishing-in-florida/",
-      "https://www.thefisherman.com/article/head-south-silver-kings-in-the-spring/",
-      "https://myfwc.com/wildlifehabitats/profiles/saltwater/tarpon/tarpon/",
-      "https://www.floridamuseum.ufl.edu/discover-fish/species-profiles/tarpon/",
-      "https://myfwc.com/fishing/saltwater/recreational/tarpon/",
-      "https://myfwc.com/fishing/saltwater/recreational/tarpon/faqs/"
+      "https://www.swg.usace.army.mil/Portals/26/docs/Planning/Public%20Notices-Civil%20Works/HSC-ECIP%20FIFR-EIS/App%20L%20-%20Essential%20Fish%20Habitat%20Assessment%20%2818%20Nov%202019%29.pdf"
     ],
     "size": "Can reach about 8 feet and 300 lb (FWC).",
     "life_history": "Slow-growing; FWC reports maturity at roughly 7-13 years. Spawning occurs mainly May-September in Florida, with offshore spawning migrations and a ribbon-like leptocephalus larval stage. Females may produce more than 12 million eggs.",
@@ -188,9 +183,12 @@
       "kind": "range",
       "weight": 0,
       "active": false,
-      "value_status": "needs_source",
-      "value_notes": "Tarpon tolerate 0-47 ppt; not needed for scoring.",
-      "sources": []
+      "value_status": "partly_sourced",
+      "value_notes": "Regional EFH and species accounts document tarpon across fresh/brackish/marine environments and broad salinity exposure, supporting euryhaline tolerance. This does not establish a predictive salinity suitability curve; the factor is inactive with zero weight and is not used by current scoring.",
+      "sources": [
+        "https://www.swg.usace.army.mil/Portals/26/docs/Planning/Public%20Notices-Civil%20Works/HSC-ECIP%20FIFR-EIS/App%20L%20-%20Essential%20Fish%20Habitat%20Assessment%20%2818%20Nov%202019%29.pdf",
+        "https://www.floridamuseum.ufl.edu/discover-fish/species-profiles/tarpon"
+      ]
     },
     {
       "param": "bridges_lights",
