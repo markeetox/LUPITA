@@ -974,3 +974,14 @@ Found species-specific evidence for all three previously needs-source named-site
 - No numeric values, weights, active flags, gates, required flags, season months, scoring, confidence, ingestion, or publication behavior changed.
 - Full source-fit notes are in docs/SPECIES_EVIDENCE_AUDIT_2026-11-17.md.
 
+
+## 2026-11-17 | Coastal pelagic multi-factor evidence review
+
+- Reviewed blackfin tuna, cobia, common snook, and Florida pompano.
+- Blackfin tuna: nine-fish Gulf tag study supports 21.9–26.6 °C use and shallow vertical habitat; shelf-slope association partially supports bathymetry, but not direct gradient or Gulf Stream distance preferences.
+- Cobia: 2026 Gulf satellite tagging supports seasonal thermal/depth behavior and southward/offshore dispersal; fish vertical depth was explicitly separated from seafloor bathymetry.
+- Common snook: added 2025 Everglades abundance and juvenile thermal-tolerance studies; retained tide/time-of-day as provisional due angler-guidance limitations.
+- Florida pompano: added NOAA-hosted life-history synthesis and FWC species profile; temperature, depth, and seasonal evidence are partial because physiological/juvenile data do not establish adult local catch curves.
+- No numeric ranges, ideal bands, weights, active flags, gates, required flags, month lists, scoring, confidence, ingestion, or publication behavior changed.
+- Full evidence notes and sources are in docs/SPECIES_EVIDENCE_AUDIT_2026-11-17.md.
+

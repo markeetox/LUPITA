@@ -386,3 +386,39 @@ Reviewed Atlantic blue marlin, Atlantic bluefin tuna, sailfish, and tarpon. Repl
 ### Batch C cumulative disposition
 Sixteen elevated-risk multi-factor profiles have now been reviewed across 59 active factors. The four pelagic profiles above complete this batch's source updates; inactive sailfish cold_front and tarpon salinity were also documented. The remaining multi-factor profiles continue to be prioritized by active evidence risk and runtime relevance.
 
+
+## Batch C research and metadata implementation: coastal pelagic species | 2026-11-17
+
+Reviewed blackfin tuna, cobia, common snook, and Florida pompano. Updated factor sources/statuses/notes where source fit justified it. No numeric intervals, ideal bands, weights, active flags, gates, required flags, month lists, or runtime behavior changed.
+
+### Blackfin tuna (Thunnus atlanticus)
+- SST: partly_sourced. A northern Gulf satellite-tag study of nine fish found 89% of time at 21.9–26.6 °C; ICCAT describes a lower distribution limit near 20 °C. This supports broad 20–29 °C / 22–27 °C context, but the tag sample was small and geographically limited.
+- SST gradient and chlorophyll gradient: provisional. Literature links distribution to upwelling, runoff, plankton concentrations, and water clarity, but does not calibrate remotely sensed gradient magnitude or a higher-is-better score.
+- Bottom slope: partly_sourced. Published summaries link Florida distribution to shelf-slope edges and continental shelf steepness, but do not validate the runtime bottom_slope metric or monotonic score.
+- Depth: partly_sourced. Fish tags report vertical dive depths; fisheries sources describe shelf-slope-edge occurrence and typical depths. Vertical fish depth is not seafloor bathymetry, so the configured 30–1,500 m / 60–800 m bathymetric band is only partly supported and likely broader than common habitat.
+- Gulf Stream edge: provisional. Warm-water/pelagic and shelf-edge associations do not establish a preferred distance from the Gulf Stream edge.
+- Sources: [NSU satellite-tag study](https://nsuworks.nova.edu/occ_facarticles/485/); [ICCAT blackfin manual](https://www.iccat.int/Documents/SCRS/Manual/CH2/2_1_10_7_BLF_ENG.pdf); [NOAA-hosted 2023 distribution/genetics paper](https://repository.library.noaa.gov/view/noaa/62951/noaa_62951_DS1.pdf); [Florida Museum](https://www.floridamuseum.ufl.edu/discover-fish/species-profiles/blackfin-tuna/); [NOAA/NMFS longline synthesis](https://www.govinfo.gov/content/pkg/GOVPUB-I-8ed8af2f8d903e3b3d038f3ad79d44c4/pdf/GOVPUB-I-8ed8af2f8d903e3b3d038f3ad79d44c4.pdf).
+
+### Cobia (Rachycentron canadum)
+- Structure: existing sourced status retained; NOAA and Florida Museum directly document buoys, debris, wrecks, artificial reefs, and other structure.
+- SST: partly_sourced. Florida Museum reports 20–30 °C; SEDAR documents temperature-related movement; 2026 Gulf tagging recorded 13.3–34.5 °C with seasonal thermal shifts. This supports broad context but not a single preferred year-round SST curve.
+- Depth: provisional. A 2026 tagging study reports fish vertical use from surface to 121 m, but vertical fish depth is not seafloor bathymetry. Available sources do not validate the configured 3–120 m / 9–45 m bathymetric preference.
+- Season presence: partly_sourced. NOAA/ASMFC describe seasonal northward/inshore movement in warm months and wintering farther south/offshore; 2026 Gulf tagging recorded south-southwest/offshore dispersal from September through April. This supports a broad South Florida winter/spring window, not exact monthly catch scores.
+- Sources: [NOAA cobia profile](https://www.fisheries.noaa.gov/species/cobia); [2026 Gulf satellite-tag study](https://repository.library.noaa.gov/view/noaa/77073); [ASMFC cobia life history](https://asmfc.org/species/cobia/); [GSMFC cobia life-history table](https://www.gsmfc.org/pubs/Habitat/tables/COBIA.pdf).
+
+### Common snook (Centropomus undecimalis)
+- SST: partly_sourced. FWC and lab studies support cold-stress boundaries around 14–16 °C; a 2025 Everglades analysis found a positive relationship between relative abundance and temperature; a 2025 juvenile thermal-tolerance study shows body size and salinity affect cold tolerance. These sources do not validate a universal adult optimum or the full 15.6–35 °C / 24–32 °C ideal band.
+- Structure: existing sourced status retained; FWC/Florida Museum document mangroves and broad inshore habitat, although not all configured categories are represented as separate runtime values.
+- Tide stage and time of day: provisional status retained. Outgoing-tide preference and night dock-light feeding are largely angler guidance; FWC spawning timing supports late afternoon/evening activity only during spawning.
+- Spawning season: existing sourced status retained with FWC seasonal window and spawning-site research.
+- Sources: [2025 Everglades abundance study](https://academic.oup.com/mcf/article/17/5/vtaf026/8256747); [2025 juvenile thermal-tolerance study](https://academic.oup.com/mcf/article/17/4/vtaf023/8233615); [snook spawning-site study](https://pmc.ncbi.nlm.nih.gov/articles/PMC4084985/); [FWC profile](https://myfwc.com/wildlifehabitats/profiles/saltwater/snook/snook/).
+
+### Florida pompano (Trachinotus carolinus)
+- SST: partly_sourced. A life-history/aquaculture synthesis reports avoidance below about 20 °C, mortality at 10–12 °C, and 25–30 °C optima for spawning, larval development, and juvenile growth. These are physiological/early-life-stage data, not an adult surf-zone catch curve.
+- Depth: partly_sourced. FWC documents inshore/nearshore sandy beaches, oyster bars, and seagrass, with records to about 40 m; the life-history synthesis describes juvenile surf-zone use and offshore movement below 20 °C. This supports shallow coastal use but not the exact 0.5–20 m / 1–8 m ideal across all stages and seasons.
+- Season presence: partly_sourced. FWC reports offshore spawning March–September; a synthesis suggests February–October in southeastern waters with peaks in April–May and September–October, while Gulf/Caribbean spawning may occur year-round. The configured month window is not a validated monthly catch curve.
+- Sources: [FWC Florida pompano profile](https://myfwc.com/wildlifehabitats/profiles/saltwater/jacks/florida-pompano/); [NOAA-hosted life-history review](https://repository.library.noaa.gov/view/noaa/49230/noaa_49230_DS1.pdf); [open-access review](https://onlinelibrary.wiley.com/doi/full/10.1111/jwas.12809); [Florida Museum](https://www.floridamuseum.ufl.edu/discover-fish/species-profiles/florida-pompano/).
+
+### Batch C cumulative disposition
+Twenty of the 29 originally elevated-risk multi-factor profiles have now been reviewed across 77 active factors. Nine elevated-risk multi-factor profiles remain, plus nine partial-risk and 51 documented multi-factor profiles. The review continues to distinguish environmental suitability from fish vertical behavior and from post-release survival; evidence for one is not automatically evidence for another.
+

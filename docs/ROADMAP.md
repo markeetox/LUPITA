@@ -413,3 +413,8 @@ Twelve of 29 elevated-risk multi-factor profiles have been reviewed and updated 
 
 Reviewed Atlantic blue marlin, Atlantic bluefin tuna, sailfish, and tarpon. Sixteen of the 29 elevated-risk multi-factor profiles have now received source-by-source review; continue with the remaining 13 elevated-risk models, then nine partial-risk and 51 documented multi-factor profiles. Maintain explicit separation between vertical fish dive depth and bathymetric seafloor depth. See SPECIES_EVIDENCE_AUDIT_2026-11-17.md.
 
+
+## 2026-11-17 | Multi-factor evidence review progress
+
+Twenty of the 29 originally elevated-risk multi-factor profiles have now been reviewed across 77 active factors. Nine elevated-risk multi-factor profiles remain, plus nine partial-risk and 51 documented multi-factor profiles. Continue with the remaining elevated-risk profiles, then review partial/documented profiles and timing/profile-level narratives. Preserve numerical settings and runtime behavior.
+
