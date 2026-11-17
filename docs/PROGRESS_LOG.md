@@ -1155,3 +1155,10 @@ The manual metadata workflow passed. Inspected the uploaded `copernicus-bottom-t
 - Global coordinate bounds and metadata presence do not establish valid coastal coverage, non-missing values, freshness, or accuracy.
 
 No temperature subset was downloaded and no runtime/model behavior changed. Next: manual-only read-only extraction pilot with the dataset-specific identifiers, then inspect data-file dimensions, fill values, wet-cell coverage, and time semantics. Full protocol: `docs/COPERNICUS_BOTTOM_TEMPERATURE_VALIDATION_2026-11-17.md`.
+
+
+## 2026-11-17 | Copernicus read-only subset pilot staged
+
+Added `scripts/copernicus_bottom_temperature_pilot.py` and manual-only workflow `.github/workflows/copernicus-bottom-temperature-pilot.yml`. The pilot makes eight one-day subset requests across South Florida/Keys, Gulf shelf, Atlantic shelf, and Pacific West Coast shelf. It uses forecast `tob` and reanalysis `bottomT`, pins the live metadata versions (`202406` and `202311`), and requests no depth dimension. The script inspects NetCDF dimensions/coordinates, fill-value encoding, valid/missing values, valid fraction, and temperature range, then uploads the samples and summary as a 14-day artifact.
+
+This is only a read-only structure/coverage smoke test. It is not a model-observation accuracy validation, and the geographic boxes are sampling windows rather than station-matched validation regions. Workflow is manual-only and not yet run. No production or model behavior changed. Full details: `docs/COPERNICUS_BOTTOM_TEMPERATURE_VALIDATION_2026-11-17.md`.
