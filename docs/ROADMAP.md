@@ -470,3 +470,8 @@ Reviewed Chinook, Coho, Chum, Pink and Sockeye (10 active factors). Species-spec
 ## 2026-11-17 | Documented Pacific rocky-reef review, batch 5
 
 Reviewed Lingcod, Cabezon, Kelp greenling, Ocean whitefish and Yelloweye rockfish (11 active factors). Added species-specific habitat/depth sources; SST bands lack numeric preference evidence. Depth and bottom-curvature support is partial, not a validated scoring curve. Progress: 30/51 profiles, 62 active factors. No numeric or runtime changes.
+
+
+## 2026-11-17 | Documented elasmobranch/tuna review, batch 6
+
+Reviewed Bat ray, Common thresher shark, Leopard shark, Soupfin shark, and Pacific bluefin tuna (10 active factors). Added species-specific sources and recorded vertical-depth versus bathymetry mismatches. Bat ray/soupfin SST remain needs_source; other thermal evidence is partial with region/size caveats. Progress: 35/51 profiles, 72 active factors. No numeric or runtime changes.

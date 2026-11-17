@@ -10,7 +10,7 @@
   "display": {
     "color": "#c9d820"
   },
-  "review_status": "v1 - West Coast Pacific habitat profile",
+  "review_status": "Evidence reviewed 2026-11-17. California Sea Grant and Florida Museum sources support shallow benthic bay habitat and behavioral thermal movement, but not a numeric preferred SST band.",
   "image": {
     "status": "placeholder",
     "kind": "illustration",
@@ -26,12 +26,15 @@
     "behavior": "Navigates West Coast kelp forests, rocky reefs, and coastal upwelling zones.",
     "regulations_link": "https://wildlife.ca.gov/Fishing/Ocean/Regulations/Sport-Fishing",
     "sources": [
-      "https://wildlife.ca.gov/Fishing/Ocean/Regulations/Sport-Fishing"
+      "https://wildlife.ca.gov/Fishing/Ocean/Regulations/Sport-Fishing",
+      "https://caseagrant.ucsd.edu/seafood-profiles/bat-ray",
+      "https://www.floridamuseum.ufl.edu/discover-fish/species-profiles/bat-ray/",
+      "https://animaldiversity.org/accounts/Myliobatis_californica/"
     ]
   },
   "lat_range": [
-    24.0,
-    38.0
+    24,
+    38
   ],
   "factors": [
     {
@@ -47,11 +50,14 @@
       ],
       "weight": 0.5,
       "active": true,
-      "value_status": "sourced",
+      "value_status": "needs_source",
       "sources": [
-        "https://wildlife.ca.gov/Fishing/Ocean/Regulations/Sport-Fishing"
+        "https://wildlife.ca.gov/Fishing/Ocean/Regulations/Sport-Fishing",
+        "https://caseagrant.ucsd.edu/seafood-profiles/bat-ray",
+        "https://www.floridamuseum.ufl.edu/discover-fish/species-profiles/bat-ray/"
       ],
-      "reason_template": "Water is {value} C, inside preferred Pacific temperature range for bat ray."
+      "reason_template": "Water is {value} C, inside preferred Pacific temperature range for bat ray.",
+      "value_notes": "California Sea Grant and Florida Museum describe bat rays moving toward warmer inshore water during cooler periods and into cooler/deeper water during warmer periods, but neither establishes a numeric preferred SST range or catch-response curve. The configured 13-22 °C range and 15-20 °C ideal remain unsupported by species-specific numeric temperature evidence; keep values unchanged and mark needs_source."
     },
     {
       "param": "depth_m",
@@ -66,19 +72,22 @@
       ],
       "weight": 0.5,
       "active": true,
-      "value_status": "sourced",
+      "value_status": "partly_sourced",
       "sources": [
-        "https://wildlife.ca.gov/Fishing/Ocean/Regulations/Sport-Fishing"
+        "https://wildlife.ca.gov/Fishing/Ocean/Regulations/Sport-Fishing",
+        "https://caseagrant.ucsd.edu/seafood-profiles/bat-ray",
+        "https://www.floridamuseum.ufl.edu/discover-fish/species-profiles/bat-ray/"
       ],
       "gate": true,
-      "reason_template": "Depth is {value} m, within prime Pacific depth zone for bat ray."
+      "reason_template": "Depth is {value} m, within prime Pacific depth zone for bat ray.",
+      "value_notes": "California Sea Grant reports intertidal-to-180 m occurrence and shallow bay/slough nurseries; Florida Museum reports common shallow muddy/sandy bays and kelp habitat from 1-46 m. This supports the configured 1-30 m shallow-bay screen but does not validate the 3-25 m ideal or capture the full depth envelope."
     }
   ],
   "timing": {
     "status": "angler_lore",
     "light": {
       "map": {
-        "day": 1.0,
+        "day": 1,
         "dawn": 0.9,
         "dusk": 0.9,
         "night": 0.5
@@ -105,7 +114,7 @@
     "source_url": "https://wildlife.ca.gov/Fishing/Ocean/Regulations/Sport-Fishing"
   },
   "lon_range": [
-    -138.0,
-    -110.0
+    -138,
+    -110
   ]
 }

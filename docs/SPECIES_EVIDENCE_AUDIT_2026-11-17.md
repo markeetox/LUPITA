@@ -740,3 +740,36 @@ Reviewed Lingcod, Cabezon, Kelp greenling, Ocean whitefish and Yelloweye rockfis
 
 ### Documented-profile review progress
 Thirty of 51 profiles reviewed across 62 active factors. The same evidence rule holds: a specific species page can substantiate habitat/depth occurrence without supporting an SST optimum, and habitat relief does not automatically validate a numerical bottom-curvature response.
+
+
+## Documented multi-factor review: sixth sharks/rays/tuna batch | 2026-11-17
+
+Reviewed Bat ray, Common thresher shark, Leopard shark, Soupfin shark, and Pacific bluefin tuna across 10 active factors. Replaced generic regulation-page citations with California Sea Grant, Florida Museum, WDFW/CDFW, NOAA and peer-reviewed tagging sources. No numeric ranges, ideal intervals, weights, active flags, gates, required flags, scoring, confidence or runtime behavior changed.
+
+### Bat ray (*Myliobatis californica*)
+- SST: needs_source. Behavioral thermoregulation toward warmer inshore water in cool periods and cooler/deeper water in warm periods is reported, but no numeric preferred SST interval is established.
+- Depth: partly_sourced. Shallow sandy/muddy bays and kelp habitat are documented from 1-46 m, with intertidal-to-180 m records and shallow nurseries. The configured 1-30 m band is a shallow-habitat screen, not a complete range.
+- Sources: [California Sea Grant bat ray](https://caseagrant.ucsd.edu/seafood-profiles/bat-ray); [Florida Museum bat ray](https://www.floridamuseum.ufl.edu/discover-fish/species-profiles/bat-ray/).
+
+### Common thresher shark (*Alopias vulpinus*)
+- SST: partly_sourced. Southern California archival tags (57 deployed, 4 recovered) recorded 16-21 °C SST; 2025 western North Atlantic tags (48 fish) recorded a broad -0.5 to 25.6 °C range with about 90% of time in 14-20 °C. Configured 14-21 °C / 16-19 °C is broadly supported but region and sample caveats remain.
+- Depth: weak_factor. Vertical dive depths reach hundreds to more than 1,000 m; this is not seafloor bathymetry.
+- Sources: [Southern California archival tagging](https://pmc.ncbi.nlm.nih.gov/articles/PMC3873052/); [2025 western North Atlantic tagging](https://www.neaq.org/publication/horizontal-and-vertical-movements-and-habitat-use-of-the-common-thresher-shark-alopias-vulpinus-in-the-western-north-atlantic/); [NOAA repository habitat study](https://repository.library.noaa.gov/view/noaa/29562/noaa_29562_DS1.pdf).
+
+### Leopard shark (*Triakis semifasciata*)
+- SST: partly_sourced. Animal Diversity Web summarizes shallow California bay/estuary habitat around 13-16 °C, but this is habitat occurrence rather than a measured universal preference curve.
+- Depth: partly_sourced. Shallow sandy/muddy bays and estuaries are documented; typical depths around 4-20 m and records to about 91 m support the shallow band but not a universal preference.
+- Sources: [Florida Museum leopard shark](https://www.floridamuseum.ufl.edu/discover-fish/species-profiles/leopard-shark/); [Aquarium of the Pacific](https://www.aquariumofpacific.org/onlinelearningcenter/species/leopard_shark); [Animal Diversity Web](https://www.animaldiversity.org/accounts/Triakis_semifasciata/).
+
+### Soupfin shark (*Galeorhinus galeus*)
+- SST: needs_source. Reviewed sources describe temperate/cold-temperate distribution but no numeric preferred SST curve.
+- Depth: partly_sourced. WDFW reports females most common shallower than 55 m and males deeper; CDFG reports strong sex- and region-specific depth differences. The configured 5-100 m interval is not universal.
+- Sources: [WDFW soupfin shark](https://wdfw.wa.gov/species-habitats/species/galeorhinus-galeus); [CDFG soupfin account](https://nrm.dfg.ca.gov/FileHandler.ashx?DocumentID=34352); [Nosal et al. 2021 telemetry](https://besjournals.onlinelibrary.wiley.com/doi/10.1111/1365-2664.13848); [COSEWIC depth/sex synthesis](https://www.canada.ca/en/environment-climate-change/services/species-risk-public-registry/cosewic-assessments-status-reports/tope/chapter-6.html).
+
+### Pacific bluefin tuna (*Thunnus orientalis*)
+- SST: partly_sourced. Archival tags on young tuna report 14-20 °C preference; 2025 adult spawning-ground tags in the Northwestern Pacific recorded 16-32 °C with strong vertical/day-night variation. Configured 15-22 °C / 17-20 °C is broad context, not a West Coast catch curve.
+- Depth: weak_factor. Pelagic tuna vertical movements reach hundreds to more than 1,000 m; bathymetry is not fish vertical depth.
+- Sources: [Itoh et al. young bluefin tagging](https://spo.nmfs.noaa.gov/sites/default/files/06itohf2.pdf); [2025 adult bluefin telemetry](https://link.springer.com/article/10.1186/s40317-025-00426-0); [NOAA Pacific bluefin](https://www.fisheries.noaa.gov/species/pacific-bluefin-tuna).
+
+### Documented-profile review progress
+Thirty-five of 51 profiles reviewed across 72 active factors. For mobile sharks and tunas, vertical depth records must remain separate from seafloor bathymetry; thermal ranges from different size classes, regions and seasons cannot be treated as one universal response curve.

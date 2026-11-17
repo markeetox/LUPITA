@@ -548,3 +548,8 @@ Reviewed Chinook, Coho, Chum, Pink and Sockeye salmon across 10 active factors. 
 ## Documented multi-factor review | fifth Pacific rocky-reef batch
 
 Reviewed Lingcod, Cabezon, Kelp greenling, Ocean whitefish and Yelloweye rockfish across 11 active factors. Replaced generic regulation-page citations with WDFW, ODFW, CDFW, NOAA AFSC, IUCN and Smithsonian sources. SST factors are needs_source across all five; depth and lingcod bottom-curvature are partly_sourced with life-stage/range/metric caveats. No numeric or runtime changes. Progress: 30 of 51 documented multi-factor profiles across 62 active factors. See [species evidence audit](SPECIES_EVIDENCE_AUDIT_2026-11-17.md).
+
+
+## Documented multi-factor review | sixth sharks/rays/tuna batch
+
+Reviewed Bat ray, Common thresher shark, Leopard shark, Soupfin shark, and Pacific bluefin tuna across 10 active factors. Added California Sea Grant, Florida Museum, WDFW/CDFG, NOAA and peer-reviewed tagging sources. Bat ray and soupfin shark SST remain needs_source; other thermal claims are partly sourced with population/region caveats. Bathymetry is weak_factor for common thresher and Pacific bluefin because their tag depths are vertical water-column occupancy. No numeric or runtime changes. Progress: 35 of 51 documented multi-factor profiles across 72 active factors. See [species evidence audit](SPECIES_EVIDENCE_AUDIT_2026-11-17.md).

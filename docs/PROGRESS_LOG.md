@@ -1066,3 +1066,8 @@ Reviewed Chinook, Coho, Chum, Pink and Sockeye across 10 active factors. Added L
 ## 2026-11-17 | Fifth documented Pacific rocky-reef batch
 
 Reviewed Lingcod, Cabezon, Kelp greenling, Ocean whitefish and Yelloweye rockfish across 11 active factors. Replaced generic regulations citations with WDFW, ODFW, CDFG, NOAA AFSC, IUCN and Smithsonian sources. SST factors lack numeric preferred-temperature evidence and are now needs_source; depth/habitat and bottom-curvature claims are partly supported with life-stage and metric caveats. No numeric or runtime changes. Progress: 30 of 51 documented multi-factor profiles across 62 active factors.
+
+
+## 2026-11-17 | Sixth documented sharks/rays/tuna batch
+
+Reviewed Bat ray, Common thresher shark, Leopard shark, Soupfin shark, and Pacific bluefin tuna across 10 active factors. Added California Sea Grant, Florida Museum, WDFW/CDFG, NOAA and tagging research. Separated vertical shark/tuna dive depths from seafloor bathymetry; temperature ranges remain region/size-class specific. No numeric or runtime changes. Progress: 35 of 51 documented multi-factor profiles across 72 active factors.

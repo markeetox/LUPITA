@@ -10,7 +10,7 @@
   "display": {
     "color": "#d820ca"
   },
-  "review_status": "v1 - West Coast Pacific habitat profile",
+  "review_status": "Evidence reviewed 2026-11-17. Florida Museum and species ecology sources support shallow estuarine habitat and broad temperature context; the SST band is not a calibrated preference curve.",
   "image": {
     "status": "placeholder",
     "kind": "illustration",
@@ -26,12 +26,15 @@
     "behavior": "Navigates West Coast kelp forests, rocky reefs, and coastal upwelling zones.",
     "regulations_link": "https://wildlife.ca.gov/Fishing/Ocean/Regulations/Sport-Fishing",
     "sources": [
-      "https://wildlife.ca.gov/Fishing/Ocean/Regulations/Sport-Fishing"
+      "https://wildlife.ca.gov/Fishing/Ocean/Regulations/Sport-Fishing",
+      "https://www.floridamuseum.ufl.edu/discover-fish/species-profiles/leopard-shark/",
+      "https://www.aquariumofpacific.org/onlinelearningcenter/species/leopard_shark",
+      "https://www.animaldiversity.org/accounts/Triakis_semifasciata/"
     ]
   },
   "lat_range": [
-    25.0,
-    40.0
+    25,
+    40
   ],
   "factors": [
     {
@@ -47,11 +50,14 @@
       ],
       "weight": 0.5,
       "active": true,
-      "value_status": "sourced",
+      "value_status": "partly_sourced",
       "sources": [
-        "https://wildlife.ca.gov/Fishing/Ocean/Regulations/Sport-Fishing"
+        "https://wildlife.ca.gov/Fishing/Ocean/Regulations/Sport-Fishing",
+        "https://www.animaldiversity.org/accounts/Triakis_semifasciata/",
+        "https://www.floridamuseum.ufl.edu/discover-fish/species-profiles/leopard-shark/"
       ],
-      "reason_template": "Water is {value} C, inside preferred Pacific temperature range for leopard shark."
+      "reason_template": "Water is {value} C, inside preferred Pacific temperature range for leopard shark.",
+      "value_notes": "Animal Diversity Web summarizes leopard sharks in shallow California bays/estuaries with reported habitat temperatures around 13-16 °C. This is habitat occurrence, not a measured preferred SST curve or a universal range across seasons and offshore movements. It supports thermal relevance but does not validate the configured 12-21 °C range or 14-19 °C ideal as a catch-response curve."
     },
     {
       "param": "depth_m",
@@ -66,19 +72,23 @@
       ],
       "weight": 0.5,
       "active": true,
-      "value_status": "sourced",
+      "value_status": "partly_sourced",
       "sources": [
-        "https://wildlife.ca.gov/Fishing/Ocean/Regulations/Sport-Fishing"
+        "https://wildlife.ca.gov/Fishing/Ocean/Regulations/Sport-Fishing",
+        "https://www.floridamuseum.ufl.edu/discover-fish/species-profiles/leopard-shark/",
+        "https://www.aquariumofpacific.org/onlinelearningcenter/species/leopard_shark",
+        "https://www.animaldiversity.org/accounts/Triakis_semifasciata/"
       ],
       "gate": true,
-      "reason_template": "Depth is {value} m, within prime Pacific depth zone for leopard shark."
+      "reason_template": "Depth is {value} m, within prime Pacific depth zone for leopard shark.",
+      "value_notes": "Florida Museum and Aquarium of the Pacific describe leopard sharks using sandy/muddy bays and estuaries, commonly in shallow subtidal water; Animal Diversity Web reports typical depths around 4-20 m and records to about 91 m. This supports the 1-30 m outer band and 3-25 m ideal as shallow-habitat context, not a measured universal depth-preference curve."
     }
   ],
   "timing": {
     "status": "angler_lore",
     "light": {
       "map": {
-        "day": 1.0,
+        "day": 1,
         "dawn": 0.9,
         "dusk": 0.9,
         "night": 0.5
@@ -105,7 +115,7 @@
     "source_url": "https://wildlife.ca.gov/Fishing/Ocean/Regulations/Sport-Fishing"
   },
   "lon_range": [
-    -138.0,
-    -110.0
+    -138,
+    -110
   ]
 }
