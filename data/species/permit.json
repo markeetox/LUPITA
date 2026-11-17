@@ -43,7 +43,7 @@
       "weight": 0.35,
       "active": true,
       "value_status": "provisional",
-      "value_notes": "FishBase reports a model-derived preferred-temperature estimate of 23.2–28.0 °C (mean 26.1 °C; 624 cells). A 2026 Texas estuary study found juvenile permit presence associated with temperatures above 25 °C, while a 1972 South Carolina surf-zone survey recorded 26 juveniles at 12.8–38.5 °C. These are modeled association and juvenile occurrence data, not adult South Florida thermal preference; retain provisional status.",
+      "value_notes": "FishBase reports a model-derived preferred-temperature estimate of 23.2–28.0 °C (mean 26.1 °C; 624 cells). A 2026 Texas estuary study found juvenile permit presence associated with temperatures above 25 °C, while a 1972 South Carolina surf-zone survey recorded 26 juveniles at 12.8–38.5 °C. These are modeled association and juvenile occurrence data, not adult South Florida thermal preference; retain provisional status. The available evidence does not provide a validated adult South Florida SST suitability band.",
       "reason_template": "Water is {value} C, within the currently configured provisional screening band for Permit; this is not a validated thermal preference.",
       "sources": [
         "https://doi.org/10.1007/s10641-026-01896-8",
