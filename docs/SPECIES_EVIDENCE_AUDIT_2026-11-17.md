@@ -440,3 +440,32 @@ Applied the recommended status/source/note classifications:
 
 All 30 profile-level source lists and active SST factor source/status/value_notes fields were updated. The four needs_source profiles retain empty factor-level SST source lists because species/habitat references do not substantiate a numeric surface-temperature claim. No numeric ranges, ideal intervals, weights, active flags, gates, required flags, scoring, confidence, source selection, ingestion, or publication behavior changed. CI run #44124511157 is validating the updated catalog.
 
+
+
+## Batch C evidence review: next four multi-factor profiles | 2026-11-17
+
+Reviewed Hogfish, Jack crevalle, King mackerel, and Red drum across 13 active factors. Added traceable species-specific sources and claim-fit notes; kept evidence statuses conservative. No numeric ranges, ideal intervals, weights, active flags, gates, required flags, scoring, confidence, or runtime behavior changed.
+
+### Hogfish (*Lachnolaimus maximus*)
+- SST: needs_source. FWC and Florida Museum accounts describe distribution and habitat but do not establish a species-specific thermal preference/tolerance band; removed non-supporting references from the factor-level source list while retaining them at profile level.
+- Structure: partly_sourced. FWC, Florida Museum, and NOAA sanctuary research support adult reef/rock/ledge/hard-bottom association and juvenile seagrass nursery use, but not exact map-class score ranking or individual polygon occupancy.
+- Depth: partly_sourced. Florida Museum reports 3–30 m occurrence, matching the configured outer range; it does not validate the 8–25 m ideal or a single depth preference across life stages.
+
+### Jack crevalle (*Caranx hippos*)
+- SST: partly_sourced. Florida Museum reports adult occurrence around 18–33.6 °C and larval occurrence around 20.4–29.4 °C; occurrence is not a preferred-temperature curve.
+- Depth: partly_sourced. Florida Museum reports shelf habitat to about 100 m and SCDNR describes offshore and estuarine use; the sources do not validate the configured shallow range as universal preference.
+- Season presence: partly_sourced. FWC reports March–September offshore spawning and SCDNR describes seasonal migration. These do not validate the full configured monthly presence window or peak catch scores in South Florida.
+
+### King mackerel (*Scomberomorus cavalla*)
+- SST: partly_sourced. NOAA/SAFMC report warm-water affinity and rare occurrence below about 20 °C, but do not establish the full configured range or ideal interval as a preferred-temperature curve.
+- SST gradient: needs_source. Generic FWC homepage citation does not establish that stronger satellite SST gradients increase king mackerel suitability.
+- Depth: partly_sourced. NOAA, Florida Museum, and FishBase report coastal-pelagic shelf depths, but published depth ranges differ and do not validate the configured band/ideal as a single preference.
+- Season presence: partly_sourced. NOAA documents the South Florida winter mixing zone south of the Keys from November–March and seasonal migration; this supports winter presence but not the exact month/peak scores as catch probabilities.
+
+### Red drum (*Sciaenops ocellatus*)
+- SST: partly_sourced. Florida Museum, NOAA-hosted habitat account, and GSMFC synthesis document broad thermal tolerance and stage-specific associations, not a preferred adult South Florida SST curve.
+- Depth: partly_sourced. Sources support shallow estuarine nursery habitat and adult coastal/nearshore use, but not a universal 0.3–15 m adult range or 0.5–5 m ideal across life stages.
+- Season presence: partly_sourced. FWC tagging and Florida Museum sources support late-August–November fall spawning/migration, but not the exact August–December monthly score or a catch-rate model.
+
+### Batch C cumulative disposition
+Twenty-four of the 29 originally elevated-risk multi-factor profiles have now been reviewed across 90 active factors. Five elevated-risk multi-factor profiles remain: Jack crevalle, King mackerel, Mahi-mahi, Mutton snapper, Red drum, Sheepshead, Southern flounder, Wahoo, and Hogfish? [inventory reconciliation required]. The source-audit artifact and current risk labels are being refreshed after the latest metadata commits; do not treat this provisional list as the final five.
