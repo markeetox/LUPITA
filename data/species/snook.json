@@ -27,12 +27,12 @@
     "sources": [
       "https://myfwc.com/wildlifehabitats/profiles/saltwater/snook/snook/",
       "https://www.floridamuseum.ufl.edu/discover-fish/species-profiles/common-snook/",
-      "https://www.yellowdogflyfishing.com/blogs/back-stage-pass/fly-fishing-snook",
       "https://scholarscommons.fgcu.edu/esploro/outputs/journalArticle/Increased-Cold-Tolerance-of-a-Tropical/99384113521706570",
-      "https://myfwc.com/research/saltwater/fish/snook/sketch-common-snook/",
+      "https://academic.oup.com/mcf/article/17/5/vtaf026/8256747",
+      "https://academic.oup.com/mcf/article/17/4/vtaf023/8233615",
       "https://pmc.ncbi.nlm.nih.gov/articles/PMC4084985/",
-      "https://animaldiversity.org/accounts/Centropomus_undecimalis/",
-      "https://myfwc.com/fishing/saltwater/recreational/snook/"
+      "https://myfwc.com/research/saltwater/fish/snook/sketch-common-snook/",
+      "https://animaldiversity.org/accounts/Centropomus_undecimalis/"
     ],
     "spawning": "Florida spawning generally runs April/May through September/October. Major inlets and coastal river mouths are documented spawning locations. Exact annual timing varies with climate and temperature.",
     "overwintering": "Mature fish commonly move into lower-salinity upper-estuary areas for colder months, then move toward inlets and other higher-salinity spawning areas in late spring and summer. Movement distances vary by coast and individual."
@@ -52,11 +52,13 @@
       "weight": 0.25,
       "active": true,
       "value_status": "partly_sourced",
-      "value_notes": "Lower bound: FWC says snook cannot tolerate water below 60 F (15.6 C); lab work found feeding stops near 14 C. A southwest Florida study found juvenile snook habitat at 24-35 C. Adult optimum was not found, so the ideal band is an estimate from that juvenile range.",
+      "value_notes": "FWC and lab studies support a lower cold-stress boundary around 14–16 °C, while a 2025 Everglades analysis found a positive relationship between common snook relative abundance and temperature. A 2025 juvenile thermal-tolerance study shows body size and salinity affect cold tolerance. These sources support temperature relevance but do not validate a universal adult optimum or the full 15.6–35 °C / 24–32 °C ideal band.",
       "reason_template": "Water is {value} C, comfortably above the cold limit where snook stop feeding.",
       "sources": [
         "https://myfwc.com/wildlifehabitats/profiles/saltwater/snook/snook/",
-        "https://scholarscommons.fgcu.edu/esploro/outputs/journalArticle/Increased-Cold-Tolerance-of-a-Tropical/99384113521706570"
+        "https://scholarscommons.fgcu.edu/esploro/outputs/journalArticle/Increased-Cold-Tolerance-of-a-Tropical/99384113521706570",
+        "https://academic.oup.com/mcf/article/17/5/vtaf026/8256747",
+        "https://academic.oup.com/mcf/article/17/4/vtaf023/8233615"
       ],
       "gate": true,
       "required": true
@@ -96,7 +98,7 @@
       "weight": 0.2,
       "active": true,
       "value_status": "provisional",
-      "value_notes": "Angler guidance (outgoing tide is best around inlets and mangroves), not a study. The mapping from tide stage to score is a judgment call.",
+      "value_notes": "Outgoing-tide preference remains angler guidance, not a controlled study. The mapping from tide stage to score is a judgment call; retain provisional.",
       "reason_template": "The tide is {value}, flushing bait past the spots where snook wait.",
       "sources": [
         "https://www.westmarine.com/west-advisor/florida-guide-to-catching-snook.html",
@@ -146,9 +148,10 @@
       "weight": 0.1,
       "active": true,
       "value_status": "provisional",
-      "value_notes": "FWC reports spawning gametes are released in the late afternoon and early evening, which supports dusk during the season. Dock-light feeding at night is angler guidance. Dawn preference is unsourced.",
+      "value_notes": "FWC reports spawning gamete release in late afternoon/early evening, supporting dusk during the spawning season. Night dock-light feeding and dawn preference remain angler guidance; this does not establish a general all-season feeding-time curve. Retain provisional.",
       "reason_template": "It is {value}, a low-light period when snook feed actively.",
       "sources": [
+        "https://myfwc.com/research/saltwater/fish/snook/sketch-common-snook/",
         "https://www.yellowdogflyfishing.com/blogs/back-stage-pass/fly-fishing-snook"
       ],
       "map": {

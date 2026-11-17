@@ -26,7 +26,10 @@
     "behavior": "Fast coastal swimmer that feeds in the surf break, sandy troughs, and tidal inlet currents.",
     "regulations_link": "https://myfwc.com/",
     "sources": [
-      "https://myfwc.com/"
+      "https://myfwc.com/wildlifehabitats/profiles/saltwater/jacks/florida-pompano/",
+      "https://repository.library.noaa.gov/view/noaa/49230/noaa_49230_DS1.pdf",
+      "https://onlinelibrary.wiley.com/doi/full/10.1111/jwas.12809",
+      "https://www.floridamuseum.ufl.edu/discover-fish/species-profiles/florida-pompano/"
     ]
   },
   "factors": [
@@ -43,11 +46,13 @@
       ],
       "weight": 0.4,
       "active": true,
-      "value_status": "sourced",
+      "value_status": "partly_sourced",
       "sources": [
-        "https://myfwc.com/"
+        "https://repository.library.noaa.gov/view/noaa/49230/noaa_49230_DS1.pdf",
+        "https://onlinelibrary.wiley.com/doi/full/10.1111/jwas.12809"
       ],
-      "reason_template": "Water is {value} C, ideal for surf-feeding pompano."
+      "reason_template": "Water is {value} C, ideal for surf-feeding pompano.",
+      "value_notes": "The aquaculture/life-history synthesis reports Florida pompano avoid water below about 20 °C, with mortality at 10–12 °C; spawning, larval development, and juvenile growth are reported optimal around 25–30 °C. These are physiological and early-life-stage data, not a calibrated adult surf-zone catch curve. They support the broad 18–30 °C range but do not validate the 22–27 °C ideal for adult fish."
     },
     {
       "param": "depth_m",
@@ -62,21 +67,24 @@
       ],
       "weight": 0.3,
       "active": true,
-      "value_status": "sourced",
+      "value_status": "partly_sourced",
       "sources": [
-        "https://myfwc.com/"
+        "https://myfwc.com/wildlifehabitats/profiles/saltwater/jacks/florida-pompano/",
+        "https://repository.library.noaa.gov/view/noaa/49230/noaa_49230_DS1.pdf"
       ],
       "gate": true,
-      "reason_template": "Depth is {value} m, in the shallow surf and trough zone."
+      "reason_template": "Depth is {value} m, in the shallow surf and trough zone.",
+      "value_notes": "FWC reports inshore/nearshore habitat along sandy beaches, oyster bars, and seagrass, with records to about 40 m. The life-history synthesis describes juveniles using beach surf zones and moving offshore when water falls below 20 °C. This supports shallow coastal use but not the exact 0.5–20 m / 1–8 m ideal across seasons and life stages. Depth is an active gate."
     },
     {
       "param": "season_presence",
       "kind": "season",
       "weight": 0.3,
       "active": true,
-      "value_status": "sourced",
+      "value_status": "partly_sourced",
       "sources": [
-        "https://myfwc.com/"
+        "https://myfwc.com/wildlifehabitats/profiles/saltwater/jacks/florida-pompano/",
+        "https://repository.library.noaa.gov/view/noaa/49230/noaa_49230_DS1.pdf"
       ],
       "months": [
         3,
@@ -98,14 +106,15 @@
         "peak": "It is peak pompano surf-run season.",
         "in_season": "It is pompano season.",
         "off": "It is outside the main pompano surf run."
-      }
+      },
+      "value_notes": "FWC reports spawning offshore March–September and temperature-influenced seasonal movement; the life-history synthesis suggests southeastern U.S. spawning February–October with peaks April–May and September–October, while Gulf/Caribbean spawning may occur year-round. The configured March–May and October–December window may represent seasonal Florida availability, but is not a validated monthly catch curve."
     }
   ],
   "timing": {
     "status": "angler_lore",
     "light": {
       "map": {
-        "day": 1.0,
+        "day": 1,
         "dawn": 0.9,
         "dusk": 0.8,
         "night": 0.3
@@ -118,7 +127,7 @@
     },
     "tide": {
       "map": {
-        "rising": 1.0,
+        "rising": 1,
         "falling": 0.8,
         "slack_high": 0.6,
         "slack_low": 0.4
@@ -144,7 +153,7 @@
     "source_url": "https://myfwc.com/fishing/saltwater/recreational/"
   },
   "lon_range": [
-    -100.0,
-    -50.0
+    -100,
+    -50
   ]
 }

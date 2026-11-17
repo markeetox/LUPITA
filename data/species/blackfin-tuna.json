@@ -27,8 +27,11 @@
     "behavior": "Pelagic schooling fish that feeds heavily along thermal breaks, current edges, and seamounds/humps.",
     "regulations_link": "https://myfwc.com/",
     "sources": [
-      "https://myfwc.com/",
-      "https://www.fisheries.noaa.gov/"
+      "https://nsuworks.nova.edu/occ_facarticles/485/",
+      "https://www.iccat.int/Documents/SCRS/Manual/CH2/2_1_10_7_BLF_ENG.pdf",
+      "https://repository.library.noaa.gov/view/noaa/62951/noaa_62951_DS1.pdf",
+      "https://www.floridamuseum.ufl.edu/discover-fish/species-profiles/blackfin-tuna/",
+      "https://www.govinfo.gov/content/pkg/GOVPUB-I-8ed8af2f8d903e3b3d038f3ad79d44c4/pdf/GOVPUB-I-8ed8af2f8d903e3b3d038f3ad79d44c4.pdf"
     ]
   },
   "factors": [
@@ -45,11 +48,13 @@
       ],
       "weight": 0.3,
       "active": true,
-      "value_status": "sourced",
+      "value_status": "partly_sourced",
       "sources": [
-        "https://myfwc.com/"
+        "https://nsuworks.nova.edu/occ_facarticles/485/",
+        "https://www.iccat.int/Documents/SCRS/Manual/CH2/2_1_10_7_BLF_ENG.pdf"
       ],
-      "reason_template": "Water is {value} C, ideal for active feeding blackfin tuna."
+      "reason_template": "Water is {value} C, ideal for active feeding blackfin tuna.",
+      "value_notes": "A northern Gulf satellite-tag study of nine blackfin tuna found 89% of recorded time at 21.9–26.6 °C (tagged fish ranged 13.9–32.9 °C). ICCAT summarizes a lower distribution limit near 20 °C. This supports the configured 20–29 °C / 22–27 °C band as broad species-level context, but the tag sample was small and geographically limited."
     },
     {
       "param": "sst_gradient",
@@ -59,11 +64,10 @@
       "value_status": "provisional",
       "reason_template": "Temperature break strength is {per10km} C per 10 km; this is a provisional water-mass boundary proxy, not a validated blackfin preference.",
       "sources": [
-        "https://www.floridamuseum.ufl.edu/discover-fish/species-profiles/blackfin-tuna/",
-        "https://academic.oup.com/icesjms/article/80/4/941/7058011",
-        "https://www.fao.org/4/ap895e/ap895e.pdf"
+        "https://repository.library.noaa.gov/view/noaa/62951/noaa_62951_DS1.pdf",
+        "https://www.iccat.int/Documents/SCRS/Manual/CH2/2_1_10_7_BLF_ENG.pdf"
       ],
-      "value_notes": "Blackfin literature supports warm-water distribution and associations with plankton-rich/upwelling conditions, but does not calibrate a preferred SST-gradient magnitude or this factor's weight. Treat this as a provisional frontal-edge proxy, not a validated species-specific gradient preference."
+      "value_notes": "Blackfin distribution is associated with upwelling, runoff, plankton concentrations, and water clarity, but these sources do not calibrate a preferred SST-gradient magnitude or validate a higher-is-better response. Retain as a provisional frontal-edge proxy."
     },
     {
       "param": "chl_gradient",
@@ -73,22 +77,23 @@
       "value_status": "provisional",
       "reason_template": "A chlorophyll edge may indicate a productivity boundary; its value as a blackfin feeding predictor remains provisional.",
       "sources": [
-        "https://www.floridamuseum.ufl.edu/discover-fish/species-profiles/blackfin-tuna/",
-        "https://academic.oup.com/icesjms/article/80/4/941/7058011",
-        "https://www.fao.org/4/ap895e/ap895e.pdf"
+        "https://repository.library.noaa.gov/view/noaa/62951/noaa_62951_DS1.pdf",
+        "https://www.iccat.int/Documents/SCRS/Manual/CH2/2_1_10_7_BLF_ENG.pdf"
       ],
-      "value_notes": "Blackfin literature links distribution to plankton concentrations and upwelling/runoff, but does not validate remotely sensed chlorophyll-gradient strength as a direct feeding predictor or calibrate this factor's weight. Provisional proxy only."
+      "value_notes": "Published summaries link blackfin distribution to plankton concentrations and upwelling/runoff, but do not establish remotely sensed chlorophyll-gradient strength as a direct feeding predictor. Retain as a provisional proxy."
     },
     {
       "param": "bottom_slope",
       "kind": "higher_is_better",
       "weight": 0.15,
       "active": true,
-      "value_status": "sourced",
+      "value_status": "partly_sourced",
       "sources": [
-        "https://myfwc.com/"
+        "https://repository.library.noaa.gov/view/noaa/62951/noaa_62951_DS1.pdf",
+        "https://www.govinfo.gov/content/pkg/GOVPUB-I-8ed8af2f8d903e3b3d038f3ad79d44c4/pdf/GOVPUB-I-8ed8af2f8d903e3b3d038f3ad79d44c4.pdf"
       ],
-      "reason_template": "Seafloor drops steeply ({value} m/km), marking humps and ledges blackfin tuna patrol."
+      "reason_template": "Seafloor drops steeply ({value} m/km), marking humps and ledges blackfin tuna patrol.",
+      "value_notes": "A species synthesis links blackfin distribution to continental-shelf steepness and reports Florida occurrences along the shelf-slope edge. This supports a broad association with shelf-edge topography, but does not validate the runtime bottom_slope metric or a monotonic higher-is-better response."
     },
     {
       "param": "depth_m",
@@ -103,12 +108,15 @@
       ],
       "weight": 0.05,
       "active": true,
-      "value_status": "sourced",
+      "value_status": "partly_sourced",
       "sources": [
-        "https://myfwc.com/"
+        "https://nsuworks.nova.edu/occ_facarticles/485/",
+        "https://www.govinfo.gov/content/pkg/GOVPUB-I-8ed8af2f8d903e3b3d038f3ad79d44c4/pdf/GOVPUB-I-8ed8af2f8d903e3b3d038f3ad79d44c4.pdf",
+        "https://www.iccat.int/Documents/SCRS/Manual/CH2/2_1_10_7_BLF_ENG.pdf"
       ],
       "gate": true,
-      "reason_template": "Depth is {value} m, in deep blue offshore waters."
+      "reason_template": "Depth is {value} m, in deep blue offshore waters.",
+      "value_notes": "Satellite tags recorded fish vertical depths of 0–217 m, with 90% of time at 0–57 m; fisheries syntheses describe adults near the shelf-slope edge and generally at less than about 183 m bottom depth. Fish vertical dive depth is not identical to seafloor bathymetry. The configured 30–1,500 m / 60–800 m bathymetric band is only partly supported and likely broader than observed common habitat. Depth is an active gate."
     },
     {
       "param": "gulf_stream_edge",
@@ -126,11 +134,10 @@
       "value_status": "provisional",
       "reason_template": "The inshore Gulf Stream edge is {abs_value} km {side}; this is a provisional proximity indicator, not a validated blackfin distance preference.",
       "sources": [
-        "https://www.floridamuseum.ufl.edu/discover-fish/species-profiles/blackfin-tuna/",
-        "https://academic.oup.com/icesjms/article/80/4/941/7058011",
-        "https://www.fao.org/4/ap895e/ap895e.pdf"
+        "https://repository.library.noaa.gov/view/noaa/62951/noaa_62951_DS1.pdf",
+        "https://www.govinfo.gov/content/pkg/GOVPUB-I-8ed8af2f8d903e3b3d038f3ad79d44c4/pdf/GOVPUB-I-8ed8af2f8d903e3b3d038f3ad79d44c4.pdf"
       ],
-      "value_notes": "Sources describe blackfin as a warm-water, oceanic/blue-water tuna and discuss the Florida Current, but do not establish a preferred distance from the Gulf Stream edge or validate the configured distance band. Provisional geographic proxy only."
+      "value_notes": "Sources describe blackfin as a warm-water pelagic tuna associated with shelf-slope edges and oceanographic features, but do not establish a preferred distance from the Gulf Stream edge or validate the configured distance band. Keep as a provisional geographic proxy."
     }
   ],
   "timing": {

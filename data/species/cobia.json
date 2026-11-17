@@ -37,9 +37,10 @@
     "sources": [
       "https://www.floridamuseum.ufl.edu/discover-fish/species-profiles/cobia/",
       "https://www.fisheries.noaa.gov/species/cobia",
-      "https://sedarweb.org/documents/sedar-95-rd07-investigating-the-seasonal-migration-of-cobia-rachycentron-canadum-and-the-influence-of-temperature-on-movement-ecology",
-      "https://guidesly.com/fishing/fish-species/cobia",
-      "https://inthespread.com/blog/cobia-fishing-a-florida-guide-381"
+      "https://repository.library.noaa.gov/view/noaa/77073",
+      "https://link.springer.com/article/10.1186/s40317-026-00458-0",
+      "https://www.gsmfc.org/pubs/Habitat/tables/COBIA.pdf",
+      "https://asmfc.org/species/cobia/"
     ]
   },
   "factors": [
@@ -60,8 +61,8 @@
         "natural_reef"
       ],
       "map": {
-        "wreck": 1.0,
-        "artificial_reef": 1.0,
+        "wreck": 1,
+        "artificial_reef": 1,
         "natural_reef": 0.7
       }
     },
@@ -70,11 +71,12 @@
       "kind": "range",
       "weight": 0.2,
       "active": true,
-      "value_status": "sourced",
-      "value_notes": "Florida Museum: cobia prefer 68-86 F (20-30 C). A SEDAR review gives an overall range of 16.8-32 C, and cobia movements follow temperature.",
+      "value_status": "partly_sourced",
+      "value_notes": "Florida Museum reports a broad 20–30 °C preference; SEDAR documents movement associated with temperature; 2026 Gulf satellite tagging recorded occupied temperatures from 13.3–34.5 °C with seasonal shifts. This supports broad thermal context but not a single preferred year-round SST curve or the exact 17–32 °C / 20–30 °C suitability scoring.",
       "sources": [
         "https://www.floridamuseum.ufl.edu/discover-fish/species-profiles/cobia/",
-        "https://sedarweb.org/documents/sedar-95-rd07-investigating-the-seasonal-migration-of-cobia-rachycentron-canadum-and-the-influence-of-temperature-on-movement-ecology"
+        "https://sedarweb.org/documents/sedar-95-rd07-investigating-the-seasonal-migration-of-cobia-rachycentron-canadum-and-the-influence-of-temperature-on-movement-ecology",
+        "https://repository.library.noaa.gov/view/noaa/77073"
       ],
       "reason_template": "Water is {value} C, inside the {ideal_min}-{ideal_max} C range cobia prefer.",
       "range": [
@@ -92,9 +94,11 @@
       "weight": 0.2,
       "active": true,
       "value_status": "provisional",
-      "value_notes": "Anglers find cobia around structure in about 30-70 ft (9-21 m) during the spring migration, and cobia use a wide range of depths. The band is an estimate.",
+      "value_notes": "The 2026 satellite-tag study reports fish vertical use from surface to 121 m, while life-history sources describe coastal and offshore habitats. Vertical fish depth is not seafloor bathymetry; the available sources do not validate the configured 3–120 m / 9–45 m bathymetric preference. Retain as provisional until a bathymetric habitat-response source is found.",
       "sources": [
-        "https://guidesly.com/fishing/fish-species/cobia"
+        "https://repository.library.noaa.gov/view/noaa/77073",
+        "https://www.gsmfc.org/pubs/Habitat/tables/COBIA.pdf",
+        "https://www.fisheries.noaa.gov/species/cobia"
       ],
       "reason_template": "Depth is {value} m, in the nearshore structure water where cobia are usually found.",
       "range": [
@@ -111,11 +115,12 @@
       "kind": "season",
       "weight": 0.25,
       "active": true,
-      "value_status": "provisional",
-      "value_notes": "NOAA Fisheries: Gulf cobia move to south Florida waters in winter, and anglers rate December to April best around wrecks and reefs in the Keys. Atlantic cobia run north in spring. The window for Miami is a judgment call.",
+      "value_status": "partly_sourced",
+      "value_notes": "NOAA/ASMFC describe seasonal northward/inshore movement in warm months and wintering farther south or offshore. A 2026 Gulf tagging study recorded south-southwest or offshore dispersal from September through April. This supports a broad South Florida winter/spring availability window, but the exact November–April month scores need local catch/telemetry calibration.",
       "sources": [
         "https://www.fisheries.noaa.gov/species/cobia",
-        "https://inthespread.com/blog/cobia-fishing-a-florida-guide-381"
+        "https://repository.library.noaa.gov/view/noaa/77073",
+        "https://asmfc.org/species/cobia/"
       ],
       "months": [
         11,
@@ -151,7 +156,7 @@
     "source_url": "https://myfwc.com/fishing/saltwater/recreational/"
   },
   "lon_range": [
-    -100.0,
-    -50.0
+    -100,
+    -50
   ]
 }
