@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Read-only Copernicus bottom-temperature coverage assessment using NOAA ETOPO."""
 from __future__ import annotations
-import json, sys
+import json, os, sys
 from io import StringIO
 from pathlib import Path
 from urllib.parse import quote
@@ -178,7 +178,7 @@ def main():
             results.append(assess(rec, bathy))
     output = {
         "purpose": "ocean-only coverage and spatial/depth-pattern assessment; not accuracy validation",
-        "source_run_id": 44144656207,
+        "source_run_id": int(os.environ.get("SOURCE_RUN_ID", "44144656207")),
         "bathymetry_source": {
             "name": "NOAA NCEI ETOPO 2022, 30 arc-second global relief model",
             "dataset_id": "ETOPO_2022_v1_30s",
