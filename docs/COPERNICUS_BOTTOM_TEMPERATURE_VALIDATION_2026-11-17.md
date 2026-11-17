@@ -16,9 +16,8 @@ A global product extent is not evidence of valid coastal coverage or scientific 
 
 - Product: `GLOBAL_ANALYSISFORECAST_PHY_001_024`
 - Dataset: `cmems_mod_glo_phy_anfc_0.083deg_P1D-m`
-- Variable: `tob`
-- Standard name: `sea_water_potential_temperature_at_sea_floor`
-- Units: °C
+- Candidate physical field: sea-water potential temperature at the sea floor.
+- Variable identifier: **not yet locked**. The original product-manual review identified `tob`, while current Copernicus guidance for the reanalysis product describes the sea-floor field as `bottomT`. These identifiers must not be assumed interchangeable across products/dataset versions. The exact variable short name, standard name, units, and dimensions must be read from each dataset's live catalogue metadata before extraction.
 - Horizontal resolution: 0.083° (approximately 8 km)
 - Temporal resolution: daily mean
 - Operational time coverage: rolling archive, with daily analysis/forecast updates and a 10-day forecast
@@ -68,7 +67,7 @@ Potential duplicate CTD records across NCEI/GTSPP and agency archives must be de
 
 ## Sampling and pairing design
 
-1. Query the daily `tob` dataset for a recent operational window and, separately, historical dates overlapping independent observations.
+1. Inspect live metadata for the daily forecast and reanalysis datasets, confirm the sea-floor variable identifier separately for each, then query a recent operational date and historical dates overlapping independent observations.
 2. Inspect returned metadata before interpreting values: variable name, units, coordinate names, time axis, grid spacing, fill values, and product/version.
 3. Build regional observation inventories first. Pair each eligible observation to the nearest valid Copernicus wet grid cell, retaining horizontal separation and bathymetric mismatch.
 4. Stratify results by region and shelf-depth class. Initial classes: inner shelf (10-50 m), middle shelf (50-200 m), and outer shelf (200-500 m). These are validation strata, not claims that every region has all classes.
@@ -112,9 +111,9 @@ Even a successful source validation would not validate existing species temperat
 
 ## Current findings and limits
 
-- The Copernicus catalog and PUM confirm that the daily dataset contains `tob`, defined as sea-bottom potential temperature in °C.
+- The earlier product-manual review identified a sea-floor temperature field in the daily forecast product, but the exact variable identifier still requires live dataset metadata confirmation. Current Copernicus guidance explicitly describes `bottomT` as sea-water potential temperature at the sea floor and states that it has no vertical depth dimension; that guidance must be mapped to the exact dataset/version before use.
 - The service catalog lists the daily dataset's operational temporal extent and daily availability.
-- NOAA AOML provides relevant South Florida survey and mooring programs. Its survey description distinguishes underway surface thermosalinograph measurements from CTD casts; only qualifying near-bottom CTD/sensor records can validate `tob`.
+- NOAA AOML provides relevant South Florida survey and mooring programs. Its survey description distinguishes underway surface thermosalinograph measurements from CTD casts; only qualifying near-bottom CTD/sensor records can validate the sea-floor temperature field.
 - NOAA SEFSC's GoMMAPPS CTD archive provides an independent Gulf/Southeast profile collection from summer 2017, with a stated maximum profile depth of 500 m.
 - NOAA GTSPP is the strongest initial global profile archive candidate for Atlantic and Pacific coverage; individual profile quality, depth, and bottom proximity still require filtering.
 - NOAA NEFSC's near-bottom observations are useful for the northern Atlantic shelf but do not represent the entire Atlantic coast.
@@ -126,7 +125,7 @@ Copernicus Marine Toolbox subsetting requires a free Copernicus Marine account a
 
 ## Next execution step
 
-After credentials are configured in the chosen execution environment, run a small, read-only pilot extraction of `tob` for one recent date and one historical date, using compact bounding boxes around the four regional observation inventories. Confirm authentication/access method, actual response variables and coordinates, fill-value semantics, and wet-cell behavior. Then acquire and quality-filter matching independent profiles. Do not add a recurring workflow or production ingestion path at this stage.
+After credentials are configured, retrieve live metadata for the daily forecast and reanalysis datasets, confirm the exact sea-floor variable identifier and dimensions, then run a small, read-only pilot extraction for one recent date and one historical date using compact bounding boxes around the four regional observation inventories. Confirm actual response variables and coordinates, fill-value semantics, and wet-cell behavior. Then acquire and quality-filter matching independent profiles. Do not add a recurring workflow or production ingestion path at this stage.
 
 ## Change-control boundary
 
@@ -137,4 +136,11 @@ This protocol and source inventory are documentation only. No production configu
 
 Added `.github/workflows/copernicus-credentials-check.yml` as a manual-only GitHub Actions workflow (`workflow_dispatch`). It installs the Copernicus Marine Toolbox 2.4.0, reads the two repository Actions secrets through environment variables, checks that both are present without printing their values, and runs `copernicusmarine login --check-credentials-valid`. It does not download data, write repository files, publish exports, or run on a schedule.
 
-The workflow has been committed but has not yet been dispatched. Therefore authentication is not yet verified. After the check passes, proceed to a separate controlled metadata/subset pilot; do not turn this diagnostic into a recurring or production workflow.
+The workflow was dispatched on 2026-11-17 and passed, confirming that the configured repository secrets authenticate successfully. It remains manual-only and does not download data.
+
+
+## Metadata-first correction | 2026-11-17
+
+Before downloading samples, variable naming was rechecked against current Copernicus documentation. Copernicus explicitly documents `bottomT` as sea-water potential temperature at the sea floor and states that it is independent of the vertical depth coordinate. The earlier protocol's `tob` identifier is therefore provisional, not assumed correct for both products. Live dataset metadata must decide the exact short name and dimensions for forecast and reanalysis separately.
+
+Added the manual-only workflow `.github/workflows/copernicus-bottom-temperature-metadata.yml` to retrieve complete live metadata JSON for the daily forecast and reanalysis dataset IDs and upload the files as a seven-day artifact. This is metadata-only: no temperature data is downloaded and no production behavior changes. The workflow has been committed but not yet run.
