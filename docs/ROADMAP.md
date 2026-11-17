@@ -368,3 +368,10 @@ Sequence:
 5. Apply only approved source/status/note updates and validate after each coherent batch.
 
 Use [SPECIES_EVIDENCE_AUDIT_2026-11-17.md](SPECIES_EVIDENCE_AUDIT_2026-11-17.md) as the master scope and interpretation record. Do not change numeric biology, weights, active flags, gates, required flags, scoring, confidence, source selection, ingestion, or publication during evidence discovery. A specific URL or `sourced` declaration is not proof of claim fit.
+
+
+### Batch A research complete | 2026-11-17
+
+Reviewed bonefish, great barracuda, and Permit, the three remaining temperature-only site pilots. Recommended bonefish and great barracuda move to `partly_sourced` with explicit physiological-performance, N=2 telemetry, and model-derived limitations; Permit remains `provisional` because available support is juvenile occurrence/model association rather than adult South Florida preference. Research findings and sources are recorded in the master evidence audit. No species JSON or numeric/model setting changed. Apply metadata only after review.
+
+Next: Batch B, the 27 other single-factor profiles, prioritized by gate/required semantics and traceability of their active factor sources.
