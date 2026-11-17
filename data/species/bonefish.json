@@ -43,8 +43,8 @@
       ],
       "weight": 0.35,
       "active": true,
-      "value_status": "partly_sourced",
-      "value_notes": "A peer-reviewed adult Eleuthera study measured laboratory performance optima of 28.0 °C for critical swimming speed and 26.7 °C for scope for activity; field loggers recorded 14.5–37.9 °C, but only eight fish were recaptured with functioning loggers from 138 implanted. A separate study reported critical thermal maxima of 36.4 ± 0.5 and 37.9 ± 0.5 °C and habitat temperatures up to 40.6 °C. These are performance/tolerance data, not preferred SST or a catch-response curve; transfer from Bahamian tidal creeks to South Florida is unvalidated.",
+      "value_status": "provisional",
+      "value_notes": "A peer-reviewed adult Eleuthera study measured laboratory performance optima of 28.0 °C for critical swimming speed and 26.7 °C for scope for activity; field loggers recorded 14.5–37.9 °C, but only eight fish were recaptured with functioning loggers from 138 implanted. A separate study reported critical thermal maxima of 36.4 ± 0.5 and 37.9 ± 0.5 °C and habitat temperatures up to 40.6 °C. These are performance and tolerance data, not preferred SST or a catch-response curve, and therefore do not validate the configured numeric SST suitability band. Transfer from Bahamian tidal creeks to South Florida is also unvalidated.",
       "reason_template": "Water is {value} C, within the currently configured provisional screening band for Bonefish; this is not a validated thermal preference.",
       "sources": [
         "https://doi.org/10.1007/s10641-015-0420-6",
