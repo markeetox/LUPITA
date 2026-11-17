@@ -686,3 +686,6 @@ Forecast date 2026-11-17 and reanalysis date 2017-07-15 are not matched, so no d
 ## Copernicus candidate sampling boxes v2 | 2026-11-17
 
 Per-cell ETOPO CSV review showed that the previous Atlantic box transitions rapidly from shallow western shelf cells to deeper water toward its eastern edge. The previous Pacific box remained abyssal-dominated, with the shallowest sampled columns at its eastern/northern edge. Updated the read-only pilot script with exploratory candidates: Atlantic -75.5 to -75.0°W, 35–36°N; Pacific -123.75 to -123.25°W, 38–39°N. Gulf and South Florida remain unchanged. These candidate bounds require a fresh Copernicus pilot and ETOPO assessment; they are not yet accepted validation strata. Production behavior remains unchanged.
+
+
+The candidate-v2 Atlantic/Pacific sample-box update passed Python tests in [run 44163056720](https://github.com/markeetox/LUPITA/actions/runs/44163056720). The bathymetry workflow now requires an explicit source run ID rather than defaulting to the older pilot, preventing accidental reuse of obsolete sample boxes. Next manual sequence: run the revised read-only Copernicus pilot, then run ETOPO assessment using that new pilot run ID. No production behavior changed.
