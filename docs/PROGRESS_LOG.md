@@ -1219,3 +1219,8 @@ Verified successful workflow [44162223743](https://github.com/markeetox/LUPITA/a
 Ocean-only valid coverage: South Florida/Keys 302/302 (100%); Gulf 246/246 (100%); Atlantic 165/166 (99.4%); Pacific 316/316 (100%). The Gulf box is currently the strongest shelf sample (193/246 cells at 10–200 m). Atlantic remains mixed shelf/deep water (91/166 at 10–200 m; 38 deeper than 2000 m). Pacific is abyssal-dominated (253/316 deeper than 2000 m, 80.1%) and must be refined before being called an outer-shelf sample. South Florida is a broad shelf/slope reference, not shallow-only. One Atlantic ocean cell is missing temperature in both subsets.
 
 Forecast date 2026-11-17 and reanalysis date 2017-07-15 are not matched; these results establish coverage and bathymetric context, not temperature accuracy. Next: refine Atlantic/Pacific sampling by explicit ETOPO depth strata, then build the independent NOAA CTD/mooring observation inventory. No production behavior changed.
+
+
+## 2026-11-17 | Candidate v2 sampling bounds from per-cell ETOPO review
+
+Reviewed the eight per-cell CSV grids from bathymetry run [44162223743](https://github.com/markeetox/LUPITA/actions/runs/44162223743). The previous Atlantic sample's western longitudes were substantially shallower than its eastern edge; the Pacific sample was abyssal-dominated, with shelf-transition cells only near its eastern/northern edge. Updated the manual pilot script with exploratory candidate v2 bounds: Atlantic -75.5 to -75.0°W, 35–36°N; Pacific -123.75 to -123.25°W, 38–39°N. Gulf and South Florida remain unchanged. These hypotheses must be checked by a new pilot and ETOPO assessment before acceptance. No production logic changed.
