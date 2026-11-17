@@ -558,3 +558,8 @@ Reviewed Bat ray, Common thresher shark, Leopard shark, Soupfin shark, and Pacif
 ## Documented multi-factor review | seventh pelagic species batch
 
 Reviewed Opah, Pacific barracuda, Pacific bonito, Pacific hake and Striped marlin across 10 active factors. Added California Sea Grant, NOAA, Aquarium of the Pacific, Smithsonian, peer-reviewed tagging and fisheries sources. Opah now has a taxonomic open issue: the Pacific opah complex was split in 2018, while the profile remains Lampris guttatus. Pacific barracuda/hake SST remain needs_source; pelagic vertical depth is distinguished from bathymetry. No numeric or runtime changes. Progress: 40 of 51 documented multi-factor profiles across 82 active factors. See [species evidence audit](SPECIES_EVIDENCE_AUDIT_2026-11-17.md).
+
+
+## Documented multi-factor review | eighth California coastal batch
+
+Reviewed Barred sand bass, Barred surfperch, Redtail surfperch, Rock greenling and White seabass across 10 active factors. Added CDFW, NOAA, WDFW, DFO and peer-reviewed thermal/habitat sources. Barred surfperch physiological data support a thermal response but not a catch curve; redtail surfperch has broad occurrence temperatures; rock greenling bottom temperatures do not validate SST; white seabass tags show ambient temperatures centered below the configured ideal. No numeric or runtime changes. Progress: 45 of 51 documented multi-factor profiles across 92 active factors. See [species evidence audit](SPECIES_EVIDENCE_AUDIT_2026-11-17.md).

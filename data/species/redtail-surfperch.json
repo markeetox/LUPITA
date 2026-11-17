@@ -10,7 +10,7 @@
   "display": {
     "color": "#24c9f2"
   },
-  "review_status": "v1 - West Coast Pacific habitat profile",
+  "review_status": "Evidence reviewed 2026-11-17. WDFW/DFO sources support surf-zone habitat and a broad reported water-temperature range; numeric preferred SST remains unvalidated.",
   "image": {
     "status": "placeholder",
     "kind": "illustration",
@@ -26,12 +26,15 @@
     "behavior": "Navigates West Coast kelp forests, rocky reefs, and coastal upwelling zones.",
     "regulations_link": "https://wdfw.wa.gov/fishing/regulations",
     "sources": [
-      "https://wdfw.wa.gov/fishing/regulations"
+      "https://wdfw.wa.gov/fishing/regulations",
+      "https://wdfw.wa.gov/species-habitats/species/amphistichus-rhodoterus",
+      "https://waves-vagues.dfo-mpo.gc.ca/library-bibliotheque/272802.pdf",
+      "https://fishbase.se/FieldGuide/FieldGuideSummary.php?GenusName=Amphistichus&SpeciesName=rhodoterus&print=&sps="
     ]
   },
   "lat_range": [
-    38.0,
-    50.0
+    38,
+    50
   ],
   "factors": [
     {
@@ -47,11 +50,14 @@
       ],
       "weight": 0.5,
       "active": true,
-      "value_status": "sourced",
+      "value_status": "partly_sourced",
       "sources": [
-        "https://wdfw.wa.gov/fishing/regulations"
+        "https://wdfw.wa.gov/fishing/regulations",
+        "https://waves-vagues.dfo-mpo.gc.ca/library-bibliotheque/272802.pdf",
+        "https://wdfw.wa.gov/species-habitats/species/amphistichus-rhodoterus"
       ],
-      "reason_template": "Water is {value} C, inside preferred Pacific temperature range for redtail surfperch."
+      "reason_template": "Water is {value} C, inside preferred Pacific temperature range for redtail surfperch.",
+      "value_notes": "DFO's Pacific species account reports redtail surfperch from 7-19 °C, with a likely colder lower limit than recorded. This is a broad occurrence range, not a preferred SST curve; the configured 8-16 °C range and 10-14 °C ideal remain unvalidated as suitability or catch-probability intervals."
     },
     {
       "param": "depth_m",
@@ -66,19 +72,23 @@
       ],
       "weight": 0.5,
       "active": true,
-      "value_status": "sourced",
+      "value_status": "partly_sourced",
       "sources": [
-        "https://wdfw.wa.gov/fishing/regulations"
+        "https://wdfw.wa.gov/fishing/regulations",
+        "https://wdfw.wa.gov/species-habitats/species/amphistichus-rhodoterus",
+        "https://waves-vagues.dfo-mpo.gc.ca/library-bibliotheque/272802.pdf",
+        "https://fishbase.se/FieldGuide/FieldGuideSummary.php?GenusName=Amphistichus&SpeciesName=rhodoterus&print=&sps="
       ],
       "gate": true,
-      "reason_template": "Depth is {value} m, within prime Pacific depth zone for redtail surfperch."
+      "reason_template": "Depth is {value} m, within prime Pacific depth zone for redtail surfperch.",
+      "value_notes": "WDFW and DFO describe redtail surfperch primarily in the surf zone on exposed sandy beaches, with use of estuaries/bays and reported shallow depth to about 7 m. This supports the 1-15 m shallow coastal band but does not validate the 3-10 m ideal as a measured preference."
     }
   ],
   "timing": {
     "status": "angler_lore",
     "light": {
       "map": {
-        "day": 1.0,
+        "day": 1,
         "dawn": 0.9,
         "dusk": 0.9,
         "night": 0.5
@@ -105,7 +115,7 @@
     "source_url": "https://wdfw.wa.gov/fishing/regulations"
   },
   "lon_range": [
-    -138.0,
-    -110.0
+    -138,
+    -110
   ]
 }

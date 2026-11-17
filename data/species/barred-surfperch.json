@@ -10,7 +10,7 @@
   "display": {
     "color": "#3caef2"
   },
-  "review_status": "v1 - West Coast Pacific habitat profile",
+  "review_status": "Evidence reviewed 2026-11-17. CDFW/UC Santa Barbara physiology and life-history sources support surf-zone temperature response and shallow sandy-beach habitat; no catch-probability curve validated.",
   "image": {
     "status": "placeholder",
     "kind": "illustration",
@@ -26,12 +26,16 @@
     "behavior": "Navigates West Coast kelp forests, rocky reefs, and coastal upwelling zones.",
     "regulations_link": "https://wildlife.ca.gov/Fishing/Ocean/Regulations/Sport-Fishing",
     "sources": [
-      "https://wildlife.ca.gov/Fishing/Ocean/Regulations/Sport-Fishing"
+      "https://wildlife.ca.gov/Fishing/Ocean/Regulations/Sport-Fishing",
+      "https://pmc.ncbi.nlm.nih.gov/articles/PMC10587238/",
+      "https://escholarship.org/uc/item/9fh0623k",
+      "https://www.waterboards.ca.gov/water_issues/programs/swamp/docs/coast_study/bog2012may/apx1.pdf",
+      "https://escholarship.org/uc/item/1q6155k6"
     ]
   },
   "lat_range": [
-    25.0,
-    38.0
+    25,
+    38
   ],
   "factors": [
     {
@@ -47,11 +51,14 @@
       ],
       "weight": 0.5,
       "active": true,
-      "value_status": "sourced",
+      "value_status": "partly_sourced",
       "sources": [
-        "https://wildlife.ca.gov/Fishing/Ocean/Regulations/Sport-Fishing"
+        "https://wildlife.ca.gov/Fishing/Ocean/Regulations/Sport-Fishing",
+        "https://pmc.ncbi.nlm.nih.gov/articles/PMC10587238/",
+        "https://escholarship.org/uc/item/1q6155k6"
       ],
-      "reason_template": "Water is {value} C, inside preferred Pacific temperature range for barred surfperch."
+      "reason_template": "Water is {value} C, inside preferred Pacific temperature range for barred surfperch.",
+      "value_notes": "A UC Santa Barbara study of 61 wild barred surfperch measured metabolic and cardiac performance at 12, 16, 20 and 22 °C. Aerobic performance remained relatively stable from 12-20 °C, while temperatures above 20 °C were limiting, especially for smaller young-of-year fish. This supports a thermal response but is not a field-derived SST preference or catch curve; the configured 12-21 °C range and 14-19 °C ideal are not directly calibrated."
     },
     {
       "param": "depth_m",
@@ -66,19 +73,23 @@
       ],
       "weight": 0.5,
       "active": true,
-      "value_status": "sourced",
+      "value_status": "partly_sourced",
       "sources": [
-        "https://wildlife.ca.gov/Fishing/Ocean/Regulations/Sport-Fishing"
+        "https://wildlife.ca.gov/Fishing/Ocean/Regulations/Sport-Fishing",
+        "https://escholarship.org/uc/item/9fh0623k",
+        "https://www.waterboards.ca.gov/water_issues/programs/swamp/docs/coast_study/bog2012may/apx1.pdf",
+        "https://fishbase.se/FieldGuide/FieldGuideSummary.php?GenusName=Amphistichus&SpeciesName=argenteus&print=&sps="
       ],
       "gate": true,
-      "reason_template": "Depth is {value} m, within prime Pacific depth zone for barred surfperch."
+      "reason_template": "Depth is {value} m, within prime Pacific depth zone for barred surfperch.",
+      "value_notes": "Barred surfperch primarily occupy the surf zone over sandy beaches; FishBase and California survey sources report shallow occurrence around 0-7 m, with trawl records to 73 m. This supports the configured 1-15 m shallow-beach screen but does not validate the 3-10 m ideal or represent all deeper incidental records."
     }
   ],
   "timing": {
     "status": "angler_lore",
     "light": {
       "map": {
-        "day": 1.0,
+        "day": 1,
         "dawn": 0.9,
         "dusk": 0.9,
         "night": 0.5
@@ -105,7 +116,7 @@
     "source_url": "https://wildlife.ca.gov/Fishing/Ocean/Regulations/Sport-Fishing"
   },
   "lon_range": [
-    -138.0,
-    -110.0
+    -138,
+    -110
   ]
 }

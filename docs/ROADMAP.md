@@ -480,3 +480,8 @@ Reviewed Bat ray, Common thresher shark, Leopard shark, Soupfin shark, and Pacif
 ## 2026-11-17 | Documented pelagic review, batch 7
 
 Reviewed Opah, Pacific barracuda, Pacific bonito, Pacific hake and Striped marlin (10 active factors). Added species-specific tagging and habitat sources. Flagged unresolved Pacific opah taxonomy; separated pelagic vertical depth from bathymetry. No numeric or runtime changes. Progress: 40/51 profiles, 82 active factors.
+
+
+## 2026-11-17 | Documented California coastal review, batch 8
+
+Reviewed Barred sand bass, Barred surfperch, Redtail surfperch, Rock greenling and White seabass (10 active factors). Added species-specific sources and conservative temperature/depth notes. Distinguished physiology, ambient fish-depth temperature and bottom-water temperature from preferred satellite SST. Progress: 45/51 profiles, 92 active factors. No numeric or runtime changes.

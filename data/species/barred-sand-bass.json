@@ -10,7 +10,7 @@
   "display": {
     "color": "#d80a4f"
   },
-  "review_status": "v1 - West Coast Pacific habitat profile",
+  "review_status": "Evidence reviewed 2026-11-17. CDFW species and tagging sources support reef-edge habitat, seasonal movement and adult depth; experienced water temperature is not a preferred SST curve.",
   "image": {
     "status": "placeholder",
     "kind": "illustration",
@@ -26,12 +26,16 @@
     "behavior": "Navigates West Coast kelp forests, rocky reefs, and coastal upwelling zones.",
     "regulations_link": "https://wildlife.ca.gov/Fishing/Ocean/Regulations/Sport-Fishing",
     "sources": [
-      "https://wildlife.ca.gov/Fishing/Ocean/Regulations/Sport-Fishing"
+      "https://wildlife.ca.gov/Fishing/Ocean/Regulations/Sport-Fishing",
+      "https://marinespecies.wildlife.ca.gov/barred-sand-bass/the-species/",
+      "https://nrm.dfg.ca.gov/FileHandler.ashx?DocumentID=122580",
+      "https://nrm.dfg.ca.gov/FileHandler.ashx?DocumentID=227132",
+      "https://www.waterboards.ca.gov/waterrights/water_issues/programs/bay_delta/california_waterfix/exhibits/docs/COSJ%20et%20al/part2sur_rebuttal/SJC_424.pdf"
     ]
   },
   "lat_range": [
-    24.0,
-    35.0
+    24,
+    35
   ],
   "factors": [
     {
@@ -47,11 +51,14 @@
       ],
       "weight": 0.5,
       "active": true,
-      "value_status": "sourced",
+      "value_status": "partly_sourced",
       "sources": [
-        "https://wildlife.ca.gov/Fishing/Ocean/Regulations/Sport-Fishing"
+        "https://wildlife.ca.gov/Fishing/Ocean/Regulations/Sport-Fishing",
+        "https://nrm.dfg.ca.gov/FileHandler.ashx?DocumentID=122580",
+        "https://marinespecies.wildlife.ca.gov/barred-sand-bass/the-species/"
       ],
-      "reason_template": "Water is {value} C, inside preferred Pacific temperature range for barred sand bass."
+      "reason_template": "Water is {value} C, inside preferred Pacific temperature range for barred sand bass.",
+      "value_notes": "CDFW tracking figures show barred sand bass experiencing roughly 11-19 °C water during representative seasonal movements, and CDFW describes summer spawning migrations. These are ambient temperatures at fish depth, not a validated preferred surface-temperature curve; they do not establish the configured 14-23 °C range or 16-21 °C ideal as catch suitability bands."
     },
     {
       "param": "depth_m",
@@ -66,19 +73,23 @@
       ],
       "weight": 0.5,
       "active": true,
-      "value_status": "sourced",
+      "value_status": "partly_sourced",
       "sources": [
-        "https://wildlife.ca.gov/Fishing/Ocean/Regulations/Sport-Fishing"
+        "https://wildlife.ca.gov/Fishing/Ocean/Regulations/Sport-Fishing",
+        "https://www.waterboards.ca.gov/waterrights/water_issues/programs/bay_delta/california_waterfix/exhibits/docs/COSJ%20et%20al/part2sur_rebuttal/SJC_424.pdf",
+        "https://marinespecies.wildlife.ca.gov/barred-sand-bass/the-species/",
+        "https://nrm.dfg.ca.gov/FileHandler.ashx?DocumentID=227132"
       ],
       "gate": true,
-      "reason_template": "Depth is {value} m, within prime Pacific depth zone for barred sand bass."
+      "reason_template": "Depth is {value} m, within prime Pacific depth zone for barred sand bass.",
+      "value_notes": "CDFW habitat sources report adults/subadults most abundant around 5.2-26 m, with occurrence to about 183 m; adults occupy the sand/rock ecotone and spawning aggregations form over soft bottom. The configured 2-40 m range is plausible for nearshore adults, but the 4-35 m ideal is not a measured depth-preference curve and juveniles use sheltered bays/shallows."
     }
   ],
   "timing": {
     "status": "angler_lore",
     "light": {
       "map": {
-        "day": 1.0,
+        "day": 1,
         "dawn": 0.9,
         "dusk": 0.9,
         "night": 0.5
@@ -105,7 +116,7 @@
     "source_url": "https://wildlife.ca.gov/Fishing/Ocean/Regulations/Sport-Fishing"
   },
   "lon_range": [
-    -138.0,
-    -110.0
+    -138,
+    -110
   ]
 }

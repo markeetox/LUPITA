@@ -807,3 +807,36 @@ Reviewed Opah, Pacific barracuda, Pacific bonito, Pacific hake and Striped marli
 
 ### Documented-profile review progress
 Forty of 51 profiles reviewed across 82 active factors. Opah adds a taxonomic identity issue that must be resolved separately; pelagic depth observations remain distinct from seafloor bathymetry. No numerical or runtime model behavior changed.
+
+
+## Documented multi-factor review: eighth California coastal batch | 2026-11-17
+
+Reviewed Barred sand bass, Barred surfperch, Redtail surfperch, Rock greenling and White seabass across 10 active factors. Replaced generic regulation references with CDFW, NOAA, WDFW, DFO and peer-reviewed thermal/habitat research. No numeric ranges, ideal intervals, weights, active flags, gates, required flags, scoring, confidence or runtime behavior changed.
+
+### Barred sand bass (*Paralabrax nebulifer*)
+- SST: partly_sourced. CDFW tagging figures show ambient temperatures around 11-19 °C during seasonal movements, but these are fish-depth temperatures, not a preferred SST or catch curve.
+- Depth: partly_sourced. Adults/subadults are most abundant around 5.2-26 m; occurrence extends deeper. Adult ecotone and summer spawning-aggregation habitat are documented; ideal band is not a measured preference.
+- Sources: [CDFW Enhanced Status Report](https://marinespecies.wildlife.ca.gov/barred-sand-bass/the-species/); [CDFW movement/tagging study](https://nrm.dfg.ca.gov/FileHandler.ashx?DocumentID=122580); [CDFW 2024 regulation background](https://nrm.dfg.ca.gov/FileHandler.ashx?DocumentID=227132).
+
+### Barred surfperch (*Amphistichus argenteus*)
+- SST: partly_sourced. UC Santa Barbara tested 61 wild fish at 12, 16, 20 and 22 °C; aerobic performance was stable from 12-20 °C and temperatures above 20 °C were limiting, especially for young-of-year fish. This is physiology, not a field SST preference/catch curve.
+- Depth: partly_sourced. Primary habitat is sandy-beach surf zone; reported shallow occurrence around 0-7 m and trawl records to 73 m. The configured band is a shallow-beach screen, not a complete range.
+- Sources: [UC Santa Barbara thermal physiology study](https://pmc.ncbi.nlm.nih.gov/articles/PMC10587238/); [Fish Bulletin 109](https://escholarship.org/uc/item/9fh0623k); [California coastal survey appendix](https://www.waterboards.ca.gov/water_issues/programs/swamp/docs/coast_study/bog2012may/apx1.pdf).
+
+### Redtail surfperch (*Amphistichus rhodoterus*)
+- SST: partly_sourced. DFO reports occurrence from 7-19 °C, with a likely colder lower limit than recorded. This is broad environmental occurrence, not preferred SST.
+- Depth: partly_sourced. WDFW/DFO describe surf-zone sandy beaches and shallow estuarine/bay use to about 7 m. Configured 1-15 m / 3-10 m is a shallow coastal screen, not a preference curve.
+- Sources: [WDFW redtail surfperch](https://wdfw.wa.gov/species-habitats/species/amphistichus-rhodoterus); [DFO Pacific species account](https://waves-vagues.dfo-mpo.gc.ca/library-bibliotheque/272802.pdf); [FishBase](https://fishbase.se/FieldGuide/FieldGuideSummary.php?GenusName=Amphistichus&SpeciesName=rhodoterus&print=&sps=).
+
+### Rock greenling (*Hexagrammos lagocephalus*)
+- SST: needs_source. A 2024 Bering Sea study reports 0.5-3.8 °C near-bottom temperatures, not satellite SST or a preferred surface-temperature curve.
+- Depth: partly_sourced. NOAA/IUCN describe nearshore rocky/kelp habitat commonly to about 50 m, with records to 665 m; 2024 Bering Sea trawl catches were 134-498 m in winter/spring, with seasonal shelf return. Configured shallow band does not represent full seasonal depth use.
+- Sources: [NOAA AFSC life-history database](https://apps-afsc.fisheries.noaa.gov/ichthyo/LHDataLH.php?GSID=Hexagrammos%21lagocephalus); [IUCN assessment](https://doi.org/10.2305/IUCN.UK.2020-2.RLTS.T158882544A158883843.en); [2024 Bering Sea study](https://ter-arkhiv.ru/0042-8752/article/view/650307).
+
+### White seabass (*Atractoscion nobilis*)
+- SST: partly_sourced. 173 adult tags, 41 recaptures and 9,130 days of records show ambient temperatures 8.7-23.6 °C, mean 15.2 °C, with 52% of time at 13-16 °C and a peak near 14 °C. Surface-oriented records were 12-19 °C 95% of the time. The configured 14-22 °C / 16-20 °C is shifted warmer; ambient temperature is not always satellite SST.
+- Depth: partly_sourced. Tagging found 95% of vertical records shallower than 50 m, with a 245 m maximum and seasonal winter deepening; CDFW describes common catches in 3-27 m. Fish vertical depth is not seabed depth.
+- Sources: [Aalbers & Sepulveda 2015 NOAA Fishery Bulletin](https://spo.nmfs.noaa.gov/sites/default/files/aalbers.pdf); [CDFW nearshore fishes](https://wildlife.ca.gov/Conservation/Marine/Nearshore); [CDFW white seabass management plan](https://nrm.dfg.ca.gov/FileHandler.ashx?DocumentID=34195&inline=true).
+
+### Documented-profile review progress
+Forty-five of 51 profiles reviewed across 92 active factors. Surfperch physiology and white seabass tagging support temperature relevance but do not automatically define a catch-probability curve; rock greenling bottom-temperature observations are not SST.
