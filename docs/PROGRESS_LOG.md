@@ -1142,3 +1142,16 @@ Committed workflow and documented it in the validation protocol and project stat
 ## 2026-11-17 | Copernicus credentials verified; metadata inspection staged
 
 The manual Copernicus credentials-check workflow passed using the repository Actions secrets. Before downloading data, rechecked official variable documentation: `bottomT` is explicitly defined as sea-water potential temperature at the sea floor and has no vertical depth dimension, while the earlier forecast-product review referenced `tob`. Do not assume these identifiers are interchangeable. Added `.github/workflows/copernicus-bottom-temperature-metadata.yml`, a manual-only metadata retrieval workflow for the daily forecast and reanalysis dataset IDs. It uploads catalogue JSON as a seven-day artifact and downloads no temperature data. Next: run it, inspect exact variable short names/standard names/units/dimensions and date coverage, then design a minimal read-only subset. No production source, model, species profile, scoring, confidence, ingestion, or publication behavior changed.
+
+
+## 2026-11-17 | Copernicus bottom-temperature live metadata inspected
+
+The manual metadata workflow passed. Inspected the uploaded `copernicus-bottom-temperature-metadata` artifact containing forecast and reanalysis catalogue JSON.
+
+- Forecast dataset `cmems_mod_glo_phy_anfc_0.083deg_P1D-m`, version `202406`: bottom-temperature short name `tob`.
+- Reanalysis dataset `cmems_mod_glo_phy_my_0.083deg_P1D-m`, version `202311`: bottom-temperature short name `bottomT`.
+- Both variables have standard name `sea_water_potential_temperature_at_sea_floor`, units `degrees_C`, and coordinates `time`, `latitude`, `longitude`; neither bottom field has a vertical depth axis.
+- Grid spacing is approximately 0.0833333 degrees. Catalogue time extrema are 2022-06-01 to 2026-11-26 (forecast, including forecast horizon) and 1993-01-01 to 2026-10-06 (reanalysis).
+- Global coordinate bounds and metadata presence do not establish valid coastal coverage, non-missing values, freshness, or accuracy.
+
+No temperature subset was downloaded and no runtime/model behavior changed. Next: manual-only read-only extraction pilot with the dataset-specific identifiers, then inspect data-file dimensions, fill values, wet-cell coverage, and time semantics. Full protocol: `docs/COPERNICUS_BOTTOM_TEMPERATURE_VALIDATION_2026-11-17.md`.
