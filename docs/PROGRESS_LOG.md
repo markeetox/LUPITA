@@ -1110,3 +1110,8 @@ Next: source-backed geographic-scope review of the 25 profiles without latitude 
 ## 2026-11-17 | Geographic range evidence pass
 
 Located source-backed range statements for all 25 grid profiles missing `lat_range`. Sources include NOAA Fisheries, state/council agencies, Florida Museum, VIMS, WoRMS and FishBase. Recorded the actual source statements and caveats in `docs/MODEL_REBUILD_PLAN_2026-11-17.md`. No decimal bounds were inferred: several species have stock splits, seasonal migration, regional absences or disjoint ranges. No profile ranges or runtime behavior changed.
+
+
+## 2026-11-17 | Phase 1 measurement alignment audit
+
+Recorded the physical measurement contract: `sst_c` is MUR surface temperature; `depth_m` is ETOPO seafloor bathymetry at stride 15, broad regional context. Five demersal SST factors are already `needs_source` because evidence is bottom-water/fish-depth temperature. Pelagic tagging depth is not seabed depth; bluefin and blue marlin use active depth gates, while mahi-mahi and steelhead depth factors are weak proxies. No source, numeric, gate, weight or scoring changes.

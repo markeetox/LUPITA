@@ -590,3 +590,10 @@ The plan separates surface SST from bottom temperature and ETOPO seafloor bathym
 ## Geographic scope research update | 2026-11-17
 
 Completed a first source pass for all 25 grid profiles that lack latitude bounds. NOAA, state, council, museum, VIMS, WoRMS and FishBase sources now document range statements in the model-rebuild plan. These are not yet translated into numeric bounds: several include stock boundaries, seasonal migration, island absences or disjoint Florida distribution. Black sea bass, king mackerel, cobia, sheepshead and southern flounder need regional treatment rather than a guessed rectangle. No geographic bounds or scoring behavior changed.
+
+
+## Measurement-alignment audit | 2026-11-17
+
+Confirmed that runtime `sst_c` is NOAA MUR sea-surface temperature and `depth_m` is ETOPO seafloor bathymetry sampled at stride 15 (broad regional context, not reef scale). Five demersal profiles (Pacific halibut, Petrale sole, Pacific cod, Sablefish, Rock greenling) have active SST factors marked `needs_source` because the cited temperature evidence is bottom-water or fish-depth data, not validated SST. Pelagic examples (bluefin tuna, blue marlin, mahi-mahi, opah, steelhead) show fish vertical depth must not be treated as seafloor depth; bluefin and blue marlin depth factors are active gates, while mahi-mahi and steelhead are weak proxies.
+
+Next design work: evaluate a validated bottom-temperature input and decide whether fish vertical depth merits a separate variable. No environmental source, factor, gate, weight, numeric range, score or confidence behavior changed. CI after taxonomy/scope metadata passed 307 tests on #44134514836.

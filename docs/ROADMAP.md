@@ -506,3 +506,8 @@ Started scope/identity before factor recalibration. Found 25 grid profiles witho
 ## 2026-11-17 | Phase 0 geographic source pass
 
 Located traceable distribution sources for all 25 grid profiles missing latitude bounds. Do not translate textual endpoints into guessed coordinates; review stock splits, seasonal migration, island absences and disjoint distributions before choosing rectangular bounds or masks. See the geographic register in `docs/MODEL_REBUILD_PLAN_2026-11-17.md`. No model or runtime changes.
+
+
+## 2026-11-17 | Phase 1 measurement alignment
+
+Documented surface SST versus bottom temperature and ETOPO seafloor bathymetry versus fish vertical depth. Five demersal SST factors are not supported by the cited bottom-water evidence. Pelagic depth factors require scrutiny, especially where they are gates. Next: evaluate candidate bottom-temperature sources and a separate fish-vertical-depth variable. No model or source changes.

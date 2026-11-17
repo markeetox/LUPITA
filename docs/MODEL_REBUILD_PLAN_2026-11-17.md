@@ -168,3 +168,57 @@ The first source pass located distribution evidence for all 25 profiles. These s
 - Stock boundaries, seasonal migration, discontinuous Florida distribution, island absences, and life-stage differences must be preserved.
 - Do not automatically convert city/country endpoints into arbitrary decimal degrees. If the source provides coordinates or a mapped polygon, use that. Otherwise keep the evidence as a documented range statement and decide whether a coarse box is defensible.
 - The strongest regional-scope flags from this pass are black sea bass (separate Mid-Atlantic/South Atlantic stocks), king mackerel (Atlantic/Gulf stock mixing in South Florida), cobia (seasonal migration), sheepshead (documented regional absences), and southern flounder (discontinuous Florida distribution).
+
+
+## Phase 1.1: physical measurement alignment audit
+
+### Runtime variables
+
+| Runtime parameter | Actual measurement | Current source / limitation |
+|---|---|---|
+| `sst_c` | Sea-surface temperature | NOAA CoastWatch MUR `jplMURSST41`, variable `analysed_sst`. This is not bottom temperature. |
+| `depth_m` | Seafloor bathymetric depth | NOAA NCEI ETOPO 2022 `z`, sign converted to positive water depth. Source is 15-arc-second but sampled at stride 15 (about 3.75 arc-minutes); config explicitly says broad regional context, not reef-scale bathymetry. |
+| Fish tag depth | Vertical position of an animal in the water column | Not a current runtime grid layer and not interchangeable with `depth_m`. |
+| Bottom-water temperature | Temperature near the seabed | Not currently supplied by the configured MUR SST layer. Must not be silently substituted with surface temperature. |
+
+### 1.1.a Demersal temperature mismatch: confirmed active SST factors
+
+The following five active SST factors are already marked `needs_source` after the source-by-source review because their cited evidence is bottom-water temperature or demersal context, not a validated surface-temperature response:
+
+| Profile | Active SST range / ideal | Evidence mismatch |
+|---|---|---|
+| Pacific halibut | 5–13 °C / 7–11 °C | IPHC bottom-water occupancy around 3–8 °C; no direct support for the configured satellite-SST curve. |
+| Petrale sole | 7–15 °C / 9–13 °C | DFO bottom-temperature tolerance; no species-specific preferred SST interval. |
+| Pacific cod | 4–12 °C / 6–10 °C | NOAA Bering Sea trawl bottom temperatures, not surface temperature or a preference curve. |
+| Sablefish | 4–12 °C / 6–10 °C | NOAA tag temperatures measured at fish depth (typically 3.9–5.0 °C); not satellite SST. |
+| Rock greenling | 6–14 °C / 8–12 °C | Bering Sea near-bottom observations (0.5–3.8 °C), not SST. |
+
+The existing ranges are retained unchanged. These profiles are not ready for SST recalibration until a surface-temperature relationship is directly supported or an appropriate bottom-temperature input is evaluated.
+
+### 1.1.b Pelagic fish depth versus seafloor bathymetry
+
+The evidence review identifies a second mismatch. Tagging studies report fish vertical depth, while the runtime factor scores ETOPO seafloor depth.
+
+| Profile | Active `depth_m` factor | Current evidence interpretation |
+|---|---:|---|
+| Bluefin tuna | 0.15 weight | NOAA/archival tags report dives to 500–1,000 m; these are fish depths, not seabed depths. The factor is an active gate. |
+| Blue marlin | 0.05 weight | Tags report upper-water-column occupancy and occasional deep dives; not bathymetric preference. The factor is an active gate. |
+| Mahi-mahi | 0.05 weight | Fish occupy surface water and dive in the water column; factor already classified `weak_factor`, a bathymetric proxy only. |
+| Opah (`Lampris incognitus`) | 0.50 weight | Pre-revision Hawaii tags report fish vertical occupancy; NOAA California catch analysis provides a separate bathymetric association, but species attribution and numeric response remain limited. |
+| Steelhead | 0.50 weight | Tags show mostly upper-5-m fish depth; factor already classified `weak_factor`, and does not establish seabed preference. |
+
+This is not an exhaustive list. Other pelagic tunas, billfish, sharks and salmonids with active `depth_m` factors need the same check. A low-weight factor can still be consequential when marked `gate: true`, because the gate can exclude a cell regardless of its small contribution to the weighted average.
+
+### 1.1.c Design decisions to evaluate (not yet implemented)
+
+1. **Surface SST:** retain as a surface environmental variable and only use evidence that measures surface temperature or demonstrates a validated relationship between surface and target-habitat temperature.
+2. **Bottom temperature:** investigate a gridded, depth-resolved source with documented temporal coverage, depth levels, resolution, regional coverage, and operational freshness. Do not enable a source until these are validated.
+3. **Bathymetry:** retain `depth_m` only when evidence describes seabed depth, demersal habitat occupancy, or a demonstrated catch-location relationship with bathymetry. Do not use fish vertical-depth observations as direct evidence for this factor.
+4. **Fish vertical depth:** if the product needs this dimension, design it as a separate parameter with a suitable data source and semantics; do not overload `depth_m`.
+5. **Resolution:** ETOPO's current stride is suitable only as broad shelf/slope context. Reef-scale or shallow-flat predictions need higher-resolution regional bathymetry and independent validation.
+
+No source selection, new data layer, factor activation, gate, weight, numeric band, scoring equation or confidence behavior is approved by this audit.
+
+### Validation checkpoint
+
+Taxonomy and scope metadata commit `b77bd890cc687b0405d3ecbb3edabdde052d337e` passed CI run [#44134514836](https://github.com/markeetox/LUPITA/actions/runs/44134514836): 307 tests passed, 0 failed, 115 warnings. The generated species audit reports 130 profiles parsed and structurally valid, 0 JSON parse errors, and 0 model-compatibility issues. No prediction behavior changed.
