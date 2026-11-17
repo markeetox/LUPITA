@@ -228,7 +228,7 @@ Taxonomy and scope metadata commit `b77bd890cc687b0405d3ecbb3edabdde052d337e` pa
 
 ### Candidate: Copernicus Marine Global Ocean Physics Analysis and Forecast
 
-<badge color="warning">Research candidate only</badge>
+**Status: research candidate only**
 
 The strongest initial candidate located is Copernicus Marine product `GLOBAL_ANALYSISFORECAST_PHY_001_024`:
 
