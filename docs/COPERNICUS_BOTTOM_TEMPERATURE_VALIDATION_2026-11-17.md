@@ -343,3 +343,21 @@ These are sampling hypotheses, not validated shelf strata. The next manual pilot
 ## Candidate v2 code check and next-run guard | 2026-11-17
 
 Python tests passed on the candidate-v2 sampling-box commit in [run 44163056720](https://github.com/markeetox/LUPITA/actions/runs/44163056720). The pilot remains manual-only. The bathymetry workflow input no longer defaults to the older pilot run ID; it now requires an explicit numeric run ID from the newly completed candidate-v2 pilot. This prevents accidentally assessing the previous boxes. Next: dispatch the read-only pilot with the existing dates, then pass that new run ID to the bathymetry workflow. No production behavior changed.
+
+
+## Candidate v2 Copernicus extraction completed | 2026-11-17
+
+The candidate-v2 manual read-only pilot succeeded in [run 44164227216](https://github.com/markeetox/LUPITA/actions/runs/44164227216). All eight subset requests completed and the artifact `copernicus-bottom-temperature-pilot` was uploaded. The extracted forecast field is `tob` from dataset version `202406`; the historical reanalysis field is `bottomT` from version `202311`. Both expose the expected sea-floor potential-temperature standard name and `degrees_C` units, with time/latitude/longitude coordinates and no vertical depth axis.
+
+| Region | Forecast valid / total | Reanalysis valid / total | Raw all-grid fraction |
+|---|---:|---:|---:|
+| South Florida / Keys | 321 / 475 | 321 / 475 | 67.6% |
+| Gulf candidate | 247 / 247 | 247 / 247 | 100% |
+| Atlantic candidate v2 | 90 / 91 | 90 / 91 | 98.9% |
+| Pacific candidate v2 | 73 / 91 | 73 / 91 | 80.2% |
+
+These are valid counts over each rectangular extraction grid. They are not ocean-only coverage rates: land and coast-ambiguous cells must be classified and excluded from the denominator. The improved raw Pacific fraction is encouraging as an extraction result, but it does not establish that the box is shelf-representative. ETOPO depth composition and coastal-mask disagreements remain unreviewed for candidate v2.
+
+Forecast values are from 2026-11-17 and reanalysis values from 2017-07-15. The snapshots are not time-matched; differences between their ranges or means are not an accuracy or inter-product validation result. The pilot establishes successful access, extraction, metadata consistency, and basic numerical plausibility only.
+
+Next: run `.github/workflows/copernicus-bottom-temperature-bathymetry.yml` with explicit `source_run_id=44164227216`; inspect ocean-only coverage, depth classes, and all per-cell mask disagreements before accepting or revising either candidate box. Continue the read-only boundary: no production ingestion, MUR SST, species profiles, factors, weights, gates, scoring, confidence, or publication behavior changes.
