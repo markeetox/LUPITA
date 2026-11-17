@@ -617,3 +617,8 @@ No Copernicus subset has yet been downloaded; no valid-coverage fraction, freshn
 ## Copernicus bottom-temperature validation | credentials setup | 2026-11-17
 
 The user configured repository Actions secrets `COPERNICUSMARINE_SERVICE_USERNAME` and `COPERNICUSMARINE_SERVICE_PASSWORD`. Added the manual-only workflow `.github/workflows/copernicus-credentials-check.yml` to validate the credentials without exposing values. It is not scheduled and does not download data or affect production. The workflow is committed but has not yet been run, so authentication remains unverified. Next: dispatch the check, then perform a compact read-only `tob` metadata/subset pilot if authentication succeeds.
+
+
+## Copernicus bottom-temperature validation | 2026-11-17
+
+The Copernicus credentials-check workflow passed, confirming GitHub Actions authentication. Before sample extraction, current Copernicus documentation revealed a variable-identifier ambiguity (`tob` in the earlier forecast-product review versus `bottomT` in current reanalysis guidance). Added a manual metadata-only workflow to retrieve live catalogue metadata for both daily forecast and reanalysis datasets. The exact variable identifiers, dimensions, units and temporal coverage must be confirmed from those metadata artifacts before constructing subset requests. No temperature data has been downloaded and no production behavior changed.
