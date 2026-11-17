@@ -94,7 +94,7 @@ Review timing maps, spawning/migration narratives, habitat descriptions, and ope
 
 ### Batch E: approved metadata updates and validation
 
-After each research batch is reviewed, apply only approved source references, evidence statuses, and explanatory notes. Then run the species validator and full tests. Keep a progress register so completed species/factors are not researched twice. Batches A and B have research recommendations recorded but still need metadata implementation; Batch C metadata updates are underway.
+After each research batch is reviewed, apply only approved source references, evidence statuses, and explanatory notes. Then run the species validator and full tests. Keep a progress register so completed species/factors are not researched twice. Batches A and B metadata implementation is now complete; Batch C metadata updates are underway.
 
 ## Guardrails
 
@@ -107,7 +107,7 @@ After each research batch is reviewed, apply only approved source references, ev
 
 ## Immediate next action
 
-Start Batch A with bonefish, great barracuda, and Permit, then move to the 27 other single-factor profiles. The master inventory should be refreshed from the current `main` branch after each completed batch so new changes are reflected accurately.
+Batch A and Batch B metadata changes have been applied to all 30 profiles. The next action is to verify the full CI validator result and refresh the inventory, then continue Batch C with remaining elevated-risk multi-factor profiles.
 
 ## Audit artifact
 
@@ -205,7 +205,7 @@ Recommended evidence-status distribution for these 27 profiles:
 
 **Critical model-design observation:** several demersal/deep-water profiles cite bottom temperatures or inhabit depths of roughly 30–370 m, while the active runtime input is satellite sea-surface temperature. Those sources may support species thermal ecology, but they do not validate a surface-temperature gate for fish occupying deep bottom habitat. This should become a separate model-to-data design review; do not silently replace SST with an inferred bottom temperature.
 
-No numeric range, ideal interval, weight, active flag, gate, required flag, source configuration, score, confidence, ingestion, or publication behavior changed in this research batch. These are research recommendations awaiting approval before profile metadata is edited.
+No numeric range, ideal interval, weight, active flag, gate, required flag, source configuration, score, confidence, ingestion, or publication behavior changed. Metadata-only source/status/note updates have been applied to all 27 profiles.
 
 
 ## Batch C research and metadata implementation: first four multi-factor profiles | 2026-11-17
@@ -421,4 +421,22 @@ Reviewed blackfin tuna, cobia, common snook, and Florida pompano. Updated factor
 
 ### Batch C cumulative disposition
 Twenty of the 29 originally elevated-risk multi-factor profiles have now been reviewed across 77 active factors. Nine elevated-risk multi-factor profiles remain, plus nine partial-risk and 51 documented multi-factor profiles. The review continues to distinguish environmental suitability from fish vertical behavior and from post-release survival; evidence for one is not automatically evidence for another.
+
+
+## Batch A/B metadata implementation | 2026-11-17
+
+Applied metadata-only evidence updates to all 30 profiles covered by Batch A and Batch B.
+
+### Batch A: remaining temperature-only site pilots
+- Bonefish: provisional → partly_sourced. Added adult performance-temperature and thermal-tolerance sources with explicit N=8 recapture limitation and Bahamas-to-South-Florida transfer caveat.
+- Great barracuda: provisional → partly_sourced. Added South Florida archival-tag thesis (N=2 adults) and FishBase model estimate with explicit small-sample/model caveats.
+- Permit: remains provisional. Added the 2026 Texas juvenile occupancy study, 1972 South Carolina juvenile survey, and FishBase model estimate; notes distinguish juvenile occurrence and modeled association from adult South Florida preference.
+
+### Batch B: 27 other single-factor grid profiles
+Applied the recommended status/source/note classifications:
+- 20 partly_sourced: Acadian redfish, albacore tuna, Atlantic cod, Atlantic halibut, bigeye tuna, blueline tilefish, cusk, golden tilefish, greater amberjack, haddock, longbill spearfish, ocean pout, shortfin mako, silk snapper, skipjack tuna, swordfish, thresher shark, vermilion snapper, white marlin, yellowfin tuna.
+- 3 provisional: great hammerhead, ocean triggerfish, pollock.
+- 4 needs_source: misty grouper, rainbow runner, Warsaw grouper, yellowedge grouper.
+
+All 30 profile-level source lists and active SST factor source/status/value_notes fields were updated. The four needs_source profiles retain empty factor-level SST source lists because species/habitat references do not substantiate a numeric surface-temperature claim. No numeric ranges, ideal intervals, weights, active flags, gates, required flags, scoring, confidence, source selection, ingestion, or publication behavior changed. CI run #44124511157 is validating the updated catalog.
 

@@ -418,3 +418,8 @@ Reviewed Atlantic blue marlin, Atlantic bluefin tuna, sailfish, and tarpon. Sixt
 
 Twenty of the 29 originally elevated-risk multi-factor profiles have now been reviewed across 77 active factors. Nine elevated-risk multi-factor profiles remain, plus nine partial-risk and 51 documented multi-factor profiles. Continue with the remaining elevated-risk profiles, then review partial/documented profiles and timing/profile-level narratives. Preserve numerical settings and runtime behavior.
 
+
+## 2026-11-17 | Batch A/B metadata updates applied
+
+Completed metadata implementation for the three remaining temperature-only site pilots and all 27 other single-factor grid profiles. Batch B status distribution is 20 partly_sourced, 3 provisional, and 4 needs_source. All numeric settings and runtime behavior remain unchanged. CI validation: #44124511157. Continue Batch C high-risk multi-factor models after the validator refresh.
+

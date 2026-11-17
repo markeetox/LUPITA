@@ -492,3 +492,8 @@ Reviewed Atlantic blue marlin, Atlantic bluefin tuna, sailfish, and tarpon. Repl
 
 Reviewed blackfin tuna, cobia, common snook, and Florida pompano. Updated evidence sources/notes across active factors while preserving all numeric model settings. Blackfin SST and bottom-slope factors are partly_sourced; gradient/chlorophyll gradient and Gulf Stream distance remain provisional, and its bathymetric depth band is only partly supported. Cobia SST and seasonal presence are partly_sourced; depth remains provisional because tag depth is fish vertical depth, not seafloor bathymetry. Snook temperature notes now include 2025 field/lab studies; tide and time-of-day remain provisional. Florida pompano SST, depth, and season are partly_sourced with life-stage and surf-zone caveats. No numeric ranges, weights, active flags, gates, required flags, season months, scoring, or runtime behavior changed. Details: [all-species evidence audit](SPECIES_EVIDENCE_AUDIT_2026-11-17.md).
 
+
+## Batch A/B evidence metadata implementation | 2026-11-17
+
+Applied metadata-only source/status/note updates to all 30 remaining single-factor profiles. Bonefish and great barracuda moved from provisional to partly_sourced; Permit remains provisional with improved source traceability. Of the 27 other single-factor grid profiles, 20 are now partly_sourced, three provisional, and four needs_source. The four needs_source profiles retain no factor-level SST references because available habitat sources do not validate numeric surface-temperature claims. No numeric model settings or runtime behavior changed. CI validation is running in [#44124511157](https://github.com/markeetox/LUPITA/actions/runs/44124511157). Details: [all-species evidence audit](SPECIES_EVIDENCE_AUDIT_2026-11-17.md).
+
