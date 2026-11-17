@@ -689,3 +689,10 @@ Per-cell ETOPO CSV review showed that the previous Atlantic box transitions rapi
 
 
 The candidate-v2 Atlantic/Pacific sample-box update passed Python tests in [run 44163056720](https://github.com/markeetox/LUPITA/actions/runs/44163056720). The bathymetry workflow now requires an explicit source run ID rather than defaulting to the older pilot, preventing accidental reuse of obsolete sample boxes. Next manual sequence: run the revised read-only Copernicus pilot, then run ETOPO assessment using that new pilot run ID. No production behavior changed.
+
+
+## Copernicus candidate v2 pilot completed | 2026-11-17
+
+The revised manual read-only pilot succeeded in [run 44164227216](https://github.com/markeetox/LUPITA/actions/runs/44164227216). All eight forecast/reanalysis subset requests completed and artifact `copernicus-bottom-temperature-pilot` was uploaded. The candidate-v2 raw rectangular-grid counts are: South Florida/Keys 321/475 (67.6%); Gulf 247/247 (100%); Atlantic 90/91 (98.9%); Pacific 73/91 (80.2%). These are all-grid fractions, not ocean-only coverage. The candidate v2 Atlantic and Pacific boxes are not accepted as representative shelf strata until the new artifact is classified against ETOPO and its depth composition and coastal-mask disagreements are reviewed.
+
+Forecast subset date is 2026-11-17; reanalysis date is 2017-07-15. They are not matched and must not be compared as a controlled accuracy test. The subset confirms successful extraction and basic numerical plausibility only. Next: run the manual ETOPO assessment with source pilot run ID `44164227216`, then inspect its summary and all per-cell CSVs. No production behavior changed.
