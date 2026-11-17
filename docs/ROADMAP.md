@@ -519,3 +519,8 @@ Priority correction: all five reviewed pelagic `depth_m` factors are active gate
 ## 2026-11-17 | Bottom-temperature source evaluation
 
 Copernicus Marine global physics forecast is the leading candidate for a bottom-temperature layer: 0.083° grid, 50 levels, daily sea-floor temperature `tob`, 10-day forecast. Keep research-only until coastal coverage, latency, and independent bottom observations are validated. Do not replace MUR SST or change species factors yet.
+
+
+## 2026-11-17 | Copernicus bottom-temperature validation protocol
+
+Confirmed daily `tob` sea-bottom potential temperature in the official Copernicus dataset documentation. Identified independent observation candidates across South Florida, Gulf, Atlantic, and Pacific regions, with important sensor-depth and geographic-coverage caveats. Added a read-only protocol covering data pairing, coastal coverage, freshness, and error metrics. No dataset sample has been downloaded yet and no accuracy result is claimed. Next: run a compact recent/historical subset pilot, inspect returned metadata and coastal wet-cell behavior, then match qualifying in-situ profiles. Do not add production ingestion or alter SST/species factors.
