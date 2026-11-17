@@ -605,3 +605,10 @@ Correction to the measurement-alignment register: all five listed pelagic `depth
 ## Bottom-temperature source research | 2026-11-17
 
 Identified Copernicus Marine `GLOBAL_ANALYSISFORECAST_PHY_001_024` as a promising candidate: global 0.083° (~8 km), 50 vertical levels, daily 10-day forecast, two-year rolling archive, with daily `tob` sea-bottom potential temperature. A historical companion reanalysis extends to 1993. Product quality documentation warns near-real-time uncertainty is higher and does not provide a dedicated bottom-temperature error metric for every coastal region. It remains research-only pending South Florida/Gulf/Atlantic/Pacific coverage and independent mooring/CTD validation. No production source or model changes.
+
+
+## Copernicus bottom-temperature validation protocol | 2026-11-17
+
+Created `docs/COPERNICUS_BOTTOM_TEMPERATURE_VALIDATION_2026-11-17.md` as a read-only validation protocol. Confirmed from the official Copernicus product manual and service catalog that `cmems_mod_glo_phy_anfc_0.083deg_P1D-m` contains daily `tob` sea-bottom potential temperature in °C. Identified independent observation candidates: NOAA AOML South Florida CTD surveys/moorings, NOAA SEFSC GoMMAPPS 2017 CTD profiles, NCEI GTSPP global temperature profiles, and NOAA NEFSC near-bottom observations for the northern Atlantic shelf. Explicitly excluded surface-only sensors from bottom validation and recorded the limitation that NEFSC coverage does not validate the full Atlantic coast.
+
+No Copernicus subset has yet been downloaded; no valid-coverage fraction, freshness metric, or model-observation error statistic is claimed. Next: perform a compact read-only pilot extraction for recent and historical dates, verify returned metadata/fill values/wet-cell behavior, then pair qualifying independent observations. No production source, workflow, species profile, numeric factor, score, confidence, ingestion, or publication behavior changed.
