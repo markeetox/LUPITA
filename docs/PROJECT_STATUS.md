@@ -444,3 +444,10 @@ The audit identifies 64 profiles with elevated active-evidence risk, 14 with par
 The 20 reviewed named-site SST profiles are now 1 sourced, 14 partly sourced, and 5 provisional. Three temperature-only site pilots remain for source-by-source review: bonefish, great barracuda, and Permit. Next sequence: finish those three; review all 27 other single-factor profiles; then review the 80 multi-factor profiles by factor family, prioritizing the 29 with elevated active-evidence risk. Timing claims and profile-level biological narratives will be audited separately.
 
 Full scope, counts, review standard, and guardrails: [all-species evidence audit](SPECIES_EVIDENCE_AUDIT_2026-11-17.md). No species values, weights, gates, required flags, scoring, confidence, source selection, ingestion, or publication behavior changed.
+
+
+## Temperature-only site pilot evidence review: Batch A | 2026-11-17
+
+Completed source research for the three remaining temperature-only site pilots: bonefish, great barracuda, and Permit. Bonefish adult studies provide laboratory performance optima (26.7–28.0 °C) and broad field exposure/critical-temperature data in the Bahamas, but not a South Florida habitat-preference curve. Great barracuda has South Florida archival-tag exposure data from only two large adults (17.8–31.3 °C), plus a model-derived FishBase estimate; neither establishes a preferred interval. Permit has a FishBase model estimate, a 2026 Texas juvenile-presence association above 25 °C, and a 1972 South Carolina juvenile occurrence range of 12.8–38.5 °C; none validates adult South Florida SST preference.
+
+Recommended metadata: bonefish and great barracuda may move from provisional to partly_sourced with strict caveats; Permit remains provisional. No profile JSON or prediction setting has been changed pending review. Full sources and reasoning: [all-species evidence audit](SPECIES_EVIDENCE_AUDIT_2026-11-17.md).
