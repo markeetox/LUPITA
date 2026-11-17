@@ -681,3 +681,8 @@ The revised ETOPO bathymetry assessment passed as [run 44162223743](https://gith
 Coverage is not the same as regional representativeness. Gulf has 193/246 cells at 10–200 m (78.5%) and is the strongest current shelf candidate. Atlantic has 91/166 at 10–200 m (54.8%) but 38 abyssal cells (>2000 m), so it remains mixed shelf/deep ocean. Pacific has 253/316 cells (>2000 m; 80.1%), so the current rectangle is abyssal-dominated despite complete ocean-only data coverage. South Florida/Keys is a broad shelf/slope sample, with 150/302 cells at 500–2000 m. One Atlantic ocean cell is missing temperature in each subset; other ocean-classified cells are valid.
 
 Forecast date 2026-11-17 and reanalysis date 2017-07-15 are not matched, so no direct product-accuracy comparison is supported. Next: refine Atlantic/Pacific boxes into explicit depth strata using per-cell CSVs, then inventory independent NOAA CTD/mooring observations. This remains exploratory and read-only; production data and scoring behavior are unchanged.
+
+
+## Copernicus candidate sampling boxes v2 | 2026-11-17
+
+Per-cell ETOPO CSV review showed that the previous Atlantic box transitions rapidly from shallow western shelf cells to deeper water toward its eastern edge. The previous Pacific box remained abyssal-dominated, with the shallowest sampled columns at its eastern/northern edge. Updated the read-only pilot script with exploratory candidates: Atlantic -75.5 to -75.0°W, 35–36°N; Pacific -123.75 to -123.25°W, 38–39°N. Gulf and South Florida remain unchanged. These candidate bounds require a fresh Copernicus pilot and ETOPO assessment; they are not yet accepted validation strata. Production behavior remains unchanged.
