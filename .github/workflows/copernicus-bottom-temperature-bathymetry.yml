@@ -29,9 +29,9 @@ jobs:
         uses: actions/download-artifact@v4
         with:
           name: copernicus-bottom-temperature-pilot
-          repository: \${{ github.repository }}
-          run-id: \${{ inputs.source_run_id }}
-          github-token: \${{ secrets.GITHUB_TOKEN }}
+          repository: ${{ github.repository }}
+          run-id: ${{ inputs.source_run_id }}
+          github-token: ${{ secrets.GITHUB_TOKEN }}
           path: artifacts/source-pilot
 
       - name: Install assessment dependencies
