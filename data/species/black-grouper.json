@@ -29,8 +29,9 @@
     "regulations_link": "https://myfwc.com/fishing/saltwater/recreational/groupers/",
     "sources": [
       "https://www.fisheries.noaa.gov/species/black-grouper",
-      "https://myfwc.com/fishing/saltwater/recreational/groupers/",
-      "https://myfwc.com/news/all-news/grouper-regs-1026/",
+      "https://www.floridamuseum.ufl.edu/discover-fish/species-profiles/black-grouper/",
+      "https://www.fdacs.gov/Consumer-Resources/Buy-Fresh-From-Florida/Seafood-Products/Grouper/Grouper-Types",
+      "https://reeflife.org/species/mycteroperca-bonaci/",
       "https://www.nps.gov/bisc/planyourvisit/fishing.htm"
     ]
   },
@@ -48,11 +49,12 @@
       ],
       "weight": 0.3,
       "active": true,
-      "value_status": "sourced",
+      "value_status": "partly_sourced",
       "sources": [
-        "https://myfwc.com/"
+        "https://reeflife.org/species/mycteroperca-bonaci/"
       ],
-      "reason_template": "Water is {value} C, inside ideal bounds for black grouper."
+      "reason_template": "Water is {value} C, inside ideal bounds for black grouper.",
+      "value_notes": "Reef Life Survey reports a broad observed sea-temperature range of 20.9–31.1 °C for the species. This is occurrence across surveyed reefs, not a physiological optimum or South Florida catch-response curve, and it does not validate the configured 20–29 °C range or 23–27 °C ideal as preferred SST."
     },
     {
       "param": "structure_type",
@@ -65,9 +67,11 @@
       ],
       "weight": 0.4,
       "active": true,
-      "value_status": "sourced",
+      "value_status": "partly_sourced",
       "sources": [
-        "https://myfwc.com/"
+        "https://www.fisheries.noaa.gov/species/black-grouper",
+        "https://www.floridamuseum.ufl.edu/discover-fish/species-profiles/black-grouper/",
+        "https://www.fdacs.gov/Consumer-Resources/Buy-Fresh-From-Florida/Seafood-Products/Grouper/Grouper-Types"
       ],
       "map": {
         "natural_reef": 1,
@@ -75,7 +79,8 @@
         "wreck": 0.9,
         "ledge": 0.8
       },
-      "reason_template": "Structure is {value}, where black grouper hold."
+      "reason_template": "Structure is {value}, where black grouper hold.",
+      "value_notes": "NOAA, Florida Museum, and FDACS describe adult black grouper using rocky bottoms, coral/natural reefs, drop-offs, ledges, and artificial reefs; juveniles use shallower seagrass/oyster habitat. This supports the broad reef/ledge/structure association, but does not validate the exact category score ordering or relative numeric map values."
     },
     {
       "param": "depth_m",
@@ -90,12 +95,15 @@
       ],
       "weight": 0.3,
       "active": true,
-      "value_status": "sourced",
+      "value_status": "partly_sourced",
       "sources": [
-        "https://myfwc.com/"
+        "https://www.fisheries.noaa.gov/species/black-grouper",
+        "https://www.floridamuseum.ufl.edu/discover-fish/species-profiles/black-grouper/",
+        "https://www.fdacs.gov/Consumer-Resources/Buy-Fresh-From-Florida/Seafood-Products/Grouper/Grouper-Types"
       ],
       "gate": true,
-      "reason_template": "Depth is {value} m, in prime reef depth zone."
+      "reason_template": "Depth is {value} m, in prime reef depth zone.",
+      "value_notes": "Florida Museum reports 6–33 m as a common habitat depth; NOAA and FDACS describe adults extending to about 200 m, with adults generally offshore and deeper than juveniles. This supports broad depth use but not the configured 10–110 m band or 20–60 m ideal as a locally calibrated preference. Depth remains an active gate."
     }
   ],
   "timing": {
