@@ -903,3 +903,15 @@ Found species-specific evidence for all three previously needs-source named-site
 - Identified a systematic model-to-data concern: SST is being used as the sole gating input for some species whose documented habitat is deep bottom water. Surface and bottom temperature must not be treated as interchangeable.
 - Full per-profile configured intervals, evidence, caveats, sources, and recommendations are in `docs/SPECIES_EVIDENCE_AUDIT_2026-11-17.md`.
 - No species JSON, numeric interval, weight, active flag, gate, required flag, scoring, confidence, source configuration, ingestion, or publication behavior changed. Metadata recommendations await review.
+
+
+## 2026-11-17 | Batch C first four elevated-risk multi-factor profiles
+
+- Reviewed African pompano, Almaco jack, black grouper, and black sea bass across 12 active factors.
+- Replaced generic homepage-only factor citations with traceable species-specific sources where available; added claim-fit notes and conservative evidence statuses.
+- African pompano and Almaco jack SST factors are needs_source; their depth/structure factors are partly_sourced.
+- Black grouper SST, structure, and depth factors are partly_sourced; available evidence supports broad occurrence/habitat but not exact preference curves or category score rankings.
+- Black sea bass structure remains sourced; SST and depth are partly_sourced because key numeric records are seasonal bottom-water observations and the species is uncommon in extreme South Florida.
+- No numerical values, category maps, weights, active flags, gates, required flags, scoring, confidence, ingestion, or publication behavior changed.
+- Full source-fit details are recorded in docs/SPECIES_EVIDENCE_AUDIT_2026-11-17.md.
+
