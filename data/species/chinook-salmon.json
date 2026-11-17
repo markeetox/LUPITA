@@ -10,7 +10,7 @@
   "display": {
     "color": "#f20c76"
   },
-  "review_status": "v1 - West Coast Pacific habitat profile",
+  "review_status": "Evidence reviewed 2026-11-17. North Pacific marine survey models and archival tagging support species-specific thermal habitat; configured SST intervals are warmer than the modeled preferred range, and bathymetry is only a weak proxy for pelagic salmon.",
   "image": {
     "status": "placeholder",
     "kind": "illustration",
@@ -26,12 +26,16 @@
     "behavior": "Navigates West Coast kelp forests, rocky reefs, and coastal upwelling zones.",
     "regulations_link": "https://wildlife.ca.gov/Fishing/Ocean/Regulations/Sport-Fishing",
     "sources": [
-      "https://wildlife.ca.gov/Fishing/Ocean/Regulations/Sport-Fishing"
+      "https://wildlife.ca.gov/Fishing/Ocean/Regulations/Sport-Fishing",
+      "https://onlinelibrary.wiley.com/doi/full/10.1111/faf.12825",
+      "https://www.fisheries.noaa.gov/species/chinook-salmon",
+      "https://repository.library.noaa.gov/view/noaa/69517",
+      "https://www.int-res.com/articles/meps2005/304/m304p207.pdf"
     ]
   },
   "lat_range": [
-    36.0,
-    60.0
+    36,
+    60
   ],
   "factors": [
     {
@@ -47,11 +51,15 @@
       ],
       "weight": 0.5,
       "active": true,
-      "value_status": "sourced",
+      "value_status": "partly_sourced",
       "sources": [
-        "https://wildlife.ca.gov/Fishing/Ocean/Regulations/Sport-Fishing"
+        "https://wildlife.ca.gov/Fishing/Ocean/Regulations/Sport-Fishing",
+        "https://onlinelibrary.wiley.com/doi/full/10.1111/faf.12825",
+        "https://www.int-res.com/articles/meps2005/304/m304p207.pdf",
+        "https://repository.library.noaa.gov/view/noaa/69517"
       ],
-      "reason_template": "Water is {value} C, inside preferred Pacific temperature range for chinook salmon."
+      "reason_template": "Water is {value} C, inside preferred Pacific temperature range for chinook salmon.",
+      "value_notes": "Langan et al. (2024) modeled Chinook marine preferred SST at 3.6-12.3 °C (80% HDI), core 5.8-10.3 °C, median 8.3 °C and modal 8.7 °C from North Pacific survey data (1953-2022). Hinke et al. archival tags off Oregon/California independently found persistent use of 8-12 °C water. This supports SST as a strong marine habitat factor, but the configured 8-16 °C range and 10-14 °C ideal are shifted warmer and miss much of the modeled preferred interval. Results are North Pacific marine-phase models, not a stock-specific coastal catch curve."
     },
     {
       "param": "depth_m",
@@ -66,19 +74,22 @@
       ],
       "weight": 0.5,
       "active": true,
-      "value_status": "sourced",
+      "value_status": "weak_factor",
       "sources": [
-        "https://wildlife.ca.gov/Fishing/Ocean/Regulations/Sport-Fishing"
+        "https://wildlife.ca.gov/Fishing/Ocean/Regulations/Sport-Fishing",
+        "https://repository.library.noaa.gov/view/noaa/69517",
+        "https://www.int-res.com/articles/meps2005/304/m304p207.pdf"
       ],
       "gate": true,
-      "reason_template": "Depth is {value} m, within prime Pacific depth zone for chinook salmon."
+      "reason_template": "Depth is {value} m, within prime Pacific depth zone for chinook salmon.",
+      "value_notes": "Chinook tagging documents fish vertical occupancy from the surface to hundreds of metres and seasonal changes in water-column depth. The runtime variable is seafloor bathymetry, not fish vertical depth; nearshore shelf association does not establish a universal 0-100 m bottom-depth preference. Retain bathymetry only as a weak shelf/offshore context proxy."
     }
   ],
   "timing": {
     "status": "angler_lore",
     "light": {
       "map": {
-        "day": 1.0,
+        "day": 1,
         "dawn": 0.9,
         "dusk": 0.9,
         "night": 0.5
@@ -105,7 +116,7 @@
     "source_url": "https://wildlife.ca.gov/Fishing/Ocean/Regulations/Sport-Fishing"
   },
   "lon_range": [
-    -138.0,
-    -110.0
+    -138,
+    -110
   ]
 }

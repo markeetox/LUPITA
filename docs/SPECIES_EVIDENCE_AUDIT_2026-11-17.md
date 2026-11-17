@@ -670,3 +670,39 @@ Reviewed California halibut, Pacific halibut, Petrale sole, Starry flounder, and
 
 ### Documented-profile review progress
 Twenty of 51 profiles reviewed across 41 active factors. The review continues to distinguish surface temperature from bottom temperature and life-stage thermal response, and to preserve seasonal depth migrations rather than compressing them into a single universal preference interval.
+
+
+## Documented multi-factor review: Pacific salmon thermal-habitat batch | 2026-11-17
+
+Reviewed Chinook, Coho, Chum, Pink and Sockeye salmon across 10 active factors. Replaced generic regulation-page citations with the 2024 North Pacific salmon temperature-distribution study, NOAA species sources and telemetry/migration research. No numeric ranges, ideal intervals, weights, active flags, gates, required flags, scoring, confidence or runtime behavior changed.
+
+### Shared interpretation
+Langan et al. (2024) used North Pacific coastal/high-seas survey data from 1953-2022 to model species-specific marine preferred SST. These are modeled distribution-based thermal ranges, not laboratory physiological optima and not stock-specific coastal catch curves. The profiles' configured SST intervals are generally shifted warmer than the modeled preferences. All five species are pelagic during the marine phase; runtime bathymetry is seafloor depth, not fish vertical depth, so it is retained as a weak shelf/coastal context proxy rather than a direct preference factor.
+
+### Chinook salmon (*Oncorhynchus tshawytscha*)
+- SST: partly_sourced. Modeled preferred SST 3.6-12.3 °C (80% HDI), core 5.8-10.3 °C, median 8.3 °C, mode 8.7 °C. Hinke et al. archival tags off Oregon/California found persistent use of 8-12 °C water. Configured 8-16 °C / 10-14 °C is warmer and misses much of the modeled interval.
+- Depth: weak_factor. Fish vertical occupancy ranges from surface to hundreds of metres; it is not seabed depth. Nearshore shelf association does not establish a universal bottom-depth band.
+- Sources: [Langan et al. 2024](https://onlinelibrary.wiley.com/doi/full/10.1111/faf.12825); [Hinke et al. 2005](https://www.int-res.com/articles/meps2005/304/m304p207.pdf); [NOAA 2024 nearshore Chinook study](https://repository.library.noaa.gov/view/noaa/69517).
+
+### Coho salmon (*Oncorhynchus kisutch*)
+- SST: partly_sourced. Modeled preferred SST 6.1-13.2 °C, core 7.2-11.0 °C, median 9.5 °C, mode 8.9 °C. Configured 7-15 °C / 9-13 °C overlaps but is weighted toward the warm edge.
+- Depth: weak_factor. Marine coho may remain coastal or migrate long distances; seafloor depth is not fish vertical depth and no universal 0-60 m bottom-depth preference is established.
+- Sources: [Langan et al. 2024](https://onlinelibrary.wiley.com/doi/full/10.1111/faf.12825); [NOAA coho science](https://www.fisheries.noaa.gov/species/coho-salmon/science); [USFWS coho account](https://www.fws.gov/species/coho-salmon-oncorhynchus-kisutch).
+
+### Chum salmon (*Oncorhynchus keta*)
+- SST: partly_sourced. Modeled preferred SST 1.3-12.6 °C, core 2.8-9.3 °C, median 7.1 °C, mode 5.8 °C. A 2025 NOAA-authored western Alaska migration-corridor study also models SST thermal suitability. Configured 6-14 °C / 8-12 °C is warmer and excludes much of the colder modeled preference.
+- Depth: weak_factor. Chum migrate across estuarine, coastal and open-ocean habitats; bathymetry is not fish vertical depth and no universal 0-60 m bottom-depth preference is established.
+- Sources: [Langan et al. 2024](https://onlinelibrary.wiley.com/doi/full/10.1111/faf.12825); [Lemagie et al. 2025](https://repository.library.noaa.gov/view/noaa/71046/noaa_71046_DS1.pdf); [NOAA chum science](https://www.fisheries.noaa.gov/species/chum-salmon/science).
+
+### Pink salmon (*Oncorhynchus gorbuscha*)
+- SST: partly_sourced. Modeled preferred SST differs by brood-cycle parity: even-year 3.0-12.6 °C (core 4.3-9.4, median 7.9, mode 6.6); odd-year 3.0-11.8 °C (core 4.3-8.9, median 7.5, mode 6.4). Configured 6-15 °C / 8-13 °C is warmer and omits much of the modeled cold-side preference.
+- Depth: weak_factor. Pink salmon are pelagic during marine feeding; NOAA notes fishing gear rarely contacts the ocean floor. Bathymetry is only a weak coastal/shelf proxy.
+- Sources: [Langan et al. 2024](https://onlinelibrary.wiley.com/doi/full/10.1111/faf.12825); [NOAA pink salmon](https://www.fisheries.noaa.gov/species/pink-salmon).
+
+### Sockeye salmon (*Oncorhynchus nerka*)
+- SST: partly_sourced. Modeled preferred SST 1.0-11.5 °C, core 2.2-7.6 °C, median 6.1 °C, mode 5.0 °C, the coldest modeled niche among the six species. A separate juvenile Bering Sea study found strongest positive density effects around 11 °C and a threshold near 12 °C, demonstrating life-stage differences. Configured 6-14 °C / 8-12 °C is shifted warm.
+- Depth: weak_factor. Pelagic migration and vertical occupancy vary by life stage, season and region; bathymetry is not fish vertical depth.
+- Sources: [Langan et al. 2024](https://onlinelibrary.wiley.com/doi/full/10.1111/faf.12825); [NOAA sockeye](https://www.fisheries.noaa.gov/species/sockeye-salmon); [juvenile Bering Sea study](https://pmc.ncbi.nlm.nih.gov/articles/PMC10999952/).
+
+### Documented-profile review progress
+Twenty-five of 51 profiles reviewed across 51 active factors. Salmon profiles expose a systematic model limitation: the SST layer is a surface proxy for a marine-phase species whose experienced temperature can differ by depth, while the active bathymetry factor is not the fish's vertical depth. Preserve these distinctions and do not change model weights or numeric bands in this evidence-only pass.

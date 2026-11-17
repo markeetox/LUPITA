@@ -1056,3 +1056,8 @@ Reviewed Kelp bass, California yellowtail, Giant sea bass, Opaleye, and Spotted 
 ## 2026-11-17 | Fourth documented demersal flatfish/cod batch
 
 Reviewed California halibut, Pacific halibut, Petrale sole, Starry flounder, and Pacific cod across 10 active factors. Added NOAA, USGS, IPHC, WDFW, ODFW and DFO sources. Distinguished surface SST from bottom temperatures, and life-stage thermal response from adult preference. Seasonal depth migrations were documented rather than collapsed into universal ranges. No numeric or runtime changes. Progress: 20 of 51 documented multi-factor profiles across 41 active factors.
+
+
+## 2026-11-17 | Pacific salmon thermal-habitat batch
+
+Reviewed Chinook, Coho, Chum, Pink and Sockeye across 10 active factors. Added Langan et al. (2024) modeled North Pacific preferred SST ranges, NOAA species pages, Chinook tagging, and chum migration-corridor evidence. Configured SST bands are generally shifted warmer than modeled marine preferences; pink salmon estimates differ by brood-cycle parity. Seafloor bathymetry is weak_factor for all five pelagic salmon. No numeric or runtime changes. Progress: 25 of 51 documented multi-factor profiles across 51 active factors.

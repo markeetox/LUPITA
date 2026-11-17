@@ -538,3 +538,8 @@ Reviewed Kelp bass, California yellowtail, Giant sea bass, Opaleye, and Spotted 
 ## Documented multi-factor review | fourth demersal flatfish/cod batch
 
 Reviewed California halibut, Pacific halibut, Petrale sole, Starry flounder, and Pacific cod across 10 active factors. Added NOAA, USGS, IPHC, WDFW, ODFW and DFO evidence. California halibut has life-stage-specific thermal evidence; Pacific halibut, Petrale sole and Pacific cod bottom-temperature records do not validate satellite SST; Starry flounder temperature evidence is broad occurrence only. Depth factors are partly sourced with seasonal and life-stage caveats. No numeric or runtime changes. Progress: 20 of 51 documented multi-factor profiles across 41 active factors. See [species evidence audit](SPECIES_EVIDENCE_AUDIT_2026-11-17.md).
+
+
+## Documented multi-factor review | Pacific salmon thermal-habitat batch
+
+Reviewed Chinook, Coho, Chum, Pink and Sockeye salmon across 10 active factors. Added the 2024 North Pacific species-specific SST distribution study, NOAA species pages, Chinook telemetry, and chum migration-corridor evidence. The modeled preferred SST ranges are generally colder than the configured bands; pink salmon estimates differ by brood-cycle parity. All five bathymetry factors are marked weak_factor because fish vertical depth is not seafloor depth. No numeric or runtime changes. Progress: 25 of 51 documented multi-factor profiles across 51 active factors. See [species evidence audit](SPECIES_EVIDENCE_AUDIT_2026-11-17.md).

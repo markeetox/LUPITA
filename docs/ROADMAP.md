@@ -460,3 +460,8 @@ Reviewed Kelp bass, California yellowtail, Giant sea bass, Opaleye, and Spotted 
 ## 2026-11-17 | Documented demersal review, batch 4
 
 Reviewed California halibut, Pacific halibut, Petrale sole, Starry flounder, and Pacific cod (10 active factors). Added species-specific agency and research sources. Bottom-temperature records were not used to validate satellite SST; life-stage and seasonal depth differences were documented. Progress: 20/51 profiles, 41 active factors. No numeric or runtime changes.
+
+
+## 2026-11-17 | Documented salmon thermal-habitat review
+
+Reviewed Chinook, Coho, Chum, Pink and Sockeye (10 active factors). Species-specific North Pacific SST models indicate the configured bands are generally too warm; pink salmon has even/odd-year differences. Bathymetry is only a weak proxy for pelagic salmon and is not equivalent to fish vertical depth. Progress: 25/51 profiles, 51 active factors. No numeric or runtime changes.
