@@ -31,7 +31,9 @@
     "sources": [
       "https://myfwc.com/wildlifehabitats/profiles/saltwater/hogfish/",
       "https://myfwc.com/research/saltwater/hogfish/",
-      "https://myfwc.com/fishing/saltwater/recreational/hogfish/"
+      "https://myfwc.com/fishing/saltwater/recreational/hogfish/",
+      "https://www.floridamuseum.ufl.edu/discover-fish/species-profiles/hogfish/",
+      "https://sanctuaries.noaa.gov/science/conservation/pdfs/lindholm2.pdf"
     ]
   },
   "factors": [
@@ -48,15 +50,10 @@
       ],
       "weight": 0.35,
       "active": true,
-      "value_status": "provisional",
-      "sources": [
-        "https://myfwc.com/wildlifehabitats/profiles/saltwater/hogfish/",
-        "https://myfwc.com/research/saltwater/hogfish/",
-        "https://myfwc.com/fishing/saltwater/recreational/hogfish/",
-        "https://www.fishbase.org/summary/1071"
-      ],
+      "value_status": "needs_source",
+      "sources": [],
       "reason_template": "Water is {value} C, within the currently configured provisional screening band for hogfish; this is not a validated thermal preference.",
-      "value_notes": "The linked FWC/species-account references describe hogfish distribution and habitat, but do not establish a species-specific thermal preference or tolerance band. The configured 22–30 °C range and 24–28 °C ideal remain unsupported numeric screening values, retained for compatibility only."
+      "value_notes": "The FWC and Florida Museum species accounts document habitat and distribution but do not establish a species-specific thermal preference or tolerance band. No factor-level reference located supports the configured 22–30 °C range or 24–28 °C ideal. Retain these legacy screening values only for compatibility; the numeric SST claim needs direct evidence."
     },
     {
       "param": "structure_type",
@@ -71,7 +68,9 @@
       "value_status": "partly_sourced",
       "sources": [
         "https://myfwc.com/wildlifehabitats/profiles/saltwater/hogfish/",
-        "https://myfwc.com/research/saltwater/hogfish/"
+        "https://myfwc.com/research/saltwater/hogfish/",
+        "https://www.floridamuseum.ufl.edu/discover-fish/species-profiles/hogfish/",
+        "https://sanctuaries.noaa.gov/science/conservation/pdfs/lindholm2.pdf"
       ],
       "map": {
         "natural_reef": 1,
@@ -79,7 +78,7 @@
         "open_sand": 0.7
       },
       "reason_template": "Structure is {value}, where hogfish forage for mollusks and crabs.",
-      "value_notes": "FWC documents mature hogfish on rocky bottoms, ledges and offshore reefs, and FWC research describes reef association and foraging around gorgonians. The current map classes are habitat proxies; they do not establish occupancy at an individual polygon."
+      "value_notes": "FWC, Florida Museum, and NOAA sanctuary research describe adult hogfish on rocky bottoms, ledges, reefs, and low-relief hard bottom, with juveniles using seagrass and inshore nursery habitat. This supports broad habitat associations, not the exact score ranking among natural_reef, hardbottom, and open_sand or occupancy at an individual mapped polygon."
     },
     {
       "param": "depth_m",
@@ -94,13 +93,14 @@
       ],
       "weight": 0.3,
       "active": true,
-      "value_status": "provisional",
+      "value_status": "partly_sourced",
       "sources": [
+        "https://www.floridamuseum.ufl.edu/discover-fish/species-profiles/hogfish/",
         "https://myfwc.com/wildlifehabitats/profiles/saltwater/hogfish/"
       ],
       "gate": true,
       "reason_template": "Depth is {value} m, in shallow patch reef depth.",
-      "value_notes": "The configured 3-30 m range is a legacy screening band. FWC documents an ontogenetic shift from shallow nursery habitat to deeper reefs but does not validate this numeric adult depth preference."
+      "value_notes": "The Florida Museum species account reports hogfish over open bottoms and coral reefs at 3–30 m, matching the configured outer range. FWC documents an ontogenetic shift from shallow juvenile nursery habitat to deeper adult reef habitat. The sources do not validate the narrower 8–25 m ideal interval or a single depth preference across life stages."
     }
   ],
   "timing": {
