@@ -468,4 +468,4 @@ Reviewed Hogfish, Jack crevalle, King mackerel, and Red drum across 13 active fa
 - Season presence: partly_sourced. FWC tagging and Florida Museum sources support late-August–November fall spawning/migration, but not the exact August–December monthly score or a catch-rate model.
 
 ### Batch C cumulative disposition
-Twenty-four of the 29 originally elevated-risk multi-factor profiles have now been reviewed across 90 active factors. Five elevated-risk multi-factor profiles remain: Jack crevalle, King mackerel, Mahi-mahi, Mutton snapper, Red drum, Sheepshead, Southern flounder, Wahoo, and Hogfish? [inventory reconciliation required]. The source-audit artifact and current risk labels are being refreshed after the latest metadata commits; do not treat this provisional list as the final five.
+Twenty-four of the 29 originally elevated-risk multi-factor profiles have now been reviewed across 90 active factors. Five elevated-risk multi-factor profiles remain for the next review: Mahi-mahi, Mutton snapper, Sheepshead, Southern flounder, and Wahoo. This is the remaining set after removing the four profiles covered in this batch from the nine-profile remainder.
