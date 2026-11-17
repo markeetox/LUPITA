@@ -131,3 +131,10 @@ After credentials are configured in the chosen execution environment, run a smal
 ## Change-control boundary
 
 This protocol and source inventory are documentation only. No production configuration, source ingestion, species profiles, numerical factors, scoring, confidence, publication, or app behavior is changed.
+
+
+## Credentials-check automation | 2026-11-17
+
+Added `.github/workflows/copernicus-credentials-check.yml` as a manual-only GitHub Actions workflow (`workflow_dispatch`). It installs the Copernicus Marine Toolbox 2.4.0, reads the two repository Actions secrets through environment variables, checks that both are present without printing their values, and runs `copernicusmarine login --check-credentials-valid`. It does not download data, write repository files, publish exports, or run on a schedule.
+
+The workflow has been committed but has not yet been dispatched. Therefore authentication is not yet verified. After the check passes, proceed to a separate controlled metadata/subset pilot; do not turn this diagnostic into a recurring or production workflow.
