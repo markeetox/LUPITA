@@ -563,3 +563,8 @@ Reviewed Opah, Pacific barracuda, Pacific bonito, Pacific hake and Striped marli
 ## Documented multi-factor review | eighth California coastal batch
 
 Reviewed Barred sand bass, Barred surfperch, Redtail surfperch, Rock greenling and White seabass across 10 active factors. Added CDFW, NOAA, WDFW, DFO and peer-reviewed thermal/habitat sources. Barred surfperch physiological data support a thermal response but not a catch curve; redtail surfperch has broad occurrence temperatures; rock greenling bottom temperatures do not validate SST; white seabass tags show ambient temperatures centered below the configured ideal. No numeric or runtime changes. Progress: 45 of 51 documented multi-factor profiles across 92 active factors. See [species evidence audit](SPECIES_EVIDENCE_AUDIT_2026-11-17.md).
+
+
+## Documented multi-factor evidence review complete | 2026-11-17
+
+Completed source-by-source claim-fit review of all 51 profiles that were classified as documented multi-factor models by the validator, covering 105 active factors. The final six reviewed were Dungeness crab (reference), Sablefish, Steelhead, Vermilion rockfish, White sturgeon and Yellowtail snapper. Sources were upgraded to species-specific NOAA, WDFW, CDFW, OPC, USGS, SEDAR and peer-reviewed research. The review identified remaining needs_source SST factors, weak bathymetry proxies, life-stage/region mismatches, and two taxonomic open items (Opah and Dungeness crab naming). No numeric ranges, ideal intervals, weights, active flags, gates, required flags, scoring, confidence, ingestion or publication behavior changed. Fresh validator reconciliation is next. See [species evidence audit](SPECIES_EVIDENCE_AUDIT_2026-11-17.md).

@@ -1081,3 +1081,10 @@ Reviewed Opah, Pacific barracuda, Pacific bonito, Pacific hake and Striped marli
 ## 2026-11-17 | Eighth documented California coastal batch
 
 Reviewed Barred sand bass, Barred surfperch, Redtail surfperch, Rock greenling and White seabass across 10 active factors. Added CDFW, NOAA, WDFW, DFO and peer-reviewed research. Surfperch physiological evidence is distinct from catch probability; rock greenling bottom temperatures are not SST; white seabass tagged ambient temperatures are centered below the configured ideal. No numeric or runtime changes. Progress: 45 of 51 documented multi-factor profiles across 92 active factors.
+
+
+## 2026-11-17 | Final documented multi-factor batch and review completion
+
+Reviewed Dungeness crab (reference), Sablefish, Steelhead, Vermilion rockfish, White sturgeon and Yellowtail snapper across 13 active factors. Added California OPC, NOAA, WDFW, CDFW, USGS, SEDAR and species-specific research sources. Dungeness crab thermal preference is food/acclimation-dependent; sablefish ambient temperature is not SST; steelhead vertical depth is not bathymetry; white sturgeon is primarily riverine/estuarine; yellowtail snapper adult reef and juvenile nursery habitats remain distinct. No numeric or runtime changes.
+
+All 51 documented multi-factor profiles have now received source-by-source review across 105 active factors. Fresh validator run and final status reconciliation are next.

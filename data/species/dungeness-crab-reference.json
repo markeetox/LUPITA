@@ -10,7 +10,7 @@
   "display": {
     "color": "#f224c8"
   },
-  "review_status": "v1 - West Coast Pacific habitat profile",
+  "review_status": "Evidence reviewed 2026-11-17. California OPC, WDFW and adult thermal-preference studies replace generic regulation citation; larval thermal limits and adult behavioral preference are distinguished.",
   "image": {
     "status": "placeholder",
     "kind": "illustration",
@@ -26,12 +26,16 @@
     "behavior": "Navigates West Coast kelp forests, rocky reefs, and coastal upwelling zones.",
     "regulations_link": "https://wildlife.ca.gov/Fishing/Ocean/Regulations/Sport-Fishing",
     "sources": [
-      "https://wildlife.ca.gov/Fishing/Ocean/Regulations/Sport-Fishing"
+      "https://wildlife.ca.gov/Fishing/Ocean/Regulations/Sport-Fishing",
+      "https://opc.ca.gov/webmaster/ftp/project_pages/Rapid%20Assessments/Dungeness%20Crab.pdf",
+      "https://wdfw.wa.gov/sites/default/files/publications/00028/wdfw00028.pdf",
+      "https://doi.org/10.1016/j.jembe.2011.12.005",
+      "https://doi.org/10.1016/0300-9629(79)90201-9"
     ]
   },
   "lat_range": [
-    34.0,
-    60.0
+    34,
+    60
   ],
   "factors": [
     {
@@ -47,11 +51,15 @@
       ],
       "weight": 0.5,
       "active": true,
-      "value_status": "sourced",
+      "value_status": "partly_sourced",
       "sources": [
-        "https://wildlife.ca.gov/Fishing/Ocean/Regulations/Sport-Fishing"
+        "https://wildlife.ca.gov/Fishing/Ocean/Regulations/Sport-Fishing",
+        "https://opc.ca.gov/webmaster/ftp/project_pages/Rapid%20Assessments/Dungeness%20Crab.pdf",
+        "https://doi.org/10.1016/j.jembe.2011.12.005",
+        "https://doi.org/10.1016/0300-9629(79)90201-9"
       ],
-      "reason_template": "Water is {value} C, inside preferred Pacific temperature range for dungeness crab (ref)."
+      "reason_template": "Water is {value} C, inside preferred Pacific temperature range for dungeness crab (ref).",
+      "value_notes": "California OPC reports the species' geographic range bounded broadly by 3-18 °C surface isotherms, with larval thermal tolerance likely more limiting than adult tolerance. Adult archival-tag/laboratory work found thermal preference behavior across 8-22 °C gradients, modified by food availability and starvation; mating waters are commonly 8-17 °C. This supports SST relevance but does not validate one universal 6-15 °C / 8-13 °C catch-suitability curve across larvae and adults."
     },
     {
       "param": "depth_m",
@@ -66,19 +74,23 @@
       ],
       "weight": 0.5,
       "active": true,
-      "value_status": "sourced",
+      "value_status": "partly_sourced",
       "sources": [
-        "https://wildlife.ca.gov/Fishing/Ocean/Regulations/Sport-Fishing"
+        "https://wildlife.ca.gov/Fishing/Ocean/Regulations/Sport-Fishing",
+        "https://doi.org/10.1016/j.jembe.2011.12.005",
+        "https://wdfw.wa.gov/sites/default/files/publications/00028/wdfw00028.pdf",
+        "https://opc.ca.gov/webmaster/ftp/project_pages/Rapid%20Assessments/Dungeness%20Crab.pdf"
       ],
       "gate": true,
-      "reason_template": "Depth is {value} m, within prime Pacific depth zone for dungeness crab (ref)."
+      "reason_template": "Depth is {value} m, within prime Pacific depth zone for dungeness crab (ref).",
+      "value_notes": "Adult archival tags found most time below 15 m, with repeated migrations into shallower estuary water; WDFW reports adults in less than 10 m during spring mating and deeper than 16 m in fall/winter. California OPC reports intertidal-to-229 m occurrence, with few crabs beyond 91 m. The configured 2-80 m / 4-75 m interval is a broad shelf/estuary screen, not one year-round preference."
     }
   ],
   "timing": {
     "status": "angler_lore",
     "light": {
       "map": {
-        "day": 1.0,
+        "day": 1,
         "dawn": 0.9,
         "dusk": 0.9,
         "night": 0.5
@@ -105,7 +117,10 @@
     "source_url": "https://wildlife.ca.gov/Fishing/Ocean/Regulations/Sport-Fishing"
   },
   "lon_range": [
-    -138.0,
-    -110.0
+    -138,
+    -110
+  ],
+  "open_items": [
+    "Current scientific name Cancer magister is widely treated as a historical synonym of Metacarcinus magister in current California fishery sources. Confirm the repository's preferred taxonomic authority before changing the profile name; no taxonomy change made in this review."
   ]
 }

@@ -8,7 +8,7 @@
     "yellowtail"
   ],
   "habitat_zone": "reef",
-  "review_status": "reviewed 2026-11-14 - biology checked against FWC and NOAA Fisheries; Florida Atlantic regulations checked against current FWC snapper guidance",
+  "review_status": "Evidence reviewed 2026-11-17. FWC/NOAA/SEDAR and juvenile survey sources support adult reef depth, habitat and broad temperature context; model-derived SST is not a calibrated catch curve.",
   "image": {
     "status": "placeholder",
     "kind": "illustration",
@@ -31,7 +31,10 @@
       "https://myfwc.com/fishing/saltwater/recreational/snappers/",
       "https://www.fisheries.noaa.gov/species/yellowtail-snapper/science",
       "https://safmc.net/species/snapper-yellowtail/",
-      "https://sedarweb.org/documents/s8dw04-the-biology-of-yellowtail-snapper-ocyurus-chrysurus-with-emphasis-on-populations-in-the-caribbean/"
+      "https://sedarweb.org/documents/s8dw04-the-biology-of-yellowtail-snapper-ocyurus-chrysurus-with-emphasis-on-populations-in-the-caribbean/",
+      "https://www.fishbase.org/summary/188",
+      "https://reeflifesurvey.com/species/ocyurus-chrysurus/",
+      "https://sedarweb.org/documents/sedar-64-dw-03-juvenile-yellowtail-snapper-ocyurus-chrysurus-collected-from-short-term-fisheries-independent-surveys-in-florida-bay-and-the-florida-keys-from-1994-2003/"
     ]
   },
   "factors": [
@@ -45,12 +48,15 @@
       ],
       "weight": 0.5,
       "active": true,
-      "value_status": "sourced",
-      "value_notes": "FWC and angling sources tie yellowtail to coral reefs, patch reefs and artificial wrecks. Structure comes from FWC's artificial reef list and the Unified Reef Map v2.2 (Jan 2025), limited to patch reef, aggregate reef, ridge and pavement. Rubble, scattered coral in sediment and seagrass are not counted. Juveniles use seagrass and mangroves (add a life_stage factor in v2).",
+      "value_status": "partly_sourced",
+      "value_notes": "FWC and SEDAR support adult association with coral/patch reefs and artificial structures, while juveniles use seagrass, mangroves and shallow nursery habitat. The runtime map includes selected reef classes (patch/aggregate/ridge/pavement) but excludes rubble, scattered coral in sediment, seagrass and mangrove nurseries. This supports adult reef association but not complete life-stage habitat coverage or exact category-score ranking.",
       "reason_template": "This spot is a {value}, the kind of reef structure yellowtail hold on.",
       "sources": [
         "https://myfwc.com/wildlifehabitats/profiles/saltwater/snapper/yellowtail-snapper",
-        "https://www.floridasportfishing.com/offshore/never-fail-yellowtail/article_9f210b53-25ed-5d2e-bd7c-8832fccd3676.html"
+        "https://www.floridasportfishing.com/offshore/never-fail-yellowtail/article_9f210b53-25ed-5d2e-bd7c-8832fccd3676.html",
+        "https://myfwc.com/wildlifehabitats/profiles/saltwater/snapper/yellowtail-snapper/",
+        "https://sedarweb.org/documents/s8dw04-the-biology-of-yellowtail-snapper-ocyurus-chrysurus-with-emphasis-on-populations-in-the-caribbean/",
+        "https://sedarweb.org/documents/sedar-64-dw-03-juvenile-yellowtail-snapper-ocyurus-chrysurus-collected-from-short-term-fisheries-independent-surveys-in-florida-bay-and-the-florida-keys-from-1994-2003/"
       ]
     },
     {
@@ -66,8 +72,8 @@
       ],
       "weight": 0.3,
       "active": true,
-      "value_status": "sourced",
-      "value_notes": "NOAA Fisheries: adults at 10-70 m near offshore reefs. SEDAR 8: commercial handline catch mainly 20-60 m. FishBase: 0-180 m overall. Cells shallower than 5 m are excluded (gate): that is bay and flat bottom, where juveniles live, not the reef water adults use. The 5 m cutoff is a judgment call, not a published figure.",
+      "value_status": "partly_sourced",
+      "value_notes": "NOAA reports adults near offshore reefs at 10-70 m; SEDAR 8 reports commercial handline catches mainly at 20-60 m; FishBase overall occurrence is 0-180 m. This supports the configured 5-180 m outer range and 10-70 m adult ideal, but juvenile shallow seagrass/mangrove habitat is separate and the 5 m gate remains a model judgment rather than a published biological cutoff.",
       "reason_template": "Depth is {value} m, within the range yellowtail use on reefs.",
       "sources": [
         "https://www.fisheries.noaa.gov/species/yellowtail-snapper/science",
@@ -89,12 +95,13 @@
       ],
       "weight": 0.2,
       "active": true,
-      "value_status": "sourced",
-      "value_notes": "FishBase model gives a preferred range of 21.7-27.9 C (mean 25.9). Reef Life Survey observations span 22.1-31.1 C.",
+      "value_status": "partly_sourced",
+      "value_notes": "FishBase's model-derived preferred SST is 21.7-27.9 °C (mean 25.9 °C, 650 cells); Reef Life Survey observations span 22.1-31.1 °C; a Florida Bay/Keys juvenile survey recorded 15.8-32.7 °C (mean 27.2 °C). These sources support warm tropical habitat and overlap the configured 21.7-31.1 °C range / 22-28 °C ideal, but modelled preference and juvenile field occurrence are not a calibrated adult catch-probability curve.",
       "reason_template": "Water is {value} C, within yellowtail's comfortable range.",
       "sources": [
         "https://www.fishbase.org/summary/188",
-        "https://reeflifesurvey.com/species/ocyurus-chrysurus/"
+        "https://reeflifesurvey.com/species/ocyurus-chrysurus/",
+        "https://sedarweb.org/documents/sedar-64-dw-03-juvenile-yellowtail-snapper-ocyurus-chrysurus-collected-from-short-term-fisheries-independent-surveys-in-florida-bay-and-the-florida-keys-from-1994-2003/"
       ]
     },
     {

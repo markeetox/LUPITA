@@ -10,7 +10,7 @@
   "display": {
     "color": "#20cbd8"
   },
-  "review_status": "v1 - West Coast Pacific habitat profile",
+  "review_status": "Evidence reviewed 2026-11-17. North Pacific ocean-migration studies support a 15 °C SST boundary and 4-16 °C surface-water exposure; bathymetry is not steelhead vertical depth.",
   "image": {
     "status": "placeholder",
     "kind": "illustration",
@@ -26,12 +26,15 @@
     "behavior": "Navigates West Coast kelp forests, rocky reefs, and coastal upwelling zones.",
     "regulations_link": "https://wdfw.wa.gov/fishing/regulations",
     "sources": [
-      "https://wdfw.wa.gov/fishing/regulations"
+      "https://wdfw.wa.gov/fishing/regulations",
+      "https://wdfw.wa.gov/sites/default/files/2021-07/light-et-al-1989-steelhead-ocean-migration.pdf",
+      "https://wdfw.wa.gov/sites/default/files/2022-10/Courtney_etal_2022_AKsteelhead_ocean_migration.pdf",
+      "https://www.fisheries.noaa.gov/species/steelhead-trout"
     ]
   },
   "lat_range": [
-    36.0,
-    60.0
+    36,
+    60
   ],
   "factors": [
     {
@@ -47,11 +50,14 @@
       ],
       "weight": 0.5,
       "active": true,
-      "value_status": "sourced",
+      "value_status": "partly_sourced",
       "sources": [
-        "https://wdfw.wa.gov/fishing/regulations"
+        "https://wdfw.wa.gov/fishing/regulations",
+        "https://wdfw.wa.gov/sites/default/files/2021-07/light-et-al-1989-steelhead-ocean-migration.pdf",
+        "https://wdfw.wa.gov/sites/default/files/2022-10/Courtney_etal_2022_AKsteelhead_ocean_migration.pdf"
       ],
-      "reason_template": "Water is {value} C, inside preferred Pacific temperature range for steelhead."
+      "reason_template": "Water is {value} C, inside preferred Pacific temperature range for steelhead.",
+      "value_notes": "A 1989 North Pacific ocean-migration synthesis found the southern limit of steelhead migration closely associated with the 15 °C sea-surface isotherm. A 2022 pop-up satellite tagging study of 63 Alaska steelhead kelts recorded a 4-16 °C thermal environment from June-January; fish spent most time in surface waters under 5 m. This supports marine SST relevance and overlaps the configured 8-16 °C / 10-14 °C bands, but is not a stock-specific catch-probability curve."
     },
     {
       "param": "depth_m",
@@ -66,19 +72,22 @@
       ],
       "weight": 0.5,
       "active": true,
-      "value_status": "sourced",
+      "value_status": "weak_factor",
       "sources": [
-        "https://wdfw.wa.gov/fishing/regulations"
+        "https://wdfw.wa.gov/fishing/regulations",
+        "https://wdfw.wa.gov/sites/default/files/2021-07/light-et-al-1989-steelhead-ocean-migration.pdf",
+        "https://wdfw.wa.gov/sites/default/files/2022-10/Courtney_etal_2022_AKsteelhead_ocean_migration.pdf"
       ],
       "gate": true,
-      "reason_template": "Depth is {value} m, within prime Pacific depth zone for steelhead."
+      "reason_template": "Depth is {value} m, within prime Pacific depth zone for steelhead.",
+      "value_notes": "Steelhead are epipelagic during ocean migration, principally within 10 m of the surface; 2022 satellite tags recorded most time in the upper 5 m and occasional dives to 15-20 m. The runtime variable is seafloor bathymetry, not fish vertical depth. The configured 0-40 m seabed range is only a weak coastal/shelf context proxy."
     }
   ],
   "timing": {
     "status": "angler_lore",
     "light": {
       "map": {
-        "day": 1.0,
+        "day": 1,
         "dawn": 0.9,
         "dusk": 0.9,
         "night": 0.5
@@ -105,7 +114,7 @@
     "source_url": "https://wdfw.wa.gov/fishing/regulations"
   },
   "lon_range": [
-    -138.0,
-    -110.0
+    -138,
+    -110
   ]
 }

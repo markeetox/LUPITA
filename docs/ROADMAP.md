@@ -485,3 +485,8 @@ Reviewed Opah, Pacific barracuda, Pacific bonito, Pacific hake and Striped marli
 ## 2026-11-17 | Documented California coastal review, batch 8
 
 Reviewed Barred sand bass, Barred surfperch, Redtail surfperch, Rock greenling and White seabass (10 active factors). Added species-specific sources and conservative temperature/depth notes. Distinguished physiology, ambient fish-depth temperature and bottom-water temperature from preferred satellite SST. Progress: 45/51 profiles, 92 active factors. No numeric or runtime changes.
+
+
+## 2026-11-17 | All documented multi-factor profiles reviewed
+
+Completed all 51 documented multi-factor profiles across 105 active factors. Final batch included Dungeness crab, Sablefish, Steelhead, Vermilion rockfish, White sturgeon and Yellowtail snapper. Source metadata and evidence notes only; no numerical model or runtime behavior changed. Run a fresh validator and reconcile all remaining elevated/partial evidence and taxonomy/region open items before any model rebuild.

@@ -840,3 +840,43 @@ Reviewed Barred sand bass, Barred surfperch, Redtail surfperch, Rock greenling a
 
 ### Documented-profile review progress
 Forty-five of 51 profiles reviewed across 92 active factors. Surfperch physiology and white seabass tagging support temperature relevance but do not automatically define a catch-probability curve; rock greenling bottom-temperature observations are not SST.
+
+
+## Documented multi-factor review: final six-profile batch | 2026-11-17
+
+Reviewed Dungeness crab (reference profile), Sablefish, Steelhead, Vermilion rockfish, White sturgeon and Yellowtail snapper across 13 active factors. Replaced generic regulations citations with California OPC, WDFW, NOAA, USGS, SEDAR and species-specific research. No numeric ranges, ideal intervals, weights, active flags, gates, required flags, scoring, confidence or runtime behavior changed.
+
+### Dungeness crab (*Cancer magister*; taxonomic synonym note)
+- SST: partly_sourced. California OPC reports broad distribution limits around 3-18 °C surface isotherms; adult thermal-preference studies tested 8-22 °C and show food/acclimation effects. Larval thermal limits are more important to geographic range than adult tolerance.
+- Depth: partly_sourced. Adult tags show most time below 15 m, with seasonal migrations to shallower water; WDFW reports mating in <10 m during spring and deeper than 16 m in fall/winter. Full occurrence extends intertidal-229 m, with few beyond 91 m.
+- Taxonomy note: current profile says *Cancer magister*, while California sources use *Metacarcinus magister* and identify the former as a synonym. No name changed.
+- Sources: [California OPC Dungeness crab](https://opc.ca.gov/webmaster/ftp/project_pages/Rapid%20Assessments/Dungeness%20Crab.pdf); [WDFW habitat guidance](https://wdfw.wa.gov/sites/default/files/publications/00028/wdfw00028.pdf); [Curtis & McGaw 2012 thermal preference](https://doi.org/10.1016/j.jembe.2011.12.005).
+
+### Sablefish (*Anoplopoma fimbria*)
+- SST: needs_source. NOAA tags recorded ambient temperatures typically 3.9-5.0 °C at fish depth, but adults are deepwater and this is not satellite SST.
+- Depth: partly_sourced. Adults live on mud bottoms around 200-1,500 m; tagged fish typically occupied 326-553 m (median 446), with 12-1,621 m range and diel vertical migration. Configured 100-500 m overlaps adult core but misses deeper adult habitat and pelagic juvenile waters.
+- Sources: [NOAA sablefish fishery profile](https://www.fisheries.noaa.gov/species/sablefish/wild-caught-fishery); [WDFW sablefish](https://wdfw.wa.gov/species-habitats/species/anoplopoma-fimbria); [NOAA 2018 diel migration study](https://repository.library.noaa.gov/view/noaa/63089/noaa_63089_DS1.pdf).
+
+### Steelhead (*Oncorhynchus mykiss*)
+- SST: partly_sourced. A 1989 North Pacific migration synthesis associates the southern limit with the 15 °C SST isotherm; 2022 Alaska satellite tags recorded 4-16 °C while fish spent most time in surface waters. This overlaps configured 8-16 °C / 10-14 °C but is not a stock-specific catch curve.
+- Depth: weak_factor. Steelhead are epipelagic, mostly within 5-10 m of the surface; this is fish vertical depth, not seafloor bathymetry.
+- Sources: [Light et al. 1989 ocean migration](https://wdfw.wa.gov/sites/default/files/2021-07/light-et-al-1989-steelhead-ocean-migration.pdf); [Courtney et al. 2022 satellite tagging](https://wdfw.wa.gov/sites/default/files/2022-10/Courtney_etal_2022_AKsteelhead_ocean_migration.pdf).
+
+### Vermilion rockfish (*Sebastes miniatus*)
+- SST: needs_source. Available 8-9 °C FishBase environmental observation is not a preferred surface-temperature curve.
+- Depth: partly_sourced. WDFW reports adults 6-436 m, most common 50-150 m; ODFW reports 100-150 fathoms; FishBase reports 15-467 m, usually 50-274 m. Configured 15-150 m captures part of adult habitat but omits deeper occurrences.
+- Sources: [WDFW vermilion rockfish](https://wdfw.wa.gov/species-habitats/species/sebastes-miniatus); [ODFW vermilion rockfish](https://nrimp.dfw.state.or.us/mrp/default.aspx?page=115); [FishBase](https://www.fishbase.org/summary/3982).
+
+### White sturgeon (*Acipenser transmontanus*)
+- SST: needs_source. Juvenile estuarine observations around 15-20 °C are not marine satellite SST or adult thermal preference; the species is primarily riverine/estuarine and only occasionally oceanic.
+- Depth: weak_factor. USGS estuary sampling found subadult/adult use of open-water shoals and channels averaging about 2-7 m; marine bathymetry does not represent river-channel depth or flow.
+- Sources: [CDFW white sturgeon](https://wildlife.ca.gov/Conservation/Fishes/Sturgeon/White-Sturgeon); [USGS estuarine habitat study](https://www.usgs.gov/publications/estuarine-habitat-use-white-sturgeon-acipenser-transmontanus); [WDFW white sturgeon](https://wdfw.wa.gov/species-habitats/species/acipenser-transmontanus).
+
+### Yellowtail snapper (*Ocyurus chrysurus*)
+- Structure: partly_sourced. Adult reef association is supported; juveniles use seagrass/mangroves, and the runtime reef map excludes those nursery habitats plus rubble/scattered coral.
+- Depth: partly_sourced. NOAA adult reef depths 10-70 m and SEDAR catches mainly 20-60 m support the adult ideal; juvenile nursery habitats are shallower. The 5 m gate remains a model judgment.
+- SST: partly_sourced. FishBase model-derived preferred SST 21.7-27.9 °C (mean25.9), Reef Life Survey 22.1-31.1 °C, and Florida Bay/Keys juvenile survey 15.8-32.7 °C. This supports warm-water habitat but not a calibrated adult catch curve.
+- Sources: [NOAA yellowtail snapper science](https://www.fisheries.noaa.gov/species/yellowtail-snapper/science); [SEDAR 8 biology](https://sedarweb.org/documents/s8dw04-the-biology-of-yellowtail-snapper-ocyurus-chrysurus-with-emphasis-on-populations-in-the-caribbean/); [SEDAR 64 juvenile Florida Bay/Keys survey](https://sedarweb.org/documents/sedar-64-dw-03-juvenile-yellowtail-snapper-ocyurus-chrysurus-collected-from-short-term-fisheries-independent-surveys-in-florida-bay-and-the-florida-keys-from-1994-2003/).
+
+### Documented-profile review progress
+All 51 of 51 profiles currently classified as documented multi-factor models have now received source-by-source claim-fit review across 105 active factors. The next step is a fresh validator run and final reconciliation of evidence-risk categories, unresolved taxonomic/regional caveats, and remaining open research items. No numeric or runtime model behavior changed in this review.
