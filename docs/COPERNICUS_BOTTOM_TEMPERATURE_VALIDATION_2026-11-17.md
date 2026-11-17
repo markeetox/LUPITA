@@ -338,3 +338,8 @@ Updated `scripts/copernicus_bottom_temperature_pilot.py` with two exploratory ca
 - Pacific: longitude -123.75 to -123.25°W, latitude 38.0 to 39.0°N (shifted east/north toward the continental margin).
 
 These are sampling hypotheses, not validated shelf strata. The next manual pilot must be followed by the ETOPO bathymetry assessment. Land and coast-ambiguous cells must remain excluded from ocean coverage; depth composition, valid coverage, and mask disagreement must all be reviewed before accepting either box. Gulf and South Florida boxes remain unchanged. No production data or scoring behavior changed.
+
+
+## Candidate v2 code check and next-run guard | 2026-11-17
+
+Python tests passed on the candidate-v2 sampling-box commit in [run 44163056720](https://github.com/markeetox/LUPITA/actions/runs/44163056720). The pilot remains manual-only. The bathymetry workflow input no longer defaults to the older pilot run ID; it now requires an explicit numeric run ID from the newly completed candidate-v2 pilot. This prevents accidentally assessing the previous boxes. Next: dispatch the read-only pilot with the existing dates, then pass that new run ID to the bathymetry workflow. No production behavior changed.
