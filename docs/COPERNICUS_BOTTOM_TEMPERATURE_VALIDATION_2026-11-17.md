@@ -432,3 +432,27 @@ NOAA SEFSC/NCEI accession 0243654 provides processed and unprocessed CTD profile
 NCEI's WOD page currently warns that WODSelect is slow and that cloud migration/maintenance may delay data access. This is an access caveat, not a reason to substitute unverified data. The first concrete data-inspection target is the GoMMAPPS CTD directory and its processed-file metadata; WOD/GTSPP discovery follows once its exact subset workflow and output fields are confirmed.
 
 No observations have been downloaded or paired yet. No bias, MAE, RMSE, matched sample count, or model accuracy result is claimed. No production behavior changed.
+
+## GoMMAPPS CTD metadata inspection | 2026-11-17
+
+Inspected the NOAA InPort parent record, CTD child record, and linked project data-dictionary record. Confirmed:
+- CTD child accession 0243654 supplies both processed and unprocessed CTD files in separate folders.
+- NOAA describes the profiles as vertical salinity, temperature, and oxygen measurements to a maximum depth of 500 m, collected typically daily at the end of marine-mammal visual-survey days.
+- The platform is NOAA Ship Gordon Gunter (ICES code 33GG).
+- CTD child record temporal extent is 2017-06-29 through 2017-08-17; parent archive overview describes the broader survey as 2017-07-03 through 2017-08-23. Use the CTD child extent for this CTD subset and preserve the distinction from the parent survey dates.
+- NOAA identifies a 23 KB investigator-supplied Word data dictionary, a separate NCEI readme, and a cruise report. The data dictionary's existence is verified, but its content and CTD directory file listing could not be retrieved in this inspection because the NCEI archive endpoints returned cache/redirect errors. Therefore column names, filename pattern, station count, and actual file formats remain unverified.
+- NOAA metadata describes the CTD profiles as in-situ data. This establishes the general measurement type, not that every cast reaches the seabed or that every deepest value is a near-bottom value.
+
+References:
+- Parent archive and child-item list: https://www.fisheries.noaa.gov/inport/item/65919
+- CTD child metadata: https://www.fisheries.noaa.gov/inport/item/66006
+- Investigator data dictionary metadata: https://www.fisheries.noaa.gov/inport/item/65961
+- NCEI archive accession: https://www.ncei.noaa.gov/archive/accession/0243654
+
+### Parser decision
+
+Do not write a production parser against assumed Sea-Bird CNV conventions yet. First retrieve the investigator data dictionary and at least one processed profile plus its header/readme. Then verify pressure/depth units, temperature variable (in-situ vs potential), QC/scan flags, cast timestamp/time zone, position source, bottom depth availability, downcast/upcast selection, and whether processed profiles contain bin averaging or despiking. Prefer processed files only after their processing history is understood; retain raw files as provenance, not as a second independent cast.
+
+WODSelect is a separate route for profile inventory: NOAA documents geographic coordinates, observation dates, dataset/probe types (including CTD), measured variables, deepest measurement, ship/platform, cruise, accession/project, and QC-flag exclusion. Its export supports WOD native, CSV, and NetCDF; NetCDF observed-level casts are delivered as individual cast files inside tar archives. This is a suitable standardized parallel inventory, but counts must be obtained from an actual query rather than inferred from the global archive size.
+
+Next operational step: retry NCEI archive retrieval / obtain the documented CTD files and investigator data dictionary; in parallel define four explicit WODSelect geographic queries matching the current validation boxes and request temperature profiles with observed levels and QC metadata. No CTD cast count, WOD regional count, or matched pair is yet claimed. No production behavior changed.
