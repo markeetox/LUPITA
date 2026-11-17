@@ -1224,3 +1224,8 @@ Forecast date 2026-11-17 and reanalysis date 2017-07-15 are not matched; these r
 ## 2026-11-17 | Candidate v2 sampling bounds from per-cell ETOPO review
 
 Reviewed the eight per-cell CSV grids from bathymetry run [44162223743](https://github.com/markeetox/LUPITA/actions/runs/44162223743). The previous Atlantic sample's western longitudes were substantially shallower than its eastern edge; the Pacific sample was abyssal-dominated, with shelf-transition cells only near its eastern/northern edge. Updated the manual pilot script with exploratory candidate v2 bounds: Atlantic -75.5 to -75.0°W, 35–36°N; Pacific -123.75 to -123.25°W, 38–39°N. Gulf and South Florida remain unchanged. These hypotheses must be checked by a new pilot and ETOPO assessment before acceptance. No production logic changed.
+
+
+## 2026-11-17 | Candidate v2 test pass and stale-artifact guard
+
+Python tests passed for candidate-v2 sampling changes in [run 44163056720](https://github.com/markeetox/LUPITA/actions/runs/44163056720). Removed the bathymetry workflow's stale default source run ID so the operator must explicitly provide the run ID from the latest successful pilot. This avoids accidentally classifying the prior pilot artifact with the old Atlantic/Pacific boxes. Next action is the new read-only pilot, followed by its ETOPO assessment. No production logic changed.
