@@ -915,3 +915,15 @@ Found species-specific evidence for all three previously needs-source named-site
 - No numerical values, category maps, weights, active flags, gates, required flags, scoring, confidence, ingestion, or publication behavior changed.
 - Full source-fit details are recorded in docs/SPECIES_EVIDENCE_AUDIT_2026-11-17.md.
 
+
+## 2026-11-17 | Batch C second four multi-factor profiles
+
+- Reviewed cubera snapper, gag grouper, red grouper, and red snapper across 12 active factors.
+- Replaced generic FWC homepage-only factor citations with traceable species-specific sources and added conservative claim-fit notes/statuses.
+- Cubera snapper: SST model estimate and reef/depth occurrence evidence are partly sourced, not a calibrated local preference.
+- Gag grouper: adult/juvenile temperature, hardbottom habitat, depth, and terrain ruggedness evidence is documented; terrain ruggedness is not the same as the runtime bottom_curvature variable.
+- Red grouper: SST association differs by life stage; shallow Florida Bay solution-hole use and broad offshore adult habitat must not be conflated.
+- Red snapper: temperature and depth sources include bottom-water/juvenile or regional studies; structure sources support artificial reef/reef association but not exact category scores.
+- No numeric values, category maps, weights, active flags, gates, required flags, scoring, confidence, ingestion, or publication behavior changed.
+- Full findings and source register are in docs/SPECIES_EVIDENCE_AUDIT_2026-11-17.md.
+

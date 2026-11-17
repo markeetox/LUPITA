@@ -388,3 +388,8 @@ Next: review metadata recommendations for Batches A and B, then continue with th
 
 Batch C has started. Four elevated-risk profiles (African pompano, Almaco jack, black grouper, black sea bass) have been reviewed and their active factor source/status/note metadata updated. Next priority is the remaining elevated-risk multi-factor profiles, grouped by ecological factor family. Preserve all numeric ranges, category maps, weights, gates, required flags, scoring, and confidence behavior until separately supported and approved. See SPECIES_EVIDENCE_AUDIT_2026-11-17.md.
 
+
+## 2026-11-17 | Multi-factor evidence review update
+
+Eight elevated-risk multi-factor profiles are now reviewed and metadata-updated: African pompano, Almaco jack, black grouper, black sea bass, cubera snapper, gag grouper, red grouper, and red snapper. Continue with the remaining elevated-risk profiles, grouped by habitat/factor family. Preserve all numerical model settings and runtime behavior during evidence review. See SPECIES_EVIDENCE_AUDIT_2026-11-17.md.
+
