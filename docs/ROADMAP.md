@@ -1,6 +1,6 @@
 # LUPITA engineering roadmap
 
-**Last updated:** 2026-11-15 | **Code:** `main` | **Generated-data export:** `data` only
+**Last updated:** 2026-11-17 | **Code:** `main` | **Generated-data export:** `data` only
 
 This is the handoff record for future sessions. Read it with [Project Status](PROJECT_STATUS.md) and [Progress Log](PROGRESS_LOG.md). Do not restart completed work or repeat expensive research workflows without a specific reason.
 
@@ -354,3 +354,17 @@ Completed the owner-approved metadata-only update across all 20 named-site SST p
 ### Named-site SST evidence follow-up | completed 2026-11-16
 
 Reviewed the final three needs-source profiles. All now have specific references and `partly_sourced` status, with notes distinguishing occurrence, migration, bottom temperature, and model-derived estimates from validated SST preference. Next priority: resolve geographic/species-identity caveats for spot and weakfish, then assess the five remaining provisional profiles. Do not adjust numeric bands or model behavior without a separate review and approval. See [evidence review](NAMED_SITE_SST_EVIDENCE_REVIEW_2026-11-16.md).
+
+
+## Active milestone: all-species biological evidence review | 2026-11-17
+
+**Inventory complete; source-by-source review queued.** The current catalog has 130 profiles: 105 grid and 25 site models; 23 temperature-only site pilots, 27 other single-factor models, and 80 multi-factor models. CI species audit #43952010312 parsed and validated all 130 profiles with zero compatibility issues. It identified 64 elevated-risk, 14 partial-risk, and 52 documented-by-current-metadata profiles. The combined active uncertain weight is 37.4 and is not a probability. There are 96 generic-homepage findings across 48 profiles, 3 missing factor-source findings across sailfish and tarpon, and 27 grid `required`-flag warnings.
+
+Sequence:
+1. Review bonefish, great barracuda, and Permit, the three remaining temperature-only site pilots.
+2. Review all 27 other single-factor models; these are currently all elevated active-evidence risk.
+3. Review the 80 multi-factor models by factor family; prioritize the 29 elevated-risk profiles.
+4. Audit timing and profile-level biological narratives separately from environmental factor evidence.
+5. Apply only approved source/status/note updates and validate after each coherent batch.
+
+Use [SPECIES_EVIDENCE_AUDIT_2026-11-17.md](SPECIES_EVIDENCE_AUDIT_2026-11-17.md) as the master scope and interpretation record. Do not change numeric biology, weights, active flags, gates, required flags, scoring, confidence, source selection, ingestion, or publication during evidence discovery. A specific URL or `sourced` declaration is not proof of claim fit.
