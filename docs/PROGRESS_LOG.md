@@ -995,3 +995,14 @@ Found species-specific evidence for all three previously needs-source named-site
 - No numeric ranges, ideal intervals, weights, active flags, gates, required flags, scoring, confidence, ingestion, or publication behavior changed.
 - Full notes and source list are in docs/SPECIES_EVIDENCE_AUDIT_2026-11-17.md. CI run #44124511157 is in progress.
 
+
+
+## 2026-11-17 | Batch C fourth multi-factor evidence review
+
+- Reviewed Hogfish, Jack crevalle, King mackerel, and Red drum across 13 active factors.
+- Hogfish SST is needs_source; reef structure and depth are partly_sourced.
+- Jack crevalle temperature, depth, and season factors are partly_sourced; occurrence and spawning/migration evidence do not establish preferred ranges or South Florida catch scores.
+- King mackerel SST, depth, and seasonal presence are partly_sourced; SST-gradient evidence is needs_source.
+- Red drum temperature, depth, and seasonal presence are partly_sourced; broad thermal tolerance and fall spawning movement do not validate precise catch curves.
+- No numeric settings, weights, active flags, gates, required flags, scoring, confidence, ingestion, or publication behavior changed.
+- Detailed evidence notes and references are in docs/SPECIES_EVIDENCE_AUDIT_2026-11-17.md.
