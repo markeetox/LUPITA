@@ -27,7 +27,10 @@
     "behavior": "Structure-oriented coastal species found around rock piles, jetty bases, hardbottom, and artificial reefs.",
     "regulations_link": "https://myfwc.com/",
     "sources": [
-      "https://myfwc.com/"
+      "https://repository.library.noaa.gov/view/noaa/3145/noaa_3145_DS1.pdf",
+      "https://sedarweb.org/documents/s25rd22-black-sea-bass-centropristis-striata-life-history-and-habitat-characteristics-second-edition/",
+      "https://www.floridamuseum.ufl.edu/discover-fish/species-profiles/black-seabass/",
+      "https://repository.library.noaa.gov/view/noaa/24450/noaa_24450_DS1.pdf"
     ]
   },
   "factors": [
@@ -44,11 +47,13 @@
       ],
       "weight": 0.35,
       "active": true,
-      "value_status": "sourced",
+      "value_status": "partly_sourced",
       "sources": [
-        "https://myfwc.com/"
+        "https://sedarweb.org/documents/s25rd22-black-sea-bass-centropristis-striata-life-history-and-habitat-characteristics-second-edition/",
+        "https://repository.library.noaa.gov/view/noaa/24450/noaa_24450_DS1.pdf"
       ],
-      "reason_template": "Water is {value} C, cool temperature range favored by black sea bass."
+      "reason_template": "Water is {value} C, cool temperature range favored by black sea bass.",
+      "value_notes": "NOAA/NEFSC trawl-survey summaries report seasonal adult bottom-water occurrence: roughly 3–21 °C in spring (most 9–12 °C) and 8–28 °C in fall (most 16–27 °C). A warming study reports seasonal exposure around 6–27 °C. These are seasonal bottom-water and northern-stock observations, not a universal surface-temperature preference curve. Florida Museum describes the species as mainly north of northeastern Florida, with extreme South Florida records during cold winters. The configured 15–24 °C SST band and 18–22 °C ideal are not locally calibrated."
     },
     {
       "param": "structure_type",
@@ -63,15 +68,18 @@
       "active": true,
       "value_status": "sourced",
       "sources": [
-        "https://myfwc.com/"
+        "https://repository.library.noaa.gov/view/noaa/3145/noaa_3145_DS1.pdf",
+        "https://sedarweb.org/documents/s25rd22-black-sea-bass-centropristis-striata-life-history-and-habitat-characteristics-second-edition/",
+        "https://www.floridamuseum.ufl.edu/discover-fish/species-profiles/black-seabass/"
       ],
       "map": {
-        "hardbottom": 1.0,
-        "artificial_reef": 1.0,
+        "hardbottom": 1,
+        "artificial_reef": 1,
         "natural_reef": 0.8,
         "wreck": 0.8
       },
-      "reason_template": "Structure is {value}, where black sea bass dwell."
+      "reason_template": "Structure is {value}, where black sea bass dwell.",
+      "value_notes": "NOAA life-history and habitat documents and the Florida Museum profile describe black sea bass using rocky bottoms, reefs, wrecks, jetties, pilings, and other structurally complex habitat. This supports the broad category association; the exact numeric score ordering remains a model heuristic."
     },
     {
       "param": "depth_m",
@@ -86,19 +94,22 @@
       ],
       "weight": 0.3,
       "active": true,
-      "value_status": "sourced",
+      "value_status": "partly_sourced",
       "sources": [
-        "https://myfwc.com/"
+        "https://repository.library.noaa.gov/view/noaa/3145/noaa_3145_DS1.pdf",
+        "https://sedarweb.org/documents/s25rd22-black-sea-bass-centropristis-striata-life-history-and-habitat-characteristics-second-edition/",
+        "https://www.floridamuseum.ufl.edu/discover-fish/species-profiles/black-seabass/"
       ],
       "gate": true,
-      "reason_template": "Depth is {value} m, in coastal hardbottom depth range."
+      "reason_template": "Depth is {value} m, in coastal hardbottom depth range.",
+      "value_notes": "NOAA sources describe adults using roughly 2–38 m in summer and deeper offshore habitats in winter, with broader seasonal records extending well beyond 60 m; Florida Museum reports offshore occurrences to about 130 m. The configured 5–60 m range and 10–35 m ideal capture part of summer habitat but do not represent the full seasonal depth use. South Florida occurrence is uncommon and associated with cold winters."
     }
   ],
   "timing": {
     "status": "angler_lore",
     "light": {
       "map": {
-        "day": 1.0,
+        "day": 1,
         "dawn": 0.9,
         "dusk": 0.9,
         "night": 0.3
@@ -125,7 +136,7 @@
     "source_url": "https://myfwc.com/fishing/saltwater/recreational/"
   },
   "lon_range": [
-    -100.0,
-    -50.0
+    -100,
+    -50
   ]
 }
