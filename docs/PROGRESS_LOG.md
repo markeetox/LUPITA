@@ -883,3 +883,13 @@ Found species-specific evidence for all three previously needs-source named-site
 - Created `docs/SPECIES_EVIDENCE_AUDIT_2026-11-17.md` with the complete scope, interpretation, review standard, batch sequence, and guardrails.
 - Next: source-by-source review of the remaining three temperature-only site pilots, then the 27 other single-factor models, followed by the 80 multi-factor models grouped by factor family and risk.
 - No species biology, numeric ranges, ideal bands, weights, active flags, gates, required flags, scoring, confidence, source selection, ingestion, or publication changed.
+
+
+## 2026-11-17 | Batch A: remaining temperature-only site pilot research
+
+- Reviewed bonefish, great barracuda, and Permit source-by-source. All three have a single active SST factor with gate and required flags, so this input determines site eligibility.
+- Bonefish: peer-reviewed adult thermal-performance optima of 26.7–28.0 °C and broad critical-temperature/field exposure data from Bahamian studies; regional transfer and habitat-preference interpretation remain limitations. Recommend partly_sourced, not sourced.
+- Great barracuda: South Florida archival-tag thesis reports 17.8–31.3 °C for only two large adults; FishBase model estimate 21.7–28.9 °C based on 2,020 cells. Recommend partly_sourced with strong sample-size and model caveats.
+- Permit: FishBase modeled estimate 23.2–28.0 °C; 2026 Texas juvenile study associates presence with >25 °C; 1972 South Carolina survey observed 26 juvenile fish at 12.8–38.5 °C. These do not establish adult South Florida thermal preference. Retain provisional.
+- Added complete source-fit review to `docs/SPECIES_EVIDENCE_AUDIT_2026-11-17.md`.
+- No species JSON or prediction settings changed. Proposed status/source/note updates await review.
