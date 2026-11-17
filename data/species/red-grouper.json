@@ -26,7 +26,11 @@
     "behavior": "Excavates solution holes and crevice habitats on low-relief hardbottom limestone plains.",
     "regulations_link": "https://myfwc.com/",
     "sources": [
-      "https://myfwc.com/"
+      "https://www.fisheries.noaa.gov/species/red-grouper",
+      "https://espis.boem.gov/Final%20Reports/4770.pdf",
+      "https://repository.library.noaa.gov/view/noaa/51241/noaa_51241_DS1.pdf",
+      "https://www.gsmfc.org/pubs/Habitat/tables/redgrouper.pdf",
+      "https://pmc.ncbi.nlm.nih.gov/articles/PMC10666610/"
     ]
   },
   "factors": [
@@ -43,11 +47,13 @@
       ],
       "weight": 0.35,
       "active": true,
-      "value_status": "sourced",
+      "value_status": "partly_sourced",
       "sources": [
-        "https://myfwc.com/"
+        "https://pmc.ncbi.nlm.nih.gov/articles/PMC10666610/",
+        "https://www.gsmfc.org/pubs/Habitat/tables/redgrouper.pdf"
       ],
-      "reason_template": "Water is {value} C, favorable for red grouper."
+      "reason_template": "Water is {value} C, favorable for red grouper.",
+      "value_notes": "A southeastern Gulf study reports that sea-surface temperature influences red grouper abundance and that thermal relationships differ between juveniles and adults. The Gulf States Marine Fisheries Commission life-history table reports juvenile occurrence at 16.1–31.2 °C and larval optimum estimates of 27.4–28.5 °C. These are stage-specific and regional observations, not a validated adult South Florida SST preference curve; they do not establish the configured 18–28 °C range or 21–25 °C ideal."
     },
     {
       "param": "structure_type",
@@ -59,16 +65,19 @@
       ],
       "weight": 0.35,
       "active": true,
-      "value_status": "sourced",
+      "value_status": "partly_sourced",
       "sources": [
-        "https://myfwc.com/"
+        "https://www.fisheries.noaa.gov/species/red-grouper",
+        "https://espis.boem.gov/Final%20Reports/4770.pdf",
+        "https://repository.library.noaa.gov/view/noaa/51241/noaa_51241_DS1.pdf"
       ],
       "map": {
-        "hardbottom": 1.0,
+        "hardbottom": 1,
         "natural_reef": 0.8,
         "ledge": 0.8
       },
-      "reason_template": "Bottom is {value}, where red grouper excavate solution holes."
+      "reason_template": "Bottom is {value}, where red grouper excavate solution holes.",
+      "value_notes": "NOAA and BOEM describe adults associated with rocky limestone reefs, hardbottom, ledges, crevices, caverns, and wrecks. A NOAA Florida Bay study documents use and excavation of shallow limestone solution holes. This supports the broad hardbottom/reef/ledge categories but does not calibrate their relative numeric scores."
     },
     {
       "param": "depth_m",
@@ -83,19 +92,22 @@
       ],
       "weight": 0.3,
       "active": true,
-      "value_status": "sourced",
+      "value_status": "partly_sourced",
       "sources": [
-        "https://myfwc.com/"
+        "https://www.fisheries.noaa.gov/species/red-grouper",
+        "https://espis.boem.gov/Final%20Reports/4770.pdf",
+        "https://www.gsmfc.org/pubs/Habitat/tables/redgrouper.pdf"
       ],
       "gate": true,
-      "reason_template": "Depth is {value} m, in prime hardbottom depth zone."
+      "reason_template": "Depth is {value} m, in prime hardbottom depth zone.",
+      "value_notes": "NOAA describes common shallow-water habitat around 3–18 m; BOEM reports a broad 3–200 m occurrence range with many fish at 30–120 m; the Gulf States life-history table describes juvenile habitat from very shallow water to about 50 m. The configured 10–120 m range and 20–60 m ideal overlap these observations but collapse strong life-stage and habitat-depth differences. Depth is an active gate."
     }
   ],
   "timing": {
     "status": "angler_lore",
     "light": {
       "map": {
-        "day": 1.0,
+        "day": 1,
         "dawn": 0.8,
         "dusk": 0.8,
         "night": 0.3
@@ -122,7 +134,7 @@
     "source_url": "https://myfwc.com/fishing/saltwater/recreational/"
   },
   "lon_range": [
-    -100.0,
-    -50.0
+    -100,
+    -50
   ]
 }
