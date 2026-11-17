@@ -1247,3 +1247,12 @@ Depth counts: Gulf 15 cells at 0–10 m, 121 at 10–50 m, 57 at 50–200 m, 20 
 Disposition: Gulf is the strongest broad shelf candidate; Atlantic v2 is a focused shallow-shelf candidate with a very small inner-shelf class; Pacific v2 is a provisional shelf/slope-transition sample with unresolved mask disagreements; South Florida remains a broad shelf/slope reference. Forecast 2026-11-17 and reanalysis 2017-07-15 are not time-matched, so these are coverage/bathymetry findings only, not accuracy validation.
 
 Next: inventory independent NOAA WOD/GTSPP and regional CTD profiles, checking actual sample depth relative to seabed, QC, timestamp, location, and duplicates. Moorings qualify only when sensor depth is documented near bottom; surface-only observations are excluded. No production source, SST, species, factor, gate, weight, scoring, confidence, ingestion, or publication behavior changed.
+
+
+## 2026-11-17 | NOAA independent observation source inventory started
+
+Completed initial metadata discovery for NOAA NCEI WOD23, GTSPP, and SEFSC GoMMAPPS GU1703 CTD accession 0243654. WOD23 provides quality-controlled global profiles and WODSelect geographic/date/variable/deepest-measurement/QC filters with CSV/NetCDF output. GTSPP offers a 1990-present geographic/date interface and a long-term best-copy archive incorporating delayed-mode full-resolution CTD/XBT or quality-controlled submissions.
+
+GoMMAPPS GU1703 CTD is the first regional archive to inspect: processed and raw profiles, maximum 500 m, 2017-06-29 to 2017-08-17, extent 23.823–29.955°N and 96.472–81.839°W. It overlaps much of the Gulf candidate and part of South Florida and includes the reanalysis pilot date 2017-07-15. Actual cast count, deepest valid sample, seabed separation, QC, and Copernicus-cell matchability remain unknown.
+
+Next: inspect GoMMAPPS CTD file listing and metadata, then build a normalized cast/profile inventory and obtain WOD/GTSPP subsets. No independent observations have yet been downloaded or paired; no bias/MAE/RMSE or accuracy claim is made. No production behavior changed.
