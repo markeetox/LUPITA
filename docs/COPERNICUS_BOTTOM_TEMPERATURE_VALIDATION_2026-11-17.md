@@ -239,3 +239,21 @@ The workflow is manual-only, uses the existing artifact from run 44144656207 by 
 The first bathymetry assessment dispatch failed at step 4, before Python dependencies were installed or the assessment script ran. GitHub Actions log for run [44157956072](https://github.com/markeetox/LUPITA/actions/runs/44157956072) reports `Unable to download artifact(s): Bad credentials`. The log shows the `repository`, `run-id`, and `github-token` expressions were passed with literal leading backslashes (for example, `\${{ github.repository }}`), so GitHub Actions did not evaluate them. This was a workflow interpolation defect, not a NOAA response, grid-shape, or coordinate-alignment failure; the bathymetry script never executed.
 
 Corrected the three expressions in `.github/workflows/copernicus-bottom-temperature-bathymetry.yml` and committed the fix. The source pilot artifact remains the same run 44144656207. The workflow is still manual-only and read-only. The corrected workflow has not yet been dispatched, so artifact access and the subsequent ETOPO parsing/alignment remain unverified. Next: rerun the workflow, inspect the first executed assessment step, then address any actual data/grid issue based on its logs.
+
+## Bathymetry assessment completed and artifact inspected | 2026-11-17
+
+The corrected manual workflow succeeded in run [44158655908](https://github.com/markeetox/LUPITA/actions/runs/44158655908). All seven steps passed, including cross-run artifact download, ETOPO assessment, and artifact upload. The generated artifact `copernicus-bottom-temperature-bathymetry-assessment` was downloaded and inspected; it contains one JSON summary and eight per-cell CSV grids.
+
+Preliminary ocean-only coverage, using ETOPO elevation < -1 m as ocean and excluding the ±1 m coastal-ambiguous band:
+- South Florida / Florida Keys: 302 ocean cells, 302 valid; 100%.
+- Gulf sample: 323 ocean cells, 323 valid; 100%.
+- Atlantic sample: 625 ocean cells, 625 valid; 100%.
+- Pacific West Coast: 113 ocean cells, 98 valid; 86.7%.
+
+This explains much of the Pacific's raw 21.1% valid/all-grid figure: 495 of 625 grid cells are classified as land, with 17 coastal-ambiguous cells. Fifteen of 113 ocean cells are missing temperature values. All 15 are in the 0–10 m depth class: 7/22 shallow ocean cells are valid (31.8%), while all sampled ocean cells in the 10–50, 50–200, 200–500, and 500–2000 m classes are valid. The sample box is therefore broadly covered offshore but has a notable very-shallow coastal gap.
+
+The assessment also flags valid Copernicus temperatures at ETOPO-classified land points: 4 in the South Florida sample and 32 in the Pacific sample. These are excluded from ocean-only coverage. They may reflect coastal grid/land-mask resolution differences or model extrapolation; they are not silently counted as ocean. The ETOPO-to-model coordinate offsets are at most about 0.00417° in latitude and longitude, consistent with nearest sampled ETOPO grid centers at roughly half a model-cell spacing. This is a coarse screening mask, not a high-resolution shoreline validation.
+
+Important sampling-design finding: the box labeled Atlantic shelf is not shelf-dominated. 572/625 cells (91.5%) are deeper than 2,000 m; only 26 cells are in the 10–200 m classes. Its all-cell mean near 2.86°C is therefore dominated by abyssal water and must not be interpreted as an Atlantic shelf temperature. The Gulf sample also includes substantial slope/deep-water area (37 cells >2,000 m and 186 cells at 500–2,000 m). The regional boxes need refinement/renaming before regional shelf statistics are used.
+
+Forecast samples are dated 2026-11-17 and reanalysis samples 2017-07-15. They are separate product/date snapshots, not a matched forecast-vs-reanalysis comparison. Results establish preliminary data availability and depth context only; they do not establish accuracy, freshness, or suitability for species scoring. Next: inspect spatial patterns and revise the regional sampling boxes, especially the Atlantic shelf box; then inventory qualifying independent CTD and mooring observations. No production behavior changed.
