@@ -17,15 +17,16 @@ import numpy as np
 import xarray as xr
 
 ROOT = Path("artifacts/copernicus-bottom-temperature-pilot")
-# Refined candidate boxes based on the first ETOPO depth/mask review.
-# They are still exploratory; the next bathymetry assessment must confirm
-# shelf representation and ocean-only coverage before these are treated as
-# regional validation strata.
+# Exploratory boxes revised from per-cell ETOPO depth distributions.
+# Atlantic is narrowed to the shallower western portion of the previous box.
+# Pacific shifts east and north toward the continental margin; ETOPO must
+# still verify whether it samples shelf rather than land/abyssal cells.
+# These are candidates only, not accepted validation strata.
 REGIONS = {
     "south_florida_keys": {"minimum_longitude": -81.0, "maximum_longitude": -79.5, "minimum_latitude": 24.5, "maximum_latitude": 26.5},
     "gulf_shelf_refined": {"minimum_longitude": -89.0, "maximum_longitude": -87.5, "minimum_latitude": 29.0, "maximum_latitude": 30.0},
-    "atlantic_shelf_refined": {"minimum_longitude": -75.5, "maximum_longitude": -74.5, "minimum_latitude": 35.0, "maximum_latitude": 36.0},
-    "pacific_outer_shelf": {"minimum_longitude": -124.5, "maximum_longitude": -123.5, "minimum_latitude": 37.0, "maximum_latitude": 39.0},
+    "atlantic_shelf_candidate_v2": {"minimum_longitude": -75.5, "maximum_longitude": -75.0, "minimum_latitude": 35.0, "maximum_latitude": 36.0},
+    "pacific_shelf_candidate_v2": {"minimum_longitude": -123.75, "maximum_longitude": -123.25, "minimum_latitude": 38.0, "maximum_latitude": 39.0},
 }
 DATASETS = {
     "forecast": {
