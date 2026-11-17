@@ -27,7 +27,10 @@
     "behavior": "Favors deep, high-relief coral ledges and rocky drop-offs along the outer continental shelf.",
     "regulations_link": "https://myfwc.com/",
     "sources": [
-      "https://myfwc.com/"
+      "https://sedarweb.org/documents/s19rd28-population-assessment-of-the-scamp-mycteroperca-phenax-from-the-southeastern-united-states/",
+      "https://safmc.net/species/grouper-scamp/",
+      "https://fishbase.se/Fieldguide/FieldGuideSummary.php?c_code=840&genusname=Mycteroperca&speciesname=phenax",
+      "https://pmc.ncbi.nlm.nih.gov/articles/PMC5338871/"
     ]
   },
   "factors": [
@@ -44,11 +47,13 @@
       ],
       "weight": 0.35,
       "active": true,
-      "value_status": "sourced",
+      "value_status": "partly_sourced",
       "sources": [
-        "https://myfwc.com/"
+        "https://sedarweb.org/documents/s19rd28-population-assessment-of-the-scamp-mycteroperca-phenax-from-the-southeastern-united-states/",
+        "https://pmc.ncbi.nlm.nih.gov/articles/PMC5338871/"
       ],
-      "reason_template": "Water is {value} C, favorable for scamp grouper."
+      "reason_template": "Water is {value} C, favorable for scamp grouper.",
+      "value_notes": "A southeastern U.S. spawning survey recorded spawning scamp at bottom temperatures of 16–27 °C (mean 21.0 °C); a SEDAR assessment describes spawning off the Carolinas at 22–25 °C. These are seasonal bottom-water/spawning observations, not a general adult SST preference curve; they partially overlap but do not validate 18–27 °C / 20–24 °C as a year-round surface-temperature optimum."
     },
     {
       "param": "structure_type",
@@ -60,16 +65,18 @@
       ],
       "weight": 0.35,
       "active": true,
-      "value_status": "sourced",
+      "value_status": "partly_sourced",
       "sources": [
-        "https://myfwc.com/"
+        "https://sedarweb.org/documents/s19rd28-population-assessment-of-the-scamp-mycteroperca-phenax-from-the-southeastern-united-states/",
+        "https://safmc.net/species/grouper-scamp/"
       ],
       "map": {
-        "natural_reef": 1.0,
-        "ledge": 1.0,
+        "natural_reef": 1,
+        "ledge": 1,
         "wreck": 0.8
       },
-      "reason_template": "Structure is {value}, preferred by scamp."
+      "reason_template": "Structure is {value}, preferred by scamp.",
+      "value_notes": "SEDAR and SAFMC describe scamp using low-profile live-bottom areas, Oculina coral, ledges, and high-relief rocky bottoms; wrecks and rock outcrops are also used. This supports the broad reef/ledge/wreck association but does not validate the exact category ranking or score values."
     },
     {
       "param": "depth_m",
@@ -84,19 +91,22 @@
       ],
       "weight": 0.3,
       "active": true,
-      "value_status": "sourced",
+      "value_status": "partly_sourced",
       "sources": [
-        "https://myfwc.com/"
+        "https://sedarweb.org/documents/s19rd28-population-assessment-of-the-scamp-mycteroperca-phenax-from-the-southeastern-united-states/",
+        "https://safmc.net/species/grouper-scamp/",
+        "https://fishbase.se/Fieldguide/FieldGuideSummary.php?c_code=840&genusname=Mycteroperca&speciesname=phenax"
       ],
       "gate": true,
-      "reason_template": "Depth is {value} m, in deep shelf edge habitat."
+      "reason_template": "Depth is {value} m, in deep shelf edge habitat.",
+      "value_notes": "SAFMC reports preferred low-profile live-bottom habitat at 75–300 ft (about 23–91 m); FishBase reports 30–100 m and NOAA/SEDAR sources describe broad shelf habitat. This overlaps the configured 25–100 m / 40–80 m band, but does not validate the exact ideal interval or all regional/life-stage differences. Depth is an active gate."
     }
   ],
   "timing": {
     "status": "angler_lore",
     "light": {
       "map": {
-        "day": 1.0,
+        "day": 1,
         "dawn": 0.8,
         "dusk": 0.8,
         "night": 0.3
@@ -123,7 +133,7 @@
     "source_url": "https://myfwc.com/fishing/saltwater/recreational/"
   },
   "lon_range": [
-    -100.0,
-    -50.0
+    -100,
+    -50
   ]
 }
