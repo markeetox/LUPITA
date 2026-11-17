@@ -298,3 +298,32 @@ Next: run the revised manual pilot, inspect the depth distribution and coastal-m
 Bathymetry workflow run [44161453015](https://github.com/markeetox/LUPITA/actions/runs/44161453015) failed at the artifact-download step because the supplied `source_run_id` was the literal string `source_run_id`, not a numeric Actions run ID. The first-pass revised pilot itself succeeded as run [44160953510](https://github.com/markeetox/LUPITA/actions/runs/44160953510), and its artifact was produced successfully. No assessment code ran and no data was lost.
 
 Updated the bathymetry workflow's default source run ID to `44160953510`, clarified the input description, and added a preflight numeric-ID validation step so placeholder text fails with a clear message before artifact download. This is a workflow usability fix only; assessment logic and production behavior are unchanged.
+
+
+## Refined ETOPO bathymetry assessment | 2026-11-17
+
+The revised read-only bathymetry assessment completed successfully in [run 44162223743](https://github.com/markeetox/LUPITA/actions/runs/44162223743), using the successful revised pilot artifact from run [44160953510](https://github.com/markeetox/LUPITA/actions/runs/44160953510). All workflow steps passed, including numeric source-run validation, artifact download, ETOPO classification, and artifact upload. Artifact: `copernicus-bottom-temperature-bathymetry-assessment` (9 files: summary JSON plus eight per-cell CSV grids).
+
+Ocean-only coverage after excluding ETOPO land (>+1 m) and coast-ambiguous cells (-1 to +1 m):
+
+| Region | ETOPO ocean cells | Forecast valid | Reanalysis valid | Coverage |
+|---|---:|---:|---:|---:|
+| South Florida / Keys | 302 | 302 | 302 | 100% |
+| Gulf shelf candidate | 246 | 246 | 246 | 100% |
+| Atlantic shelf candidate | 166 | 165 | 165 | 99.4% |
+| Pacific outer-shelf candidate | 316 | 316 | 316 | 100% |
+
+The revised rectangles substantially improve the test: the Gulf, Atlantic, and Pacific boxes now avoid the original estuary/land-dominated samples. However, 100% valid-cell coverage is not proof of accuracy or shelf representativeness. Depth composition matters:
+
+- Gulf: 193/246 ocean cells (78.5%) are 10–200 m; 33 cells are 500–2000 m. This is the strongest current shelf-oriented candidate.
+- Atlantic: 91/166 cells (54.8%) are 10–200 m; 38 are >2000 m and 29 are 500–2000 m. This is a mixed shelf-to-deep-ocean box, not a clean shelf-only sample.
+- Pacific: 253/316 cells (80.1%) are >2000 m; only 22 are 50–500 m. Despite 100% ocean-only data coverage, this box is abyssal-dominated and must not be described as a representative outer-shelf sample.
+- South Florida / Keys: 53/302 cells (17.5%) are 0–50 m, while 150/302 (49.7%) are 500–2000 m. This is a broad shelf/slope reference, not a shallow-coastal-only sample.
+
+One Atlantic ocean-classified cell is missing temperature in both product subsets. All other ocean-classified cells are valid. The small number of Copernicus-valid/ETOPO-land disagreements remains visible in the per-cell CSVs and is not counted as ocean coverage.
+
+Forecast subset date is 2026-11-17; reanalysis subset date is 2017-07-15. These are not matched dates and must not be compared as a controlled forecast-vs-reanalysis accuracy test. The current assessment establishes sampled-grid coverage and bathymetric context only. It does not validate temperature accuracy, freshness, or fish/species relevance.
+
+### Next step
+
+Refine the Atlantic and especially Pacific sampling geometry using the per-cell depth coordinates, aiming for explicit bathymetric strata rather than rectangular regions that accidentally include abyssal water. Keep Gulf as the best current shelf candidate and retain South Florida as a broad regional reference. Then build the independent NOAA CTD/mooring observation inventory and matched validation design. Continue to keep all work read-only: no production ingestion, MUR SST, species profiles, factors, weights, gates, scoring, confidence, or publication behavior changes.
