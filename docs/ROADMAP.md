@@ -440,3 +440,8 @@ Next: run/inspect the refreshed species-profile validator, then review remaining
 ## 2026-11-17 | Validator checkpoint and next evidence queue
 
 Batch C is complete and validated by CI #44127699186 (307 passed, 0 failed). The species audit reports 130 structurally valid profiles and zero compatibility issues. Current evidence risk: 30 elevated, 48 partial, 52 documented; multi-factor subset: 16 elevated, 13 partial, 51 documented. The previously elevated/partial multi-factor profiles have already received source-by-source review. Next focus is the 51 documented multi-factor profiles, verifying actual claim fit rather than treating the validator's documented category as scientific validation. No numerical or runtime changes.
+
+
+## 2026-11-17 | Documented multi-factor review underway
+
+The first five of 51 documented multi-factor profiles have been reviewed: Black rockfish, Blue rockfish, Bocaccio rockfish, Canary rockfish, and Copper rockfish (11 active factors). Source-reference presence was not treated as scientific validation; SST, bottom-temperature, life-stage and depth-proxy mismatches were recorded. Continue the remaining documented profiles by ecological/factor family. No numeric or runtime changes. See SPECIES_EVIDENCE_AUDIT_2026-11-17.md.

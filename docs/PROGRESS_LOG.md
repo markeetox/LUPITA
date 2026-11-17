@@ -1027,3 +1027,17 @@ All 29 originally elevated-risk multi-factor profiles have now been reviewed. Ne
 CI #44127699186 passed: 307 tests, 0 failures, 115 warnings. Species audit: 130 parsed and structurally valid, 0 model-compatibility issues, 0 JSON parse errors; 0 errors, 488 warnings, 122 informational findings. Current evidence risk is 30 elevated, 48 partial, 52 documented; multi-factor distribution is 16 elevated, 13 partial, 51 documented. Combined active uncertain factor weight is 10.34 (not probability).
 
 All 29 originally elevated-risk multi-factor profiles have been reviewed. Current elevated/partial classifications reflect evidence limitations and are not an unreviewed queue. Next: source-by-source claim-fit review of the 51 documented multi-factor profiles. Specific reference metadata is not proof that numeric biological claims or runtime response curves are validated. Preserve model behavior during this review.
+
+
+## 2026-11-17 | First documented multi-factor batch: Pacific rockfish
+
+Reviewed Black rockfish, Blue rockfish, Bocaccio rockfish, Canary rockfish, and Copper rockfish across 11 active factors. Replaced generic regulations-page citations with specific WDFW, ODFW, NOAA, COSEWIC and research sources.
+
+- Black rockfish SST is partly_sourced with juvenile-only caveats; depth and reef-curvature claims are partly_sourced.
+- Blue rockfish SST is needs_source; NOAA climate-sensitivity evidence does not validate a numeric preference band. Depth is partly_sourced.
+- Bocaccio SST is needs_source; adult/juvenile depth and habitat are partly_sourced with clear ontogenetic caveats.
+- Canary rockfish SST is needs_source; bottom-trawl temperature records are not satellite SST and were not significant after depth effects. The configured depth band is shallower than much of the observed adult distribution.
+- Copper rockfish SST/depth are partly_sourced with regional and life-stage limitations.
+- No numeric ranges, ideal intervals, weights, active flags, gates, required flags, or runtime behavior changed.
+
+Progress: 5 of 51 documented multi-factor profiles reviewed across 11 active factors. See the master evidence audit.

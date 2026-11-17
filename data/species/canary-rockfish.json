@@ -10,7 +10,7 @@
   "display": {
     "color": "#3fd820"
   },
-  "review_status": "v1 - West Coast Pacific habitat profile",
+  "review_status": "Evidence reviewed 2026-11-17. Species-specific trawl and NOAA habitat evidence added; bottom-temperature observations do not validate the runtime SST factor.",
   "image": {
     "status": "placeholder",
     "kind": "illustration",
@@ -26,12 +26,14 @@
     "behavior": "Navigates West Coast kelp forests, rocky reefs, and coastal upwelling zones.",
     "regulations_link": "https://wildlife.ca.gov/Fishing/Ocean/Regulations/Sport-Fishing",
     "sources": [
-      "https://wildlife.ca.gov/Fishing/Ocean/Regulations/Sport-Fishing"
+      "https://wildlife.ca.gov/Fishing/Ocean/Regulations/Sport-Fishing",
+      "https://www.fisheries.noaa.gov/species/canary-rockfish/overview",
+      "https://agris.fao.org/search/en/providers/122415/records/6473683a08fd68d54605dee0"
     ]
   },
   "lat_range": [
-    32.0,
-    58.0
+    32,
+    58
   ],
   "factors": [
     {
@@ -47,11 +49,13 @@
       ],
       "weight": 0.5,
       "active": true,
-      "value_status": "sourced",
+      "value_status": "needs_source",
       "sources": [
-        "https://wildlife.ca.gov/Fishing/Ocean/Regulations/Sport-Fishing"
+        "https://wildlife.ca.gov/Fishing/Ocean/Regulations/Sport-Fishing",
+        "https://agris.fao.org/search/en/providers/122415/records/6473683a08fd68d54605dee0"
       ],
-      "reason_template": "Water is {value} C, inside preferred Pacific temperature range for canary rockfish."
+      "reason_template": "Water is {value} C, inside preferred Pacific temperature range for canary rockfish.",
+      "value_notes": "A 2009 Washington/Oregon trawl-logbook analysis found canary rockfish catches at bottom temperatures of 6.2-9.0 °C, but temperature was not significant in the fitted presence model after accounting for other variables and was highly correlated with bottom depth. These are bottom-trawl temperatures, not satellite SST, and do not validate the configured 7-15 °C SST range or 9-13 °C ideal."
     },
     {
       "param": "depth_m",
@@ -66,19 +70,22 @@
       ],
       "weight": 0.5,
       "active": true,
-      "value_status": "sourced",
+      "value_status": "partly_sourced",
       "sources": [
-        "https://wildlife.ca.gov/Fishing/Ocean/Regulations/Sport-Fishing"
+        "https://wildlife.ca.gov/Fishing/Ocean/Regulations/Sport-Fishing",
+        "https://www.fisheries.noaa.gov/species/canary-rockfish/overview",
+        "https://agris.fao.org/search/en/providers/122415/records/6473683a08fd68d54605dee0"
       ],
       "gate": true,
-      "reason_template": "Depth is {value} m, within prime Pacific depth zone for canary rockfish."
+      "reason_template": "Depth is {value} m, within prime Pacific depth zone for canary rockfish.",
+      "value_notes": "NOAA reports adult canary rockfish mainly at 160-820 feet (about 49-250 m), sometimes to 1400 feet. A Washington/Oregon trawl analysis found 57-307 m, with over 90% of catch tows between 57 and 199 m. The configured 20-150 m range and 22-145 m ideal omit much of the observed adult depth distribution, so depth is only partly supported and the ideal is not validated."
     }
   ],
   "timing": {
     "status": "angler_lore",
     "light": {
       "map": {
-        "day": 1.0,
+        "day": 1,
         "dawn": 0.9,
         "dusk": 0.9,
         "night": 0.5
@@ -105,7 +112,7 @@
     "source_url": "https://wildlife.ca.gov/Fishing/Ocean/Regulations/Sport-Fishing"
   },
   "lon_range": [
-    -138.0,
-    -110.0
+    -138,
+    -110
   ]
 }

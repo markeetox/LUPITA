@@ -535,3 +535,39 @@ The 16 currently elevated multi-factor profiles are African pompano, Almaco jack
 The 13 partial-risk multi-factor profiles are Atlantic bluefin tuna, Black grouper, Black sea bass, Cubera snapper, Florida pompano, Gag grouper, Gray (mangrove) snapper, Gray triggerfish, Jack crevalle, Red drum, Red grouper, Red snapper, and Scamp grouper. These are also already covered by the earlier source-by-source reviews.
 
 **Next review queue:** the 51 documented multi-factor profiles. “Documented” means the current metadata passes the validator's source-reference/documentation criteria; it does not mean every biological claim or numeric response curve has been independently validated. Continue checking factor-by-factor claim fit, region, life stage, runtime-variable match, and whether occurrence/tolerance is being mistaken for preference. Keep numerical model behavior unchanged.
+
+
+## Documented multi-factor review: first Pacific rockfish batch | 2026-11-17
+
+Started source-by-source claim-fit review of the 51 multi-factor profiles currently classified as documented by the validator. “Documented” means the current source metadata meets validator criteria; it is not independent proof that each biological value is valid.
+
+Reviewed five Pacific rockfish profiles across 11 active factors. Replaced generic fishing-regulations-page citations with species-specific agency and research sources. No numeric ranges, ideal intervals, weights, active flags, gates, required flags, score behavior, confidence behavior, or data ingestion changed.
+
+### Black rockfish (*Sebastes melanops*)
+- SST: partly_sourced. Early-life studies report young fish in nearshore/estuarine thermal environments around 8-18 °C in summer and offshore winter/spring waters around 14-15 °C. These are juvenile observations, not adult preferred SST or a universal catch curve.
+- Depth: partly_sourced. WDFW reports most fish shallower than about 73 m, with a broad maximum to 366 m; ODFW describes common occurrence from 0-40 fathoms. This supports the outer 5-80 m screen but not the 7-75 m ideal.
+- Bottom curvature: partly_sourced. Rocky reef/pinnacle/kelp association is documented, but not a quantitative response to the runtime curvature metric.
+- Sources: [WDFW black rockfish](https://wdfw.wa.gov/species-habitats/species/sebastes-melanops); [ODFW black rockfish](https://nrimp.dfw.state.or.us/MRP/default.aspx?pagename=SgfSpeciesInfoBlack+Rockfish); [NOAA early-life growth/temperature research](https://repository.library.noaa.gov/view/noaa/39580/noaa_39580_DS1.pdf).
+
+### Blue rockfish (*Sebastes mystinus*)
+- SST: needs_source. NOAA's California climate assessment describes SST/upwelling effects on prey and recruitment, but does not establish a numeric preferred SST interval. The configured 9-17 °C / 11-15 °C values remain unsupported.
+- Depth: partly_sourced. WDFW describes near-surface to roughly 300-foot habitat over reefs, pinnacles and kelp; ODFW reports broad occurrence with common use of the upper 50 fathoms. This supports habitat context, not the 7-85 m ideal.
+- Sources: [WDFW blue rockfish](https://wdfw.wa.gov/species-habitats/species/sebastes-mystinus); [ODFW blue rockfish](https://nrimp.dfw.state.or.us/mrp/default.aspx?pagename=SgfSpeciesInfoBlue+Rockfish); [NOAA climate vulnerability assessment](https://repository.library.noaa.gov/view/noaa/13953/noaa_13953_DS1.pdf).
+
+### Bocaccio rockfish (*Sebastes paucispinis*)
+- SST: needs_source. Reviewed NOAA/WDFW/COSEWIC sources describe habitat and depth but do not support a numeric preferred SST curve. Pelagic juvenile and demersal/midwater adult stages are not interchangeable.
+- Depth: partly_sourced. NOAA reports adult rocky habitat at 130-980 feet (about 40-299 m); WDFW reports 20-475 m, with highest abundance around 95-225 m. Juveniles settle shallower and move deeper with age; adults can also be midwater. The configured 20-200 m / 22-195 m intervals are not universal preferences.
+- Sources: [NOAA Fisheries bocaccio](https://www.fisheries.noaa.gov/species/bocaccio); [WDFW bocaccio](https://wdfw.wa.gov/species-habitats/species/sebastes-paucispinis); [COSEWIC assessment](https://www.canada.ca/en/environment-climate-change/services/species-risk-public-registry/cosewic-assessments-status-reports/bocaccio-2013.html).
+
+### Canary rockfish (*Sebastes pinniger*)
+- SST: needs_source. A Washington/Oregon trawl study reports bottom temperatures of 6.2-9.0 °C where canary rockfish were caught, but temperature was not significant in the presence model and was highly correlated with bottom depth. Bottom-trawl temperature is not satellite SST and does not support the configured 7-15 °C / 9-13 °C SST suitability curve.
+- Depth: partly_sourced. NOAA reports adult habitat primarily 160-820 feet (about 49-250 m), sometimes to 1400 feet; a trawl analysis found 57-307 m, with over 90% of catch tows between 57 and 199 m. The configured 20-150 m / 22-145 m ranges omit much of observed adult habitat.
+- Sources: [NOAA Fisheries canary rockfish](https://www.fisheries.noaa.gov/species/canary-rockfish/overview); [FAO AGRIS record of Vestfals 2009 habitat analysis](https://agris.fao.org/search/en/providers/122415/records/6473683a08fd68d54605dee0).
+
+### Copper rockfish (*Sebastes caurinus*)
+- SST: partly_sourced. A NOAA Puget Sound status review reports environmental temperatures around 7-13 °C, and a young-of-year thermal-performance study documents temperature effects on recruit behavior, growth and survival. These are regional/early-life findings, not an adult preferred satellite-SST curve.
+- Depth: partly_sourced. ODFW describes a shallow rocky-water species occurring to 100 fathoms; NOAA documents adults on rocky reefs and rock-sand bottoms, with marked regional depth variation. This supports broad habitat context but not one universal 5-100 m / 7-95 m ideal.
+- Sources: [ODFW copper rockfish](https://nrimp.dfw.state.or.us/mrp/default.aspx?pagename=SgfSpeciesInfoCopper+Rockfish); [NOAA Puget Sound copper rockfish status review](https://repository.library.noaa.gov/view/noaa/29024/noaa_29024_DS1.pdf); [Schaal and Lotterhos 2021 thermal-performance study](https://academic.oup.com/icesjms/article/78/5/1684/6237190).
+
+### Documented-profile review progress
+Five of 51 documented multi-factor profiles reviewed across 11 active factors. This first batch shows why source-path validation alone is not enough: species-specific depth and habitat evidence can coexist with unsupported SST bands, bottom-temperature/SST mismatches, or unvalidated ideal intervals. Continue by ecological/factor family; preserve numeric and runtime behavior until separately reviewed and approved.

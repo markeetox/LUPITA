@@ -10,7 +10,7 @@
   "display": {
     "color": "#f24e24"
   },
-  "review_status": "v1 - West Coast Pacific habitat profile",
+  "review_status": "Evidence reviewed 2026-11-17. West Coast species and habitat references now replace the generic regulations page; SST evidence is life-stage limited and depth/reef proxies are only partly supported.",
   "image": {
     "status": "placeholder",
     "kind": "illustration",
@@ -26,12 +26,16 @@
     "behavior": "Navigates West Coast kelp forests, rocky reefs, and coastal upwelling zones.",
     "regulations_link": "https://wdfw.wa.gov/fishing/regulations",
     "sources": [
-      "https://wdfw.wa.gov/fishing/regulations"
+      "https://wdfw.wa.gov/fishing/regulations",
+      "https://wdfw.wa.gov/species-habitats/species/sebastes-melanops",
+      "https://nrimp.dfw.state.or.us/MRP/default.aspx?pagename=SgfSpeciesInfoBlack+Rockfish",
+      "https://repository.library.noaa.gov/view/noaa/10936/noaa_10936_DS1.pdf",
+      "https://repository.library.noaa.gov/view/noaa/44179/noaa_44179_DS1.pdf"
     ]
   },
   "lat_range": [
-    34.0,
-    60.0
+    34,
+    60
   ],
   "factors": [
     {
@@ -47,11 +51,13 @@
       ],
       "weight": 0.5,
       "active": true,
-      "value_status": "sourced",
+      "value_status": "partly_sourced",
       "sources": [
-        "https://wdfw.wa.gov/fishing/regulations"
+        "https://wdfw.wa.gov/fishing/regulations",
+        "https://repository.library.noaa.gov/view/noaa/39580/noaa_39580_DS1.pdf"
       ],
-      "reason_template": "Water is {value} C, inside preferred Pacific temperature range for black rockfish."
+      "reason_template": "Water is {value} C, inside preferred Pacific temperature range for black rockfish.",
+      "value_notes": "Published early-life studies report young black rockfish occupying a broad nearshore thermal environment (approximately 8-18 °C in summer estuaries and nearshore habitats, with offshore winter/spring waters around 14-15 °C). These are juvenile habitat observations, not adult preferred SST or a catch-response curve; they do not validate the configured 7-15 °C range or 9-13 °C ideal for all life stages."
     },
     {
       "param": "depth_m",
@@ -66,30 +72,36 @@
       ],
       "weight": 0.4,
       "active": true,
-      "value_status": "sourced",
+      "value_status": "partly_sourced",
       "sources": [
-        "https://wdfw.wa.gov/fishing/regulations"
+        "https://wdfw.wa.gov/fishing/regulations",
+        "https://wdfw.wa.gov/species-habitats/species/sebastes-melanops",
+        "https://nrimp.dfw.state.or.us/MRP/default.aspx?pagename=SgfSpeciesInfoBlack+Rockfish"
       ],
       "gate": true,
-      "reason_template": "Depth is {value} m, within prime Pacific depth zone for black rockfish."
+      "reason_template": "Depth is {value} m, within prime Pacific depth zone for black rockfish.",
+      "value_notes": "WDFW reports black rockfish to 366 m but most commonly shallower than about 73 m; ODFW describes schooling over rocky reefs from bottom to surface and common depths of 0-40 fathoms. This supports the broad 5-80 m outer screening range, but does not establish the 7-75 m ideal as a preferred bottom-depth curve."
     },
     {
       "param": "bottom_curvature",
       "kind": "higher_is_better",
       "weight": 0.1,
       "active": true,
-      "value_status": "sourced",
+      "value_status": "partly_sourced",
       "sources": [
-        "https://wdfw.wa.gov/fishing/regulations"
+        "https://wdfw.wa.gov/fishing/regulations",
+        "https://wdfw.wa.gov/species-habitats/species/sebastes-melanops",
+        "https://nrimp.dfw.state.or.us/MRP/default.aspx?pagename=SgfSpeciesInfoBlack+Rockfish"
       ],
-      "reason_template": "Seafloor curvature marks sharp reef edges and high-relief pinnacles."
+      "reason_template": "Seafloor curvature marks sharp reef edges and high-relief pinnacles.",
+      "value_notes": "WDFW and ODFW describe black rockfish schooling around rocky reefs, pinnacles and kelp. That supports rocky-reef habitat association, but does not directly validate the runtime bottom_curvature metric or a monotonic higher-is-better response."
     }
   ],
   "timing": {
     "status": "angler_lore",
     "light": {
       "map": {
-        "day": 1.0,
+        "day": 1,
         "dawn": 0.9,
         "dusk": 0.9,
         "night": 0.5
@@ -116,7 +128,7 @@
     "source_url": "https://wdfw.wa.gov/fishing/regulations"
   },
   "lon_range": [
-    -138.0,
-    -110.0
+    -138,
+    -110
   ]
 }

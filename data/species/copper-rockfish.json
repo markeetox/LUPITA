@@ -10,7 +10,7 @@
   "display": {
     "color": "#d82f20"
   },
-  "review_status": "v1 - West Coast Pacific habitat profile",
+  "review_status": "Evidence reviewed 2026-11-17. ODFW and NOAA sources support rocky reef habitat and broad depth use; thermal evidence is regional/life-stage limited, not a validated SST preference curve.",
   "image": {
     "status": "placeholder",
     "kind": "illustration",
@@ -26,12 +26,16 @@
     "behavior": "Navigates West Coast kelp forests, rocky reefs, and coastal upwelling zones.",
     "regulations_link": "https://wildlife.ca.gov/Fishing/Ocean/Regulations/Sport-Fishing",
     "sources": [
-      "https://wildlife.ca.gov/Fishing/Ocean/Regulations/Sport-Fishing"
+      "https://wildlife.ca.gov/Fishing/Ocean/Regulations/Sport-Fishing",
+      "https://nrimp.dfw.state.or.us/mrp/default.aspx?pagename=SgfSpeciesInfoCopper+Rockfish",
+      "https://repository.library.noaa.gov/view/noaa/29024/noaa_29024_DS1.pdf",
+      "https://academic.oup.com/icesjms/article/78/5/1684/6237190",
+      "https://repository.library.noaa.gov/view/noaa/37282/noaa_37282_DS1.pdf"
     ]
   },
   "lat_range": [
-    30.0,
-    58.0
+    30,
+    58
   ],
   "factors": [
     {
@@ -47,11 +51,15 @@
       ],
       "weight": 0.5,
       "active": true,
-      "value_status": "sourced",
+      "value_status": "partly_sourced",
       "sources": [
-        "https://wildlife.ca.gov/Fishing/Ocean/Regulations/Sport-Fishing"
+        "https://wildlife.ca.gov/Fishing/Ocean/Regulations/Sport-Fishing",
+        "https://repository.library.noaa.gov/view/noaa/29024/noaa_29024_DS1.pdf",
+        "https://academic.oup.com/icesjms/article/78/5/1684/6237190",
+        "https://repository.library.noaa.gov/view/noaa/37282/noaa_37282_DS1.pdf"
       ],
-      "reason_template": "Water is {value} C, inside preferred Pacific temperature range for copper rockfish."
+      "reason_template": "Water is {value} C, inside preferred Pacific temperature range for copper rockfish.",
+      "value_notes": "A NOAA Puget Sound status review and a young-of-year thermal-performance study provide regional and early-life evidence: copper rockfish environmental temperatures in the Puget Sound account are about 7-13 °C, and recruit foraging/growth/survival respond to warming. These sources do not establish adult preferred satellite SST or validate the configured 8-16 °C range and 10-14 °C ideal across the species' range."
     },
     {
       "param": "depth_m",
@@ -66,19 +74,22 @@
       ],
       "weight": 0.5,
       "active": true,
-      "value_status": "sourced",
+      "value_status": "partly_sourced",
       "sources": [
-        "https://wildlife.ca.gov/Fishing/Ocean/Regulations/Sport-Fishing"
+        "https://wildlife.ca.gov/Fishing/Ocean/Regulations/Sport-Fishing",
+        "https://nrimp.dfw.state.or.us/mrp/default.aspx?pagename=SgfSpeciesInfoCopper+Rockfish",
+        "https://repository.library.noaa.gov/view/noaa/29024/noaa_29024_DS1.pdf"
       ],
       "gate": true,
-      "reason_template": "Depth is {value} m, within prime Pacific depth zone for copper rockfish."
+      "reason_template": "Depth is {value} m, within prime Pacific depth zone for copper rockfish.",
+      "value_notes": "ODFW describes copper rockfish as a common shallow rocky-water species and reports occurrence to 100 fathoms; NOAA documents adults on rocky reefs and rock-sand bottoms, with strong regional depth variation (generally deeper in southern California and shallower in British Columbia). This supports broad depth/habitat association but does not validate one 5-100 m / 7-95 m ideal across regions and life stages."
     }
   ],
   "timing": {
     "status": "angler_lore",
     "light": {
       "map": {
-        "day": 1.0,
+        "day": 1,
         "dawn": 0.9,
         "dusk": 0.9,
         "night": 0.5
@@ -105,7 +116,7 @@
     "source_url": "https://wildlife.ca.gov/Fishing/Ocean/Regulations/Sport-Fishing"
   },
   "lon_range": [
-    -138.0,
-    -110.0
+    -138,
+    -110
   ]
 }
