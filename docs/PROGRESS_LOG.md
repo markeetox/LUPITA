@@ -1123,3 +1123,10 @@ Correction: bluefin tuna, blue marlin, mahi-mahi, opah and steelhead all have ac
 ## 2026-11-17 | Bottom-temperature source candidate
 
 Researched Copernicus Marine Global Ocean Physics Analysis and Forecast: 0.083° (~8 km), 50 levels, daily `tob` sea-bottom potential temperature, 10-day forecast, two-year rolling archive. Historical reanalysis offers a 1993+ backtest path. Product quality notes higher near-real-time uncertainty; no dedicated coastal bottom-temperature error metric was found. Candidate only; regional coverage and independent in-situ validation required before production integration. No source or model changes.
+
+
+## 2026-11-17 | Copernicus bottom-temperature validation protocol
+
+Confirmed the official Copernicus daily dataset ID and `tob` variable definition (sea-bottom potential temperature, °C). Researched independent validation candidates: NOAA AOML South Florida CTD surveys and moorings; NOAA SEFSC GoMMAPPS 2017 CTD archive; NOAA NCEI GTSPP global temperature profiles; and NOAA NEFSC near-bottom observations for the northern Atlantic shelf. Documented eligibility rules so surface-only buoy/thermosalinograph data are not misclassified as bottom observations, and so CTD samples must be demonstrably near the seabed. NEFSC northern-shelf coverage is not treated as full Atlantic coverage.
+
+Created `docs/COPERNICUS_BOTTOM_TEMPERATURE_VALIDATION_2026-11-17.md` with regional strata, paired-sample methodology, coverage/freshness/agreement metrics, acceptance principles, and strict read-only change boundaries. This is source research and protocol design only: no Copernicus data has yet been downloaded, and no coverage or accuracy result is claimed. No production configuration, source ingestion, species model, scoring, or publication behavior changed. Next: compact recent/historical Copernicus subset pilot and metadata inspection.
