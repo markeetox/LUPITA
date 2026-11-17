@@ -870,3 +870,16 @@ Applied the source-by-source review to all 20 named-site SST profiles. Replaced 
 ## Follow-up review of spot, weakfish, and white grunt | 2026-11-16
 
 Found species-specific evidence for all three previously needs-source named-site SST profiles and applied conservative metadata updates. All three are now `partly_sourced`, not `sourced`: spot has Mississippi bottom-temperature/catch evidence but conflicting South Florida distribution references; weakfish has ASMFC occurrence/migration evidence but southern Florida hybridization/identity concerns; white grunt has adult occurrence temperatures and a FishBase model-derived preferred-temperature estimate. Updated overall 20-profile totals: 1 sourced, 14 partly sourced, 5 provisional, 0 needs-source. Numeric settings and all prediction behavior remain unchanged. Details and references: [evidence review](NAMED_SITE_SST_EVIDENCE_REVIEW_2026-11-16.md).
+
+
+## 2026-11-17 | Master evidence inventory for all 130 species profiles
+
+- Retrieved and reviewed the species audit artifact from [CI #43952010312](https://github.com/markeetox/LUPITA/actions/runs/43952010312), generated from main commit `866dc4a`.
+- Confirmed 130 profiles parsed, 130 structurally valid, zero JSON parse errors, and zero model-compatibility issues.
+- Catalog model scope: 105 grid / 25 sites; 23 temperature-only site pilots / 27 other single-factor / 80 multi-factor.
+- Current evidence-risk classification: 64 elevated, 14 partial, 52 documented by current active-factor metadata. Combined uncertain active weight is 37.4, a configuration-weight sum, not a probability or calibrated scientific-quality measure.
+- Validator recorded 96 generic-homepage source findings across 48 profiles, 3 missing factor-source findings across sailfish and tarpon, and 27 grid `required`-flag mismatch warnings.
+- The 20 named-site SST profiles already reviewed are now 1 sourced, 14 partly sourced, and 5 provisional. Three remaining temperature-only site profiles are bonefish, great barracuda, and Permit.
+- Created `docs/SPECIES_EVIDENCE_AUDIT_2026-11-17.md` with the complete scope, interpretation, review standard, batch sequence, and guardrails.
+- Next: source-by-source review of the remaining three temperature-only site pilots, then the 27 other single-factor models, followed by the 80 multi-factor models grouped by factor family and risk.
+- No species biology, numeric ranges, ideal bands, weights, active flags, gates, required flags, scoring, confidence, source selection, ingestion, or publication changed.
