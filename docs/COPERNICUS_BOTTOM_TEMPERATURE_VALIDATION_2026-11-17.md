@@ -126,7 +126,7 @@ Copernicus Marine Toolbox subsetting requires a free Copernicus Marine account a
 
 ## Next execution step
 
-With credentials and live metadata now confirmed, the next step is to add a manual-only, read-only subset pilot using `tob` for forecast and `bottomT` for reanalysis. Select dates within each dataset's confirmed time extent and compact bounding boxes around the four regional observation inventories. Inspect actual returned variables, coordinates, fill-value semantics, wet-cell behavior, and data-file metadata. Then acquire and quality-filter matching independent profiles. Do not add a recurring workflow or production ingestion path at this stage.
+With credentials and live metadata now confirmed, a manual-only, read-only subset pilot has been added. It uses `tob` for forecast and `bottomT` for reanalysis, samples one date per dataset, and requests compact bounding boxes around four regional strata. Inspect actual returned variables, coordinates, fill-value semantics, wet-cell behavior, and data-file metadata. Then acquire and quality-filter matching independent profiles. Do not add a recurring workflow or production ingestion path at this stage.
 
 ## Change-control boundary
 
@@ -161,3 +161,14 @@ Both bottom fields expose `time`, `latitude`, and `longitude` coordinates, with 
 The forecast catalogue maximum is a future forecast-horizon coordinate and must not be reported as the latest observation/analysis time. Actual per-cell validity, fill values, and the analysis-versus-forecast time semantics remain to be checked in subset output. The reanalysis time maximum is the catalogue coordinate endpoint, not a measured freshness result.
 
 The metadata artifact also lists `geoseries` and `timeseries` Zarr services with explicit coordinate metadata; native-file and WMTS entries list variables but no coordinate arrays in this response. No temperature samples were downloaded. No model, species, scoring, ingestion, or publication behavior changed.
+
+
+## Read-only subset pilot staged | 2026-11-17
+
+Added `scripts/copernicus_bottom_temperature_pilot.py` and manual-only workflow `.github/workflows/copernicus-bottom-temperature-pilot.yml`.
+
+The workflow performs eight small requests: four regional boxes from the forecast dataset using `tob` for the selected forecast date, and the same four boxes from reanalysis using `bottomT` for the selected historical date. Defaults are 2026-11-17 (forecast) and 2017-07-15 (reanalysis); both are editable workflow inputs and must remain within the corresponding dataset's live time extent. Dataset versions are pinned to the exact catalogue versions inspected (`202406` and `202311`). No depth range is supplied because the confirmed bottom fields have no vertical depth coordinate.
+
+Regions: South Florida/Florida Keys, Gulf shelf, Atlantic shelf, and Pacific West Coast shelf. The script writes the NetCDF subsets and a JSON summary containing dimensions, coordinate extents, valid/missing counts, valid fraction, value range, units/standard name, fill-value encoding, and available global metadata. This is a coverage/structure smoke test only, not a model-accuracy comparison. The bounding boxes are broad sampling windows, not approved ecological regions or observation-matched stations.
+
+The workflow is manual-only, read-only, does not commit artifacts, does not run on a schedule, and does not change production ingestion or model behavior. It has been committed but **has not yet been dispatched**. After it passes, inspect the artifact before making any coverage or quality claims.
