@@ -423,3 +423,8 @@ Twenty of the 29 originally elevated-risk multi-factor profiles have now been re
 
 Completed metadata implementation for the three remaining temperature-only site pilots and all 27 other single-factor grid profiles. Batch B status distribution is 20 partly_sourced, 3 provisional, and 4 needs_source. All numeric settings and runtime behavior remain unchanged. CI validation: #44124511157. Continue Batch C high-risk multi-factor models after the validator refresh.
 
+
+
+## 2026-11-17 | Batch C fourth multi-factor review
+
+Reviewed Hogfish, Jack crevalle, King mackerel, and Red drum across 13 active factors. Continue with the remaining elevated-risk multi-factor profiles, then partial/documented models and timing/profile narratives. The exact remaining profile list will be reconciled against the refreshed validator artifact before the next batch. Preserve numeric settings and runtime behavior. See SPECIES_EVIDENCE_AUDIT_2026-11-17.md.
