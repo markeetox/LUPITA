@@ -28,7 +28,13 @@
     "behavior": "Forages over shallow oyster bars, seagrass flats, and muddy estuarine channels. Adult bull reds form fall spawning runs in inlet passes.",
     "regulations_link": "https://myfwc.com/",
     "sources": [
-      "https://myfwc.com/"
+      "https://myfwc.com/",
+      "https://www.floridamuseum.ufl.edu/discover-fish/species-profiles/red-drum/",
+      "https://myfwc.com/research/saltwater/fish/red-drum/birthplace-role/",
+      "https://www.gsmfc.org/pubs/Habitat/tables/reddrum.pdf",
+      "https://repository.library.noaa.gov/view/noaa/40403/noaa_40403_DS1.pdf",
+      "https://asmfc.org/wp-content/uploads/2024/12/HMS14_AtlanticSciaenidHabitats_Winter2017.pdf",
+      "https://dnr.sc.gov/marine/species/reddrum.html"
     ]
   },
   "factors": [
@@ -45,11 +51,14 @@
       ],
       "weight": 0.4,
       "active": true,
-      "value_status": "sourced",
+      "value_status": "partly_sourced",
       "sources": [
-        "https://myfwc.com/"
+        "https://www.floridamuseum.ufl.edu/discover-fish/species-profiles/red-drum/",
+        "https://www.gsmfc.org/pubs/Habitat/tables/reddrum.pdf",
+        "https://repository.library.noaa.gov/view/noaa/40403/noaa_40403_DS1.pdf"
       ],
-      "reason_template": "Water is {value} C, favorable for foraging red drum."
+      "reason_template": "Water is {value} C, favorable for foraging red drum.",
+      "value_notes": "The Florida Museum reports broad adult thermal tolerance around 4–34 °C; the NOAA-hosted habitat account reports captures across 36–92 °F, and the Gulf States Marine Fisheries Commission synthesis gives stage-specific temperature associations, including juvenile and egg/larval data. These support broad thermal biology, not a preferred adult South Florida SST curve. The configured 15–32 °C range and 22–28 °C ideal are not directly validated."
     },
     {
       "param": "depth_m",
@@ -64,21 +73,26 @@
       ],
       "weight": 0.3,
       "active": true,
-      "value_status": "sourced",
+      "value_status": "partly_sourced",
       "sources": [
-        "https://myfwc.com/"
+        "https://www.floridamuseum.ufl.edu/discover-fish/species-profiles/red-drum/",
+        "https://myfwc.com/research/saltwater/fish/red-drum/birthplace-role/",
+        "https://dnr.sc.gov/marine/species/reddrum.html"
       ],
       "gate": true,
-      "reason_template": "Depth is {value} m, in shallow flats and channel habitat."
+      "reason_template": "Depth is {value} m, in shallow flats and channel habitat.",
+      "value_notes": "Sources document shallow estuarine nursery habitat, tidal creeks, oyster reefs, beaches, and adult movement into coastal/nearshore waters. This supports the general shallow coastal habitat role, but not a universal 0.3–15 m adult range or the 0.5–5 m ideal across life stages and seasons."
     },
     {
       "param": "season_presence",
       "kind": "season",
       "weight": 0.3,
       "active": true,
-      "value_status": "sourced",
+      "value_status": "partly_sourced",
       "sources": [
-        "https://myfwc.com/"
+        "https://myfwc.com/research/saltwater/fish/red-drum/birthplace-role/",
+        "https://www.floridamuseum.ufl.edu/discover-fish/species-profiles/red-drum/",
+        "https://asmfc.org/wp-content/uploads/2024/12/HMS14_AtlanticSciaenidHabitats_Winter2017.pdf"
       ],
       "months": [
         8,
@@ -98,14 +112,15 @@
         "peak": "It is peak fall red drum run season.",
         "in_season": "It is red drum season.",
         "off": "Outside peak fall run, but red drum are present year-round."
-      }
+      },
+      "value_notes": "FWC acoustic-tagging research documents mature adults arriving in Florida Gulf nearshore spawning areas in late August and remaining through November; the Florida Museum reports spawning from mid-August to mid-November. This supports the fall spawning/migration context, but does not establish the configured August–December window or September–November peak as a catch-rate model, and timing differs among regions and populations."
     }
   ],
   "timing": {
     "status": "angler_lore",
     "light": {
       "map": {
-        "dawn": 1.0,
+        "dawn": 1,
         "dusk": 0.9,
         "day": 0.8,
         "night": 0.5
@@ -118,7 +133,7 @@
     },
     "tide": {
       "map": {
-        "rising": 1.0,
+        "rising": 1,
         "falling": 0.9,
         "slack_high": 0.5,
         "slack_low": 0.4
@@ -144,7 +159,7 @@
     "source_url": "https://myfwc.com/fishing/saltwater/recreational/red-drum/"
   },
   "lon_range": [
-    -100.0,
-    -50.0
+    -100,
+    -50
   ]
 }
