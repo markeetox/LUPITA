@@ -391,3 +391,44 @@ The forecast sample date is 2026-11-17 and reanalysis sample date is 2017-07-15.
 - Do not begin matched accuracy statistics until eligible observation records, near-bottom tolerances, spatial/time matching limits, QC rules, and duplicate handling are explicitly defined.
 
 No production source configuration, MUR SST, species profiles, numerical factors, weights, gates, scoring, confidence, ingestion, or publication behavior changed.
+
+
+## Independent observation inventory: source discovery | 2026-11-17
+
+Initial source discovery was completed after the candidate-v2 ETOPO assessment. This is a metadata/source inventory only; no observation files have yet been downloaded, parsed, counted, or accepted as matched validation pairs.
+
+### Primary profile archives
+
+- **NOAA NCEI World Ocean Database (WOD23):** NCEI describes WOD as a quality-controlled global collection of ocean profiles. WOD23 contains more than 18.6 million casts and 3.13 billion profile measurements. WODSelect supports geographic coordinates, dates, dataset/probe type, measured variables, deepest measurement, ship/platform, cruise, accession, project, and QC-flag exclusion. It can deliver WOD native, CSV, or NetCDF. This is the primary discovery source for all four regions, but profile-level bottom proximity and local bathymetry must still be established.
+  - Landing page: https://www.ncei.noaa.gov/products/world-ocean-database
+  - WODSelect: https://www.ncei.noaa.gov/access/world-ocean-database-select/dbsearch.html
+- **NOAA NCEI GTSPP:** The interface supports geographic and date filtering from 1990 to present. NCEI maintains a long-term best-copy archive that replaces lower-resolution real-time records with delayed-mode full-resolution shipboard CTD/XBT or quality-controlled source submissions. Prefer best-copy/delayed-mode data for retrospective validation; preserve platform and duplicate identifiers.
+  - Landing page: https://www.ncei.noaa.gov/products/global-temperature-and-salinity-profile-programme
+  - Data access documentation: https://www.nodc.noaa.gov/gtspp/access_data/index.html
+
+### Strong regional candidate: GoMMAPPS GU1703 CTD
+
+NOAA SEFSC/NCEI accession 0243654 provides processed and unprocessed CTD profiles from NOAA Ship Gordon Gunter's 2017 GoMMAPPS survey. The CTD record describes vertical temperature, salinity, and oxygen profiles to a maximum depth of 500 m. Metadata extent is 2017-06-29 through 2017-08-17 and approximately 23.823–29.955°N, 96.472–81.839°W. This geographically overlaps much of the Gulf candidate box and parts of the South Florida region. Its survey period also includes the reanalysis pilot date 2017-07-15, making it a particularly useful first archive to inspect for retrospective matching. It is not yet known how many casts have valid deepest levels near the seabed within our exact Copernicus grid cells; no sample count or validation coverage is claimed.
+  - InPort CTD metadata: https://www.fisheries.noaa.gov/inport/item/66006
+  - Direct NCEI CTD directory: https://www.ncei.noaa.gov/archive/accession/0243654/1.1/data/0-data/NOAA_SEFSC_GoMMAPPS_GU1703_CTD/NOAA_SEFSC_GoMMAPPS_GU1703_CTD/
+  - Parent accession overview: https://www.ncei.noaa.gov/archive/accession/GOMMAPPS
+
+### Regional coverage cautions
+
+- **South Florida / Keys:** WOD/GTSPP and NOAA AOML CTD/mooring programs remain candidates. AOML underway thermosalinograph observations are surface measurements and are not eligible as bottom validation. Moorings require sensor depth and local bathymetry metadata.
+- **Gulf:** GoMMAPPS GU1703 CTD is the first regional archive to inspect, followed by WOD/GTSPP. Its 500 m maximum profile depth means deep cells may have no near-bottom sample.
+- **Atlantic:** WOD/GTSPP plus NOAA NEFSC near-bottom records may help, but NEFSC coverage is concentrated on the Northeast shelf and cannot be generalized to the entire Atlantic sample.
+- **Pacific:** WOD/GTSPP and regional NOAA/state CTD or fisheries-survey profiles remain candidates. Actual station coverage, depth, QC, and near-bottom proximity must be demonstrated.
+
+### Inventory implementation sequence
+
+1. Obtain the GoMMAPPS processed and unprocessed CTD file listing and inspect its data dictionary/readme before choosing a representation. Avoid mixing processed and raw casts without a documented preference.
+2. Parse cast-level metadata and profile measurements into a normalized, source-attributed inventory. Preserve original accession, cruise/platform, cast/station ID, timestamp, position, measured depth, temperature, units, and all available QC fields.
+3. Obtain WODSelect/GTSPP regional subsets for the candidate boxes and broad historical windows. Request temperature profiles and retain the relevant quality flags and instrument/platform metadata.
+4. Join casts to ETOPO local water depth and calculate deepest-valid-sample separation from the seabed. Keep the raw separation; apply no arbitrary near-bottom cutoff until it is specified and justified.
+5. Detect duplicates across GoMMAPPS, WOD, GTSPP, and other agency copies using platform/cruise, timestamp, location, and profile identity.
+6. Report inventory counts by region, source, year/season, platform, QC status, deepest sample depth, seabed separation, and Copernicus grid-cell matchability before calculating any error metric.
+
+NCEI's WOD page currently warns that WODSelect is slow and that cloud migration/maintenance may delay data access. This is an access caveat, not a reason to substitute unverified data. The first concrete data-inspection target is the GoMMAPPS CTD directory and its processed-file metadata; WOD/GTSPP discovery follows once its exact subset workflow and output fields are confirmed.
+
+No observations have been downloaded or paired yet. No bias, MAE, RMSE, matched sample count, or model accuracy result is claimed. No production behavior changed.
