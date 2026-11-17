@@ -85,3 +85,29 @@ Useful NOAA records:
 Run the four WODSelect queries and capture the regional cast counts and query settings. Separately obtain the GoMMAPPS CTD directory listing, one processed profile plus header, and the investigator Word document through a working NOAA download path or NOAA contact. Once these source files are available, inspect their actual schema before writing any parser.
 
 No independent observations have yet been accepted or paired. No bias, MAE, RMSE, matched-pair count, or model accuracy result is claimed. No production behavior changed.
+
+
+## First regional WODSelect inventory: South Florida / Keys | 2026-11-17
+
+WODSelect query completed at 2026-11-17 21:02:40 UTC (timestamp shown in the user's copied results). Query bounds: longitude -81.0000 to -79.5000; latitude 26.5000 to 24.5000. Selected datasets: OSD, CTD, XBT, MBT, PFL, DRB, MRB, APB, UOR, SUR, GLD. Required and extracted measured variable: Temperature. No observation-date restriction or deepest-measurement restriction is shown in the returned criteria. The copied criteria do not show the QC-exclusion setting or WOD release/version, so those remain unrecorded rather than assumed.
+
+Returned WODSelect counts:
+
+| Dataset | Casts |
+|---|---:|
+| OSD | 663 |
+| CTD | 649 |
+| XBT | 2,286 |
+| MBT | 3,725 |
+| PFL | 200 |
+| DRB | 0 |
+| MRB | 3 |
+| APB | 0 |
+| UOR | 0 |
+| SUR | 0 cruises |
+| GLD | 861 |
+| **TOTAL** | **8,387 casts** |
+
+This is a regional inventory count across selected WOD dataset types, not a count of unique, quality-screened, near-bottom observations. The instrument groups have different profile characteristics; actual profile depths, bottom separation, timestamps, position, QC, duplicate status, and eligibility must be assessed after extraction. Do not use 8,387 as the validation sample size.
+
+Next: record the export options shown by WODSelect and request observed-level NetCDF with available QC/IQuOD flags retained, preferably separate instrument files. Preserve the query receipt and downloaded filenames/checksums. Continue with Gulf, Atlantic, and Pacific regional inventory queries using the exact bounds above. No profiles have yet been accepted or paired; no bias/MAE/RMSE or model-accuracy result is claimed. No production behavior changed.
