@@ -511,3 +511,6 @@ Located traceable distribution sources for all 25 grid profiles missing latitude
 ## 2026-11-17 | Phase 1 measurement alignment
 
 Documented surface SST versus bottom temperature and ETOPO seafloor bathymetry versus fish vertical depth. Five demersal SST factors are not supported by the cited bottom-water evidence. Pelagic depth factors require scrutiny, especially where they are gates. Next: evaluate candidate bottom-temperature sources and a separate fish-vertical-depth variable. No model or source changes.
+
+
+Priority correction: all five reviewed pelagic `depth_m` factors are active gates, including mahi-mahi, opah and steelhead. Review gate semantics before any model rebuild; no gates changed.

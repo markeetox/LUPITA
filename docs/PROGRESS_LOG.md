@@ -1115,3 +1115,6 @@ Located source-backed range statements for all 25 grid profiles missing `lat_ran
 ## 2026-11-17 | Phase 1 measurement alignment audit
 
 Recorded the physical measurement contract: `sst_c` is MUR surface temperature; `depth_m` is ETOPO seafloor bathymetry at stride 15, broad regional context. Five demersal SST factors are already `needs_source` because evidence is bottom-water/fish-depth temperature. Pelagic tagging depth is not seabed depth; bluefin and blue marlin use active depth gates, while mahi-mahi and steelhead depth factors are weak proxies. No source, numeric, gate, weight or scoring changes.
+
+
+Correction: bluefin tuna, blue marlin, mahi-mahi, opah and steelhead all have active `depth_m` gates. Low factor weight or `weak_factor` status does not prevent the gate from excluding cells. No gate changes made.

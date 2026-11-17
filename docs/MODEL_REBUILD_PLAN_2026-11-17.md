@@ -199,15 +199,15 @@ The existing ranges are retained unchanged. These profiles are not ready for SST
 
 The evidence review identifies a second mismatch. Tagging studies report fish vertical depth, while the runtime factor scores ETOPO seafloor depth.
 
-| Profile | Active `depth_m` factor | Current evidence interpretation |
-|---|---:|---|
-| Bluefin tuna | 0.15 weight | NOAA/archival tags report dives to 500–1,000 m; these are fish depths, not seabed depths. The factor is an active gate. |
-| Blue marlin | 0.05 weight | Tags report upper-water-column occupancy and occasional deep dives; not bathymetric preference. The factor is an active gate. |
-| Mahi-mahi | 0.05 weight | Fish occupy surface water and dive in the water column; factor already classified `weak_factor`, a bathymetric proxy only. |
-| Opah (`Lampris incognitus`) | 0.50 weight | Pre-revision Hawaii tags report fish vertical occupancy; NOAA California catch analysis provides a separate bathymetric association, but species attribution and numeric response remain limited. |
-| Steelhead | 0.50 weight | Tags show mostly upper-5-m fish depth; factor already classified `weak_factor`, and does not establish seabed preference. |
+| Profile | Active `depth_m` weight | Gate? | Current evidence interpretation |
+|---|---:|:---:|---|
+| Bluefin tuna | 0.15 | Yes | NOAA/archival tags report dives to 500–1,000 m; these are fish depths, not seabed depths. |
+| Blue marlin | 0.05 | Yes | Tags report upper-water-column occupancy and occasional deep dives; not bathymetric preference. |
+| Mahi-mahi | 0.05 | Yes | Fish occupy surface water and dive in the water column; factor is classified `weak_factor`, a bathymetric proxy only. |
+| Opah (`Lampris incognitus`) | 0.50 | Yes | Pre-revision Hawaii tags report fish vertical occupancy; NOAA California catch analysis provides a separate bathymetric association, but species attribution and numeric response remain limited. |
+| Steelhead | 0.50 | Yes | Tags show mostly upper-5-m fish depth; factor is classified `weak_factor`, and does not establish seabed preference. |
 
-This is not an exhaustive list. Other pelagic tunas, billfish, sharks and salmonids with active `depth_m` factors need the same check. A low-weight factor can still be consequential when marked `gate: true`, because the gate can exclude a cell regardless of its small contribution to the weighted average.
+This is not an exhaustive list. Other pelagic tunas, billfish, sharks and salmonids with active `depth_m` factors need the same check. All five listed pelagic `depth_m` factors are active gates. This is a high-priority eligibility risk: each can exclude a cell regardless of its small contribution to the weighted average. The weak-factor status does not neutralize gate behavior.
 
 ### 1.1.c Design decisions to evaluate (not yet implemented)
 
