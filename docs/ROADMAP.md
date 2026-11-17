@@ -497,3 +497,8 @@ Completed all 51 documented multi-factor profiles across 105 active factors. Fin
 All 130 profiles have been source-reviewed. Final validator reports 68 elevated, 61 partial, 1 documented; 130 structurally valid, 0 compatibility issues, 0 validator errors. The 51 initially documented multi-factor profiles were reviewed across 105 active factors. Many were reclassified because source presence did not substantiate numeric preference curves or runtime proxy relationships.
 
 Next work is to resolve scope/taxonomy first (Southern flounder, Pacific Opah, Dungeness crab, White sturgeon), then design a source/measurement plan for bottom temperature versus SST and bathymetry versus fish vertical depth. Only after those decisions should model rebuild candidates, numerical bands, factor weights or gates be considered. No such model changes were made.
+
+
+## 2026-11-17 | Model-rebuild plan, Phase 0 underway
+
+Started scope/identity before factor recalibration. Found 25 grid profiles without latitude bounds; missing `lat_range` means no latitude eligibility filter in the grid scorer. Corrected opah and Dungeness crab accepted taxonomic metadata. Flagged Southern flounder's discontinuous Florida distribution and White sturgeon's freshwater/estuarine scope. The next work is a source-backed geographic register, followed by measurement alignment (SST vs bottom temperature; seafloor depth vs fish vertical depth). No score, numeric band, weight, gate, active flag, or runtime change.

@@ -920,3 +920,12 @@ The final 51-profile review covered 105 active factors. The validator subsequent
 
 ### Recommended next phase
 Stop broad citation collection and convert the completed audit into a controlled model-rebuild plan. Rank candidate changes by regional applicability, active uncertain weight, factor measurement mismatch, and whether evidence supports a numeric response curve. First resolve taxonomy and regional-scope decisions; then decide whether LUPITA needs bottom-temperature inputs or whether SST remains a documented proxy; then evaluate weak bathymetry factors and species-specific numeric bands. Any score, weight, gate, activation or biological-value change remains a separate approval decision.
+
+
+## Controlled model-rebuild planning | Phase 0 findings (2026-11-17)
+
+The production grid envelope is 15–60°N, 138°W–50°W. The scorer applies profile `lat_range` and `lon_range` when present; absence of `lat_range` means no latitude filter. Twenty-five grid profiles currently omit latitude bounds and are listed in `docs/MODEL_REBUILD_PLAN_2026-11-17.md`. No bounds were inferred.
+
+Taxonomic metadata is normalized for Eastern North Pacific opah to `Lampris incognitus` and Dungeness crab to accepted name `Metacarcinus magister` (historical synonym `Cancer magister`). Southern flounder has a disjoint Florida distribution, and White sturgeon is primarily riverine/estuarine. Both require explicit scope decisions before model rebuild.
+
+The next phase is source-backed geographic-scope review of the 25 profiles, then measurement alignment for SST versus bottom temperature and ETOPO bathymetry versus fish vertical depth. No numeric or runtime changes.

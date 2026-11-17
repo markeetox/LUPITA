@@ -10,7 +10,7 @@
   "display": {
     "color": "#ddf23c"
   },
-  "review_status": "Evidence reviewed 2026-11-17. Estuarine habitat and fall/winter spawning migration are documented, but published distribution evidence flags absence from much of southern Florida; regional model applicability requires separate review.",
+  "review_status": "Regional scope reviewed 2026-11-17. Southern flounder has a discontinuous Florida distribution: it occurs south to the Loxahatchee River on the Atlantic coast, is reported absent south of there and around the peninsula tip, but occurs in the Caloosahatchee River Estuary on the southwest coast. A simple latitude/longitude rectangle cannot represent this split.",
   "image": {
     "status": "placeholder",
     "kind": "illustration",
@@ -109,7 +109,7 @@
         "in_season": "It is flounder season.",
         "off": "Outside peak fall run."
       },
-      "value_notes": "SCDNR describes adult offshore migration in late fall, winter spawning and return to inshore habitat in spring; the Gulf spawning profile describes October-January spawning migration. This supports a broad fall/winter Gulf/Atlantic pattern, but not a South Florida catch curve. The species' reported absence from the Loxahatchee-Caloosahatchee stretch is a major regional applicability caveat for this app."
+      "value_notes": "SCDNR describes adult offshore migration in late fall, winter spawning and return to inshore habitat in spring; the Gulf spawning profile describes October-January spawning migration. This supports a broad fall/winter Gulf/Atlantic pattern, but not a South Florida catch curve. The species' reported absence from the Loxahatchee-Caloosahatchee stretch is a major regional applicability caveat for this app. The Florida distribution is discontinuous: Atlantic records extend south to Loxahatchee River, with absence southward and around the peninsula tip, while the Caloosahatchee River Estuary is an exception on the southwest coast. This regional split cannot be represented by the current longitude-only filter."
     }
   ],
   "timing": {
@@ -159,6 +159,6 @@
     -50
   ],
   "open_items": [
-    "Regional distribution must be resolved before treating this profile as applicable to South Florida: a 2023 fisheries assessment cites the species as absent between the Loxahatchee and Caloosahatchee rivers. No model activation, range, or scoring change was made."
+    "The species is reported from the Albemarle Sound south to the Loxahatchee River on Florida's Atlantic coast, absent south of the Loxahatchee and around the peninsula tip, but present again in the Caloosahatchee River Estuary on the southwest coast. The profile has no lat_range; pipeline.scoring.score_species therefore applies only its broad longitude bound and does not restrict latitude. A rectangular lat_range would still incorrectly include the absent Atlantic coast south of Loxahatchee or exclude valid southwest estuary records. Decide whether to use a coastal distribution mask, separate Atlantic/Gulf regional profiles, or exclude the South Florida Atlantic subregion. No geographic or scoring behavior changed."
   ]
 }

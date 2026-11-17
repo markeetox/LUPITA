@@ -202,3 +202,8 @@ Named-site model limitations and evidence gaps are tracked in [the 2026-11-15 si
 The source-by-source evidence review now covers all 130 species profiles. Final validation: 307 tests passed; 130 profiles parsed and structurally valid; 0 JSON errors and 0 model-compatibility issues. The evidence audit reports 68 elevated, 61 partial, and 1 documented profile. These are evidence-quality categories, not runtime-health states.
 
 See [the full species evidence audit](docs/SPECIES_EVIDENCE_AUDIT_2026-11-17.md) for source-by-source findings, open taxonomy/region questions, and the next model-rebuild priorities. No biological values, model weights, gates, scoring, or runtime behavior were changed during this review.
+
+
+## Controlled model-rebuild planning
+
+See [the Phase 0 model-rebuild plan](docs/MODEL_REBUILD_PLAN_2026-11-17.md). The first audit found 25 grid profiles without latitude restrictions. Taxonomic metadata has been normalized for Eastern North Pacific opah and Dungeness crab; Southern flounder and White sturgeon remain explicit regional/ecological scope decisions. No scoring or numeric model changes were made.

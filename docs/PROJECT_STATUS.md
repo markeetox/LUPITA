@@ -577,3 +577,12 @@ All 130 species profiles have received source-by-source evidence review. Final C
 Evidence risk is 68 elevated, 61 partial, and 1 documented. Combined active uncertain factor weight is 29.84 (not probability or percentage). The validator classifies 127 profiles NEEDS MODEL REBUILD and 3 NEEDS RESEARCH; this is biological-completeness prioritization, not runtime breakage. The 51 initially documented multi-factor profiles have now been reviewed across 105 active factors; many were correctly reclassified after claim-fit review. See [SPECIES_EVIDENCE_AUDIT_2026-11-17.md](SPECIES_EVIDENCE_AUDIT_2026-11-17.md).
 
 Next phase is a controlled model-rebuild plan, not another broad citation pass. Resolve Southern flounder regional applicability, Opah and Dungeness crab taxonomy, White sturgeon ocean-grid scope, bottom-temperature versus SST mismatches, and bathymetry versus fish vertical-depth proxies. No numerical biology, factor weights, active flags, gates, scoring, confidence or runtime behavior changed in this evidence review.
+
+
+## Controlled model-rebuild planning started | 2026-11-17
+
+Phase 0 identified a geographic eligibility issue: 25 of 130 grid profiles have no `lat_range`, and the grid scorer therefore applies only their broad longitude bound. The source envelope is 15–60°N, 138°W–50°W. No guessed bounds were added.
+
+Taxonomy metadata was normalized for Eastern North Pacific opah (`Lampris incognitus`, supported by the 2018 revision and NOAA Monterey Bay checklist) and Dungeness crab (`Metacarcinus magister`, accepted name; `Cancer magister` retained as synonym). Southern flounder has a discontinuous Florida distribution; white sturgeon is primarily riverine/estuarine and only occasionally marine. Both need explicit scope decisions.
+
+The plan separates surface SST from bottom temperature and ETOPO seafloor bathymetry from fish vertical depth. No prediction formulas, numeric bands, weights, gates, active flags, environmental source selection, ingestion or publication behavior changed. See [MODEL_REBUILD_PLAN_2026-11-17.md](MODEL_REBUILD_PLAN_2026-11-17.md).

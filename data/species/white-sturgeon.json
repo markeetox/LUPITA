@@ -10,7 +10,7 @@
   "display": {
     "color": "#2042d8"
   },
-  "review_status": "Evidence reviewed 2026-11-17. CDFW/USGS/WDFW sources show white sturgeon is primarily riverine/estuarine and only occasionally marine; ocean SST and bathymetry factors are poor proxies for most life stages.",
+  "review_status": "Regional/model scope reviewed 2026-11-17. White sturgeon is anadromous but primarily inhabits large rivers and associated estuaries; coastal-ocean excursions occur but are uncommon. The current marine SST and ETOPO bathymetry factors do not represent its dominant habitat.",
   "image": {
     "status": "placeholder",
     "kind": "illustration",
@@ -23,7 +23,7 @@
     "size": "Min limit 42 inches TL / Bag limit 1 per year / tag required",
     "diet": "Small fish, crustaceans, squids, and pelagic prey",
     "swimming_depth": "2 to 30 m",
-    "behavior": "Navigates West Coast kelp forests, rocky reefs, and coastal upwelling zones.",
+    "behavior": "Anadromous species that primarily inhabits large rivers and associated estuaries, moving between freshwater and saltwater; adults only occasionally enter coastal ocean waters.",
     "regulations_link": "https://wildlife.ca.gov/Fishing/Ocean/Regulations/Sport-Fishing",
     "sources": [
       "https://wildlife.ca.gov/Fishing/Ocean/Regulations/Sport-Fishing",
@@ -117,5 +117,8 @@
   "lon_range": [
     -138,
     -110
+  ],
+  "open_items": [
+    "Decide whether this species belongs in the ocean-grid prediction catalog. CDFW describes white sturgeon as primarily resident in large rivers and associated estuaries, with only occasional ocean occurrence. The current model scores marine-grid SST and seafloor bathymetry, but lacks river-channel depth, flow, and estuary-specific habitat inputs. Candidate paths: exclude from ocean-grid predictions, or design a separate freshwater/estuary model. No model activation, factor, range, weight, gate, or scoring change made."
   ]
 }

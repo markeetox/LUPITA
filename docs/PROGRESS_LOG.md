@@ -1097,3 +1097,12 @@ Completed source-by-source review of all 130 species profiles, including the 51 
 The validator reclassified many profiles after claim-fit review because their citations did not substantiate numeric preference curves or because factors were only weak proxies. This is an evidence-quality correction, not a runtime regression. No numeric ranges, ideal intervals, weights, gates, active flags, scoring, confidence, ingestion or publication behavior changed.
 
 Next phase: controlled model-rebuild planning. Prioritize southern flounder regional applicability, Opah/Dungeness crab taxonomy, White sturgeon freshwater/estuary scope, bottom temperature versus SST, and bathymetry versus fish vertical depth. Do not implement biology or model changes without separate approval.
+
+
+## 2026-11-17 | Controlled model-rebuild planning, Phase 0
+
+Inspected the production grid envelope and scorer. The configured North America source envelope is 15–60°N and 138°W–50°W. Twenty-five of 130 grid profiles omit `lat_range`; when absent, `score_species` applies no latitude filter. Recorded all 25 in the model-rebuild plan; no guessed bounds were added.
+
+Resolved two taxonomy metadata items: Eastern North Pacific opah is assigned to `Lampris incognitus` based on the 2018 revision and NOAA Monterey Bay checklist; Dungeness crab uses accepted name `Metacarcinus magister`, retaining `Cancer magister` as synonym. Clarified southern flounder's discontinuous Florida distribution and white sturgeon's primarily riverine/estuarine ecology. No numeric or runtime model behavior changed.
+
+Next: source-backed geographic-scope review of the 25 profiles without latitude bounds, then review of rectangular range mismatches. See `docs/MODEL_REBUILD_PLAN_2026-11-17.md`.

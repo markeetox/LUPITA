@@ -2,15 +2,16 @@
   "schema_version": 1,
   "id": "dungeness-crab-reference",
   "common_name": "Dungeness crab (ref)",
-  "scientific_name": "Cancer magister",
+  "scientific_name": "Metacarcinus magister",
   "aliases": [
-    "dungeness crab (ref)"
+    "dungeness crab (ref)",
+    "Cancer magister"
   ],
   "habitat_zone": "inshore",
   "display": {
     "color": "#f224c8"
   },
-  "review_status": "Evidence reviewed 2026-11-17. California OPC, WDFW and adult thermal-preference studies replace generic regulation citation; larval thermal limits and adult behavioral preference are distinguished.",
+  "review_status": "Taxonomic name normalized 2026-11-17 to Metacarcinus magister, the accepted name used by OBIS and the FDA Seafood List; Cancer magister is retained as a historical synonym. Existing thermal and depth evidence notes remain unchanged.",
   "image": {
     "status": "placeholder",
     "kind": "illustration",
@@ -30,7 +31,9 @@
       "https://opc.ca.gov/webmaster/ftp/project_pages/Rapid%20Assessments/Dungeness%20Crab.pdf",
       "https://wdfw.wa.gov/sites/default/files/publications/00028/wdfw00028.pdf",
       "https://doi.org/10.1016/j.jembe.2011.12.005",
-      "https://doi.org/10.1016/0300-9629(79)90201-9"
+      "https://doi.org/10.1016/0300-9629(79)90201-9",
+      "https://obis.org/taxon/452271",
+      "https://hfpappexternal.fda.gov/scripts/fdcc/index.cfm?id=Metacarcinus_magister&set=SeafoodList"
     ]
   },
   "lat_range": [
@@ -120,7 +123,5 @@
     -138,
     -110
   ],
-  "open_items": [
-    "Current scientific name Cancer magister is widely treated as a historical synonym of Metacarcinus magister in current California fishery sources. Confirm the repository's preferred taxonomic authority before changing the profile name; no taxonomy change made in this review."
-  ]
+  "open_items": []
 }
