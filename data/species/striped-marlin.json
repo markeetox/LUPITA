@@ -10,7 +10,7 @@
   "display": {
     "color": "#8536d8"
   },
-  "review_status": "v1 - West Coast Pacific habitat profile",
+  "review_status": "Evidence reviewed 2026-11-17. Pacific catch-rate and satellite-tag studies support 20-25 °C habitat, while vertical depth is not seafloor bathymetry.",
   "image": {
     "status": "placeholder",
     "kind": "illustration",
@@ -26,12 +26,15 @@
     "behavior": "Navigates West Coast kelp forests, rocky reefs, and coastal upwelling zones.",
     "regulations_link": "https://wildlife.ca.gov/Fishing/Ocean/Regulations/Sport-Fishing",
     "sources": [
-      "https://wildlife.ca.gov/Fishing/Ocean/Regulations/Sport-Fishing"
+      "https://wildlife.ca.gov/Fishing/Ocean/Regulations/Sport-Fishing",
+      "https://academic.oup.com/icesjms/article/70/5/1013/643037",
+      "https://www.frontiersin.org/journals/marine-science/articles/10.3389/fmars.2022.879503/full",
+      "https://repository.library.noaa.gov/view/noaa/52798/noaa_52798_DS1.pdf"
     ]
   },
   "lat_range": [
-    15.0,
-    34.0
+    15,
+    34
   ],
   "factors": [
     {
@@ -47,11 +50,14 @@
       ],
       "weight": 0.5,
       "active": true,
-      "value_status": "sourced",
+      "value_status": "partly_sourced",
       "sources": [
-        "https://wildlife.ca.gov/Fishing/Ocean/Regulations/Sport-Fishing"
+        "https://wildlife.ca.gov/Fishing/Ocean/Regulations/Sport-Fishing",
+        "https://academic.oup.com/icesjms/article/70/5/1013/643037",
+        "https://repository.library.noaa.gov/view/noaa/52798/noaa_52798_DS1.pdf"
       ],
-      "reason_template": "Water is {value} C, inside preferred Pacific temperature range for striped marlin."
+      "reason_template": "Water is {value} C, inside preferred Pacific temperature range for striped marlin.",
+      "value_notes": "North Pacific research reports 20-25 °C as a preferred temperature range; California/Mexico recreational catch rates were highest around 22-24 °C, and longline analyses report 20-26 °C. These align well with the configured 18-26 °C range and 20-24 °C ideal. However, habitat is non-contiguous and stock/region/season effects are substantial, so this is not a universal global catch curve."
     },
     {
       "param": "depth_m",
@@ -66,19 +72,22 @@
       ],
       "weight": 0.5,
       "active": true,
-      "value_status": "sourced",
+      "value_status": "weak_factor",
       "sources": [
-        "https://wildlife.ca.gov/Fishing/Ocean/Regulations/Sport-Fishing"
+        "https://wildlife.ca.gov/Fishing/Ocean/Regulations/Sport-Fishing",
+        "https://www.frontiersin.org/journals/marine-science/articles/10.3389/fmars.2022.879503/full",
+        "https://pmc.ncbi.nlm.nih.gov/articles/PMC3114854/"
       ],
       "gate": true,
-      "reason_template": "Depth is {value} m, within prime Pacific depth zone for striped marlin."
+      "reason_template": "Depth is {value} m, within prime Pacific depth zone for striped marlin.",
+      "value_notes": "Satellite tags show striped marlin spend much of their time near the surface but can dive to 460 m or deeper depending on oxygen, thermocline and region. The runtime variable is seafloor bathymetry, not fish vertical depth; the configured 0-100 m seabed band is only a weak shelf/offshore proxy."
     }
   ],
   "timing": {
     "status": "angler_lore",
     "light": {
       "map": {
-        "day": 1.0,
+        "day": 1,
         "dawn": 0.9,
         "dusk": 0.9,
         "night": 0.5
@@ -105,7 +114,7 @@
     "source_url": "https://wildlife.ca.gov/Fishing/Ocean/Regulations/Sport-Fishing"
   },
   "lon_range": [
-    -138.0,
-    -110.0
+    -138,
+    -110
   ]
 }

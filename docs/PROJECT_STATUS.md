@@ -553,3 +553,8 @@ Reviewed Lingcod, Cabezon, Kelp greenling, Ocean whitefish and Yelloweye rockfis
 ## Documented multi-factor review | sixth sharks/rays/tuna batch
 
 Reviewed Bat ray, Common thresher shark, Leopard shark, Soupfin shark, and Pacific bluefin tuna across 10 active factors. Added California Sea Grant, Florida Museum, WDFW/CDFG, NOAA and peer-reviewed tagging sources. Bat ray and soupfin shark SST remain needs_source; other thermal claims are partly sourced with population/region caveats. Bathymetry is weak_factor for common thresher and Pacific bluefin because their tag depths are vertical water-column occupancy. No numeric or runtime changes. Progress: 35 of 51 documented multi-factor profiles across 72 active factors. See [species evidence audit](SPECIES_EVIDENCE_AUDIT_2026-11-17.md).
+
+
+## Documented multi-factor review | seventh pelagic species batch
+
+Reviewed Opah, Pacific barracuda, Pacific bonito, Pacific hake and Striped marlin across 10 active factors. Added California Sea Grant, NOAA, Aquarium of the Pacific, Smithsonian, peer-reviewed tagging and fisheries sources. Opah now has a taxonomic open issue: the Pacific opah complex was split in 2018, while the profile remains Lampris guttatus. Pacific barracuda/hake SST remain needs_source; pelagic vertical depth is distinguished from bathymetry. No numeric or runtime changes. Progress: 40 of 51 documented multi-factor profiles across 82 active factors. See [species evidence audit](SPECIES_EVIDENCE_AUDIT_2026-11-17.md).

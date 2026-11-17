@@ -773,3 +773,37 @@ Reviewed Bat ray, Common thresher shark, Leopard shark, Soupfin shark, and Pacif
 
 ### Documented-profile review progress
 Thirty-five of 51 profiles reviewed across 72 active factors. For mobile sharks and tunas, vertical depth records must remain separate from seafloor bathymetry; thermal ranges from different size classes, regions and seasons cannot be treated as one universal response curve.
+
+
+## Documented multi-factor review: seventh pelagic species batch | 2026-11-17
+
+Reviewed Opah, Pacific barracuda, Pacific bonito, Pacific hake and Striped marlin across 10 active factors. Replaced generic regulation citations with California Sea Grant, NOAA, Aquarium of the Pacific, Smithsonian, peer-reviewed tagging and fisheries sources. No numeric ranges, ideal intervals, weights, active flags, gates, required flags, scoring, confidence or runtime behavior changed.
+
+### Opah (*Lampris guttatus*)
+- SST: partly_sourced. Hawaii archival tags (pre-2018 opah complex) recorded 8-20 °C by day and 16-22 °C at night, with peak nighttime frequency at 18-20 °C. Configured 14-22 °C / 16-20 °C aligns more closely with nighttime occupancy than daytime habitat.
+- Depth: partly_sourced. Tags show vertical occupancy 50-400 m by day and 50-150 m at night. NOAA EcoCast California drift-gillnet data show catches primarily over shelf/slope and bathymetry as the strongest modeled predictor; this supports a regional bathymetry proxy, not a numeric preferred interval.
+- **Taxonomy open issue:** the 2018 revision split Pacific opah into *Lampris incognitus* and *L. megalopsis*. The profile currently says *L. guttatus*. Resolve intended taxon before treating older Pacific sources as species-specific; no name changed.
+- Sources: [Polovina et al. 2008 tagging](https://www.soest.hawaii.edu/PFRP/reprints/polovina_opah2008.pdf); [NOAA EcoCast annual report](https://repository.library.noaa.gov/view/noaa/19480/noaa_19480_DS1.pdf); [2018 taxonomic revision](https://pubmed.ncbi.nlm.nih.gov/29690102/); [California Sea Grant opah](https://caseagrant.ucsd.edu/seafood-profiles/opah).
+
+### Pacific barracuda (*Sphyraena argentea*)
+- SST: needs_source. Sources describe seasonal northward movement and adaptation to temperature variation but no numeric preferred SST.
+- Depth: partly_sourced. Coastal reef/kelp habitat, shallow juveniles and records to about 37 m support a shallow coastal screen; FishBase reports 0-18 m. The configured range is not a universal preference curve.
+- Sources: [Aquarium of the Pacific](https://www.aquariumofpacific.org/onlinelearningcenter/species/california_barracuda); [FishBase](https://www.fishbase.org/summary/3678).
+
+### Pacific bonito (*Sarda lineolata*)
+- SST: partly_sourced. California Sea Grant reports population abundance fluctuates with warm/cold PDO periods; OPC reports greatest abundance in warm waters between Magdalena Bay and Point Conception. No numeric preferred SST curve validates the configured interval.
+- Depth: weak_factor. Bonito are pelagic; reported fish vertical occupancy around 80-200 m or 0-110 m is not seafloor bathymetry. Configured 0-40 m bottom-depth interval is only a weak shelf/nearshore proxy.
+- Sources: [California Sea Grant](https://caseagrant.ucsd.edu/seafood-profiles/pacific-bonito); [OPC marine species report](https://opc.ca.gov/webmaster/_media_library/2019/08/Draft_Marine-Species-Report_Bonito.pdf); [Smithsonian Eastern Pacific account](https://biogeodb.stri.si.edu/sftep/en/thefishes/species/2218).
+
+### Pacific hake (*Merluccius productus*)
+- SST: needs_source. NOAA sources document pelagic/neritic distribution and depth but do not validate a numeric preferred satellite-SST curve.
+- Depth: partly_sourced. NOAA occurrence data report 25-575 m, with 97.9% between 50-500 m; species records span 0-914 m. The configured 50-400 m band is a broad occurrence screen, not a measured seabed preference.
+- Sources: [NOAA species depth record](https://repository.library.noaa.gov/view/noaa/5807/noaa_5807_DS1.pdf); [NOAA Pacific whiting](https://www.fisheries.noaa.gov/species/pacific-whiting); [NOAA Washington species guide](https://www.webapps.nwfsc.noaa.gov/assets/26/6864_03092012_104420_Washington.1977a.pdf).
+
+### Striped marlin (*Kajikia audax*)
+- SST: partly_sourced. North Pacific studies report 20-25 °C preferred habitat, California/Mexico catch rates highest around 22-24 °C, and longline habitat estimates 20-26 °C. This aligns with the configured 18-26 °C / 20-24 °C intervals, but stock/region/season effects are substantial.
+- Depth: weak_factor. Satellite tags show much time near the surface with dives to 460 m or more depending on region and oceanographic conditions; vertical depth is not bathymetry.
+- Sources: [ICES Journal North Pacific habitat analysis](https://academic.oup.com/icesjms/article/70/5/1013/643037); [Frontiers 2022 tagging study](https://www.frontiersin.org/journals/marine-science/articles/10.3389/fmars.2022.879503/full); [NOAA reproductive biology synthesis](https://repository.library.noaa.gov/view/noaa/52798/noaa_52798_DS1.pdf).
+
+### Documented-profile review progress
+Forty of 51 profiles reviewed across 82 active factors. Opah adds a taxonomic identity issue that must be resolved separately; pelagic depth observations remain distinct from seafloor bathymetry. No numerical or runtime model behavior changed.

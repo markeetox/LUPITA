@@ -10,7 +10,7 @@
   "display": {
     "color": "#f2b424"
   },
-  "review_status": "v1 - West Coast Pacific habitat profile",
+  "review_status": "Evidence reviewed 2026-11-17. California Sea Grant and OPC sources support warm/cold-period population shifts and pelagic habitat; numeric SST preference is not calibrated and bathymetry is a weak proxy.",
   "image": {
     "status": "placeholder",
     "kind": "illustration",
@@ -26,12 +26,15 @@
     "behavior": "Navigates West Coast kelp forests, rocky reefs, and coastal upwelling zones.",
     "regulations_link": "https://wildlife.ca.gov/Fishing/Ocean/Regulations/Sport-Fishing",
     "sources": [
-      "https://wildlife.ca.gov/Fishing/Ocean/Regulations/Sport-Fishing"
+      "https://wildlife.ca.gov/Fishing/Ocean/Regulations/Sport-Fishing",
+      "https://caseagrant.ucsd.edu/seafood-profiles/pacific-bonito",
+      "https://opc.ca.gov/webmaster/_media_library/2019/08/Draft_Marine-Species-Report_Bonito.pdf",
+      "https://biogeodb.stri.si.edu/sftep/en/thefishes/species/2218"
     ]
   },
   "lat_range": [
-    20.0,
-    38.0
+    20,
+    38
   ],
   "factors": [
     {
@@ -47,11 +50,14 @@
       ],
       "weight": 0.5,
       "active": true,
-      "value_status": "sourced",
+      "value_status": "partly_sourced",
       "sources": [
-        "https://wildlife.ca.gov/Fishing/Ocean/Regulations/Sport-Fishing"
+        "https://wildlife.ca.gov/Fishing/Ocean/Regulations/Sport-Fishing",
+        "https://caseagrant.ucsd.edu/seafood-profiles/pacific-bonito",
+        "https://opc.ca.gov/webmaster/_media_library/2019/08/Draft_Marine-Species-Report_Bonito.pdf"
       ],
-      "reason_template": "Water is {value} C, inside preferred Pacific temperature range for pacific bonito."
+      "reason_template": "Water is {value} C, inside preferred Pacific temperature range for pacific bonito.",
+      "value_notes": "California Sea Grant reports Pacific bonito abundance fluctuates with warm/cold Pacific Decadal Oscillation periods, and the OPC species report places greatest abundance in warm waters between Magdalena Bay and Point Conception. This supports SST as a relevant regional factor, but no numeric preferred SST curve validates the configured 15-24 °C range or 17-22 °C ideal."
     },
     {
       "param": "depth_m",
@@ -66,19 +72,23 @@
       ],
       "weight": 0.5,
       "active": true,
-      "value_status": "sourced",
+      "value_status": "weak_factor",
       "sources": [
-        "https://wildlife.ca.gov/Fishing/Ocean/Regulations/Sport-Fishing"
+        "https://wildlife.ca.gov/Fishing/Ocean/Regulations/Sport-Fishing",
+        "https://caseagrant.ucsd.edu/seafood-profiles/pacific-bonito",
+        "https://opc.ca.gov/webmaster/_media_library/2019/08/Draft_Marine-Species-Report_Bonito.pdf",
+        "https://biogeodb.stri.si.edu/sftep/en/thefishes/species/2218"
       ],
       "gate": true,
-      "reason_template": "Depth is {value} m, within prime Pacific depth zone for pacific bonito."
+      "reason_template": "Depth is {value} m, within prime Pacific depth zone for pacific bonito.",
+      "value_notes": "Pacific bonito is pelagic and schooling, with younger fish near kelp/bays and larger fish offshore. Sources report water-column depths around 80-200 m or occurrence to 91-110 m, but those are fish occupancy depths, not seafloor bathymetry. The configured 0-40 m bottom-depth band is only a weak nearshore/shelf proxy, not a direct depth preference."
     }
   ],
   "timing": {
     "status": "angler_lore",
     "light": {
       "map": {
-        "day": 1.0,
+        "day": 1,
         "dawn": 0.9,
         "dusk": 0.9,
         "night": 0.5
@@ -105,7 +115,7 @@
     "source_url": "https://wildlife.ca.gov/Fishing/Ocean/Regulations/Sport-Fishing"
   },
   "lon_range": [
-    -138.0,
-    -110.0
+    -138,
+    -110
   ]
 }

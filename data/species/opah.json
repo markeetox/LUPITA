@@ -10,7 +10,7 @@
   "display": {
     "color": "#3c54f2"
   },
-  "review_status": "v1 - West Coast Pacific habitat profile",
+  "review_status": "Evidence reviewed 2026-11-17. Hawaii opah tagging and California EcoCast data support thermal/depth context, but 2018 taxonomy split means the Pacific species identity must be resolved.",
   "image": {
     "status": "placeholder",
     "kind": "illustration",
@@ -26,12 +26,17 @@
     "behavior": "Navigates West Coast kelp forests, rocky reefs, and coastal upwelling zones.",
     "regulations_link": "https://wildlife.ca.gov/Fishing/Ocean/Regulations/Sport-Fishing",
     "sources": [
-      "https://wildlife.ca.gov/Fishing/Ocean/Regulations/Sport-Fishing"
+      "https://wildlife.ca.gov/Fishing/Ocean/Regulations/Sport-Fishing",
+      "https://www.soest.hawaii.edu/PFRP/reprints/polovina_opah2008.pdf",
+      "https://repository.library.noaa.gov/view/noaa/19480/noaa_19480_DS1.pdf",
+      "https://caseagrant.ucsd.edu/seafood-profiles/opah",
+      "https://pubmed.ncbi.nlm.nih.gov/29690102/",
+      "https://www.itis.gov/servlet/SingleRpt/RefRpt?search_id=pub_id&search_id_value=20949&search_type=publication"
     ]
   },
   "lat_range": [
-    20.0,
-    40.0
+    20,
+    40
   ],
   "factors": [
     {
@@ -47,11 +52,15 @@
       ],
       "weight": 0.5,
       "active": true,
-      "value_status": "sourced",
+      "value_status": "partly_sourced",
       "sources": [
-        "https://wildlife.ca.gov/Fishing/Ocean/Regulations/Sport-Fishing"
+        "https://wildlife.ca.gov/Fishing/Ocean/Regulations/Sport-Fishing",
+        "https://www.soest.hawaii.edu/PFRP/reprints/polovina_opah2008.pdf",
+        "https://pubmed.ncbi.nlm.nih.gov/29690102/",
+        "https://caseagrant.ucsd.edu/seafood-profiles/opah"
       ],
-      "reason_template": "Water is {value} C, inside preferred Pacific temperature range for opah."
+      "reason_template": "Water is {value} C, inside preferred Pacific temperature range for opah.",
+      "value_notes": "Hawaii archival-tag data from the pre-2018 taxonomic complex show opah in roughly 8-20 °C water by day and 16-22 °C at night, with peak nighttime frequency at 18-20 °C. This broadly overlaps the configured 14-22 °C / 16-20 °C band but describes diel vertical behavior, not a fixed surface-temperature preference. Crucially, the 2018 revision split Pacific opah into L. incognitus and L. megalopsis; the current profile is named L. guttatus, so the species-specific applicability of older Pacific tagging remains unresolved."
     },
     {
       "param": "depth_m",
@@ -66,19 +75,23 @@
       ],
       "weight": 0.5,
       "active": true,
-      "value_status": "sourced",
+      "value_status": "partly_sourced",
       "sources": [
-        "https://wildlife.ca.gov/Fishing/Ocean/Regulations/Sport-Fishing"
+        "https://wildlife.ca.gov/Fishing/Ocean/Regulations/Sport-Fishing",
+        "https://www.soest.hawaii.edu/PFRP/reprints/polovina_opah2008.pdf",
+        "https://repository.library.noaa.gov/view/noaa/19480/noaa_19480_DS1.pdf",
+        "https://pubmed.ncbi.nlm.nih.gov/29690102/"
       ],
       "gate": true,
-      "reason_template": "Depth is {value} m, within prime Pacific depth zone for opah."
+      "reason_template": "Depth is {value} m, within prime Pacific depth zone for opah.",
+      "value_notes": "Hawaii archival tags report opah vertical occupancy around 50-400 m by day and 50-150 m at night; this is fish depth in the water column, not seabed depth. Separately, NOAA EcoCast analysis of California drift-gillnet catch data reports opah catches primarily over the continental shelf and slope, with bathymetry explaining the greatest share of modeled variability. This supports bathymetry as a regional distribution proxy but does not validate the configured 50-400 m response interval. Pacific taxonomic identity remains unresolved after the 2018 split."
     }
   ],
   "timing": {
     "status": "angler_lore",
     "light": {
       "map": {
-        "day": 1.0,
+        "day": 1,
         "dawn": 0.9,
         "dusk": 0.9,
         "night": 0.5
@@ -105,7 +118,10 @@
     "source_url": "https://wildlife.ca.gov/Fishing/Ocean/Regulations/Sport-Fishing"
   },
   "lon_range": [
-    -138.0,
-    -110.0
+    -138,
+    -110
+  ],
+  "open_items": [
+    "Taxonomic review in 2018 split the Pacific opah complex into Lampris incognitus (smalleye Pacific opah) and Lampris megalopsis (bigeye Pacific opah). This West Coast profile currently uses Lampris guttatus. Resolve intended Pacific taxon before treating older Pacific tagging and habitat sources as species-specific. No scientific-name or model change made."
   ]
 }
