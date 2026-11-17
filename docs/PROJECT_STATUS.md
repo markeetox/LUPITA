@@ -725,3 +725,11 @@ NOAA InPort confirms GoMMAPPS accession 0243654 includes processed and unprocess
 An investigator-supplied Word data dictionary and NCEI readme are catalogued, but the archive endpoints failed retrieval in this inspection. Actual file listing, profile schema, cast count, depth units, QC flags, and near-bottom eligibility remain unknown. Do not build a parser from assumed Sea-Bird CNV structure until at least one processed file/header and the data dictionary are inspected.
 
 Next: retrieve those source files and define regional WODSelect queries using observed-level temperature profiles and QC metadata. WODSelect supports geography, date, CTD dataset, temperature, deepest measurement, platform/cruise, accession/project, and QC filtering, with CSV or NetCDF export. No observation counts or matched pairs are claimed. No production behavior changed.
+
+
+## NOAA profile inventory query design | 2026-11-17
+WODSelect query setup is now specified for the exact four current Copernicus candidate boxes. The plan calls for one query per region, an all-years first-pass temperature-profile inventory, retention of quality flags (no initial QC exclusion), observed-level data, and recording the actual returned cast count before extraction. The first pass should retain broad profile dataset types; a CTD/OSD-focused subset can follow without prematurely discarding other instruments. WODSelect requires an email-based extraction request and its generated download files are temporary.
+
+A metadata distinction was resolved for GoMMAPPS accession 0243654: InPort item 65961 is a 23 KB investigator-supplied Word document described as additional project metadata, but its contents have not been inspected and it is not yet verified as the CTD schema. Item 66003 is a separate 28 KB CSV dictionary stored under the VisualSightingData directory; it is not the CTD dictionary. Official NCEI/legacy NODC archive file URLs and the OAS live detail page remained inaccessible in this inspection. CTD file listing, filenames, columns, units, QC flags, cast count, and near-bottom eligibility remain unknown.
+
+The exact query settings, four boxes, metadata distinctions, access limitations, and next steps are documented in `docs/NOAA_WODSELECT_REGIONAL_QUERY_PLAN_2026-11-17.md`. No regional cast counts or matched pairs are claimed. No production behavior changed.
