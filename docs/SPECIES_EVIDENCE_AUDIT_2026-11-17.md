@@ -206,3 +206,36 @@ Recommended evidence-status distribution for these 27 profiles:
 **Critical model-design observation:** several demersal/deep-water profiles cite bottom temperatures or inhabit depths of roughly 30–370 m, while the active runtime input is satellite sea-surface temperature. Those sources may support species thermal ecology, but they do not validate a surface-temperature gate for fish occupying deep bottom habitat. This should become a separate model-to-data design review; do not silently replace SST with an inferred bottom temperature.
 
 No numeric range, ideal interval, weight, active flag, gate, required flag, source configuration, score, confidence, ingestion, or publication behavior changed in this research batch. These are research recommendations awaiting approval before profile metadata is edited.
+
+
+## Batch C research and metadata implementation: first four multi-factor profiles | 2026-11-17
+
+The first four elevated-risk multi-factor profiles were reviewed factor by factor. Their prior factor-level citations pointed only to the generic FWC homepage. Species-specific sources were added and active-factor evidence statuses/notes were updated. No numeric intervals, ideal bands, category maps, weights, active flags, gates, required flags, timing scores, or runtime behavior changed.
+
+### African pompano (Alectis ciliaris)
+- SST: needs_source. The STRI Greater Caribbean account describes tropical distribution and habitat but does not provide a numeric thermal preference. The configured 22–29 °C range and 24–27 °C ideal remain unvalidated screening assumptions.
+- Structure: partly_sourced. The STRI account supports coastal, reef-associated/benthopelagic habitat but does not validate the exact wreck/artificial-reef/natural-reef/ledge ranking or map scores.
+- Depth: partly_sourced. STRI reports 0–100 m, which supports broad depth use but not the configured 20–120 m band or 35–80 m ideal; the configured upper limit exceeds the cited range. Depth is an active gate.
+- Source: [STRI Greater Caribbean species account](https://biogeodb.stri.si.edu/caribbean/en/thefishes/species/1243).
+
+### Almaco jack (Seriola rivoliana)
+- SST: needs_source. No wild-population thermal preference evidence was found to validate 20–28 °C / 22–26 °C. UF/IFAS reports 26 °C for captive broodstock conditioning, which is not wild habitat preference.
+- Structure: partly_sourced. NOAA and UF/IFAS support rocky outcrops, reef structures, artificial reefs, wrecks, and high-relief structures, but not the exact category score ordering.
+- Depth: partly_sourced. NOAA reports 15–110 m; UF/IFAS reports 3–35 m in subtropical regions and artificial-reef/wreck use to 245 m; STRI reports 3–340 m. These broad ranges do not validate the exact 30–200 m / 40–120 m configured band for South Florida. Depth is an active gate.
+- Sources: [NOAA Almaco jack science profile](https://www.fisheries.noaa.gov/species/almaco-jack/science); [UF/IFAS FA249](https://ask.ifas.ufl.edu/publication/FA249); [STRI Greater Caribbean species account](https://biogeodb.stri.si.edu/caribbean/en/thefishes/species/1283).
+
+### Black grouper (Mycteroperca bonaci)
+- SST: partly_sourced. Reef Life Survey reports a broad observed sea-temperature range of 20.9–31.1 °C. This is reef occurrence, not a physiological optimum or locally calibrated catch-response curve, and does not validate 20–29 °C / 23–27 °C as preferred SST.
+- Structure: partly_sourced. NOAA, Florida Museum, and FDACS support rocky bottoms, coral/natural reefs, drop-offs, ledges, caves, crevices, and artificial reefs. The exact category score ordering remains heuristic.
+- Depth: partly_sourced. Florida Museum reports 6–33 m as common habitat; NOAA/FDACS describe adults extending to about 200 m. This supports broad depth use but not the exact 10–110 m / 20–60 m band as a local preference. Depth remains an active gate.
+- Sources: [Reef Life Survey](https://reeflife.org/species/mycteroperca-bonaci/); [NOAA black grouper profile](https://www.fisheries.noaa.gov/species/black-grouper); [Florida Museum profile](https://www.floridamuseum.ufl.edu/discover-fish/species-profiles/black-grouper/); [FDACS grouper types](https://www.fdacs.gov/Consumer-Resources/Buy-Fresh-From-Florida/Seafood-Products/Grouper/Grouper-Types).
+
+### Black sea bass (Centropristis striata)
+- SST: partly_sourced. NOAA/NEFSC trawl surveys report seasonal adult bottom-water occurrence of roughly 3–21 °C in spring (most 9–12 °C) and 8–28 °C in fall (most 16–27 °C); a warming study reports seasonal exposure around 6–27 °C. These are bottom-water/northern-stock observations, not a universal SST preference curve. Florida Museum describes the species as mainly north of northeastern Florida, with extreme South Florida records during cold winters.
+- Structure: sourced. NOAA life-history documents and Florida Museum support rocky bottoms, reefs, wrecks, jetties, pilings, and other complex habitat. The category score ordering remains a model heuristic.
+- Depth: partly_sourced. NOAA sources describe summer use around 2–38 m and deeper offshore winter habitat; Florida Museum reports occurrences to about 130 m. The configured 5–60 m / 10–35 m band captures part of summer habitat but not full seasonal depth use. South Florida occurrence is uncommon and associated with cold winters.
+- Sources: [NOAA NMFS-NE-143](https://repository.library.noaa.gov/view/noaa/3145/noaa_3145_DS1.pdf); [NOAA NMFS-NE-200 / SEDAR life-history review](https://sedarweb.org/documents/s25rd22-black-sea-bass-centropristis-striata-life-history-and-habitat-characteristics-second-edition/); [NOAA warming study](https://repository.library.noaa.gov/view/noaa/24450/noaa_24450_DS1.pdf); [Florida Museum profile](https://www.floridamuseum.ufl.edu/discover-fish/species-profiles/black-seabass/).
+
+### Batch C first-pass disposition
+Four profiles reviewed; 12 active factors updated with factor-specific source references, evidence statuses, and limitations. No numerical model settings or scoring behavior changed. This is not the completion of Batch C: the remaining 25 elevated-risk multi-factor profiles and the other 51 multi-factor profiles still require grouped review. Timing and profile-level narratives remain separate review work.
+
