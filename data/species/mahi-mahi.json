@@ -9,7 +9,7 @@
     "dorado"
   ],
   "habitat_zone": "offshore",
-  "review_status": "draft v2 - temperature and depth now sourced; remaining gaps listed in open_items",
+  "review_status": "Evidence reviewed 2026-11-17. Tagging supports broad surface-temperature occupancy; gradient, chlorophyll, Gulf Stream-distance and bottom-depth claims remain provisional or weak.",
   "image": {
     "status": "placeholder",
     "kind": "illustration",
@@ -30,7 +30,8 @@
       "https://flylifemagazine.com/tips-tactics-mahi-on-the-fly/",
       "https://ncseagrant.ncsu.edu/hooklinescience/what-depth-and-water-temperature-do-mahi-mahi-prefer/",
       "https://fishbase.se/summary/SpeciesSummary.php?id=6",
-      "https://europeantrackingnetwork.org/en/dolphinfish"
+      "https://europeantrackingnetwork.org/en/dolphinfish",
+      "https://www.frontiersin.org/journals/marine-science/articles/10.3389/fmars.2021.626082/full"
     ],
     "swimming_depth": "Epipelagic: surface to about 85 m. Satellite-tagged fish spent about 40% of their time within about 1 m of the surface and made occasional dives to about 250 m."
   },
@@ -48,14 +49,15 @@
       ],
       "weight": 0.32,
       "active": true,
-      "value_status": "sourced",
-      "value_notes": "Tagging study: satellite-tagged mahi spent 95% of their time in 25-29 C surface water (77-84 F), preferring about 26.7-27.8 C while migrating north. FishBase model: preferred 18.1-29.1 C, mean 27.4. Tracking-network summary: below 20 C limits metabolism, above about 28 C tends to be suboptimal. The angler site SatFish suggests 21-26 C ideal; we follow the tagging data instead.",
+      "value_status": "partly_sourced",
+      "value_notes": "Satellite tags from 19 wild mahi (2 off Louisiana, 17 off Miami; 2016-2018) recorded 95% of observed time in 25-29 °C SST. The narrower 26.7-27.8 °C association was reported during northward migration, not as a universal South Florida catch optimum. This supports broad thermal occupancy but does not calibrate the configured band as a catch-probability curve.",
       "reason_template": "Water is {value} C, inside the {ideal_min}-{ideal_max} C range where mahi are most active.",
       "sources": [
         "https://ncseagrant.ncsu.edu/hooklinescience/what-depth-and-water-temperature-do-mahi-mahi-prefer/",
         "https://fishbase.se/summary/SpeciesSummary.php?id=6",
         "https://europeantrackingnetwork.org/en/dolphinfish",
-        "https://www.frontiersin.org/articles/10.3389/fmars.2021.654276/pdf"
+        "https://www.frontiersin.org/articles/10.3389/fmars.2021.654276/pdf",
+        "https://www.frontiersin.org/journals/marine-science/articles/10.3389/fmars.2021.626082/full"
       ]
     },
     {
@@ -75,7 +77,7 @@
       "kind": "range",
       "range": [
         0.01,
-        5.0
+        5
       ],
       "ideal": [
         0.05,
@@ -108,11 +110,12 @@
       "kind": "higher_is_better",
       "weight": 0.08,
       "active": true,
-      "value_status": "sourced",
-      "value_notes": "Surface current convergence accumulates floating sargassum weed lines and flotsam, the primary feeding habitat for mahi.",
+      "value_status": "partly_sourced",
+      "value_notes": "Species sources support mahi association with floating sargassum, flotsam and oceanic fronts. They do not directly validate the runtime current_convergence field or its higher-is-better response; the mechanism is plausible but remains a proxy rather than a measured species response.",
       "reason_template": "Surface currents converge here, accumulating sargassum weed lines and flotsam.",
       "sources": [
-        "https://www.deq.nc.gov/about/divisions/marine-fisheries/species/dolphinfish"
+        "https://www.deq.nc.gov/about/divisions/marine-fisheries/species/dolphinfish",
+        "https://ncseagrant.ncsu.edu/hooklinescience/what-depth-and-water-temperature-do-mahi-mahi-prefer/"
       ]
     },
     {
@@ -129,10 +132,12 @@
       "weight": 0.05,
       "active": true,
       "value_status": "weak_factor",
-      "value_notes": "This parameter is bottom (water) depth. Mahi live in the upper water column, so bottom depth only separates offshore from nearshore water. Keep the weight low. Numeric limits are placeholders.",
+      "value_notes": "The runtime variable is seafloor bathymetric depth. Tagging shows mahi spend much of their time near the surface and can dive hundreds of metres in the water column; those vertical fish depths are not bottom-depth preferences. Bathymetry is retained only as a weak offshore/nearshore proxy, and the configured numeric band remains unvalidated.",
       "reason_template": "Depth is {value} m, in the offshore waters mahi use.",
       "sources": [
-        "https://www.deq.nc.gov/about/divisions/marine-fisheries/species/dolphinfish"
+        "https://www.deq.nc.gov/about/divisions/marine-fisheries/species/dolphinfish",
+        "https://ncseagrant.ncsu.edu/hooklinescience/what-depth-and-water-temperature-do-mahi-mahi-prefer/",
+        "https://www.frontiersin.org/journals/marine-science/articles/10.3389/fmars.2021.626082/full"
       ],
       "gate": true
     },
@@ -147,7 +152,7 @@
         0.5,
         3
       ],
-      "weight": 0.0,
+      "weight": 0,
       "active": false,
       "value_status": "needs_source",
       "value_notes": "Replaced by the Gulf Stream edge factor: current speed alone is a weak signal and had no numeric source.",
@@ -179,7 +184,7 @@
         -10,
         12
       ],
-      "weight": 0.10,
+      "weight": 0.1,
       "active": true,
       "value_status": "provisional",
       "value_notes": "SatFish: mahi gather along current edges, eddies and convergence zones. The edge is estimated from 25 km satellite altimetry, so it is good to roughly 20 km. The band is an estimate.",
@@ -211,7 +216,7 @@
     "source_url": "https://myfwc.com/fishing/saltwater/recreational/dolphinfish/"
   },
   "lon_range": [
-    -100.0,
-    -50.0
+    -100,
+    -50
   ]
 }

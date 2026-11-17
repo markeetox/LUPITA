@@ -10,7 +10,7 @@
   "display": {
     "color": "#ddf23c"
   },
-  "review_status": "draft v1 - benthic estuarine flatfish profile",
+  "review_status": "Evidence reviewed 2026-11-17. Estuarine habitat and fall/winter spawning migration are documented, but published distribution evidence flags absence from much of southern Florida; regional model applicability requires separate review.",
   "image": {
     "status": "placeholder",
     "kind": "illustration",
@@ -26,7 +26,11 @@
     "behavior": "Camouflaged ambush predator that lies buried on muddy and sandy bottoms near inlet channels, docks, and drop-offs.",
     "regulations_link": "https://myfwc.com/",
     "sources": [
-      "https://myfwc.com/"
+      "https://myfwc.com/",
+      "https://www.dnr.sc.gov/marine/species/southernflounder.html",
+      "https://geo.gcoos.org/restore/species_profiles/Southern%20Flounder/",
+      "https://www.seafoodwatch.org/globalassets/sfw/pdf/expert-review/030623/seafood-watch-southern-flounder-us-27899.pdf",
+      "https://www.govinfo.gov/content/pkg/GOVPUB-HS4_100-PURL-gpo255991/pdf/GOVPUB-HS4_100-PURL-gpo255991.pdf"
     ]
   },
   "factors": [
@@ -43,11 +47,14 @@
       ],
       "weight": 0.4,
       "active": true,
-      "value_status": "sourced",
+      "value_status": "provisional",
       "sources": [
-        "https://myfwc.com/"
+        "https://myfwc.com/",
+        "https://www.govinfo.gov/content/pkg/GOVPUB-HS4_100-PURL-gpo255991/pdf/GOVPUB-HS4_100-PURL-gpo255991.pdf",
+        "https://www.seafoodwatch.org/globalassets/sfw/pdf/expert-review/030623/seafood-watch-southern-flounder-us-27899.pdf"
       ],
-      "reason_template": "Water is {value} C, favorable for southern flounder."
+      "reason_template": "Water is {value} C, favorable for southern flounder.",
+      "value_notes": "A government species account reports broad temperature tolerance of roughly 5-35 °C; that is not a preferred SST range or catch-response curve. No reviewed source validates the configured 14-28 °C outer band or 18-25 °C ideal. There is also a regional applicability concern: a 2023 fisheries assessment cites records describing the species as absent from southern Florida between the Loxahatchee and Caloosahatchee rivers."
     },
     {
       "param": "depth_m",
@@ -62,21 +69,28 @@
       ],
       "weight": 0.3,
       "active": true,
-      "value_status": "sourced",
+      "value_status": "partly_sourced",
       "sources": [
-        "https://myfwc.com/"
+        "https://myfwc.com/",
+        "https://www.dnr.sc.gov/marine/species/southernflounder.html",
+        "https://geo.gcoos.org/restore/species_profiles/Southern%20Flounder/",
+        "https://www.govinfo.gov/content/pkg/GOVPUB-HS4_100-PURL-gpo255991/pdf/GOVPUB-HS4_100-PURL-gpo255991.pdf"
       ],
       "gate": true,
-      "reason_template": "Depth is {value} m, in shallow estuarine channel and drop-off zone."
+      "reason_template": "Depth is {value} m, in shallow estuarine channel and drop-off zone.",
+      "value_notes": "Sources support demersal use of shallow muddy/silty estuaries and tidal creeks, juvenile soft-bottom nursery habitat, and adult offshore spawning migrations reported at approximately 15 to greater than 70 m in Gulf populations. This supports habitat context but does not validate the configured 0.5-25 m range or 1-10 m ideal across life stages and seasons; the factor is seafloor depth, not fish vertical depth."
     },
     {
       "param": "season_presence",
       "kind": "season",
       "weight": 0.3,
       "active": true,
-      "value_status": "sourced",
+      "value_status": "partly_sourced",
       "sources": [
-        "https://myfwc.com/"
+        "https://myfwc.com/",
+        "https://www.dnr.sc.gov/marine/species/southernflounder.html",
+        "https://geo.gcoos.org/restore/species_profiles/Southern%20Flounder/",
+        "https://www.seafoodwatch.org/globalassets/sfw/pdf/expert-review/030623/seafood-watch-southern-flounder-us-27899.pdf"
       ],
       "months": [
         10,
@@ -94,14 +108,15 @@
         "peak": "It is peak fall flounder migration season.",
         "in_season": "It is flounder season.",
         "off": "Outside peak fall run."
-      }
+      },
+      "value_notes": "SCDNR describes adult offshore migration in late fall, winter spawning and return to inshore habitat in spring; the Gulf spawning profile describes October-January spawning migration. This supports a broad fall/winter Gulf/Atlantic pattern, but not a South Florida catch curve. The species' reported absence from the Loxahatchee-Caloosahatchee stretch is a major regional applicability caveat for this app."
     }
   ],
   "timing": {
     "status": "angler_lore",
     "light": {
       "map": {
-        "night": 1.0,
+        "night": 1,
         "dusk": 0.9,
         "dawn": 0.9,
         "day": 0.4
@@ -114,7 +129,7 @@
     },
     "tide": {
       "map": {
-        "falling": 1.0,
+        "falling": 1,
         "rising": 0.8,
         "slack_low": 0.5,
         "slack_high": 0.4
@@ -140,7 +155,10 @@
     "source_url": "https://myfwc.com/fishing/saltwater/recreational/"
   },
   "lon_range": [
-    -100.0,
-    -50.0
+    -100,
+    -50
+  ],
+  "open_items": [
+    "Regional distribution must be resolved before treating this profile as applicable to South Florida: a 2023 fisheries assessment cites the species as absent between the Loxahatchee and Caloosahatchee rivers. No model activation, range, or scoring change was made."
   ]
 }

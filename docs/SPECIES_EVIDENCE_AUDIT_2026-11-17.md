@@ -469,3 +469,49 @@ Reviewed Hogfish, Jack crevalle, King mackerel, and Red drum across 13 active fa
 
 ### Batch C cumulative disposition
 Twenty-four of the 29 originally elevated-risk multi-factor profiles have now been reviewed across 90 active factors. Five elevated-risk multi-factor profiles remain for the next review: Mahi-mahi, Mutton snapper, Sheepshead, Southern flounder, and Wahoo. This is the remaining set after removing the four profiles covered in this batch from the nine-profile remainder.
+
+
+## Batch C evidence review: final five elevated-risk multi-factor profiles | 2026-11-17
+
+Reviewed Mahi-mahi, Mutton snapper, Sheepshead, Southern flounder, and Wahoo across 26 active factors. Updated only profile/factor sources, evidence statuses, explanatory notes, review metadata, and the Southern flounder regional-applicability open item. No numeric ranges, ideal intervals, weights, active flags, gates, required flags, month lists, scoring, confidence, source selection, ingestion, or publication behavior changed.
+
+### Mahi-mahi (*Coryphaena hippurus*)
+- SST: partly_sourced. Satellite tags from 19 wild fish (2 off Louisiana, 17 off Miami) recorded 95% of observed time in 25-29 °C SST. The narrower 26.7-27.8 °C association applies during northward migration, not a universal South Florida catch optimum.
+- Current convergence: partly_sourced. Sargassum/flotsam association is documented, but no reviewed source directly validates the runtime current-convergence calculation or its response curve.
+- Bottom depth: weak_factor. Fish vertical dive depth is not seafloor bathymetry; bathymetry remains only an offshore/nearshore proxy.
+- SST gradient, chlorophyll, chlorophyll gradient, and Gulf Stream-edge distance remain provisional because their numeric/relative response curves are not calibrated by the reviewed species-specific evidence.
+- Sources: [NC Sea Grant satellite-tag summary](https://ncseagrant.ncsu.edu/hooklinescience/what-depth-and-water-temperature-do-mahi-mahi-prefer/); [Frontiers tagging study](https://www.frontiersin.org/journals/marine-science/articles/10.3389/fmars.2021.626082/full).
+
+### Mutton snapper (*Lutjanus analis*)
+- Structure: partly_sourced. Florida Keys telemetry supports adult reef home-site fidelity and migration to discrete Riley's Hump spawning grounds; generic reef polygons do not identify aggregation sites, and category score ranking is unvalidated.
+- Bottom curvature: partly_sourced. Reef-edge habitat context is plausible, but the runtime curvature metric and higher-is-better response are not directly measured.
+- Depth and SST remain provisional. The existing numeric bands are not validated depth preference or temperature selection curves.
+- Season presence: partly_sourced. Telemetry of 55 fish in the Dry Tortugas (2008-2012) documented spawning migrations April-August, linked to lunar timing and warming from 25-30 °C. This is local spawning-migration evidence, not a catch-rate curve; the configured May-August interval omits observed April movements and June-July peak scores are not independently validated.
+- Sources: [NOAA repository, Feeley et al. 2018](https://repository.library.noaa.gov/view/noaa/62684); [FWC mutton snapper profile](https://myfwc.com/wildlifehabitats/profiles/saltwater/snapper/mutton-snapper/); [adult temperature-selection study](https://link.springer.com/article/10.1186/s40317-021-00237-z).
+
+### Sheepshead (*Archosargus probatocephalus*)
+- SST: provisional. A federal species account reports broad environmental temperatures of about 8-30 °C, not a preferred SST curve; the configured 12-28 °C / 16-24 °C bands remain unvalidated.
+- Depth: partly_sourced. FWC and Florida Museum support coastal structure, tidal-creek, estuarine, seagrass and mud-bottom habitat across life stages, but not the exact 0.5-15 m / 1-8 m bathymetric preference.
+- Season presence: partly_sourced. FWC reports nearshore spawning movement and March-April spawning; Florida Museum records early-spring spawning and Gulf larvae January-May. The configured December-April window and January-March peak scores are not a validated catch curve.
+- Replaced generic homepage-only citations with specific FWC, Florida Museum and federal environmental-account sources.
+- Sources: [FWC sheepshead profile](https://myfwc.com/wildlifehabitats/profiles/saltwater/porgy/sheepshead/); [Florida Museum sheepshead profile](https://www.floridamuseum.ufl.edu/discover-fish/species-profiles/sheepshead/); [federal environmental account](https://www.govinfo.gov/content/pkg/GOVPUB-I-c8f81a7f04971b438a7ada229aea835f/pdf/GOVPUB-I-c8f81a7f04971b438a7ada229aea835f.pdf).
+
+### Southern flounder (*Paralichthys lethostigma*)
+- SST: provisional. The reported broad 5-35 °C tolerance is not a preferred SST curve and does not validate the configured 14-28 °C / 18-25 °C intervals.
+- Depth: partly_sourced. Sources support shallow muddy/silty estuarine and tidal-creek habitat, juvenile soft-bottom nursery areas, and adult offshore spawning migrations; these life-stage and seasonal habitats do not validate one universal 0.5-25 m / 1-10 m preference.
+- Season presence: partly_sourced. SCDNR and Gulf spawning sources support fall offshore migration and winter spawning (Gulf profile October-January), but not a South Florida catch curve.
+- **Regional applicability warning:** a 2023 fisheries assessment cites evidence that southern flounder are absent from southern Florida between the Loxahatchee and Caloosahatchee rivers. This conflicts with treating the species as a routine South Florida target. The issue is recorded for a separate geographic/model-scope decision; no factor was disabled and no score changed.
+- Sources: [SCDNR species account](https://www.dnr.sc.gov/marine/species/southernflounder.html); [GCOOS Gulf spawning profile](https://geo.gcoos.org/restore/species_profiles/Southern%20Flounder/); [Seafood Watch 2023 assessment](https://www.seafoodwatch.org/globalassets/sfw/pdf/expert-review/030623/seafood-watch-southern-flounder-us-27899.pdf); [federal species account](https://www.govinfo.gov/content/pkg/GOVPUB-HS4_100-PURL-gpo255991/pdf/GOVPUB-HS4_100-PURL-gpo255991.pdf).
+
+### Wahoo (*Acanthocybium solandri*)
+- SST: partly_sourced. Florida Straits tags from four fish recorded over 90% of time in approximately 17.5-27.5 °C water; ICCAT summarizes a broader 20-30 °C preference. This supports broad thermal context, not a South Florida catch-probability curve.
+- Bottom slope: partly_sourced. Banks, drop-offs and pelagic features are documented, but the 2 km bathymetric slope metric and monotonic score are not calibrated.
+- SST gradient and chlorophyll gradient remain provisional; reviewed sources do not validate their runtime magnitudes as suitability responses.
+- Current convergence: partly_sourced. Association with current lines and floating objects is supported, but not the exact current-convergence calculation.
+- Bottom depth: weak_factor. Tag-derived vertical fish depth is not seafloor bathymetry; retain only as a weak offshore screen.
+- Season presence: partly_sourced. ICCAT reports year-round Gulf/Caribbean presence and northwest Atlantic summer spawning; Florida Museum reports western-central Atlantic spawning mainly May-August. Neither validates the configured October-March angler-derived fishing window or November-February peaks.
+- Gulf Stream edge: partly_sourced. East Florida movements may be associated with the Gulf Stream, but no distance-response curve validates the configured band.
+- Sources: [NC Sea Grant Florida Straits tagging summary](https://ncseagrant.ncsu.edu/hooklinescience/where-do-wahoo-spend-time-in-the-water-column/); [ICCAT Wahoo Manual](https://www.iccat.int/Documents/SCRS/Manual/CH2/2_1_10_10_WAH_ENG.pdf); [Florida Museum wahoo profile](https://www.floridamuseum.ufl.edu/discover-fish/species-profiles/wahoo/); [ICCAT western North Atlantic tagging synthesis](https://www.iccat.int/Documents/CVSP/CV073_2017/n_9/CV073093163.pdf).
+
+### Batch C cumulative disposition
+All 29 of the originally elevated-risk multi-factor profiles have now received source-by-source review. Across the five profiles in this final batch, 26 active factors were examined. The 29-profile review is complete; the next step is to reconcile the refreshed validator artifact and proceed to the remaining partial-risk and documented multi-factor profiles. Southern flounder's regional distribution conflict must remain an explicit open issue until separately resolved.

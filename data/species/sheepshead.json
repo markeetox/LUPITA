@@ -11,7 +11,7 @@
   "display": {
     "color": "#96f224"
   },
-  "review_status": "draft v1 - coastal structure and piling species",
+  "review_status": "Evidence reviewed 2026-11-17. Florida-specific habitat and spawning evidence now replaces generic homepage citations; the configured SST band remains provisional.",
   "image": {
     "status": "placeholder",
     "kind": "illustration",
@@ -27,7 +27,10 @@
     "behavior": "Uses human teeth to scrape barnacles and oysters off bridge pilings, seawalls, docks, and rock jetties. Spawns in late winter near inlets.",
     "regulations_link": "https://myfwc.com/",
     "sources": [
-      "https://myfwc.com/"
+      "https://myfwc.com/",
+      "https://myfwc.com/wildlifehabitats/profiles/saltwater/porgy/sheepshead/",
+      "https://www.floridamuseum.ufl.edu/discover-fish/species-profiles/sheepshead/",
+      "https://www.govinfo.gov/content/pkg/GOVPUB-I-c8f81a7f04971b438a7ada229aea835f/pdf/GOVPUB-I-c8f81a7f04971b438a7ada229aea835f.pdf"
     ]
   },
   "factors": [
@@ -44,11 +47,14 @@
       ],
       "weight": 0.4,
       "active": true,
-      "value_status": "sourced",
+      "value_status": "provisional",
       "sources": [
-        "https://myfwc.com/"
+        "https://myfwc.com/",
+        "https://www.govinfo.gov/content/pkg/GOVPUB-I-c8f81a7f04971b438a7ada229aea835f/pdf/GOVPUB-I-c8f81a7f04971b438a7ada229aea835f.pdf",
+        "https://myfwc.com/wildlifehabitats/profiles/saltwater/porgy/sheepshead/"
       ],
-      "reason_template": "Water is {value} C, cool-water preference ideal for sheepshead."
+      "reason_template": "Water is {value} C, cool-water preference ideal for sheepshead.",
+      "value_notes": "A federal species account reports a broad environmental temperature range of about 8-30 °C, but that is tolerance/context, not a preferred adult SST curve. FWC and Florida Museum habitat accounts do not validate the configured 12-28 °C outer band or 16-24 °C ideal. Keep both numeric intervals provisional."
     },
     {
       "param": "depth_m",
@@ -63,21 +69,27 @@
       ],
       "weight": 0.3,
       "active": true,
-      "value_status": "sourced",
+      "value_status": "partly_sourced",
       "sources": [
-        "https://myfwc.com/"
+        "https://myfwc.com/",
+        "https://myfwc.com/wildlifehabitats/profiles/saltwater/porgy/sheepshead/",
+        "https://www.floridamuseum.ufl.edu/discover-fish/species-profiles/sheepshead/"
       ],
       "gate": true,
-      "reason_template": "Depth is {value} m, in shallow piling and dock structure zone."
+      "reason_template": "Depth is {value} m, in shallow piling and dock structure zone.",
+      "value_notes": "FWC and Florida Museum support shallow coastal habitat around oyster bars, seawalls, pilings, jetties, mangroves and tidal creeks; juveniles also use seagrass and mud, while adults move offshore to spawn. These habitat descriptions support shallow coastal use but do not validate the exact 0.5-15 m range or 1-8 m ideal as a universal bottom-depth preference."
     },
     {
       "param": "season_presence",
       "kind": "season",
       "weight": 0.3,
       "active": true,
-      "value_status": "sourced",
+      "value_status": "partly_sourced",
       "sources": [
-        "https://myfwc.com/"
+        "https://myfwc.com/",
+        "https://myfwc.com/wildlifehabitats/profiles/saltwater/porgy/sheepshead/",
+        "https://www.floridamuseum.ufl.edu/discover-fish/species-profiles/sheepshead/",
+        "https://www.govinfo.gov/content/pkg/GOVPUB-I-c8f81a7f04971b438a7ada229aea835f/pdf/GOVPUB-I-c8f81a7f04971b438a7ada229aea835f.pdf"
       ],
       "months": [
         12,
@@ -97,14 +109,15 @@
         "peak": "It is peak winter sheepshead spawning season.",
         "in_season": "It is sheepshead season.",
         "off": "Outside peak winter run, but sheepshead are present year-round around pilings."
-      }
+      },
+      "value_notes": "FWC reports nearshore spawning movement in late winter and early spring, typically March-April. Florida Museum reports early-spring spawning and Gulf larvae recorded January-May. This supports a broad seasonal pattern, but not the configured December-April window or January-March peak scores as a South Florida catch-rate curve."
     }
   ],
   "timing": {
     "status": "angler_lore",
     "light": {
       "map": {
-        "day": 1.0,
+        "day": 1,
         "dawn": 0.8,
         "dusk": 0.8,
         "night": 0.3
@@ -117,7 +130,7 @@
     },
     "tide": {
       "map": {
-        "rising": 1.0,
+        "rising": 1,
         "falling": 0.9,
         "slack_high": 0.5,
         "slack_low": 0.4
@@ -143,7 +156,7 @@
     "source_url": "https://myfwc.com/fishing/saltwater/recreational/"
   },
   "lon_range": [
-    -100.0,
-    -50.0
+    -100,
+    -50
   ]
 }

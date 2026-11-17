@@ -1006,3 +1006,17 @@ Found species-specific evidence for all three previously needs-source named-site
 - Red drum temperature, depth, and seasonal presence are partly_sourced; broad thermal tolerance and fall spawning movement do not validate precise catch curves.
 - No numeric settings, weights, active flags, gates, required flags, scoring, confidence, ingestion, or publication behavior changed.
 - Detailed evidence notes and references are in docs/SPECIES_EVIDENCE_AUDIT_2026-11-17.md.
+
+
+## 2026-11-17 | Batch C final five-profile evidence review
+
+Reviewed Mahi-mahi, Mutton snapper, Sheepshead, Southern flounder, and Wahoo across 26 active factors. Added species-specific sources and conservative claim-fit notes; replaced sheepshead and southern flounder generic FWC homepage references with traceable species and regional sources.
+
+- Mahi-mahi SST is partly_sourced based on 19 wild satellite-tagged fish; gradient/chlorophyll/Gulf Stream-distance claims remain provisional, current convergence is partly_sourced, and bottom depth remains a weak proxy.
+- Mutton snapper telemetry supports Dry Tortugas spawning migrations April-August and reef-site fidelity; seasonal presence is partly_sourced, while numeric SST/depth bands remain provisional.
+- Sheepshead now has specific FWC/Florida Museum/federal references. Habitat and spawning season are partly_sourced; the numeric SST band remains provisional.
+- Southern flounder has documented estuarine habitat and fall/winter spawning migration, but a fisheries assessment cites absence from southern Florida between the Loxahatchee and Caloosahatchee rivers. This is an explicit regional-applicability open issue, not an automatic model-disable decision.
+- Wahoo Florida Straits tagging and ICCAT synthesis support broad temperature and pelagic movement context; slope, gradients, current convergence, season, and Gulf Stream distance remain partly or provisionally supported as documented in the audit.
+- No numeric ranges, ideal intervals, weights, active flags, gates, required flags, month lists, scoring, confidence, ingestion, or publication behavior changed.
+
+All 29 originally elevated-risk multi-factor profiles have now been reviewed. Next: validate the metadata batch, reconcile the refreshed audit artifact, then proceed to remaining partial-risk and documented multi-factor profiles.

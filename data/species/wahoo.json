@@ -11,7 +11,7 @@
   "display": {
     "color": "#d82070"
   },
-  "review_status": "draft - mostly angler and habitat-description sources; temperature band and season are provisional",
+  "review_status": "Evidence reviewed 2026-11-17. Florida Straits tagging and ICCAT synthesis support broad pelagic temperature and movement context; slope, gradient and Gulf Stream-distance response functions remain uncalibrated.",
   "confidence_cap": "Low",
   "image": {
     "status": "placeholder",
@@ -34,7 +34,10 @@
       "https://ncseagrant.ncsu.edu/hooklinescience/wp-json/wp/v2/posts/667",
       "https://marineinfo.org/id/publication/256034",
       "https://inthespread.com/blog/wahoo-fishing-in-florida-expert-regional-tactics-376",
-      "https://www.satfish.com/wahoo-species-profile/"
+      "https://www.satfish.com/wahoo-species-profile/",
+      "https://ncseagrant.ncsu.edu/hooklinescience/where-do-wahoo-spend-time-in-the-water-column/",
+      "https://www.floridamuseum.ufl.edu/discover-fish/species-profiles/wahoo/",
+      "https://www.iccat.int/Documents/CVSP/CV073_2017/n_9/CV073093163.pdf"
     ]
   },
   "factors": [
@@ -43,11 +46,12 @@
       "kind": "higher_is_better",
       "weight": 0.23,
       "active": true,
-      "value_status": "provisional",
-      "value_notes": "Louisiana Sea Grant: wahoo are more common near banks (lumps), drop-offs and weed lines. Angler accounts focus on steep ledges where depth contours stack close together. Scored relative to the steepest offshore slopes in the area; the 2 km grid smooths small ledges away.",
+      "value_status": "partly_sourced",
+      "value_notes": "Wahoo sources describe pelagic association with banks, drop-offs, current lines and floating structure. These habitat associations do not validate the pipeline's 2 km bathymetric bottom_slope magnitude or a monotonic higher-is-better response; small ledges may also be smoothed out by the grid.",
       "sources": [
         "https://www.laseagrant.org/fisheries/wahoo/",
-        "https://www.satfish.com/wahoo-species-profile/"
+        "https://www.satfish.com/wahoo-species-profile/",
+        "https://www.iccat.int/Documents/SCRS/Manual/CH2/2_1_10_10_WAH_ENG.pdf"
       ],
       "reason_template": "The seafloor drops steeply here ({value} m of depth change per km), one of the sharper ledges in the area."
     },
@@ -56,11 +60,13 @@
       "kind": "range",
       "weight": 0.22,
       "active": true,
-      "value_status": "provisional",
-      "value_notes": "Tagging of four wahoo in the Florida Straits (FAU) found the optimal swimming temperature started near 23.1 C. Angler sources give about 22-27 C as the best band. Sources disagree on the upper edge, so the ideal band is an estimate.",
+      "value_status": "partly_sourced",
+      "value_notes": "Florida Straits pop-up satellite tags on four wahoo recorded more than 90% of time in approximately 17.5-27.5 °C water; ICCAT summarizes a broader 20-30 °C preferred-temperature range. This supports broad thermal context for the configured 21-30 °C band and 23-28 °C ideal, but the Florida tag sample was only four fish and does not establish a South Florida catch-probability curve.",
       "sources": [
         "https://www.iccat.int/Documents/SCRS/Manual/CH2/2_1_10_10_WAH_ENG.pdf",
-        "https://ncseagrant.ncsu.edu/hooklinescience/wp-json/wp/v2/posts/667"
+        "https://ncseagrant.ncsu.edu/hooklinescience/wp-json/wp/v2/posts/667",
+        "https://ncseagrant.ncsu.edu/hooklinescience/where-do-wahoo-spend-time-in-the-water-column/",
+        "https://www.iccat.int/Documents/CVSP/CV073_2017/n_9/CV073093163.pdf"
       ],
       "reason_template": "Water is {value} C, inside the {ideal_min}-{ideal_max} C range where wahoo are most active.",
       "range": [
@@ -78,10 +84,11 @@
       "weight": 0.1,
       "active": true,
       "value_status": "provisional",
-      "value_notes": "Anglers fish wahoo along temperature breaks and current edges, especially where they meet a steep ledge. Scored relative to today's sharpest offshore breaks.",
+      "value_notes": "Angler sources describe fishing temperature breaks and current edges, but reviewed biological sources do not quantify wahoo response to the runtime scalar SST-gradient magnitude. Relative ranking against the day's sharpest breaks is not a validated species suitability curve.",
       "sources": [
         "https://www.satfish.com/wahoo-species-profile/",
-        "https://inthespread.com/blog/wahoo-fishing-in-florida-expert-regional-tactics-376"
+        "https://inthespread.com/blog/wahoo-fishing-in-florida-expert-regional-tactics-376",
+        "https://www.iccat.int/Documents/SCRS/Manual/CH2/2_1_10_10_WAH_ENG.pdf"
       ],
       "reason_template": "Water temperature changes about {per10km} C every 10 km here, one of the sharper breaks in the area today."
     },
@@ -91,9 +98,10 @@
       "weight": 0.05,
       "active": true,
       "value_status": "provisional",
-      "value_notes": "Color changes and chlorophyll edges concentrate baitfish and wahoo along offshore drop-offs.",
+      "value_notes": "The existing source is angler guidance about water-color edges. No reviewed species-specific study validates remotely sensed chlorophyll-gradient magnitude as a monotonic wahoo suitability factor; retain provisional status.",
       "sources": [
-        "https://www.satfish.com/wahoo-species-profile/"
+        "https://www.satfish.com/wahoo-species-profile/",
+        "https://www.iccat.int/Documents/SCRS/Manual/CH2/2_1_10_10_WAH_ENG.pdf"
       ],
       "reason_template": "A strong water color edge is present, where wahoo patrol for bait."
     },
@@ -102,10 +110,11 @@
       "kind": "higher_is_better",
       "weight": 0.08,
       "active": true,
-      "value_status": "sourced",
-      "value_notes": "Wahoo patrol weed lines and flotsam formed by converging oceanic currents.",
+      "value_status": "partly_sourced",
+      "value_notes": "ICCAT describes wahoo association with current lines, floating objects and oceanic features, supporting a broad current-feature association. The sources do not directly validate the runtime current_convergence calculation or its higher-is-better response.",
       "sources": [
-        "https://www.laseagrant.org/fisheries/wahoo/"
+        "https://www.laseagrant.org/fisheries/wahoo/",
+        "https://www.iccat.int/Documents/SCRS/Manual/CH2/2_1_10_10_WAH_ENG.pdf"
       ],
       "reason_template": "Converging currents aggregate weed lines and bait along drop-offs."
     },
@@ -114,11 +123,13 @@
       "kind": "range",
       "weight": 0.04,
       "active": true,
-      "value_status": "provisional",
-      "value_notes": "Wahoo are blue-water fish that do not live near shore. Cells shallower than 30 m are excluded. Bottom depth is a weak guide because the fish swim in the upper water column.",
+      "value_status": "weak_factor",
+      "value_notes": "The runtime variable is seafloor bathymetric depth. Florida Straits tagging describes fish vertical occupancy (more than 90% of time above 200 m), and ICCAT describes epipelagic use in the upper mixed layer; neither establishes preferred seabed depth. Retain only as a weak offshore/nearshore screen; configured numeric intervals remain unvalidated.",
       "sources": [
         "https://www.laseagrant.org/fisheries/wahoo/",
-        "https://ncseagrant.ncsu.edu/hooklinescience/wp-json/wp/v2/posts/667"
+        "https://ncseagrant.ncsu.edu/hooklinescience/wp-json/wp/v2/posts/667",
+        "https://ncseagrant.ncsu.edu/hooklinescience/where-do-wahoo-spend-time-in-the-water-column/",
+        "https://www.iccat.int/Documents/SCRS/Manual/CH2/2_1_10_10_WAH_ENG.pdf"
       ],
       "reason_template": "Depth is {value} m, in the blue water wahoo use.",
       "range": [
@@ -136,11 +147,13 @@
       "kind": "season",
       "weight": 0.18,
       "active": true,
-      "value_status": "provisional",
-      "value_notes": "Angler sources call November to February prime wahoo season off the Keys and Miami. Other sources say wahoo are caught year-round with a late-summer to early-fall peak in some regions. The window here is a judgment call.",
+      "value_status": "partly_sourced",
+      "value_notes": "ICCAT reports year-round presence in the Caribbean and Gulf of Mexico and summer spawning in the northwest Atlantic (June-August, including Florida and the Bahamas); the Florida Museum reports western-central Atlantic spawning mainly May-August. These sources do not validate the configured October-March angler-derived fishing window or November-February peak months as a South Florida catch curve.",
       "sources": [
         "https://inthespread.com/blog/wahoo-fishing-in-florida-expert-regional-tactics-376",
-        "https://inthespread.com/blog/the-best-depth-for-wahoo-fishing-366"
+        "https://inthespread.com/blog/the-best-depth-for-wahoo-fishing-366",
+        "https://www.iccat.int/Documents/SCRS/Manual/CH2/2_1_10_10_WAH_ENG.pdf",
+        "https://www.floridamuseum.ufl.edu/discover-fish/species-profiles/wahoo/"
       ],
       "months": [
         10,
@@ -175,14 +188,16 @@
         -6,
         15
       ],
-      "weight": 0.10,
+      "weight": 0.1,
       "active": true,
-      "value_status": "provisional",
-      "value_notes": "Wahoo anglers fish current edges, often where the edge meets a steep ledge. The edge is estimated from 25 km satellite altimetry, so it is good to roughly 20 km. The band is an estimate.",
+      "value_status": "partly_sourced",
+      "value_notes": "ICCAT summarizes extensive East Florida wahoo movements that may be associated with the Gulf Stream. This supports regional movement context, not a preferred distance-response relationship; the configured -35 to 40 km range and -6 to 15 km ideal remain unvalidated.",
       "reason_template": "The Gulf Stream's inshore edge is close ({abs_value} km {side}). Wahoo patrol current edges.",
       "sources": [
         "https://www.satfish.com/wahoo-species-profile/",
-        "https://inthespread.com/blog/wahoo-fishing-in-florida-expert-regional-tactics-376"
+        "https://inthespread.com/blog/wahoo-fishing-in-florida-expert-regional-tactics-376",
+        "https://www.iccat.int/Documents/SCRS/Manual/CH2/2_1_10_10_WAH_ENG.pdf",
+        "https://www.iccat.int/Documents/CVSP/CV073_2017/n_9/CV073093163.pdf"
       ]
     }
   ],
@@ -196,8 +211,8 @@
     ],
     "light": {
       "map": {
-        "dawn": 1.0,
-        "dusk": 1.0,
+        "dawn": 1,
+        "dusk": 1,
         "day": 0.6,
         "night": 0.6
       },
@@ -215,7 +230,7 @@
       ],
       "from_days": -3,
       "to_days": 3,
-      "in_score": 1.0,
+      "in_score": 1,
       "out_score": 0.6,
       "text": "It is the week around the full moon, when local charters report the year's best wahoo fishing with the king tides."
     }
@@ -231,7 +246,7 @@
     "source_url": "https://myfwc.com/fishing/saltwater/recreational/"
   },
   "lon_range": [
-    -100.0,
-    -50.0
+    -100,
+    -50
   ]
 }

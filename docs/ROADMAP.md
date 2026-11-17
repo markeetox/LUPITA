@@ -428,3 +428,10 @@ Completed metadata implementation for the three remaining temperature-only site 
 ## 2026-11-17 | Batch C fourth multi-factor review
 
 Reviewed Hogfish, Jack crevalle, King mackerel, and Red drum across 13 active factors. Continue with the remaining elevated-risk multi-factor profiles, then partial/documented models and timing/profile narratives. The exact remaining profile list will be reconciled against the refreshed validator artifact before the next batch. Preserve numeric settings and runtime behavior. See SPECIES_EVIDENCE_AUDIT_2026-11-17.md.
+
+
+## 2026-11-17 | Batch C elevated-risk review complete
+
+Completed source-by-source review of all 29 originally elevated-risk multi-factor profiles. The final five were Mahi-mahi, Mutton snapper, Sheepshead, Southern flounder, and Wahoo (26 active factors). Source/status/value-note metadata only; all numerical and runtime behavior remains unchanged.
+
+Next: run/inspect the refreshed species-profile validator, then review remaining partial-risk and documented multi-factor profiles. Resolve the southern flounder South Florida distribution caveat separately before any model-scope or activation decision. See [SPECIES_EVIDENCE_AUDIT_2026-11-17.md](SPECIES_EVIDENCE_AUDIT_2026-11-17.md).

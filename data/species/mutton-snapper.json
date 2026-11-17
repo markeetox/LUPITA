@@ -16,7 +16,7 @@
   "max_spots": 25,
   "patch_block_cells": 6,
   "title_from": "structure",
-  "review_status": "reviewed 2026-11-14 - biology checked against FWC and NOAA research; Atlantic/Gulf Florida recreational limits checked against current FWC snapper regulations",
+  "review_status": "Evidence reviewed 2026-11-17. Dry Tortugas telemetry supports seasonal spawning migrations and reef-site fidelity; numeric depth and SST suitability bands remain provisional.",
   "image": {
     "status": "placeholder",
     "kind": "illustration",
@@ -42,7 +42,9 @@
       "https://myfwc.com/wildlifehabitats/profiles/saltwater/snapper/mutton-snapper/",
       "https://myfwc.com/fishing/saltwater/recreational/snappers/",
       "https://myfwc.com/research/saltwater/wdr/",
-      "https://www.sciencedirect.com/science/article/abs/pii/S0165783618300560"
+      "https://www.sciencedirect.com/science/article/abs/pii/S0165783618300560",
+      "https://repository.library.noaa.gov/view/noaa/62684",
+      "https://www.floridamuseum.ufl.edu/discover-fish/species-profiles/mutton-snapper/"
     ]
   },
   "factors": [
@@ -52,10 +54,12 @@
       "weight": 0.32,
       "active": true,
       "value_status": "partly_sourced",
-      "value_notes": "Adults are tied to reefs, wrecks and artificial reefs, especially where reef meets sand. Structure comes from FWC's artificial reef list and the Unified Reef Map. Open sand is not counted even though mutton also use sand near reefs.",
+      "value_notes": "Florida reef habitat and Dry Tortugas telemetry support adult association with reef home sites and discrete spawning grounds. Juveniles use shallow vegetated nursery habitat. The study does not validate the exact score ranking among runtime structure categories, and generic reef polygons must not be treated as known spawning aggregation sites.",
       "sources": [
         "https://inthespread.com/blog/mutton-snapper-fishing-tips-techniques-and-strategies-336",
-        "https://www.scrfa.org/?p=176123"
+        "https://www.scrfa.org/?p=176123",
+        "https://repository.library.noaa.gov/view/noaa/62684",
+        "https://myfwc.com/wildlifehabitats/profiles/saltwater/snapper/mutton-snapper/"
       ],
       "preferred": [
         "wreck",
@@ -73,10 +77,11 @@
       "kind": "higher_is_better",
       "weight": 0.08,
       "active": true,
-      "value_status": "sourced",
-      "value_notes": "Adult mutton snapper patrol reef breaks, terrace edges, and ridge drop-offs.",
+      "value_status": "partly_sourced",
+      "value_notes": "Adult reef association and documented movements between resident reef habitat and Riley's Hump support the broader relevance of reef edges and discrete reef features. The cited angler source does not establish a quantitative preference for the runtime bottom_curvature metric or its monotonic score.",
       "sources": [
-        "https://inthespread.com/blog/mutton-snapper-fishing-tips-techniques-and-strategies-336"
+        "https://inthespread.com/blog/mutton-snapper-fishing-tips-techniques-and-strategies-336",
+        "https://repository.library.noaa.gov/view/noaa/62684"
       ],
       "reason_template": "Sharp bottom curvature indicates a terrace edge or reef break line."
     },
@@ -86,10 +91,11 @@
       "weight": 0.3,
       "active": true,
       "value_status": "provisional",
-      "value_notes": "The broad configured depth band blends FishBase occurrence depth and angler-reported fishing depths. It is not a validated species-specific preferred depth or a universal adult depth range; retained unchanged for compatibility.",
+      "value_notes": "Available sources describe adult reef habitat, shallow juvenile nursery areas and spawning-site movements, but do not validate the configured 15-120 m range or 25-70 m ideal as a species-specific depth preference. Life stage and local reef context matter; numeric values remain unchanged and provisional.",
       "sources": [
         "https://fishbase.net.br/summary/1403",
-        "https://myfwc.com/wildlifehabitats/profiles/saltwater/snapper/mutton-snapper/"
+        "https://myfwc.com/wildlifehabitats/profiles/saltwater/snapper/mutton-snapper/",
+        "https://repository.library.noaa.gov/view/noaa/62684"
       ],
       "reason_template": "Depth is {value} m, in the reef water adult mutton snapper use.",
       "range": [
@@ -108,9 +114,10 @@
       "weight": 0.15,
       "active": true,
       "value_status": "provisional",
-      "value_notes": "Acoustic telemetry of adult mutton snapper in St. Thomas found no evidence of selection for specific temperature ranges; tagged fish used available temperatures equitably. This is useful negative evidence, not support for the configured 19–31 °C range or 22–29.5 °C ideal. Keep both values provisional and do not present them as validated thermal tolerance.",
+      "value_notes": "Dry Tortugas telemetry found spawning migrations during a seasonal warming period of roughly 25-30 °C, while separate adult acoustic telemetry found no evidence of selection for specific available temperatures. Seasonal exposure is not a thermal preference curve and does not validate the configured 19-31 °C range or 22-29.5 °C ideal.",
       "sources": [
-        "https://link.springer.com/article/10.1186/s40317-021-00237-z"
+        "https://link.springer.com/article/10.1186/s40317-021-00237-z",
+        "https://repository.library.noaa.gov/view/noaa/62684"
       ],
       "reason_template": "Water is {value} C, within the currently configured provisional screening band for mutton snapper; this is not a validated thermal tolerance.",
       "range": [
@@ -127,11 +134,12 @@
       "kind": "season",
       "weight": 0.1,
       "active": true,
-      "value_status": "provisional",
-      "value_notes": "Aggregations form in the warm months, and reef anglers rate May to August best, tied to the spawning cycle. Mutton snapper are caught year-round, so the off-season score is only mildly lower.",
+      "value_status": "partly_sourced",
+      "value_notes": "Acoustic telemetry of 55 mutton snapper in the Dry Tortugas (2008-2012) documented spawning migrations from April through August, linked to lunar timing and seasonal warming. This supports a local Florida Keys/Tortugas spawning period, but the configured May-August window omits observed April movements and the June-July peak scores are not independently validated as catch peaks.",
       "sources": [
         "https://inthespread.com/blog/mutton-snapper-fishing-tips-techniques-and-strategies-336",
-        "https://geo.gcoos.org/restore/species_profiles/Mutton%20Snapper/"
+        "https://geo.gcoos.org/restore/species_profiles/Mutton%20Snapper/",
+        "https://repository.library.noaa.gov/view/noaa/62684"
       ],
       "months": [
         5,

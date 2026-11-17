@@ -502,3 +502,12 @@ Applied metadata-only source/status/note updates to all 30 remaining single-fact
 ## Batch C evidence review | 2026-11-17
 
 Reviewed Hogfish, Jack crevalle, King mackerel, and Red drum across 13 active factors. Added specific sources and conservative claim-fit notes. Hogfish SST and king mackerel SST-gradient factors are needs_source; the remaining reviewed factors are partly_sourced. Broad thermal occurrence, depth/habitat records, spawning timing, and migration evidence were not treated as validated preferred-value or catch-response curves. No numeric model settings or runtime behavior changed. Details: [all-species evidence audit](SPECIES_EVIDENCE_AUDIT_2026-11-17.md).
+
+
+## Batch C completed | 2026-11-17
+
+Completed source-by-source review of all 29 profiles originally classified as elevated active-evidence risk. The final five reviewed were Mahi-mahi, Mutton snapper, Sheepshead, Southern flounder, and Wahoo (26 active factors). Evidence metadata was updated without changing numeric ranges, ideal intervals, weights, active flags, gates, required flags, month lists, scoring, confidence, ingestion, or publication behavior.
+
+Important open issue: a 2023 fisheries assessment cites southern flounder as absent from southern Florida between the Loxahatchee and Caloosahatchee rivers. The profile now carries a regional-applicability warning; no factor was disabled and no prediction behavior changed. See [SPECIES_EVIDENCE_AUDIT_2026-11-17.md](SPECIES_EVIDENCE_AUDIT_2026-11-17.md) for source-by-source findings.
+
+Next: refresh/review the validator artifact after these metadata updates, then continue the remaining partial-risk multi-factor profiles and documented profiles. Keep regional species applicability, biological evidence, environmental source freshness, and prediction confidence as separate concerns.
