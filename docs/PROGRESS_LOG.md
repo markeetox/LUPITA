@@ -1234,3 +1234,16 @@ Python tests passed for candidate-v2 sampling changes in [run 44163056720](https
 ## 2026-11-17 | Candidate v2 Copernicus pilot succeeded
 
 Manual read-only pilot [44164227216](https://github.com/markeetox/LUPITA/actions/runs/44164227216) completed successfully; all eight subset requests and artifact upload passed. Raw valid/all-grid counts: South Florida/Keys 321/475 (67.6%); Gulf 247/247 (100%); Atlantic v2 90/91 (98.9%); Pacific v2 73/91 (80.2%). These percentages include land and coastal cells and are not ocean-only coverage. Forecast (2026-11-17) and reanalysis (2017-07-15) dates differ, so no direct product comparison or accuracy conclusion is supported. Next: dispatch the ETOPO bathymetry assessment using source run ID `44164227216`, then review ocean-only coverage, depth composition, and land/coast mask disagreements from all per-cell CSVs. No production logic changed.
+
+
+## 2026-11-17 | Candidate v2 Copernicus ETOPO assessment completed
+
+Candidate-v2 Copernicus pilot [44164227216](https://github.com/markeetox/LUPITA/actions/runs/44164227216) and ETOPO assessment [44166772711](https://github.com/markeetox/LUPITA/actions/runs/44166772711) both passed. Downloaded and inspected the assessment JSON and all eight per-cell CSV grids.
+
+Ocean-only coverage: South Florida/Keys 302/302 (100%); Gulf 246/246 (100%); Atlantic v2 87/88 (98.9%); Pacific v2 65/65 (100%). Pacific has eight Copernicus-valid/ETOPO-land disagreements; South Florida has four. These remain excluded from ocean coverage.
+
+Depth counts: Gulf 15 cells at 0–10 m, 121 at 10–50 m, 57 at 50–200 m, 20 at 200–500 m, and 33 at 500–2000 m; 178/246 are 10–200 m (72.4%). Atlantic v2 has 2 at 0–10 m, 68 at 10–50 m, 10 at 50–200 m, 3 at 200–500 m, 3 at 500–2000 m, and 2 deeper than 2000 m; one of the two 0–10 m cells is missing temperature. Pacific v2 has 4 at 10–50 m, 33 at 50–200 m, 10 at 200–500 m, 13 at 500–2000 m, and 5 deeper than 2000 m; 43/65 are at 50–500 m. South Florida/Keys has 46 at 0–10 m, 7 at 10–50 m, 34 at 50–200 m, 65 at 200–500 m, and 150 at 500–2000 m.
+
+Disposition: Gulf is the strongest broad shelf candidate; Atlantic v2 is a focused shallow-shelf candidate with a very small inner-shelf class; Pacific v2 is a provisional shelf/slope-transition sample with unresolved mask disagreements; South Florida remains a broad shelf/slope reference. Forecast 2026-11-17 and reanalysis 2017-07-15 are not time-matched, so these are coverage/bathymetry findings only, not accuracy validation.
+
+Next: inventory independent NOAA WOD/GTSPP and regional CTD profiles, checking actual sample depth relative to seabed, QC, timestamp, location, and duplicates. Moorings qualify only when sensor depth is documented near bottom; surface-only observations are excluded. No production source, SST, species, factor, gate, weight, scoring, confidence, ingestion, or publication behavior changed.
