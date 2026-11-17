@@ -490,3 +490,10 @@ Reviewed Barred sand bass, Barred surfperch, Redtail surfperch, Rock greenling a
 ## 2026-11-17 | All documented multi-factor profiles reviewed
 
 Completed all 51 documented multi-factor profiles across 105 active factors. Final batch included Dungeness crab, Sablefish, Steelhead, Vermilion rockfish, White sturgeon and Yellowtail snapper. Source metadata and evidence notes only; no numerical model or runtime behavior changed. Run a fresh validator and reconcile all remaining elevated/partial evidence and taxonomy/region open items before any model rebuild.
+
+
+## 2026-11-17 | Transition from evidence review to model-rebuild planning
+
+All 130 profiles have been source-reviewed. Final validator reports 68 elevated, 61 partial, 1 documented; 130 structurally valid, 0 compatibility issues, 0 validator errors. The 51 initially documented multi-factor profiles were reviewed across 105 active factors. Many were reclassified because source presence did not substantiate numeric preference curves or runtime proxy relationships.
+
+Next work is to resolve scope/taxonomy first (Southern flounder, Pacific Opah, Dungeness crab, White sturgeon), then design a source/measurement plan for bottom temperature versus SST and bathymetry versus fish vertical depth. Only after those decisions should model rebuild candidates, numerical bands, factor weights or gates be considered. No such model changes were made.

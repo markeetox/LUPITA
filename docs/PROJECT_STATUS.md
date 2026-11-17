@@ -568,3 +568,12 @@ Reviewed Barred sand bass, Barred surfperch, Redtail surfperch, Rock greenling a
 ## Documented multi-factor evidence review complete | 2026-11-17
 
 Completed source-by-source claim-fit review of all 51 profiles that were classified as documented multi-factor models by the validator, covering 105 active factors. The final six reviewed were Dungeness crab (reference), Sablefish, Steelhead, Vermilion rockfish, White sturgeon and Yellowtail snapper. Sources were upgraded to species-specific NOAA, WDFW, CDFW, OPC, USGS, SEDAR and peer-reviewed research. The review identified remaining needs_source SST factors, weak bathymetry proxies, life-stage/region mismatches, and two taxonomic open items (Opah and Dungeness crab naming). No numeric ranges, ideal intervals, weights, active flags, gates, required flags, scoring, confidence, ingestion or publication behavior changed. Fresh validator reconciliation is next. See [species evidence audit](SPECIES_EVIDENCE_AUDIT_2026-11-17.md).
+
+
+## Final species evidence review checkpoint | 2026-11-17
+
+All 130 species profiles have received source-by-source evidence review. Final CI [#44131162206](https://github.com/markeetox/LUPITA/actions/runs/44131162206) passed 307 tests, 0 failures, 115 warnings. Final validator: 130 parsed, 130 structurally valid, 0 JSON errors, 0 model-compatibility issues, 0 validator errors, 590 warnings and 120 informational findings.
+
+Evidence risk is 68 elevated, 61 partial, and 1 documented. Combined active uncertain factor weight is 29.84 (not probability or percentage). The validator classifies 127 profiles NEEDS MODEL REBUILD and 3 NEEDS RESEARCH; this is biological-completeness prioritization, not runtime breakage. The 51 initially documented multi-factor profiles have now been reviewed across 105 active factors; many were correctly reclassified after claim-fit review. See [SPECIES_EVIDENCE_AUDIT_2026-11-17.md](SPECIES_EVIDENCE_AUDIT_2026-11-17.md).
+
+Next phase is a controlled model-rebuild plan, not another broad citation pass. Resolve Southern flounder regional applicability, Opah and Dungeness crab taxonomy, White sturgeon ocean-grid scope, bottom-temperature versus SST mismatches, and bathymetry versus fish vertical-depth proxies. No numerical biology, factor weights, active flags, gates, scoring, confidence or runtime behavior changed in this evidence review.

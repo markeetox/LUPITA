@@ -880,3 +880,43 @@ Reviewed Dungeness crab (reference profile), Sablefish, Steelhead, Vermilion roc
 
 ### Documented-profile review progress
 All 51 of 51 profiles currently classified as documented multi-factor models have now received source-by-source claim-fit review across 105 active factors. The next step is a fresh validator run and final reconciliation of evidence-risk categories, unresolved taxonomic/regional caveats, and remaining open research items. No numeric or runtime model behavior changed in this review.
+
+
+## Final validator reconciliation and completion | 2026-11-17
+
+CI [#44131162206](https://github.com/markeetox/LUPITA/actions/runs/44131162206) passed **307 tests, 0 failures, 115 warnings**. The final species audit artifact [#14348699477](https://github.com/markeetox/LUPITA/actions/runs/44131162206/artifacts/14348699477) inspected all 130 profiles.
+
+### Structural and evidence results
+- Profiles inspected/parsed: 130 / 130.
+- JSON parse errors: 0.
+- Structurally valid profiles: 130.
+- Model-compatibility issues: 0.
+- Validator errors: 0.
+- Validator warnings: 590; informational findings: 120.
+- Evidence risk: 68 elevated, 61 partial, 1 documented.
+- Risk by model scope:
+  - Elevated: 54 multi-factor, 7 other single-factor, 7 temperature-only site profiles.
+  - Partial: 26 multi-factor, 20 other single-factor, 15 temperature-only site profiles.
+  - Documented: 0 multi-factor, 0 other single-factor, 1 temperature-only site profile (Spanish mackerel).
+- Combined active uncertain factor weight: 29.84. This is a sum of configured factor weights, not a probability, percentage, or calibrated confidence score.
+- Validator biological completeness classification: 127 NEEDS MODEL REBUILD, 3 NEEDS RESEARCH. This classification is not a count of malformed files or runtime incompatibilities.
+
+### Review coverage
+All 130 profiles have now received source-by-source review:
+- 20 initial named-site SST profiles plus 3 provisional South Florida SST pilots.
+- 27 other single-factor profiles.
+- 29 originally elevated-risk multi-factor profiles.
+- 51 profiles that were initially classified as documented multi-factor models.
+
+The final 51-profile review covered 105 active factors. The validator subsequently reclassified many of these as elevated or partial because specific citations do not substantiate numeric preference curves, or because a factor is only a weak proxy. This is an intended evidence-quality correction, not a regression in JSON structure or runtime compatibility.
+
+### Open decisions before any model rebuild
+1. **Regional applicability:** Southern flounder is reported absent from southern Florida between the Loxahatchee and Caloosahatchee rivers; its South Florida model scope needs an explicit decision.
+2. **Taxonomy:** Pacific opah taxonomy split into *Lampris incognitus* and *L. megalopsis*, while the current profile says *L. guttatus*. Dungeness crab sources use *Metacarcinus magister* for the current name and *Cancer magister* as a synonym. Resolve accepted profile names before using these profiles as species-specific models.
+3. **Freshwater/estuarine scope:** White sturgeon is primarily riverine/estuarine and only occasionally marine; decide whether it belongs in the ocean-grid catalog.
+4. **Surface versus bottom temperature:** Pacific halibut, Petrale sole, Pacific cod, Sablefish and Rock greenling evidence often describes bottom-water temperatures, which cannot validate the runtime satellite-SST factor.
+5. **Bathymetry versus fish vertical depth:** Pelagic salmon, tunas, marlin, sharks and other midwater species have tagging data on fish depth in the water column. That is not seafloor bathymetry; several existing depth factors are now explicitly marked weak.
+6. **Numeric suitability bands:** Pacific salmon preferred SST estimates are generally colder than configured ranges; other species have life-stage, region, sex, season and diel mismatches. Do not silently change ranges or weights.
+
+### Recommended next phase
+Stop broad citation collection and convert the completed audit into a controlled model-rebuild plan. Rank candidate changes by regional applicability, active uncertain weight, factor measurement mismatch, and whether evidence supports a numeric response curve. First resolve taxonomy and regional-scope decisions; then decide whether LUPITA needs bottom-temperature inputs or whether SST remains a documented proxy; then evaluate weak bathymetry factors and species-specific numeric bands. Any score, weight, gate, activation or biological-value change remains a separate approval decision.

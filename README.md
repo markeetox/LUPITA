@@ -195,3 +195,10 @@ The selected SST ERDDAP host is exposed as `source_endpoint` in `latest.json` an
 
 
 Named-site model limitations and evidence gaps are tracked in [the 2026-11-15 site-model triage](docs/SITE_MODEL_TRIAGE_2026-11-15.md).
+
+
+## Species evidence review status (2026-11-17)
+
+The source-by-source evidence review now covers all 130 species profiles. Final validation: 307 tests passed; 130 profiles parsed and structurally valid; 0 JSON errors and 0 model-compatibility issues. The evidence audit reports 68 elevated, 61 partial, and 1 documented profile. These are evidence-quality categories, not runtime-health states.
+
+See [the full species evidence audit](docs/SPECIES_EVIDENCE_AUDIT_2026-11-17.md) for source-by-source findings, open taxonomy/region questions, and the next model-rebuild priorities. No biological values, model weights, gates, scoring, or runtime behavior were changed during this review.

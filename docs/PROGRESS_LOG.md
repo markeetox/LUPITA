@@ -1088,3 +1088,12 @@ Reviewed Barred sand bass, Barred surfperch, Redtail surfperch, Rock greenling a
 Reviewed Dungeness crab (reference), Sablefish, Steelhead, Vermilion rockfish, White sturgeon and Yellowtail snapper across 13 active factors. Added California OPC, NOAA, WDFW, CDFW, USGS, SEDAR and species-specific research sources. Dungeness crab thermal preference is food/acclimation-dependent; sablefish ambient temperature is not SST; steelhead vertical depth is not bathymetry; white sturgeon is primarily riverine/estuarine; yellowtail snapper adult reef and juvenile nursery habitats remain distinct. No numeric or runtime changes.
 
 All 51 documented multi-factor profiles have now received source-by-source review across 105 active factors. Fresh validator run and final status reconciliation are next.
+
+
+## 2026-11-17 | Full 130-profile evidence review complete
+
+Completed source-by-source review of all 130 species profiles, including the 51 initially documented multi-factor profiles across 105 active factors. Final CI #44131162206 passed: 307 tests, 0 failures, 115 warnings. Final validator: 130 parsed/structurally valid, 0 JSON errors, 0 compatibility issues, 0 validator errors, 590 warnings, 120 informational findings. Evidence risk: 68 elevated, 61 partial, 1 documented. Active uncertain factor-weight sum: 29.84 (not probability).
+
+The validator reclassified many profiles after claim-fit review because their citations did not substantiate numeric preference curves or because factors were only weak proxies. This is an evidence-quality correction, not a runtime regression. No numeric ranges, ideal intervals, weights, gates, active flags, scoring, confidence, ingestion or publication behavior changed.
+
+Next phase: controlled model-rebuild planning. Prioritize southern flounder regional applicability, Opah/Dungeness crab taxonomy, White sturgeon freshwater/estuary scope, bottom temperature versus SST, and bathymetry versus fish vertical depth. Do not implement biology or model changes without separate approval.
