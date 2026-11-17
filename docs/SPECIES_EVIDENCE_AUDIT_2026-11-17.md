@@ -350,3 +350,39 @@ Python CI [#44123016856](https://github.com/markeetox/LUPITA/actions/runs/441230
 
 The updated audit is a metadata-quality diagnostic, not a biological-quality verdict. Numeric model settings and runtime behavior remain unchanged.
 
+
+## Batch C research and metadata implementation: pelagic species | 2026-11-17
+
+Reviewed Atlantic blue marlin, Atlantic bluefin tuna, sailfish, and tarpon. Replaced generic references for blue marlin and bluefin tuna, tightened sailfish current-convergence evidence, and documented inactive sailfish/tarpon factors. No numeric ranges, ideal bands, factor weights, active flags, gates, required flags, season months, or runtime behavior changed.
+
+### Atlantic blue marlin (Makaira nigricans)
+- SST: partly_sourced. North Atlantic and Southwest Atlantic satellite-tag studies report most time in warm surface waters, commonly 26–30 °C; a 21-fish Southwest Atlantic study reports most time at 26–28 °C. Supports broad 23–31 °C / 26–29 °C association, not a South Florida catch-probability curve.
+- SST gradient: partly_sourced. Tagging and Gulf movement studies describe seasonal shifts with SST, production, fronts/eddies, and temperature/oxygen structure. They do not calibrate the pipeline's scalar SST-gradient magnitude.
+- Current convergence: partly_sourced. Shelf-edge and productive oceanographic features are supported, but studies do not directly measure current convergence or validate a higher-is-better score.
+- Gulf Stream edge: provisional. Seasonal shelf-edge/offshore movements are documented, but no species-specific distance-response curve validates the configured -20 to 50 km / 0 to 25 km bands.
+- Depth: partly_sourced. Tag records describe fish vertical dive depths, not seafloor bathymetry. The configured 100–4,000 m bathymetric range and 200–2,000 m ideal remain unvalidated as a seabed-depth preference; this factor is an active gate.
+- Season presence: partly_sourced. Gulf tagging documents summer use of northern Gulf shelf-edge waters during spawning and overwintering in the Bay of Campeche. The configured May–September window is a broad Gulf seasonal proxy, not a South Florida monthly catch curve.
+- Sources: [NOAA-hosted North Atlantic tag study](https://repository.library.noaa.gov/view/noaa/58935); [USGS Gulf movement study](https://www.usgs.gov/publications/horizontal-movements-atlantic-blue-marlin-makaira-nigricans-gulf-mexico); [Southwest Atlantic satellite-tag study](https://doi.org/10.3390/fishes10050201); [North Atlantic seasonal/diel habitat study](https://academic.oup.com/icesjms/article/80/4/1002/7067461).
+
+### Atlantic bluefin tuna (Thunnus thynnus)
+- SST: partly_sourced. Archival-tag data report 10–23 °C for most occupancy, with peak occupancy around 13–20 °C; ICCAT documents broad adult/juvenile temperature tolerances. Supports broad 12–24 °C / 16–22 °C context, but use varies by stock, stage, season, and dive depth.
+- SST gradient: partly_sourced. NOAA habitat guidance describes feeding along productive frontal features, including chlorophyll-a fronts, and tracking temperature/currents. A chlorophyll front is not identical to runtime SST-gradient magnitude.
+- Depth: partly_sourced. NOAA reports frequent dives to 500–1,000 m, but these are fish vertical dive depths, not seafloor bathymetry. The configured 100–3,000 m / 200–1,500 m bathymetric range remains unvalidated as a seabed-depth preference; depth is an active gate.
+- Season presence: partly_sourced. NOAA reports western Atlantic spawning from mid-April through June, mainly in the Gulf, while tagging summaries describe seasonal movements. The configured January–May window may represent migration/availability but does not capture the full spawning period or establish a South Florida monthly catch curve.
+- Sources: [NOAA western Atlantic bluefin profile](https://cd1-www.fisheries.noaa.gov/species/western-atlantic-bluefin-tuna); [NOAA HMS EFH Amendment 10](https://www.habitat.noaa.gov/application/efhinventory/docs/a10_hms_efh.pdf); [archival-tag study](https://pmc.ncbi.nlm.nih.gov/articles/PMC2701635/); [ICCAT temperature analysis](https://www.iccat.int/Documents/CVSP/CV075_2018/n_6/CV075061494.pdf); [NOAA habitat guidance](https://www.ncei.noaa.gov/waf/data-atlas-waf/products/html/lmrPlates/HabitatSuitability_BluefinTunaLayerGuidance.htm).
+
+### Atlantic sailfish (Istiophorus platypterus)
+- Existing factor research and notes were retained. The current-convergence factor was downgraded from sourced to partly_sourced because its evidence is primarily Florida angler reporting of bait/weed lines and shelf-edge current features, not a direct current-convergence study.
+- The inactive cold_front factor now has traceable Florida angler references and remains provisional; it is not detected by the pipeline and has zero scoring weight.
+- Existing provisional SST-gradient, chlorophyll, chlorophyll-gradient, depth, and Gulf Stream-edge claims remain provisional pending stronger direct studies/calibration. Existing South Florida tagging and seasonal evidence for SST and season presence remains partly_sourced.
+- Sources: [Nova Southeastern sailfish habitat research](https://nsuworks.nova.edu/mako/vol2021/iss1/1); [ICCAT sailfish habitat report](https://www.iccat.int/Documents/CVSP/CV065_2010/n_5/CV065051740.pdf); [Florida Sportsman local guidance](https://floridasportsman.com/editorial/features_florida_sailfish_fishing_basics/397320).
+
+### Atlantic tarpon (Megalops atlanticus)
+- Existing active-factor statuses/notes were retained: SST, season, and inlet structure remain partly_sourced; tide stage and time-of-day remain provisional.
+- The inactive salinity factor now cites a regional EFH assessment and Florida Museum species account. Broad euryhaline tolerance supports partial biological context but does not establish a predictive salinity suitability curve; weight remains zero.
+- The inactive bridges_lights factor remains needs_source until traceable evidence and a usable dataset exist.
+- Sources: [regional essential fish habitat assessment](https://www.swg.usace.army.mil/Portals/26/docs/Planning/Public%20Notices-Civil%20Works/HSC-ECIP%20FIFR-EIS/App%20L%20-%20Essential%20Fish%20Habitat%20Assessment%20%2818%20Nov%202019%29.pdf); [Florida Museum tarpon profile](https://www.floridamuseum.ufl.edu/discover-fish/species-profiles/tarpon/).
+
+### Batch C cumulative disposition
+Sixteen elevated-risk multi-factor profiles have now been reviewed across 59 active factors. The four pelagic profiles above complete this batch's source updates; inactive sailfish cold_front and tarpon salinity were also documented. The remaining multi-factor profiles continue to be prioritized by active evidence risk and runtime relevance.
+

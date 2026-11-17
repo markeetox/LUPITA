@@ -408,3 +408,8 @@ Twelve of the 29 elevated-risk multi-factor profiles have now been reviewed acro
 
 Twelve of 29 elevated-risk multi-factor profiles have been reviewed and updated across 36 active factors. Latest validator run #44123016856 passed for all 130 profiles. Current evidence-risk distribution is 55 elevated, 23 partial, 52 documented; combined uncertain active factor weight is 26.4. Remaining work: implement reviewed metadata for Batches A/B, complete the remaining 17 elevated-risk multi-factor profiles and nine partial-risk multi-factor profiles, then review the 51 documented multi-factor profiles and timing/profile narratives. Preserve numeric model settings and runtime behavior.
 
+
+## 2026-11-17 | Pelagic species evidence review
+
+Reviewed Atlantic blue marlin, Atlantic bluefin tuna, sailfish, and tarpon. Sixteen of the 29 elevated-risk multi-factor profiles have now received source-by-source review; continue with the remaining 13 elevated-risk models, then nine partial-risk and 51 documented multi-factor profiles. Maintain explicit separation between vertical fish dive depth and bathymetric seafloor depth. See SPECIES_EVIDENCE_AUDIT_2026-11-17.md.
+

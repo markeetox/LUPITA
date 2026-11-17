@@ -962,3 +962,15 @@ Found species-specific evidence for all three previously needs-source named-site
 - Multi-factor risk distribution: 20 elevated, 9 partial, 51 documented.
 - The validator's classifications reflect current metadata quality, not a scientific verdict. Numeric model settings and runtime behavior remain unchanged.
 
+
+## 2026-11-17 | Pelagic multi-factor evidence review
+
+- Reviewed Atlantic blue marlin, Atlantic bluefin tuna, sailfish, and tarpon.
+- Blue marlin: added North Atlantic/Southwest Atlantic satellite-tagging and Gulf movement studies; marked SST, SST-gradient, convergence, bathymetry, and season partly_sourced; Gulf Stream distance remains provisional.
+- Bluefin tuna: added NOAA/ICCAT/archival-tag sources for SST, fronts, vertical habitat, and seasonal migration; all active factors are partly_sourced.
+- For both billfish/tuna profiles, explicitly distinguished vertical fish dive depth from seafloor bathymetry used by the pipeline's depth_m factor.
+- Sailfish current_convergence was downgraded to partly_sourced; inactive cold_front now has local angler references but remains provisional.
+- Tarpon inactive salinity now has an EFH source and remains partly_sourced; inactive bridges_lights remains needs_source.
+- No numeric values, weights, active flags, gates, required flags, season months, scoring, confidence, ingestion, or publication behavior changed.
+- Full source-fit notes are in docs/SPECIES_EVIDENCE_AUDIT_2026-11-17.md.
+
