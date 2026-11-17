@@ -477,3 +477,8 @@ Completed the third multi-factor batch: gray triggerfish, gray (mangrove) snappe
 
 Completed the third multi-factor batch: gray triggerfish, gray (mangrove) snapper, scamp grouper, and snowy grouper. Replaced generic homepage factor references with species-specific sources and updated 12 active factor statuses/notes. Gray triggerfish, gray snapper, and scamp factors are partly_sourced; snowy grouper SST is needs_source because available temperature records are deep bottom-water spawning observations, not SST, while slope and depth remain partly_sourced. No numeric bands, weights, active flags, gates, required flags, scoring, confidence, source selection, ingestion, or publication behavior changed. Details: [all-species evidence audit](SPECIES_EVIDENCE_AUDIT_2026-11-17.md).
 
+
+## All-species validator refresh after 12 multi-factor reviews | 2026-11-17
+
+Latest Python CI [#44123016856](https://github.com/markeetox/LUPITA/actions/runs/44123016856) passed: all 130 species profiles parsed and were structurally valid, with zero model compatibility issues and zero validator errors. After the first 12 elevated-risk multi-factor profiles were metadata-updated, elevated active-evidence risk decreased from 64 to 55 profiles, partial risk increased from 14 to 23, and combined uncertain active weight decreased from 37.4 to 26.4. Generic homepage-only findings decreased from 96 across 48 profiles to 59 across 36 profiles. The updated multi-factor risk distribution is 20 elevated, 9 partial, and 51 documented. These are validator classifications, not biological-quality scores. No numeric model settings or prediction behavior changed. See [all-species evidence audit](SPECIES_EVIDENCE_AUDIT_2026-11-17.md).
+

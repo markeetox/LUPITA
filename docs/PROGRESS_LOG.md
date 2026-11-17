@@ -951,3 +951,14 @@ Found species-specific evidence for all three previously needs-source named-site
 - No numeric values, weights, active flags, gates, required flags, scoring, confidence, ingestion, or publication behavior changed.
 - Full findings and source register are in docs/SPECIES_EVIDENCE_AUDIT_2026-11-17.md.
 
+
+## 2026-11-17 | All-species validator refresh after 12 multi-factor reviews
+
+- Python CI #44123016856 passed with 130 profiles parsed, 130 structurally valid, 0 compatibility issues, and 0 validator errors.
+- Elevated active-evidence risk: 55 profiles (down from 64 baseline).
+- Partial active-evidence risk: 23 profiles (up from 14 baseline).
+- Combined active uncertain factor weight: 26.4 (down from 37.4 baseline; not a probability or percentage).
+- Generic homepage-only findings: 59 across 36 profiles (down from 96 across 48 profiles).
+- Multi-factor risk distribution: 20 elevated, 9 partial, 51 documented.
+- The validator's classifications reflect current metadata quality, not a scientific verdict. Numeric model settings and runtime behavior remain unchanged.
+

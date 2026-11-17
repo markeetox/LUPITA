@@ -403,3 +403,8 @@ Twelve of the 29 elevated-risk multi-factor profiles have now been reviewed acro
 
 Twelve of the 29 elevated-risk multi-factor profiles have now been reviewed across 36 active factors. Seventeen elevated-risk multi-factor profiles remain, plus 51 other multi-factor profiles. Continue with the remaining high-risk models by ecological factor family, with special attention to SST-vs-bottom-temperature mismatches and proxies that do not match the runtime variable. See SPECIES_EVIDENCE_AUDIT_2026-11-17.md.
 
+
+## 2026-11-17 | Current all-species evidence review status
+
+Twelve of 29 elevated-risk multi-factor profiles have been reviewed and updated across 36 active factors. Latest validator run #44123016856 passed for all 130 profiles. Current evidence-risk distribution is 55 elevated, 23 partial, 52 documented; combined uncertain active factor weight is 26.4. Remaining work: implement reviewed metadata for Batches A/B, complete the remaining 17 elevated-risk multi-factor profiles and nine partial-risk multi-factor profiles, then review the 51 documented multi-factor profiles and timing/profile narratives. Preserve numeric model settings and runtime behavior.
+

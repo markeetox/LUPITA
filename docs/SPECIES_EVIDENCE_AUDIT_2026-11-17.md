@@ -1,10 +1,10 @@
 # LUPITA all-species evidence audit: master inventory
 
 **Audit date:** 2026-11-17  
-**Branch / audited commit:** `main` / `866dc4a44ea3e7a2ae819bd14c77ed5b1ccd70c0`  
-**Source:** species-profile audit artifact from [Python CI run #43952010312](https://github.com/markeetox/LUPITA/actions/runs/43952010312)  
-**Scope:** all JSON profiles in `data/species/`; read-only inventory and prioritization  
-**Boundary:** this inventory does not change species biology, factor values, scoring, or production behavior.
+**Branch:** `main`  
+**Latest validator snapshot:** [Python CI run #44123016856](https://github.com/markeetox/LUPITA/actions/runs/44123016856), profile commit `c7e3243cf118dfcf11d26f905ac2db22dda4dc7b`  
+**Scope:** all JSON profiles in `data/species/`; master inventory, prioritization, and source-by-source review tracking  
+**Boundary:** evidence references, statuses, and explanatory notes are being updated in approved batches. Numeric biology, weights, active flags, gates, scoring, confidence, ingestion, and publication behavior remain unchanged.
 
 ## Executive result
 
@@ -14,8 +14,8 @@ The current catalog contains **130 species profiles**, not just the 20 named-sit
 - 130 structurally valid; 0 model-compatibility issues.
 - 105 grid models and 25 named-site models.
 - 23 temperature-only named-site pilots, 27 other single-factor models, and 80 multi-factor models.
-- 64 profiles have elevated active-evidence risk, 14 have partial active-evidence risk, and 52 have no active uncertain weight under the validator's current metadata rules.
-- The combined active uncertain factor weight is 37.4. This is a sum of configured factor weights across profiles, **not** a probability, percentage of fish presence, or calibrated scientific-quality score.
+- 55 profiles have elevated active-evidence risk, 23 have partial active-evidence risk, and 52 have no active uncertain weight under the validator's current metadata rules.
+- The combined active uncertain factor weight is 26.4. This is a sum of configured factor weights across profiles, **not** a probability, percentage of fish presence, or calibrated scientific-quality score.
 - The validator classifies 127 profiles as NEEDS MODEL REBUILD and 3 as NEEDS RESEARCH. These are structural review classifications, not a scientific verdict that 127 species profiles are unusable.
 
 The audit artifact and validator findings are useful for prioritization, but they are not a substitute for source-by-source biological review. A `sourced` label or a specific URL does not prove that the source supports the configured value, population, life stage, region, or model use.
@@ -26,28 +26,28 @@ The audit artifact and validator findings are useful for prioritization, but the
 |---|---:|---:|---:|---:|
 | Temperature-only site pilot | 23 | 8 | 14 | 1 |
 | Other single-factor model | 27 | 27 | 0 | 0 |
-| Multi-factor model | 80 | 29 | 0 | 51 |
-| **Total** | **130** | **64** | **14** | **52** |
+| Multi-factor model | 80 | 20 | 9 | 51 |
+| **Total** | **130** | **55** | **23** | **52** |
 
 The 20 named-site SST profiles reviewed and updated on November 16 are part of the 23 temperature-only pilots. Their current declared statuses are 1 `sourced`, 14 `partly_sourced`, and 5 `provisional`. The three remaining temperature-only site profiles are **bonefish, great barracuda, and Permit**.
 
 ## Validator findings that guide the review
 
-The November 16 audit artifact recorded:
+The latest validator artifact from run #44123016856 records:
 
 | Finding | Count | Interpretation |
 |---|---:|---|
-| Generic homepage-only source warnings | 96 findings across 48 profiles | These references are not traceable enough to substantiate a factor claim. Findings include configured factors whether active or inactive. |
-| Missing factor-source warnings | 3 findings across 2 profiles | Sailfish and tarpon need factor-level source inspection. |
-| Active evidence uncertainty | 64 profiles | At least some active factor weight is provisional, has incomplete reference metadata, or otherwise fails the validator's current source checks. |
-| Partly sourced active evidence | 19 profiles | Declared partial support needs claim-fit review. |
+| Generic homepage-only source warnings | 59 findings across 36 profiles | These references are not traceable enough to substantiate a factor claim. Findings include configured factors whether active or inactive. |
+| Missing factor-source warnings | 6 findings across 5 profiles | African pompano, Almaco jack, sailfish, snowy grouper, and tarpon need factor-level source inspection. |
+| Active evidence uncertainty | 55 profiles | At least some active factor weight is provisional, has incomplete reference metadata, or otherwise fails the validator's current source checks. |
+| Partly sourced active evidence | 31 profiles | Declared partial support needs claim-fit review. |
 | Grid `required` flag ignored | 27 profiles | The grid scorer does not enforce factor-level `required`; the effective behavior must be reviewed against `gate` and runtime contracts. |
 | Single-factor models | 50 profiles | Full data coverage does not establish biological completeness. |
 | Limited biological dimensions | 50 profiles | Only one of six structural review dimensions is represented. |
 | Partial biological dimensions | 75 profiles | Two or three of six dimensions are represented. |
 | Provisional timing | 128 profiles | Timing maps are hypotheses/angler guidance, not empirically calibrated feeding probabilities. |
 
-The 96 generic-reference findings are **not 96 species** and do not imply all 96 are active. The 3 missing-source findings occur in two profiles. These distinctions matter when prioritizing work.
+The 59 generic-reference findings are **not 59 species** and do not imply all 59 are active. The six missing-source findings occur across five profiles. These distinctions matter when prioritizing work.
 
 ## Review standard
 
@@ -78,15 +78,15 @@ A source can be authoritative and still be a poor fit for a specific factor clai
 
 ### Batch A: finish the temperature-only site pilots
 
-Review bonefish, great barracuda, and Permit using the same source-by-source standard as the prior 20. These models have a single SST input that is both required and a gate, so weak thermal evidence directly affects site eligibility.
+Research review is complete for bonefish, great barracuda, and Permit. Metadata application and validator refresh remain to be completed after this research batch is reviewed. These models have a single SST input that is both required and a gate, so weak thermal evidence directly affects site eligibility.
 
 ### Batch B: the 27 other single-factor models
 
-These are all currently elevated-risk profiles. Review the actual factor claim and the specific source rather than assuming a generic species page validates the configured range. Confirm whether each is SST-only or another single-factor design and whether the active gate matches the runtime contract.
+Research review is complete for all 27. Metadata application and validator refresh remain pending. The review found 20 partly_sourced, three provisional, and four needs_source SST claims; several demersal species rely on bottom-temperature evidence while the active runtime gate uses SST.
 
 ### Batch C: the 80 multi-factor models
 
-Review active factors in coherent parameter groups (SST/gradients, depth/bathymetry, structure/habitat, currents/convergence/Gulf Stream edge, chlorophyll, and seasonal presence). Reuse a source assessment across species only when its taxon, geography, life stage, and measured variable genuinely apply. The 29 multi-factor profiles with elevated active-evidence risk receive priority within this batch.
+Review active factors in coherent parameter groups (SST/gradients, depth/bathymetry, structure/habitat, currents/convergence/Gulf Stream edge, chlorophyll, and seasonal presence). Reuse a source assessment across species only when its taxon, geography, life stage, and measured variable genuinely apply. The 20 multi-factor profiles with elevated active-evidence risk and nine with partial risk receive priority within this batch. Twelve elevated-risk profiles have been reviewed so far.
 
 ### Batch D: timing and profile-level biology
 
@@ -94,7 +94,7 @@ Review timing maps, spawning/migration narratives, habitat descriptions, and ope
 
 ### Batch E: approved metadata updates and validation
 
-After each research batch is reviewed, apply only approved source references, evidence statuses, and explanatory notes. Then run the species validator and full tests. Keep a progress register so completed species/factors are not researched twice.
+After each research batch is reviewed, apply only approved source references, evidence statuses, and explanatory notes. Then run the species validator and full tests. Keep a progress register so completed species/factors are not researched twice. Batches A and B have research recommendations recorded but still need metadata implementation; Batch C metadata updates are underway.
 
 ## Guardrails
 
@@ -335,4 +335,18 @@ The third multi-factor batch covers gray triggerfish, gray (mangrove) snapper, s
 
 ### Batch C cumulative disposition
 Twelve elevated-risk multi-factor profiles have now been reviewed across 36 active factors: African pompano, Almaco jack, black grouper, black sea bass, cubera snapper, gag grouper, red grouper, red snapper, gray triggerfish, gray snapper, scamp grouper, and snowy grouper. Seventeen of the original 29 elevated-risk multi-factor profiles remain, along with 51 other multi-factor profiles. Timing and profile-level narratives remain separate review work.
+
+
+## Latest validator refresh after Batch C third profile update | 2026-11-17
+
+Python CI [#44123016856](https://github.com/markeetox/LUPITA/actions/runs/44123016856) passed and regenerated the full 130-profile audit after the gray triggerfish, gray snapper, scamp grouper, and snowy grouper metadata changes.
+
+- 130 profiles parsed and structurally valid; 0 JSON parse errors; 0 model compatibility issues; 0 validator errors.
+- Active evidence risk changed from the original baseline of 64 elevated / 14 partial / 52 documented to **55 elevated / 23 partial / 52 documented**.
+- Combined active uncertain factor weight declined from 37.4 to **26.4**. This is a sum of configured factor weights across profiles, not a probability or percentage.
+- Generic homepage-only findings declined from 96 across 48 profiles to **59 across 36 profiles**.
+- Missing factor-source findings are now 6 across five profiles: African pompano SST, Almaco jack SST, sailfish cold_front, snowy grouper SST, and tarpon salinity/bridges_lights.
+- Across the 80 multi-factor profiles, current risk distribution is 20 elevated, 9 partial, and 51 documented by current metadata. The 27 other single-factor grid profiles remain elevated-risk; the 23 temperature-only site pilots remain 8 elevated, 14 partial, and 1 documented.
+
+The updated audit is a metadata-quality diagnostic, not a biological-quality verdict. Numeric model settings and runtime behavior remain unchanged.
 
