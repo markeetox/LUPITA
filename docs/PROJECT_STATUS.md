@@ -696,3 +696,14 @@ The candidate-v2 Atlantic/Pacific sample-box update passed Python tests in [run 
 The revised manual read-only pilot succeeded in [run 44164227216](https://github.com/markeetox/LUPITA/actions/runs/44164227216). All eight forecast/reanalysis subset requests completed and artifact `copernicus-bottom-temperature-pilot` was uploaded. The candidate-v2 raw rectangular-grid counts are: South Florida/Keys 321/475 (67.6%); Gulf 247/247 (100%); Atlantic 90/91 (98.9%); Pacific 73/91 (80.2%). These are all-grid fractions, not ocean-only coverage. The candidate v2 Atlantic and Pacific boxes are not accepted as representative shelf strata until the new artifact is classified against ETOPO and its depth composition and coastal-mask disagreements are reviewed.
 
 Forecast subset date is 2026-11-17; reanalysis date is 2017-07-15. They are not matched and must not be compared as a controlled accuracy test. The subset confirms successful extraction and basic numerical plausibility only. Next: run the manual ETOPO assessment with source pilot run ID `44164227216`, then inspect its summary and all per-cell CSVs. No production behavior changed.
+
+
+## Copernicus bottom-temperature candidate v2 bathymetry assessment | 2026-11-17
+
+The candidate-v2 pilot [44164227216](https://github.com/markeetox/LUPITA/actions/runs/44164227216) and ETOPO assessment [44166772711](https://github.com/markeetox/LUPITA/actions/runs/44166772711) both passed. The ETOPO artifact was inspected, including all eight per-cell CSV grids.
+
+Ocean-only coverage: South Florida/Keys 302/302 (100%); Gulf 246/246 (100%); Atlantic v2 87/88 (98.9%); Pacific v2 65/65 (100%). Pacific has eight additional Copernicus-valid cells classified as ETOPO land; South Florida has four. These mask disagreements are excluded from ocean coverage and remain unresolved.
+
+Depth composition confirms the Gulf as the strongest broad shelf candidate (178/246 cells at 10–200 m). Atlantic v2 is focused shallow shelf (78/88 at 10–200 m), but has only two 0–10 m cells and one of those is missing temperature. Pacific v2 has 43/65 cells at 50–500 m, making it a provisional shelf/slope-transition sample, though the sample is small. South Florida remains a broad shelf/slope reference, not shallow-only.
+
+The dates differ (forecast 2026-11-17; reanalysis 2017-07-15), so no accuracy or direct forecast/reanalysis comparison is supported. Next: inventory independent near-bottom NOAA CTD/profile observations and verify regional station coverage, actual sensor/sample depth, QC, and date availability before any model-observation pairing. No production behavior changed.
