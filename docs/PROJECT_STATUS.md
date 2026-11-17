@@ -622,3 +622,10 @@ The user configured repository Actions secrets `COPERNICUSMARINE_SERVICE_USERNAM
 ## Copernicus bottom-temperature validation | 2026-11-17
 
 The Copernicus credentials-check workflow passed, confirming GitHub Actions authentication. Before sample extraction, current Copernicus documentation revealed a variable-identifier ambiguity (`tob` in the earlier forecast-product review versus `bottomT` in current reanalysis guidance). Added a manual metadata-only workflow to retrieve live catalogue metadata for both daily forecast and reanalysis datasets. The exact variable identifiers, dimensions, units and temporal coverage must be confirmed from those metadata artifacts before constructing subset requests. No temperature data has been downloaded and no production behavior changed.
+
+
+## Copernicus bottom-temperature metadata confirmed | 2026-11-17
+
+The manual metadata inspection workflow passed and its two JSON outputs were reviewed. The forecast daily dataset `cmems_mod_glo_phy_anfc_0.083deg_P1D-m` (version `202406`) exposes sea-floor potential temperature as `tob`; the reanalysis daily dataset `cmems_mod_glo_phy_my_0.083deg_P1D-m` (version `202311`) exposes the same standard-name field as `bottomT`. Both are in `degrees_C`, use standard name `sea_water_potential_temperature_at_sea_floor`, and expose `time`, `latitude`, and `longitude` coordinates without a vertical depth axis.
+
+Catalogue time-coordinate extrema are 2022-06-01 to 2026-11-26 for forecast and 1993-01-01 to 2026-10-06 for reanalysis. The forecast maximum includes the forecast horizon and is not a latest-observation timestamp. Global coordinate bounds do not prove coastal data coverage or valid values. Next: build a manual-only read-only subset pilot and inspect actual data, fill values, coastal wet-cell coverage, and time semantics. No temperature samples, production source, model, species profiles, factors, scoring, confidence, ingestion, or publication behavior changed. See [Copernicus validation protocol](COPERNICUS_BOTTOM_TEMPERATURE_VALIDATION_2026-11-17.md).
