@@ -111,3 +111,10 @@ Returned WODSelect counts:
 This is a regional inventory count across selected WOD dataset types, not a count of unique, quality-screened, near-bottom observations. The instrument groups have different profile characteristics; actual profile depths, bottom separation, timestamps, position, QC, duplicate status, and eligibility must be assessed after extraction. Do not use 8,387 as the validation sample size.
 
 Next: record the export options shown by WODSelect and request observed-level NetCDF with available QC/IQuOD flags retained, preferably separate instrument files. Preserve the query receipt and downloaded filenames/checksums. Continue with Gulf, Atlantic, and Pacific regional inventory queries using the exact bounds above. No profiles have yet been accepted or paired; no bias/MAE/RMSE or model-accuracy result is claimed. No production behavior changed.
+
+
+## South Florida WOD extraction request submitted | 2026-11-17
+
+WODSelect confirmed successful submission of the South Florida/Keys extraction request. NOAA states that generated files will be available in the WODSelect output directory for up to 72 hours after they are prepared, after which they are removed. Output location: https://www.ncei.noaa.gov/access/world-ocean-database-select/OCLdb_output
+
+Submission confirmation is not evidence that files are ready or downloaded. Readiness time, file names, formats, export options actually applied, file sizes, and checksums remain pending. Next: check the output directory until the request is prepared, download all generated files within the 72-hour availability window, preserve the request/query receipt, and inspect file metadata/schema before writing any parser. Do not assume the selected output format or flag retention until verified from the actual files/receipt. No profiles have been screened or paired; no accuracy metrics are claimed. No production behavior changed.
