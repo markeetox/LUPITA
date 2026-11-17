@@ -361,3 +361,33 @@ These are valid counts over each rectangular extraction grid. They are not ocean
 Forecast values are from 2026-11-17 and reanalysis values from 2017-07-15. The snapshots are not time-matched; differences between their ranges or means are not an accuracy or inter-product validation result. The pilot establishes successful access, extraction, metadata consistency, and basic numerical plausibility only.
 
 Next: run `.github/workflows/copernicus-bottom-temperature-bathymetry.yml` with explicit `source_run_id=44164227216`; inspect ocean-only coverage, depth classes, and all per-cell mask disagreements before accepting or revising either candidate box. Continue the read-only boundary: no production ingestion, MUR SST, species profiles, factors, weights, gates, scoring, confidence, or publication behavior changes.
+
+
+## Candidate v2 ETOPO assessment completed | 2026-11-17
+
+The revised Copernicus pilot [44164227216](https://github.com/markeetox/LUPITA/actions/runs/44164227216) was classified against NOAA NCEI ETOPO 2022 in successful bathymetry assessment [44166772711](https://github.com/markeetox/LUPITA/actions/runs/44166772711). The artifact contains the JSON summary and eight forecast/reanalysis per-cell CSV grids. The assessment uses ETOPO elevation > +1 m as land, < -1 m as ocean, and -1 m through +1 m as coastal-ambiguous; ETOPO is a global relief model, not a navigation chart, and near-zero coastal cells remain ambiguous.
+
+Ocean-only valid coverage:
+- South Florida / Keys: 302/302 ocean cells (100%); 4 additional Copernicus-valid cells are ETOPO-land disagreements.
+- Gulf shelf candidate: 246/246 (100%); no Copernicus-valid ETOPO-land cells.
+- Atlantic shelf candidate v2: 87/88 (98.9%); no Copernicus-valid ETOPO-land cells. The single missing ocean cell is in the 0–10 m class; only 1 of 2 cells in that class is valid.
+- Pacific shelf candidate v2: 65/65 (100%); 8 additional Copernicus-valid cells are ETOPO-land disagreements.
+
+Depth composition (forecast/reanalysis share the same ETOPO classification):
+- Gulf: 15 cells at 0–10 m, 121 at 10–50 m, 57 at 50–200 m, 20 at 200–500 m, and 33 at 500–2000 m. The 178/246 cells at 10–200 m (72.4%) make this the strongest broad shelf-oriented candidate.
+- Atlantic v2: 2 cells at 0–10 m, 68 at 10–50 m, 10 at 50–200 m, 3 at 200–500 m, 3 at 500–2000 m, and 2 deeper than 2000 m. This is a focused shallow-shelf sample, but its inner-shelf class is tiny and one of its two 0–10 m cells is missing.
+- Pacific v2: 4 cells at 10–50 m, 33 at 50–200 m, 10 at 200–500 m, 13 at 500–2000 m, and 5 deeper than 2000 m. The 43/65 cells at 50–500 m (66.2%) are useful for a shelf/slope transition sample, but the total is small and the eight land-mask disagreements need spatial review.
+- South Florida / Keys: 46 cells at 0–10 m, 7 at 10–50 m, 34 at 50–200 m, 65 at 200–500 m, and 150 at 500–2000 m. Retain as a broad shelf/slope reference, not a shallow-coastal-only stratum.
+
+The forecast sample date is 2026-11-17 and reanalysis sample date is 2017-07-15. They are not matched in time and must not be compared as a controlled product or accuracy test. These results establish subset extraction, ETOPO-classified wet-cell coverage, and bathymetric context only. They do not establish temperature accuracy, operational freshness, or species relevance. The Pacific and South Florida Copernicus-valid/ETOPO-land disagreements remain excluded from ocean coverage and require mask/resolution interpretation.
+
+### Current disposition and next work
+
+- Retain Gulf as the primary broad shelf validation candidate.
+- Retain Atlantic v2 as a focused shallow-shelf candidate, while noting its small 0–10 m sample and one missing shallow cell.
+- Retain Pacific v2 provisionally as a shelf/slope-transition candidate; inspect the eight land-mask disagreements before accepting the region.
+- Retain South Florida / Keys as a broad shelf/slope reference.
+- Proceed to an independent NOAA in-situ observation inventory. Prioritize NCEI World Ocean Database / GTSPP profiles and NOAA regional CTD archives; include moorings only where instrument depth is documented near the seabed. Surface-only buoy and underway thermosalinograph records are ineligible.
+- Do not begin matched accuracy statistics until eligible observation records, near-bottom tolerances, spatial/time matching limits, QC rules, and duplicate handling are explicitly defined.
+
+No production source configuration, MUR SST, species profiles, numerical factors, weights, gates, scoring, confidence, ingestion, or publication behavior changed.
