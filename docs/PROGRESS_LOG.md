@@ -1177,3 +1177,10 @@ GitHub Actions run [44144656207](https://github.com/markeetox/LUPITA/actions/run
 - Decoded ranges (°C): South Florida forecast 5.75–27.70, reanalysis 5.28–30.89; Gulf 4.07–26.20 and 4.02–30.18; Atlantic 1.76–21.01 and 1.85–21.37; Pacific 2.16–18.79 and 2.15–18.36.
 
 Next: distinguish land-mask cells from missing ocean cells using wet-cell/bathymetry information, then build the independent near-bottom CTD/mooring observation inventory and perform matched validation. Keep all work read-only and manual-only. No production model or ingestion behavior changed. Full findings and caveats: `docs/COPERNICUS_BOTTOM_TEMPERATURE_VALIDATION_2026-11-17.md`.
+
+
+## 2026-11-17 | NOAA ETOPO bathymetry assessment staged for Copernicus pilot
+
+Downloaded and inspected the successful Copernicus pilot artifact from run [44144656207](https://github.com/markeetox/LUPITA/actions/runs/44144656207). Confirmed all eight NetCDF samples, expected forecast/reanalysis variable names, dates, coordinates, fill values, and decoded temperatures. The raw Pacific valid fraction is 21.1%, but valid cells cluster on the western side of the box and missing cells toward the east/south; land masking may explain much of the apparent gap. Atlantic forecast and reanalysis both show a cold-dominated spatial pattern (most cells around 1.8–3°C) with warmer cells concentrated along one edge, requiring depth classification before interpretation.
+
+Added `scripts/assess_copernicus_bottom_temperature_bathymetry.py` and manual-only workflow `.github/workflows/copernicus-bottom-temperature-bathymetry.yml`. The workflow reuses the existing pilot artifact and samples NOAA NCEI ETOPO 2022 30-arc-second relief data, classifying land/ocean/coastal-ambiguous cells and reporting ocean-only coverage plus temperature statistics by depth class. It is staged but not yet dispatched. No Copernicus production ingestion, MUR SST, species profiles, numeric factors, weights, gates, scoring, confidence, or publication behavior changed. Next: run and inspect the bathymetry assessment, then assemble independent near-bottom CTD/mooring observations for matched bias/MAE/RMSE analysis.
