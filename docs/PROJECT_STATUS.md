@@ -716,3 +716,12 @@ Initial NOAA source discovery is documented in the Copernicus validation protoco
 NOAA SEFSC/NCEI GoMMAPPS GU1703 CTD accession 0243654 is the first regional archive to inspect: processed and unprocessed vertical profiles, maximum depth 500 m, 2017-06-29 through 2017-08-17, spatial extent approximately 23.823–29.955°N and 96.472–81.839°W. This overlaps much of the Gulf candidate and part of South Florida and includes the reanalysis pilot date 2017-07-15. Cast counts and near-bottom eligibility are not yet known.
 
 Next: inspect the GoMMAPPS CTD directory, processed-file format, readme/data dictionary, and cast-level metadata; then inventory WOD/GTSPP profiles for all four regions. No observations have yet been accepted or paired, and no accuracy statistics are claimed. Surface-only observations remain ineligible. No production behavior changed.
+
+
+## GoMMAPPS CTD metadata inspected | 2026-11-17
+
+NOAA InPort confirms GoMMAPPS accession 0243654 includes processed and unprocessed CTD files in separate folders. Profiles contain vertical salinity, temperature, and oxygen to a stated maximum 500 m; platform is NOAA Ship Gordon Gunter (33GG). CTD child extent is 2017-06-29 to 2017-08-17; parent survey extent is broader (2017-07-03 to 2017-08-23), so preserve the CTD-specific period.
+
+An investigator-supplied Word data dictionary and NCEI readme are catalogued, but the archive endpoints failed retrieval in this inspection. Actual file listing, profile schema, cast count, depth units, QC flags, and near-bottom eligibility remain unknown. Do not build a parser from assumed Sea-Bird CNV structure until at least one processed file/header and the data dictionary are inspected.
+
+Next: retrieve those source files and define regional WODSelect queries using observed-level temperature profiles and QC metadata. WODSelect supports geography, date, CTD dataset, temperature, deepest measurement, platform/cruise, accession/project, and QC filtering, with CSV or NetCDF export. No observation counts or matched pairs are claimed. No production behavior changed.
