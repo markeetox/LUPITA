@@ -40,6 +40,8 @@ jobs:
           python -m pip install numpy pandas requests xarray netCDF4
 
       - name: Classify land, ocean, and depth classes
+        env:
+          SOURCE_RUN_ID: ${{ inputs.source_run_id }}
         run: python scripts/assess_copernicus_bottom_temperature_bathymetry.py
 
       - name: Upload bathymetry assessment
