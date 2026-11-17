@@ -10,7 +10,7 @@
   "display": {
     "color": "#d8b820"
   },
-  "review_status": "v1 - West Coast Pacific habitat profile",
+  "review_status": "Evidence reviewed 2026-11-17. CDFW enhanced status report and Smithsonian species account replace generic regulation citation; warm-SST recruitment evidence is qualitative, not a numeric preference curve.",
   "image": {
     "status": "placeholder",
     "kind": "illustration",
@@ -26,12 +26,15 @@
     "behavior": "Navigates West Coast kelp forests, rocky reefs, and coastal upwelling zones.",
     "regulations_link": "https://wildlife.ca.gov/Fishing/Ocean/Regulations/Sport-Fishing",
     "sources": [
-      "https://wildlife.ca.gov/Fishing/Ocean/Regulations/Sport-Fishing"
+      "https://wildlife.ca.gov/Fishing/Ocean/Regulations/Sport-Fishing",
+      "https://nrm.dfg.ca.gov/FileHandler.ashx?DocumentID=174760",
+      "https://biogeodb.stri.si.edu/sftep/en/thefishes/species/1167/on",
+      "https://www.fishbase.org/summary/3335"
     ]
   },
   "lat_range": [
-    25.0,
-    35.0
+    25,
+    35
   ],
   "factors": [
     {
@@ -47,11 +50,13 @@
       ],
       "weight": 0.5,
       "active": true,
-      "value_status": "sourced",
+      "value_status": "partly_sourced",
       "sources": [
-        "https://wildlife.ca.gov/Fishing/Ocean/Regulations/Sport-Fishing"
+        "https://wildlife.ca.gov/Fishing/Ocean/Regulations/Sport-Fishing",
+        "https://nrm.dfg.ca.gov/FileHandler.ashx?DocumentID=174760"
       ],
-      "reason_template": "Water is {value} C, inside preferred Pacific temperature range for kelp bass."
+      "reason_template": "Water is {value} C, inside preferred Pacific temperature range for kelp bass.",
+      "value_notes": "CDFW's 2019 enhanced status report states that larval survival is highest during extended periods of warmer-than-average SST and that local temperature/current regimes influence recruitment. This supports SST as a relevant environmental factor, but does not identify a numeric adult or larval optimum and does not validate the configured 14-23 °C range or 16-21 °C ideal."
     },
     {
       "param": "depth_m",
@@ -66,19 +71,22 @@
       ],
       "weight": 0.5,
       "active": true,
-      "value_status": "sourced",
+      "value_status": "partly_sourced",
       "sources": [
-        "https://wildlife.ca.gov/Fishing/Ocean/Regulations/Sport-Fishing"
+        "https://wildlife.ca.gov/Fishing/Ocean/Regulations/Sport-Fishing",
+        "https://nrm.dfg.ca.gov/FileHandler.ashx?DocumentID=174760",
+        "https://www.fishbase.org/summary/3335"
       ],
       "gate": true,
-      "reason_template": "Depth is {value} m, within prime Pacific depth zone for kelp bass."
+      "reason_template": "Depth is {value} m, within prime Pacific depth zone for kelp bass.",
+      "value_notes": "CDFW reports kelp bass from the surface to 46 m, most abundant at 2.7-21.3 m; FishBase reports most occurrence around 2.4-21 m. This supports the shallow 1-30 m habitat screen, but the configured 3-25 m ideal extends beyond the best-documented abundance band and is not a measured depth-preference curve."
     }
   ],
   "timing": {
     "status": "angler_lore",
     "light": {
       "map": {
-        "day": 1.0,
+        "day": 1,
         "dawn": 0.9,
         "dusk": 0.9,
         "night": 0.5
@@ -105,7 +113,7 @@
     "source_url": "https://wildlife.ca.gov/Fishing/Ocean/Regulations/Sport-Fishing"
   },
   "lon_range": [
-    -138.0,
-    -110.0
+    -138,
+    -110
   ]
 }

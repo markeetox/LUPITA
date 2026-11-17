@@ -10,7 +10,7 @@
   "display": {
     "color": "#523cf2"
   },
-  "review_status": "v1 - West Coast Pacific habitat profile",
+  "review_status": "Evidence reviewed 2026-11-17. California spawning-temperature and global tagging sources support broad thermal context, but depth is a weak bathymetric proxy for this mobile pelagic species.",
   "image": {
     "status": "placeholder",
     "kind": "illustration",
@@ -26,12 +26,16 @@
     "behavior": "Navigates West Coast kelp forests, rocky reefs, and coastal upwelling zones.",
     "regulations_link": "https://wildlife.ca.gov/Fishing/Ocean/Regulations/Sport-Fishing",
     "sources": [
-      "https://wildlife.ca.gov/Fishing/Ocean/Regulations/Sport-Fishing"
+      "https://wildlife.ca.gov/Fishing/Ocean/Regulations/Sport-Fishing",
+      "https://pmc.ncbi.nlm.nih.gov/articles/PMC5027219/",
+      "https://www.animaldiversity.org/accounts/Seriola_lalandi/",
+      "https://www.fishbase.org/summary/382",
+      "https://doi.org/10.1139/cjfas-2025-0343"
     ]
   },
   "lat_range": [
-    15.0,
-    35.0
+    15,
+    35
   ],
   "factors": [
     {
@@ -47,11 +51,15 @@
       ],
       "weight": 0.5,
       "active": true,
-      "value_status": "sourced",
+      "value_status": "partly_sourced",
       "sources": [
-        "https://wildlife.ca.gov/Fishing/Ocean/Regulations/Sport-Fishing"
+        "https://wildlife.ca.gov/Fishing/Ocean/Regulations/Sport-Fishing",
+        "https://www.fishbase.org/summary/382",
+        "https://pmc.ncbi.nlm.nih.gov/articles/PMC5027219/",
+        "https://doi.org/10.1139/cjfas-2025-0343"
       ],
-      "reason_template": "Water is {value} C, inside preferred Pacific temperature range for california yellowtail."
+      "reason_template": "Water is {value} C, inside preferred Pacific temperature range for california yellowtail.",
+      "value_notes": "FishBase summarizes warmer-water affinity around 18-24 °C; California yellowtail spawning off San Diego/Catalina has been reported at 16.5-22.0 °C. A 2026 Tasman Sea satellite-tagging study of adult S. lalandi found a broad 11-27 °C thermal envelope and core use around 17.4-20.8 °C, but that population is geographically distinct. These sources support broad thermal context, not a universal California SST catch curve or validation of the configured 16-25 °C / 19-23 °C intervals."
     },
     {
       "param": "depth_m",
@@ -66,19 +74,22 @@
       ],
       "weight": 0.5,
       "active": true,
-      "value_status": "sourced",
+      "value_status": "weak_factor",
       "sources": [
-        "https://wildlife.ca.gov/Fishing/Ocean/Regulations/Sport-Fishing"
+        "https://wildlife.ca.gov/Fishing/Ocean/Regulations/Sport-Fishing",
+        "https://www.animaldiversity.org/accounts/Seriola_lalandi/",
+        "https://www.fishbase.org/summary/382"
       ],
       "gate": true,
-      "reason_template": "Depth is {value} m, within prime Pacific depth zone for california yellowtail."
+      "reason_template": "Depth is {value} m, within prime Pacific depth zone for california yellowtail.",
+      "value_notes": "California yellowtail is a mobile benthopelagic/pelagic fish using coastal and oceanic waters, reefs, kelp beds and offshore islands; sources report dives or occurrence well beyond 50 m, including up to 228 m. The runtime variable is seafloor bathymetric depth, not fish vertical depth. A 0-50 m band is only a weak nearshore/reef-context proxy and does not represent the species' full offshore habitat; numeric values remain unchanged."
     }
   ],
   "timing": {
     "status": "angler_lore",
     "light": {
       "map": {
-        "day": 1.0,
+        "day": 1,
         "dawn": 0.9,
         "dusk": 0.9,
         "night": 0.5
@@ -105,7 +116,7 @@
     "source_url": "https://wildlife.ca.gov/Fishing/Ocean/Regulations/Sport-Fishing"
   },
   "lon_range": [
-    -138.0,
-    -110.0
+    -138,
+    -110
   ]
 }

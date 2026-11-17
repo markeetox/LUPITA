@@ -450,3 +450,8 @@ The first five of 51 documented multi-factor profiles have been reviewed: Black 
 ## 2026-11-17 | Documented Pacific nearshore review, batch 2
 
 Reviewed Gopher rockfish, Kelp rockfish, Olive rockfish, Treefish, and Halfmoon (10 active factors). Species-specific habitat and depth sources support broad occurrence, but no reviewed source validated their numeric SST suitability bands. Those factors are now marked needs_source; depth remains partly_sourced with regional/life-stage caveats. Progress: 10/51 profiles, 21 active factors. No numeric or runtime changes.
+
+
+## 2026-11-17 | Documented California coastal review, batch 3
+
+Reviewed Kelp bass, California yellowtail, Giant sea bass, Opaleye, and Spotted sand bass (10 active factors). Added species-specific sources and conservative claim-fit notes. Numeric tolerance, model-derived preferred-temperature estimates, spawning temperature and SST preference are kept distinct. California yellowtail bathymetry is a weak proxy; Giant sea bass SST remains needs_source. Progress: 15/51 profiles, 31 active factors. No numeric or runtime changes.

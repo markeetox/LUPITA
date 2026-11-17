@@ -528,3 +528,8 @@ Started claim-fit review of the 51 multi-factor profiles currently classified as
 ## Documented multi-factor review | second Pacific nearshore batch
 
 Reviewed Gopher rockfish, Kelp rockfish, Olive rockfish, Treefish, and Halfmoon across 10 active factors. Replaced generic regulation-page references with specific CDFW, ODFW, NOAA, Smithsonian Tropical Research Institute, FishBase and aquarium sources. All five SST bands are now marked needs_source because the reviewed evidence did not substantiate the configured numeric SST preferences; depth/habitat evidence is partly_sourced with range and life-stage caveats. No numeric or runtime changes. Total documented multi-factor review progress: 10 of 51 profiles across 21 active factors. See [species evidence audit](SPECIES_EVIDENCE_AUDIT_2026-11-17.md).
+
+
+## Documented multi-factor review | third California coastal batch
+
+Reviewed Kelp bass, California yellowtail, Giant sea bass, Opaleye, and Spotted sand bass across 10 active factors. Replaced generic regulation-page citations with specific CDFW, Smithsonian, FishBase, USGS and research sources. Kelp bass SST has qualitative recruitment support but no numeric optimum; California yellowtail has broad thermal evidence but bathymetry is only a weak proxy; Giant sea bass SST remains needs_source; Opaleye's broad temperature envelope is provisional; Spotted sand bass has a model-derived temperature estimate, not field-validated preference. All depth/habitat factors are partly supported with caveats. No numeric or runtime changes. Progress: 15 of 51 documented multi-factor profiles across 31 active factors. See [species evidence audit](SPECIES_EVIDENCE_AUDIT_2026-11-17.md).

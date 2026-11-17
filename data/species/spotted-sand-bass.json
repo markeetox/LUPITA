@@ -10,7 +10,7 @@
   "display": {
     "color": "#242ff2"
   },
-  "review_status": "v1 - West Coast Pacific habitat profile",
+  "review_status": "Evidence reviewed 2026-11-17. CDFG and FishBase sources support shallow bay/harbor habitat and broad temperature tolerance; the SST band is a modelled estimate, not a measured preference.",
   "image": {
     "status": "placeholder",
     "kind": "illustration",
@@ -26,12 +26,15 @@
     "behavior": "Navigates West Coast kelp forests, rocky reefs, and coastal upwelling zones.",
     "regulations_link": "https://wildlife.ca.gov/Fishing/Ocean/Regulations/Sport-Fishing",
     "sources": [
-      "https://wildlife.ca.gov/Fishing/Ocean/Regulations/Sport-Fishing"
+      "https://wildlife.ca.gov/Fishing/Ocean/Regulations/Sport-Fishing",
+      "https://nrm.dfg.ca.gov/FileHandler.ashx?DocumentID=34355&inline=",
+      "https://www.fishbase.org/summary/3336",
+      "https://nas.er.usgs.gov/queries/factsheet.aspx?SpeciesID=972"
     ]
   },
   "lat_range": [
-    24.0,
-    34.0
+    24,
+    34
   ],
   "factors": [
     {
@@ -47,11 +50,14 @@
       ],
       "weight": 0.5,
       "active": true,
-      "value_status": "sourced",
+      "value_status": "partly_sourced",
       "sources": [
-        "https://wildlife.ca.gov/Fishing/Ocean/Regulations/Sport-Fishing"
+        "https://wildlife.ca.gov/Fishing/Ocean/Regulations/Sport-Fishing",
+        "https://www.fishbase.org/summary/3336",
+        "https://nrm.dfg.ca.gov/FileHandler.ashx?DocumentID=34355&inline="
       ],
-      "reason_template": "Water is {value} C, inside preferred Pacific temperature range for spotted sand bass."
+      "reason_template": "Water is {value} C, inside preferred Pacific temperature range for spotted sand bass.",
+      "value_notes": "FishBase reports broad tolerance from about 7.5-32 °C and a model-derived preferred-temperature estimate of 18.1-26.8 °C (mean 22.3 °C, 42 cells). CDFG describes southern California bay/lagoon habitats as warm-water refuges for this subtropical species. These support broad thermal relevance, but the preference estimate is model-derived rather than field-validated and does not establish the configured 15-24 °C / 17-22 °C band as a catch-probability curve."
     },
     {
       "param": "depth_m",
@@ -66,19 +72,23 @@
       ],
       "weight": 0.5,
       "active": true,
-      "value_status": "sourced",
+      "value_status": "partly_sourced",
       "sources": [
-        "https://wildlife.ca.gov/Fishing/Ocean/Regulations/Sport-Fishing"
+        "https://wildlife.ca.gov/Fishing/Ocean/Regulations/Sport-Fishing",
+        "https://nrm.dfg.ca.gov/FileHandler.ashx?DocumentID=34355&inline=",
+        "https://www.fishbase.org/summary/3336",
+        "https://nas.er.usgs.gov/queries/factsheet.aspx?SpeciesID=972"
       ],
       "gate": true,
-      "reason_template": "Depth is {value} m, within prime Pacific depth zone for spotted sand bass."
+      "reason_template": "Depth is {value} m, within prime Pacific depth zone for spotted sand bass.",
+      "value_notes": "CDFG describes southern California populations as restricted mainly to shallow sandy/muddy bays, harbors and coastal lagoons with eelgrass, surfgrass and rock relief. FishBase reports occurrence from 1-61 m, usually near sand/mud, rocks and eelgrass. This supports shallow habitat but not a universal 1-20 m / 3-15 m depth-preference curve; localized bay populations and warm-water refuges are important."
     }
   ],
   "timing": {
     "status": "angler_lore",
     "light": {
       "map": {
-        "day": 1.0,
+        "day": 1,
         "dawn": 0.9,
         "dusk": 0.9,
         "night": 0.5
@@ -105,7 +115,7 @@
     "source_url": "https://wildlife.ca.gov/Fishing/Ocean/Regulations/Sport-Fishing"
   },
   "lon_range": [
-    -138.0,
-    -110.0
+    -138,
+    -110
   ]
 }

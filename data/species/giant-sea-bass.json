@@ -10,7 +10,7 @@
   "display": {
     "color": "#0cf214"
   },
-  "review_status": "v1 - West Coast Pacific habitat profile",
+  "review_status": "Evidence reviewed 2026-11-17. STRI and aquarium sources support rocky-bottom habitat and ontogenetic/seasonal depth shifts; no numeric SST preference source found.",
   "image": {
     "status": "placeholder",
     "kind": "illustration",
@@ -26,12 +26,15 @@
     "behavior": "Navigates West Coast kelp forests, rocky reefs, and coastal upwelling zones.",
     "regulations_link": "https://wildlife.ca.gov/Fishing/Ocean/Regulations/Sport-Fishing",
     "sources": [
-      "https://wildlife.ca.gov/Fishing/Ocean/Regulations/Sport-Fishing"
+      "https://wildlife.ca.gov/Fishing/Ocean/Regulations/Sport-Fishing",
+      "https://biogeodb.stri.si.edu/sftep/en/thefishes/species/1098/on",
+      "https://www.aquariumofpacific.org/onlinelearningcenter/species/giant_sea_bass",
+      "https://www.fishbase.org/summary/3310"
     ]
   },
   "lat_range": [
-    24.0,
-    35.0
+    24,
+    35
   ],
   "factors": [
     {
@@ -47,11 +50,14 @@
       ],
       "weight": 0.5,
       "active": true,
-      "value_status": "sourced",
+      "value_status": "needs_source",
       "sources": [
-        "https://wildlife.ca.gov/Fishing/Ocean/Regulations/Sport-Fishing"
+        "https://wildlife.ca.gov/Fishing/Ocean/Regulations/Sport-Fishing",
+        "https://biogeodb.stri.si.edu/sftep/en/thefishes/species/1098/on",
+        "https://www.aquariumofpacific.org/onlinelearningcenter/species/giant_sea_bass"
       ],
-      "reason_template": "Water is {value} C, inside preferred Pacific temperature range for giant sea bass."
+      "reason_template": "Water is {value} C, inside preferred Pacific temperature range for giant sea bass.",
+      "value_notes": "The reviewed giant sea bass sources describe geographic range, rocky-bottom/kelp habitat and seasonal depth movements but do not establish a numeric preferred SST or validated thermal response curve. The configured 15-23 °C range and 17-21 °C ideal remain unsupported by species-specific temperature evidence; keep values unchanged and mark needs_source."
     },
     {
       "param": "depth_m",
@@ -66,19 +72,23 @@
       ],
       "weight": 0.5,
       "active": true,
-      "value_status": "sourced",
+      "value_status": "partly_sourced",
       "sources": [
-        "https://wildlife.ca.gov/Fishing/Ocean/Regulations/Sport-Fishing"
+        "https://wildlife.ca.gov/Fishing/Ocean/Regulations/Sport-Fishing",
+        "https://biogeodb.stri.si.edu/sftep/en/thefishes/species/1098/on",
+        "https://www.aquariumofpacific.org/onlinelearningcenter/species/giant_sea_bass",
+        "https://www.animaldiversity.org/accounts/Stereolepis_gigas/"
       ],
       "gate": true,
-      "reason_template": "Depth is {value} m, within prime Pacific depth zone for giant sea bass."
+      "reason_template": "Depth is {value} m, within prime Pacific depth zone for giant sea bass.",
+      "value_notes": "STRI reports 5-45 m rocky-bottom/algal-bed habitat; Aquarium of the Pacific describes adults near rocky drop-offs deeper than 30 m, juveniles on sand/mud around 21 m, and seasonal movement between shallower summer and deeper winter habitat. Other species accounts report adult ridges around 70-80 m. This supports depth as relevant but not one universal 10-100 m / 12-95 m preference across life stages and seasons."
     }
   ],
   "timing": {
     "status": "angler_lore",
     "light": {
       "map": {
-        "day": 1.0,
+        "day": 1,
         "dawn": 0.9,
         "dusk": 0.9,
         "night": 0.5
@@ -105,7 +115,7 @@
     "source_url": "https://wildlife.ca.gov/Fishing/Ocean/Regulations/Sport-Fishing"
   },
   "lon_range": [
-    -138.0,
-    -110.0
+    -138,
+    -110
   ]
 }

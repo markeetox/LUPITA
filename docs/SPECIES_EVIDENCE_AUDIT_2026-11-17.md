@@ -604,3 +604,36 @@ Reviewed Gopher rockfish, Kelp rockfish, Olive rockfish, Treefish, and Halfmoon 
 
 ### Documented-profile review progress
 Ten of 51 profiles reviewed across 21 active factors. The second batch reinforces the same distinction: specific species sources often support habitat and depth occurrence, but do not establish numeric SST preference or ideal intervals. “Documented” source metadata is not equivalent to a validated numeric suitability curve.
+
+
+## Documented multi-factor review: third California coastal batch | 2026-11-17
+
+Reviewed Kelp bass, California yellowtail, Giant sea bass, Opaleye, and Spotted sand bass across 10 active factors. Replaced generic sport-regulation citations with CDFW enhanced status/species reports, Smithsonian Tropical Research Institute, FishBase, USGS and peer-reviewed temperature/tagging sources. No numeric ranges, ideal intervals, weights, active flags, gates, required flags, scoring, confidence or runtime behavior changed.
+
+### Kelp bass (*Paralabrax clathratus*)
+- SST: partly_sourced. CDFW reports larval survival is highest during extended warmer-than-average SST and that local temperature/current regimes influence recruitment. This supports relevance, not a numeric adult/larval optimum or the configured range.
+- Depth: partly_sourced. CDFW reports surface to 46 m, most abundant 2.7-21.3 m; FishBase reports most occurrence around 2.4-21 m. The configured outer band is broadly plausible, but ideal extends beyond the best-documented abundance band.
+- Sources: [CDFW 2019 Enhanced Status Report](https://nrm.dfg.ca.gov/FileHandler.ashx?DocumentID=174760); [Smithsonian Eastern Pacific species account](https://biogeodb.stri.si.edu/sftep/en/thefishes/species/1167/on).
+
+### California yellowtail (*Seriola lalandi*)
+- SST: partly_sourced. FishBase reports warmer-water affinity around 18-24 °C; California spawning temperatures have been reported at 16.5-22.0 °C. A 2026 Tasman Sea satellite-tagging study of adult S. lalandi reports broad thermal occupancy and core use around 17.4-20.8 °C, but is geographically distinct. This is broad thermal context, not a universal California SST catch curve.
+- Depth: weak_factor. The fish is mobile and pelagic/benthopelagic, using coastal and oceanic waters, reefs, kelp beds and islands; reported vertical depths extend well beyond the configured 0-50 m. Runtime bathymetry is seafloor depth, not fish vertical depth, so retain only as a weak nearshore/reef proxy.
+- Sources: [California yellowtail spawning study](https://pmc.ncbi.nlm.nih.gov/articles/PMC5027219/); [2026 adult satellite-tagging study](https://doi.org/10.1139/cjfas-2025-0343); [FishBase species summary](https://www.fishbase.org/summary/382).
+
+### Giant sea bass (*Stereolepis gigas*)
+- SST: needs_source. Reviewed species sources do not establish a numeric preferred SST or validated thermal response curve.
+- Depth: partly_sourced. STRI reports 5-45 m rocky-bottom/algal habitat; Aquarium of the Pacific describes adults near rocky drop-offs deeper than 30 m, juveniles on sand/mud around 21 m, and seasonal summer-shallow/winter-deeper movement. Other accounts report deeper ridges around 70-80 m. One universal band across stages/seasons is not established.
+- Sources: [Smithsonian Eastern Pacific species account](https://biogeodb.stri.si.edu/sftep/en/thefishes/species/1098/on); [Aquarium of the Pacific giant sea bass](https://www.aquariumofpacific.org/onlinelearningcenter/species/giant_sea_bass).
+
+### Opaleye (*Girella nigricans*)
+- SST: provisional. FishBase's broad 0-33 °C environmental envelope and climate labels are not a preferred SST curve.
+- Depth: partly_sourced. STRI reports 1-32 m on rocky shores; FishBase reports 2-30 m, commonly 2-6 m, and resident intertidal/kelp behavior. This supports shallow habitat but not the configured ideal interval.
+- Sources: [Smithsonian Eastern Pacific species account](https://biogeodb.stri.si.edu/sftep/en/thefishes/species/1566); [FishBase opaleye](https://fishbase.se/summary/girella-nigricans).
+
+### Spotted sand bass (*Paralabrax maculatofasciatus*)
+- SST: partly_sourced. FishBase reports broad 7.5-32 °C tolerance and a model-derived preferred-temperature estimate of 18.1-26.8 °C (mean 22.3 °C, 42 cells). CDFG describes shallow southern California bays/harbors as warm-water refuges. The model estimate is not field-validated and does not establish a catch curve.
+- Depth: partly_sourced. CDFG describes shallow sandy/muddy bays, harbors and lagoons with eelgrass/surfgrass/rock relief; FishBase reports 1-61 m. The configured shallow band is plausible for localized bay populations, not a universal depth preference.
+- Sources: [CDFG spotted sand bass account](https://nrm.dfg.ca.gov/FileHandler.ashx?DocumentID=34355&inline=); [FishBase spotted sand bass](https://www.fishbase.org/summary/3336); [USGS species profile](https://nas.er.usgs.gov/queries/factsheet.aspx?SpeciesID=972).
+
+### Documented-profile review progress
+Fifteen of 51 profiles reviewed across 31 active factors. The audit continues to separate numeric temperature tolerance, modeled temperature estimates, spawning temperature, and observed habitat use. None is silently promoted to a universal preferred SST curve.
