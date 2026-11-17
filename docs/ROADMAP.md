@@ -372,7 +372,7 @@ Use [SPECIES_EVIDENCE_AUDIT_2026-11-17.md](SPECIES_EVIDENCE_AUDIT_2026-11-17.md)
 
 ### Batch A research complete | 2026-11-17
 
-Reviewed bonefish, great barracuda, and Permit, the three remaining temperature-only site pilots. Recommended bonefish and great barracuda move to `partly_sourced` with explicit physiological-performance, N=2 telemetry, and model-derived limitations; Permit remains `provisional` because available support is juvenile occurrence/model association rather than adult South Florida preference. Research findings and sources are recorded in the master evidence audit. No species JSON or numeric/model setting changed. Apply metadata only after review.
+Reviewed bonefish, great barracuda, and Permit, the three remaining temperature-only site pilots. Recommended great barracuda moves to `partly_sourced` with N=2 telemetry caveats; bonefish and Permit remain `provisional` because available evidence does not validate their numeric SST bands. Research findings and sources are recorded in the master evidence audit. No species JSON or numeric/model setting changed. Apply metadata only after review.
 
 Next: Batch B, the 27 other single-factor profiles, prioritized by gate/required semantics and traceability of their active factor sources.
 

@@ -989,7 +989,7 @@ Found species-specific evidence for all three previously needs-source named-site
 ## 2026-11-17 | Batch A/B metadata implementation
 
 - Applied source/status/value_notes updates to bonefish, great barracuda, Permit, and all 27 other single-factor grid profiles.
-- Bonefish and great barracuda are partly_sourced; Permit remains provisional with new juvenile/model source references and life-stage caveats.
+- Great barracuda is partly_sourced; bonefish and Permit remain provisional because the added evidence does not validate their numeric SST bands.
 - Batch B: 20 partly_sourced, 3 provisional, 4 needs_source.
 - The four needs_source SST factors have no factor-level source references because the available species/habitat pages do not support a numeric SST claim.
 - No numeric ranges, ideal intervals, weights, active flags, gates, required flags, scoring, confidence, ingestion, or publication behavior changed.

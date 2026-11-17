@@ -153,7 +153,7 @@ Configured range: 20–34 °C; ideal: 24–30 °C; current status: `provisional`
 ### Batch A disposition
 
 All three reviews are complete at the research level. No species JSON was modified. The proposed metadata-only actions are:
-- Bonefish: `provisional` → `partly_sourced`, with adult performance-vs-preference caveats.
+- Bonefish: remains `provisional`; adult performance/tolerance studies do not validate its numeric SST suitability band.
 - Great barracuda: `provisional` → `partly_sourced`, with N=2 adult South Florida telemetry and model-derived caveats.
 - Permit: remain `provisional`; add better traceable juvenile/model sources with explicit life-stage and geographic limitations.
 
@@ -428,7 +428,7 @@ Twenty of the 29 originally elevated-risk multi-factor profiles have now been re
 Applied metadata-only evidence updates to all 30 profiles covered by Batch A and Batch B.
 
 ### Batch A: remaining temperature-only site pilots
-- Bonefish: provisional → partly_sourced. Added adult performance-temperature and thermal-tolerance sources with explicit N=8 recapture limitation and Bahamas-to-South-Florida transfer caveat.
+- Bonefish: remains provisional. Added adult performance-temperature and thermal-tolerance sources with explicit N=8 recapture limitation and Bahamas-to-South-Florida transfer caveat; these do not validate preferred SST.
 - Great barracuda: provisional → partly_sourced. Added South Florida archival-tag thesis (N=2 adults) and FishBase model estimate with explicit small-sample/model caveats.
 - Permit: remains provisional. Added the 2026 Texas juvenile occupancy study, 1972 South Carolina juvenile survey, and FishBase model estimate; notes distinguish juvenile occurrence and modeled association from adult South Florida preference.
 
