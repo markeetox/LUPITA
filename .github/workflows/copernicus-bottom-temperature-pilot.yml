@@ -1,0 +1,72 @@
+name: Copernicus bottom-temperature read-only pilot
+
+on:
+  workflow_dispatch:
+    inputs:
+      forecast_date:
+        description: "Single UTC day to sample from the forecast dataset (YYYY-MM-DD)"
+        required: true
+        default: "2026-11-17"
+        type: string
+      reanalysis_date:
+        description: "Single UTC day to sample from reanalysis (YYYY-MM-DD)"
+        required: true
+        default: "2017-07-15"
+        type: string
+
+permissions:
+  contents: read
+
+concurrency:
+  group: copernicus-bottom-temperature-pilot
+  cancel-in-progress: false
+
+jobs:
+  read-only-pilot:
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    env:
+      COPERNICUS_PILOT_FORECAST_DATE: ${{ inputs.forecast_date }}
+      COPERNICUS_PILOT_REANALYSIS_DATE: ${{ inputs.reanalysis_date }}
+      COPERNICUSMARINE_SERVICE_USERNAME: ${{ secrets.COPERNICUSMARINE_SERVICE_USERNAME }}
+      COPERNICUSMARINE_SERVICE_PASSWORD: ${{ secrets.COPERNICUSMARINE_SERVICE_PASSWORD }}
+    steps:
+      - name: Check out main
+        uses: actions/checkout@v4
+        with:
+          ref: main
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install read-only pilot dependencies
+        run: |
+          python -m pip install --disable-pip-version-check "copernicusmarine==2.4.0" xarray netCDF4 numpy
+
+      - name: Validate inputs and credentials
+        run: |
+          set -euo pipefail
+          if [ -z "$COPERNICUSMARINE_SERVICE_USERNAME" ] || [ -z "$COPERNICUSMARINE_SERVICE_PASSWORD" ]; then
+            echo "::error::Copernicus Marine repository secrets are missing or empty."
+            exit 1
+          fi
+          python - <<'PY'
+          import datetime
+          import os
+          for key in ("COPERNICUS_PILOT_FORECAST_DATE", "COPERNICUS_PILOT_REANALYSIS_DATE"):
+              datetime.date.fromisoformat(os.environ[key])
+              print(f"{key}: valid ISO date")
+          PY
+
+      - name: Download and inspect four-region samples
+        run: python scripts/copernicus_bottom_temperature_pilot.py
+
+      - name: Upload read-only pilot results
+        uses: actions/upload-artifact@v4
+        with:
+          name: copernicus-bottom-temperature-pilot
+          path: artifacts/copernicus-bottom-temperature-pilot/
+          if-no-files-found: error
+          retention-days: 14
