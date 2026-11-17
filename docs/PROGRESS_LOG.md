@@ -1256,3 +1256,12 @@ Completed initial metadata discovery for NOAA NCEI WOD23, GTSPP, and SEFSC GoMMA
 GoMMAPPS GU1703 CTD is the first regional archive to inspect: processed and raw profiles, maximum 500 m, 2017-06-29 to 2017-08-17, extent 23.823–29.955°N and 96.472–81.839°W. It overlaps much of the Gulf candidate and part of South Florida and includes the reanalysis pilot date 2017-07-15. Actual cast count, deepest valid sample, seabed separation, QC, and Copernicus-cell matchability remain unknown.
 
 Next: inspect GoMMAPPS CTD file listing and metadata, then build a normalized cast/profile inventory and obtain WOD/GTSPP subsets. No independent observations have yet been downloaded or paired; no bias/MAE/RMSE or accuracy claim is made. No production behavior changed.
+
+
+## 2026-11-17 | GoMMAPPS CTD metadata inspected; file-level retrieval pending
+
+Inspected NOAA InPort parent accession 0243654, CTD child record 66006, and investigator data-dictionary record 65961. NOAA confirms separate processed/unprocessed CTD folders, vertical temperature/salinity/oxygen profiles to a stated maximum depth of 500 m, and NOAA Ship Gordon Gunter (33GG) as platform. CTD-specific extent is 2017-06-29 to 2017-08-17; parent survey extent is broader, 2017-07-03 to 2017-08-23.
+
+The 23 KB investigator data dictionary and NCEI readme are catalogued, but archive retrieval returned cache/redirect errors. We have not verified actual filenames, columns, station counts, units, QC/scan flags, or near-bottom cast eligibility. No parser should be written against assumed CNV conventions until a processed file/header and data dictionary are inspected.
+
+WODSelect offers regional/date/CTD/temperature/deepest-measurement/platform/cruise/QC filters and CSV or NetCDF exports. Next: retry documented GoMMAPPS file retrieval and prepare explicit WODSelect subsets for each validation region. No counts or matched pairs claimed; no production behavior changed.
