@@ -120,9 +120,13 @@ Even a successful source validation would not validate existing species temperat
 - NOAA NEFSC's near-bottom observations are useful for the northern Atlantic shelf but do not represent the entire Atlantic coast.
 - No Copernicus subset has yet been downloaded or sampled in this phase. No coverage fraction, freshness result, or model-vs-observation error statistic is claimed.
 
+## Access prerequisite
+
+Copernicus Marine Toolbox subsetting requires a free Copernicus Marine account and valid credentials. The Toolbox reads `COPERNICUSMARINE_SERVICE_USERNAME` and `COPERNICUSMARINE_SERVICE_PASSWORD` from environment variables or a local credentials file. Do not commit credentials, place them in workflow YAML, or paste them into repository files. If the pilot is run in GitHub Actions, use repository Actions secrets; if run locally, use environment variables. Official guidance: https://toolbox-docs.marine.copernicus.eu/en/stable/installation.html and https://help.marine.copernicus.eu/en/articles/8185007-copernicus-marine-toolbox-credentials-configuration.
+
 ## Next execution step
 
-Run a small, read-only pilot extraction of `tob` for one recent date and one historical date, using compact bounding boxes around the four regional observation inventories. Confirm authentication/access method, actual response variables and coordinates, fill-value semantics, and wet-cell behavior. Then acquire and quality-filter matching independent profiles. Do not add a recurring workflow or production ingestion path at this stage.
+After credentials are configured in the chosen execution environment, run a small, read-only pilot extraction of `tob` for one recent date and one historical date, using compact bounding boxes around the four regional observation inventories. Confirm authentication/access method, actual response variables and coordinates, fill-value semantics, and wet-cell behavior. Then acquire and quality-filter matching independent profiles. Do not add a recurring workflow or production ingestion path at this stage.
 
 ## Change-control boundary
 
