@@ -1265,3 +1265,9 @@ Inspected NOAA InPort parent accession 0243654, CTD child record 66006, and inve
 The 23 KB investigator data dictionary and NCEI readme are catalogued, but archive retrieval returned cache/redirect errors. We have not verified actual filenames, columns, station counts, units, QC/scan flags, or near-bottom cast eligibility. No parser should be written against assumed CNV conventions until a processed file/header and data dictionary are inspected.
 
 WODSelect offers regional/date/CTD/temperature/deepest-measurement/platform/cruise/QC filters and CSV or NetCDF exports. Next: retry documented GoMMAPPS file retrieval and prepare explicit WODSelect subsets for each validation region. No counts or matched pairs claimed; no production behavior changed.
+
+
+## 2026-11-17 | WODSelect query plan and GoMMAPPS dictionary distinction
+Prepared exact WODSelect query instructions for all four current Copernicus candidate boxes. The initial inventory is all-years temperature profiles, broad profile dataset coverage, no initial QC exclusion, observed-level data, and preservation of WOD/IQuOD flags where available. Record the actual cast count and settings for each region before extraction; WODSelect emails download links and generated files are temporary.
+
+Clarified GoMMAPPS metadata: InPort item 65961 is an investigator Word document described as additional project metadata, not yet verified as a CTD schema because its contents remain inaccessible. Item 66003 is a CSV dictionary explicitly stored in the visual-sighting data directory and is not the CTD dictionary. Archive directory/file endpoints returned cache/redirect/access errors and the OAS detail page timed out. No CTD file schema, cast count, or near-bottom eligibility has been verified. No parser was written. Details are in `docs/NOAA_WODSELECT_REGIONAL_QUERY_PLAN_2026-11-17.md`. No observations paired; no accuracy statistics claimed; no production behavior changed.
