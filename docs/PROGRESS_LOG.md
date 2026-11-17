@@ -1162,3 +1162,18 @@ No temperature subset was downloaded and no runtime/model behavior changed. Next
 Added `scripts/copernicus_bottom_temperature_pilot.py` and manual-only workflow `.github/workflows/copernicus-bottom-temperature-pilot.yml`. The pilot makes eight one-day subset requests across South Florida/Keys, Gulf shelf, Atlantic shelf, and Pacific West Coast shelf. It uses forecast `tob` and reanalysis `bottomT`, pins the live metadata versions (`202406` and `202311`), and requests no depth dimension. The script inspects NetCDF dimensions/coordinates, fill-value encoding, valid/missing values, valid fraction, and temperature range, then uploads the samples and summary as a 14-day artifact.
 
 This is only a read-only structure/coverage smoke test. It is not a model-observation accuracy validation, and the geographic boxes are sampling windows rather than station-matched validation regions. Workflow is manual-only and not yet run. No production or model behavior changed. Full details: `docs/COPERNICUS_BOTTOM_TEMPERATURE_VALIDATION_2026-11-17.md`.
+
+
+## 2026-11-17 | Copernicus read-only subset pilot passed and inspected
+
+GitHub Actions run [44144656207](https://github.com/markeetox/LUPITA/actions/runs/44144656207) passed. Downloaded and inspected artifact `copernicus-bottom-temperature-pilot`; all eight expected NetCDF files and `pilot-summary.json` are present.
+
+- Forecast `tob` and reanalysis `bottomT` returned successfully for all four sampling boxes.
+- Requested timestamps, coordinate dimensions, standard names, and Celsius units were confirmed.
+- Forecast fill value is approximately `9.96921e36`; reanalysis is packed int16 with fill value `-32767`, scale factor `0.00073244`, and offset `21`. Decoded reanalysis statistics match the pilot summary.
+- Valid/all-grid-cell fractions: South Florida 321/475 (67.6%), Gulf 325/325 (100%), Atlantic 625/625 (100%), Pacific 132/625 (21.1%), same in both products.
+- These are raw bounding-box fractions, not ocean-only coverage. Land mask versus missing ocean data is not yet resolved.
+- Forecast sample date: 2026-11-17; reanalysis sample date: 2017-07-15. Different products/dates mean these are not a direct comparison or accuracy validation.
+- Decoded ranges (°C): South Florida forecast 5.75–27.70, reanalysis 5.28–30.89; Gulf 4.07–26.20 and 4.02–30.18; Atlantic 1.76–21.01 and 1.85–21.37; Pacific 2.16–18.79 and 2.15–18.36.
+
+Next: distinguish land-mask cells from missing ocean cells using wet-cell/bathymetry information, then build the independent near-bottom CTD/mooring observation inventory and perform matched validation. Keep all work read-only and manual-only. No production model or ingestion behavior changed. Full findings and caveats: `docs/COPERNICUS_BOTTOM_TEMPERATURE_VALIDATION_2026-11-17.md`.
