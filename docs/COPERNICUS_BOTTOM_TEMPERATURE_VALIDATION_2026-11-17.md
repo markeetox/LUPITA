@@ -216,3 +216,20 @@ Established: authentication, dataset access, dataset-specific variable identifie
 Not established: ocean-only valid coverage, nearshore completeness, operational freshness/update latency, forecast lead-time semantics beyond the returned daily timestamp, accuracy against observations, suitability for any species, or usefulness as a fishing-prediction factor.
 
 Next: create a wet-cell/bathymetry-aware coverage assessment for the four boxes, then assemble quality-controlled independent CTD and mooring observations with documented near-bottom sample/sensor depth. Pair only time- and location-eligible observations and report regional bias/MAE/RMSE with sample counts. Keep the workflow manual-only and preserve the production change-control boundary.
+
+
+## NOAA ETOPO ocean-mask and spatial-pattern assessment staged | 2026-11-17
+
+The first pilot artifact was inspected directly. The Pacific valid cells form a west-side coastal/ocean pattern while missing cells dominate the eastern/southern portion of the rectangular box. This suggests the raw 21.1% all-grid valid fraction may be heavily affected by land masking, but that is not yet a measured ocean-only coverage result.
+
+The Atlantic forecast and reanalysis samples both show a strong spatial gradient: most of the grid is approximately 1.8–3°C, while warmer values cluster along the western/southwestern edge. The similar pattern in both products makes a simple decoding error less likely. The rectangle may mix deep offshore water with shelf cells; depth classification is required before describing the sample as representative shelf temperature.
+
+Added:
+- `scripts/assess_copernicus_bottom_temperature_bathymetry.py`
+- `.github/workflows/copernicus-bottom-temperature-bathymetry.yml`
+
+The manual-only workflow reuses the existing pilot artifact by run ID; it does not re-download Copernicus data. It samples NOAA NCEI ETOPO 2022 30-arc-second global relief through the NOAA ERDDAP grid service, taking every tenth ETOPO cell to approximate the Copernicus 0.083333-degree grid. It validates grid dimensions and coordinate offsets before pairing cells. The per-cell outputs retain ETOPO elevation, estimated seafloor depth, bottom temperature, wet/land/ambiguous classification, and depth class.
+
+Classification is deliberately conservative: ETOPO elevation above +1 m is land; below -1 m is ocean; the ±1 m band is coastal-ambiguous and excluded from the ocean-only denominator. Ocean cells are stratified into 0–10, 10–50, 50–200, 200–500, 500–2000, and >2000 m depth classes. The output reports ocean-only coverage and temperature statistics by depth class for forecast and reanalysis separately. This is a grid-mask diagnostic, not a navigation product or accuracy validation. ETOPO is a global relief model and nearshore values can be generalized; see NOAA's ETOPO documentation: https://www.ncei.noaa.gov/products/etopo-global-relief-model and the ERDDAP dataset metadata: https://oceanwatch.pifsc.noaa.gov/erddap/griddap/ETOPO_2022_v1_30s.html.
+
+The workflow is manual-only, uses the existing artifact from run 44144656207 by default, produces a 14-day assessment artifact, and does not alter Copernicus data, MUR SST, production ingestion, species profiles, numeric bands, weights, gates, scoring, or publication behavior. It is staged but has not yet been dispatched. Next: run it, inspect ocean-only coverage and depth-stratified spatial patterns, then build the independent CTD/mooring inventory.
