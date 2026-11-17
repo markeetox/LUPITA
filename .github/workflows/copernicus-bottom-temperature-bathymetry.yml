@@ -4,9 +4,8 @@ on:
   workflow_dispatch:
     inputs:
       source_run_id:
-        description: "Enter the numeric run ID from the successful read-only pilot workflow"
+        description: "Enter the numeric run ID from the NEW successful pilot containing the latest candidate sampling boxes"
         required: true
-        default: "44160953510"
 
 permissions:
   actions: read
