@@ -291,3 +291,10 @@ These are hypotheses for a second coverage pass, not approved ecological boundar
 The existing ETOPO classification is coarse (30-arc-second relief sampled at approximately the Copernicus grid spacing) and the ±1 m coast-ambiguous band is not a substitute for a high-resolution wet mask. No land-classified temperature is accepted as ocean data. No accuracy, freshness, or species relevance is inferred from these diagnostics.
 
 Next: run the revised manual pilot, inspect the depth distribution and coastal-mask mismatches again, then select qualifying NOAA CTD/mooring profiles for independent matched validation. All work remains read-only; no production ingestion, MUR SST, species profiles, factors, weights, gates, scoring, confidence, or publication behavior changes.
+
+
+## Workflow input correction | 2026-11-17
+
+Bathymetry workflow run [44161453015](https://github.com/markeetox/LUPITA/actions/runs/44161453015) failed at the artifact-download step because the supplied `source_run_id` was the literal string `source_run_id`, not a numeric Actions run ID. The first-pass revised pilot itself succeeded as run [44160953510](https://github.com/markeetox/LUPITA/actions/runs/44160953510), and its artifact was produced successfully. No assessment code ran and no data was lost.
+
+Updated the bathymetry workflow's default source run ID to `44160953510`, clarified the input description, and added a preflight numeric-ID validation step so placeholder text fails with a clear message before artifact download. This is a workflow usability fix only; assessment logic and production behavior are unchanged.
