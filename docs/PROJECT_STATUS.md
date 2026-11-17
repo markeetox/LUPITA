@@ -672,3 +672,12 @@ Updated the manual pilot's candidate boxes, retaining South Florida and shifting
 ## Copernicus workflow input correction | 2026-11-17
 
 Bathymetry workflow run [44161453015](https://github.com/markeetox/LUPITA/actions/runs/44161453015) stopped before assessment because the artifact downloader received the literal string `source_run_id` instead of a numeric Actions run ID. The revised pilot succeeded as run [44160953510](https://github.com/markeetox/LUPITA/actions/runs/44160953510). Updated the bathymetry workflow default to that successful pilot run, clarified the input label, and added numeric-ID preflight validation. No data was lost and no assessment or production logic ran.
+
+
+## Copernicus refined bathymetry assessment | 2026-11-17
+
+The revised ETOPO bathymetry assessment passed as [run 44162223743](https://github.com/markeetox/LUPITA/actions/runs/44162223743), using pilot run [44160953510](https://github.com/markeetox/LUPITA/actions/runs/44160953510). Artifact `copernicus-bottom-temperature-bathymetry-assessment` contains the summary JSON and eight per-cell CSVs. Ocean-only coverage: South Florida/Keys 302/302 (100%); Gulf candidate 246/246 (100%); Atlantic candidate 165/166 (99.4%); Pacific candidate 316/316 (100%).
+
+Coverage is not the same as regional representativeness. Gulf has 193/246 cells at 10–200 m (78.5%) and is the strongest current shelf candidate. Atlantic has 91/166 at 10–200 m (54.8%) but 38 abyssal cells (>2000 m), so it remains mixed shelf/deep ocean. Pacific has 253/316 cells (>2000 m; 80.1%), so the current rectangle is abyssal-dominated despite complete ocean-only data coverage. South Florida/Keys is a broad shelf/slope sample, with 150/302 cells at 500–2000 m. One Atlantic ocean cell is missing temperature in each subset; other ocean-classified cells are valid.
+
+Forecast date 2026-11-17 and reanalysis date 2017-07-15 are not matched, so no direct product-accuracy comparison is supported. Next: refine Atlantic/Pacific boxes into explicit depth strata using per-cell CSVs, then inventory independent NOAA CTD/mooring observations. This remains exploratory and read-only; production data and scoring behavior are unchanged.
