@@ -382,3 +382,9 @@ Next: Batch B, the 27 other single-factor profiles, prioritized by gate/required
 Reviewed the 27 other single-factor grid SST profiles. Research recommendations: 20 partly_sourced, 3 provisional, and 4 needs_source for the active SST claim. The most important finding is that several deep demersal species have bottom-temperature evidence while the model gates on satellite SST. This is a model-to-data design issue to assess separately; no SST values or scoring were changed. Full review is in the master evidence audit.
 
 Next: review metadata recommendations for Batches A and B, then continue with the 80 multi-factor profiles grouped by parameter family and elevated active-evidence risk. Start with factors whose source references are generic or absent and whose weights/gates materially affect eligibility.
+
+
+## 2026-11-17 | Multi-factor evidence review underway
+
+Batch C has started. Four elevated-risk profiles (African pompano, Almaco jack, black grouper, black sea bass) have been reviewed and their active factor source/status/note metadata updated. Next priority is the remaining elevated-risk multi-factor profiles, grouped by ecological factor family. Preserve all numeric ranges, category maps, weights, gates, required flags, scoring, and confidence behavior until separately supported and approved. See SPECIES_EVIDENCE_AUDIT_2026-11-17.md.
+
