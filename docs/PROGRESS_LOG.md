@@ -1118,3 +1118,8 @@ Recorded the physical measurement contract: `sst_c` is MUR surface temperature; 
 
 
 Correction: bluefin tuna, blue marlin, mahi-mahi, opah and steelhead all have active `depth_m` gates. Low factor weight or `weak_factor` status does not prevent the gate from excluding cells. No gate changes made.
+
+
+## 2026-11-17 | Bottom-temperature source candidate
+
+Researched Copernicus Marine Global Ocean Physics Analysis and Forecast: 0.083° (~8 km), 50 levels, daily `tob` sea-bottom potential temperature, 10-day forecast, two-year rolling archive. Historical reanalysis offers a 1993+ backtest path. Product quality notes higher near-real-time uncertainty; no dedicated coastal bottom-temperature error metric was found. Candidate only; regional coverage and independent in-situ validation required before production integration. No source or model changes.

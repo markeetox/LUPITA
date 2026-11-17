@@ -514,3 +514,8 @@ Documented surface SST versus bottom temperature and ETOPO seafloor bathymetry v
 
 
 Priority correction: all five reviewed pelagic `depth_m` factors are active gates, including mahi-mahi, opah and steelhead. Review gate semantics before any model rebuild; no gates changed.
+
+
+## 2026-11-17 | Bottom-temperature source evaluation
+
+Copernicus Marine global physics forecast is the leading candidate for a bottom-temperature layer: 0.083° grid, 50 levels, daily sea-floor temperature `tob`, 10-day forecast. Keep research-only until coastal coverage, latency, and independent bottom observations are validated. Do not replace MUR SST or change species factors yet.

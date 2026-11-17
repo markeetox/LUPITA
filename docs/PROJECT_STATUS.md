@@ -600,3 +600,8 @@ Next design work: evaluate a validated bottom-temperature input and decide wheth
 
 
 Correction to the measurement-alignment register: all five listed pelagic `depth_m` factors (bluefin tuna, blue marlin, mahi-mahi, opah, steelhead) are active gates, including the three classified `weak_factor` or partly sourced. Gate behavior can exclude cells regardless of factor weight. No gates were changed; this is a priority for explicit model-design review.
+
+
+## Bottom-temperature source research | 2026-11-17
+
+Identified Copernicus Marine `GLOBAL_ANALYSISFORECAST_PHY_001_024` as a promising candidate: global 0.083° (~8 km), 50 vertical levels, daily 10-day forecast, two-year rolling archive, with daily `tob` sea-bottom potential temperature. A historical companion reanalysis extends to 1993. Product quality documentation warns near-real-time uncertainty is higher and does not provide a dedicated bottom-temperature error metric for every coastal region. It remains research-only pending South Florida/Gulf/Atlantic/Pacific coverage and independent mooring/CTD validation. No production source or model changes.

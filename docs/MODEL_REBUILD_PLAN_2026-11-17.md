@@ -222,3 +222,48 @@ No source selection, new data layer, factor activation, gate, weight, numeric ba
 ### Validation checkpoint
 
 Taxonomy and scope metadata commit `b77bd890cc687b0405d3ecbb3edabdde052d337e` passed CI run [#44134514836](https://github.com/markeetox/LUPITA/actions/runs/44134514836): 307 tests passed, 0 failed, 115 warnings. The generated species audit reports 130 profiles parsed and structurally valid, 0 JSON parse errors, and 0 model-compatibility issues. No prediction behavior changed.
+
+
+## Phase 1.2: candidate bottom-temperature source evaluation
+
+### Candidate: Copernicus Marine Global Ocean Physics Analysis and Forecast
+
+<badge color="warning">Research candidate only</badge>
+
+The strongest initial candidate located is Copernicus Marine product `GLOBAL_ANALYSISFORECAST_PHY_001_024`:
+
+- Global 1/12° (0.083°, approximately 8 km) horizontal grid.
+- 50 vertical levels, from surface to deep ocean.
+- Daily analysis/forecast updates and a 10-day forecast.
+- Two-year rolling archive for the operational product.
+- The daily 2D dataset `cmems_mod_glo_phy_anfc_0.083deg_P1D-m` includes `tob`, sea-water potential temperature at the sea floor.
+- The product is a numerical model using satellite and in-situ observations, not a direct bottom-temperature observation at every cell.
+- Product-level quality documentation says near-real-time analysis/forecast uncertainty is higher because fewer observations are available. It reports 3D temperature forecast RMSD varying by depth layer; the quality summary does not provide a dedicated bottom-temperature error metric for every coastal region.
+
+Sources:
+- Product description and 0.083°/50-level/global coverage: https://data.marine.copernicus.eu/product/GLOBAL_ANALYSISFORECAST_PHY_001_024/description
+- Product User Manual, daily `tob` bottom potential temperature: https://documentation.marine.copernicus.eu/PUM/CMEMS-GLO-PUM-001-024.pdf
+- Dataset IDs and daily access: https://data.marine.copernicus.eu/product/GLOBAL_ANALYSISFORECAST_PHY_001_024/services
+- Quality summary, including higher near-real-time uncertainty and temperature validation: https://documentation.marine.copernicus.eu/SQO/CMEMS-GLO-SQO-001-024.pdf
+- Copernicus Marine Toolbox access: https://help.marine.copernicus.eu/en/articles/4703373-differences-between-copernicus-marine-products-and-datasets-and-their-identifiers
+
+### Historical companion for model evaluation
+
+Copernicus also lists `GLOBAL_MULTIYEAR_PHY_001_030`, a global 0.083° / 50-level physics reanalysis with daily and monthly products extending back to 1993. This may support historical hindcasts and response-curve evaluation, but it is not the live operational forecast source.
+
+### Preliminary assessment
+
+This is a promising fit for the five demersal profiles whose active SST evidence is actually bottom-water temperature. It is not yet a production recommendation.
+
+Before integration, test:
+
+1. Actual `tob` availability and valid-cell fraction over South Florida, Gulf shelf, Atlantic shelf, and representative Pacific shelf locations.
+2. Coastal/nearshore land-mask behavior and missing values in shallow water.
+3. Timestamp, update latency, and whether daily analysis/forecast fields can be selected consistently.
+4. Agreement against independent bottom-temperature observations (buoys, moorings, CTD or fisheries survey data) in each target region.
+5. Difference between modelled bottom potential temperature and each species study's actual measurement depth.
+6. Access, credentials, request limits, licensing and long-term service stability.
+
+The 8 km grid is broad habitat context, not reef-scale temperature. A bottom-temperature field does not automatically validate the existing numeric bands; it only aligns the physical measurement more closely with demersal evidence. Any new source would need its own freshness, coverage, provenance and quality diagnostics.
+
+**Decision:** retain this as a research candidate. Do not add it to `config/sources.json`, do not alter `sst_c` factors, and do not change production ingestion until the regional validation is complete.
