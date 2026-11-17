@@ -10,7 +10,7 @@
   "display": {
     "color": "#0cf2c0"
   },
-  "review_status": "v1 - West Coast Pacific habitat profile",
+  "review_status": "Evidence reviewed 2026-11-17. WDFW/ODFW species accounts support rocky-bottom depth and habitat; no numeric preferred SST evidence found, and curvature is only qualitatively supported.",
   "image": {
     "status": "placeholder",
     "kind": "illustration",
@@ -26,12 +26,15 @@
     "behavior": "Navigates West Coast kelp forests, rocky reefs, and coastal upwelling zones.",
     "regulations_link": "https://wildlife.ca.gov/Fishing/Ocean/Regulations/Sport-Fishing",
     "sources": [
-      "https://wildlife.ca.gov/Fishing/Ocean/Regulations/Sport-Fishing"
+      "https://wildlife.ca.gov/Fishing/Ocean/Regulations/Sport-Fishing",
+      "https://wdfw.wa.gov/species-habitats/species/ophiodon-elongatus",
+      "https://nrimp.dfw.state.or.us/mrp/default.aspx?pagename=SgfSpeciesInfoLingcod",
+      "https://animaldiversity.org/accounts/Ophiodon_elongatus/"
     ]
   },
   "lat_range": [
-    34.0,
-    60.0
+    34,
+    60
   ],
   "factors": [
     {
@@ -47,11 +50,14 @@
       ],
       "weight": 0.5,
       "active": true,
-      "value_status": "sourced",
+      "value_status": "needs_source",
       "sources": [
-        "https://wildlife.ca.gov/Fishing/Ocean/Regulations/Sport-Fishing"
+        "https://wildlife.ca.gov/Fishing/Ocean/Regulations/Sport-Fishing",
+        "https://wdfw.wa.gov/species-habitats/species/ophiodon-elongatus",
+        "https://nrimp.dfw.state.or.us/mrp/default.aspx?pagename=SgfSpeciesInfoLingcod"
       ],
-      "reason_template": "Water is {value} C, inside preferred Pacific temperature range for lingcod."
+      "reason_template": "Water is {value} C, inside preferred Pacific temperature range for lingcod.",
+      "value_notes": "WDFW and ODFW species accounts describe range and rocky-bottom habitat but do not establish a numeric preferred surface-temperature interval for lingcod. The broad statement that lingcod tolerate varied water temperatures does not validate the configured 7-15 °C range or 9-13 °C ideal. Keep values unchanged and mark needs_source."
     },
     {
       "param": "depth_m",
@@ -66,30 +72,36 @@
       ],
       "weight": 0.4,
       "active": true,
-      "value_status": "sourced",
+      "value_status": "partly_sourced",
       "sources": [
-        "https://wildlife.ca.gov/Fishing/Ocean/Regulations/Sport-Fishing"
+        "https://wildlife.ca.gov/Fishing/Ocean/Regulations/Sport-Fishing",
+        "https://wdfw.wa.gov/species-habitats/species/ophiodon-elongatus",
+        "https://nrimp.dfw.state.or.us/mrp/default.aspx?pagename=SgfSpeciesInfoLingcod"
       ],
       "gate": true,
-      "reason_template": "Depth is {value} m, within prime Pacific depth zone for lingcod."
+      "reason_template": "Depth is {value} m, within prime Pacific depth zone for lingcod.",
+      "value_notes": "WDFW reports most lingcod on rocky bottom at 10-100 m, with records to 427 m; ODFW reports adults near rocks from inshore to 230 fathoms and young fish on sand/mud in bays. This supports depth and habitat relevance but not one 10-150 m / 12-145 m preference across adults and juveniles."
     },
     {
       "param": "bottom_curvature",
       "kind": "higher_is_better",
       "weight": 0.1,
       "active": true,
-      "value_status": "sourced",
+      "value_status": "partly_sourced",
       "sources": [
-        "https://wildlife.ca.gov/Fishing/Ocean/Regulations/Sport-Fishing"
+        "https://wildlife.ca.gov/Fishing/Ocean/Regulations/Sport-Fishing",
+        "https://wdfw.wa.gov/species-habitats/species/ophiodon-elongatus",
+        "https://nrimp.dfw.state.or.us/mrp/default.aspx?pagename=SgfSpeciesInfoLingcod"
       ],
-      "reason_template": "Seafloor curvature identifies rocky pinnacles, ledges, and break lines where lingcod ambush prey."
+      "reason_template": "Seafloor curvature identifies rocky pinnacles, ledges, and break lines where lingcod ambush prey.",
+      "value_notes": "WDFW and ODFW document adult lingcod association with rocky bottom, reefs and complex hard structure, while juveniles use sand/mud in bays. This supports structure/relief context but does not directly validate the runtime bottom_curvature metric or its numeric response."
     }
   ],
   "timing": {
     "status": "angler_lore",
     "light": {
       "map": {
-        "day": 1.0,
+        "day": 1,
         "dawn": 0.9,
         "dusk": 0.9,
         "night": 0.5
@@ -116,7 +128,7 @@
     "source_url": "https://wildlife.ca.gov/Fishing/Ocean/Regulations/Sport-Fishing"
   },
   "lon_range": [
-    -138.0,
-    -110.0
+    -138,
+    -110
   ]
 }

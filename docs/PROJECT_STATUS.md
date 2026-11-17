@@ -543,3 +543,8 @@ Reviewed California halibut, Pacific halibut, Petrale sole, Starry flounder, and
 ## Documented multi-factor review | Pacific salmon thermal-habitat batch
 
 Reviewed Chinook, Coho, Chum, Pink and Sockeye salmon across 10 active factors. Added the 2024 North Pacific species-specific SST distribution study, NOAA species pages, Chinook telemetry, and chum migration-corridor evidence. The modeled preferred SST ranges are generally colder than the configured bands; pink salmon estimates differ by brood-cycle parity. All five bathymetry factors are marked weak_factor because fish vertical depth is not seafloor depth. No numeric or runtime changes. Progress: 25 of 51 documented multi-factor profiles across 51 active factors. See [species evidence audit](SPECIES_EVIDENCE_AUDIT_2026-11-17.md).
+
+
+## Documented multi-factor review | fifth Pacific rocky-reef batch
+
+Reviewed Lingcod, Cabezon, Kelp greenling, Ocean whitefish and Yelloweye rockfish across 11 active factors. Replaced generic regulation-page citations with WDFW, ODFW, CDFW, NOAA AFSC, IUCN and Smithsonian sources. SST factors are needs_source across all five; depth and lingcod bottom-curvature are partly_sourced with life-stage/range/metric caveats. No numeric or runtime changes. Progress: 30 of 51 documented multi-factor profiles across 62 active factors. See [species evidence audit](SPECIES_EVIDENCE_AUDIT_2026-11-17.md).

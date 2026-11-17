@@ -465,3 +465,8 @@ Reviewed California halibut, Pacific halibut, Petrale sole, Starry flounder, and
 ## 2026-11-17 | Documented salmon thermal-habitat review
 
 Reviewed Chinook, Coho, Chum, Pink and Sockeye (10 active factors). Species-specific North Pacific SST models indicate the configured bands are generally too warm; pink salmon has even/odd-year differences. Bathymetry is only a weak proxy for pelagic salmon and is not equivalent to fish vertical depth. Progress: 25/51 profiles, 51 active factors. No numeric or runtime changes.
+
+
+## 2026-11-17 | Documented Pacific rocky-reef review, batch 5
+
+Reviewed Lingcod, Cabezon, Kelp greenling, Ocean whitefish and Yelloweye rockfish (11 active factors). Added species-specific habitat/depth sources; SST bands lack numeric preference evidence. Depth and bottom-curvature support is partial, not a validated scoring curve. Progress: 30/51 profiles, 62 active factors. No numeric or runtime changes.

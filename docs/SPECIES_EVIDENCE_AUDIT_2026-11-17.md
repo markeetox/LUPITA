@@ -706,3 +706,37 @@ Langan et al. (2024) used North Pacific coastal/high-seas survey data from 1953-
 
 ### Documented-profile review progress
 Twenty-five of 51 profiles reviewed across 51 active factors. Salmon profiles expose a systematic model limitation: the SST layer is a surface proxy for a marine-phase species whose experienced temperature can differ by depth, while the active bathymetry factor is not the fish's vertical depth. Preserve these distinctions and do not change model weights or numeric bands in this evidence-only pass.
+
+
+## Documented multi-factor review: fifth Pacific rocky-reef batch | 2026-11-17
+
+Reviewed Lingcod, Cabezon, Kelp greenling, Ocean whitefish and Yelloweye rockfish across 11 active factors. Replaced generic regulation-page references with WDFW, ODFW, CDFW, NOAA AFSC, IUCN and Smithsonian sources. No numeric ranges, ideal intervals, weights, active flags, gates, required flags, scoring, confidence or runtime behavior changed.
+
+### Lingcod (*Ophiodon elongatus*)
+- SST: needs_source. Species accounts describe temperature tolerance but do not establish a numeric preferred SST curve.
+- Depth: partly_sourced. WDFW reports most adults on rocky bottom at 10-100 m, with records to 427 m; ODFW reports adults near rocks and juveniles in bays. Configured 10-150 m / 12-145 m is not a universal stage-specific preference.
+- Bottom curvature: partly_sourced. Rocky reef/complex hard-bottom association supports habitat relevance but not a direct quantitative response to the runtime curvature metric.
+- Sources: [WDFW lingcod](https://wdfw.wa.gov/species-habitats/species/ophiodon-elongatus); [ODFW lingcod](https://nrimp.dfw.state.or.us/mrp/default.aspx?pagename=SgfSpeciesInfoLingcod).
+
+### Cabezon (*Scorpaenichthys marmoratus*)
+- SST: needs_source. Reviewed species sources provide no numeric preferred SST evidence.
+- Depth: partly_sourced. CDFG reports adults intertidal-110 m (most common intertidal-30 m), juveniles in tidepools, and egg nests intertidal-15 m; adults associate with hard bottom. Configured 2-50 m / 4-45 m is not life-stage-specific.
+- Sources: [CDFG cabezon life-stage distribution](https://nrm.dfg.ca.gov/FileHandler.ashx?DocumentID=33887); [ODFW cabezon](https://nrimp.dfw.state.or.us/mrp/default.aspx?page=89).
+
+### Kelp greenling (*Hexagrammos decagrammus*)
+- SST: needs_source. Habitat sources do not establish a numeric preferred SST curve.
+- Depth: partly_sourced. WDFW reports rocky inshore/kelp habitat to about 46 m; ODFW reports 25 fathoms; IUCN describes intertidal/subtidal rocky reefs, kelp and eelgrass typically to 50 m. A Farallon survey reports 0-100 m. Configured 1-40 m / 3-35 m is plausible shallow habitat, not a universal preference.
+- Sources: [WDFW kelp greenling](https://wdfw.wa.gov/species-habitats/species/hexagrammos-decagrammus); [ODFW greenling](https://nrimp.dfw.state.or.us/mrp/default.aspx?p=74); [IUCN assessment](https://doi.org/10.2305/IUCN.UK.2020-2.RLTS.T158882453A158883838.en).
+
+### Ocean whitefish (*Caulolatilus princeps*)
+- SST: needs_source. Reviewed species accounts do not establish a numeric preferred SST or validated thermal response curve.
+- Depth: partly_sourced. STRI reports bottom-associated rock/sand habitat from 3-160 m, including 80-160 m observations at Isla del Coco. Configured 10-100 m / 12-95 m is not a complete species depth envelope.
+- Sources: [Smithsonian Eastern Pacific species account](https://biogeodb.stri.si.edu/sftep/en/thefishes/species/1220); [2018 Isla del Coco reef-fish synthesis](https://stri-apps.si.edu/docs/publications/pdfs/Sanchez-Jimenez_A_et_al.2018-Rev_Biol_Trop.66-Suplemento_5_S1-S113.pdf).
+
+### Yelloweye rockfish (*Sebastes ruberrimus*)
+- SST: needs_source. Climate sensitivity through prey availability does not establish a numeric SST preference.
+- Depth: partly_sourced. WDFW reports 11-549 m, adults typically 91-180 m, and juveniles shallower; adults use deep, high-relief complex rock. NOAA AFSC gives common depths around 50-400 m. Configured 30-200 m overlaps adult habitat but not the full ontogenetic range.
+- Sources: [WDFW yelloweye rockfish](https://wdfw.wa.gov/species-habitats/species/sebastes-ruberrimus); [ODFW yelloweye](https://nrimp.dfw.state.or.us/MRP/default.aspx?pagename=SgfSpeciesInfoYelloweye+Rockfish); [NOAA AFSC rockfish guide](https://apps-afsc.fisheries.noaa.gov/Publications/AFSC-TM/NOAA-TM-AFSC-95.pdf).
+
+### Documented-profile review progress
+Thirty of 51 profiles reviewed across 62 active factors. The same evidence rule holds: a specific species page can substantiate habitat/depth occurrence without supporting an SST optimum, and habitat relief does not automatically validate a numerical bottom-curvature response.
