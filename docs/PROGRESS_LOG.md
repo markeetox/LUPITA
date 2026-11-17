@@ -1276,3 +1276,8 @@ Clarified GoMMAPPS metadata: InPort item 65961 is an investigator Word document 
 ## 2026-11-17 | South Florida WODSelect cast inventory captured
 
 Recorded the first WODSelect regional inventory in `docs/NOAA_WODSELECT_REGIONAL_QUERY_PLAN_2026-11-17.md`. South Florida/Keys box (-81.0 to -79.5° longitude, 24.5 to 26.5° latitude) returned 8,387 casts across the selected broad profile datasets: OSD 663, CTD 649, XBT 2,286, MBT 3,725, PFL 200, MRB 3, GLD 861; DRB/APB/UOR 0; SUR 0 cruises. Temperature was both the required and extracted variable. The copied result does not report the QC exclusion setting or WOD release/version, so these are left unknown. The total is not a count of unique, QC-accepted, near-bottom observations. Next: inspect export choices and request observed-level NetCDF with QC/IQuOD flags retained where available; then run the same inventory for Gulf, Atlantic, and Pacific. No data have been downloaded or paired, no accuracy result is claimed, and no production behavior changed.
+
+
+## 2026-11-17 | South Florida WOD extraction request queued
+
+Recorded NOAA WODSelect's successful submission confirmation for the South Florida/Keys extraction. NOAA's output directory is https://www.ncei.noaa.gov/access/world-ocean-database-select/OCLdb_output; prepared files are retained for up to 72 hours after preparation. This confirms submission only, not readiness or successful download. Next: monitor for preparation, download promptly within the availability window, record exact files and checksums, then inspect the actual data structure and flags before parser work. No profile screening, matching, accuracy analysis, or production changes have occurred.
