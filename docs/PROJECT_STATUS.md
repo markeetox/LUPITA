@@ -467,3 +467,8 @@ Completed the first four elevated-risk multi-factor profile reviews: African pom
 
 Completed the second multi-factor evidence batch: cubera snapper, gag grouper, red grouper, and red snapper. Replaced generic homepage-only factor references and updated evidence statuses/notes across 12 active factors. All factors remain partly_sourced because the available sources support broad occurrence, habitat, or life-stage relationships but do not validate every configured interval or numeric category score. Gag bottom-curvature evidence is especially indirect: terrain ruggedness is not identical to the runtime bottom_curvature variable. No numeric bands, category maps, weights, active flags, gates, required flags, scoring, confidence, source selection, ingestion, or publication behavior changed. Details: [all-species evidence audit](SPECIES_EVIDENCE_AUDIT_2026-11-17.md).
 
+
+## Multi-factor evidence review | third four profiles | 2026-11-17
+
+Completed the third multi-factor batch: gray triggerfish, gray (mangrove) snapper, scamp grouper, and snowy grouper. Replaced generic homepage factor references with species-specific sources and updated 12 active factor statuses/notes. Gray triggerfish, gray snapper, and scamp factors are partly_sourced; snowy grouper SST is needs_source because available temperature records are deep bottom-water spawning observations, not SST, while slope and depth remain partly_sourced. No numeric bands, weights, active flags, gates, required flags, scoring, confidence, source selection, ingestion, or publication behavior changed. Details: [all-species evidence audit](SPECIES_EVIDENCE_AUDIT_2026-11-17.md).
+
