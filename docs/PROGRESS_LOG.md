@@ -1229,3 +1229,8 @@ Reviewed the eight per-cell CSV grids from bathymetry run [44162223743](https://
 ## 2026-11-17 | Candidate v2 test pass and stale-artifact guard
 
 Python tests passed for candidate-v2 sampling changes in [run 44163056720](https://github.com/markeetox/LUPITA/actions/runs/44163056720). Removed the bathymetry workflow's stale default source run ID so the operator must explicitly provide the run ID from the latest successful pilot. This avoids accidentally classifying the prior pilot artifact with the old Atlantic/Pacific boxes. Next action is the new read-only pilot, followed by its ETOPO assessment. No production logic changed.
+
+
+## 2026-11-17 | Candidate v2 Copernicus pilot succeeded
+
+Manual read-only pilot [44164227216](https://github.com/markeetox/LUPITA/actions/runs/44164227216) completed successfully; all eight subset requests and artifact upload passed. Raw valid/all-grid counts: South Florida/Keys 321/475 (67.6%); Gulf 247/247 (100%); Atlantic v2 90/91 (98.9%); Pacific v2 73/91 (80.2%). These percentages include land and coastal cells and are not ocean-only coverage. Forecast (2026-11-17) and reanalysis (2017-07-15) dates differ, so no direct product comparison or accuracy conclusion is supported. Next: dispatch the ETOPO bathymetry assessment using source run ID `44164227216`, then review ocean-only coverage, depth composition, and land/coast mask disagreements from all per-cell CSVs. No production logic changed.
