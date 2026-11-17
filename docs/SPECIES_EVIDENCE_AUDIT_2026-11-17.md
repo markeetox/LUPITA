@@ -637,3 +637,36 @@ Reviewed Kelp bass, California yellowtail, Giant sea bass, Opaleye, and Spotted 
 
 ### Documented-profile review progress
 Fifteen of 51 profiles reviewed across 31 active factors. The audit continues to separate numeric temperature tolerance, modeled temperature estimates, spawning temperature, and observed habitat use. None is silently promoted to a universal preferred SST curve.
+
+
+## Documented multi-factor review: fourth demersal flatfish/cod batch | 2026-11-17
+
+Reviewed California halibut, Pacific halibut, Petrale sole, Starry flounder, and Pacific cod across 10 active factors. Added NOAA, USGS, IPHC, WDFW, ODFW and DFO sources. No numeric ranges, ideal intervals, weights, active flags, gates, required flags, scoring, confidence or runtime behavior changed.
+
+### California halibut (*Paralichthys californicus*)
+- SST: partly_sourced. NOAA's egg-suitability analysis uses 12-20 °C; USGS laboratory work found eggs hatch at 12, 16 and 20 °C, while juvenile thermal preference varies with acclimation (final preferendum 18.4 °C). This is life-stage-specific thermal evidence, not a universal adult catch curve.
+- Depth: partly_sourced. NOAA reports most mature fish shallower than 30 m, though mature fish occur to about 100 m; juveniles rely on estuaries/embayments. The configured 2-60 m interval and 4-55 m ideal are not life-stage-specific.
+- Sources: [NOAA SST assessment](https://repository.library.noaa.gov/view/noaa/48188/noaa_48188_DS1.pdf); [USGS early-life temperature study](https://pubs.usgs.gov/publication/70180738); [NOAA habitat synthesis](https://storage.googleapis.com/nmfs_odp_swfsc/Publications/Files/CR/2025/2025Purcell2.pdf).
+
+### Pacific halibut (*Hippoglossus stenolepis*)
+- SST: needs_source. IPHC reports adult bottom-water temperatures around 3-8 °C; this cannot validate the model's satellite SST factor.
+- Depth: partly_sourced. IPHC reports summer feeding to about 500 m, most frequent catches around 30-270 m, and deeper offshore winter spawning. Juveniles use shallower habitat; the configured band does not represent all life stages/seasons.
+- Sources: [IPHC stock status and biology](https://www.iphc.int/research/pacific-halibut-stock-status-biology/); [USGS depth synthesis](https://pubs.usgs.gov/sir/2016/5038/sir20165038_profiles11.pdf); [NOAA commercial fishery species account](https://repository.library.noaa.gov/view/noaa/10936/noaa_10936_DS1.pdf).
+
+### Petrale sole (*Eopsetta jordani*)
+- SST: needs_source. DFO documents tolerance of varying bottom temperatures, not preferred satellite SST.
+- Depth: partly_sourced. WDFW reports 18-550 m, with seasonal abundance shifting from 55-128 m in April-October to 274-457 m in winter. The configured 20-200 m band omits much of the winter spawning distribution.
+- Sources: [WDFW petrale sole](https://wdfw.wa.gov/species-habitats/species/eopsetta-jordani); [ODFW petrale sole](https://nrimp.dfw.state.or.us/mrp/default.aspx?page=109); [DFO petrale sole](https://www.dfo-mpo.gc.ca/species-especes/profiles-profils/petrale-sole-plie-californie-eng.html).
+
+### Starry flounder (*Platichthys stellatus*)
+- SST: provisional. San Francisco Bay age-0 observations span roughly 8-23 °C, but this is broad occurrence, not a preferred adult SST curve.
+- Depth: partly_sourced. WDFW reports 0-375 m, most commonly above 146 m, nearshore and sometimes brackish/fresh; ODFW reports most fish above 80 fathoms and juveniles intertidal. The configured 1-50 m band captures only shallow nearshore habitat.
+- Sources: [WDFW starry flounder](https://wdfw.wa.gov/species-habitats/species/platichthys-stellatus); [ODFW starry flounder](https://nrimp.dfw.state.or.us/mrp/default.aspx?page=114); [California nursery synthesis](https://www.pacificfishhabitat.org/wp-content/uploads/2017/09/tnc_ca_fishnurseries_lowres_min.pdf).
+
+### Pacific cod (*Gadus macrocephalus*)
+- SST: needs_source. NOAA survey values of -1.6 to 8.4 °C (eastern Bering Sea) and -1.6 to 11 °C (northern Bering Sea) are bottom-trawl temperatures, not satellite SST or preferred temperature.
+- Depth: partly_sourced. NOAA describes winter spawning on the outer/upper shelf and summer movement to shallower shelf feeding grounds; the configured 20-200 m range is a shelf screen, not a universal depth preference.
+- Sources: [NOAA Pacific cod](https://www.fisheries.noaa.gov/species/pacific-cod); [NOAA 2022 Bering Sea trawl survey](https://repository.library.noaa.gov/view/noaa/50154/noaa_50154_DS1.pdf); [NOAA species depth record](https://repository.library.noaa.gov/view/noaa/5807/noaa_5807_DS1.pdf).
+
+### Documented-profile review progress
+Twenty of 51 profiles reviewed across 41 active factors. The review continues to distinguish surface temperature from bottom temperature and life-stage thermal response, and to preserve seasonal depth migrations rather than compressing them into a single universal preference interval.

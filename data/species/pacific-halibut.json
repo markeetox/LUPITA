@@ -10,7 +10,7 @@
   "display": {
     "color": "#d82041"
   },
-  "review_status": "v1 - West Coast Pacific habitat profile",
+  "review_status": "Evidence reviewed 2026-11-17. IPHC and NOAA sources support demersal depth and seasonal migration; reported adult temperatures are bottom-water temperatures and cannot validate satellite SST.",
   "image": {
     "status": "placeholder",
     "kind": "illustration",
@@ -26,12 +26,16 @@
     "behavior": "Navigates West Coast kelp forests, rocky reefs, and coastal upwelling zones.",
     "regulations_link": "https://wdfw.wa.gov/fishing/regulations",
     "sources": [
-      "https://wdfw.wa.gov/fishing/regulations"
+      "https://wdfw.wa.gov/fishing/regulations",
+      "https://www.iphc.int/research/pacific-halibut-stock-status-biology/",
+      "https://www.fisheries.noaa.gov/species/pacific-halibut",
+      "https://pubs.usgs.gov/sir/2016/5038/sir20165038_profiles11.pdf",
+      "https://repository.library.noaa.gov/view/noaa/10936/noaa_10936_DS1.pdf"
     ]
   },
   "lat_range": [
-    40.0,
-    60.0
+    40,
+    60
   ],
   "factors": [
     {
@@ -47,11 +51,14 @@
       ],
       "weight": 0.5,
       "active": true,
-      "value_status": "sourced",
+      "value_status": "needs_source",
       "sources": [
-        "https://wdfw.wa.gov/fishing/regulations"
+        "https://wdfw.wa.gov/fishing/regulations",
+        "https://www.iphc.int/research/pacific-halibut-stock-status-biology/",
+        "https://pubs.usgs.gov/sir/2016/5038/sir20165038_profiles11.pdf"
       ],
-      "reason_template": "Water is {value} C, inside preferred Pacific temperature range for pacific halibut."
+      "reason_template": "Water is {value} C, inside preferred Pacific temperature range for pacific halibut.",
+      "value_notes": "IPHC reports Pacific halibut routinely occupy bottom-water temperatures around 3-8 °C, but the fish is demersal and the model factor is satellite sea-surface temperature. Bottom temperature is not interchangeable with SST, and the reviewed sources do not validate the configured 5-13 °C surface-temperature band or 7-11 °C ideal. Keep values unchanged and mark needs_source."
     },
     {
       "param": "depth_m",
@@ -66,19 +73,23 @@
       ],
       "weight": 0.5,
       "active": true,
-      "value_status": "sourced",
+      "value_status": "partly_sourced",
       "sources": [
-        "https://wdfw.wa.gov/fishing/regulations"
+        "https://wdfw.wa.gov/fishing/regulations",
+        "https://www.iphc.int/research/pacific-halibut-stock-status-biology/",
+        "https://pubs.usgs.gov/sir/2016/5038/sir20165038_profiles11.pdf",
+        "https://repository.library.noaa.gov/view/noaa/10936/noaa_10936_DS1.pdf"
       ],
       "gate": true,
-      "reason_template": "Depth is {value} m, within prime Pacific depth zone for pacific halibut."
+      "reason_template": "Depth is {value} m, within prime Pacific depth zone for pacific halibut.",
+      "value_notes": "IPHC reports summer feeding on the continental shelf to about 500 m, most frequent captures around 30-270 m, and deeper offshore winter spawning. NOAA/USGS sources describe ontogenetic depth shifts, including juveniles in shallow water and spawning at roughly 183-457 m. The configured 20-250 m band covers much feeding habitat but does not represent the full life-stage or winter spawning depth range."
     }
   ],
   "timing": {
     "status": "angler_lore",
     "light": {
       "map": {
-        "day": 1.0,
+        "day": 1,
         "dawn": 0.9,
         "dusk": 0.9,
         "night": 0.5
@@ -105,7 +116,7 @@
     "source_url": "https://wdfw.wa.gov/fishing/regulations"
   },
   "lon_range": [
-    -138.0,
-    -110.0
+    -138,
+    -110
   ]
 }

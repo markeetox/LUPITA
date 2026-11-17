@@ -455,3 +455,8 @@ Reviewed Gopher rockfish, Kelp rockfish, Olive rockfish, Treefish, and Halfmoon 
 ## 2026-11-17 | Documented California coastal review, batch 3
 
 Reviewed Kelp bass, California yellowtail, Giant sea bass, Opaleye, and Spotted sand bass (10 active factors). Added species-specific sources and conservative claim-fit notes. Numeric tolerance, model-derived preferred-temperature estimates, spawning temperature and SST preference are kept distinct. California yellowtail bathymetry is a weak proxy; Giant sea bass SST remains needs_source. Progress: 15/51 profiles, 31 active factors. No numeric or runtime changes.
+
+
+## 2026-11-17 | Documented demersal review, batch 4
+
+Reviewed California halibut, Pacific halibut, Petrale sole, Starry flounder, and Pacific cod (10 active factors). Added species-specific agency and research sources. Bottom-temperature records were not used to validate satellite SST; life-stage and seasonal depth differences were documented. Progress: 20/51 profiles, 41 active factors. No numeric or runtime changes.

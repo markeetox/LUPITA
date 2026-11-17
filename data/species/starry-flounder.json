@@ -10,7 +10,7 @@
   "display": {
     "color": "#f23cb0"
   },
-  "review_status": "v1 - West Coast Pacific habitat profile",
+  "review_status": "Evidence reviewed 2026-11-17. WDFW/ODFW and nursery-habitat sources support broad nearshore occurrence; temperature evidence is occurrence/tolerance, not a preferred SST curve.",
   "image": {
     "status": "placeholder",
     "kind": "illustration",
@@ -26,12 +26,15 @@
     "behavior": "Navigates West Coast kelp forests, rocky reefs, and coastal upwelling zones.",
     "regulations_link": "https://wildlife.ca.gov/Fishing/Ocean/Regulations/Sport-Fishing",
     "sources": [
-      "https://wildlife.ca.gov/Fishing/Ocean/Regulations/Sport-Fishing"
+      "https://wildlife.ca.gov/Fishing/Ocean/Regulations/Sport-Fishing",
+      "https://wdfw.wa.gov/species-habitats/species/platichthys-stellatus",
+      "https://nrimp.dfw.state.or.us/mrp/default.aspx?page=114",
+      "https://www.pacificfishhabitat.org/wp-content/uploads/2017/09/tnc_ca_fishnurseries_lowres_min.pdf"
     ]
   },
   "lat_range": [
-    34.0,
-    60.0
+    34,
+    60
   ],
   "factors": [
     {
@@ -47,11 +50,13 @@
       ],
       "weight": 0.5,
       "active": true,
-      "value_status": "sourced",
+      "value_status": "provisional",
       "sources": [
-        "https://wildlife.ca.gov/Fishing/Ocean/Regulations/Sport-Fishing"
+        "https://wildlife.ca.gov/Fishing/Ocean/Regulations/Sport-Fishing",
+        "https://www.pacificfishhabitat.org/wp-content/uploads/2017/09/tnc_ca_fishnurseries_lowres_min.pdf"
       ],
-      "reason_template": "Water is {value} C, inside preferred Pacific temperature range for starry flounder."
+      "reason_template": "Water is {value} C, inside preferred Pacific temperature range for starry flounder.",
+      "value_notes": "A California estuarine nursery synthesis reports age-0 starry flounder captured in San Francisco Bay across approximately 8-23 °C, but this is occurrence across a broad range, not a preferred SST interval or adult thermal curve. The configured 6-16 °C range and 8-14 °C ideal are not validated by that observation; retain provisional status."
     },
     {
       "param": "depth_m",
@@ -66,19 +71,22 @@
       ],
       "weight": 0.5,
       "active": true,
-      "value_status": "sourced",
+      "value_status": "partly_sourced",
       "sources": [
-        "https://wildlife.ca.gov/Fishing/Ocean/Regulations/Sport-Fishing"
+        "https://wildlife.ca.gov/Fishing/Ocean/Regulations/Sport-Fishing",
+        "https://wdfw.wa.gov/species-habitats/species/platichthys-stellatus",
+        "https://nrimp.dfw.state.or.us/mrp/default.aspx?page=114"
       ],
       "gate": true,
-      "reason_template": "Depth is {value} m, within prime Pacific depth zone for starry flounder."
+      "reason_template": "Depth is {value} m, within prime Pacific depth zone for starry flounder.",
+      "value_notes": "WDFW reports occurrence on mud, sand and gravel from 0-375 m, most commonly above 146 m, usually nearshore and sometimes in brackish/fresh water; ODFW reports 0-205 fathoms, with most fish above 80 fathoms and juveniles intertidal. The configured 1-50 m band captures shallow nearshore habitat but not the broader adult range; the ideal is not a measured depth preference."
     }
   ],
   "timing": {
     "status": "angler_lore",
     "light": {
       "map": {
-        "day": 1.0,
+        "day": 1,
         "dawn": 0.9,
         "dusk": 0.9,
         "night": 0.5
@@ -105,7 +113,7 @@
     "source_url": "https://wildlife.ca.gov/Fishing/Ocean/Regulations/Sport-Fishing"
   },
   "lon_range": [
-    -138.0,
-    -110.0
+    -138,
+    -110
   ]
 }

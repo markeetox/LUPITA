@@ -10,7 +10,7 @@
   "display": {
     "color": "#d85f0a"
   },
-  "review_status": "v1 - West Coast Pacific habitat profile",
+  "review_status": "Evidence reviewed 2026-11-17. NOAA/USGS early-life thermal studies and NOAA habitat synthesis added; SST and depth claims are partly supported with explicit life-stage caveats.",
   "image": {
     "status": "placeholder",
     "kind": "illustration",
@@ -26,12 +26,15 @@
     "behavior": "Navigates West Coast kelp forests, rocky reefs, and coastal upwelling zones.",
     "regulations_link": "https://wildlife.ca.gov/Fishing/Ocean/Regulations/Sport-Fishing",
     "sources": [
-      "https://wildlife.ca.gov/Fishing/Ocean/Regulations/Sport-Fishing"
+      "https://wildlife.ca.gov/Fishing/Ocean/Regulations/Sport-Fishing",
+      "https://repository.library.noaa.gov/view/noaa/48188/noaa_48188_DS1.pdf",
+      "https://pubs.usgs.gov/publication/70180738",
+      "https://storage.googleapis.com/nmfs_odp_swfsc/Publications/Files/CR/2025/2025Purcell2.pdf"
     ]
   },
   "lat_range": [
-    25.0,
-    40.0
+    25,
+    40
   ],
   "factors": [
     {
@@ -47,11 +50,15 @@
       ],
       "weight": 0.5,
       "active": true,
-      "value_status": "sourced",
+      "value_status": "partly_sourced",
       "sources": [
-        "https://wildlife.ca.gov/Fishing/Ocean/Regulations/Sport-Fishing"
+        "https://wildlife.ca.gov/Fishing/Ocean/Regulations/Sport-Fishing",
+        "https://repository.library.noaa.gov/view/noaa/48188/noaa_48188_DS1.pdf",
+        "https://pubs.usgs.gov/publication/70180738",
+        "https://onlinelibrary.wiley.com/doi/10.1111/j.1365-2109.2009.02385.x"
       ],
-      "reason_template": "Water is {value} C, inside preferred Pacific temperature range for california halibut."
+      "reason_template": "Water is {value} C, inside preferred Pacific temperature range for california halibut.",
+      "value_notes": "NOAA's California halibut SST assessment uses 12-20 °C as an egg-suitability threshold based on laboratory egg development; USGS experiments found eggs hatched at 12, 16 and 20 °C but not at 8 or 24 °C. Juvenile studies report preferred temperatures varying with acclimation (15.1-24.7 °C; final preferendum 18.4 °C). This supports thermal relevance, but egg and juvenile responses differ and do not establish a universal adult SST catch curve. The configured 12-21 °C / 14-19 °C bands remain provisional for mixed life stages."
     },
     {
       "param": "depth_m",
@@ -66,19 +73,21 @@
       ],
       "weight": 0.5,
       "active": true,
-      "value_status": "sourced",
+      "value_status": "partly_sourced",
       "sources": [
-        "https://wildlife.ca.gov/Fishing/Ocean/Regulations/Sport-Fishing"
+        "https://wildlife.ca.gov/Fishing/Ocean/Regulations/Sport-Fishing",
+        "https://storage.googleapis.com/nmfs_odp_swfsc/Publications/Files/CR/2025/2025Purcell2.pdf"
       ],
       "gate": true,
-      "reason_template": "Depth is {value} m, within prime Pacific depth zone for california halibut."
+      "reason_template": "Depth is {value} m, within prime Pacific depth zone for california halibut.",
+      "value_notes": "NOAA's 2025 species synthesis reports mature California halibut in nearshore coastal waters to about 100 m, with most mature fish shallower than 30 m; juveniles rely on estuaries and embayments. This supports shallow demersal habitat but the configured 2-60 m band and 4-55 m ideal extend well beyond the depth range used by most mature fish and do not represent nursery habitat separately."
     }
   ],
   "timing": {
     "status": "angler_lore",
     "light": {
       "map": {
-        "day": 1.0,
+        "day": 1,
         "dawn": 0.9,
         "dusk": 0.9,
         "night": 0.5
@@ -105,7 +114,7 @@
     "source_url": "https://wildlife.ca.gov/Fishing/Ocean/Regulations/Sport-Fishing"
   },
   "lon_range": [
-    -138.0,
-    -110.0
+    -138,
+    -110
   ]
 }

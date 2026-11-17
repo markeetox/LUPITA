@@ -533,3 +533,8 @@ Reviewed Gopher rockfish, Kelp rockfish, Olive rockfish, Treefish, and Halfmoon 
 ## Documented multi-factor review | third California coastal batch
 
 Reviewed Kelp bass, California yellowtail, Giant sea bass, Opaleye, and Spotted sand bass across 10 active factors. Replaced generic regulation-page citations with specific CDFW, Smithsonian, FishBase, USGS and research sources. Kelp bass SST has qualitative recruitment support but no numeric optimum; California yellowtail has broad thermal evidence but bathymetry is only a weak proxy; Giant sea bass SST remains needs_source; Opaleye's broad temperature envelope is provisional; Spotted sand bass has a model-derived temperature estimate, not field-validated preference. All depth/habitat factors are partly supported with caveats. No numeric or runtime changes. Progress: 15 of 51 documented multi-factor profiles across 31 active factors. See [species evidence audit](SPECIES_EVIDENCE_AUDIT_2026-11-17.md).
+
+
+## Documented multi-factor review | fourth demersal flatfish/cod batch
+
+Reviewed California halibut, Pacific halibut, Petrale sole, Starry flounder, and Pacific cod across 10 active factors. Added NOAA, USGS, IPHC, WDFW, ODFW and DFO evidence. California halibut has life-stage-specific thermal evidence; Pacific halibut, Petrale sole and Pacific cod bottom-temperature records do not validate satellite SST; Starry flounder temperature evidence is broad occurrence only. Depth factors are partly sourced with seasonal and life-stage caveats. No numeric or runtime changes. Progress: 20 of 51 documented multi-factor profiles across 41 active factors. See [species evidence audit](SPECIES_EVIDENCE_AUDIT_2026-11-17.md).
