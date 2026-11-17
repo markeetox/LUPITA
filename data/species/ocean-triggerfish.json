@@ -21,7 +21,7 @@
     "life_history": "Spawns seasonally along coastal or shelf waters.",
     "regulations_link": "https://www.fisheries.noaa.gov/",
     "sources": [
-      "https://www.fisheries.noaa.gov/"
+      "https://fishbase.org/summary/Canthidermis-sufflamen"
     ],
     "spawning": "Spawns seasonally based on water temperature and regional climate.",
     "overwintering": "Migrates to warmer or deeper waters depending on season."
@@ -31,20 +31,20 @@
       "param": "sst_c",
       "kind": "range",
       "range": [
-        20.0,
-        30.0
+        20,
+        30
       ],
       "ideal": [
-        23.0,
-        28.0
+        23,
+        28
       ],
       "weight": 0.35,
       "active": true,
-      "value_status": "sourced",
-      "value_notes": "NOAA oceanographic temperature profile for Ocean triggerfish.",
+      "value_status": "provisional",
+      "value_notes": "FishBase reports a model-derived preferred-temperature estimate of 22.7–28.6 °C (mean 27.3 °C; 770 cells). No independent field or physiological study was located to validate the configured 20–30 °C range or 23–28 °C ideal; retain provisional status.",
       "reason_template": "Water is {value} C, within the preferred thermal range for Ocean triggerfish.",
       "sources": [
-        "https://www.fisheries.noaa.gov/"
+        "https://fishbase.org/summary/Canthidermis-sufflamen"
       ],
       "gate": true,
       "required": true
@@ -72,7 +72,7 @@
     },
     "light": {
       "map": {
-        "dusk": 1.0,
+        "dusk": 1,
         "night": 0.8,
         "dawn": 0.9,
         "day": 0.6
@@ -86,7 +86,7 @@
     },
     "tide": {
       "map": {
-        "falling": 1.0,
+        "falling": 1,
         "slack_low": 0.6,
         "rising": 0.7,
         "slack_high": 0.5
@@ -112,8 +112,8 @@
     }
   },
   "lat_range": [
-    15.0,
-    35.0
+    15,
+    35
   ],
   "regulations": {
     "summary": "Regulated species - See MyFWC/NOAA guidelines",
@@ -126,7 +126,7 @@
     "source_url": "https://myfwc.com/fishing/saltwater/recreational/"
   },
   "lon_range": [
-    -100.0,
-    -50.0
+    -100,
+    -50
   ]
 }

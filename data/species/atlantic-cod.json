@@ -23,7 +23,8 @@
     "life_history": "Spawns seasonally along coastal or shelf waters.",
     "regulations_link": "https://www.fisheries.noaa.gov/",
     "sources": [
-      "https://www.fisheries.noaa.gov/"
+      "https://academic.oup.com/icesjms/article/75/4/1329/4803072",
+      "https://www.fisheries.noaa.gov/species/atlantic-cod"
     ],
     "spawning": "Spawns seasonally based on water temperature and regional climate.",
     "overwintering": "Migrates to warmer or deeper waters depending on season."
@@ -33,20 +34,21 @@
       "param": "sst_c",
       "kind": "range",
       "range": [
-        0.0,
-        16.0
+        0,
+        16
       ],
       "ideal": [
-        4.0,
-        12.0
+        4,
+        12
       ],
       "weight": 0.35,
       "active": true,
-      "value_status": "sourced",
-      "value_notes": "NOAA oceanographic temperature profile for Atlantic cod.",
+      "value_status": "partly_sourced",
+      "value_notes": "A Gulf of Maine catch-temperature analysis reports seasonal bottom-temperature associations around 5.34–6.26 °C in spring and 8.43–9.08 °C in fall; NOAA describes Atlantic cod as cold-water and demersal. Stock and season matter, and bottom-temperature observations do not validate the configured 0–16 °C satellite-SST band or 4–12 °C ideal.",
       "reason_template": "Water is {value} C, within the preferred thermal range for Atlantic cod.",
       "sources": [
-        "https://www.fisheries.noaa.gov/"
+        "https://academic.oup.com/icesjms/article/75/4/1329/4803072",
+        "https://www.fisheries.noaa.gov/species/atlantic-cod"
       ],
       "gate": true,
       "required": true
@@ -74,7 +76,7 @@
     },
     "light": {
       "map": {
-        "dusk": 1.0,
+        "dusk": 1,
         "night": 0.8,
         "dawn": 0.9,
         "day": 0.6
@@ -88,7 +90,7 @@
     },
     "tide": {
       "map": {
-        "falling": 1.0,
+        "falling": 1,
         "slack_low": 0.6,
         "rising": 0.7,
         "slack_high": 0.5
@@ -114,8 +116,8 @@
     }
   },
   "lat_range": [
-    38.0,
-    52.0
+    38,
+    52
   ],
   "regulations": {
     "summary": "Regulated species - See MyFWC/NOAA guidelines",
@@ -128,7 +130,7 @@
     "source_url": "https://myfwc.com/fishing/saltwater/recreational/"
   },
   "lon_range": [
-    -100.0,
-    -50.0
+    -100,
+    -50
   ]
 }

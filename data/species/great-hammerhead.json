@@ -23,7 +23,7 @@
     "life_history": "Spawns seasonally along coastal or shelf waters.",
     "regulations_link": "https://www.fisheries.noaa.gov/",
     "sources": [
-      "https://www.fisheries.noaa.gov/"
+      "https://repository.library.noaa.gov/view/noaa/49034/noaa_49034_DS1.pdf"
     ],
     "spawning": "Spawns seasonally based on water temperature and regional climate.",
     "overwintering": "Migrates to warmer or deeper waters depending on season."
@@ -33,20 +33,20 @@
       "param": "sst_c",
       "kind": "range",
       "range": [
-        20.0,
-        32.0
+        20,
+        32
       ],
       "ideal": [
-        24.0,
-        30.0
+        24,
+        30
       ],
       "weight": 0.35,
       "active": true,
-      "value_status": "sourced",
-      "value_notes": "NOAA oceanographic temperature profile for Great hammerhead shark.",
+      "value_status": "provisional",
+      "value_notes": "A NOAA Florida survey recorded only two juveniles (24.6–27.5 °C) and one adult (27.1 °C) in the northern Gulf. The sample is far too small and geographically limited to validate the configured 20–32 °C range or 24–30 °C ideal as a species-wide SST preference.",
       "reason_template": "Water is {value} C, within the preferred thermal range for Great hammerhead shark.",
       "sources": [
-        "https://www.fisheries.noaa.gov/"
+        "https://repository.library.noaa.gov/view/noaa/49034/noaa_49034_DS1.pdf"
       ],
       "gate": true,
       "required": true
@@ -74,7 +74,7 @@
     },
     "light": {
       "map": {
-        "dusk": 1.0,
+        "dusk": 1,
         "night": 0.8,
         "dawn": 0.9,
         "day": 0.6
@@ -88,7 +88,7 @@
     },
     "tide": {
       "map": {
-        "falling": 1.0,
+        "falling": 1,
         "slack_low": 0.6,
         "rising": 0.7,
         "slack_high": 0.5
@@ -114,8 +114,8 @@
     }
   },
   "lat_range": [
-    15.0,
-    35.0
+    15,
+    35
   ],
   "regulations": {
     "summary": "Regulated species - See MyFWC/NOAA guidelines",
@@ -128,7 +128,7 @@
     "source_url": "https://myfwc.com/fishing/saltwater/recreational/"
   },
   "lon_range": [
-    -100.0,
-    -50.0
+    -100,
+    -50
   ]
 }

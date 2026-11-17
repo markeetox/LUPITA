@@ -24,9 +24,8 @@
     "life_history": "Native Florida species. The current FWC profile supports the habitat and feeding summary but does not establish a precise South Florida spawning calendar.",
     "regulations_link": "https://myfwc.com/fishing/saltwater/recreational/barracuda/",
     "sources": [
-      "https://myfwc.com/wildlifehabitats/profiles/saltwater/barracuda/",
-      "https://myfwc.com/fishing/saltwater/recreational/barracuda/",
-      "https://myfwc.com/fishing/saltwater/recreational/full-rule/"
+      "https://nsuworks.nova.edu/occ_stuetd/32",
+      "https://www.fishbase.se/country/CountrySpeciesSummary.php?c_code=690&id=1235"
     ]
   },
   "factors": [
@@ -43,11 +42,12 @@
       ],
       "weight": 0.35,
       "active": true,
-      "value_status": "provisional",
-      "value_notes": "The previous numeric temperature bounds were not supported by a traceable species-specific thermal-preference source. They are retained unchanged for compatibility but should not be interpreted as a validated preferred range.",
+      "value_status": "partly_sourced",
+      "value_notes": "A South Florida NSU thesis reports pop-up archival tagging of only two large adults (>100 cm), which experienced 17.8–31.3 °C; the sample is too small to establish preference. FishBase reports a model-derived preferred-temperature estimate of 21.7–28.9 °C (mean 27.2 °C; 2,020 cells). These support broad exposure context but do not validate the configured 20–32 °C range or 24–30 °C ideal as a catch optimum.",
       "reason_template": "Water is {value} C, within the preferred thermal range for Great barracuda.",
       "sources": [
-        "https://myfwc.com/wildlifehabitats/profiles/saltwater/barracuda/"
+        "https://nsuworks.nova.edu/occ_stuetd/32",
+        "https://www.fishbase.se/country/CountrySpeciesSummary.php?c_code=690&id=1235"
       ],
       "gate": true,
       "required": true

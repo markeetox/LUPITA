@@ -23,7 +23,7 @@
     "life_history": "Spawns seasonally along coastal or shelf waters.",
     "regulations_link": "https://www.fisheries.noaa.gov/",
     "sources": [
-      "https://www.fisheries.noaa.gov/"
+      "https://fishbase.se/Country/CountrySpeciesSummary.php?c_code=616&genusname=Pollachius&lang=English&speciesname=virens"
     ],
     "spawning": "Spawns seasonally based on water temperature and regional climate.",
     "overwintering": "Migrates to warmer or deeper waters depending on season."
@@ -33,20 +33,20 @@
       "param": "sst_c",
       "kind": "range",
       "range": [
-        2.0,
-        16.0
+        2,
+        16
       ],
       "ideal": [
-        5.0,
-        12.0
+        5,
+        12
       ],
       "weight": 0.35,
       "active": true,
-      "value_status": "sourced",
-      "value_notes": "NOAA oceanographic temperature profile for Pollock.",
+      "value_status": "provisional",
+      "value_notes": "FishBase reports a model-derived preferred-temperature estimate of 0.5–10.2 °C (mean 7 °C; 292 cells). This does not independently validate the configured 2–16 °C range or 5–12 °C ideal, and no direct species-specific field/physiological preference source was found.",
       "reason_template": "Water is {value} C, within the preferred thermal range for Pollock.",
       "sources": [
-        "https://www.fisheries.noaa.gov/"
+        "https://fishbase.se/Country/CountrySpeciesSummary.php?c_code=616&genusname=Pollachius&lang=English&speciesname=virens"
       ],
       "gate": true,
       "required": true
@@ -74,7 +74,7 @@
     },
     "light": {
       "map": {
-        "dusk": 1.0,
+        "dusk": 1,
         "night": 0.8,
         "dawn": 0.9,
         "day": 0.6
@@ -88,7 +88,7 @@
     },
     "tide": {
       "map": {
-        "falling": 1.0,
+        "falling": 1,
         "slack_low": 0.6,
         "rising": 0.7,
         "slack_high": 0.5
@@ -114,8 +114,8 @@
     }
   },
   "lat_range": [
-    40.0,
-    52.0
+    40,
+    52
   ],
   "regulations": {
     "summary": "Regulated species - See MyFWC/NOAA guidelines",
@@ -128,7 +128,7 @@
     "source_url": "https://myfwc.com/fishing/saltwater/recreational/"
   },
   "lon_range": [
-    -100.0,
-    -50.0
+    -100,
+    -50
   ]
 }

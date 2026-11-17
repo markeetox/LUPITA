@@ -23,7 +23,8 @@
     "life_history": "Spawns seasonally along coastal or shelf waters.",
     "regulations_link": "https://www.fisheries.noaa.gov/",
     "sources": [
-      "https://www.fisheries.noaa.gov/"
+      "https://www.canada.ca/en/environment-climate-change/services/species-risk-public-registry/cosewic-assessments-status-reports/deepwater-redfish-acadian-complex-2010.html",
+      "https://www.st.nmfs.noaa.gov/Assets/ecosystems/climate/images/species-results/pdfs/Acadian_Redfish.pdf"
     ],
     "spawning": "Spawns seasonally based on water temperature and regional climate.",
     "overwintering": "Migrates to warmer or deeper waters depending on season."
@@ -33,20 +34,21 @@
       "param": "sst_c",
       "kind": "range",
       "range": [
-        3.0,
-        14.0
+        3,
+        14
       ],
       "ideal": [
-        5.0,
-        10.0
+        5,
+        10
       ],
       "weight": 0.35,
       "active": true,
-      "value_status": "sourced",
-      "value_notes": "NOAA oceanographic temperature profile for Acadian redfish.",
+      "value_status": "partly_sourced",
+      "value_notes": "DFO/COSEWIC reports adult preferred temperatures around 4.5–7 °C in the Gulf of Maine and cool deep habitat. This is bottom/deep habitat evidence, not satellite SST; it does not directly validate the configured 3–14 °C range or 5–10 °C ideal as a surface-temperature gate.",
       "reason_template": "Water is {value} C, within the preferred thermal range for Acadian redfish.",
       "sources": [
-        "https://www.fisheries.noaa.gov/"
+        "https://www.canada.ca/en/environment-climate-change/services/species-risk-public-registry/cosewic-assessments-status-reports/deepwater-redfish-acadian-complex-2010.html",
+        "https://www.st.nmfs.noaa.gov/Assets/ecosystems/climate/images/species-results/pdfs/Acadian_Redfish.pdf"
       ],
       "gate": true,
       "required": true
@@ -74,7 +76,7 @@
     },
     "light": {
       "map": {
-        "dusk": 1.0,
+        "dusk": 1,
         "night": 0.8,
         "dawn": 0.9,
         "day": 0.6
@@ -88,7 +90,7 @@
     },
     "tide": {
       "map": {
-        "falling": 1.0,
+        "falling": 1,
         "slack_low": 0.6,
         "rising": 0.7,
         "slack_high": 0.5
@@ -114,8 +116,8 @@
     }
   },
   "lat_range": [
-    41.0,
-    52.0
+    41,
+    52
   ],
   "regulations": {
     "summary": "Regulated species - See MyFWC/NOAA guidelines",
@@ -128,7 +130,7 @@
     "source_url": "https://myfwc.com/fishing/saltwater/recreational/"
   },
   "lon_range": [
-    -100.0,
-    -50.0
+    -100,
+    -50
   ]
 }

@@ -23,10 +23,8 @@
     "life_history": "Matures at approximately 3-4 years and 17-18 inches total length; can live more than 23 years. Spawning occurs offshore, with seasonal movements between home ranges and spawning sites documented in some regional populations. Bahamas migration findings should not automatically be transferred to South Florida.",
     "regulations_link": "https://myfwc.com/fishing/saltwater/recreational/bonefish/",
     "sources": [
-      "https://doi.org/10.3354/meps291237",
-      "https://www.fisheries.noaa.gov/resource/peer-reviewed-research/bonefish-albula-vulpes-home-range-spawning-site-linkages-support",
-      "https://myfwc.com/wildlifehabitats/profiles/saltwater/bonefish/",
-      "https://myfwc.com/fishing/saltwater/recreational/bonefish/"
+      "https://doi.org/10.1007/s10641-015-0420-6",
+      "https://doi.org/10.1016/j.jtherbio.2010.10.005"
     ],
     "spawning": "Some Bahamas studies document spawning-site linkages and seasonal movements, but those findings should not be assumed for South Florida. FWC reports spawning from November through May, probably in deep or offshore water; the timing and routes of individual South Florida spawning migrations remain incompletely understood.",
     "overwintering": "No South Florida overwintering route or seasonal refuge rule is encoded in this pilot profile."
@@ -45,12 +43,12 @@
       ],
       "weight": 0.35,
       "active": true,
-      "value_status": "provisional",
-      "value_notes": "Adult Bonefish thermal studies in the Bahamas measured performance optima around 26.7–28.0 °C and critical thermal limits. These are useful species-specific physiological findings, but they are not a validated South Florida habitat-preference curve and do not validate the configured 20–35 °C range or 25–31 °C ideal. Retained as provisional screening values only; independent local validation is still required.",
+      "value_status": "partly_sourced",
+      "value_notes": "A peer-reviewed adult Eleuthera study measured laboratory performance optima of 28.0 °C for critical swimming speed and 26.7 °C for scope for activity; field loggers recorded 14.5–37.9 °C, but only eight fish were recaptured with functioning loggers from 138 implanted. A separate study reported critical thermal maxima of 36.4 ± 0.5 and 37.9 ± 0.5 °C and habitat temperatures up to 40.6 °C. These are performance/tolerance data, not preferred SST or a catch-response curve; transfer from Bahamian tidal creeks to South Florida is unvalidated.",
       "reason_template": "Water is {value} C, within the currently configured provisional screening band for Bonefish; this is not a validated thermal preference.",
       "sources": [
-        "https://doi.org/10.1016/j.jtherbio.2010.10.005",
-        "https://doi.org/10.1007/s10641-015-0420-6"
+        "https://doi.org/10.1007/s10641-015-0420-6",
+        "https://doi.org/10.1016/j.jtherbio.2010.10.005"
       ],
       "gate": true,
       "required": true

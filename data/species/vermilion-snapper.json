@@ -23,7 +23,7 @@
     "life_history": "Spawns seasonally along coastal or shelf waters.",
     "regulations_link": "https://www.fisheries.noaa.gov/",
     "sources": [
-      "https://www.fisheries.noaa.gov/"
+      "https://mrl.charleston.edu/wp-content/uploads/pdf/tr30s/Techreport33.pdf"
     ],
     "spawning": "Spawns seasonally based on water temperature and regional climate.",
     "overwintering": "Migrates to warmer or deeper waters depending on season."
@@ -33,20 +33,20 @@
       "param": "sst_c",
       "kind": "range",
       "range": [
-        18.0,
-        29.0
+        18,
+        29
       ],
       "ideal": [
-        21.0,
-        27.0
+        21,
+        27
       ],
       "weight": 0.35,
       "active": true,
-      "value_status": "sourced",
-      "value_notes": "NOAA oceanographic temperature profile for Vermilion snapper.",
+      "value_status": "partly_sourced",
+      "value_notes": "A South Atlantic shelf survey recorded 395 vermilion snapper at 19.7–25.7 °C and depths of 20–86 m. This supports broad regional occurrence but does not establish a preferred temperature interval or validate the configured 18–29 °C / 21–27 °C SST ideal.",
       "reason_template": "Water is {value} C, within the preferred thermal range for Vermilion snapper.",
       "sources": [
-        "https://www.fisheries.noaa.gov/"
+        "https://mrl.charleston.edu/wp-content/uploads/pdf/tr30s/Techreport33.pdf"
       ],
       "gate": true,
       "required": true
@@ -74,7 +74,7 @@
     },
     "light": {
       "map": {
-        "dusk": 1.0,
+        "dusk": 1,
         "night": 0.8,
         "dawn": 0.9,
         "day": 0.6
@@ -88,7 +88,7 @@
     },
     "tide": {
       "map": {
-        "falling": 1.0,
+        "falling": 1,
         "slack_low": 0.6,
         "rising": 0.7,
         "slack_high": 0.5
@@ -114,8 +114,8 @@
     }
   },
   "lat_range": [
-    18.0,
-    36.0
+    18,
+    36
   ],
   "regulations": {
     "summary": "Regulated species - See MyFWC/NOAA guidelines",
@@ -128,7 +128,7 @@
     "source_url": "https://myfwc.com/fishing/saltwater/recreational/"
   },
   "lon_range": [
-    -100.0,
-    -50.0
+    -100,
+    -50
   ]
 }

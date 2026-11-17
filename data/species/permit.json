@@ -21,10 +21,9 @@
     "life_history": "Permit mature at roughly 2-3 years depending on sex and can live at least 23 years. Adults use both shallow flats and deeper reef habitat; the lower Florida Keys telemetry study documented seasonal reef occupancy, but it does not establish that every mapped reef is a spawning site.",
     "regulations_link": "https://myfwc.com/fishing/saltwater/recreational/permit/",
     "sources": [
-      "https://pubmed.ncbi.nlm.nih.gov/31823365/",
-      "https://www.floridamuseum.ufl.edu/discover-fish/species-profiles/permit/",
-      "https://myfwc.com/research/saltwater/fish/permit/fishery/",
-      "https://myfwc.com/fishing/saltwater/recreational/permit/"
+      "https://doi.org/10.1007/s10641-026-01896-8",
+      "https://mrl.charleston.edu/wp-content/uploads/pdf/tr10s/Techreport4.pdf",
+      "https://www.fishbase.se/Country/CountrySpeciesSummary.php?c_code=840&id=1266"
     ],
     "spawning": "Lower Florida Keys telemetry reported reef occupancy peaking from March through September, especially April-May, and interpreted this pattern as associated with spawning. Treat this as study-area evidence, not a statewide calendar or proof that every reef polygon is spawning habitat.",
     "overwintering": "No South Florida overwintering route or seasonal refuge rule is encoded in this pilot profile."
@@ -44,11 +43,12 @@
       "weight": 0.35,
       "active": true,
       "value_status": "provisional",
-      "value_notes": "FishBase reports a model-derived preferred-temperature estimate of 23.2–28.0 °C based on 624 cells; this is not a validated species-specific thermal preference curve or a controlled thermal-preference experiment. The cited Lower Florida Keys telemetry supports habitat use and seasonal reef occupancy, not the configured 20–34 °C screening range or 24–30 °C ideal. Keep these values provisional pending direct thermal evidence and local validation.",
+      "value_notes": "FishBase reports a model-derived preferred-temperature estimate of 23.2–28.0 °C (mean 26.1 °C; 624 cells). A 2026 Texas estuary study found juvenile permit presence associated with temperatures above 25 °C, while a 1972 South Carolina surf-zone survey recorded 26 juveniles at 12.8–38.5 °C. These are modeled association and juvenile occurrence data, not adult South Florida thermal preference; retain provisional status.",
       "reason_template": "Water is {value} C, within the currently configured provisional screening band for Permit; this is not a validated thermal preference.",
       "sources": [
-        "https://www.fishbase.se/country/CountrySpeciesSummary.php?c_code=660&genusname=Trachinotus&speciesname=falcatus",
-        "https://pubmed.ncbi.nlm.nih.gov/31823365/"
+        "https://doi.org/10.1007/s10641-026-01896-8",
+        "https://mrl.charleston.edu/wp-content/uploads/pdf/tr10s/Techreport4.pdf",
+        "https://www.fishbase.se/Country/CountrySpeciesSummary.php?c_code=840&id=1266"
       ],
       "gate": true,
       "required": true

@@ -21,7 +21,8 @@
     "life_history": "Spawns seasonally along coastal or shelf waters.",
     "regulations_link": "https://www.fisheries.noaa.gov/",
     "sources": [
-      "https://www.fisheries.noaa.gov/"
+      "https://doi.org/10.1093/icesjms/fsx176",
+      "https://academic.oup.com/icesjms/article/72/8/2364/2458701"
     ],
     "spawning": "Spawns seasonally based on water temperature and regional climate.",
     "overwintering": "Migrates to warmer or deeper waters depending on season."
@@ -31,20 +32,21 @@
       "param": "sst_c",
       "kind": "range",
       "range": [
-        20.0,
-        30.0
+        20,
+        30
       ],
       "ideal": [
-        23.0,
-        28.0
+        23,
+        28
       ],
       "weight": 0.35,
       "active": true,
-      "value_status": "sourced",
-      "value_notes": "NOAA oceanographic temperature profile for White marlin.",
+      "value_status": "partly_sourced",
+      "value_notes": "A Yucatán PSAT study of 18 fish found experienced temperatures of 10.0–33.6 °C, with most time above 24 °C and apparent use around 24–30 °C; a western North Atlantic PSAT study of 28 fish found greatest time around 26 °C. This closely supports the 23–28 °C ideal, but regional and life-stage caveats remain and the exact 20–30 °C outer range is not calibrated for South Florida.",
       "reason_template": "Water is {value} C, within the preferred thermal range for White marlin.",
       "sources": [
-        "https://www.fisheries.noaa.gov/"
+        "https://doi.org/10.1093/icesjms/fsx176",
+        "https://academic.oup.com/icesjms/article/72/8/2364/2458701"
       ],
       "gate": true,
       "required": true
@@ -72,7 +74,7 @@
     },
     "light": {
       "map": {
-        "dusk": 1.0,
+        "dusk": 1,
         "night": 0.8,
         "dawn": 0.9,
         "day": 0.6
@@ -86,7 +88,7 @@
     },
     "tide": {
       "map": {
-        "falling": 1.0,
+        "falling": 1,
         "slack_low": 0.6,
         "rising": 0.7,
         "slack_high": 0.5
@@ -112,8 +114,8 @@
     }
   },
   "lat_range": [
-    18.0,
-    42.0
+    18,
+    42
   ],
   "regulations": {
     "summary": "Regulated species - See MyFWC/NOAA guidelines",
@@ -126,7 +128,7 @@
     "source_url": "https://myfwc.com/fishing/saltwater/recreational/"
   },
   "lon_range": [
-    -100.0,
-    -50.0
+    -100,
+    -50
   ]
 }
