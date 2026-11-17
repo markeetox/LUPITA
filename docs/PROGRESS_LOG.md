@@ -939,3 +939,15 @@ Found species-specific evidence for all three previously needs-source named-site
 - No numeric values, weights, active flags, gates, required flags, scoring, confidence, ingestion, or publication behavior changed.
 - Full findings and source register are in docs/SPECIES_EVIDENCE_AUDIT_2026-11-17.md.
 
+
+## 2026-11-17 | Batch C third four multi-factor profiles
+
+- Reviewed gray triggerfish, gray (mangrove) snapper, scamp grouper, and snowy grouper across 12 active factors.
+- Added species-specific NOAA, FWC, SAFMC, Florida Museum, SEDAR, and peer-reviewed references; replaced generic factor homepage citations.
+- Gray triggerfish: 2026 tag-return analysis (N=3,744) and spawning observations support partial SST/depth context, not a preference curve.
+- Gray snapper: adult occurrence spans 13.4–32.5 °C and 0–180 m; configured factor bands represent a subset, not full species preference.
+- Scamp: spawning bottom temperatures and low-profile live-bottom/depth studies partially support factors, but not year-round SST preference.
+- Snowy grouper: numeric thermal observations are deep bottom-water spawning data, so active SST remains needs_source; bottom slope and depth remain partly_sourced.
+- No numeric values, weights, active flags, gates, required flags, scoring, confidence, ingestion, or publication behavior changed.
+- Full findings and source register are in docs/SPECIES_EVIDENCE_AUDIT_2026-11-17.md.
+

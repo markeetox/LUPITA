@@ -304,3 +304,35 @@ The third multi-factor batch covers gray triggerfish, gray (mangrove) snapper, s
 ### Batch C cumulative disposition
 Twelve elevated-risk multi-factor profiles have now been reviewed across 36 active factors: African pompano, Almaco jack, black grouper, black sea bass, cubera snapper, gag grouper, red grouper, red snapper, gray triggerfish, gray snapper, scamp grouper, and snowy grouper. Seventeen of the original 29 elevated-risk multi-factor profiles remain, along with 51 other multi-factor profiles. Timing and profile-level narratives remain separate review work.
 
+
+## Batch C research and metadata implementation: third four multi-factor profiles | 2026-11-17
+
+The third multi-factor batch covers gray triggerfish, gray (mangrove) snapper, scamp grouper, and snowy grouper. Their factor citations were replaced or supplemented with specific fisheries, agency, and research sources, and active factor statuses/notes were updated. No numeric intervals, ideal bands, weights, active flags, gates, required flags, or runtime behavior changed.
+
+### Gray triggerfish (Balistes capriscus)
+- SST: partly_sourced. A 2026 Florida Panhandle tag-return analysis of 3,744 released fish recorded capture SST of 15–31 °C (median 22 °C) and lower recapture proportions with increasing SST, especially above 20 °C. A southeastern U.S. spawning survey recorded spawning females at 15–27 °C (mean 22.7 °C). These are release/recapture and spawning observations, not a validated South Florida habitat-preference curve.
+- Structure: partly_sourced. NOAA and Florida Museum support natural/artificial reefs, hardbottom, and ledges; they do not validate wreck preference or exact category scores.
+- Depth: partly_sourced. NOAA reports adult depth around 10–55 m, Florida Museum to about 55 m, and the 2026 dataset sampled 20–67 m. These sources do not validate the full 10–100 m configured outer band.
+- Sources: [NOAA Gray Triggerfish Layer Guidance](https://www.ncei.noaa.gov/waf/data-atlas-waf/products/html/lmrPlates/GrayTriggerfishLayerGuidance.htm); [Florida Museum](https://www.floridamuseum.ufl.edu/discover-fish/species-profiles/gray-triggerfish/); [2026 tag-return study](https://www.frontiersin.org/journals/marine-science/articles/10.3389/fmars.2026.1743605/full); [southeastern U.S. spawning survey](https://repository.library.noaa.gov/view/noaa/17687/noaa_17687_DS1.pdf).
+
+### Gray (mangrove) snapper (Lutjanus griseus)
+- SST: partly_sourced. A regional EFH assessment reports adult occurrence at 13.4–32.5 °C across estuarine, nearshore, and offshore environments. This is a broad occurrence envelope, not a preferred interval or South Florida SST response curve.
+- Structure: partly_sourced. Florida Museum and the EFH assessment describe mangrove, coral/rocky ledge, reef, hardbottom, and soft-bottom use. They do not validate every configured category, especially wrecks/artificial reefs, or the score ordering.
+- Depth: partly_sourced. The EFH assessment reports adult occurrence from 0–180 m; the configured 0.5–50 m band represents a shallow coastal subset rather than the full distribution.
+- Sources: [Florida Museum gray snapper profile](https://www.floridamuseum.ufl.edu/discover-fish/species-profiles/gray-snapper/); [regional essential fish habitat assessment](https://www.swg.usace.army.mil/Portals/26/docs/Planning/Public%20Notices-Civil%20Works/HSC-ECIP%20FIFR-EIS/App%20L%20-%20Essential%20Fish%20Habitat%20Assessment%20%2818%20Nov%202019%29.pdf); [FWC gray snapper profile](https://myfwc.com/wildlifehabitats/profiles/saltwater/snapper/gray-snapper/).
+
+### Scamp grouper (Mycteroperca phenax)
+- SST: partly_sourced. Southeastern U.S. spawning observations report bottom temperatures of 16–27 °C (mean 21 °C); SEDAR describes Carolina spawning at 22–25 °C. These are seasonal bottom-water/spawning observations, not a year-round SST preference.
+- Structure: partly_sourced. SEDAR and SAFMC describe low-profile live-bottom areas, Oculina coral, ledges, high-relief rocky bottoms, wrecks, and outcrops. This supports the broad association but not exact category score values.
+- Depth: partly_sourced. SAFMC reports preferred low-profile live-bottom habitat at 75–300 ft (about 23–91 m); FishBase reports 30–100 m. This overlaps the configured 25–100 m / 40–80 m band but does not validate the exact ideal interval.
+- Sources: [SEDAR scamp assessment](https://sedarweb.org/documents/s19rd28-population-assessment-of-the-scamp-mycteroperca-phenax-from-the-southeastern-united-states/); [SAFMC scamp profile](https://safmc.net/species/grouper-scamp/); [FishBase field guide](https://fishbase.se/Fieldguide/FieldGuideSummary.php?c_code=840&genusname=Mycteroperca&speciesname=phenax); [southeastern U.S. spawning survey](https://pmc.ncbi.nlm.nih.gov/articles/PMC5338871/).
+
+### Snowy grouper (Hyporthodus niveatus)
+- SST: needs_source. Available numeric temperatures are spawning-condition females at deep bottom depths (175–223 m), with 9–15 °C observations. These do not validate the configured 12–24 °C surface-temperature range or 14–20 °C ideal. Surface SST is not established as a valid proxy for this deep-water species.
+- Bottom slope: partly_sourced. SAFMC describes outer-shelf/upper-slope habitat with ridges, terraces, and steep cliffs. This supports broad slope/relief association but does not validate the continuous bottom_slope metric or a monotonic higher-is-better response.
+- Depth: partly_sourced. SAFMC reports adult depths of 116–259 m; spawning females were observed at 175–223 m (N=48); FWC describes rocky/reef habitat to 1,700 ft. This supports the configured deep-water context but not a locally calibrated optimum.
+- Sources: [SAFMC Amendment 51](https://safmc.net/documents/snapper-grouper-amendment-51-final-03-02-2023/); [SAFMC species profile](https://safmc.net/species/grouper-snowy/); [FWC snowy grouper profile](https://myfwc.com/wildlifehabitats/profiles/saltwater/grouper/snowy-grouper/); [spawning survey](https://pmc.ncbi.nlm.nih.gov/articles/PMC5338871/); [BOEM habitat assessment](https://www.boem.gov/sites/default/files/documents/environment/BOEM-EIS-2016-049-v2_0.pdf).
+
+### Batch C cumulative disposition
+Twelve elevated-risk multi-factor profiles have now been reviewed across 36 active factors: African pompano, Almaco jack, black grouper, black sea bass, cubera snapper, gag grouper, red grouper, red snapper, gray triggerfish, gray snapper, scamp grouper, and snowy grouper. Seventeen of the original 29 elevated-risk multi-factor profiles remain, along with 51 other multi-factor profiles. Timing and profile-level narratives remain separate review work.
+

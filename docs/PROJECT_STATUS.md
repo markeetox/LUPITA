@@ -472,3 +472,8 @@ Completed the second multi-factor evidence batch: cubera snapper, gag grouper, r
 
 Completed the third multi-factor batch: gray triggerfish, gray (mangrove) snapper, scamp grouper, and snowy grouper. Replaced generic homepage factor references with species-specific sources and updated 12 active factor statuses/notes. Gray triggerfish, gray snapper, and scamp factors are partly_sourced; snowy grouper SST is needs_source because available temperature records are deep bottom-water spawning observations, not SST, while slope and depth remain partly_sourced. No numeric bands, weights, active flags, gates, required flags, scoring, confidence, source selection, ingestion, or publication behavior changed. Details: [all-species evidence audit](SPECIES_EVIDENCE_AUDIT_2026-11-17.md).
 
+
+## Multi-factor evidence review | third four profiles | 2026-11-17
+
+Completed the third multi-factor batch: gray triggerfish, gray (mangrove) snapper, scamp grouper, and snowy grouper. Replaced generic homepage factor references with species-specific sources and updated 12 active factor statuses/notes. Gray triggerfish, gray snapper, and scamp factors are partly_sourced; snowy grouper SST is needs_source because available temperature records are deep bottom-water spawning observations, not SST, while slope and depth remain partly_sourced. No numeric bands, weights, active flags, gates, required flags, scoring, confidence, source selection, ingestion, or publication behavior changed. Details: [all-species evidence audit](SPECIES_EVIDENCE_AUDIT_2026-11-17.md).
+

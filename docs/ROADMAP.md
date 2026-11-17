@@ -398,3 +398,8 @@ Eight elevated-risk multi-factor profiles are now reviewed and metadata-updated:
 
 Twelve of the 29 elevated-risk multi-factor profiles have now been reviewed across 36 active factors. Seventeen elevated-risk multi-factor profiles remain, plus 51 other multi-factor profiles. Continue with the remaining high-risk models by ecological factor family, with special attention to SST-vs-bottom-temperature mismatches and proxies that do not match the runtime variable. See SPECIES_EVIDENCE_AUDIT_2026-11-17.md.
 
+
+## 2026-11-17 | Multi-factor evidence review update
+
+Twelve of the 29 elevated-risk multi-factor profiles have now been reviewed across 36 active factors. Seventeen elevated-risk multi-factor profiles remain, plus 51 other multi-factor profiles. Continue with the remaining high-risk models by ecological factor family, with special attention to SST-vs-bottom-temperature mismatches and proxies that do not match the runtime variable. See SPECIES_EVIDENCE_AUDIT_2026-11-17.md.
+
