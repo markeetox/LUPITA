@@ -158,3 +158,12 @@ However, the WOD23 manual describes latitude, longitude, and Julian year-day var
 - NOAA glider vehicle table: https://www.ncei.noaa.gov/access/world-ocean-database/CODES/s_74_ocean_vehicle.html
 - NOAA probe type table: https://www.ncei.noaa.gov/access/world-ocean-database/CODES/s_29_probe_type.html
 - NOAA temperature instrument table: https://www.ncei.noaa.gov/access/world-ocean-database/CODES/v_5_instrument.html
+
+
+## Clarification: current NOAA code table confirms GLD auxiliary position/time variables | 2026-11-18
+
+A follow-up check of the current NCEI online depth-dependent-variable code table resolves the apparent dataset-availability discrepancy. Unlike the 2024 WOD23 manual's prose summary, the current online table explicitly lists codes 30 (latitude), 31 (longitude), and 32 (Julian year-day) for GLD as well as SUR/APB/UOR. Its footnote says these codes are not depth-dependent variables and are not selectable in WODSelect.
+
+Therefore their presence in the GLD archive is supported by the current code table and is not a format error. In this archive, 116 casts carry these values aligned with profile levels, and the decoded latitude/longitude values vary along the glider trajectory. Treat them as per-observation position/time metadata, not physical variables that depend on depth. The 745 remaining casts contain code 32 but no per-level latitude/longitude, so their primary-header coordinates remain the available spatial locator. Use the per-observation coordinates for the 116 casts after basic consistency checks; retain the source distinction in the normalized data.
+
+Reference: https://www.ncei.noaa.gov/access/world-ocean-database/CODES/depth-dependent-variables.html
