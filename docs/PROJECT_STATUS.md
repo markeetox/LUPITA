@@ -784,3 +784,10 @@ Added a manual-only, read-only workflow to export the NOAA NCEI ETOPO 2022 30-ar
 Files: `scripts/export_wod_gld_etopo_grid.py`, `tests/test_wod_gld_etopo_grid.py`, `.github/workflows/wod-gld-etopo-grid.yml`, and `docs/WOD_GLD_ETOPO_GRID_PROTOCOL_2026-11-18.md`. The workflow is manual-only and does not change production or prediction behavior. The Python test run triggered by the new test file is pending inspection; the ETOPO export workflow has not yet been dispatched.
 
 Next: confirm the Python test result, manually dispatch the ETOPO export workflow, download its artifact, and join all 84,099 GLD levels to the nearest 30-arc-second bathymetry cell using per-observation coordinates where present and cast-header coordinates otherwise. Calculate continuous seabed separation first; do not choose a near-bottom cutoff prematurely.
+
+
+## GLD ETOPO exporter CI validation | 2026-11-18
+
+The first Python CI attempt exposed an avoidable test dependency: the new research exporter/tests imported pandas, which is not part of the repository's core test requirements. Refactored the exporter and tests to use the Python standard library; requests is imported only when the export is executed. No pandas or NumPy dependency was added to the production or core test environment.
+
+The complete repository Python test suite, including the new GLD ETOPO grid tests and species profile audit, passed in [GitHub Actions run 44409583591](https://github.com/markeetox/LUPITA/actions/runs/44409583591). The manual ETOPO export workflow is ready but has not yet been dispatched. No ETOPO subset has been downloaded and no GLD levels have been joined yet.
