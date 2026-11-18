@@ -775,3 +775,12 @@ Detailed audit: `docs/WOD_GLD_REFERENCE_PARSE_AUDIT_2026-11-18.md`. Next: resolv
 ## GLD per-observation position/time fields clarified | 2026-11-18
 
 The current NCEI online code table explicitly lists WOD codes 30 (latitude), 31 (longitude), and 32 (Julian year-day) for GLD, in addition to SUR/APB/UOR. Its footnote classifies them as non-depth-dependent and not selectable in WODSelect. This resolves the apparent conflict with the 2024 WOD23 manual's older prose list. Their presence in the GLD file is supported; the 116 casts carrying per-level values can use those values as per-observation position/time metadata after consistency checks. The other 745 casts have code 32 but no per-level latitude/longitude and therefore retain primary-header position as their available locator. They must not be treated as physical depth-dependent variables. Source: https://www.ncei.noaa.gov/access/world-ocean-database/CODES/depth-dependent-variables.html
+
+
+## Full-resolution GLD seabed-depth grid preparation | 2026-11-18
+
+Added a manual-only, read-only workflow to export the NOAA NCEI ETOPO 2022 30-arc-second grid over the South Florida GLD coordinate envelope. The earlier Copernicus bathymetry artifact sampled ETOPO on a roughly 0.083-degree grid and is too coarse for assigning seabed depth to individual glider observations. The new exporter uses stride 1 at 0.008333-degree resolution, validates regular spacing and complete rectangular coverage, normalizes longitude, preserves raw elevation, and labels ocean/land/coastal-ambiguous cells.
+
+Files: `scripts/export_wod_gld_etopo_grid.py`, `tests/test_wod_gld_etopo_grid.py`, `.github/workflows/wod-gld-etopo-grid.yml`, and `docs/WOD_GLD_ETOPO_GRID_PROTOCOL_2026-11-18.md`. The workflow is manual-only and does not change production or prediction behavior. The Python test run triggered by the new test file is pending inspection; the ETOPO export workflow has not yet been dispatched.
+
+Next: confirm the Python test result, manually dispatch the ETOPO export workflow, download its artifact, and join all 84,099 GLD levels to the nearest 30-arc-second bathymetry cell using per-observation coordinates where present and cast-header coordinates otherwise. Calculate continuous seabed separation first; do not choose a near-bottom cutoff prematurely.
