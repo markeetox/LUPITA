@@ -84,3 +84,18 @@ References:
 - [NOAA WOD23 User Manual](https://repository.library.noaa.gov/view/noaa/66124/noaa_66124_DS1.pdf)
 
 The format identification is now supported by the reference parser, but the GLD file has not yet been fully parsed and independently reconciled. Next: run the reference parser against the complete GLD archive (or a faithful, pinned copy in a research-only environment), verify it reads all 861 casts to end-of-file without offset/record errors, and audit decoded metadata, temperature/depth variables, uncertainty fields, QC flags, missing values, and plausible ranges. Only after that should a Lupita-specific ingestion adapter be designed. Keep the reference parser research-only; do not add it to production runtime or change prediction/scoring behavior. No profile has yet been accepted as near-bottom or paired with Copernicus.
+
+
+## GLD source-derived parser-core execution and field QA | 2026-11-18
+
+The GLD archive was decoded with a faithful transcription of the IQuOD `wodpy` reference `WodProfile` core routines, pinned to source commit `116480b257a227ce38281d3836c40812246e5156` and `wod.py` blob `c65b39c295443aa13690a15b5216a7e1e36486b6`. The published package itself was not installed in this environment; therefore this is source-derived parser-core execution, not an independent package-import/parity test.
+
+All 861 casts decoded; all profile byte spans matched the reference byte-navigation calculation with zero mismatches, and the parser reached EOF exactly at 4,036,532 bytes. There are 861 unique cast UIDs and 84,099 decoded levels. Declared and decoded level counts match for every cast, and every level contains depth and temperature. The 861 profiles are all observed-level records (profile type 0), all have probe type 15 (glider), and all primary-header coordinates lie inside the requested South Florida box.
+
+Temperature is WOD variable code 1 (°C), range 5.941–31.690°C. Depth ranges 0.11–715.84 m. These are observation depths, not seafloor depths. All 861 temperature profiles have an instrument metadata code: 456 for 823 casts and 495 for 38 casts. Vehicle metadata classifies 521 casts as Spray gliders, 262 as Seagliders, and 78 as Slocum gliders. There are 44 cruise numbers, 44 accession values, and 13 platform codes; 218 casts carry project code 821 (Gliders in the Gulf Stream), while 643 have no project code recorded.
+
+WOD temperature cast/profile QC: 511 flag 0 and 350 nonzero. Per-level temperature QC: 84,064 flag 0 and 35 flag 3 (gradient check). Per-level depth QC: 84,066 flag 0 and 33 flag 2 (density inversion). A provisional strict WOD-QC-only subset contains 48,852 levels with cast/profile, temperature-level, and depth flags all zero; this is not a near-bottom-eligible count or final inclusion rule. Originator flag-set code 3 is present on 712 casts; 149 casts lack code 96, so their originator flag definitions remain unknown. All 84,099 temperature levels contain an encoded value-uncertainty field of 0.002; depth uncertainty and cast latitude/longitude uncertainty are absent.
+
+A GLD-specific metadata discrepancy remains open: 116 casts contain per-level codes 30/31/32 (latitude/longitude/Julian year-day), with 12,283 decoded per-level coordinate pairs, while 745 casts contain code 32 only. NOAA's WOD23 manual describes these auxiliary variables for SUR/APB/UOR rather than GLD. Do not use these per-level coordinates/times for matching until their GLD semantics are confirmed.
+
+Full field inventory, QC counts, uncertainty findings, limitations, and next steps: [WOD GLD IQuOD parse audit](WOD_GLD_REFERENCE_PARSE_AUDIT_2026-11-18.md). No Copernicus pairing, near-bottom acceptance, accuracy statistics, or production/scoring changes have occurred.
