@@ -167,3 +167,10 @@ A follow-up check of the current NCEI online depth-dependent-variable code table
 Therefore their presence in the GLD archive is supported by the current code table and is not a format error. In this archive, 116 casts carry these values aligned with profile levels, and the decoded latitude/longitude values vary along the glider trajectory. Treat them as per-observation position/time metadata, not physical variables that depend on depth. The 745 remaining casts contain code 32 but no per-level latitude/longitude, so their primary-header coordinates remain the available spatial locator. Use the per-observation coordinates for the 116 casts after basic consistency checks; retain the source distinction in the normalized data.
 
 Reference: https://www.ncei.noaa.gov/access/world-ocean-database/CODES/depth-dependent-variables.html
+
+
+## Full-resolution ETOPO join preparation | 2026-11-18
+
+The earlier Copernicus bathymetry artifact samples ETOPO on the approximately 0.083-degree Copernicus grid. That is useful for broad regional context but too coarse to assign seabed depth confidently to individual GLD measurements. Added a manual-only exporter for the NOAA NCEI ETOPO 2022 30-arc-second grid (0.008333 degrees) over the verified GLD coordinate envelope. The exporter preserves raw positive-up elevation, derives positive seafloor depth only for elevation below -1 m, keeps the -1 to +1 m coast band ambiguous, and validates full grid spacing/coverage. No GLD level has yet been joined to this grid.
+
+Protocol: [WOD GLD ETOPO grid export](WOD_GLD_ETOPO_GRID_PROTOCOL_2026-11-18.md). Workflow: `.github/workflows/wod-gld-etopo-grid.yml`. Next: inspect the Python CI result, manually run the export workflow, then join the resulting grid to GLD observations and calculate continuous bottom separation. No near-bottom threshold or production behavior has changed.
