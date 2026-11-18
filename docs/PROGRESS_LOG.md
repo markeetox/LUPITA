@@ -1340,3 +1340,10 @@ Added:
 The script validates regular grid spacing, duplicate coordinates, full rectangular coverage, fill values, longitude normalization, and vertical sign. It retains ETOPO elevation and derives positive seafloor depth only for cells below -1 m; cells between -1 m and +1 m remain coastal-ambiguous. Workflow has no secrets and no production dependencies. The Python CI run triggered by the new test file is pending inspection; the manual export has not yet run.
 
 Next: inspect CI, dispatch the ETOPO workflow, download the 30-arc-second grid artifact, then join each GLD level using per-observation position for the 116 casts with codes 30/31 and cast-header position for the remaining 745. Compute continuous bottom separation before defining any threshold. No production species, scoring, confidence, or publication behavior changed.
+
+
+## 2026-11-18 | GLD ETOPO exporter tests and full Python CI passed
+
+The first CI attempt failed at test collection because pandas was not installed by the repository's core requirements. Removed pandas/NumPy from the new exporter and tests: parsing, grid validation, CSV output, and metadata now use the Python standard library; requests is imported only inside the network execution path. This keeps the research-only tool from adding dependencies to LUPITA's runtime or core test environment.
+
+The full Python test suite passed in [run 44409583591](https://github.com/markeetox/LUPITA/actions/runs/44409583591), including the new GLD ETOPO tests and species audit. The manual ETOPO export workflow is ready but remains undispatched. Next: manually run `.github/workflows/wod-gld-etopo-grid.yml`, inspect the artifact, then join GLD levels to 30-arc-second ETOPO and calculate continuous bottom separation. No production behavior changed.
