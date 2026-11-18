@@ -58,3 +58,13 @@ Not yet established:
 6. Deduplicate against GTSPP and GoMMAPPS before any Copernicus model-observation pairing.
 
 No profiles have been accepted as near-bottom observations or paired with Copernicus. No bias, MAE, RMSE, validation sample size, or accuracy claim is made. No production behavior changed.
+
+
+
+## Delivery clarification | 2026-11-18
+
+The user confirmed that these five archives are the complete set NOAA supplied for this extraction. Treat them as the complete delivered package; do not ask the user to upload OSD/CTD files again. The five files contain 7,075 cast-start records. The earlier WODSelect inventory was 8,387 across all selected dataset types, including OSD (663) and CTD (649), which are absent from the delivered package. The difference is 1,312 casts. This is a query-inventory-versus-delivery discrepancy, not an upload omission by the user. It remains unknown whether OSD/CTD were excluded during extraction, not generated, or otherwise omitted by NOAA.
+
+NOAA's current WODSelect interface documents three output choices (WOD native ASCII, CSV, and netCDF), observed/standard level options, and WOD/IQuOD flag options. The WOD23 manual specifies C as the first byte of WOD23/WOD18 native ASCII cast records; all delivered records start with Q. The files are 80-character records plus CR-LF, but that alone does not establish that they are valid WOD native ASCII. Before parsing, ask NOAA OCL support to identify the Q record prefix and confirm the actual export format/version and whether the 7,075 records are the complete result of the submitted extraction. Preserve the original files unchanged.
+
+Next work is not blocked entirely: retain the integrity/count audit, request NOAA clarification, and prepare the independent parser-validation checklist against the WOD23 record specification. Do not interpret any profile fields or run a production parser until the Q marker/format is resolved. After resolution, parse the five delivered datasets as the first South Florida sample and explicitly document OSD/CTD as unavailable in this delivery unless NOAA supplies a corrected export. No production behavior changed.
