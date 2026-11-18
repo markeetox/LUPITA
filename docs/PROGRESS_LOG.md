@@ -1325,3 +1325,18 @@ Full results and caveats are in `docs/WOD_GLD_REFERENCE_PARSE_AUDIT_2026-11-18.m
 ## 2026-11-18 | Clarified GLD position/time variable codes
 
 Checked the current NOAA NCEI depth-dependent-variable code table after noticing that GLD casts contain codes 30/31/32. The current table explicitly lists these codes for GLD, SUR, APB, and UOR, and states they are not depth-dependent variables and are not selectable in WODSelect. This resolves the apparent omission in the 2024 manual prose. The 116 GLD casts with codes 30/31/32 contain position/time values aligned with profile levels; treat them as per-observation geolocation/time metadata, not physical depth-dependent variables. The other 745 casts have Julian year-day code 32 but no per-level latitude/longitude, so retain primary-header coordinates as their spatial locator. All 12,283 decoded coordinate pairs remain inside the requested box. Source: https://www.ncei.noaa.gov/access/world-ocean-database/CODES/depth-dependent-variables.html
+
+
+## 2026-11-18 | Added full-resolution ETOPO export for GLD bathymetry join
+
+The prior Copernicus bathymetry artifact uses ETOPO values sampled on the model's approximately 0.083-degree grid. That is too coarse for assigning local seabed depth to individual GLD measurements. Added a research-only exporter that requests NOAA NCEI ETOPO 2022 at its full 30-arc-second grid spacing (0.008333 degrees) across the verified South Florida GLD coordinate envelope, with a small margin.
+
+Added:
+- `scripts/export_wod_gld_etopo_grid.py`
+- `tests/test_wod_gld_etopo_grid.py`
+- `.github/workflows/wod-gld-etopo-grid.yml` (manual-only)
+- `docs/WOD_GLD_ETOPO_GRID_PROTOCOL_2026-11-18.md`
+
+The script validates regular grid spacing, duplicate coordinates, full rectangular coverage, fill values, longitude normalization, and vertical sign. It retains ETOPO elevation and derives positive seafloor depth only for cells below -1 m; cells between -1 m and +1 m remain coastal-ambiguous. Workflow has no secrets and no production dependencies. The Python CI run triggered by the new test file is pending inspection; the manual export has not yet run.
+
+Next: inspect CI, dispatch the ETOPO workflow, download the 30-arc-second grid artifact, then join each GLD level using per-observation position for the 116 casts with codes 30/31 and cast-header position for the remaining 745. Compute continuous bottom separation before defining any threshold. No production species, scoring, confidence, or publication behavior changed.
