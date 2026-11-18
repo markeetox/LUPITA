@@ -68,3 +68,19 @@ The user confirmed that these five archives are the complete set NOAA supplied f
 NOAA's current WODSelect interface documents three output choices (WOD native ASCII, CSV, and netCDF), observed/standard level options, and WOD/IQuOD flag options. The WOD23 manual specifies C as the first byte of WOD23/WOD18 native ASCII cast records; all delivered records start with Q. The files are 80-character records plus CR-LF, but that alone does not establish that they are valid WOD native ASCII. Before parsing, ask NOAA OCL support to identify the Q record prefix and confirm the actual export format/version and whether the 7,075 records are the complete result of the submitted extraction. Preserve the original files unchanged.
 
 Next work is not blocked entirely: retain the integrity/count audit, request NOAA clarification, and prepare the independent parser-validation checklist against the WOD23 record specification. Do not interpret any profile fields or run a production parser until the Q marker/format is resolved. After resolution, parse the five delivered datasets as the first South Florida sample and explicitly document OSD/CTD as unavailable in this delivery unless NOAA supplies a corrected export. No production behavior changed.
+
+
+## GLD archive reinspection and format identification | 2026-11-18
+
+The user re-uploaded the original GLD archive for direct inspection. The active-runtime file was `ocldb1794949360.1820758.GLD(1).gz`. Its SHA-256 is `c75b110c4eba09c0a55aed34cf31d12f2693d3053fad09216d2794ff370fb0e3`, exactly matching the checksum recorded in the initial audit. Compressed size is 837,608 bytes; decompressed size is 4,036,532 bytes. Gzip decompression/CRC passed. The decompressed file contains 49,226 fixed-width 80-character records, 861 cast-start records, and CRLF line endings. These checks confirm the uploaded archive is byte-identical to the previously audited GLD file.
+
+### Resolution of the Q prefix
+
+The `Q` prefix is not an unexplained NOAA corruption or a reason to reject the archive. Inspection of the IQuOD `wodpy` reference parser (`IQuOD/wodpy`, `wodpy/wod.py`) shows explicit detection of a first-line `Q` marker as IQuOD formatting (`self.IQuOD = True`). The parser then reads additional latitude/longitude uncertainty fields, per-variable and secondary-header `iMeta` fields, per-level depth uncertainty, and per-variable value uncertainty. This is the missing format distinction that the standard WOD23 ASCII description alone did not explain.
+
+References:
+- [IQuOD/wodpy reference parser](https://github.com/IQuOD/wodpy/blob/main/wodpy/wod.py)
+- [IQuOD/wodpy usage and field API](https://github.com/IQuOD/wodpy)
+- [NOAA WOD23 User Manual](https://repository.library.noaa.gov/view/noaa/66124/noaa_66124_DS1.pdf)
+
+The format identification is now supported by the reference parser, but the GLD file has not yet been fully parsed and independently reconciled. Next: run the reference parser against the complete GLD archive (or a faithful, pinned copy in a research-only environment), verify it reads all 861 casts to end-of-file without offset/record errors, and audit decoded metadata, temperature/depth variables, uncertainty fields, QC flags, missing values, and plausible ranges. Only after that should a Lupita-specific ingestion adapter be designed. Keep the reference parser research-only; do not add it to production runtime or change prediction/scoring behavior. No profile has yet been accepted as near-bottom or paired with Copernicus.
