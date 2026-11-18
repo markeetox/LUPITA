@@ -1307,3 +1307,16 @@ User clarified that GLD, MRB, PFL, MBT, and XBT are the five files NOAA supplied
 **Validation status:** archive integrity and format identification passed. Full parser execution and decoded-field QA are still pending. No parser has been added to LUPITA, no observations have been screened or paired, and no production/scoring behavior changed.
 
 **Next:** validate the entire GLD file with a pinned IQuOD reference parser in a research-only environment; reconcile 861 parsed profiles and inspect actual metadata, temperature/depth values, uncertainty, QC flags, and missingness before writing any LUPITA adapter.
+
+
+## 2026-11-18 | South Florida GLD Q-format parser-core execution
+
+Executed a faithful transcription of the IQuOD `wodpy` reference `WodProfile` core parsing routines, pinned to source commit `116480b257a227ce38281d3836c40812246e5156` (source blob `c65b39c295443aa13690a15b5216a7e1e36486b6`). The published package itself was not installed, so this validates the source-derived parser core but is not a package-import/parity test.
+
+All 861 GLD casts decoded without exceptions. Every declared profile byte span matched the parser's 80-character/CRLF navigation calculation; zero offset mismatches; final position equals file size 4,036,532 bytes. The 861 UIDs are unique. There are 84,099 observed levels and every level has depth and temperature. All casts are profile type 0 (observed), probe type 15 (glider), and primary-header coordinates fall within the South Florida query box.
+
+QC summary: cast/profile temperature QC 0 on 511 casts and nonzero on 350. Per-level temperature QC: 84,064 flag 0, 35 flag 3. Per-level depth QC: 84,066 flag 0, 33 flag 2. Provisional strict WOD-QC-only subset: 48,852 levels after requiring profile, temperature-level, and depth flags all zero. Do not treat this as a near-bottom count or final inclusion rule. Originator flag-set code 3 appears on 712 casts; 149 have no flag-set metadata. Temperature value uncertainty is encoded as 0.002 at all 84,099 levels; depth and position uncertainty fields are absent.
+
+Metadata: 44 cruise numbers, 44 accession values, 13 platform codes; vehicle classes are Spray glider (521 casts), Seaglider (262), and Slocum glider (78). Instrument metadata codes are 456 (823 casts) and 495 (38). A GLD-specific discrepancy remains: 116 casts include per-level latitude/longitude/Julian-day codes 30/31/32, although the WOD23 manual describes these auxiliary variables for SUR/APB/UOR rather than GLD. Do not use these fields for model matching until confirmed.
+
+Full results and caveats are in `docs/WOD_GLD_REFERENCE_PARSE_AUDIT_2026-11-18.md`. Next: verify the GLD position/time fields, join observation depths to ETOPO at verified locations, preserve QC sensitivity subsets, and resolve in-situ versus Copernicus potential-temperature comparability. No Copernicus pairings, accuracy statistics, or production changes.
