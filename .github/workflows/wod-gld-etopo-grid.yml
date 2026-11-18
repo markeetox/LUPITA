@@ -1,0 +1,39 @@
+name: WOD GLD South Florida ETOPO 30s grid export
+
+on:
+  workflow_dispatch: {}
+
+permissions:
+  contents: read
+
+jobs:
+  export:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - name: Check out main
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install research dependencies
+        run: |
+          python -m pip install --upgrade pip
+          python -m pip install numpy pandas requests pytest
+
+      - name: Run focused parser tests
+        run: python -m pytest -q tests/test_wod_gld_etopo_grid.py
+
+      - name: Export full-resolution ETOPO subset
+        run: python scripts/export_wod_gld_etopo_grid.py
+
+      - name: Upload ETOPO grid artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: wod-gld-south-florida-etopo-30s
+          path: artifacts/wod-gld-etopo-grid/
+          if-no-files-found: error
+          retention-days: 14
