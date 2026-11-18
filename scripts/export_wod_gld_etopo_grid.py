@@ -2,16 +2,14 @@
 """Export a full-resolution NOAA ETOPO 2022 30-arc-second grid for GLD QA."""
 from __future__ import annotations
 
+import csv
 import hashlib
 import json
+import math
 from datetime import datetime, timezone
 from io import StringIO
 from pathlib import Path
 from urllib.parse import quote
-
-import numpy as np
-import pandas as pd
-import requests
 
 ETOPO_BASE = "https://oceanwatch.pifsc.noaa.gov/erddap/griddap/ETOPO_2022_v1_30s"
 GRID_RESOLUTION_DEG = 1.0 / 120.0
@@ -42,92 +40,121 @@ def build_request_url(bbox: dict[str, float] = BBOX) -> str:
     return f"{ETOPO_BASE}.csv?{quote(query, safe='[]():.')}"
 
 
-def parse_etopo_csv(csv_text: str) -> pd.DataFrame:
-    frame = pd.read_csv(StringIO(csv_text), skiprows=[1])
-    frame.columns = [str(column).strip().lower() for column in frame.columns]
-    required = {"latitude", "longitude", "z"}
-    if not required.issubset(frame.columns):
-        raise ValueError(f"Unexpected ETOPO columns: {list(frame.columns)}")
+def parse_etopo_csv(csv_text: str) -> list[dict[str, float | str | None]]:
+    lines = csv_text.splitlines()
+    if len(lines) < 3:
+        raise ValueError("ETOPO CSV must contain a header, units row, and data")
+    reader = csv.DictReader(StringIO("\n".join([lines[0], *lines[2:]])))
+    if not reader.fieldnames:
+        raise ValueError("ETOPO CSV has no header")
+    columns = {name.strip().lower(): name for name in reader.fieldnames}
+    if not {"latitude", "longitude", "z"}.issubset(columns):
+        raise ValueError(f"Unexpected ETOPO columns: {reader.fieldnames}")
 
-    frame = frame[["latitude", "longitude", "z"]].apply(
-        pd.to_numeric, errors="coerce"
-    )
-    frame = frame.dropna(subset=["latitude", "longitude"]).copy()
-    frame = frame.rename(columns={"z": "etopo_elevation_m"})
-    frame.loc[frame["etopo_elevation_m"] <= FILL_VALUE, "etopo_elevation_m"] = np.nan
+    rows: list[dict[str, float | str | None]] = []
+    for raw in reader:
+        try:
+            latitude = float(raw[columns["latitude"]])
+            longitude = float(raw[columns["longitude"]])
+        except (TypeError, ValueError):
+            continue
+        try:
+            elevation = float(raw[columns["z"]])
+            if not math.isfinite(elevation) or elevation <= FILL_VALUE:
+                elevation = None
+        except (TypeError, ValueError):
+            elevation = None
 
-    # ERDDAP longitude is 0..360; the GLD archive uses -180..180.
-    frame["longitude"] = np.where(
-        frame["longitude"] > 180.0,
-        frame["longitude"] - 360.0,
-        frame["longitude"],
-    )
+        # ERDDAP longitude is 0..360; the GLD archive uses -180..180.
+        if longitude > 180.0:
+            longitude -= 360.0
 
-    elevation = frame["etopo_elevation_m"].to_numpy(dtype=float)
-    valid = np.isfinite(elevation)
-    ocean = valid & (elevation < -COAST_BAND_M)
-    land = valid & (elevation > COAST_BAND_M)
-    coast = valid & ~(ocean | land)
+        if elevation is None:
+            seafloor_depth = None
+            etopo_class = "missing"
+        elif elevation < -COAST_BAND_M:
+            seafloor_depth = -elevation
+            etopo_class = "ocean"
+        elif elevation > COAST_BAND_M:
+            seafloor_depth = None
+            etopo_class = "land"
+        else:
+            seafloor_depth = None
+            etopo_class = "coast_ambiguous"
 
-    frame["seafloor_depth_m"] = np.where(ocean, -elevation, np.nan)
-    frame["etopo_class"] = np.select(
-        [ocean, land, coast],
-        ["ocean", "land", "coast_ambiguous"],
-        default="missing",
-    )
-    return frame.sort_values(["latitude", "longitude"]).reset_index(drop=True)
+        rows.append({
+            "latitude": latitude,
+            "longitude": longitude,
+            "etopo_elevation_m": elevation,
+            "seafloor_depth_m": seafloor_depth,
+            "etopo_class": etopo_class,
+        })
+
+    return sorted(rows, key=lambda row: (row["latitude"], row["longitude"]))
 
 
-def validate_grid(frame: pd.DataFrame) -> dict[str, int | float]:
-    if frame.empty:
+def validate_grid(rows: list[dict[str, float | str | None]]) -> dict[str, int | float]:
+    if not rows:
         raise ValueError("ETOPO subset is empty")
-    if frame[["latitude", "longitude"]].duplicated().any():
+    coordinates = [(row["latitude"], row["longitude"]) for row in rows]
+    if len(set(coordinates)) != len(coordinates):
         raise ValueError("ETOPO subset contains duplicate coordinate pairs")
 
-    latitudes = np.sort(frame["latitude"].unique())
-    longitudes = np.sort(frame["longitude"].unique())
+    latitudes = sorted({float(row["latitude"]) for row in rows})
+    longitudes = sorted({float(row["longitude"]) for row in rows})
     if len(latitudes) < 2 or len(longitudes) < 2:
         raise ValueError("ETOPO subset must contain multiple rows and columns")
 
-    lat_steps = np.diff(latitudes)
-    lon_steps = np.diff(longitudes)
-    if not np.allclose(lat_steps, GRID_RESOLUTION_DEG, rtol=0.0, atol=1e-7):
-        raise ValueError(f"Unexpected latitude spacing: {np.unique(np.round(lat_steps, 10))}")
-    if not np.allclose(lon_steps, GRID_RESOLUTION_DEG, rtol=0.0, atol=1e-7):
-        raise ValueError(f"Unexpected longitude spacing: {np.unique(np.round(lon_steps, 10))}")
+    lat_steps = [b - a for a, b in zip(latitudes, latitudes[1:])]
+    lon_steps = [b - a for a, b in zip(longitudes, longitudes[1:])]
+    if not all(math.isclose(step, GRID_RESOLUTION_DEG, rel_tol=0.0, abs_tol=1e-7) for step in lat_steps):
+        raise ValueError(f"Unexpected latitude spacing: {sorted(set(round(x, 10) for x in lat_steps))}")
+    if not all(math.isclose(step, GRID_RESOLUTION_DEG, rel_tol=0.0, abs_tol=1e-7) for step in lon_steps):
+        raise ValueError(f"Unexpected longitude spacing: {sorted(set(round(x, 10) for x in lon_steps))}")
 
     expected_cells = len(latitudes) * len(longitudes)
-    if len(frame) != expected_cells:
+    if len(rows) != expected_cells:
         raise ValueError(
-            f"Incomplete ETOPO rectangle: {len(frame)} rows for "
+            f"Incomplete ETOPO rectangle: {len(rows)} rows for "
             f"{len(latitudes)} x {len(longitudes)} coordinates"
         )
 
     return {
-        "rows": int(len(frame)),
-        "latitude_count": int(len(latitudes)),
-        "longitude_count": int(len(longitudes)),
-        "latitude_min": float(latitudes.min()),
-        "latitude_max": float(latitudes.max()),
-        "longitude_min": float(longitudes.min()),
-        "longitude_max": float(longitudes.max()),
-        "resolution_degrees": float(GRID_RESOLUTION_DEG),
-        "missing_elevation_count": int(frame["etopo_elevation_m"].isna().sum()),
+        "rows": len(rows),
+        "latitude_count": len(latitudes),
+        "longitude_count": len(longitudes),
+        "latitude_min": latitudes[0],
+        "latitude_max": latitudes[-1],
+        "longitude_min": longitudes[0],
+        "longitude_max": longitudes[-1],
+        "resolution_degrees": GRID_RESOLUTION_DEG,
+        "missing_elevation_count": sum(row["etopo_elevation_m"] is None for row in rows),
     }
 
 
 def main() -> None:
+    import requests
+
     url = build_request_url()
     print(f"Requesting full-resolution ETOPO subset: {url}", flush=True)
     response = requests.get(url, timeout=180)
     response.raise_for_status()
 
-    frame = parse_etopo_csv(response.text)
-    grid_info = validate_grid(frame)
+    rows = parse_etopo_csv(response.text)
+    grid_info = validate_grid(rows)
     OUTPUT_ROOT.mkdir(parents=True, exist_ok=True)
 
     csv_path = OUTPUT_ROOT / "wod_gld_south_florida_etopo_30s.csv"
-    frame.to_csv(csv_path, index=False)
+    with csv_path.open("w", newline="", encoding="utf-8") as stream:
+        writer = csv.DictWriter(
+            stream,
+            fieldnames=[
+                "latitude", "longitude", "etopo_elevation_m",
+                "seafloor_depth_m", "etopo_class",
+            ],
+        )
+        writer.writeheader()
+        writer.writerows(rows)
     csv_sha256 = hashlib.sha256(csv_path.read_bytes()).hexdigest()
 
     metadata = {
