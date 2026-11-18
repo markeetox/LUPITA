@@ -99,3 +99,12 @@ WOD temperature cast/profile QC: 511 flag 0 and 350 nonzero. Per-level temperatu
 A GLD-specific metadata discrepancy remains open: 116 casts contain per-level codes 30/31/32 (latitude/longitude/Julian year-day), with 12,283 decoded per-level coordinate pairs, while 745 casts contain code 32 only. NOAA's WOD23 manual describes these auxiliary variables for SUR/APB/UOR rather than GLD. Do not use these per-level coordinates/times for matching until their GLD semantics are confirmed.
 
 Full field inventory, QC counts, uncertainty findings, limitations, and next steps: [WOD GLD IQuOD parse audit](WOD_GLD_REFERENCE_PARSE_AUDIT_2026-11-18.md). No Copernicus pairing, near-bottom acceptance, accuracy statistics, or production/scoring changes have occurred.
+
+
+## Clarification: current NOAA code table confirms GLD auxiliary position/time variables | 2026-11-18
+
+A follow-up check of the current NCEI online depth-dependent-variable code table resolves the apparent dataset-availability discrepancy. Unlike the 2024 WOD23 manual's prose summary, the current online table explicitly lists codes 30 (latitude), 31 (longitude), and 32 (Julian year-day) for GLD as well as SUR/APB/UOR. Its footnote says these codes are not depth-dependent variables and are not selectable in WODSelect.
+
+Therefore their presence in the GLD archive is supported by the current code table and is not a format error. In this archive, 116 casts carry these values aligned with profile levels, and the decoded latitude/longitude values vary along the glider trajectory. Treat them as per-observation position/time metadata, not physical variables that depend on depth. The 745 remaining casts contain code 32 but no per-level latitude/longitude, so their primary-header coordinates remain the available spatial locator. Use the per-observation coordinates for the 116 casts after basic consistency checks; retain the source distinction in the normalized data.
+
+Reference: https://www.ncei.noaa.gov/access/world-ocean-database/CODES/depth-dependent-variables.html
