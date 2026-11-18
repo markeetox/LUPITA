@@ -1292,3 +1292,18 @@ Inspected the five uploaded gzip files for GLD, MRB, PFL, MBT, and XBT. All deco
 ## 2026-11-18 | NOAA confirms five archives are the complete delivered set
 
 User clarified that GLD, MRB, PFL, MBT, and XBT are the five files NOAA supplied and there are no additional OSD/CTD archives in the delivery. Treat this as the complete delivered package; do not request that the user re-upload or search for files they were not given. The package has 7,075 cast-start records versus the WODSelect inventory of 8,387; OSD 663 and CTD 649 are absent, leaving a 1,312-cast discrepancy to resolve with NOAA. WODSelect documentation lists native ASCII, CSV, and netCDF output plus level/flag options; the WOD23 native ASCII specification requires cast-start prefix C, but the delivered records begin Q. No parser or profile interpretation should proceed until NOAA OCL support confirms the export format/version and marker. Next: send NOAA a concise support request, then parse the five datasets as the first sample once format is verified. No production changes.
+
+
+## 2026-11-18 | Reinspect South Florida GLD and identify IQuOD format
+
+**Branch:** `main`  
+**Scope:** read-only NOAA source-format investigation; no production changes.
+
+- Re-read the uploaded GLD gzip archive and verified its SHA-256 matches the original audit exactly: `c75b110c4eba09c0a55aed34cf31d12f2693d3053fad09216d2794ff370fb0e3`.
+- Reconfirmed gzip integrity, 837,608 compressed bytes, 4,036,532 decompressed bytes, 49,226 fixed-width 80-character records, CRLF line endings, and 861 cast-start records.
+- Inspected the IQuOD `wodpy` reference implementation. It explicitly recognizes first-byte `Q` as IQuOD formatting and changes the parser layout to include coordinate uncertainty, iMeta metadata, depth uncertainty, and per-variable measurement uncertainty.
+- Corrected the previous interpretation: `Q` is a recognized IQuOD format marker, not evidence of a corrupt or unknown WOD export.
+
+**Validation status:** archive integrity and format identification passed. Full parser execution and decoded-field QA are still pending. No parser has been added to LUPITA, no observations have been screened or paired, and no production/scoring behavior changed.
+
+**Next:** validate the entire GLD file with a pinned IQuOD reference parser in a research-only environment; reconcile 861 parsed profiles and inspect actual metadata, temperature/depth values, uncertainty, QC flags, and missingness before writing any LUPITA adapter.
