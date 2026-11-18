@@ -39,3 +39,8 @@ After the workflow artifact is inspected, join each GLD observation level to the
 Keep the coordinate-source field in every joined row. Compute continuous bottom separation as `seafloor_depth_m - observation_depth_m`. Do not impose a near-bottom cutoff until the full distribution and spatial sensitivity are reviewed. ETOPO is a global relief model, not a navigation chart, and a nearest-cell join is still an approximation.
 
 No production species data, scoring, gates, weights, confidence, ingestion, or publication behavior may change in this research workflow.
+
+
+## CI status | 2026-11-18
+
+The initial Python CI attempt failed because the test module imported pandas, which is not part of the repository's core requirements. The exporter and tests were refactored to use the Python standard library; `requests` is imported only inside the network execution path. The full repository Python test suite passed in [run 44409583591](https://github.com/markeetox/LUPITA/actions/runs/44409583591). The manual export workflow has not yet been dispatched, so no full-resolution ETOPO grid artifact exists yet.
