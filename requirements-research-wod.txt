@@ -1,0 +1,2 @@
+# Research-only dependency; not part of LUPITA production/runtime requirements.
+git+https://github.com/IQuOD/wodpy.git@116480b257a227ce38281d3836c40812246e5156
