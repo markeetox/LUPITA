@@ -40,3 +40,11 @@ Inspected the USF Sam ERDDAP variable metadata in detail. Confirmed temperature 
 ## 2026-11-19 | IOOS USF Sam profile row inventory workflow
 
 Added `scripts/download_ioos_glider_profile_inventory.py` and manual workflow `.github/workflows/ioos-usf-sam-profile-inventory.yml`. Script dynamically discovers dataset variables from ERDDAP info metadata, verifies required core fields, downloads raw observation rows plus all available QARTOD variables for temperature/pressure/depth/location, and summarizes row count, unique profile IDs, WMO IDs, nonmissing core fields, and QC counts. It preserves the raw CSV and metadata CSV as workflow artifacts with a JSON inventory summary. Workflow has not yet been run; no actual row counts/QC distributions are claimed. No ETOPO or Copernicus join and no production changes.
+
+
+
+## 2026-11-19 | IOOS inventory failure traced to ERDDAP metadata header parsing
+
+Inspected failed run [44534528629](https://github.com/markeetox/LUPITA/actions/runs/44534528629). Checkout and Python setup succeeded; downloader failed at the required-variable check because it parsed `rowName`/`variableName`, while standard ERDDAP `info/index.csv` uses `Row Type`/`Variable Name`. The script therefore produced an empty available-variable list before the observation data request. This is a client-side metadata parsing defect, not a dataset or observation-download failure.
+
+Committed a normalized header parser in `scripts/download_ioos_glider_profile_inventory.py` and added `tests/test_ioos_glider_profile_inventory.py` for standard ERDDAP headers, compact legacy headers, invalid headers, and empty responses. Python CI will verify the fix. Next: after CI passes, rerun the manual IOOS inventory workflow. No actual glider rows/QC counts retrieved yet; no ETOPO join, Copernicus pairing, or production behavior change.
