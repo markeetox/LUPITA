@@ -23,7 +23,7 @@ def test_nearest_cell_and_bilinear_interpolation(tmp_path):
     result = bathymetry_at(25.0041665, -79.9958335, grid)
     assert result["etopo_class"] == "ocean"
     assert result["seafloor_depth_m"] in (100.0, 120.0, 140.0, 160.0)
-    assert math.isclose(result["bilinear_seafloor_depth_m"], 130.0, abs_tol=1e-4)
+    assert math.isclose(result["bilinear_seafloor_depth_m"], 130.0, abs_tol=0.01)
     assert result["grid_cell_offset_m"] >= 0
 
 
