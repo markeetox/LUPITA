@@ -26,11 +26,11 @@ jobs:
       - name: Download the NOAA GLD source archive
         run: |
           mkdir -p research-inputs/etopo research-output
-          curl --fail --location --retry 3 --retry-delay 3 \
+          curl --fail --location --retry 8 --retry-all-errors --retry-delay 10 --max-time 180 \
             "https://www.ncei.noaa.gov/access/world-ocean-database-select/OCLdb_output/ocldb1794949360.1820758.GLD.gz" \
             --output research-inputs/ocldb1794949360.1820758.GLD.gz
           gzip -t research-inputs/ocldb1794949360.1820758.GLD.gz
-          sha256sum research-inputs/ocldb1794949360.1820758.GLD.gz
+          echo "c75b110c4eba09c0a55aed34cf31d12f2693d3053fad09216d2794ff370fb0e3  research-inputs/ocldb1794949360.1820758.GLD.gz" | sha256sum --check
       - name: Download the exact ETOPO artifact from export run
         uses: actions/download-artifact@v4
         with:
