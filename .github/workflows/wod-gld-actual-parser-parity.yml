@@ -2,9 +2,6 @@ name: WOD GLD actual parser parity (manual research)
 
 on:
   workflow_dispatch: {}
-  push:
-    paths:
-      - .github/workflows/wod-gld-actual-parser-parity.yml
 
 permissions:
   contents: read
