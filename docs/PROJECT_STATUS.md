@@ -804,3 +804,6 @@ Nearest-cell bottom separation has 184 negative levels; bilinear interpolation h
 Added reproducible join adapter `scripts/join_wod_gld_etopo.py`, pinned research dependency `requirements-research-wod.txt`, tests, manual parser-import validation workflow, and protocol `docs/WOD_GLD_ETOPO_JOIN_PROTOCOL_2026-11-19.md`. New tests passed in [CI run 44526729327](https://github.com/markeetox/LUPITA/actions/runs/44526729327). The manual workflow verifying the installed `wodpy` import remains to be run. Full results are in `docs/WOD_GLD_REFERENCE_PARSE_AUDIT_2026-11-18.md`.
 
 Next: verify package-level parser parity, inspect negative-separation casts and bathymetry sensitivity, then resolve temperature/potential-temperature comparability. No production prediction behavior changed.
+
+
+Latest follow-up CI after the joiner metadata/QC reporting changes also passed: [run 44527038522](https://github.com/markeetox/LUPITA/actions/runs/44527038522). This validates the repository Python test suite; the separate manual workflow still needs to verify installation/import of the pinned `wodpy` package.
