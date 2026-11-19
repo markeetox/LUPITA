@@ -71,3 +71,11 @@ Added a manual, read-only GitHub Actions workflow and downloader:
 The script discovers variables from the live ERDDAP `info/{dataset}/index.csv` metadata endpoint, verifies required identifiers/time/position/depth/pressure/temperature columns, then downloads source observation rows from the ERDDAP `.csvp` endpoint. It includes every available QARTOD variable whose name begins with temperature, pressure, depth, or location prefixes. It writes the source metadata CSV, raw observation CSV, and JSON summary containing row count, unique profile IDs, WMO IDs, nonmissing core values, and QC flag counts.
 
 The workflow is manual-only. It has been committed but has not yet been run; the live source download and the exact number of rows/QC counts remain unverified until the user dispatches it and the run succeeds. No ETOPO join or Copernicus matching occurs in this step.
+
+
+
+## First workflow attempt and parser correction | 2026-11-19
+
+The first manual inventory run failed before the observation query. GitHub Actions run [44534528629](https://github.com/markeetox/LUPITA/actions/runs/44534528629) successfully checked out the repository and set up Python, but the script reported every required variable missing and `available=[]`. Inspection of the script showed it expected compact metadata keys `rowName` and `variableName`; the ERDDAP `info/{dataset}/index.csv` response uses the standard labels `Row Type` and `Variable Name`. This was a client-side CSV-header parsing defect, not evidence that the dataset lacks variables or that the data endpoint is unavailable.
+
+Corrected the metadata parser to normalize header labels and accept the standard ERDDAP header, while retaining compatibility with compact legacy labels. Added unit tests for standard headers, legacy headers, unrecognized headers, and empty responses. The fix is on `main`; the Python CI workflow will verify it. The inventory workflow has not yet been rerun, so no profile rows or QC counts are available. Next: wait for CI, then manually rerun the inventory workflow.
