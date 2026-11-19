@@ -31,16 +31,11 @@ FLAG_MEANINGS = {
 
 
 def _header_key(value: str) -> str:
-    """Normalize ERDDAP CSV header labels without depending on spaces/case."""
     return "".join(ch.lower() for ch in value.strip().lstrip("\ufeff") if ch.isalnum())
 
 
 def parse_info_variables(info_text: str) -> tuple[list[str], list[str]]:
-    """Return variable names and original header labels from ERDDAP info/index.csv.
-
-    ERDDAP's standard info CSV uses headers such as 'Row Type' and
-    'Variable Name'. Older/alternate endpoints may use rowName/variableName.
-    """
+    """Read standard ERDDAP info/index.csv variable rows."""
     reader = csv.DictReader(io.StringIO(info_text))
     if not reader.fieldnames:
         raise ValueError("ERDDAP info CSV is empty or has no header row")
@@ -59,6 +54,23 @@ def parse_info_variables(info_text: str) -> tuple[list[str], list[str]]:
         and (row.get(variable_col) or "").strip()
     }
     return sorted(variables), list(reader.fieldnames)
+
+
+def normalize_csvp_rows(data_text: str) -> tuple[list[str], list[dict[str, str]]]:
+    """Normalize ERDDAP .csvp headers, whose first row is 'name (units)'."""
+    reader = csv.DictReader(io.StringIO(data_text))
+    if not reader.fieldnames:
+        raise ValueError("ERDDAP CSVp response is empty or has no header row")
+    canonical = []
+    rename = {}
+    for header in reader.fieldnames:
+        name = header.strip().split(" (", 1)[0].strip()
+        canonical.append(name)
+        rename[header] = name
+    rows = []
+    for raw in reader:
+        rows.append({rename[k]: (v or "") for k, v in raw.items() if k in rename})
+    return canonical, rows
 
 
 def fetch(url: str, attempts: int = 4) -> bytes:
@@ -105,10 +117,14 @@ def main() -> None:
     raw_path = out / f"{DATASET}_observations.csv"
     raw_path.write_bytes(data_bytes)
 
-    reader = csv.DictReader(io.StringIO(data_bytes.decode("utf-8-sig")))
-    rows = list(reader)
-    if not reader.fieldnames or "temperature" not in reader.fieldnames:
-        raise RuntimeError("ERDDAP CSV response did not contain the expected temperature header")
+    data_text = data_bytes.decode("utf-8-sig")
+    fieldnames, rows = normalize_csvp_rows(data_text)
+    if "temperature" not in fieldnames:
+        preview = "\\n".join(data_text.splitlines()[:4])
+        raise RuntimeError(
+            "ERDDAP CSVp response did not contain a temperature column after "
+            f"stripping unit annotations; headers={fieldnames}; response_preview={preview!r}"
+        )
 
     qc_counts = {}
     for variable in selected:
@@ -132,6 +148,7 @@ def main() -> None:
         "unique_profile_id_count": len(profile_ids),
         "unique_wmo_ids": sorted({r.get("wmo_id", "").strip() for r in rows if present(r, "wmo_id")}),
         "variables_downloaded": selected,
+        "response_headers": fieldnames,
         "qc_flag_counts": qc_counts,
         "nonmissing_counts": {
             k: sum(present(r, k) for r in rows)
