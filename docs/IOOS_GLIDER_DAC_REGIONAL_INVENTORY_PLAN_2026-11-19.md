@@ -59,3 +59,15 @@ Dataset references:
 - No validation sample size, bias, MAE, RMSE, or Copernicus accuracy result is claimed.
 
 This is research-only. No production ingestion, species profile, SST factor, numerical range, weight, gate, score, confidence, or publication behavior changes.
+
+
+## Profile-row retrieval implementation | 2026-11-19
+
+Added a manual, read-only GitHub Actions workflow and downloader:
+- Workflow: `.github/workflows/ioos-usf-sam-profile-inventory.yml`
+- Script: `scripts/download_ioos_glider_profile_inventory.py`
+- Artifact name: `ioos-usf-sam-profile-inventory`
+
+The script discovers variables from the live ERDDAP `info/{dataset}/index.csv` metadata endpoint, verifies required identifiers/time/position/depth/pressure/temperature columns, then downloads source observation rows from the ERDDAP `.csvp` endpoint. It includes every available QARTOD variable whose name begins with temperature, pressure, depth, or location prefixes. It writes the source metadata CSV, raw observation CSV, and JSON summary containing row count, unique profile IDs, WMO IDs, nonmissing core values, and QC flag counts.
+
+The workflow is manual-only. It has been committed but has not yet been run; the live source download and the exact number of rows/QC counts remain unverified until the user dispatches it and the run succeeds. No ETOPO join or Copernicus matching occurs in this step.
