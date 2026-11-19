@@ -212,6 +212,7 @@ def run_join(gld_path: Path, etopo_path: Path, output_path: Path, metadata_path:
     rows = 0
     negative_nearest = 0
     negative_bilinear = 0
+    negative_bilinear_strict_qc = 0
     sensitivity: dict[str, dict[str, int]] = {
         str(limit): {"all_levels": 0, "strict_qc_levels": 0, "all_casts": 0, "strict_qc_casts": 0}
         for limit in NEAR_BOTTOM_SENSITIVITY_M
@@ -261,13 +262,15 @@ def run_join(gld_path: Path, etopo_path: Path, output_path: Path, metadata_path:
             if row["bilinear_bottom_separation_m"] is not None:
                 sep = row["bilinear_bottom_separation_m"]
                 bilinear_separations.append(sep)
-                if sep < 0:
-                    negative_bilinear += 1
                 strict = (
                     row["temperature_profile_qc"] == 0
                     and row["temperature_level_qc"] == 0
                     and row["depth_level_qc"] == 0
                 )
+                if sep < 0:
+                    negative_bilinear += 1
+                    if strict:
+                        negative_bilinear_strict_qc += 1
                 if sep >= 0:
                     for limit in NEAR_BOTTOM_SENSITIVITY_M:
                         if sep <= limit:
@@ -316,6 +319,7 @@ def run_join(gld_path: Path, etopo_path: Path, output_path: Path, metadata_path:
         "bilinear_bottom_separation_m": stats(bilinear_separations),
         "negative_nearest_separation_levels": negative_nearest,
         "negative_bilinear_separation_levels": negative_bilinear,
+        "negative_bilinear_separation_strict_qc_levels": negative_bilinear_strict_qc,
         "nonnegative_bilinear_near_bottom_sensitivity": sensitivity,
         "near_bottom_cutoff_selected": None,
         "caveats": [
