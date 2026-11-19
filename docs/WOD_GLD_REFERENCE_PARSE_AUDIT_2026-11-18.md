@@ -174,3 +174,63 @@ Reference: https://www.ncei.noaa.gov/access/world-ocean-database/CODES/depth-dep
 The earlier Copernicus bathymetry artifact samples ETOPO on the approximately 0.083-degree Copernicus grid. That is useful for broad regional context but too coarse to assign seabed depth confidently to individual GLD measurements. Added a manual-only exporter for the NOAA NCEI ETOPO 2022 30-arc-second grid (0.008333 degrees) over the verified GLD coordinate envelope. The exporter preserves raw positive-up elevation, derives positive seafloor depth only for elevation below -1 m, keeps the -1 to +1 m coast band ambiguous, and validates full grid spacing/coverage. No GLD level has yet been joined to this grid.
 
 Protocol: [WOD GLD ETOPO grid export](WOD_GLD_ETOPO_GRID_PROTOCOL_2026-11-18.md). Workflow: `.github/workflows/wod-gld-etopo-grid.yml`. Next: inspect the Python CI result, manually run the export workflow, then join the resulting grid to GLD observations and calculate continuous bottom separation. No near-bottom threshold or production behavior has changed.
+
+
+## Full-resolution ETOPO export and preliminary GLD level join | 2026-11-19
+
+### ETOPO artifact
+
+Manual export workflow run: [44524228011](https://github.com/markeetox/LUPITA/actions/runs/44524228011). Artifact `wod-gld-south-florida-etopo-30s`, artifact ID `14529482014`, GitHub artifact digest `sha256:7b3c4befcf4f1b1b56c71bedaf531feeac653b535efd2d0a436ee768f115e099`.
+
+- ETOPO dataset: `ETOPO_2022_v1_30s`, 30 arc-second grid.
+- Grid: 253 latitude rows × 193 longitude columns = 48,829 cells.
+- Resolution: 0.008333333 degrees.
+- Bounds actually returned: 24.4541667–26.5541667°N, -81.0458333 to -79.4458333°.
+- Missing elevations: 0.
+- Export CSV SHA-256: `e9e66d915e6dd82403785a2e5f90a9a008127557391e3ec1be8a79ddfa754739`.
+
+### Preliminary observed-level join
+
+The archive and ETOPO artifact were joined locally using a source-derived transcription of the pinned IQuOD `WodProfile` parsing logic. This reproduces the earlier 861-cast / 84,099-level decode, but is not yet a run of the installed `wodpy` package. A repository join adapter has now been added and pins the IQuOD source commit; its package-import workflow is a separate verification step.
+
+- Casts: 861.
+- Temperature/depth levels joined: 84,099.
+- Coordinates: 71,816 levels use cast-header positions (745 casts); 12,283 use per-observation latitude/longitude codes 30/31 (116 casts).
+- All 84,099 nearest-cell assignments land in ETOPO ocean-class cells; no missing bathymetry assignment.
+- Nearest-cell center offset: median 349.25 m, mean 331.72 m, maximum 625.86 m.
+- Nearest-cell bottom separation `ETOPO seafloor depth - observed depth`: median 171.68 m; 184 levels have negative separation.
+- Bilinear interpolation was possible for all 84,099 levels because all four surrounding cells were ocean. Bilinear separation median: 171.75 m; 145 levels are negative.
+- The 145 negative bilinear levels occur in 38 casts. These are observations whose reported depth exceeds the ETOPO seabed estimate. They remain visible; they are not clipped or automatically discarded.
+- The nearest-cell vs bilinear negative count changes from 184 to 145, demonstrating that the interpolation treatment affects the inconsistency count, though both views use the same ETOPO source.
+
+### Descriptive near-bottom sensitivity only
+
+Using bilinear separation and requiring nonnegative separation, the following counts are descriptive bands, not an adopted eligibility cutoff:
+
+| Separation band | All levels | Casts represented | Strict WOD-QC levels | Strict-QC casts |
+|---|---:|---:|---:|---:|
+| 0–5 m | 107 | 69 | 24 | 22 |
+| 0–10 m | 310 | 120 | 78 | 36 |
+| 0–20 m | 1,279 | 322 | 555 | 139 |
+| 0–50 m | 6,767 | 637 | 3,842 | 338 |
+
+Strict WOD-QC means temperature profile QC = 0, temperature level QC = 0, and depth level QC = 0. The strict subset contains 48,852 levels overall. Counts are levels nested within casts, not independent sample sizes. No near-bottom threshold is selected.
+
+### Reproducibility code added
+
+- `scripts/join_wod_gld_etopo.py`
+- `requirements-research-wod.txt` (IQuOD `wodpy` pinned to commit `116480b257a227ce38281d3836c40812246e5156`)
+- `tests/test_join_wod_gld_etopo.py`
+- `.github/workflows/wod-gld-etopo-join.yml` (manual dependency-import and unit-test validation)
+- `docs/WOD_GLD_ETOPO_JOIN_PROTOCOL_2026-11-19.md`
+
+The adapter accepts compressed GLD input, preserves WOD QC/originator fields, joins nearest-cell and bilinear bathymetry, records coordinate provenance and input checksums, and reports sensitivity counts without selecting a cutoff. Python CI run [44526729327](https://github.com/markeetox/LUPITA/actions/runs/44526729327) passed the new join tests. The separate manual workflow that installs and imports the pinned IQuOD package has not yet been run.
+
+### Limitations and next steps
+
+1. Run the manual `wod-gld-etopo-join.yml` workflow to verify installation/import of the pinned `wodpy` package; then compare package output against this source-derived local join.
+2. Review the 145 negative bilinear-separation levels (43 in the strict WOD-QC subset), especially repeated glider transects and local bathymetric gradients. Do not assume these are all parser errors or all ETOPO errors.
+3. Assess nearest-cell offset and alternative bathymetric interpolation/uncertainty; ETOPO is global relief, not a local survey.
+4. Keep 0–5/10/20/50 m bands as sensitivity views only; no near-bottom cutoff is approved.
+5. Resolve in-situ vs potential-temperature comparability before any Copernicus temperature residuals.
+6. No production species factors, ranges, gates, weights, scoring, confidence, ingestion, or publication behavior changed.
