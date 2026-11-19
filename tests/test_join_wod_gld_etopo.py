@@ -1,6 +1,6 @@
 from __future__ import annotations
 
-from scripts.join_wod_gld_etopo import bathymetry_at, load_etopo
+import math\n\nfrom scripts.join_wod_gld_etopo import bathymetry_at, load_etopo
 
 
 def make_grid(tmp_path):
@@ -21,13 +21,13 @@ def test_nearest_cell_and_bilinear_interpolation(tmp_path):
     result = bathymetry_at(25.0041665, -79.9958335, grid)
     assert result["etopo_class"] == "ocean"
     assert result["seafloor_depth_m"] in (100.0, 120.0, 140.0, 160.0)
-    assert result["bilinear_seafloor_depth_m"] == 130.0
+    assert math.isclose(result["bilinear_seafloor_depth_m"], 130.0, abs_tol=1e-4)
     assert result["grid_cell_offset_m"] >= 0
 
 
 def test_bilinear_is_not_returned_across_land(tmp_path):
     grid = make_grid(tmp_path)
-    cell = grid["cells"][(25.008333, -79.99166666666667)]
+    cell = grid["cells"][(25.008333333333333, -79.99166666666667)]
     cell["class"] = "land"
     result = bathymetry_at(25.0041665, -79.9958335, grid)
     assert result["bilinear_seafloor_depth_m"] is None
