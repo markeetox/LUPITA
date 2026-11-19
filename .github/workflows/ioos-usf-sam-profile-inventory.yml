@@ -1,0 +1,27 @@
+name: IOOS USF Sam glider profile inventory (manual research)
+
+on:
+  workflow_dispatch: {}
+
+permissions:
+  contents: read
+
+jobs:
+  inventory:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Download profile observations and inventory QC flags
+        run: |
+          python scripts/download_ioos_glider_profile_inventory.py --output-dir artifacts/ioos-usf-sam
+      - name: Upload source rows and inventory summary
+        uses: actions/upload-artifact@v4
+        with:
+          name: ioos-usf-sam-profile-inventory
+          path: artifacts/ioos-usf-sam/
+          if-no-files-found: error
+          retention-days: 14
