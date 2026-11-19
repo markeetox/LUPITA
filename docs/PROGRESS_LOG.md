@@ -35,3 +35,8 @@ Added `docs/IOOS_GLIDER_DAC_REGIONAL_INVENTORY_PLAN_2026-11-19.md` with source m
 
 
 Inspected the USF Sam ERDDAP variable metadata in detail. Confirmed temperature is measured CTD Celsius (accuracy 0.004°C, resolution 0.001°C); depth is calculated from m_depth, positive down, sea-surface reference, 0.01m accuracy; pressure is measured in bar with documented x10 conversion to dbar. Profile-level and point-level precise time/coordinates are described as calculated/interpolated. Temperature QARTOD primary flags use 1 PASS, 2 NOT_EVALUATED, 3 SUSPECT, 4 FAIL, 9 MISSING; actual row counts by flag not yet retrieved. This corrects an earlier plan statement that described point-level precise fields as measured. No profile data download, ETOPO join, or Copernicus pairing yet.
+
+
+## 2026-11-19 | IOOS USF Sam profile row inventory workflow
+
+Added `scripts/download_ioos_glider_profile_inventory.py` and manual workflow `.github/workflows/ioos-usf-sam-profile-inventory.yml`. Script dynamically discovers dataset variables from ERDDAP info metadata, verifies required core fields, downloads raw observation rows plus all available QARTOD variables for temperature/pressure/depth/location, and summarizes row count, unique profile IDs, WMO IDs, nonmissing core fields, and QC counts. It preserves the raw CSV and metadata CSV as workflow artifacts with a JSON inventory summary. Workflow has not yet been run; no actual row counts/QC distributions are claimed. No ETOPO or Copernicus join and no production changes.
