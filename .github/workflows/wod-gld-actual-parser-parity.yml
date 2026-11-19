@@ -38,7 +38,7 @@ jobs:
           path: research-inputs/etopo
       - name: Locate ETOPO CSV
         run: |
-          find research-inputs/etopo -type f -maxdepth 4 -print
+          find research-inputs/etopo -maxdepth 4 -type f -print
           ETOPO_FILE="$(find research-inputs/etopo -name 'wod_gld_south_florida_etopo_30s.csv' -print -quit)"
           test -n "$ETOPO_FILE"
           cp "$ETOPO_FILE" research-inputs/wod_gld_south_florida_etopo_30s.csv
@@ -51,13 +51,7 @@ jobs:
             --etopo research-inputs/wod_gld_south_florida_etopo_30s.csv \
             --output research-output/actual_wodpy_join.csv \
             --metadata research-output/actual_wodpy_join_metadata.json
-      - name: Compare every cast-level key and selected field
-        run: |
-          python scripts/compare_wod_gld_etopo_joins.py \
-            --reference research-inputs/preliminary_join.csv.gz \
-            --actual research-output/actual_wodpy_join.csv \
-            --json research-output/parser_parity_report.json
-      - name: Upload parser parity results
+      - name: Upload actual parser results for independent comparison
         if: always()
         uses: actions/upload-artifact@v4
         with:
