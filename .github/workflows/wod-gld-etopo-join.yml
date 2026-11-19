@@ -1,0 +1,31 @@
+name: WOD GLD South Florida ETOPO join (manual research)
+
+on:
+  workflow_dispatch:
+    inputs:
+      gld_artifact_id:
+        description: Optional artifact ID containing the GLD ASCII file (not currently stored in this repository)
+        required: false
+        type: string
+
+permissions:
+  contents: read
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Install research parser and test dependencies
+        run: |
+          python -m pip install --upgrade pip
+          python -m pip install -r requirements-research-wod.txt pytest
+      - name: Run ETOPO join unit tests
+        run: python -m pytest -q tests/test_join_wod_gld_etopo.py
+      - name: Explain required local inputs
+        run: |
+          echo "This workflow validates the joiner only."
+          echo "Run scripts/join_wod_gld_etopo.py locally with the NOAA GLD archive and downloaded ETOPO CSV."
