@@ -1358,3 +1358,6 @@ Joined 84,099 GLD temperature/depth levels across 861 casts locally using source
 Descriptive nonnegative bilinear bands (levels / casts; strict WOD QC levels / casts): 0–5 m 107/69; strict 24/22. 0–10 m 310/120; strict 78/36. 0–20 m 1,279/322; strict 555/139. 0–50 m 6,767/637; strict 3,842/338. Strict requires temperature profile, temperature level, and depth level QC flags all zero. These are sensitivity counts only, not adopted cutoffs or independent sample sizes. 43 negative bilinear levels are also in the strict QC subset.
 
 Added `scripts/join_wod_gld_etopo.py`, pinned `requirements-research-wod.txt`, unit tests, manual package-import validation workflow, and `docs/WOD_GLD_ETOPO_JOIN_PROTOCOL_2026-11-19.md`. New join tests passed in [run 44526729327](https://github.com/markeetox/LUPITA/actions/runs/44526729327). The manual workflow to install/import the actual pinned package is not yet run. No Copernicus temperature pairing or production changes.
+
+
+Latest follow-up CI after the joiner metadata/QC reporting changes also passed: [run 44527038522](https://github.com/markeetox/LUPITA/actions/runs/44527038522). This validates the repository Python test suite; the separate manual workflow still needs to verify installation/import of the pinned `wodpy` package.
