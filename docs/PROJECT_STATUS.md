@@ -791,3 +791,16 @@ Next: confirm the Python test result, manually dispatch the ETOPO export workflo
 The first Python CI attempt exposed an avoidable test dependency: the new research exporter/tests imported pandas, which is not part of the repository's core test requirements. Refactored the exporter and tests to use the Python standard library; requests is imported only when the export is executed. No pandas or NumPy dependency was added to the production or core test environment.
 
 The complete repository Python test suite, including the new GLD ETOPO grid tests and species profile audit, passed in [GitHub Actions run 44409583591](https://github.com/markeetox/LUPITA/actions/runs/44409583591). The manual ETOPO export workflow is ready but has not yet been dispatched. No ETOPO subset has been downloaded and no GLD levels have been joined yet.
+
+
+## South Florida GLD full-resolution ETOPO join | 2026-11-19
+
+The manual ETOPO export completed successfully in [run 44524228011](https://github.com/markeetox/LUPITA/actions/runs/44524228011). Artifact ID 14529482014 contains 48,829 cells on a 253 × 193, 30-arc-second grid, with zero missing elevations. The export CSV SHA-256 is `e9e66d915e6dd82403785a2e5f90a9a008127557391e3ec1be8a79ddfa754739`.
+
+A preliminary local join of all 84,099 GLD temperature/depth levels was performed with a source-derived transcription of the pinned IQuOD parser core. It is not yet an execution of the installed `wodpy` package. 71,816 levels use cast-header coordinates (745 casts); 12,283 use per-observation coordinates (116 casts). All levels map to ocean-class ETOPO cells. Median nearest-cell offset is 349.25 m (maximum 625.86 m).
+
+Nearest-cell bottom separation has 184 negative levels; bilinear interpolation has 145 negative levels across 38 casts. Bilinear median separation is 171.75 m. Descriptive nonnegative bilinear sensitivity counts: 0–5 m = 107 levels / 69 casts (strict WOD QC: 24 / 22); 0–10 m = 310 / 120 (strict: 78 / 36); 0–20 m = 1,279 / 322 (strict: 555 / 139); 0–50 m = 6,767 / 637 (strict: 3,842 / 338). Strict QC requires temperature profile, temperature level, and depth level flags all zero. These are level counts nested within casts, not independent observations. No cutoff is selected.
+
+Added reproducible join adapter `scripts/join_wod_gld_etopo.py`, pinned research dependency `requirements-research-wod.txt`, tests, manual parser-import validation workflow, and protocol `docs/WOD_GLD_ETOPO_JOIN_PROTOCOL_2026-11-19.md`. New tests passed in [CI run 44526729327](https://github.com/markeetox/LUPITA/actions/runs/44526729327). The manual workflow verifying the installed `wodpy` import remains to be run. Full results are in `docs/WOD_GLD_REFERENCE_PARSE_AUDIT_2026-11-18.md`.
+
+Next: verify package-level parser parity, inspect negative-separation casts and bathymetry sensitivity, then resolve temperature/potential-temperature comparability. No production prediction behavior changed.
