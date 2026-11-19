@@ -9,10 +9,13 @@ from __future__ import annotations
 import argparse
 import bisect
 import csv
+import gzip
 import hashlib
 import json
 import math
 import os
+import shutil
+import tempfile
 from collections import Counter
 from datetime import datetime, timezone
 from pathlib import Path
@@ -83,6 +86,8 @@ def bathymetry_at(lat: float, lon: float, grid: dict[str, Any]) -> dict[str, Any
     cells = grid["cells"]
     lat_axis = grid["latitudes"]
     lon_axis = grid["longitudes"]
+    if not (lat_axis[0] <= lat <= lat_axis[-1] and lon_axis[0] <= lon <= lon_axis[-1]):
+        raise ValueError(f"Observation coordinate outside ETOPO grid: {lat}, {lon}")
     nearest_lat = nearest_axis(lat_axis, lat)
     nearest_lon = nearest_axis(lon_axis, lon)
     nearest = cells[(nearest_lat, nearest_lon)]
@@ -125,9 +130,21 @@ def iter_wod_levels(gld_path: Path):
     # Import only when running this research adapter; production does not depend on wodpy.
     from wodpy.wod import WodProfile
 
-    with gld_path.open("r", encoding="ascii", newline="") as stream:
-        file_size = os.fstat(stream.fileno()).st_size
-        while stream.tell() < file_size:
+    if gld_path.suffix.lower() == ".gz":
+        with tempfile.TemporaryFile(mode="w+t", encoding="ascii", newline="") as stream:
+            with gzip.open(gld_path, "rt", encoding="ascii", newline="") as source:
+                shutil.copyfileobj(source, stream)
+            stream.flush()
+            stream.seek(0)
+            yield from _iter_profiles(stream, WodProfile)
+    else:
+        with gld_path.open("r", encoding="ascii", newline="") as stream:
+            yield from _iter_profiles(stream, WodProfile)
+
+
+def _iter_profiles(stream, WodProfile):
+    file_size = os.fstat(stream.fileno()).st_size
+    while stream.tell() < file_size:
             profile = WodProfile(stream)
             header = profile.primary_header
             variables = header["variables"]
