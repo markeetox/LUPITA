@@ -1,0 +1,70 @@
+name: WOD GLD actual parser parity (manual research)
+
+on:
+  workflow_dispatch: {}
+
+permissions:
+  contents: read
+  actions: read
+
+jobs:
+  parse-and-compare:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Install exact pinned IQuOD parser
+        run: |
+          python -m pip install --upgrade pip
+          python -m pip install -r requirements-research-wod.txt
+      - name: Download the NOAA GLD source archive
+        run: |
+          mkdir -p research-inputs/etopo research-output
+          curl --fail --location --retry 3 --retry-delay 3 \
+            "https://www.ncei.noaa.gov/access/world-ocean-database-select/OCLdb_output/ocldb1794949360.1820758.GLD.gz" \
+            --output research-inputs/ocldb1794949360.1820758.GLD.gz
+          gzip -t research-inputs/ocldb1794949360.1820758.GLD.gz
+          sha256sum research-inputs/ocldb1794949360.1820758.GLD.gz
+      - name: Download the exact ETOPO artifact from export run
+        uses: actions/download-artifact@v4
+        with:
+          name: wod-gld-south-florida-etopo-30s
+          repository: ${{ github.repository }}
+          run-id: 44524228011
+          github-token: ${{ github.token }}
+          path: research-inputs/etopo
+      - name: Locate ETOPO CSV
+        run: |
+          find research-inputs/etopo -type f -maxdepth 4 -print
+          ETOPO_FILE="$(find research-inputs/etopo -name 'wod_gld_south_florida_etopo_30s.csv' -print -quit)"
+          test -n "$ETOPO_FILE"
+          cp "$ETOPO_FILE" research-inputs/wod_gld_south_florida_etopo_30s.csv
+          sha256sum research-inputs/wod_gld_south_florida_etopo_30s.csv
+      - name: Run the actual pinned wodpy parser and ETOPO join
+        run: |
+          python -c "from wodpy.wod import WodProfile; print('Pinned WodProfile import OK')"
+          python scripts/join_wod_gld_etopo.py \
+            --gld research-inputs/ocldb1794949360.1820758.GLD.gz \
+            --etopo research-inputs/wod_gld_south_florida_etopo_30s.csv \
+            --output research-output/actual_wodpy_join.csv \
+            --metadata research-output/actual_wodpy_join_metadata.json
+      - name: Compare every cast-level key and selected field
+        run: |
+          python scripts/compare_wod_gld_etopo_joins.py \
+            --reference research-inputs/preliminary_join.csv.gz \
+            --actual research-output/actual_wodpy_join.csv \
+            --json research-output/parser_parity_report.json
+      - name: Upload parser parity results
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: wod-gld-actual-parser-parity
+          path: |
+            research-output/
+            research-inputs/ocldb1794949360.1820758.GLD.gz
+            research-inputs/wod_gld_south_florida_etopo_30s.csv
+          if-no-files-found: warn
+          retention-days: 14
