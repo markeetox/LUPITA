@@ -58,3 +58,6 @@ A preliminary local join used source-derived IQuOD parser-core logic (not an ins
 Bilinear nonnegative sensitivity counts, levels/casts (strict WOD QC levels/casts): 0–5 m 107/69 (24/22); 0–10 m 310/120 (78/36); 0–20 m 1,279/322 (555/139); 0–50 m 6,767/637 (3,842/338). Strict WOD QC requires profile, temperature-level, and depth-level flags all zero. These are descriptive counts only; no threshold is adopted.
 
 The repository join adapter, pinned parser dependency, tests, and manual package-import workflow are now in place. The new tests passed in [run 44526729327](https://github.com/markeetox/LUPITA/actions/runs/44526729327). Actual package-level parse parity is pending the manual workflow. Full result interpretation and limitations are appended to the GLD reference parse audit.
+
+
+Latest follow-up CI after the joiner metadata/QC reporting changes also passed: [run 44527038522](https://github.com/markeetox/LUPITA/actions/runs/44527038522). This validates the repository Python test suite; the separate manual workflow still needs to verify installation/import of the pinned `wodpy` package.
