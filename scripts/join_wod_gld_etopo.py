@@ -145,63 +145,63 @@ def iter_wod_levels(gld_path: Path):
 def _iter_profiles(stream, WodProfile):
     file_size = os.fstat(stream.fileno()).st_size
     while stream.tell() < file_size:
-            profile = WodProfile(stream)
-            header = profile.primary_header
-            variables = header["variables"]
-            indexes: dict[int, int] = {}
-            for index, variable in enumerate(variables):
-                code = variable["Variable code"]
-                if code in indexes:
-                    raise ValueError(f"Duplicate variable code {code} in cast {header['WOD unique cast number']}")
-                indexes[code] = index
-            if 1 not in indexes:
-                raise ValueError(f"Temperature variable code 1 missing in cast {header['WOD unique cast number']}")
+        profile = WodProfile(stream)
+        header = profile.primary_header
+        variables = header["variables"]
+        indexes: dict[int, int] = {}
+        for index, variable in enumerate(variables):
+            code = variable["Variable code"]
+            if code in indexes:
+                raise ValueError(f"Duplicate variable code {code} in cast {header['WOD unique cast number']}")
+            indexes[code] = index
+        if 1 not in indexes:
+            raise ValueError(f"Temperature variable code 1 missing in cast {header['WOD unique cast number']}")
 
-            temp_index = indexes[1]
-            lat_index, lon_index, jday_index = indexes.get(30), indexes.get(31), indexes.get(32)
-            has_track = lat_index is not None and lon_index is not None
+        temp_index = indexes[1]
+        lat_index, lon_index, jday_index = indexes.get(30), indexes.get(31), indexes.get(32)
+        has_track = lat_index is not None and lon_index is not None
 
-            for level_index, level in enumerate(profile.profile_data):
-                if level.get("Missing"):
-                    continue
-                temp = level["variables"][temp_index]
-                if temp.get("Missing"):
-                    continue
+        for level_index, level in enumerate(profile.profile_data):
+            if level.get("Missing"):
+                continue
+            temp = level["variables"][temp_index]
+            if temp.get("Missing"):
+                continue
 
-                if has_track:
-                    obs_lat = level["variables"][lat_index]["Value"]
-                    obs_lon = level["variables"][lon_index]["Value"]
-                else:
-                    obs_lat = obs_lon = None
+            if has_track:
+                obs_lat = level["variables"][lat_index]["Value"]
+                obs_lon = level["variables"][lon_index]["Value"]
+            else:
+                obs_lat = obs_lon = None
 
-                if obs_lat is not None and obs_lon is not None:
-                    coordinate_source = "per_observation"
-                else:
-                    obs_lat = header["Latitude"]
-                    obs_lon = header["Longitude"]
-                    coordinate_source = "cast_header"
+            if obs_lat is not None and obs_lon is not None:
+                coordinate_source = "per_observation"
+            else:
+                obs_lat = header["Latitude"]
+                obs_lon = header["Longitude"]
+                coordinate_source = "cast_header"
 
-                jday = level["variables"][jday_index]["Value"] if jday_index is not None else None
-                yield {
-                    "uid": header["WOD unique cast number"],
-                    "level_index": level_index,
-                    "year": header["Year"],
-                    "month": header["Month"],
-                    "day": header["Day"],
-                    "time_hour": header.get("Time"),
-                    "julian_year_day": jday,
-                    "latitude": obs_lat,
-                    "longitude": obs_lon,
-                    "coordinate_source": coordinate_source,
-                    "depth_m": level["Depth"],
-                    "temperature_c": temp["Value"],
-                    "temperature_uncertainty_raw": temp.get("Value_unc"),
-                    "temperature_profile_qc": variables[temp_index]["Quality control flag for variable"],
-                    "temperature_level_qc": temp.get("Value quality control flag"),
-                    "temperature_originator_qc": temp.get("Value originator flag"),
-                    "depth_level_qc": level.get("Depth error code"),
-                    "depth_originator_qc": level.get("Originator depth error flag"),
-                }
+            jday = level["variables"][jday_index]["Value"] if jday_index is not None else None
+            yield {
+                "uid": header["WOD unique cast number"],
+                "level_index": level_index,
+                "year": header["Year"],
+                "month": header["Month"],
+                "day": header["Day"],
+                "time_hour": header.get("Time"),
+                "julian_year_day": jday,
+                "latitude": obs_lat,
+                "longitude": obs_lon,
+                "coordinate_source": coordinate_source,
+                "depth_m": level["Depth"],
+                "temperature_c": temp["Value"],
+                "temperature_uncertainty_raw": temp.get("Value_unc"),
+                "temperature_profile_qc": variables[temp_index]["Quality control flag for variable"],
+                "temperature_level_qc": temp.get("Value quality control flag"),
+                "temperature_originator_qc": temp.get("Value originator flag"),
+                "depth_level_qc": level.get("Depth error code"),
+                "depth_originator_qc": level.get("Originator depth error flag"),
+            }
 
 
 def run_join(gld_path: Path, etopo_path: Path, output_path: Path, metadata_path: Path) -> dict[str, Any]:
