@@ -69,3 +69,10 @@ The current NCEI form confirms that optional criteria may be left blank to use d
 The user must submit this form in a browser; the assistant's available web retrieval can inspect the form but cannot submit its interactive query. Capture the resulting count and any receipt/result text before proceeding to DBID list or data download. The form itself is at https://www.ncei.noaa.gov/access/global-temperature-salinity-profile-programme/gwi.html.
 
 GTSPP Best Copy files are updated on or about the 7th of each month, per NCEI's access-data page. Record the release context; do not equate the catalog's update date with observation freshness.
+
+
+## Service interruption update | 2026-11-19 13:28Z
+
+The user attempted to open the GTSPP query interface and received **Service Unavailable**. This confirms that the interactive query route is not currently usable from the user's browser. NCEI's public Alerts page reports intermittent degraded order fulfillment during its cloud migration; the broader NCEI Access page warns that many portals and data folders are unavailable. The exact GTSPP endpoint's underlying cause is not independently confirmed, but the user-visible failure is recorded.
+
+No query was submitted, no regional station count was returned, and no data file was retrieved. Stop asking the user to retry the GTSPP form while the service notice remains active. A parallel IOOS Glider DAC inventory route is documented in `docs/IOOS_GLIDER_DAC_REGIONAL_INVENTORY_PLAN_2026-11-19.md`; it has an independently hosted ERDDAP/THREDDS catalog and a verified USF Sam Gulf deployment candidate. This is a glider-only supplementary source, not a GTSPP/WOD equivalent.
