@@ -1347,3 +1347,14 @@ Next: inspect CI, dispatch the ETOPO workflow, download the 30-arc-second grid a
 The first CI attempt failed at test collection because pandas was not installed by the repository's core requirements. Removed pandas/NumPy from the new exporter and tests: parsing, grid validation, CSV output, and metadata now use the Python standard library; requests is imported only inside the network execution path. This keeps the research-only tool from adding dependencies to LUPITA's runtime or core test environment.
 
 The full Python test suite passed in [run 44409583591](https://github.com/markeetox/LUPITA/actions/runs/44409583591), including the new GLD ETOPO tests and species audit. The manual ETOPO export workflow is ready but remains undispatched. Next: manually run `.github/workflows/wod-gld-etopo-grid.yml`, inspect the artifact, then join GLD levels to 30-arc-second ETOPO and calculate continuous bottom separation. No production behavior changed.
+
+
+## 2026-11-19 | ETOPO export succeeded and GLD level join completed provisionally
+
+The manual full-resolution ETOPO workflow completed successfully: [run 44524228011](https://github.com/markeetox/LUPITA/actions/runs/44524228011), artifact ID 14529482014. The artifact has 48,829 cells (253 × 193) at 30 arc-seconds, zero missing elevations, and CSV SHA-256 `e9e66d915e6dd82403785a2e5f90a9a008127557391e3ec1be8a79ddfa754739`.
+
+Joined 84,099 GLD temperature/depth levels across 861 casts locally using source-derived IQuOD parser-core logic. This is not yet package-import parity with installed `wodpy`. 71,816 levels use cast-header positions and 12,283 use per-observation positions. All nearest ETOPO cells classify as ocean. Nearest-cell center offset median 349.25 m, max 625.86 m. Nearest-cell separation has 184 negative levels; bilinear separation has 145 negative levels across 38 casts. Median bilinear separation 171.75 m.
+
+Descriptive nonnegative bilinear bands (levels / casts; strict WOD QC levels / casts): 0–5 m 107/69; strict 24/22. 0–10 m 310/120; strict 78/36. 0–20 m 1,279/322; strict 555/139. 0–50 m 6,767/637; strict 3,842/338. Strict requires temperature profile, temperature level, and depth level QC flags all zero. These are sensitivity counts only, not adopted cutoffs or independent sample sizes. 43 negative bilinear levels are also in the strict QC subset.
+
+Added `scripts/join_wod_gld_etopo.py`, pinned `requirements-research-wod.txt`, unit tests, manual package-import validation workflow, and `docs/WOD_GLD_ETOPO_JOIN_PROTOCOL_2026-11-19.md`. New join tests passed in [run 44526729327](https://github.com/markeetox/LUPITA/actions/runs/44526729327). The manual workflow to install/import the actual pinned package is not yet run. No Copernicus temperature pairing or production changes.
