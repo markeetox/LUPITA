@@ -29,6 +29,38 @@ FLAG_MEANINGS = {
     "4": "FAIL", "9": "MISSING", "-128": "FILL_OR_UNSET",
 }
 
+
+def _header_key(value: str) -> str:
+    """Normalize ERDDAP CSV header labels without depending on spaces/case."""
+    return "".join(ch.lower() for ch in value.strip().lstrip("\ufeff") if ch.isalnum())
+
+
+def parse_info_variables(info_text: str) -> tuple[list[str], list[str]]:
+    """Return variable names and original header labels from ERDDAP info/index.csv.
+
+    ERDDAP's standard info CSV uses headers such as 'Row Type' and
+    'Variable Name'. Older/alternate endpoints may use rowName/variableName.
+    """
+    reader = csv.DictReader(io.StringIO(info_text))
+    if not reader.fieldnames:
+        raise ValueError("ERDDAP info CSV is empty or has no header row")
+    columns = {_header_key(name): name for name in reader.fieldnames}
+    row_type_col = columns.get("rowtype") or columns.get("rowname")
+    variable_col = columns.get("variablename") or columns.get("variable")
+    if not row_type_col or not variable_col:
+        raise ValueError(
+            "Unrecognized ERDDAP info CSV header; "
+            f"expected Row Type and Variable Name, got {reader.fieldnames}"
+        )
+    variables = {
+        (row.get(variable_col) or "").strip()
+        for row in reader
+        if (row.get(row_type_col) or "").strip().lower() == "variable"
+        and (row.get(variable_col) or "").strip()
+    }
+    return sorted(variables), list(reader.fieldnames)
+
+
 def fetch(url: str, attempts: int = 4) -> bytes:
     last = None
     for n in range(attempts):
@@ -42,6 +74,7 @@ def fetch(url: str, attempts: int = 4) -> bytes:
                 time.sleep(3 * (n + 1))
     raise RuntimeError(f"ERDDAP request failed after {attempts} attempts: {url}: {last}")
 
+
 def main() -> None:
     ap = argparse.ArgumentParser()
     ap.add_argument("--output-dir", default="artifacts/ioos-usf-sam")
@@ -52,17 +85,19 @@ def main() -> None:
     info_url = f"{BASE}/info/{DATASET}/index.csv"
     info_bytes = fetch(info_url)
     (out / "dataset_info.csv").write_bytes(info_bytes)
-    info_rows = list(csv.DictReader(io.StringIO(info_bytes.decode("utf-8-sig"))))
-    available = sorted({
-        r.get("variableName", "").strip()
-        for r in info_rows
-        if r.get("rowName", "").strip().lower() == "variable" and r.get("variableName", "").strip()
-    })
+    available, info_headers = parse_info_variables(info_bytes.decode("utf-8-sig"))
+    if not available:
+        raise RuntimeError(
+            "ERDDAP info CSV contained no variable rows; "
+            f"headers={info_headers}; saved raw response to {out / 'dataset_info.csv'}"
+        )
     missing = [v for v in CORE if v not in available]
     if missing:
-        raise RuntimeError(f"Dataset missing required variables: {missing}; available={available}")
+        raise RuntimeError(
+            f"Dataset missing required variables: {missing}; "
+            f"available={available}; info_headers={info_headers}"
+        )
     selected = CORE + [v for v in available if v.startswith(QC_PREFIXES)]
-    # Keep deterministic order and avoid duplicates.
     selected = list(dict.fromkeys(selected))
     query = ",".join(selected)
     data_url = f"{BASE}/tabledap/{DATASET}.csvp?{urllib.parse.quote(query, safe=',_')}"
@@ -85,7 +120,7 @@ def main() -> None:
 
     def present(row, key):
         value = (row.get(key) or "").strip()
-        return value not in ("", "NaN", "nan", "null", "None")
+        return value not in ("", "NaN", "nan", "null", "None", "-9999", "-999")
 
     profile_ids = {r.get("profile_id", "").strip() for r in rows if present(r, "profile_id")}
     summary = {
@@ -118,6 +153,7 @@ def main() -> None:
     print(json.dumps(summary, indent=2))
     if not rows:
         raise RuntimeError("Dataset query returned zero observation rows")
+
 
 if __name__ == "__main__":
     main()
