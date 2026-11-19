@@ -78,7 +78,7 @@ def main():
         and all(v["mismatches"] == 0 for v in field_report.values())
     )
     a.json.parent.mkdir(parents=True, exist_ok=True)
-    a.json.write_text(json.dumps(report, indent=2)+"\\n", encoding="utf-8")
+    a.json.write_text(json.dumps(report, indent=2)+"\n", encoding="utf-8")
     print(json.dumps(report, indent=2))
     if report["missing_from_actual"] or report["extra_in_actual"] or ref_dupes or act_dupes: raise SystemExit(2)
     if any(v["mismatches"] for v in field_report.values()): raise SystemExit(1)
