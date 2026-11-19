@@ -807,3 +807,14 @@ Next: verify package-level parser parity, inspect negative-separation casts and 
 
 
 Latest follow-up CI after the joiner metadata/QC reporting changes also passed: [run 44527038522](https://github.com/markeetox/LUPITA/actions/runs/44527038522). This validates the repository Python test suite; the separate manual workflow still needs to verify installation/import of the pinned `wodpy` package.
+
+
+## Actual pinned WOD parser run prepared | 2026-11-19
+
+The earlier manual workflow [run 44527436701](https://github.com/markeetox/LUPITA/actions/runs/44527436701) successfully installed/imported the pinned `wodpy` dependency and ran join unit tests, but did not parse the NOAA GLD archive. Do not describe that run as full parser parity.
+
+Added `scripts/compare_wod_gld_etopo_joins.py` and `.github/workflows/wod-gld-actual-parser-parity.yml`. The new manual-only workflow installs IQuOD `wodpy` at commit `116480b257a227ce38281d3836c40812246e5156`, downloads the NOAA WODSelect GLD gzip from the NCEI output directory, downloads the exact ETOPO artifact from run 44524228011, executes `scripts/join_wod_gld_etopo.py` using the actual package, and uploads the resulting CSV and metadata as `wod-gld-actual-parser-parity` for independent comparison. It does not modify production data or scoring.
+
+The workflow is committed to `main` but has not been dispatched. GitHub Actions dispatch is not available through the connected GitHub tools in this session, so one manual click is still required: Actions → “WOD GLD actual parser parity (manual research)” → Run workflow. The NOAA WODSelect output files are temporary (72-hour availability); if the download step reports the GLD URL is no longer available, re-export only the GLD dataset or use the already-held archive through an approved private input route. No user-side terminal commands are required.
+
+After a successful run, download the `wod-gld-actual-parser-parity` artifact. Compare actual output against the preliminary 84,099-level join with the committed comparator; inspect any differences before accepting parser parity. The run is still research-only. No Copernicus matching, near-bottom cutoff, or production prediction change is authorized by this step.
