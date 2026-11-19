@@ -23,3 +23,12 @@ After the exact WODSelect GLD output URL repeatedly returned HTTP 503, inspected
 Created `docs/NOAA_GTSPP_REGIONAL_INVENTORY_PLAN_2026-11-19.md` with the four existing Copernicus candidate boxes, a conservative query protocol, and screening/deduplication requirements. The query page was reachable, but no GTSPP query was submitted and no counts or data files have been retrieved. GTSPP may overlap WOD/IQuOD/other archives and must not be counted as independent until deduplicated. This is a parallel candidate acquisition route, not an asserted equivalent replacement for the original WODSelect GLD file.
 
 Corrected the project record to omit a non-stable built-wheel SHA claim; the exact IQuOD source commit remains the reproducible parser provenance. No production behavior changed.
+
+
+## 2026-11-19 | GTSPP query unavailable; IOOS Glider DAC alternate source reconnaissance
+
+The user attempted the GTSPP regional query form and received Service Unavailable. NCEI Alerts currently reports intermittent degraded order fulfillment during its cloud migration; the NCEI Access page warns that many portals and data folders are unavailable. No query count or GTSPP file was retrieved. Stop retrying the query interface while the outage notice remains active.
+
+Investigated the independently hosted IOOS National Glider DAC ERDDAP/THREDDS distribution. The DAC catalogs historical and current glider missions and provides profile-level datasets. Verified one University of South Florida/GCOOS deployment, `usf-sam-20240216T0000`: 2024-02-16 through 2024-03-15; 27.588–28.039°N, -84.567 to -83.122°W; maximum depth 140.68 m; CTD; trajectory-profile; QARTOD flags available. It is outside the existing Gulf Copernicus box, so it is only a candidate for a separate West Florida shelf/slope stratum. Maximum depth alone does not prove near-bottom coverage. No observations downloaded, no ETOPO join, no Copernicus pairs or metrics.
+
+Added `docs/IOOS_GLIDER_DAC_REGIONAL_INVENTORY_PLAN_2026-11-19.md` with source metadata, screening requirements, and limits. No production changes.
