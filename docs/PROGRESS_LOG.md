@@ -50,3 +50,9 @@ Inspected failed run [44534528629](https://github.com/markeetox/LUPITA/actions/r
 Committed a normalized header parser in `scripts/download_ioos_glider_profile_inventory.py` and added `tests/test_ioos_glider_profile_inventory.py` for standard ERDDAP headers, compact legacy headers, invalid headers, and empty responses. Python CI will verify the fix. Next: after CI passes, rerun the manual IOOS inventory workflow. No actual glider rows/QC counts retrieved yet; no ETOPO join, Copernicus pairing, or production behavior change.
 
 The ERDDAP metadata parser fix and test suite passed in Python CI runs [44534825300](https://github.com/markeetox/LUPITA/actions/runs/44534825300) and [44534837360](https://github.com/markeetox/LUPITA/actions/runs/44534837360). The fixture tests confirm standard ERDDAP spaced headers and compact legacy headers are handled. CI does not verify live ERDDAP access or retrieve glider observations. Manual inventory workflow is ready for a fresh run.
+
+## 2026-11-19 | IOOS second run reached data response; CSVp unit header mismatch fixed
+
+Run [44535135692](https://github.com/markeetox/LUPITA/actions/runs/44535135692) passed ERDDAP metadata discovery and fetched the observation response, but the downloader rejected its header because it expected `temperature` exactly. ERDDAP documents `.csvp` as using `name (units)` headers (e.g. `temperature (degree_C)`): https://www.ncei.noaa.gov/erddap/tabledap/documentation.html. The workflow did not upload artifacts and no observation/QC counts were generated.
+
+Updated the downloader to normalize unit-annotated CSVp headers for analysis while preserving the raw response exactly. Added tests for unit-annotated and bare CSV headers. Wait for Python CI before another manual dispatch. No ETOPO join, Copernicus pairing, or production changes.
