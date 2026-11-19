@@ -47,3 +47,14 @@ The script writes a joined level CSV and a metadata JSON with input checksums, p
 - Glider levels within casts and repeated trajectories are autocorrelated.
 - WOD temperature variable 1 is in degrees Celsius and has not been established as potential temperature. No Copernicus residual or accuracy metric is permitted until thermodynamic comparability is resolved.
 - No species-factor, gate, weight, scoring, confidence, ingestion, or publication behavior changes.
+
+
+## Preliminary local join results | 2026-11-19
+
+The ETOPO export workflow completed in [run 44524228011](https://github.com/markeetox/LUPITA/actions/runs/44524228011), producing artifact ID 14529482014. The 30-arc-second grid contains 48,829 cells (253 × 193), zero missing elevations, and CSV SHA-256 `e9e66d915e6dd82403785a2e5f90a9a008127557391e3ec1be8a79ddfa754739`.
+
+A preliminary local join used source-derived IQuOD parser-core logic (not an installed-package parity test). It joined 84,099 levels from 861 casts. 71,816 levels use cast-header coordinates and 12,283 use per-observation coordinates. All mapped nearest cells are ETOPO ocean class. Median nearest-cell offset 349.25 m; maximum 625.86 m. Negative bottom separation counts: 184 using nearest cell, 145 using bilinear interpolation; bilinear negatives occur in 38 casts. Median bilinear separation 171.75 m.
+
+Bilinear nonnegative sensitivity counts, levels/casts (strict WOD QC levels/casts): 0–5 m 107/69 (24/22); 0–10 m 310/120 (78/36); 0–20 m 1,279/322 (555/139); 0–50 m 6,767/637 (3,842/338). Strict WOD QC requires profile, temperature-level, and depth-level flags all zero. These are descriptive counts only; no threshold is adopted.
+
+The repository join adapter, pinned parser dependency, tests, and manual package-import workflow are now in place. The new tests passed in [run 44526729327](https://github.com/markeetox/LUPITA/actions/runs/44526729327). Actual package-level parse parity is pending the manual workflow. Full result interpretation and limitations are appended to the GLD reference parse audit.
