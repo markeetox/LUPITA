@@ -1,6 +1,8 @@
 from __future__ import annotations
 
-import math\n\nfrom scripts.join_wod_gld_etopo import bathymetry_at, load_etopo
+import math
+
+from scripts.join_wod_gld_etopo import bathymetry_at, load_etopo
 
 
 def make_grid(tmp_path):
