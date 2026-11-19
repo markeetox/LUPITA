@@ -1361,3 +1361,12 @@ Added `scripts/join_wod_gld_etopo.py`, pinned `requirements-research-wod.txt`, u
 
 
 Latest follow-up CI after the joiner metadata/QC reporting changes also passed: [run 44527038522](https://github.com/markeetox/LUPITA/actions/runs/44527038522). This validates the repository Python test suite; the separate manual workflow still needs to verify installation/import of the pinned `wodpy` package.
+
+
+## 2026-11-19 | Prepared actual pinned WOD parser execution on GitHub Actions
+
+Clarified that manual workflow run [44527436701](https://github.com/markeetox/LUPITA/actions/runs/44527436701) only installed/imported pinned `wodpy` and ran unit tests; it did not parse the real 861-cast GLD archive. Added `scripts/compare_wod_gld_etopo_joins.py` and manual workflow `.github/workflows/wod-gld-actual-parser-parity.yml`. The new workflow downloads the NOAA GLD gzip from WODSelect's temporary output directory, retrieves the exact ETOPO artifact from run 44524228011, runs the actual pinned parser through the existing join adapter, and uploads the full joined CSV plus metadata for comparison. It is research-only and does not touch production behavior.
+
+Commits: comparator `6949d46c6bb81b612d3bd24b232f15dd25880839` (newline fix follow-ups `e6ddd0c24e407bdc11402427739c0dac5e0878ed` and `dd970c33ac0dadd980eb4f636dac16231ddc834c`); workflow `fa3554980be751b3ceb4f8be31b1761e583c9abb` (workflow refinement `0e09752bea31fbbfa0d467da4316abf39d20bacd`).
+
+The workflow is committed to `main` and remains manual-only. The connected GitHub tools do not expose workflow dispatch, so it has not been started from this session. Next: dispatch it once in GitHub Actions, then inspect/download the `wod-gld-actual-parser-parity` artifact and compare every cast-level key and selected field to the preliminary join. NOAA WODSelect output files are temporary; if the archive URL has expired, use a renewed GLD export rather than substituting another dataset.
