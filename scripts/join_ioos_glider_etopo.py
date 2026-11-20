@@ -222,6 +222,11 @@ def join_rows(rows: list[dict[str, str]], cells: list[dict[str, float]]) -> tupl
             "median": sorted(profile_min_separation.values())[len(profile_min_separation)//2] if profile_min_separation else None,
             "max": max(profile_min_separation.values()) if profile_min_separation else None,
         },
+        "profile_maximum_bottom_separation_m": {
+            "min": min(profile_max_separation.values()) if profile_max_separation else None,
+            "median": sorted(profile_max_separation.values())[len(profile_max_separation.values())//2] if profile_max_separation else None,
+            "max": max(profile_max_separation.values()) if profile_max_separation else None,
+        },
         "near_bottom_sensitivity_nonnegative_separation_only": near_bottom_json,
         "limits": [
             "precise_lat/precise_lon are interpolated position estimates, not raw direct GPS fixes",
