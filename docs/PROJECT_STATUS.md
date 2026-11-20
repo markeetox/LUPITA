@@ -72,3 +72,11 @@ Results: 201,645 total ERDDAP rows; 2,387 unique profiles; 72,426 rows with temp
 Per-profile maximum depth median 35.09 m, 90th percentile 59.42 m, 95th percentile 68.83 m, maximum 140.68 m. Therefore maximum deployment depth does not establish typical near-bottom coverage. 129,219 of the 201,645 ERDDAP rows contain no temperature/depth/pressure; keep total table rows separate from usable observations.
 
 Next: export ETOPO 2022 30-arc-second bathymetry for the actual glider footprint, join observations with coordinate provenance, calculate per-profile bottom separation and sensitivity bands. No Copernicus pairing, accuracy claim, or production behavior change yet. Full protocol/results: [IOOS_GLIDER_DAC_REGIONAL_INVENTORY_PLAN_2026-11-19.md](IOOS_GLIDER_DAC_REGIONAL_INVENTORY_PLAN_2026-11-19.md).
+
+## IOOS USF Sam depth-distribution and pressure-metadata screening | 2026-11-20
+
+A second pass over the raw artifact from [run 44737352618](https://github.com/markeetox/LUPITA/actions/runs/44737352618) found that profile maximum depth is highly uneven: 512/2,387 profiles reach at least 50 m; 112 reach 75 m; 52 reach 100 m; 10 reach 125 m; and 4 reach 140 m. These are maximum-depth counts only, not bottom-proximity counts. No seabed separation can be inferred without local bathymetry.
+
+A pressure metadata inconsistency must be resolved before using pressure: observed values span 0.58–141.67, but ERDDAP labels units as bar while its comment says the variable is multiplied by 10 to convert from bar to dbar. Values near 141 at depths near 140 m appear dbar-like, but that is not enough to override source metadata. Preserve the original values; do not use pressure for the ETOPO join until source-sensor units/transformation are verified. Use the separate depth variable, documented as calculated from CTD m_depth, as the candidate depth coordinate.
+
+ETOPO join caveat: ETOPO 2022 30-arc-second z is height positive up with EGM2008 vertical CRS, while glider depth is sea-surface referenced. Bottom separation is therefore a preliminary screening estimate unless vertical-datum equivalence is established. Keep negative separations visible. Point coordinates are interpolated estimates. No Copernicus pairing, accuracy claim, or production change.
