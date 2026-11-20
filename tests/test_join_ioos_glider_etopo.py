@@ -86,3 +86,32 @@ def test_profile_summary_reports_signed_min_max_and_qc_counts():
     assert profile["negative_separation_rows"] == 1
     assert profile["within_5m_rows"] == 1
     assert profile["within_5m_primary_qc_pass_rows"] == 1
+
+
+
+def test_missing_temperature_depth_rows_do_not_poison_separation_statistics():
+    rows = [
+        {"profile_id": "p1", "precise_time": "2024-02-16T00:00:00Z", "precise_lat": "27.5",
+         "precise_lon": "-84.5", "depth": "45", "temperature": "18.2",
+         "qartod_temperature_primary_flag": "1"},
+        {"profile_id": "p1", "precise_time": "2024-02-16T00:00:10Z", "precise_lat": "27.5",
+         "precise_lon": "-84.5", "depth": "NaN", "temperature": "NaN",
+         "qartod_temperature_primary_flag": "9"},
+    ]
+    cells = [
+        {"latitude": 27.5, "longitude": 275.5, "z": -50},
+        {"latitude": 27.5, "longitude": 275.5083333333, "z": -50},
+        {"latitude": 27.5083333333, "longitude": 275.5, "z": -50},
+        {"latitude": 27.5083333333, "longitude": 275.5083333333, "z": -50},
+    ]
+    joined, summary = module.join_rows(rows, cells)
+    profile = module.build_profile_summary(joined)[0]
+    assert len(joined) == 2
+    assert joined[1]["depth_m"] is None
+    assert joined[1]["temperature_c"] is None
+    assert joined[1]["bottom_separation_m_screening_only"] is None
+    assert summary["temperature_depth_observation_rows"] == 1
+    assert summary["bottom_separation_m_screening_only"]["median"] == 5
+    assert profile["joined_position_rows"] == 2
+    assert profile["temperature_observation_rows"] == 1
+    assert profile["median_signed_separation_m"] == 5
