@@ -109,3 +109,25 @@ Inventory results:
 - The inventory did not calculate ETOPO bottom separation or pair to Copernicus.
 
 Next: obtain ETOPO 2022 30-arc-second bathymetry covering the actual glider footprint, join each temperature observation using documented position/time fields and preserve coordinate provenance, inspect per-profile seabed separation and near-bottom sensitivity bands. Do not select a cutoff or pair Copernicus until this is complete. The deployment remains a separate West Florida shelf/slope candidate, not a direct sample of the existing Copernicus Gulf pilot box.
+
+### Additional screening from the downloaded observation rows | 2026-11-20
+
+The downloaded raw CSV was independently re-read, rather than relying only on the workflow summary. Profile maximum-depth screening across all 2,387 profiles with valid temperature/depth rows:
+
+- At least 10 m: 2,376 profiles
+- At least 20 m: 2,242
+- At least 50 m: 512
+- At least 75 m: 112
+- At least 100 m: 52
+- At least 125 m: 10
+- At least 140 m: 4
+
+These are profile maximum-depth counts, not counts of near-bottom profiles. Seafloor depth is not yet known at each profile position, so none of these thresholds can be interpreted as bottom proximity.
+
+The temperature-bearing rows have 72,382 primary-QC PASS, 43 SUSPECT, and 1 FAIL. For the spike test specifically, only 9,954 are PASS, 4,774 are NOT_EVALUATED, 18 are SUSPECT, 1 is FAIL, and 57,679 have no spike-test value. The high primary-PASS count must not conceal missing individual-test coverage.
+
+**Pressure metadata discrepancy requiring resolution:** raw observation values span 0.58–141.67, while ERDDAP metadata labels pressure as bar and its comment says it is an alias for sci_water_pressure, multiplied by 10 to convert from bar to dbar. Values near 141 at a reported depth near 140 m look numerically like dbar, but that is not sufficient evidence to relabel or convert the variable. Preserve the source values and units as published; do not use pressure in bathymetry matching until the source-sensor units and transformation are verified. The separate depth field is documented as calculated from the CTD m_depth sensor and is the candidate vertical coordinate for the preliminary ETOPO separation screen.
+
+For the ETOPO join, use point-level precise_lat/precise_lon as the dataset's interpolated position estimates, preserve that provenance, and report nearest-grid-cell offset. ETOPO 2022 30-arc-second z is height positive up in the EGM2008 vertical CRS; converting negative ocean elevations to positive seafloor depth and subtracting the glider depth is only a screening estimate because the glider depth is sea-surface referenced and the vertical datums are not demonstrated to be identical. Retain negative separations and do not clip them.
+
+Next: acquire ETOPO 2022 30-arc-second cells covering the actual track, join every temperature-bearing row, and report per-profile minimum/maximum bottom separation plus sensitivity counts at 5/10/20/50 m. No near-bottom cutoff is selected in advance.
