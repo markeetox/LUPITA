@@ -131,3 +131,13 @@ The temperature-bearing rows have 72,382 primary-QC PASS, 43 SUSPECT, and 1 FAIL
 For the ETOPO join, use point-level precise_lat/precise_lon as the dataset's interpolated position estimates, preserve that provenance, and report nearest-grid-cell offset. ETOPO 2022 30-arc-second z is height positive up in the EGM2008 vertical CRS; converting negative ocean elevations to positive seafloor depth and subtracting the glider depth is only a screening estimate because the glider depth is sea-surface referenced and the vertical datums are not demonstrated to be identical. Retain negative separations and do not clip them.
 
 Next: acquire ETOPO 2022 30-arc-second cells covering the actual track, join every temperature-bearing row, and report per-profile minimum/maximum bottom separation plus sensitivity counts at 5/10/20/50 m. No near-bottom cutoff is selected in advance.
+
+## IOOS-to-ETOPO screening implementation | 2026-11-20
+
+Added research-only script `scripts/join_ioos_glider_etopo.py`, workflow `.github/workflows/ioos-usf-sam-etopo-screening.yml`, and unit tests `tests/test_join_ioos_glider_etopo.py`.
+
+The manual workflow accepts the successful inventory run ID, downloads that run's `ioos-usf-sam-profile-inventory` artifact through the GitHub Actions artifact API, requests the ETOPO 2022 30-arc-second grid subset covering the observed glider track from NOAA ERDDAP, and joins every temperature-bearing observation to its nearest grid center. West longitudes are converted to the ETOPO ERDDAP 0–360 longitude convention. It preserves original observation values, interpolated coordinate provenance, QARTOD temperature primary flag, ETOPO grid cell, nearest-cell offset, and signed bottom-separation estimate. It outputs the raw ETOPO subset, per-observation join CSV, and JSON summary with 5/10/20/50m sensitivity counts split by all rows and primary-QC PASS rows.
+
+The script deliberately excludes pressure because of the unresolved source metadata unit/transformation conflict. It classifies ETOPO cells using the established thresholds: z < -1m ocean, z > +1m land, and -1m through +1m coastal ambiguous. Negative separations are retained. It labels separation as screening-only because ETOPO z is EGM2008 height positive up while glider depth is sea-surface referenced; equivalence of vertical datums is not established. No near-bottom cutoff is selected and no Copernicus pairing occurs.
+
+The workflow is manual-only. It has not yet been dispatched, so the live ETOPO request, artifact download, and resulting join are not yet verified. Input run ID for the current inventory is `44737352618`. Run the new workflow from Actions and provide that run's link for review. No production behavior changed.
