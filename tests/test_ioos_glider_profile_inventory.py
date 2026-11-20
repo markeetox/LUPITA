@@ -1,6 +1,8 @@
 import unittest
 
 from scripts.download_ioos_glider_profile_inventory import (
+    CORE,
+    QC_PREFIXES,
     normalize_csvp_rows,
     parse_info_variables,
 )
@@ -53,3 +55,9 @@ glider-a,18.5,13.0
 
 if __name__ == "__main__":
     unittest.main()
+
+
+
+def test_inventory_includes_practical_salinity_and_its_qc_flags():
+    assert "salinity" in CORE
+    assert "qartod_salinity_" in QC_PREFIXES
