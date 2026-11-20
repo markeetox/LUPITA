@@ -21,9 +21,9 @@ BASE = "https://gliders.ioos.us/erddap"
 DATASET = "usf-sam-20240216T0000"
 CORE = [
     "trajectory", "wmo_id", "profile_id", "time", "latitude", "longitude",
-    "precise_time", "precise_lat", "precise_lon", "depth", "pressure", "temperature",
+    "precise_time", "precise_lat", "precise_lon", "depth", "pressure", "temperature", "salinity",
 ]
-QC_PREFIXES = ("qartod_temperature_", "qartod_pressure_", "qartod_depth_", "qartod_location_")
+QC_PREFIXES = ("qartod_temperature_", "qartod_pressure_", "qartod_depth_", "qartod_location_", "qartod_salinity_")
 FLAG_MEANINGS = {
     "1": "PASS", "2": "NOT_EVALUATED", "3": "SUSPECT",
     "4": "FAIL", "9": "MISSING", "-128": "FILL_OR_UNSET",
@@ -153,7 +153,8 @@ def main() -> None:
         "nonmissing_counts": {
             k: sum(present(r, k) for r in rows)
             for k in ("profile_id", "precise_time", "precise_lat", "precise_lon",
-                      "depth", "pressure", "temperature", "qartod_temperature_primary_flag")
+                      "depth", "pressure", "temperature", "salinity", "qartod_temperature_primary_flag",
+                      "qartod_salinity_primary_flag")
             if k in selected
         },
         "temperature_flag_interpretation": FLAG_MEANINGS,
@@ -162,7 +163,9 @@ def main() -> None:
             "Profile-level time/latitude/longitude are calculated/interpolated.",
             "precise_time/precise_lat/precise_lon are also documented as calculated/interpolated point values.",
             "Depth is calculated from the CTD depth sensor; pressure is measured and represented in bar.",
+            "Salinity is a calculated practical-salinity variable from the CTD; preserve its QARTOD flags.",
             "QC flag counts are descriptive; NOT_EVALUATED is not PASS.",
+            "Salinity is included to support a later TEOS-10 conversion of in-situ CTD temperature to potential temperature; no conversion is performed by this inventory.",
             "No near-bottom threshold, ETOPO join, or Copernicus pairing is performed by this inventory.",
         ],
     }
