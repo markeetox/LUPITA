@@ -89,3 +89,23 @@ The rerun [44535135692](https://github.com/markeetox/LUPITA/actions/runs/4453513
 Updated the downloader to normalize `.csvp` headers by removing the parenthesized unit annotation while preserving the original raw response file. Added tests for unit-annotated and bare CSV headers. This preserves original values and units in the raw file; the JSON inventory records the normalized field names. Python CI must pass before the next manual run. No ETOPO join, Copernicus pairing, or production change.
 
 The CSVp header normalization and tests passed Python CI in runs [44535325946](https://github.com/markeetox/LUPITA/actions/runs/44535325946) and [44535361351](https://github.com/markeetox/LUPITA/actions/runs/44535361351). These validate parser fixtures only; live inventory still requires a manual workflow dispatch.
+
+## First successful live profile inventory | 2026-11-20
+
+Successful manual workflow run: [44737352618](https://github.com/markeetox/LUPITA/actions/runs/44737352618). Both the observation download and artifact upload completed. Artifact: `ioos-usf-sam-profile-inventory`, ID `14628762755`, SHA-256 `15e4149e892813a398187987bda6eddaef96e7aef0b14f03e20bb1bb5ba97a1f`. The ZIP contains `dataset_info.csv`, `inventory_summary.json`, and the unmodified ERDDAP `.csvp` observation CSV.
+
+Inventory results:
+- Dataset: `usf-sam-20240216T0000`; WMO ID 4801942.
+- 201,645 total ERDDAP rows and 2,387 unique profile IDs.
+- 72,426 rows contain temperature, depth, and pressure; all 2,387 profiles have at least some such observations.
+- Temperature range 16.8621–21.7797 °C; depth range 0.5761–140.6833 m; pressure range 0.58–141.67 bar.
+- Observation period 2024-02-16T16:23:37Z through 2024-03-15T10:52:41Z.
+- Point-field precise coordinates span 27.58795–28.03947°N and -84.56762 to -83.12165°W. These fields are documented as calculated/interpolated, not direct raw sensor positions.
+- Per-profile maximum depth median 35.09 m; 90th percentile 59.42 m; 95th percentile 68.83 m; maximum 140.68 m. Thus the dataset's maximum depth is not representative of every profile and cannot be treated as seabed reach.
+- Temperature primary QARTOD on 72,426 temperature rows: 72,382 PASS, 43 SUSPECT, 1 FAIL. PASS is 99.939% of temperature-bearing rows. Do not equate this with independent calibration validation.
+- Temperature spike flag: 9,954 PASS, 4,774 NOT_EVALUATED, 18 SUSPECT, 1 FAIL; remaining 57,679 rows have no spike flag. NOT_EVALUATED and absent flags are not PASS.
+- Temperature flat-line: 72,401 PASS and 25 SUSPECT. Gross-range and rate-of-change flags report PASS for all 72,426 temperature-bearing rows.
+- 129,219 of the 201,645 ERDDAP rows have no temperature/depth/pressure values. They remain in the raw artifact; the inventory must distinguish total table rows from usable temperature-bearing observations. The dataset uses profile/subset variables, so row count is not the usable sample count.
+- The inventory did not calculate ETOPO bottom separation or pair to Copernicus.
+
+Next: obtain ETOPO 2022 30-arc-second bathymetry covering the actual glider footprint, join each temperature observation using documented position/time fields and preserve coordinate provenance, inspect per-profile seabed separation and near-bottom sensitivity bands. Do not select a cutoff or pair Copernicus until this is complete. The deployment remains a separate West Florida shelf/slope candidate, not a direct sample of the existing Copernicus Gulf pilot box.
