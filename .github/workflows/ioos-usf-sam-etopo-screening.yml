@@ -1,0 +1,49 @@
+name: IOOS USF Sam ETOPO bathymetry screening
+
+on:
+  workflow_dispatch:
+    inputs:
+      inventory_run_id:
+        description: "Successful IOOS inventory workflow run ID"
+        required: true
+        type: string
+
+permissions:
+  actions: read
+  contents: read
+
+jobs:
+  join:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Validate inventory run ID
+        shell: bash
+        run: |
+          if ! [[ "${{ inputs.inventory_run_id }}" =~ ^[0-9]+$ ]]; then
+            echo "inventory_run_id must be numeric" >&2
+            exit 1
+          fi
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Download prior inventory artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: ioos-usf-sam-profile-inventory
+          path: research-inputs/ioos-usf-sam
+          repository: ${{ github.repository }}
+          run-id: ${{ inputs.inventory_run_id }}
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+      - name: Run ETOPO screening join
+        run: |
+          python scripts/join_ioos_glider_etopo.py \
+            --input-csv research-inputs/ioos-usf-sam/usf-sam-20240216T0000_observations.csv \
+            --output-dir artifacts/ioos-usf-sam-etopo
+      - name: Upload ETOPO screening artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: ioos-usf-sam-etopo-screening
+          path: artifacts/ioos-usf-sam-etopo/
+          if-no-files-found: error
+          retention-days: 14
