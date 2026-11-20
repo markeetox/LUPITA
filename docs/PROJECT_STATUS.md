@@ -94,3 +94,8 @@ The first live artifact exposed a summary-statistics defect: NaN depth/temperatu
 ## IOOS ETOPO screening fix validated | 2026-11-20
 
 Python CI run [44741832591](https://github.com/markeetox/LUPITA/actions/runs/44741832591) passed, including the new missing-depth/temperature regression test and full project test suite. The prior CI failure was a test expectation error for -83.3° converted to 276.7° in the 0–360 longitude convention; corrected and revalidated. No production behavior changed.
+
+
+## Next validation requirement: potential-temperature comparability | 2026-11-20
+
+Copernicus `bottomT` is sea-floor potential temperature, while IOOS `temperature` is measured CTD in-situ temperature. These are not directly interchangeable. IOOS metadata confirms a calculated practical-salinity variable and QARTOD salinity flags are available. Updated the research inventory downloader to retrieve salinity and all salinity QARTOD flags; CI is pending in [44742300164](https://github.com/markeetox/LUPITA/actions/runs/44742300164) and [44742308838](https://github.com/markeetox/LUPITA/actions/runs/44742308838). No salinity rows or potential-temperature conversions have been produced yet. After CI, rerun the manual IOOS inventory, inspect salinity QC, assess depth-derived sea-pressure calculation as an alternative to the unresolved pressure variable, then use TEOS-10 for a documented conversion. Only after that should the West Florida Copernicus reanalysis daily `bottomT` subset be extracted and compared. Daily P1D-m values are daily means, so temporal support must be respected. The deployment is outside the existing Gulf candidate box. No production changes.
