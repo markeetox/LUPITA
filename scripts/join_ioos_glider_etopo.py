@@ -235,6 +235,38 @@ def join_rows(rows: list[dict[str, str]], cells: list[dict[str, float]]) -> tupl
     return output, summary
 
 
+
+def build_profile_summary(joined: list[dict[str, object]]) -> list[dict[str, object]]:
+    grouped: dict[str, list[dict[str, object]]] = {}
+    for row in joined:
+        grouped.setdefault(str(row["profile_id"]), []).append(row)
+    result = []
+    for profile_id, rows in sorted(grouped.items()):
+        ocean = [r for r in rows if r["bottom_separation_m_screening_only"] is not None]
+        separations = [float(r["bottom_separation_m_screening_only"]) for r in ocean]
+        nonnegative = [v for v in separations if v >= 0]
+        profile = {
+            "profile_id": profile_id,
+            "temperature_observation_rows": len(rows),
+            "ocean_cell_rows": len(ocean),
+            "negative_separation_rows": sum(v < 0 for v in separations),
+            "minimum_signed_separation_m": min(separations) if separations else None,
+            "median_signed_separation_m": sorted(separations)[len(separations)//2] if separations else None,
+            "maximum_signed_separation_m": max(separations) if separations else None,
+            "minimum_nonnegative_separation_m": min(nonnegative) if nonnegative else None,
+            "temperature_primary_qc_pass_rows": sum(r["temperature_primary_qc"] == "PASS" for r in rows),
+        }
+        for band in DEPTH_BANDS_M:
+            within = [r for r in ocean if r["bottom_separation_m_screening_only"] is not None
+                      and 0 <= float(r["bottom_separation_m_screening_only"]) <= band]
+            profile[f"within_{band}m_rows"] = len(within)
+            profile[f"within_{band}m_primary_qc_pass_rows"] = sum(
+                r["temperature_primary_qc"] == "PASS" for r in within
+            )
+        result.append(profile)
+    return result
+
+
 def main() -> None:
     parser = argparse.ArgumentParser()
     parser.add_argument("--input-csv", required=True)
@@ -257,7 +289,15 @@ def main() -> None:
         writer.writerows(output)
     etopo_path = out_dir / "etopo_grid.csv"
     etopo_path.write_text(etopo_text, encoding="utf-8")
+    profile_output = build_profile_summary(output)
+    profile_path = out_dir / "usf-sam-20240216T0000_profile_bottom_separation.csv"
+    with profile_path.open("w", encoding="utf-8", newline="") as stream:
+        profile_writer = csv.DictWriter(stream, fieldnames=list(profile_output[0]))
+        profile_writer.writeheader()
+        profile_writer.writerows(profile_output)
     summary.update({
+        "profile_summary_rows": len(profile_output),
+        "profile_summary_csv": profile_path.name,
         "dataset_id": "usf-sam-20240216T0000",
         "source_observation_csv": input_path.name,
         "source_observation_csv_sha256": input_sha,
