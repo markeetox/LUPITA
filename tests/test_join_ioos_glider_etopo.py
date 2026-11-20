@@ -62,3 +62,27 @@ def test_join_rows_classifies_land_and_coastal_ambiguous():
     joined, summary = module.join_rows(rows, cells)
     assert {row["etopo_class"] for row in joined} == {"land", "coastal_ambiguous"}
     assert summary["ocean_rows_with_separation"] == 0
+
+
+def test_profile_summary_reports_signed_min_max_and_qc_counts():
+    rows = [
+        {"profile_id": "p1", "precise_time": "2024-02-16T00:00:00Z", "precise_lat": "27.5",
+         "precise_lon": "-84.5", "depth": "45", "temperature": "18.2",
+         "qartod_temperature_primary_flag": "1"},
+        {"profile_id": "p1", "precise_time": "2024-02-16T00:01:00Z", "precise_lat": "27.5",
+         "precise_lon": "-84.5", "depth": "55", "temperature": "18.1",
+         "qartod_temperature_primary_flag": "3"},
+    ]
+    cells = [
+        {"latitude": 27.5, "longitude": 275.5, "z": -50},
+        {"latitude": 27.5, "longitude": 275.5083333333, "z": -50},
+        {"latitude": 27.5083333333, "longitude": 275.5, "z": -50},
+        {"latitude": 27.5083333333, "longitude": 275.5083333333, "z": -50},
+    ]
+    joined, _ = module.join_rows(rows, cells)
+    profile = module.build_profile_summary(joined)[0]
+    assert profile["minimum_signed_separation_m"] == -5
+    assert profile["maximum_signed_separation_m"] == 5
+    assert profile["negative_separation_rows"] == 1
+    assert profile["within_5m_rows"] == 1
+    assert profile["within_5m_primary_qc_pass_rows"] == 1
