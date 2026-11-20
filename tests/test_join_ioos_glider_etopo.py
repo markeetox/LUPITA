@@ -51,7 +51,7 @@ def test_join_rows_classifies_land_and_coastal_ambiguous():
         {"profile_id": "p1", "precise_time": "2024-02-16T00:00:00Z", "precise_lat": "27.5",
          "precise_lon": "-84.5", "depth": "5", "temperature": "18.2"},
         {"profile_id": "p2", "precise_time": "2024-02-16T00:01:00Z", "precise_lat": "27.5",
-         "precise_lon": "-84.5", "depth": "5", "temperature": "18.1"},
+         "precise_lon": "-84.4916666667", "depth": "5", "temperature": "18.1"},
     ]
     cells = [
         {"latitude": 27.5, "longitude": 275.5, "z": 5},
@@ -60,5 +60,5 @@ def test_join_rows_classifies_land_and_coastal_ambiguous():
         {"latitude": 27.5083333333, "longitude": 275.5083333333, "z": 0},
     ]
     joined, summary = module.join_rows(rows, cells)
-    assert {row["etopo_class"] for row in joined} == {"land"}
+    assert {row["etopo_class"] for row in joined} == {"land", "coastal_ambiguous"}
     assert summary["ocean_rows_with_separation"] == 0
