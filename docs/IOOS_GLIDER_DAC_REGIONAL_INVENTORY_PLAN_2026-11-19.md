@@ -140,4 +140,25 @@ The manual workflow accepts the successful inventory run ID, downloads that run'
 
 The script writes a second per-profile CSV with signed minimum/median/maximum separation, negative-separation counts, minimum nonnegative separation, and 5/10/20/50m observation counts split by primary-QC PASS. The script deliberately excludes pressure because of the unresolved source metadata unit/transformation conflict. It classifies ETOPO cells using the established thresholds: z < -1m ocean, z > +1m land, and -1m through +1m coastal ambiguous. Negative separations are retained. It labels separation as screening-only because ETOPO z is EGM2008 height positive up while glider depth is sea-surface referenced; equivalence of vertical datums is not established. No near-bottom cutoff is selected and no Copernicus pairing occurs.
 
-The workflow is manual-only. It has not yet been dispatched, so the live ETOPO request, artifact download, and resulting join are not yet verified. Input run ID for the current inventory is `44737352618`. Run the new workflow from Actions and provide that run's link for review. No production behavior changed.
+The workflow is manual-only. It completed successfully in [run 44740669528](https://github.com/markeetox/LUPITA/actions/runs/44740669528), using inventory run `44737352618`; artifact ID 14631270203 contains the ETOPO grid, observation join, profile summary, and JSON summary. See the results section below. No production behavior changed.
+
+
+## IOOS USF Sam ETOPO screening results | 2026-11-20
+
+Successful live run [44740669528](https://github.com/markeetox/LUPITA/actions/runs/44740669528), job `join`, artifact `ioos-usf-sam-etopo-screening` ID 14631270203 (ZIP SHA-256 `42f2ab838d22946e72f14bbc27874cb28e028fb88cffe06bfe4d66d04e560022`). The workflow downloaded the exact inventory artifact from run 44737352618, requested ETOPO_2022_v1_30s for the glider track, joined the rows, and uploaded all four outputs.
+
+The join contains 201,645 coordinate-bearing rows across 2,387 profiles. All 201,645 mapped to ETOPO ocean-class cells; no land or coastal-ambiguous point assignments occurred in this track. This does not mean every row has usable temperature/depth: 72,426 rows have finite depth and temperature, and 129,219 do not. Among the usable rows, temperature primary QARTOD is 72,382 PASS, 43 SUSPECT, and 1 FAIL.
+
+For the 72,426 finite temperature/depth observations, nearest-cell ETOPO screening separation is -4.852 to 143.988m, with median 20.044m and mean 25.234m. There are 1,062 negative separations (1,061 PASS and 1 SUSPECT); these remain visible and are excluded from nonnegative near-bottom bands. Nearest ETOPO grid-center offset has median about 351m and maximum about 618m.
+
+Nonnegative separation sensitivity (not an adopted cutoff):
+- 0–5m: 8,446 observations, 2,180 profiles; 8,445 PASS observations and 2,180 PASS-represented profiles.
+- 0–10m: 17,261 observations, 2,212 profiles; 17,260 PASS observations and 2,212 PASS-represented profiles.
+- 0–20m: 35,075 observations, 2,250 profiles; 35,074 PASS observations and 2,250 PASS-represented profiles.
+- 0–50m: 63,765 observations, 2,298 profiles; 63,743 PASS observations and 2,297 PASS-represented profiles.
+
+All profile counts are nested within one glider deployment and are not independent samples. The glider precise position fields are interpolated estimates, not raw GPS fixes. ETOPO height uses EGM2008 and is not established as vertically equivalent to the sea-surface-referenced glider depth. Negative separation may reflect vertical reference, bathymetry, sensor depth, or position uncertainty; its cause is unresolved. Pressure remains excluded due to the unresolved source metadata units/transformation issue. This is bathymetric screening only, not Copernicus accuracy validation. The deployment is outside the existing Copernicus Gulf candidate box and would require a separate West Florida regional Copernicus extraction and time-matched comparison.
+
+A defect was identified in the first output summary: missing depth/temperature values were represented as NaN, causing the all-row separation median (and some per-profile medians) to serialize as NaN. The observation-level CSV and sensitivity counts still supported the finite-row calculations above; medians were independently recomputed from the 72,426 finite observations. Fixed the join to retain position-only rows while calculating separation only for finite depth+temperature values, report valid observation/QC counts, and calculate medians from finite values. Added a regression test. A separate pre-existing URL test expected longitude 275 for -83.3°; corrected it to 276.7° (0–360 convention). Python CI is being rerun; do not treat the fix as validated until that run passes.
+
+No Copernicus pairing, production scoring/source changes, species profile changes, or ingestion changes.
