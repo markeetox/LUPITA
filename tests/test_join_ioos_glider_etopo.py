@@ -19,7 +19,7 @@ def test_parse_etopo_csvp_with_units():
 def test_build_etopo_url_converts_negative_longitudes_to_360():
     rows = [{"precise_lat": "27.7", "precise_lon": "-83.3"}]
     url = module.build_etopo_url(rows)
-    assert "275." in url
+    assert "276." in url
     assert "27." in url
     assert url.startswith(module.ETOPO_BASE + ".csvp?")
 
