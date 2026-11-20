@@ -40,10 +40,10 @@ def read_observations(path: Path) -> list[dict[str, str]]:
         rows = []
         for raw in reader:
             row = {normalize_header(k): (v or "").strip() for k, v in raw.items() if k}
-            if all(row.get(k) for k in ("precise_lat", "precise_lon", "depth", "temperature", "precise_time", "profile_id")):
+            if all(row.get(k) for k in ("precise_lat", "precise_lon", "precise_time", "profile_id")):
                 rows.append(row)
     if not rows:
-        raise ValueError("No rows with coordinates, depth, temperature, time and profile_id")
+        raise ValueError("No rows with coordinates, time and profile_id")
     return rows
 
 
@@ -131,6 +131,24 @@ def make_grid(cells: list[dict[str, float]]) -> tuple[dict[tuple[float, float], 
     return grid, sorted(lats), sorted(lons)
 
 
+def finite_float(value: object) -> float | None:
+    try:
+        number = float(value)
+    except (TypeError, ValueError):
+        return None
+    return number if math.isfinite(number) else None
+
+
+def median(values: list[float]) -> float | None:
+    if not values:
+        return None
+    ordered = sorted(values)
+    middle = len(ordered) // 2
+    if len(ordered) % 2:
+        return ordered[middle]
+    return (ordered[middle - 1] + ordered[middle]) / 2
+
+
 def join_rows(rows: list[dict[str, str]], cells: list[dict[str, float]]) -> tuple[list[dict[str, object]], dict[str, object]]:
     grid, lat_axis, lon_axis = make_grid(cells)
     output = []
@@ -145,12 +163,15 @@ def join_rows(rows: list[dict[str, str]], cells: list[dict[str, float]]) -> tupl
         grid_lat, grid_lon = nearest(lat_axis, lat), nearest(lon_axis, lon360)
         z = grid[(grid_lat, grid_lon)]
         offset = haversine_m(lat, lon, grid_lat, ((grid_lon + 180) % 360) - 180)
+        depth_m = finite_float(row.get("depth"))
+        temperature_c = finite_float(row.get("temperature"))
         if z < -1.0:
             cell_class = "ocean"
             seafloor_depth = -z
-            separation = seafloor_depth - float(row["depth"])
-            separation_values.append(separation)
-            profile_summaries.setdefault(row["profile_id"], []).append(separation)
+            separation = seafloor_depth - depth_m if depth_m is not None and temperature_c is not None else None
+            if separation is not None:
+                separation_values.append(separation)
+                profile_summaries.setdefault(row["profile_id"], []).append(separation)
         elif z > 1.0:
             cell_class, seafloor_depth, separation = "land", None, None
         else:
@@ -165,8 +186,8 @@ def join_rows(rows: list[dict[str, str]], cells: list[dict[str, float]]) -> tupl
             "precise_time_utc": row["precise_time"],
             "precise_lat_interpolated_deg": lat,
             "precise_lon_interpolated_deg": lon,
-            "depth_m": float(row["depth"]),
-            "temperature_c": float(row["temperature"]),
+            "depth_m": depth_m,
+            "temperature_c": temperature_c,
             "temperature_primary_qc": FLAG_MEANINGS.get(primary_flag, "UNKNOWN"),
             "etopo_latitude_deg": grid_lat,
             "etopo_longitude_0_360_deg": grid_lon,
@@ -208,23 +229,27 @@ def join_rows(rows: list[dict[str, str]], cells: list[dict[str, float]]) -> tupl
         "negative_separation_rows_preserved": sum(v < 0 for v in separation_values),
         "bottom_separation_m_screening_only": {
             "min": min(separation_values) if separation_values else None,
-            "median": sorted(separation_values)[len(separation_values)//2] if separation_values else None,
+            "median": median(separation_values),
             "max": max(separation_values) if separation_values else None,
         },
+        "temperature_depth_observation_rows": len(separation_values),
+        "temperature_primary_qc_counts": dict(Counter(
+            row["temperature_primary_qc"] for row in output if row["temperature_c"] is not None and row["depth_m"] is not None
+        )),
         "nearest_grid_center_offset_m": {
             "min": min(x["nearest_grid_center_offset_m"] for x in output),
-            "median": sorted(x["nearest_grid_center_offset_m"] for x in output)[len(output)//2],
+            "median": median([x["nearest_grid_center_offset_m"] for x in output]),
             "max": max(x["nearest_grid_center_offset_m"] for x in output),
         },
         "profiles_with_ocean_cells": len(profile_summaries),
         "profile_minimum_bottom_separation_m": {
             "min": min(profile_min_separation.values()) if profile_min_separation else None,
-            "median": sorted(profile_min_separation.values())[len(profile_min_separation)//2] if profile_min_separation else None,
+            "median": median(list(profile_min_separation.values())),
             "max": max(profile_min_separation.values()) if profile_min_separation else None,
         },
         "profile_maximum_bottom_separation_m": {
             "min": min(profile_max_separation.values()) if profile_max_separation else None,
-            "median": sorted(profile_max_separation.values())[len(profile_max_separation.values())//2] if profile_max_separation else None,
+            "median": median(list(profile_max_separation.values())),
             "max": max(profile_max_separation.values()) if profile_max_separation else None,
         },
         "near_bottom_sensitivity_nonnegative_separation_only": near_bottom_json,
@@ -248,21 +273,25 @@ def build_profile_summary(joined: list[dict[str, object]]) -> list[dict[str, obj
     result = []
     for profile_id, rows in sorted(grouped.items()):
         ocean = [r for r in rows if r["bottom_separation_m_screening_only"] is not None]
-        separations = [float(r["bottom_separation_m_screening_only"]) for r in ocean]
+        separations = [float(r["bottom_separation_m_screening_only"]) for r in ocean
+                       if math.isfinite(float(r["bottom_separation_m_screening_only"]))]
+        temperature_rows = [r for r in rows if r["temperature_c"] is not None and r["depth_m"] is not None]
         nonnegative = [v for v in separations if v >= 0]
         profile = {
             "profile_id": profile_id,
-            "temperature_observation_rows": len(rows),
+            "joined_position_rows": len(rows),
+            "temperature_observation_rows": len(temperature_rows),
             "ocean_cell_rows": len(ocean),
             "negative_separation_rows": sum(v < 0 for v in separations),
             "minimum_signed_separation_m": min(separations) if separations else None,
-            "median_signed_separation_m": sorted(separations)[len(separations)//2] if separations else None,
+            "median_signed_separation_m": median(separations),
             "maximum_signed_separation_m": max(separations) if separations else None,
             "minimum_nonnegative_separation_m": min(nonnegative) if nonnegative else None,
-            "temperature_primary_qc_pass_rows": sum(r["temperature_primary_qc"] == "PASS" for r in rows),
+            "temperature_primary_qc_pass_rows": sum(r["temperature_primary_qc"] == "PASS" for r in temperature_rows),
         }
         for band in DEPTH_BANDS_M:
             within = [r for r in ocean if r["bottom_separation_m_screening_only"] is not None
+                      and math.isfinite(float(r["bottom_separation_m_screening_only"]))
                       and 0 <= float(r["bottom_separation_m_screening_only"]) <= band]
             profile[f"within_{band}m_rows"] = len(within)
             profile[f"within_{band}m_primary_qc_pass_rows"] = sum(
