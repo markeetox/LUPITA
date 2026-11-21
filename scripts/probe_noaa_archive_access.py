@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
-"""Read-only probe of NOAA NCEI archive endpoints for selected Pulley Ridge datasets."""
+"""Read-only probe of NOAA NCEI and legacy NODC archive endpoints."""
 from __future__ import annotations
+
 import json
 import urllib.error
 import urllib.request
@@ -11,20 +12,27 @@ URLS = {
     "adcp_ncei_landing": "https://www.ncei.noaa.gov/archive/accession/0181331",
     "adcp_ncei_download": "https://www.ncei.noaa.gov/archive/accession/download/181331",
     "adcp_legacy_index": "https://www.nodc.noaa.gov/archive/arc0139/0181331/",
+    "adcp_legacy_data_index": "https://www.nodc.noaa.gov/archive/arc0139/0181331/1.1/",
+    "adcp_legacy_metadata_xml": "https://www.nodc.noaa.gov/archive/arc0139/0181331/0181331.1.1.xml",
     "logger_ncei_landing": "https://www.ncei.noaa.gov/archive/accession/0190271",
     "logger_ncei_download": "https://www.ncei.noaa.gov/archive/accession/download/190271",
     "logger_legacy_index": "https://www.nodc.noaa.gov/archive/arc0139/0190271/",
+    "logger_legacy_data_index": "https://www.nodc.noaa.gov/archive/arc0139/0190271/1.1/",
+    "logger_legacy_metadata_xml": "https://www.nodc.noaa.gov/archive/arc0139/0190271/0190271.1.1.xml",
     "ctd_ncei_landing": "https://www.ncei.noaa.gov/archive/accession/0190533",
     "ctd_ncei_download": "https://www.ncei.noaa.gov/archive/accession/download/190533",
     "ctd_legacy_index": "https://www.nodc.noaa.gov/archive/arc0141/0190533/",
+    "ctd_legacy_data_index": "https://www.nodc.noaa.gov/archive/arc0141/0190533/1.1/",
+    "ctd_legacy_metadata_xml": "https://www.nodc.noaa.gov/archive/arc0141/0190533/0190533.1.1.xml",
     "seamap_ncei_landing": "https://www.ncei.noaa.gov/archive/accession/0131259",
     "seamap_oas_download": "https://www.ncei.noaa.gov/archive/archive-management-system/OAS/bin/prd/jquery/accession/download/131259",
 }
 
+
 def probe(name: str, url: str) -> dict:
     req = urllib.request.Request(
         url,
-        headers={"User-Agent": "LUPITA-research-archive-probe/1.0", "Range": "bytes=0-4095"},
+        headers={"User-Agent": "LUPITA-research-archive-probe/1.1", "Range": "bytes=0-4095"},
         method="GET",
     )
     try:
@@ -35,7 +43,7 @@ def probe(name: str, url: str) -> dict:
                 "status": response.status, "content_type": response.headers.get("Content-Type"),
                 "content_length": response.headers.get("Content-Length"),
                 "content_range": response.headers.get("Content-Range"),
-                "bytes_read": len(body), "preview": body[:1200].decode("utf-8", "replace"),
+                "bytes_read": len(body), "preview": body[:3000].decode("utf-8", "replace"),
             }
     except urllib.error.HTTPError as exc:
         body = exc.read(4096)
@@ -48,11 +56,15 @@ def probe(name: str, url: str) -> dict:
     except Exception as exc:
         return {"name": name, "requested_url": url, "error": f"{type(exc).__name__}: {exc}"}
 
+
 def main() -> None:
     results = [probe(name, url) for name, url in URLS.items()]
     report = {
         "generated_utc": datetime.now(timezone.utc).isoformat(),
-        "purpose": "Read-only endpoint and directory-listing discovery; no archive payloads downloaded.",
+        "purpose": (
+            "Read-only endpoint, nested directory-listing, and metadata-header discovery; "
+            "no archive payloads downloaded."
+        ),
         "results": results,
     }
     Path("noaa_archive_probe.json").write_text(json.dumps(report, indent=2), encoding="utf-8")
@@ -60,6 +72,7 @@ def main() -> None:
         print(json.dumps({k: v for k, v in item.items() if k != "preview"}))
         if item.get("preview"):
             print("PREVIEW", item["name"], item["preview"][:350].replace("\\n", " "))
+
 
 if __name__ == "__main__":
     main()
