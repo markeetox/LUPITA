@@ -144,3 +144,17 @@ Cruise-report inspection corrected the initial Nancy Foster recommendation: acce
 ## NOAA Pulley Ridge archive role clarification | 2026-11-21
 
 NOAA project records confirm accession 0181331 is the moored ADCP archive and explicitly includes hourly bottom temperature at Northern Dry Tortugas, Southern Dry Tortugas and Pulley Ridge; this is the direct bottom-temperature candidate. Accession 0190533 is CTD profiles from the mooring sites (2013/2014) with manufacturer processing details in file headers. Accession 0190271 is a separate lower Florida Keys temperature-logger series at shallow 0–10 m and deep 20–30 m shelf sites, not automatically the same near-bottom mooring series. Added manual read-only archive endpoint probe workflow and script to inspect availability/listings for these accessions plus SEAMAP 0131259. Awaiting manual workflow dispatch; no archive data retrieved yet. No Copernicus matchup or production changes.
+
+
+## Legacy archive access result and nested-listing probe | 2026-11-21
+
+Manual workflow [44958887218](https://github.com/markeetox/LUPITA/actions/runs/44958887218) completed successfully and produced artifact `noaa-archive-access-probe` (ID 14728881660; expires 2026-12-05). The report was downloaded and inspected.
+
+The modern NCEI routes remain unavailable or unstable: accession landing pages for 0181331 and 0190271 returned HTTP 503; their modern download routes returned timeout/503. The 0190533 landing and download routes timed out. SEAMAP 0131259 landing timed out and its OAS download returned HTTP 503.
+
+Crucially, all three legacy NODC parent directory listings returned HTTP 206 with complete 1,114-byte HTML indexes. They expose an `1.1/` data directory and an accession XML metadata file:
+- 0181331: `https://www.nodc.noaa.gov/archive/arc0139/0181331/1.1/` and `0181331.1.1.xml`
+- 0190271: `https://www.nodc.noaa.gov/archive/arc0139/0190271/1.1/` and `0190271.1.1.xml`
+- 0190533: `https://www.nodc.noaa.gov/archive/arc0141/0190533/1.1/` and `0190533.1.1.xml`
+
+The 206 responses confirm that legacy directory listings are reachable, but no data files have yet been listed or downloaded. Expanded `scripts/probe_noaa_archive_access.py` to probe each nested `1.1/` directory and XML metadata header using bounded HTTP Range requests; it remains read-only and does not retrieve archive payloads. Commit: 9720d80122387f5f55365c6fadd40018f3b220dd. Next: manually rerun the same workflow and inspect nested file names, sizes, and metadata. Prioritize identifying the actual bottom-temperature logger series within 0181331; keep 0190271 and 0190533 distinct. No Copernicus matchups, conversion, species/scoring, ingestion or production changes.
