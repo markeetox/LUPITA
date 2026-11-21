@@ -133,3 +133,8 @@ Confirmed public ERDDAP lineage: merged DBA path 0000339.dba; example source SBD
 ## 2026-11-21 | GPCTD manual and pressure/depth consistency
 
 Sea-Bird GPCTD manual revision 004 specifies that engineering OutputFormat 0/1 outputs temperature in ITS-90 °C and pressure in dbar; OutputFormat 2 outputs raw counts. Deployment OutputFormat is not published, so ITS-90 remains unconfirmed for this dataset. Row-level pressure/depth check over 72,426 pairs: correlation 0.9999999964; mean ratio 1.006743; median ratio 1.006735. This is physically consistent with pressure in dbar, not bar, and matches the metadata comment describing multiplication by 10 from bar to dbar. Likely stale ERDDAP units attribute; preserve it as published and obtain provider confirmation. Updated provenance request document with exact confirmation items. No TEOS-10 conversion, Copernicus pairing or production changes.
+
+
+## 2026-11-21 | Alternative in-situ validation datasets screened
+
+Identified NOAA OMAO Nancy Foster CTD accession 0283250 as the first alternative to inspect: SBE-9 originator data with documented t090C ITS-90, prDM dbar, sal00, altimeter and bottom-depth fields; raw suite requires processing/QC audit and covers western Gulf. Identified SEFSC SEFIS CTD 2010–2024 with explicit ITS-90, psi pressure, PSU salinity and 1-metre bins; station/time/QC/bottom-proximity limitations need review and latest release check. Also recorded SEFSC bottom-longline CTD_PROC_CAST, Argo delayed-mode and CCHDO/GO-SHIP as secondary routes. See docs/ALTERNATIVE_IN_SITU_VALIDATION_DATASETS_2026-11-21.md. No alternative observations downloaded, no TEOS-10 or Copernicus comparison, no production changes.
