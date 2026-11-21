@@ -105,3 +105,10 @@ The cruise report for NF-22-06 documents CTD casts at approximately 1,043–1,86
 5. Preserve USF Sam as supplementary until its instrument provenance response arrives.
 
 No files from these NOAA accessions have yet been retrieved or parsed in this reassessment. The published literature and metadata establish a promising candidate design, not validation results. No TEOS-10 conversion, Copernicus matchup, species-profile change, score/gate change, or production change has occurred.
+
+
+## Archive role clarification and retrieval probe | 2026-11-21
+
+Clarified the Pulley Ridge data roles from NOAA project records. Accession 0181331 is the moored ADCP time series and its description explicitly says hourly near-surface/near-bottom velocity and bottom temperature at Northern Dry Tortugas, Southern Dry Tortugas and Pulley Ridge. This is the direct fixed-site bottom-temperature candidate to prioritize. Accession 0190533 is CTD cast profiles at those mooring sites in August 2013 and 2014; raw data are manufacturer-standard processed and headers contain processing details. Accession 0190271 is a separate temperature-logger time series for shallow (0–10 m) and deep shelf (20–30 m) locations in the lower Florida Keys; it must not be described as the same 0.5 m-above-bottom mooring sensor series without checking metadata. The published near-bottom 0.5 m positioning applies to the specific near-bottom recorders discussed in the methods, while archive membership/variable content must be confirmed directly.
+
+Added read-only discovery script scripts/probe_noaa_archive_access.py and manual workflow .github/workflows/noaa-archive-access-probe.yml. It probes NCEI landing/download endpoints and legacy NODC directory listings for 0181331, 0190271, 0190533 and SEAMAP 0131259, recording response status, redirects, content type, size and short previews. It does not download archive payloads. Workflow must be manually dispatched; no live probe has run yet. No NOAA data files have been retrieved, no Copernicus matchups or production changes.
