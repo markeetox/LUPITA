@@ -1,0 +1,24 @@
+name: NOAA Archive Access Probe
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  probe:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Probe NOAA archive endpoints
+        run: python scripts/probe_noaa_archive_access.py
+      - name: Upload endpoint report
+        uses: actions/upload-artifact@v4
+        with:
+          name: noaa-archive-access-probe
+          path: noaa_archive_probe.json
+          if-no-files-found: error
+          retention-days: 14
