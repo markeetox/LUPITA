@@ -112,3 +112,17 @@ No files from these NOAA accessions have yet been retrieved or parsed in this re
 Clarified the Pulley Ridge data roles from NOAA project records. Accession 0181331 is the moored ADCP time series and its description explicitly says hourly near-surface/near-bottom velocity and bottom temperature at Northern Dry Tortugas, Southern Dry Tortugas and Pulley Ridge. This is the direct fixed-site bottom-temperature candidate to prioritize. Accession 0190533 is CTD cast profiles at those mooring sites in August 2013 and 2014; raw data are manufacturer-standard processed and headers contain processing details. Accession 0190271 is a separate temperature-logger time series for shallow (0–10 m) and deep shelf (20–30 m) locations in the lower Florida Keys; it must not be described as the same 0.5 m-above-bottom mooring sensor series without checking metadata. The published near-bottom 0.5 m positioning applies to the specific near-bottom recorders discussed in the methods, while archive membership/variable content must be confirmed directly.
 
 Added read-only discovery script scripts/probe_noaa_archive_access.py and manual workflow .github/workflows/noaa-archive-access-probe.yml. It probes NCEI landing/download endpoints and legacy NODC directory listings for 0181331, 0190271, 0190533 and SEAMAP 0131259, recording response status, redirects, content type, size and short previews. It does not download archive payloads. Workflow must be manually dispatched; no live probe has run yet. No NOAA data files have been retrieved, no Copernicus matchups or production changes.
+
+
+## Legacy archive access result and nested-listing probe | 2026-11-21
+
+Manual workflow [44958887218](https://github.com/markeetox/LUPITA/actions/runs/44958887218) completed successfully and produced artifact `noaa-archive-access-probe` (ID 14728881660; expires 2026-12-05). The report was downloaded and inspected.
+
+The modern NCEI routes remain unavailable or unstable: accession landing pages for 0181331 and 0190271 returned HTTP 503; their modern download routes returned timeout/503. The 0190533 landing and download routes timed out. SEAMAP 0131259 landing timed out and its OAS download returned HTTP 503.
+
+Crucially, all three legacy NODC parent directory listings returned HTTP 206 with complete 1,114-byte HTML indexes. They expose an `1.1/` data directory and an accession XML metadata file:
+- 0181331: `https://www.nodc.noaa.gov/archive/arc0139/0181331/1.1/` and `0181331.1.1.xml`
+- 0190271: `https://www.nodc.noaa.gov/archive/arc0139/0190271/1.1/` and `0190271.1.1.xml`
+- 0190533: `https://www.nodc.noaa.gov/archive/arc0141/0190533/1.1/` and `0190533.1.1.xml`
+
+The 206 responses confirm that legacy directory listings are reachable, but no data files have yet been listed or downloaded. Expanded `scripts/probe_noaa_archive_access.py` to probe each nested `1.1/` directory and XML metadata header using bounded HTTP Range requests; it remains read-only and does not retrieve archive payloads. Commit: 9720d80122387f5f55365c6fadd40018f3b220dd. Next: manually rerun the same workflow and inspect nested file names, sizes, and metadata. Prioritize identifying the actual bottom-temperature logger series within 0181331; keep 0190271 and 0190533 distinct. No Copernicus matchups, conversion, species/scoring, ingestion or production changes.
