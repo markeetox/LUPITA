@@ -67,3 +67,41 @@ Identify independent observations with stronger published measurement provenance
 For each candidate, inspect original variable names/units, temperature scale, pressure units, calibration/processing provenance, QC semantics, position/time provenance, bottom-depth or altimeter evidence, vertical reference, and source-level identifiers. Deduplicate overlapping archives. Convert in-situ temperature to potential temperature only after inputs are qualified. Pair only observations within a predeclared spatial/time window and report near-bottom sensitivity bands without choosing a cutoff to optimize agreement.
 
 No data have yet been downloaded from these alternative candidates. No TEOS-10 conversion, Copernicus matchup, species-profile edit, scoring change, ingestion change or production change has been made.
+
+
+## Priority reassessment after cruise-depth check | 2026-11-21
+
+### Important correction: Nancy Foster accession 0283250 is not the primary shelf candidate
+
+The cruise report for NF-22-06 documents CTD casts at approximately 1,043–1,862 m water depth (the listed cast depths are around 1,000–1,862 m). Although accession 0283250 has excellent documented originator variables (t090C ITS-90, prDM dbar, sal00, altM), this is a deep-water / deep-benthic dataset, not a suitable primary validation source for the current shelf-focused Copernicus candidate regions. Retain only as a possible deep-water reference. Sources: https://repository.library.noaa.gov/view/noaa/55612/noaa_55612_DS1.pdf and https://www.ncei.noaa.gov/metadata/granule/geoportal/rest/metadata/item/OMAO-CTD.0283250/html.
+
+### New highest-priority candidate: NOAA Pulley Ridge / Dry Tortugas near-bottom moorings
+
+- NCEI accession 0181331: Moored ADCP time series, 2012-08-15 to 2015-06-24. Data.gov catalogue description reports bottom-mounted upward-facing ADCPs at Northern Dry Tortugas, Southern Dry Tortugas and Pulley Ridge, hourly velocity and bottom-temperature measurements. Catalogue entry indicates 239 files: https://catalog.data.gov/?q=Loggers (search accession 0181331); NOAA project listing: https://products.coastalscience.noaa.gov/collections/regional/pulleyridge/.
+- Independent peer-reviewed methods paper: https://www.sciencedirect.com/science/article/pii/S0079661117303385 and accessible NOAA-hosted PDF https://www.aoml.noaa.gov/phod/docs/Kourafalou_etal_POCEAN_2018.pdf.
+- Paper states near-bottom temperature recorders were positioned 0.5 m above the seafloor at all three sites; bottom depths: Pulley Ridge 69.5 m, Northern Dry Tortugas 54.5 m, Southern Dry Tortugas 66.7 m. Time series: 34 months for Pulley Ridge and Northern Dry Tortugas, 27 months for Southern Dry Tortugas. This is unusually strong direct near-bottom evidence for bottomT validation, although it is a small fixed-site sample and old (2012–2015).
+- Important: the published paper describes the near-bottom temperature recorders separately from the ADCP velocity bins. Confirm whether accession 0181331 includes the actual near-bottom temperature recorder series or only ADCP time series; inspect related accession 0190271 and source file manifests before coding. Do not assume all variables are in one archive.
+- NOAA report for Pulley Ridge deployment 2013–2014 shows bottom temperature summary plot (mean 22.2°C, SD 2.0°C), but plot is not a substitute for raw time-series data: https://www.aoml.noaa.gov/ftp/pub/phod/rsmith/Pulley_Ridge/NCEI/mADCP/Pulley_Ridge_ADCP_02.pdf.
+- The study sites lie near 24.47–24.77°N, 83.09–83.67°W and 54.5–69.5 m bottom depth. These are Southwest Florida Shelf / shelf-slope reef strata, not the existing Gulf/Atlantic/Pacific Copernicus pilot boxes. Extract matching Copernicus daily bottomT at exact site coordinates and dates if the sensor series can be obtained.
+
+### Related NOAA Pulley Ridge datasets to inspect together
+
+- Accession 0190533: CTD casts at mooring sites across Northern Dry Tortugas, Southern Dry Tortugas and Pulley Ridge, August 2013 and August 2014; includes conductivity, temperature, depth, salinity and oxygen. Metadata says raw data were processed with manufacturer standard routines, with details in each data-file header. Data.gov record reports accessLevel non-public while exposing an NCEI download URL, so access availability must be tested rather than assumed. https://catalog.data.gov/dataset/coral-ecosystem-connectivity-from-pulley-ridge-to-the-florida-keys-conductivity-temperatur.
+- Accession 0190271: associated temperature logger time series, 2012-07-20 to 2014-08-13, for deep shelf (20–30 m) and shallow shelf (0–10 m) lower Florida Keys sites. This is valuable shallow-shelf temperature context, but it is not necessarily near-bottom. https://doi.org/10.25921/hhjr-bm33.
+- Accession 0181331 is ADCP data; 0190271 is a distinct temperature time-series accession; 0190533 is CTD casts. Keep source roles separate and deduplicate where series overlap.
+
+### Additional regional candidate: SEAMAP 2009–2015 CTD archive
+
+- NCEI accession 0131259; 1,761 observations; Gulf of Mexico extent 24–31°N, 81–98°W; CTD casts from SEAMAP fishery-independent cruises, 2009-06-08 to 2015-07-16.
+- InPort lists seven annual Oregon II cruise child datasets (2009–2015), a 27.984 MB tar.gz archive, sampling map and sampling-point documentation. This is a useful broad Gulf inventory candidate, with cruise-specific station coverage and fishery-independent survey context.
+- It does not yet establish temperature scale, per-level QC, near-bottom distance, or processing details. Inspect raw files and their headers before qualifying it. Metadata: https://www.fisheries.noaa.gov/inport/item/67849 and archive landing: https://www.ncei.noaa.gov/archive/accession/0131259.
+
+### Revised work order
+
+1. Inspect NOAA Pulley Ridge/Dry Tortugas accessions 0181331, 0190271 and 0190533 together, starting with the direct near-bottom recorder series and file manifests. Confirm public file availability, exact sensor positions, logger depth above seabed, sampling interval, units, calibration and QC.
+2. Extract Copernicus daily reanalysis bottomT for the three fixed mooring sites and exact observation dates. This provides a direct model-versus-measured-bottom-temperature pilot without needing to infer near-bottom status from a full water-column profile.
+3. Inspect SEAMAP accession 0131259 for regional CTD coverage and possible additional near-bottom casts; only include casts with defensible bottom proximity.
+4. Keep Nancy Foster 0283250 as a deep-water-only candidate, not the shelf pilot.
+5. Preserve USF Sam as supplementary until its instrument provenance response arrives.
+
+No files from these NOAA accessions have yet been retrieved or parsed in this reassessment. The published literature and metadata establish a promising candidate design, not validation results. No TEOS-10 conversion, Copernicus matchup, species-profile change, score/gate change, or production change has occurred.
