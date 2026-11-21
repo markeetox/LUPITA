@@ -1,0 +1,122 @@
+{
+  "schema_version": 1,
+  "id": "sablefish",
+  "common_name": "Sablefish",
+  "scientific_name": "Anoplopoma fimbria",
+  "aliases": [
+    "sablefish"
+  ],
+  "habitat_zone": "reef",
+  "display": {
+    "color": "#ac3cf2"
+  },
+  "review_status": "Evidence reviewed 2026-11-17. NOAA and WDFW sources support deep adult habitat and diel vertical migration; tagged fish temperature is not satellite SST.",
+  "image": {
+    "status": "placeholder",
+    "kind": "illustration",
+    "url": "fish/sablefish.png",
+    "credit": "Original illustration",
+    "license": "",
+    "plan": "web/fish/sablefish.png placeholder illustration."
+  },
+  "profile": {
+    "size": "Min limit None / Bag limit 2-5 per harvester / day",
+    "diet": "Small fish, crustaceans, squids, and pelagic prey",
+    "swimming_depth": "100 to 500 m",
+    "behavior": "Navigates West Coast kelp forests, rocky reefs, and coastal upwelling zones.",
+    "regulations_link": "https://wildlife.ca.gov/Fishing/Ocean/Regulations/Sport-Fishing",
+    "sources": [
+      "https://wildlife.ca.gov/Fishing/Ocean/Regulations/Sport-Fishing",
+      "https://www.fisheries.noaa.gov/species/sablefish/wild-caught-fishery",
+      "https://wdfw.wa.gov/species-habitats/species/anoplopoma-fimbria",
+      "https://repository.library.noaa.gov/view/noaa/63089/noaa_63089_DS1.pdf",
+      "https://repository.library.noaa.gov/view/noaa/57009"
+    ]
+  },
+  "lat_range": [
+    32,
+    60
+  ],
+  "factors": [
+    {
+      "param": "sst_c",
+      "kind": "range",
+      "range": [
+        4,
+        12
+      ],
+      "ideal": [
+        6,
+        10
+      ],
+      "weight": 0.5,
+      "active": true,
+      "value_status": "needs_source",
+      "sources": [
+        "https://wildlife.ca.gov/Fishing/Ocean/Regulations/Sport-Fishing",
+        "https://repository.library.noaa.gov/view/noaa/63089/noaa_63089_DS1.pdf",
+        "https://repository.library.noaa.gov/view/noaa/57009"
+      ],
+      "reason_template": "Water is {value} C, inside preferred Pacific temperature range for sablefish.",
+      "value_notes": "NOAA archival tags found sablefish typically at 3.9-5.0 °C (median 4.4 °C), with seasonal temperature variation during diel vertical migration. These are ambient temperatures at the fish's depth, not satellite SST. Adults are deepwater and juveniles occupy near-surface waters, so the configured 4-12 °C SST range and 6-10 °C ideal are not validated by the reviewed evidence; keep values unchanged and mark needs_source."
+    },
+    {
+      "param": "depth_m",
+      "kind": "range",
+      "range": [
+        100,
+        500
+      ],
+      "ideal": [
+        102,
+        495
+      ],
+      "weight": 0.5,
+      "active": true,
+      "value_status": "partly_sourced",
+      "sources": [
+        "https://wildlife.ca.gov/Fishing/Ocean/Regulations/Sport-Fishing",
+        "https://www.fisheries.noaa.gov/species/sablefish/wild-caught-fishery",
+        "https://wdfw.wa.gov/species-habitats/species/anoplopoma-fimbria",
+        "https://repository.library.noaa.gov/view/noaa/63089/noaa_63089_DS1.pdf"
+      ],
+      "gate": true,
+      "reason_template": "Depth is {value} m, within prime Pacific depth zone for sablefish.",
+      "value_notes": "NOAA and WDFW describe adults on mud bottoms at roughly 200-1,500 m, while juveniles occupy the water column and nearshore nurseries. Adult tags recorded fish depths typically 326-553 m (median 446 m), with a 12-1,621 m range and diel vertical migration. The configured 100-500 m range overlaps the adult core but misses much deeper adult habitat and juvenile pelagic habitat; tagged fish depth is not identical to seabed depth."
+    }
+  ],
+  "timing": {
+    "status": "angler_lore",
+    "light": {
+      "map": {
+        "day": 1,
+        "dawn": 0.9,
+        "dusk": 0.9,
+        "night": 0.5
+      },
+      "text": {
+        "day": "Full daylight when Pacific gamefish actively hunt.",
+        "dawn": "Dawn low-light feeding window.",
+        "dusk": "Dusk feeding window."
+      }
+    },
+    "note": "West Coast captain reports and biological upwelling patterns.",
+    "sources": [
+      "https://wildlife.ca.gov/Fishing/Ocean/Regulations/Sport-Fishing"
+    ]
+  },
+  "regulations": {
+    "summary": "CDFW/WDFW: Deepwater groundfish limits",
+    "min_size": "None",
+    "max_size": "None",
+    "bag_limit": "2-5 per harvester / day",
+    "season": "Open year-round (depth restricted)",
+    "jurisdiction": "NOAA Fisheries / CDFW",
+    "source_name": "West Coast State Regulations (CDFW/WDFW/ODFW/NOAA)",
+    "source_url": "https://wildlife.ca.gov/Fishing/Ocean/Regulations/Sport-Fishing"
+  },
+  "lon_range": [
+    -138,
+    -110
+  ]
+}

@@ -1,0 +1,141 @@
+{
+  "schema_version": 1,
+  "id": "weakfish",
+  "common_name": "Weakfish",
+  "scientific_name": "Cynoscion regalis",
+  "aliases": [
+    "sea trout",
+    "squeteague"
+  ],
+  "habitat_zone": "inshore",
+  "review_status": "draft v1 - compiled from NOAA Fisheries and regional fisheries management guidelines",
+  "image": {
+    "status": "placeholder",
+    "kind": "illustration",
+    "url": "fish/placeholder.png",
+    "credit": "Placeholder graphic",
+    "license": "",
+    "plan": "web/fish/placeholder.png is a transparent placeholder image."
+  },
+  "profile": {
+    "size": "Variable per NOAA / regional guidelines",
+    "diet": "Small fish, crustaceans, and cephalopods.",
+    "behavior": "Active predator along coastal, shelf, or offshore environments.",
+    "life_history": "Spawns seasonally along coastal or shelf waters.",
+    "regulations_link": "https://www.fisheries.noaa.gov/",
+    "sources": [
+      "https://asmfc.org/wp-content/uploads/2025/01/2016WeakfishStockAssessment_PeerReviewReport_May2016.pdf",
+      "https://repository.library.noaa.gov/view/noaa/33312/noaa_33312_DS1.pdf",
+      "https://www.vims.edu/research/units/programs/multispecies_fisheries_research/speciesofinterest/weakfish.php"
+    ],
+    "spawning": "Spawns seasonally based on water temperature and regional climate.",
+    "overwintering": "Migrates to warmer or deeper waters depending on season."
+  },
+  "factors": [
+    {
+      "param": "sst_c",
+      "kind": "range",
+      "range": [
+        10,
+        28
+      ],
+      "ideal": [
+        16,
+        24
+      ],
+      "weight": 0.35,
+      "active": true,
+      "value_status": "partly_sourced",
+      "value_notes": "Partly sourced. The 2016 ASMFC benchmark assessment reports weakfish in shallow marine/estuarine waters at about 17–26.5°C and describes seasonal migration associated with the 16–24°C isotherms; this overlaps the configured 16–24°C ideal interval but describes observed habitat and migration, not a validated thermal optimum. A NOAA technical report describes a small adult aquarium study acclimated at 19–20°C; gradual warming toward 29°C initially increased activity consistent with avoidance, followed by acclimation. That experiment does not establish 29°C as preferred. Geographic identity is a major caveat: ASMFC documents Florida Atlantic Coast hybridization with sand seatrout and reports pure weakfish are rare southward; VIMS describes Florida occurrence as uncommon. Do not interpret this broad coastal evidence as a South Florida local abundance or catch curve.",
+      "reason_template": "Water is {value} C, within the preferred thermal range for Weakfish.",
+      "sources": [
+        "https://asmfc.org/wp-content/uploads/2025/01/2016WeakfishStockAssessment_PeerReviewReport_May2016.pdf",
+        "https://repository.library.noaa.gov/view/noaa/33312/noaa_33312_DS1.pdf",
+        "https://www.vims.edu/research/units/programs/multispecies_fisheries_research/speciesofinterest/weakfish.php"
+      ],
+      "gate": true,
+      "required": true
+    }
+  ],
+  "open_items": [],
+  "display": {
+    "color": "#d8d636"
+  },
+  "model": "sites",
+  "site_kinds": [
+    "inlet"
+  ],
+  "min_score_report": 0.35,
+  "max_spots": 15,
+  "confidence_cap": "Medium",
+  "timing": {
+    "status": "angler_lore",
+    "note": "Timing weights and light/tide preferences for Weakfish.",
+    "sources": [
+      "https://www.fisheries.noaa.gov/"
+    ],
+    "weights": {
+      "light": 0.5,
+      "tide": 0.3,
+      "front": 0.2
+    },
+    "light": {
+      "map": {
+        "dusk": 1,
+        "night": 0.8,
+        "dawn": 0.9,
+        "day": 0.6
+      },
+      "text": {
+        "dusk": "Dusk activity peak for Weakfish.",
+        "night": "Night feeding period for Weakfish.",
+        "dawn": "Dawn activity peak for Weakfish.",
+        "day": "Daytime feeding period for Weakfish."
+      }
+    },
+    "tide": {
+      "map": {
+        "falling": 1,
+        "slack_low": 0.6,
+        "rising": 0.7,
+        "slack_high": 0.5
+      },
+      "text": {
+        "falling": "Outgoing tide flushes food for Weakfish.",
+        "slack_low": "Slack low tide for Weakfish.",
+        "rising": "Incoming tide brings bait for Weakfish.",
+        "slack_high": "Slack high tide for Weakfish."
+      }
+    },
+    "front": {
+      "map": {
+        "approaching": 0.8,
+        "just_passed": 0.4,
+        "lull": 0.5
+      },
+      "text": {
+        "approaching": "Pre-front feeding spree for Weakfish.",
+        "just_passed": "Post-front slow period for Weakfish.",
+        "lull": "Stable weather pattern for Weakfish."
+      }
+    }
+  },
+  "lat_range": [
+    28,
+    42
+  ],
+  "regulations": {
+    "summary": "Regulated species - See MyFWC/NOAA guidelines",
+    "min_size": "Check MyFWC/NOAA rules",
+    "max_size": "None",
+    "bag_limit": "Varies by region / state",
+    "season": "Open year-round (subject to local quota/closures)",
+    "jurisdiction": "Atlantic & Gulf State/Federal Waters",
+    "source_name": "MyFWC Saltwater Regulations",
+    "source_url": "https://myfwc.com/fishing/saltwater/recreational/"
+  },
+  "lon_range": [
+    -100,
+    -50
+  ]
+}

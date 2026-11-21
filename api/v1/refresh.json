@@ -1,0 +1,17 @@
+{
+  "api_version": 1,
+  "generated_utc": "2026-11-21T17:23:15.510553+00:00",
+  "status": "degraded",
+  "prediction_refreshed": true,
+  "prediction_snapshot": {
+    "status": "refreshed",
+    "generated_utc": "2026-11-21T17:23:15.510553+00:00",
+    "source": "current_refresh"
+  },
+  "critical_issues": [],
+  "optional_layer_issues": [],
+  "freshness_issues": [
+    "chlorophyll: stale (149.4 hours old)"
+  ],
+  "errors": []
+}

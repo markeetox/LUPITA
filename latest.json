@@ -1,0 +1,1158 @@
+{
+  "generated_utc": "2026-11-21T17:23:15.510553+00:00",
+  "region": "north_america_coastlines",
+  "buoys": [
+    {
+      "station": "41122",
+      "name": "Hollywood Beach, FL",
+      "lat": 26.0,
+      "lon": -80.1,
+      "ok": true,
+      "time_utc": "2026-11-21T16:30:00+00:00",
+      "water_temp_c": 26.3,
+      "water_temp_time_utc": "2026-11-21T16:30:00+00:00",
+      "air_temp_c": 24.8,
+      "wind_kn": null,
+      "gust_kn": null,
+      "wind_dir_deg": null,
+      "wave_height_m": 0.2,
+      "wave_period_s": 8.0,
+      "pressure_hpa": null,
+      "pressure_change_3h_hpa": null,
+      "water_temp_change_24h_c": 0.8,
+      "zone": "ocean"
+    },
+    {
+      "station": "VAKF1",
+      "name": "Virginia Key, FL",
+      "lat": 25.73,
+      "lon": -80.16,
+      "ok": true,
+      "time_utc": "2026-11-21T16:48:00+00:00",
+      "water_temp_c": 24.7,
+      "water_temp_time_utc": "2026-11-21T16:48:00+00:00",
+      "air_temp_c": 25.5,
+      "wind_kn": 8.0,
+      "gust_kn": 8.9,
+      "wind_dir_deg": 220.0,
+      "wave_height_m": null,
+      "wave_period_s": null,
+      "pressure_hpa": 1014.0,
+      "pressure_change_3h_hpa": -0.7,
+      "water_temp_change_24h_c": 0.3,
+      "zone": "coastal"
+    },
+    {
+      "station": "PEGF1",
+      "name": "Port Everglades, FL",
+      "lat": 26.09,
+      "lon": -80.12,
+      "ok": true,
+      "time_utc": "2026-11-21T16:48:00+00:00",
+      "water_temp_c": null,
+      "water_temp_time_utc": null,
+      "air_temp_c": 24.9,
+      "wind_kn": 1.0,
+      "gust_kn": 2.9,
+      "wind_dir_deg": 340.0,
+      "wave_height_m": null,
+      "wave_period_s": null,
+      "pressure_hpa": 1013.2,
+      "pressure_change_3h_hpa": -1.0,
+      "water_temp_change_24h_c": null,
+      "zone": "coastal"
+    },
+    {
+      "station": "LKWF1",
+      "name": "Lake Worth Pier, FL",
+      "lat": 26.61,
+      "lon": -80.03,
+      "ok": true,
+      "time_utc": "2026-11-21T16:48:00+00:00",
+      "water_temp_c": 26.6,
+      "water_temp_time_utc": "2026-11-21T16:48:00+00:00",
+      "air_temp_c": 23.8,
+      "wind_kn": 5.1,
+      "gust_kn": 6.0,
+      "wind_dir_deg": 290.0,
+      "wave_height_m": null,
+      "wave_period_s": null,
+      "pressure_hpa": 1014.2,
+      "pressure_change_3h_hpa": -0.8,
+      "water_temp_change_24h_c": -0.3,
+      "zone": "coastal"
+    },
+    {
+      "station": "THRF1",
+      "name": "Thursday Point, FL",
+      "lat": 25.2,
+      "lon": -80.37,
+      "ok": true,
+      "time_utc": "2026-11-21T16:00:00+00:00",
+      "water_temp_c": 24.7,
+      "water_temp_time_utc": "2026-11-21T16:00:00+00:00",
+      "air_temp_c": null,
+      "wind_kn": null,
+      "gust_kn": null,
+      "wind_dir_deg": null,
+      "wave_height_m": null,
+      "wave_period_s": null,
+      "pressure_hpa": null,
+      "pressure_change_3h_hpa": null,
+      "water_temp_change_24h_c": 0.5,
+      "zone": "inshore"
+    },
+    {
+      "station": "MNBF1",
+      "name": "Manatee Bay, FL",
+      "lat": 25.24,
+      "lon": -80.42,
+      "ok": true,
+      "time_utc": "2026-11-21T16:00:00+00:00",
+      "water_temp_c": 24.9,
+      "water_temp_time_utc": "2026-11-21T16:00:00+00:00",
+      "air_temp_c": null,
+      "wind_kn": null,
+      "gust_kn": null,
+      "wind_dir_deg": null,
+      "wave_height_m": null,
+      "wave_period_s": null,
+      "pressure_hpa": null,
+      "pressure_change_3h_hpa": null,
+      "water_temp_change_24h_c": 0.4,
+      "zone": "inshore"
+    },
+    {
+      "station": "41068",
+      "name": "Fort Pierce, FL (FTP)",
+      "lat": 27.59,
+      "lon": -80.19,
+      "ok": true,
+      "time_utc": "2026-11-21T16:08:00+00:00",
+      "water_temp_c": 23.7,
+      "water_temp_time_utc": "2026-11-21T16:08:00+00:00",
+      "air_temp_c": 23.8,
+      "wind_kn": 9.7,
+      "gust_kn": 11.7,
+      "wind_dir_deg": 160.0,
+      "wave_height_m": null,
+      "wave_period_s": null,
+      "pressure_hpa": 1013.8,
+      "pressure_change_3h_hpa": 0.0,
+      "water_temp_change_24h_c": 0.0,
+      "zone": "ocean"
+    },
+    {
+      "station": "41114",
+      "name": "Fort Pierce, FL (134)",
+      "lat": 27.56,
+      "lon": -80.22,
+      "ok": true,
+      "time_utc": "2026-11-21T16:56:00+00:00",
+      "water_temp_c": 23.9,
+      "water_temp_time_utc": "2026-11-21T16:56:00+00:00",
+      "air_temp_c": null,
+      "wind_kn": null,
+      "gust_kn": null,
+      "wind_dir_deg": null,
+      "wave_height_m": 1.3,
+      "wave_period_s": 10.0,
+      "pressure_hpa": null,
+      "pressure_change_3h_hpa": null,
+      "water_temp_change_24h_c": -0.2,
+      "zone": "ocean"
+    },
+    {
+      "station": "44139",
+      "name": "Halifax / Offshore, NS",
+      "lat": 44.24,
+      "lon": -62.75,
+      "ok": true,
+      "time_utc": "2026-11-21T17:00:00+00:00",
+      "water_temp_c": 9.5,
+      "water_temp_time_utc": "2026-11-21T17:00:00+00:00",
+      "air_temp_c": 8.0,
+      "wind_kn": 13.6,
+      "gust_kn": 15.6,
+      "wind_dir_deg": 330.0,
+      "wave_height_m": 1.1,
+      "wave_period_s": 6.0,
+      "pressure_hpa": 1026.4,
+      "pressure_change_3h_hpa": 0.2,
+      "water_temp_change_24h_c": 0.2,
+      "zone": "ocean"
+    },
+    {
+      "station": "44009",
+      "name": "Delaware Bay, DE/NJ",
+      "lat": 38.46,
+      "lon": -74.7,
+      "ok": true,
+      "time_utc": "2026-11-21T16:40:00+00:00",
+      "water_temp_c": 15.6,
+      "water_temp_time_utc": "2026-11-21T16:00:00+00:00",
+      "air_temp_c": 15.6,
+      "wind_kn": 5.8,
+      "gust_kn": 7.8,
+      "wind_dir_deg": 60.0,
+      "wave_height_m": null,
+      "wave_period_s": null,
+      "pressure_hpa": 1027.4,
+      "pressure_change_3h_hpa": -0.7,
+      "water_temp_change_24h_c": null,
+      "zone": "ocean"
+    },
+    {
+      "station": "41013",
+      "name": "Frying Pan Shoals, NC",
+      "lat": 33.44,
+      "lon": -77.74,
+      "ok": true,
+      "time_utc": "2026-11-21T16:40:00+00:00",
+      "water_temp_c": 23.4,
+      "water_temp_time_utc": "2026-11-21T16:40:00+00:00",
+      "air_temp_c": 22.8,
+      "wind_kn": 17.5,
+      "gust_kn": 21.4,
+      "wind_dir_deg": 70.0,
+      "wave_height_m": 2.9,
+      "wave_period_s": 9.0,
+      "pressure_hpa": 1018.1,
+      "pressure_change_3h_hpa": -1.2,
+      "water_temp_change_24h_c": -0.5,
+      "zone": "ocean"
+    },
+    {
+      "station": "42001",
+      "name": "Mid Gulf of Mexico",
+      "lat": 25.89,
+      "lon": -89.65,
+      "ok": true,
+      "time_utc": "2026-11-21T16:40:00+00:00",
+      "water_temp_c": 26.8,
+      "water_temp_time_utc": "2026-11-21T16:40:00+00:00",
+      "air_temp_c": 26.1,
+      "wind_kn": 7.8,
+      "gust_kn": 9.7,
+      "wind_dir_deg": 60.0,
+      "wave_height_m": 1.6,
+      "wave_period_s": 8.0,
+      "pressure_hpa": 1014.0,
+      "pressure_change_3h_hpa": 0.5,
+      "water_temp_change_24h_c": 0.2,
+      "zone": "ocean"
+    },
+    {
+      "station": "42055",
+      "name": "Bay of Campeche, MX",
+      "lat": 22.14,
+      "lon": -94.11,
+      "ok": true,
+      "time_utc": "2026-11-21T16:40:00+00:00",
+      "water_temp_c": 28.0,
+      "water_temp_time_utc": "2026-11-21T16:40:00+00:00",
+      "air_temp_c": 25.6,
+      "wind_kn": 5.8,
+      "gust_kn": 7.8,
+      "wind_dir_deg": 70.0,
+      "wave_height_m": 1.1,
+      "wave_period_s": 9.0,
+      "pressure_hpa": 1014.9,
+      "pressure_change_3h_hpa": 0.3,
+      "water_temp_change_24h_c": -0.3,
+      "zone": "ocean"
+    },
+    {
+      "station": "46086",
+      "name": "San Clemente Basin, CA",
+      "lat": 32.5,
+      "lon": -118.03,
+      "ok": true,
+      "time_utc": "2026-11-21T16:40:00+00:00",
+      "water_temp_c": 23.5,
+      "water_temp_time_utc": "2026-11-21T16:40:00+00:00",
+      "air_temp_c": 18.9,
+      "wind_kn": 5.8,
+      "gust_kn": 7.8,
+      "wind_dir_deg": 50.0,
+      "wave_height_m": null,
+      "wave_period_s": null,
+      "pressure_hpa": 1017.5,
+      "pressure_change_3h_hpa": 1.6,
+      "water_temp_change_24h_c": 0.0,
+      "zone": "ocean"
+    },
+    {
+      "station": "46025",
+      "name": "Santa Monica Basin, CA",
+      "lat": 33.75,
+      "lon": -119.08,
+      "ok": true,
+      "time_utc": "2026-11-21T16:40:00+00:00",
+      "water_temp_c": 21.4,
+      "water_temp_time_utc": "2026-11-21T16:40:00+00:00",
+      "air_temp_c": 18.3,
+      "wind_kn": 5.8,
+      "gust_kn": 7.8,
+      "wind_dir_deg": 70.0,
+      "wave_height_m": 1.1,
+      "wave_period_s": 14.0,
+      "pressure_hpa": 1017.9,
+      "pressure_change_3h_hpa": 1.3,
+      "water_temp_change_24h_c": -1.0,
+      "zone": "ocean"
+    },
+    {
+      "station": "46011",
+      "name": "Santa Maria, CA",
+      "lat": 34.95,
+      "lon": -120.99,
+      "ok": true,
+      "time_utc": "2026-11-20T20:20:00+00:00",
+      "water_temp_c": 21.4,
+      "water_temp_time_utc": "2026-11-20T20:20:00+00:00",
+      "air_temp_c": 15.4,
+      "wind_kn": 7.8,
+      "gust_kn": 11.7,
+      "wind_dir_deg": 310.0,
+      "wave_height_m": 2.3,
+      "wave_period_s": 12.0,
+      "pressure_hpa": 1018.6,
+      "pressure_change_3h_hpa": -0.5,
+      "water_temp_change_24h_c": 0.5,
+      "zone": "ocean"
+    },
+    {
+      "station": "46042",
+      "name": "Monterey Bay, CA",
+      "lat": 36.75,
+      "lon": -122.42,
+      "ok": true,
+      "time_utc": "2026-11-21T16:40:00+00:00",
+      "water_temp_c": 20.0,
+      "water_temp_time_utc": "2026-11-21T16:40:00+00:00",
+      "air_temp_c": 13.5,
+      "wind_kn": 11.7,
+      "gust_kn": 15.6,
+      "wind_dir_deg": 90.0,
+      "wave_height_m": 2.0,
+      "wave_period_s": 11.0,
+      "pressure_hpa": 1019.4,
+      "pressure_change_3h_hpa": 0.6,
+      "water_temp_change_24h_c": 0.8,
+      "zone": "ocean"
+    },
+    {
+      "station": "46026",
+      "name": "San Francisco, CA",
+      "lat": 37.75,
+      "lon": -122.82,
+      "ok": true,
+      "time_utc": "2026-11-21T16:50:00+00:00",
+      "water_temp_c": 18.5,
+      "water_temp_time_utc": "2026-11-21T16:40:00+00:00",
+      "air_temp_c": null,
+      "wind_kn": 15.6,
+      "gust_kn": 17.5,
+      "wind_dir_deg": 100.0,
+      "wave_height_m": 1.5,
+      "wave_period_s": 11.0,
+      "pressure_hpa": null,
+      "pressure_change_3h_hpa": null,
+      "water_temp_change_24h_c": 0.2,
+      "zone": "ocean"
+    },
+    {
+      "station": "46022",
+      "name": "Eel River, CA",
+      "lat": 40.75,
+      "lon": -124.58,
+      "ok": true,
+      "time_utc": "2026-11-21T16:50:00+00:00",
+      "water_temp_c": 17.4,
+      "water_temp_time_utc": "2026-11-21T16:40:00+00:00",
+      "air_temp_c": 11.4,
+      "wind_kn": 17.5,
+      "gust_kn": 21.4,
+      "wind_dir_deg": 260.0,
+      "wave_height_m": 2.8,
+      "wave_period_s": 7.0,
+      "pressure_hpa": 1015.3,
+      "pressure_change_3h_hpa": 1.2,
+      "water_temp_change_24h_c": -0.2,
+      "zone": "ocean"
+    },
+    {
+      "station": "46050",
+      "name": "Stonewall Bank, OR",
+      "lat": 44.64,
+      "lon": -124.53,
+      "ok": true,
+      "time_utc": "2026-11-21T16:40:00+00:00",
+      "water_temp_c": null,
+      "water_temp_time_utc": null,
+      "air_temp_c": null,
+      "wind_kn": 19.4,
+      "gust_kn": 23.3,
+      "wind_dir_deg": 200.0,
+      "wave_height_m": 3.1,
+      "wave_period_s": 7.0,
+      "pressure_hpa": 1009.6,
+      "pressure_change_3h_hpa": -0.4,
+      "water_temp_change_24h_c": null,
+      "zone": "ocean"
+    },
+    {
+      "station": "46089",
+      "name": "Tillamook, OR",
+      "lat": 45.89,
+      "lon": -125.82,
+      "ok": true,
+      "time_utc": "2026-11-21T16:40:00+00:00",
+      "water_temp_c": 12.9,
+      "water_temp_time_utc": "2026-11-21T16:40:00+00:00",
+      "air_temp_c": null,
+      "wind_kn": 15.6,
+      "gust_kn": 21.4,
+      "wind_dir_deg": 160.0,
+      "wave_height_m": 3.6,
+      "wave_period_s": 8.0,
+      "pressure_hpa": 1005.4,
+      "pressure_change_3h_hpa": -1.2,
+      "water_temp_change_24h_c": 0.7,
+      "zone": "ocean"
+    },
+    {
+      "station": "46029",
+      "name": "Columbia River Bar, WA",
+      "lat": 46.16,
+      "lon": -124.13,
+      "ok": true,
+      "time_utc": "2026-11-21T16:40:00+00:00",
+      "water_temp_c": 13.1,
+      "water_temp_time_utc": "2026-11-21T16:40:00+00:00",
+      "air_temp_c": 11.2,
+      "wind_kn": 21.4,
+      "gust_kn": 29.2,
+      "wind_dir_deg": 140.0,
+      "wave_height_m": 2.0,
+      "wave_period_s": 14.0,
+      "pressure_hpa": 1008.3,
+      "pressure_change_3h_hpa": -1.7,
+      "water_temp_change_24h_c": 0.0,
+      "zone": "ocean"
+    },
+    {
+      "station": "46087",
+      "name": "Neah Bay, WA",
+      "lat": 48.49,
+      "lon": -124.73,
+      "ok": true,
+      "time_utc": "2026-11-21T16:50:00+00:00",
+      "water_temp_c": 11.7,
+      "water_temp_time_utc": "2026-11-21T16:40:00+00:00",
+      "air_temp_c": 8.1,
+      "wind_kn": 27.2,
+      "gust_kn": 31.1,
+      "wind_dir_deg": 100.0,
+      "wave_height_m": 1.8,
+      "wave_period_s": 12.0,
+      "pressure_hpa": 1011.3,
+      "pressure_change_3h_hpa": -1.4,
+      "water_temp_change_24h_c": 0.8,
+      "zone": "ocean"
+    },
+    {
+      "station": "46206",
+      "name": "La Perouse Bank, BC",
+      "lat": 48.83,
+      "lon": -126.0,
+      "ok": true,
+      "time_utc": "2026-11-21T17:00:00+00:00",
+      "water_temp_c": 12.5,
+      "water_temp_time_utc": "2026-11-21T17:00:00+00:00",
+      "air_temp_c": 9.2,
+      "wind_kn": 23.3,
+      "gust_kn": 31.1,
+      "wind_dir_deg": 120.0,
+      "wave_height_m": 2.6,
+      "wave_period_s": 7.0,
+      "pressure_hpa": 1009.1,
+      "pressure_change_3h_hpa": -1.4,
+      "water_temp_change_24h_c": 0.0,
+      "zone": "ocean"
+    }
+  ],
+  "sst": {
+    "parameter": "sst_c",
+    "dataset": "jplMURSST41",
+    "time": "2026-11-20T09:00:00Z",
+    "gradient_unit": "degC per km",
+    "shape": [
+      901,
+      1761
+    ],
+    "valid_fraction": 0.552,
+    "value_min": -1.726,
+    "value_max": 31.436,
+    "gradient_max": 0.2936,
+    "strongest_gradient_cells": [
+      {
+        "lat": 37.8,
+        "lon": -67.05,
+        "value": 0.2936
+      },
+      {
+        "lat": 37.85,
+        "lon": -67.2,
+        "value": 0.2721
+      },
+      {
+        "lat": 37.9,
+        "lon": -67.25,
+        "value": 0.2715
+      },
+      {
+        "lat": 38.0,
+        "lon": -65.95,
+        "value": 0.2698
+      },
+      {
+        "lat": 38.05,
+        "lon": -65.95,
+        "value": 0.2678
+      },
+      {
+        "lat": 37.95,
+        "lon": -67.35,
+        "value": 0.2676
+      },
+      {
+        "lat": 41.15,
+        "lon": -66.25,
+        "value": 0.2652
+      },
+      {
+        "lat": 37.8,
+        "lon": -67.0,
+        "value": 0.2639
+      },
+      {
+        "lat": 41.2,
+        "lon": -66.2,
+        "value": 0.2633
+      },
+      {
+        "lat": 41.85,
+        "lon": -65.65,
+        "value": 0.2632
+      },
+      {
+        "lat": 37.9,
+        "lon": -67.3,
+        "value": 0.2618
+      },
+      {
+        "lat": 41.2,
+        "lon": -66.25,
+        "value": 0.2618
+      },
+      {
+        "lat": 37.85,
+        "lon": -67.15,
+        "value": 0.2596
+      },
+      {
+        "lat": 41.9,
+        "lon": -65.6,
+        "value": 0.2578
+      },
+      {
+        "lat": 41.25,
+        "lon": -66.2,
+        "value": 0.2577
+      },
+      {
+        "lat": 39.7,
+        "lon": -65.0,
+        "value": 0.2574
+      },
+      {
+        "lat": 40.35,
+        "lon": -66.8,
+        "value": 0.2551
+      },
+      {
+        "lat": 37.75,
+        "lon": -66.95,
+        "value": 0.2545
+      },
+      {
+        "lat": 38.05,
+        "lon": -65.9,
+        "value": 0.2538
+      },
+      {
+        "lat": 40.8,
+        "lon": -66.9,
+        "value": 0.2531
+      },
+      {
+        "lat": 41.25,
+        "lon": -66.15,
+        "value": 0.2526
+      },
+      {
+        "lat": 37.8,
+        "lon": -67.1,
+        "value": 0.2525
+      },
+      {
+        "lat": 41.8,
+        "lon": -65.7,
+        "value": 0.2515
+      },
+      {
+        "lat": 40.5,
+        "lon": -63.3,
+        "value": 0.2501
+      },
+      {
+        "lat": 43.2,
+        "lon": -60.0,
+        "value": 0.2473
+      }
+    ],
+    "source_endpoint": "https://coastwatch.pfeg.noaa.gov/erddap"
+  },
+  "chlorophyll": {
+    "parameter": "chlorophyll",
+    "dataset": "nesdisVHNnoaa20chlaDaily",
+    "time": "2026-11-15T12:00:00Z",
+    "gradient_unit": "log10(mg/m3) per km",
+    "shape": [
+      240,
+      470
+    ],
+    "valid_fraction": 0.214,
+    "value_min": 0.001,
+    "value_max": 385.568,
+    "gradient_max": 0.0974,
+    "strongest_gradient_cells": [
+      {
+        "lat": 45.5438,
+        "lon": -127.8563,
+        "value": 0.0974
+      },
+      {
+        "lat": 15.1687,
+        "lon": -93.5438,
+        "value": 0.0961
+      },
+      {
+        "lat": 44.9813,
+        "lon": -87.1688,
+        "value": 0.0943
+      },
+      {
+        "lat": 41.0438,
+        "lon": -134.2313,
+        "value": 0.0904
+      },
+      {
+        "lat": 44.9813,
+        "lon": -129.1688,
+        "value": 0.0859
+      },
+      {
+        "lat": 42.7313,
+        "lon": -131.7938,
+        "value": 0.0837
+      },
+      {
+        "lat": 45.3563,
+        "lon": -136.8563,
+        "value": 0.0824
+      },
+      {
+        "lat": 45.1688,
+        "lon": -86.9813,
+        "value": 0.08
+      },
+      {
+        "lat": 40.4813,
+        "lon": -133.2938,
+        "value": 0.0794
+      },
+      {
+        "lat": 45.3563,
+        "lon": -137.7938,
+        "value": 0.0785
+      },
+      {
+        "lat": 45.5438,
+        "lon": -127.6688,
+        "value": 0.0772
+      },
+      {
+        "lat": 37.2938,
+        "lon": -50.7938,
+        "value": 0.0771
+      },
+      {
+        "lat": 44.0438,
+        "lon": -125.7938,
+        "value": 0.0769
+      },
+      {
+        "lat": 36.7313,
+        "lon": -133.6688,
+        "value": 0.0768
+      },
+      {
+        "lat": 45.3563,
+        "lon": -137.4188,
+        "value": 0.0767
+      },
+      {
+        "lat": 41.4188,
+        "lon": -69.5438,
+        "value": 0.0765
+      },
+      {
+        "lat": 43.6688,
+        "lon": -129.9188,
+        "value": 0.0762
+      },
+      {
+        "lat": 21.7312,
+        "lon": -97.4813,
+        "value": 0.0755
+      },
+      {
+        "lat": 40.6688,
+        "lon": -133.1063,
+        "value": 0.0753
+      },
+      {
+        "lat": 44.0438,
+        "lon": -125.4188,
+        "value": 0.0751
+      },
+      {
+        "lat": 40.1063,
+        "lon": -134.7938,
+        "value": 0.0743
+      },
+      {
+        "lat": 47.4188,
+        "lon": -127.6688,
+        "value": 0.0735
+      },
+      {
+        "lat": 38.4188,
+        "lon": -128.6063,
+        "value": 0.0734
+      },
+      {
+        "lat": 47.0438,
+        "lon": -125.0438,
+        "value": 0.0733
+      },
+      {
+        "lat": 46.8563,
+        "lon": -127.2938,
+        "value": 0.073
+      }
+    ],
+    "source_endpoint": "https://coastwatch.pfeg.noaa.gov/erddap"
+  },
+  "structure": {
+    "artificial_reef_records": 4548,
+    "natural_reef_polygons": 25362,
+    "cells_wreck": 221,
+    "cells_artificial_reef": 344,
+    "cells_natural_reef": 307
+  },
+  "habitat": {
+    "feature_count": 49903,
+    "geometry_feature_count": 49903,
+    "class_counts": {
+      "Artificial": 942,
+      "Coral Reef and Hardbottom": 23412,
+      "Dredged/Excavated": 70,
+      "Land": 892,
+      "Mangrove": 1957,
+      "Not Classified": 727,
+      "Seagrass": 12509,
+      "Unconsolidated Sediment": 9394
+    },
+    "category_feature_counts": {
+      "artificial": 942,
+      "dredged": 70,
+      "hard_bottom": 23412,
+      "seagrass": 12509,
+      "soft_bottom": 9394
+    },
+    "unknown_classes": {
+      "Land": 892,
+      "Mangrove": 1957,
+      "Not Classified": 727
+    },
+    "mapped_cell_count": 514,
+    "category_cell_counts": {
+      "artificial": 21,
+      "dredged": 13,
+      "hard_bottom": 354,
+      "seagrass": 375,
+      "soft_bottom": 374
+    },
+    "dataset": "FWC Unified Reef Map v2.2, Level 0 (released January 2025; component source dates vary)",
+    "version": "2.2",
+    "release_date": "2025-01",
+    "class_field": "FIRST_ClassLv0",
+    "coverage_semantics": "Zero category cover outside mapped polygons means unknown, not confirmed absence.",
+    "query_region": {
+      "lat": [
+        24,
+        28
+      ],
+      "lon": [
+        -83,
+        -79
+      ]
+    },
+    "sample_cell_km": 0.25
+  },
+  "bathymetry": {
+    "dataset": "ETOPO_2022_v1_15s",
+    "static": true,
+    "source_grid_shape": [
+      721,
+      1409
+    ],
+    "source_valid_fraction": 1.0,
+    "aligned_grid_shape": [
+      901,
+      1761
+    ],
+    "depth_valid_fraction": 0.532274,
+    "depth_min_m": 0.000202,
+    "depth_max_m": 8374.563526,
+    "stride": {
+      "latitude": 15,
+      "longitude": 15
+    },
+    "note": "NOAA NCEI ETOPO 2022 15-arc-second global relief model. Sampled every 15 source cells (~3.75 arc-minutes) to bound the broad North America request; do not interpret this as reef-scale or shallow-flat bathymetry. Negative z values are below sea level, so depth_m = -z."
+  },
+  "data_quality": {
+    "schema_version": 1,
+    "layers": {
+      "sst": {
+        "status": "loaded",
+        "dataset": "jplMURSST41",
+        "source_endpoint": "https://coastwatch.pfeg.noaa.gov/erddap",
+        "grid_shape": [
+          901,
+          1761
+        ],
+        "valid_fraction": 0.551977,
+        "time": "2026-11-20T09:00:00Z",
+        "freshness": {
+          "observed_at": "2026-11-20T09:00:00Z",
+          "warning_age_hours": 36,
+          "stale_age_hours": 72,
+          "threshold_basis": "Provisional operational thresholds for a daily gridded SST product; validate against observed ERDDAP latency.",
+          "age_hours": 32.39,
+          "status": "fresh"
+        }
+      },
+      "chlorophyll": {
+        "status": "loaded",
+        "primary_dataset": "nesdisVHNnoaa20chlaDaily",
+        "primary_enabled": true,
+        "primary_loaded": true,
+        "primary_source_grid_shape": [
+          240,
+          470
+        ],
+        "primary_source_valid_fraction": 0.21445921985815602,
+        "primary_aligned_grid_shape": [
+          901,
+          1761
+        ],
+        "primary_aligned_valid_fraction": 0.215631,
+        "gapfilled_dataset": "nesdisVHNnoaaSNPPnoaa20NRTchlaGapfilledDaily",
+        "gapfilled_enabled": false,
+        "gapfilled_attempted": false,
+        "gapfilled_loaded": false,
+        "gapfilled_source_grid_shape": null,
+        "gapfilled_source_valid_fraction": null,
+        "primary_time": "2026-11-15T12:00:00Z",
+        "gapfilled_time": null,
+        "gapfilled_used": false,
+        "final_dataset": "nesdisVHNnoaa20chlaDaily",
+        "final_grid_shape": [
+          901,
+          1761
+        ],
+        "final_valid_fraction": 0.215631,
+        "time": "2026-11-15T12:00:00Z",
+        "freshness": {
+          "observed_at": "2026-11-15T12:00:00Z",
+          "warning_age_hours": 72,
+          "stale_age_hours": 120,
+          "threshold_basis": "Provisional operational thresholds for daily satellite scenes; cloud gaps and processing latency are expected.",
+          "age_hours": 149.39,
+          "status": "stale"
+        },
+        "primary_freshness": {
+          "observed_at": "2026-11-15T12:00:00Z",
+          "warning_age_hours": 72,
+          "stale_age_hours": 120,
+          "threshold_basis": "Provisional operational thresholds for daily satellite scenes; cloud gaps and processing latency are expected.",
+          "age_hours": 149.39,
+          "status": "stale"
+        }
+      },
+      "bathymetry": {
+        "status": "loaded",
+        "dataset": "ETOPO_2022_v1_15s",
+        "static": true,
+        "source_grid_shape": [
+          721,
+          1409
+        ],
+        "source_valid_fraction": 1.0,
+        "aligned_grid_shape": [
+          901,
+          1761
+        ],
+        "depth_valid_fraction": 0.532274,
+        "depth_min_m": 0.000202,
+        "depth_max_m": 8374.563526,
+        "stride": {
+          "latitude": 15,
+          "longitude": 15
+        },
+        "note": "NOAA NCEI ETOPO 2022 15-arc-second global relief model. Sampled every 15 source cells (~3.75 arc-minutes) to bound the broad North America request; do not interpret this as reef-scale or shallow-flat bathymetry. Negative z values are below sea level, so depth_m = -z."
+      },
+      "currents": {
+        "status": "loaded",
+        "selected_source": "NOAA HF Radar",
+        "blend_mode": "HF Radar only; satellite altimetry excluded from current field",
+        "primary": {
+          "dataset": "ucsdHfrE2",
+          "loaded": true,
+          "time": "2026-11-21T09:00:00Z",
+          "source_grid_shape": [
+            251,
+            285
+          ],
+          "source_valid_fraction": 0.017152,
+          "aligned_valid_fraction": 0.000108,
+          "query_region": {
+            "lat": [
+              24,
+              28.5
+            ],
+            "lon": [
+              -83.5,
+              -78
+            ]
+          },
+          "query_region_grid_cells": 10101,
+          "query_region_aligned_valid_cells": 172,
+          "query_region_aligned_valid_fraction": 0.017028,
+          "quality": {
+            "hdop_median": 0.46,
+            "number_of_sites_median": 2.0,
+            "number_of_radials_median": 39.0,
+            "quality_fields_are_diagnostic_only": true
+          }
+        },
+        "fallback": {
+          "dataset": "nesdisSSH1day",
+          "loaded": true,
+          "time": "2026-09-28T00:00:00Z",
+          "source_grid_shape": [
+            181,
+            353
+          ],
+          "aligned_valid_fraction": 0.534818,
+          "age_hours_at_load": 1313.402,
+          "max_current_age_hours": 72,
+          "current_eligible": false,
+          "used_for_currents": false,
+          "current_exclusion_reason": "older than 72 hour current-use limit"
+        },
+        "fallback_used_for_currents": false,
+        "combined_aligned_valid_fraction": 0.000108,
+        "query_region_coverage": {
+          "region": {
+            "lat": [
+              24,
+              28.5
+            ],
+            "lon": [
+              -83.5,
+              -78
+            ]
+          },
+          "target_grid_cells": 10101,
+          "hfr_valid_cells": 172,
+          "hfr_valid_fraction": 0.017028,
+          "altimetry_valid_cells": 7668,
+          "altimetry_valid_fraction": 0.759133,
+          "combined_valid_cells": 172,
+          "combined_valid_fraction": 0.017028
+        },
+        "dataset": "ucsdHfrE2",
+        "time": "2026-11-21T09:00:00Z",
+        "freshness": {
+          "observed_at": "2026-11-21T09:00:00Z",
+          "warning_age_hours": 12,
+          "stale_age_hours": 24,
+          "threshold_basis": "Provisional operational thresholds for NOAA near-real-time hourly 2 km HF Radar surface-current vectors; calibrate against production observation latency.",
+          "age_hours": 8.39,
+          "status": "fresh"
+        },
+        "primary_freshness": {
+          "observed_at": "2026-11-21T09:00:00Z",
+          "warning_age_hours": 12,
+          "stale_age_hours": 24,
+          "threshold_basis": "Provisional operational thresholds for NOAA near-real-time hourly 2 km HF Radar surface-current vectors; calibrate against production observation latency.",
+          "age_hours": 8.39,
+          "status": "fresh"
+        },
+        "fallback_freshness": {
+          "observed_at": "2026-09-28T00:00:00Z",
+          "warning_age_hours": 36,
+          "stale_age_hours": 72,
+          "threshold_basis": "Provisional operational thresholds for daily satellite-altimetry geostrophic currents; broad-area fallback and Gulf Stream-edge context.",
+          "age_hours": 1313.39,
+          "status": "stale"
+        }
+      },
+      "reef_structure": {
+        "status": "loaded",
+        "artificial_reef_records": 4548,
+        "natural_reef_polygons": 25362,
+        "cells_wreck": 221,
+        "cells_artificial_reef": 344,
+        "cells_natural_reef": 307,
+        "dataset": "FWC artificial reefs + FWC Unified Reef Map v2.2"
+      },
+      "benthic_habitat": {
+        "status": "loaded",
+        "feature_count": 49903,
+        "geometry_feature_count": 49903,
+        "class_counts": {
+          "Artificial": 942,
+          "Coral Reef and Hardbottom": 23412,
+          "Dredged/Excavated": 70,
+          "Land": 892,
+          "Mangrove": 1957,
+          "Not Classified": 727,
+          "Seagrass": 12509,
+          "Unconsolidated Sediment": 9394
+        },
+        "category_feature_counts": {
+          "artificial": 942,
+          "dredged": 70,
+          "hard_bottom": 23412,
+          "seagrass": 12509,
+          "soft_bottom": 9394
+        },
+        "unknown_classes": {
+          "Land": 892,
+          "Mangrove": 1957,
+          "Not Classified": 727
+        },
+        "mapped_cell_count": 514,
+        "category_cell_counts": {
+          "artificial": 21,
+          "dredged": 13,
+          "hard_bottom": 354,
+          "seagrass": 375,
+          "soft_bottom": 374
+        },
+        "dataset": "FWC Unified Reef Map v2.2, Level 0 (released January 2025; component source dates vary)",
+        "version": "2.2",
+        "release_date": "2025-01",
+        "class_field": "FIRST_ClassLv0",
+        "coverage_semantics": "Zero category cover outside mapped polygons means unknown, not confirmed absence.",
+        "query_region": {
+          "lat": [
+            24,
+            28
+          ],
+          "lon": [
+            -83,
+            -79
+          ]
+        },
+        "sample_cell_km": 0.25
+      },
+      "closures": {
+        "status": "loaded",
+        "area_count": 199
+      }
+    },
+    "semantics": {
+      "missing_data": "Unavailable or unmapped cells are unknown, not zero or confirmed absence.",
+      "bathymetry_resolution": "ETOPO is sampled at the configured stride and is regional context, not reef-scale navigation data.",
+      "chlorophyll": "Cloud-related gaps are expected; gap-filled use is reported separately and does not imply direct observation."
+    }
+  },
+  "closures": {
+    "loaded": true,
+    "areas": 199
+  },
+  "conditions": {
+    "moon": {
+      "illumination": 0.935,
+      "phase": "waxing gibbous",
+      "text": "94% lit, waxing gibbous; full moon in 3 days"
+    },
+    "front": {
+      "state": "lull",
+      "source": "observed",
+      "time": "2026-11-20T02:50:00+00:00",
+      "text": "A cold front passed about 39 h ago (observed)"
+    },
+    "sea": {
+      "now": {
+        "level": "good",
+        "label": "Good",
+        "wind_kn": 8.0,
+        "wave_ft": 0.7,
+        "text": "Good: SW wind 8 kn, waves 1 ft at 8 s (Virginia Key, FL, 4 km away; waves: Hollywood Beach, FL, 28 km away)",
+        "missing": []
+      },
+      "outlook": {
+        "level": "good",
+        "max_wind_kn": 11,
+        "at": "2026-11-21T18:00:00+00:00",
+        "text": "Forecast: winds up to 11 kn from the S around 1:00 PM (good for most boats)"
+      }
+    }
+  },
+  "fish_updated": true,
+  "errors": [],
+  "pipeline_health": {
+    "status": "degraded",
+    "prediction_refreshed": true,
+    "critical_issues": [],
+    "optional_layer_issues": [],
+    "freshness_issues": [
+      "chlorophyll: stale (149.4 hours old)"
+    ],
+    "warnings": []
+  },
+  "prediction_snapshot": {
+    "status": "refreshed",
+    "generated_utc": "2026-11-21T17:23:15.510553+00:00",
+    "source": "current_refresh"
+  }
+}

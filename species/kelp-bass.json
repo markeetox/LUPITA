@@ -1,0 +1,119 @@
+{
+  "schema_version": 1,
+  "id": "kelp-bass",
+  "common_name": "Kelp bass",
+  "scientific_name": "Paralabrax clathratus",
+  "aliases": [
+    "kelp bass"
+  ],
+  "habitat_zone": "reef",
+  "display": {
+    "color": "#d8b820"
+  },
+  "review_status": "Evidence reviewed 2026-11-17. CDFW enhanced status report and Smithsonian species account replace generic regulation citation; warm-SST recruitment evidence is qualitative, not a numeric preference curve.",
+  "image": {
+    "status": "placeholder",
+    "kind": "illustration",
+    "url": "fish/kelp-bass.png",
+    "credit": "Original illustration",
+    "license": "",
+    "plan": "web/fish/kelp-bass.png placeholder illustration."
+  },
+  "profile": {
+    "size": "Min limit 14 inches TL / Bag limit 5 per harvester / day",
+    "diet": "Small fish, crustaceans, squids, and pelagic prey",
+    "swimming_depth": "1 to 30 m",
+    "behavior": "Navigates West Coast kelp forests, rocky reefs, and coastal upwelling zones.",
+    "regulations_link": "https://wildlife.ca.gov/Fishing/Ocean/Regulations/Sport-Fishing",
+    "sources": [
+      "https://wildlife.ca.gov/Fishing/Ocean/Regulations/Sport-Fishing",
+      "https://nrm.dfg.ca.gov/FileHandler.ashx?DocumentID=174760",
+      "https://biogeodb.stri.si.edu/sftep/en/thefishes/species/1167/on",
+      "https://www.fishbase.org/summary/3335"
+    ]
+  },
+  "lat_range": [
+    25,
+    35
+  ],
+  "factors": [
+    {
+      "param": "sst_c",
+      "kind": "range",
+      "range": [
+        14,
+        23
+      ],
+      "ideal": [
+        16,
+        21
+      ],
+      "weight": 0.5,
+      "active": true,
+      "value_status": "partly_sourced",
+      "sources": [
+        "https://wildlife.ca.gov/Fishing/Ocean/Regulations/Sport-Fishing",
+        "https://nrm.dfg.ca.gov/FileHandler.ashx?DocumentID=174760"
+      ],
+      "reason_template": "Water is {value} C, inside preferred Pacific temperature range for kelp bass.",
+      "value_notes": "CDFW's 2019 enhanced status report states that larval survival is highest during extended periods of warmer-than-average SST and that local temperature/current regimes influence recruitment. This supports SST as a relevant environmental factor, but does not identify a numeric adult or larval optimum and does not validate the configured 14-23 °C range or 16-21 °C ideal."
+    },
+    {
+      "param": "depth_m",
+      "kind": "range",
+      "range": [
+        1,
+        30
+      ],
+      "ideal": [
+        3,
+        25
+      ],
+      "weight": 0.5,
+      "active": true,
+      "value_status": "partly_sourced",
+      "sources": [
+        "https://wildlife.ca.gov/Fishing/Ocean/Regulations/Sport-Fishing",
+        "https://nrm.dfg.ca.gov/FileHandler.ashx?DocumentID=174760",
+        "https://www.fishbase.org/summary/3335"
+      ],
+      "gate": true,
+      "reason_template": "Depth is {value} m, within prime Pacific depth zone for kelp bass.",
+      "value_notes": "CDFW reports kelp bass from the surface to 46 m, most abundant at 2.7-21.3 m; FishBase reports most occurrence around 2.4-21 m. This supports the shallow 1-30 m habitat screen, but the configured 3-25 m ideal extends beyond the best-documented abundance band and is not a measured depth-preference curve."
+    }
+  ],
+  "timing": {
+    "status": "angler_lore",
+    "light": {
+      "map": {
+        "day": 1,
+        "dawn": 0.9,
+        "dusk": 0.9,
+        "night": 0.5
+      },
+      "text": {
+        "day": "Full daylight when Pacific gamefish actively hunt.",
+        "dawn": "Dawn low-light feeding window.",
+        "dusk": "Dusk feeding window."
+      }
+    },
+    "note": "West Coast captain reports and biological upwelling patterns.",
+    "sources": [
+      "https://wildlife.ca.gov/Fishing/Ocean/Regulations/Sport-Fishing"
+    ]
+  },
+  "regulations": {
+    "summary": "CDFW: 14\" min TL; 5 per day combined",
+    "min_size": "14 inches TL",
+    "max_size": "None",
+    "bag_limit": "5 per harvester / day",
+    "season": "Open year-round",
+    "jurisdiction": "California State Waters (CDFW)",
+    "source_name": "West Coast State Regulations (CDFW/WDFW/ODFW/NOAA)",
+    "source_url": "https://wildlife.ca.gov/Fishing/Ocean/Regulations/Sport-Fishing"
+  },
+  "lon_range": [
+    -138,
+    -110
+  ]
+}

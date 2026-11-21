@@ -1,0 +1,122 @@
+{
+  "schema_version": 1,
+  "id": "soupfin-shark",
+  "common_name": "Soupfin shark",
+  "scientific_name": "Galeorhinus galeus",
+  "aliases": [
+    "soupfin shark"
+  ],
+  "habitat_zone": "inshore",
+  "display": {
+    "color": "#0a85d8"
+  },
+  "review_status": "Evidence reviewed 2026-11-17. WDFW/CDFG and California telemetry sources document sex-specific depth use and multiyear migration; no numeric SST preference evidence found.",
+  "image": {
+    "status": "placeholder",
+    "kind": "illustration",
+    "url": "fish/soupfin-shark.png",
+    "credit": "Original illustration",
+    "license": "",
+    "plan": "web/fish/soupfin-shark.png placeholder illustration."
+  },
+  "profile": {
+    "size": "Min limit None / Bag limit 2-10 per day",
+    "diet": "Small fish, crustaceans, squids, and pelagic prey",
+    "swimming_depth": "5 to 100 m",
+    "behavior": "Navigates West Coast kelp forests, rocky reefs, and coastal upwelling zones.",
+    "regulations_link": "https://wildlife.ca.gov/Fishing/Ocean/Regulations/Sport-Fishing",
+    "sources": [
+      "https://wildlife.ca.gov/Fishing/Ocean/Regulations/Sport-Fishing",
+      "https://wdfw.wa.gov/species-habitats/species/galeorhinus-galeus",
+      "https://nrm.dfg.ca.gov/FileHandler.ashx?DocumentID=34352",
+      "https://besjournals.onlinelibrary.wiley.com/doi/10.1111/1365-2664.13848",
+      "https://www.canada.ca/en/environment-climate-change/services/species-risk-public-registry/cosewic-assessments-status-reports/tope/chapter-6.html"
+    ]
+  },
+  "lat_range": [
+    28,
+    48
+  ],
+  "factors": [
+    {
+      "param": "sst_c",
+      "kind": "range",
+      "range": [
+        11,
+        20
+      ],
+      "ideal": [
+        13,
+        18
+      ],
+      "weight": 0.5,
+      "active": true,
+      "value_status": "needs_source",
+      "sources": [
+        "https://wildlife.ca.gov/Fishing/Ocean/Regulations/Sport-Fishing",
+        "https://wdfw.wa.gov/species-habitats/species/galeorhinus-galeus",
+        "https://nrm.dfg.ca.gov/FileHandler.ashx?DocumentID=34352"
+      ],
+      "reason_template": "Water is {value} C, inside preferred Pacific temperature range for soupfin shark.",
+      "value_notes": "WDFW and CDFW describe soupfin sharks as temperate/cold-temperate and migratory, but reviewed sources do not establish a numeric preferred SST interval. The configured 11-20 °C range and 13-18 °C ideal remain unsupported by a species-specific SST preference curve; keep values unchanged and mark needs_source."
+    },
+    {
+      "param": "depth_m",
+      "kind": "range",
+      "range": [
+        5,
+        100
+      ],
+      "ideal": [
+        7,
+        95
+      ],
+      "weight": 0.5,
+      "active": true,
+      "value_status": "partly_sourced",
+      "sources": [
+        "https://wildlife.ca.gov/Fishing/Ocean/Regulations/Sport-Fishing",
+        "https://wdfw.wa.gov/species-habitats/species/galeorhinus-galeus",
+        "https://nrm.dfg.ca.gov/FileHandler.ashx?DocumentID=34352",
+        "https://www.canada.ca/en/environment-climate-change/services/species-risk-public-registry/cosewic-assessments-status-reports/tope/chapter-6.html"
+      ],
+      "gate": true,
+      "reason_template": "Depth is {value} m, within prime Pacific depth zone for soupfin shark.",
+      "value_notes": "WDFW reports soupfin sharks from muddy shallows to more than 411 m, with females most common shallower than 55 m and males generally deeper. CDFG describes sex- and region-specific patterns: southern California females are predominantly shallower than about 37 m, while northern California males are commonly deeper than 37 m. The configured 5-100 m band is not a universal preference and needs sex/region context."
+    }
+  ],
+  "timing": {
+    "status": "angler_lore",
+    "light": {
+      "map": {
+        "day": 1,
+        "dawn": 0.9,
+        "dusk": 0.9,
+        "night": 0.5
+      },
+      "text": {
+        "day": "Full daylight when Pacific gamefish actively hunt.",
+        "dawn": "Dawn low-light feeding window.",
+        "dusk": "Dusk feeding window."
+      }
+    },
+    "note": "West Coast captain reports and biological upwelling patterns.",
+    "sources": [
+      "https://wildlife.ca.gov/Fishing/Ocean/Regulations/Sport-Fishing"
+    ]
+  },
+  "regulations": {
+    "summary": "CDFW: Finfish aggregate bag limits",
+    "min_size": "None",
+    "max_size": "None",
+    "bag_limit": "2-10 per day",
+    "season": "Open year-round",
+    "jurisdiction": "CDFW",
+    "source_name": "West Coast State Regulations (CDFW/WDFW/ODFW/NOAA)",
+    "source_url": "https://wildlife.ca.gov/Fishing/Ocean/Regulations/Sport-Fishing"
+  },
+  "lon_range": [
+    -138,
+    -110
+  ]
+}

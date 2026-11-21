@@ -1,0 +1,122 @@
+{
+  "schema_version": 1,
+  "id": "yelloweye-rockfish",
+  "common_name": "Yelloweye rockfish",
+  "scientific_name": "Sebastes ruberrimus",
+  "aliases": [
+    "yelloweye rockfish"
+  ],
+  "habitat_zone": "reef",
+  "display": {
+    "color": "#24f2e6"
+  },
+  "review_status": "Evidence reviewed 2026-11-17. WDFW/ODFW and NOAA AFSC sources support deep rocky-reef habitat and ontogenetic depth shifts; no numeric preferred SST evidence found.",
+  "image": {
+    "status": "placeholder",
+    "kind": "illustration",
+    "url": "fish/yelloweye-rockfish.png",
+    "credit": "Original illustration",
+    "license": "",
+    "plan": "web/fish/yelloweye-rockfish.png placeholder illustration."
+  },
+  "profile": {
+    "size": "Min limit Prohibited / Bag limit 0 per harvester / day",
+    "diet": "Small fish, crustaceans, squids, and pelagic prey",
+    "swimming_depth": "30 to 200 m",
+    "behavior": "Navigates West Coast kelp forests, rocky reefs, and coastal upwelling zones.",
+    "regulations_link": "https://wildlife.ca.gov/Fishing/Ocean/Regulations/Sport-Fishing",
+    "sources": [
+      "https://wildlife.ca.gov/Fishing/Ocean/Regulations/Sport-Fishing",
+      "https://wdfw.wa.gov/species-habitats/species/sebastes-ruberrimus",
+      "https://nrimp.dfw.state.or.us/MRP/default.aspx?pagename=SgfSpeciesInfoYelloweye+Rockfish",
+      "https://apps-afsc.fisheries.noaa.gov/Publications/AFSC-TM/NOAA-TM-AFSC-95.pdf",
+      "https://wdfw.wa.gov/sites/default/files/2019-10/Attachment%20D%20Fed_WA%20Listed%20Spp%20EIS%20Update.pdf"
+    ]
+  },
+  "lat_range": [
+    34,
+    60
+  ],
+  "factors": [
+    {
+      "param": "sst_c",
+      "kind": "range",
+      "range": [
+        6,
+        14
+      ],
+      "ideal": [
+        8,
+        12
+      ],
+      "weight": 0.5,
+      "active": true,
+      "value_status": "needs_source",
+      "sources": [
+        "https://wildlife.ca.gov/Fishing/Ocean/Regulations/Sport-Fishing",
+        "https://wdfw.wa.gov/species-habitats/species/sebastes-ruberrimus",
+        "https://apps-afsc.fisheries.noaa.gov/Publications/AFSC-TM/NOAA-TM-AFSC-95.pdf"
+      ],
+      "reason_template": "Water is {value} C, inside preferred Pacific temperature range for yelloweye rockfish.",
+      "value_notes": "WDFW, ODFW and NOAA AFSC sources document yelloweye distribution, climate sensitivity and deep rocky-reef habitat but do not establish a numeric preferred surface-temperature range. Climate sensitivity through prey availability is not a thermal preference curve. The configured 6-14 °C range and 8-12 °C ideal remain unsupported; keep values unchanged and mark needs_source."
+    },
+    {
+      "param": "depth_m",
+      "kind": "range",
+      "range": [
+        30,
+        200
+      ],
+      "ideal": [
+        32,
+        195
+      ],
+      "weight": 0.5,
+      "active": true,
+      "value_status": "partly_sourced",
+      "sources": [
+        "https://wildlife.ca.gov/Fishing/Ocean/Regulations/Sport-Fishing",
+        "https://wdfw.wa.gov/species-habitats/species/sebastes-ruberrimus",
+        "https://nrimp.dfw.state.or.us/MRP/default.aspx?pagename=SgfSpeciesInfoYelloweye+Rockfish",
+        "https://apps-afsc.fisheries.noaa.gov/Publications/AFSC-TM/NOAA-TM-AFSC-95.pdf"
+      ],
+      "gate": true,
+      "reason_template": "Depth is {value} m, within prime Pacific depth zone for yelloweye rockfish.",
+      "value_notes": "WDFW reports yelloweye from 11-549 m, with adults typically 91-180 m and juveniles in shallower kelp/algal habitat; adults and older juveniles use deep, high-relief complex rock. ODFW reports 8-300 fathoms, and NOAA AFSC gives a common depth range of roughly 50-400 m. The configured 30-200 m band overlaps adult habitat but does not cover the full ontogenetic range or deeper occurrences."
+    }
+  ],
+  "timing": {
+    "status": "angler_lore",
+    "light": {
+      "map": {
+        "day": 1,
+        "dawn": 0.9,
+        "dusk": 0.9,
+        "night": 0.5
+      },
+      "text": {
+        "day": "Full daylight when Pacific gamefish actively hunt.",
+        "dawn": "Dawn low-light feeding window.",
+        "dusk": "Dusk feeding window."
+      }
+    },
+    "note": "West Coast captain reports and biological upwelling patterns.",
+    "sources": [
+      "https://wildlife.ca.gov/Fishing/Ocean/Regulations/Sport-Fishing"
+    ]
+  },
+  "regulations": {
+    "summary": "CDFW/WDFW: Prohibited / mandatory release",
+    "min_size": "Prohibited",
+    "max_size": "Prohibited",
+    "bag_limit": "0 per harvester / day",
+    "season": "Closed to retention",
+    "jurisdiction": "NOAA Fisheries / CDFW / WDFW",
+    "source_name": "West Coast State Regulations (CDFW/WDFW/ODFW/NOAA)",
+    "source_url": "https://wildlife.ca.gov/Fishing/Ocean/Regulations/Sport-Fishing"
+  },
+  "lon_range": [
+    -138,
+    -110
+  ]
+}

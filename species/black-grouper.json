@@ -1,0 +1,149 @@
+{
+  "schema_version": 1,
+  "id": "black-grouper",
+  "common_name": "Black grouper",
+  "scientific_name": "Mycteroperca bonaci",
+  "aliases": [
+    "black grouper",
+    "carbo"
+  ],
+  "habitat_zone": "reef",
+  "display": {
+    "color": "#36d887"
+  },
+  "review_status": "reviewed 2026-11-14 - biology checked against NOAA Fisheries; Atlantic/Monroe recreational rules checked against current FWC guidance",
+  "image": {
+    "status": "placeholder",
+    "kind": "illustration",
+    "url": "fish/black-grouper.png",
+    "credit": "Original illustration",
+    "license": "",
+    "plan": "web/fish/black-grouper.png placeholder illustration."
+  },
+  "profile": {
+    "size": "Large reef grouper; adults commonly reach several feet. NOAA describes fish occurring to about 200 m depth.",
+    "diet": "Juveniles feed mainly on crustaceans, especially shrimp. Adults primarily eat fishes and squid.",
+    "swimming_depth": "Near-bottom reef habitat from shallow water to about 200 m; adults move into progressively deeper water as they grow.",
+    "behavior": "Generally solitary and relatively site-attached outside spawning. Adults occupy rocky bottoms, drop-off walls, ledges, caves, crevices, coral reefs and artificial reefs. Juveniles use seagrass and oyster-rubble habitat in parts of the range; Florida Keys juveniles also use reef habitat.",
+    "life_history": "Protogynous hermaphrodite: fish begin life as females and some change to males as they grow. Adults aggregate to spawn; fertilized eggs are pelagic.",
+    "regulations_link": "https://myfwc.com/fishing/saltwater/recreational/groupers/",
+    "sources": [
+      "https://www.fisheries.noaa.gov/species/black-grouper",
+      "https://www.floridamuseum.ufl.edu/discover-fish/species-profiles/black-grouper/",
+      "https://www.fdacs.gov/Consumer-Resources/Buy-Fresh-From-Florida/Seafood-Products/Grouper/Grouper-Types",
+      "https://reeflife.org/species/mycteroperca-bonaci/",
+      "https://www.nps.gov/bisc/planyourvisit/fishing.htm"
+    ]
+  },
+  "factors": [
+    {
+      "param": "sst_c",
+      "kind": "range",
+      "range": [
+        20,
+        29
+      ],
+      "ideal": [
+        23,
+        27
+      ],
+      "weight": 0.3,
+      "active": true,
+      "value_status": "partly_sourced",
+      "sources": [
+        "https://reeflife.org/species/mycteroperca-bonaci/"
+      ],
+      "reason_template": "Water is {value} C, inside ideal bounds for black grouper.",
+      "value_notes": "Reef Life Survey reports a broad observed sea-temperature range of 20.9–31.1 °C for the species. This is occurrence across surveyed reefs, not a physiological optimum or South Florida catch-response curve, and it does not validate the configured 20–29 °C range or 23–27 °C ideal as preferred SST."
+    },
+    {
+      "param": "structure_type",
+      "kind": "category",
+      "preferred": [
+        "natural_reef",
+        "artificial_reef",
+        "wreck",
+        "ledge"
+      ],
+      "weight": 0.4,
+      "active": true,
+      "value_status": "partly_sourced",
+      "sources": [
+        "https://www.fisheries.noaa.gov/species/black-grouper",
+        "https://www.floridamuseum.ufl.edu/discover-fish/species-profiles/black-grouper/",
+        "https://www.fdacs.gov/Consumer-Resources/Buy-Fresh-From-Florida/Seafood-Products/Grouper/Grouper-Types"
+      ],
+      "map": {
+        "natural_reef": 1,
+        "artificial_reef": 0.9,
+        "wreck": 0.9,
+        "ledge": 0.8
+      },
+      "reason_template": "Structure is {value}, where black grouper hold.",
+      "value_notes": "NOAA, Florida Museum, and FDACS describe adult black grouper using rocky bottoms, coral/natural reefs, drop-offs, ledges, and artificial reefs; juveniles use shallower seagrass/oyster habitat. This supports the broad reef/ledge/structure association, but does not validate the exact category score ordering or relative numeric map values."
+    },
+    {
+      "param": "depth_m",
+      "kind": "range",
+      "range": [
+        10,
+        110
+      ],
+      "ideal": [
+        20,
+        60
+      ],
+      "weight": 0.3,
+      "active": true,
+      "value_status": "partly_sourced",
+      "sources": [
+        "https://www.fisheries.noaa.gov/species/black-grouper",
+        "https://www.floridamuseum.ufl.edu/discover-fish/species-profiles/black-grouper/",
+        "https://www.fdacs.gov/Consumer-Resources/Buy-Fresh-From-Florida/Seafood-Products/Grouper/Grouper-Types"
+      ],
+      "gate": true,
+      "reason_template": "Depth is {value} m, in prime reef depth zone.",
+      "value_notes": "Florida Museum reports 6–33 m as a common habitat depth; NOAA and FDACS describe adults extending to about 200 m, with adults generally offshore and deeper than juveniles. This supports broad depth use but not the configured 10–110 m band or 20–60 m ideal as a locally calibrated preference. Depth remains an active gate."
+    }
+  ],
+  "timing": {
+    "status": "angler_lore",
+    "light": {
+      "map": {
+        "dawn": 1,
+        "dusk": 1,
+        "day": 0.7,
+        "night": 0.5
+      },
+      "text": {
+        "dawn": "It is dawn, a low-light time when fish feed actively.",
+        "dusk": "It is dusk, a low-light time when fish feed actively."
+      }
+    },
+    "note": "Patterns reported by local captains and fishing writers, not tested by studies.",
+    "sources": [
+      "https://myfwc.com/"
+    ]
+  },
+  "regulations": {
+    "summary": "Atlantic/Monroe County: 24 in total length; 1 gag or black grouper per person per day combined, within the 3-fish grouper/tilefish aggregate; combined gag/black vessel limit 2. Open May 1-Dec. 31.",
+    "min_size": "24 inches total length (Atlantic, including all Monroe County waters)",
+    "max_size": "None",
+    "bag_limit": "Atlantic/Monroe: 1 gag or black grouper per person per day combined; 2 combined gag/black grouper per vessel per day; within 3-fish grouper/tilefish aggregate. For-hire captain and crew may not retain.",
+    "season": "Atlantic/Monroe: May 1-December 31. Gulf rules differ; federal depth-area closures also apply.",
+    "jurisdiction": "Florida Atlantic state and federal waters, including Monroe County; separate Gulf rules apply",
+    "source_name": "Florida Fish and Wildlife Conservation Commission",
+    "source_url": "https://myfwc.com/fishing/saltwater/recreational/groupers/",
+    "effective_date": "2026-10-28",
+    "notes": "FWC states the Atlantic rules include all Monroe County waters. Gulf black grouper rules differ. Special regulations apply inside Biscayne National Park; consult the park-specific FWC rules before harvest. Reef-fish gear and landing requirements also apply.",
+    "verified_date": "2026-11-14"
+  },
+  "lon_range": [
+    -100,
+    -50
+  ],
+  "open_items": [
+    "The legacy SST range and ideal band are not supported by a species-specific thermal-preference study in the current record; treat them as provisional screening values, not a validated optimum.",
+    "Biscayne National Park species-specific size and bag restrictions need separate encoding before this record can provide park-level harvest advice."
+  ]
+}

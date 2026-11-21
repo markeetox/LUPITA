@@ -1,0 +1,139 @@
+{
+  "schema_version": 1,
+  "id": "scamp-grouper",
+  "common_name": "Scamp grouper",
+  "scientific_name": "Mycteroperca phenax",
+  "aliases": [
+    "scamp",
+    "broomtail"
+  ],
+  "habitat_zone": "reef",
+  "display": {
+    "color": "#f2130c"
+  },
+  "review_status": "draft v1 - deep reef grouper profile",
+  "image": {
+    "status": "placeholder",
+    "kind": "illustration",
+    "url": "fish/scamp-grouper.png",
+    "credit": "Original illustration",
+    "license": "",
+    "plan": "web/fish/scamp-grouper.png placeholder illustration."
+  },
+  "profile": {
+    "size": "Common 4-12 lb; up to 30 lb",
+    "diet": "Fish, crabs, and squids",
+    "swimming_depth": "30 to 100 m",
+    "behavior": "Favors deep, high-relief coral ledges and rocky drop-offs along the outer continental shelf.",
+    "regulations_link": "https://myfwc.com/",
+    "sources": [
+      "https://sedarweb.org/documents/s19rd28-population-assessment-of-the-scamp-mycteroperca-phenax-from-the-southeastern-united-states/",
+      "https://safmc.net/species/grouper-scamp/",
+      "https://fishbase.se/Fieldguide/FieldGuideSummary.php?c_code=840&genusname=Mycteroperca&speciesname=phenax",
+      "https://pmc.ncbi.nlm.nih.gov/articles/PMC5338871/"
+    ]
+  },
+  "factors": [
+    {
+      "param": "sst_c",
+      "kind": "range",
+      "range": [
+        18,
+        27
+      ],
+      "ideal": [
+        20,
+        24
+      ],
+      "weight": 0.35,
+      "active": true,
+      "value_status": "partly_sourced",
+      "sources": [
+        "https://sedarweb.org/documents/s19rd28-population-assessment-of-the-scamp-mycteroperca-phenax-from-the-southeastern-united-states/",
+        "https://pmc.ncbi.nlm.nih.gov/articles/PMC5338871/"
+      ],
+      "reason_template": "Water is {value} C, favorable for scamp grouper.",
+      "value_notes": "A southeastern U.S. spawning survey recorded spawning scamp at bottom temperatures of 16–27 °C (mean 21.0 °C); a SEDAR assessment describes spawning off the Carolinas at 22–25 °C. These are seasonal bottom-water/spawning observations, not a general adult SST preference curve; they partially overlap but do not validate 18–27 °C / 20–24 °C as a year-round surface-temperature optimum."
+    },
+    {
+      "param": "structure_type",
+      "kind": "category",
+      "preferred": [
+        "natural_reef",
+        "ledge",
+        "wreck"
+      ],
+      "weight": 0.35,
+      "active": true,
+      "value_status": "partly_sourced",
+      "sources": [
+        "https://sedarweb.org/documents/s19rd28-population-assessment-of-the-scamp-mycteroperca-phenax-from-the-southeastern-united-states/",
+        "https://safmc.net/species/grouper-scamp/"
+      ],
+      "map": {
+        "natural_reef": 1,
+        "ledge": 1,
+        "wreck": 0.8
+      },
+      "reason_template": "Structure is {value}, preferred by scamp.",
+      "value_notes": "SEDAR and SAFMC describe scamp using low-profile live-bottom areas, Oculina coral, ledges, and high-relief rocky bottoms; wrecks and rock outcrops are also used. This supports the broad reef/ledge/wreck association but does not validate the exact category ranking or score values."
+    },
+    {
+      "param": "depth_m",
+      "kind": "range",
+      "range": [
+        25,
+        100
+      ],
+      "ideal": [
+        40,
+        80
+      ],
+      "weight": 0.3,
+      "active": true,
+      "value_status": "partly_sourced",
+      "sources": [
+        "https://sedarweb.org/documents/s19rd28-population-assessment-of-the-scamp-mycteroperca-phenax-from-the-southeastern-united-states/",
+        "https://safmc.net/species/grouper-scamp/",
+        "https://fishbase.se/Fieldguide/FieldGuideSummary.php?c_code=840&genusname=Mycteroperca&speciesname=phenax"
+      ],
+      "gate": true,
+      "reason_template": "Depth is {value} m, in deep shelf edge habitat.",
+      "value_notes": "SAFMC reports preferred low-profile live-bottom habitat at 75–300 ft (about 23–91 m); FishBase reports 30–100 m and NOAA/SEDAR sources describe broad shelf habitat. This overlaps the configured 25–100 m / 40–80 m band, but does not validate the exact ideal interval or all regional/life-stage differences. Depth is an active gate."
+    }
+  ],
+  "timing": {
+    "status": "angler_lore",
+    "light": {
+      "map": {
+        "day": 1,
+        "dawn": 0.8,
+        "dusk": 0.8,
+        "night": 0.3
+      },
+      "text": {
+        "day": "It is full daylight, when fish feed actively.",
+        "dawn": "It is dawn, a low-light time when fish feed actively.",
+        "dusk": "It is dusk, a low-light time when fish feed actively."
+      }
+    },
+    "note": "Patterns reported by local captains and fishing writers, not tested by studies.",
+    "sources": [
+      "https://myfwc.com/"
+    ]
+  },
+  "regulations": {
+    "summary": "Regulated species - See MyFWC/NOAA guidelines",
+    "min_size": "Check MyFWC/NOAA rules",
+    "max_size": "None",
+    "bag_limit": "Varies by region / state",
+    "season": "Open year-round (subject to local quota/closures)",
+    "jurisdiction": "Atlantic & Gulf State/Federal Waters",
+    "source_name": "MyFWC Saltwater Regulations",
+    "source_url": "https://myfwc.com/fishing/saltwater/recreational/"
+  },
+  "lon_range": [
+    -100,
+    -50
+  ]
+}

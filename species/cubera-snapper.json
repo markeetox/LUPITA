@@ -1,0 +1,142 @@
+{
+  "schema_version": 1,
+  "id": "cubera-snapper",
+  "common_name": "Cubera snapper",
+  "scientific_name": "Lutjanus cyanopterus",
+  "aliases": [
+    "cubera",
+    "cubera snapper"
+  ],
+  "habitat_zone": "reef",
+  "display": {
+    "color": "#0c3df2"
+  },
+  "review_status": "draft v1 - giant reef snapper profile",
+  "image": {
+    "status": "placeholder",
+    "kind": "illustration",
+    "url": "fish/cubera-snapper.png",
+    "credit": "Original illustration",
+    "license": "",
+    "plan": "web/fish/cubera-snapper.png placeholder illustration."
+  },
+  "profile": {
+    "size": "Common 20-60 lb; up to 120+ lb",
+    "diet": "Spiny lobsters, large crabs, and reef fishes",
+    "swimming_depth": "18 to 90 m",
+    "behavior": "Largest Atlantic snapper; holds in deep reef ledges and wrecks, forming full-moon summer spawning aggregations.",
+    "regulations_link": "https://myfwc.com/",
+    "sources": [
+      "https://www.floridamuseum.ufl.edu/discover-fish/species-profiles/cubera-snapper/",
+      "https://www.boem.gov/sites/default/files/documents/environment/BOEM-EIS-2016-049-v2_0.pdf",
+      "https://www.fishbase.se/Country/CountrySpeciesSummary.php?c_code=076&id=1427"
+    ]
+  },
+  "factors": [
+    {
+      "param": "sst_c",
+      "kind": "range",
+      "range": [
+        22,
+        30
+      ],
+      "ideal": [
+        24,
+        28
+      ],
+      "weight": 0.35,
+      "active": true,
+      "value_status": "partly_sourced",
+      "sources": [
+        "https://www.fishbase.se/Country/CountrySpeciesSummary.php?c_code=076&id=1427"
+      ],
+      "reason_template": "Water is {value} C, ideal for cubera snapper.",
+      "value_notes": "FishBase reports a model-derived preferred-temperature estimate of 21.7–27.6 °C (mean 25.5 °C) based on 100 cells. This overlaps the configured 22–30 °C range and 24–28 °C ideal, but it is a distribution model estimate, not a direct physiological experiment or local catch-response curve."
+    },
+    {
+      "param": "structure_type",
+      "kind": "category",
+      "preferred": [
+        "natural_reef",
+        "wreck",
+        "artificial_reef",
+        "ledge"
+      ],
+      "weight": 0.35,
+      "active": true,
+      "value_status": "partly_sourced",
+      "sources": [
+        "https://www.floridamuseum.ufl.edu/discover-fish/species-profiles/cubera-snapper/",
+        "https://www.boem.gov/sites/default/files/documents/environment/BOEM-EIS-2016-049-v2_0.pdf"
+      ],
+      "map": {
+        "natural_reef": 1,
+        "wreck": 1,
+        "artificial_reef": 0.8,
+        "ledge": 0.9
+      },
+      "reason_template": "Structure is {value}, where giant cubera snapper hide.",
+      "value_notes": "Florida Museum and BOEM describe cubera snapper as reef-associated, using rocky ledges/overhangs, deep reefs, and wrecks. This supports the broad structure association but does not validate the exact category ranking or numeric map scores."
+    },
+    {
+      "param": "depth_m",
+      "kind": "range",
+      "range": [
+        18,
+        90
+      ],
+      "ideal": [
+        30,
+        60
+      ],
+      "weight": 0.3,
+      "active": true,
+      "value_status": "partly_sourced",
+      "sources": [
+        "https://www.floridamuseum.ufl.edu/discover-fish/species-profiles/cubera-snapper/",
+        "https://www.boem.gov/sites/default/files/documents/environment/BOEM-EIS-2016-049-v2_0.pdf"
+      ],
+      "gate": true,
+      "reason_template": "Depth is {value} m, in deep reef habitat.",
+      "value_notes": "Florida Museum reports depths to about 55 m; BOEM reports adults to about 85 m and spawning aggregations at 67–85 m. This supports reef-depth use but does not validate the configured 18–90 m range or 30–60 m ideal as a general preference. Depth is an active gate."
+    }
+  ],
+  "timing": {
+    "status": "angler_lore",
+    "light": {
+      "map": {
+        "night": 1,
+        "dusk": 0.9,
+        "dawn": 0.8,
+        "day": 0.3
+      },
+      "text": {
+        "night": "It is night, when nocturnal feeding is high.",
+        "dusk": "It is dusk, a low-light time when fish feed actively.",
+        "dawn": "It is dawn, a low-light time when fish feed actively."
+      }
+    },
+    "note": "Patterns reported by local captains and fishing writers, not tested by studies.",
+    "sources": [
+      "https://myfwc.com/"
+    ]
+  },
+  "lat_range": [
+    15,
+    35
+  ],
+  "regulations": {
+    "summary": "Regulated species - See MyFWC/NOAA guidelines",
+    "min_size": "Check MyFWC/NOAA rules",
+    "max_size": "None",
+    "bag_limit": "Varies by region / state",
+    "season": "Open year-round (subject to local quota/closures)",
+    "jurisdiction": "Atlantic & Gulf State/Federal Waters",
+    "source_name": "MyFWC Saltwater Regulations",
+    "source_url": "https://myfwc.com/fishing/saltwater/recreational/"
+  },
+  "lon_range": [
+    -100,
+    -50
+  ]
+}

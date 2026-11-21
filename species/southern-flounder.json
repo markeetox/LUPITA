@@ -1,0 +1,164 @@
+{
+  "schema_version": 1,
+  "id": "southern-flounder",
+  "common_name": "Southern flounder",
+  "scientific_name": "Paralichthys lethostigma",
+  "aliases": [
+    "flounder"
+  ],
+  "habitat_zone": "inshore",
+  "display": {
+    "color": "#ddf23c"
+  },
+  "review_status": "Regional scope reviewed 2026-11-17. Southern flounder has a discontinuous Florida distribution: it occurs south to the Loxahatchee River on the Atlantic coast, is reported absent south of there and around the peninsula tip, but occurs in the Caloosahatchee River Estuary on the southwest coast. A simple latitude/longitude rectangle cannot represent this split.",
+  "image": {
+    "status": "placeholder",
+    "kind": "illustration",
+    "url": "fish/southern-flounder.png",
+    "credit": "Original illustration",
+    "license": "",
+    "plan": "web/fish/southern-flounder.png placeholder illustration."
+  },
+  "profile": {
+    "size": "Common 1-4 lb; up to 13 lb",
+    "diet": "Small fishes (mullet, anchovies), shrimp, and crabs",
+    "swimming_depth": "Benthic bottom; 0.5 to 25 m",
+    "behavior": "Camouflaged ambush predator that lies buried on muddy and sandy bottoms near inlet channels, docks, and drop-offs.",
+    "regulations_link": "https://myfwc.com/",
+    "sources": [
+      "https://myfwc.com/",
+      "https://www.dnr.sc.gov/marine/species/southernflounder.html",
+      "https://geo.gcoos.org/restore/species_profiles/Southern%20Flounder/",
+      "https://www.seafoodwatch.org/globalassets/sfw/pdf/expert-review/030623/seafood-watch-southern-flounder-us-27899.pdf",
+      "https://www.govinfo.gov/content/pkg/GOVPUB-HS4_100-PURL-gpo255991/pdf/GOVPUB-HS4_100-PURL-gpo255991.pdf"
+    ]
+  },
+  "factors": [
+    {
+      "param": "sst_c",
+      "kind": "range",
+      "range": [
+        14,
+        28
+      ],
+      "ideal": [
+        18,
+        25
+      ],
+      "weight": 0.4,
+      "active": true,
+      "value_status": "provisional",
+      "sources": [
+        "https://myfwc.com/",
+        "https://www.govinfo.gov/content/pkg/GOVPUB-HS4_100-PURL-gpo255991/pdf/GOVPUB-HS4_100-PURL-gpo255991.pdf",
+        "https://www.seafoodwatch.org/globalassets/sfw/pdf/expert-review/030623/seafood-watch-southern-flounder-us-27899.pdf"
+      ],
+      "reason_template": "Water is {value} C, favorable for southern flounder.",
+      "value_notes": "A government species account reports broad temperature tolerance of roughly 5-35 °C; that is not a preferred SST range or catch-response curve. No reviewed source validates the configured 14-28 °C outer band or 18-25 °C ideal. There is also a regional applicability concern: a 2023 fisheries assessment cites records describing the species as absent from southern Florida between the Loxahatchee and Caloosahatchee rivers."
+    },
+    {
+      "param": "depth_m",
+      "kind": "range",
+      "range": [
+        0.5,
+        25
+      ],
+      "ideal": [
+        1,
+        10
+      ],
+      "weight": 0.3,
+      "active": true,
+      "value_status": "partly_sourced",
+      "sources": [
+        "https://myfwc.com/",
+        "https://www.dnr.sc.gov/marine/species/southernflounder.html",
+        "https://geo.gcoos.org/restore/species_profiles/Southern%20Flounder/",
+        "https://www.govinfo.gov/content/pkg/GOVPUB-HS4_100-PURL-gpo255991/pdf/GOVPUB-HS4_100-PURL-gpo255991.pdf"
+      ],
+      "gate": true,
+      "reason_template": "Depth is {value} m, in shallow estuarine channel and drop-off zone.",
+      "value_notes": "Sources support demersal use of shallow muddy/silty estuaries and tidal creeks, juvenile soft-bottom nursery habitat, and adult offshore spawning migrations reported at approximately 15 to greater than 70 m in Gulf populations. This supports habitat context but does not validate the configured 0.5-25 m range or 1-10 m ideal across life stages and seasons; the factor is seafloor depth, not fish vertical depth."
+    },
+    {
+      "param": "season_presence",
+      "kind": "season",
+      "weight": 0.3,
+      "active": true,
+      "value_status": "partly_sourced",
+      "sources": [
+        "https://myfwc.com/",
+        "https://www.dnr.sc.gov/marine/species/southernflounder.html",
+        "https://geo.gcoos.org/restore/species_profiles/Southern%20Flounder/",
+        "https://www.seafoodwatch.org/globalassets/sfw/pdf/expert-review/030623/seafood-watch-southern-flounder-us-27899.pdf"
+      ],
+      "months": [
+        10,
+        11,
+        12,
+        1
+      ],
+      "peak_months": [
+        11,
+        12
+      ],
+      "in_score": 0.9,
+      "off_score": 0.4,
+      "value_text": {
+        "peak": "It is peak fall flounder migration season.",
+        "in_season": "It is flounder season.",
+        "off": "Outside peak fall run."
+      },
+      "value_notes": "SCDNR describes adult offshore migration in late fall, winter spawning and return to inshore habitat in spring; the Gulf spawning profile describes October-January spawning migration. This supports a broad fall/winter Gulf/Atlantic pattern, but not a South Florida catch curve. The species' reported absence from the Loxahatchee-Caloosahatchee stretch is a major regional applicability caveat for this app. The Florida distribution is discontinuous: Atlantic records extend south to Loxahatchee River, with absence southward and around the peninsula tip, while the Caloosahatchee River Estuary is an exception on the southwest coast. This regional split cannot be represented by the current longitude-only filter."
+    }
+  ],
+  "timing": {
+    "status": "angler_lore",
+    "light": {
+      "map": {
+        "night": 1,
+        "dusk": 0.9,
+        "dawn": 0.9,
+        "day": 0.4
+      },
+      "text": {
+        "night": "It is night, when nocturnal feeding is high.",
+        "dusk": "It is dusk, a low-light time when fish feed actively.",
+        "dawn": "It is dawn, a low-light time when fish feed actively."
+      }
+    },
+    "tide": {
+      "map": {
+        "falling": 1,
+        "rising": 0.8,
+        "slack_low": 0.5,
+        "slack_high": 0.4
+      },
+      "text": {
+        "falling": "The tide is falling, flushing bait out through structure.",
+        "rising": "The tide is rising, bringing in fresh water and bait."
+      }
+    },
+    "note": "Patterns reported by local captains and fishing writers, not tested by studies.",
+    "sources": [
+      "https://myfwc.com/"
+    ]
+  },
+  "regulations": {
+    "summary": "Regulated species - See MyFWC/NOAA guidelines",
+    "min_size": "Check MyFWC/NOAA rules",
+    "max_size": "None",
+    "bag_limit": "Varies by region / state",
+    "season": "Open year-round (subject to local quota/closures)",
+    "jurisdiction": "Atlantic & Gulf State/Federal Waters",
+    "source_name": "MyFWC Saltwater Regulations",
+    "source_url": "https://myfwc.com/fishing/saltwater/recreational/"
+  },
+  "lon_range": [
+    -100,
+    -50
+  ],
+  "open_items": [
+    "The species is reported from the Albemarle Sound south to the Loxahatchee River on Florida's Atlantic coast, absent south of the Loxahatchee and around the peninsula tip, but present again in the Caloosahatchee River Estuary on the southwest coast. The profile has no lat_range; pipeline.scoring.score_species therefore applies only its broad longitude bound and does not restrict latitude. A rectangular lat_range would still incorrectly include the absent Atlantic coast south of Loxahatchee or exclude valid southwest estuary records. Decide whether to use a coastal distribution mask, separate Atlantic/Gulf regional profiles, or exclude the South Florida Atlantic subregion. No geographic or scoring behavior changed."
+  ]
+}

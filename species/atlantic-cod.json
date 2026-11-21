@@ -1,0 +1,136 @@
+{
+  "schema_version": 1,
+  "id": "atlantic-cod",
+  "common_name": "Atlantic cod",
+  "scientific_name": "Gadus morhua",
+  "aliases": [
+    "cod"
+  ],
+  "habitat_zone": "offshore",
+  "review_status": "draft v1 - compiled from NOAA Fisheries and regional fisheries management guidelines",
+  "image": {
+    "status": "placeholder",
+    "kind": "illustration",
+    "url": "fish/placeholder.png",
+    "credit": "Placeholder graphic",
+    "license": "",
+    "plan": "web/fish/placeholder.png is a transparent placeholder image."
+  },
+  "profile": {
+    "size": "Variable per NOAA / regional guidelines",
+    "diet": "Small fish, crustaceans, and cephalopods.",
+    "behavior": "Active predator along coastal, shelf, or offshore environments.",
+    "life_history": "Spawns seasonally along coastal or shelf waters.",
+    "regulations_link": "https://www.fisheries.noaa.gov/",
+    "sources": [
+      "https://academic.oup.com/icesjms/article/75/4/1329/4803072",
+      "https://www.fisheries.noaa.gov/species/atlantic-cod"
+    ],
+    "spawning": "Spawns seasonally based on water temperature and regional climate.",
+    "overwintering": "Migrates to warmer or deeper waters depending on season."
+  },
+  "factors": [
+    {
+      "param": "sst_c",
+      "kind": "range",
+      "range": [
+        0,
+        16
+      ],
+      "ideal": [
+        4,
+        12
+      ],
+      "weight": 0.35,
+      "active": true,
+      "value_status": "partly_sourced",
+      "value_notes": "A Gulf of Maine catch-temperature analysis reports seasonal bottom-temperature associations around 5.34–6.26 °C in spring and 8.43–9.08 °C in fall; NOAA describes Atlantic cod as cold-water and demersal. Stock and season matter, and bottom-temperature observations do not validate the configured 0–16 °C satellite-SST band or 4–12 °C ideal.",
+      "reason_template": "Water is {value} C, within the preferred thermal range for Atlantic cod.",
+      "sources": [
+        "https://academic.oup.com/icesjms/article/75/4/1329/4803072",
+        "https://www.fisheries.noaa.gov/species/atlantic-cod"
+      ],
+      "gate": true,
+      "required": true
+    }
+  ],
+  "open_items": [],
+  "display": {
+    "color": "#f2880c"
+  },
+  "model": "grid",
+  "site_kinds": [],
+  "min_score_report": 0.35,
+  "max_spots": 15,
+  "confidence_cap": "Medium",
+  "timing": {
+    "status": "angler_lore",
+    "note": "Timing weights and light/tide preferences for Atlantic cod.",
+    "sources": [
+      "https://www.fisheries.noaa.gov/"
+    ],
+    "weights": {
+      "light": 0.5,
+      "tide": 0.3,
+      "front": 0.2
+    },
+    "light": {
+      "map": {
+        "dusk": 1,
+        "night": 0.8,
+        "dawn": 0.9,
+        "day": 0.6
+      },
+      "text": {
+        "dusk": "Dusk activity peak for Atlantic cod.",
+        "night": "Night feeding period for Atlantic cod.",
+        "dawn": "Dawn activity peak for Atlantic cod.",
+        "day": "Daytime feeding period for Atlantic cod."
+      }
+    },
+    "tide": {
+      "map": {
+        "falling": 1,
+        "slack_low": 0.6,
+        "rising": 0.7,
+        "slack_high": 0.5
+      },
+      "text": {
+        "falling": "Outgoing tide flushes food for Atlantic cod.",
+        "slack_low": "Slack low tide for Atlantic cod.",
+        "rising": "Incoming tide brings bait for Atlantic cod.",
+        "slack_high": "Slack high tide for Atlantic cod."
+      }
+    },
+    "front": {
+      "map": {
+        "approaching": 0.8,
+        "just_passed": 0.4,
+        "lull": 0.5
+      },
+      "text": {
+        "approaching": "Pre-front feeding spree for Atlantic cod.",
+        "just_passed": "Post-front slow period for Atlantic cod.",
+        "lull": "Stable weather pattern for Atlantic cod."
+      }
+    }
+  },
+  "lat_range": [
+    38,
+    52
+  ],
+  "regulations": {
+    "summary": "Regulated species - See MyFWC/NOAA guidelines",
+    "min_size": "Check MyFWC/NOAA rules",
+    "max_size": "None",
+    "bag_limit": "Varies by region / state",
+    "season": "Open year-round (subject to local quota/closures)",
+    "jurisdiction": "Atlantic & Gulf State/Federal Waters",
+    "source_name": "MyFWC Saltwater Regulations",
+    "source_url": "https://myfwc.com/fishing/saltwater/recreational/"
+  },
+  "lon_range": [
+    -100,
+    -50
+  ]
+}

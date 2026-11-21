@@ -1,0 +1,124 @@
+{
+  "schema_version": 1,
+  "id": "white-sturgeon",
+  "common_name": "White sturgeon",
+  "scientific_name": "Acipenser transmontanus",
+  "aliases": [
+    "white sturgeon"
+  ],
+  "habitat_zone": "inshore",
+  "display": {
+    "color": "#2042d8"
+  },
+  "review_status": "Regional/model scope reviewed 2026-11-17. White sturgeon is anadromous but primarily inhabits large rivers and associated estuaries; coastal-ocean excursions occur but are uncommon. The current marine SST and ETOPO bathymetry factors do not represent its dominant habitat.",
+  "image": {
+    "status": "placeholder",
+    "kind": "illustration",
+    "url": "fish/white-sturgeon.png",
+    "credit": "Original illustration",
+    "license": "",
+    "plan": "web/fish/white-sturgeon.png placeholder illustration."
+  },
+  "profile": {
+    "size": "Min limit 42 inches TL / Bag limit 1 per year / tag required",
+    "diet": "Small fish, crustaceans, squids, and pelagic prey",
+    "swimming_depth": "2 to 30 m",
+    "behavior": "Anadromous species that primarily inhabits large rivers and associated estuaries, moving between freshwater and saltwater; adults only occasionally enter coastal ocean waters.",
+    "regulations_link": "https://wildlife.ca.gov/Fishing/Ocean/Regulations/Sport-Fishing",
+    "sources": [
+      "https://wildlife.ca.gov/Fishing/Ocean/Regulations/Sport-Fishing",
+      "https://wildlife.ca.gov/Conservation/Fishes/Sturgeon/White-Sturgeon",
+      "https://wdfw.wa.gov/species-habitats/species/acipenser-transmontanus",
+      "https://www.usgs.gov/publications/estuarine-habitat-use-white-sturgeon-acipenser-transmontanus",
+      "https://marinespecies.wildlife.ca.gov/white-sturgeon/the-species/"
+    ]
+  },
+  "lat_range": [
+    36,
+    54
+  ],
+  "factors": [
+    {
+      "param": "sst_c",
+      "kind": "range",
+      "range": [
+        8,
+        18
+      ],
+      "ideal": [
+        10,
+        16
+      ],
+      "weight": 0.5,
+      "active": true,
+      "value_status": "needs_source",
+      "sources": [
+        "https://wildlife.ca.gov/Fishing/Ocean/Regulations/Sport-Fishing",
+        "https://wildlife.ca.gov/Conservation/Fishes/Sturgeon/White-Sturgeon",
+        "https://marinespecies.wildlife.ca.gov/white-sturgeon/the-species/"
+      ],
+      "reason_template": "Water is {value} C, inside preferred Pacific temperature range for white sturgeon.",
+      "value_notes": "CDFW reports white sturgeon primarily in large rivers and associated estuaries, with only occasional ocean occurrence. CDFG/CA Marine Species Portal reports juvenile estuarine water temperatures around 15-20 °C in a Fraser River context, not marine satellite SST or adult thermal preference. The configured 8-18 °C / 10-16 °C SST band is not validated for the species' dominant river/estuary life history; keep values unchanged and mark needs_source."
+    },
+    {
+      "param": "depth_m",
+      "kind": "range",
+      "range": [
+        2,
+        30
+      ],
+      "ideal": [
+        4,
+        25
+      ],
+      "weight": 0.5,
+      "active": true,
+      "value_status": "weak_factor",
+      "sources": [
+        "https://wildlife.ca.gov/Fishing/Ocean/Regulations/Sport-Fishing",
+        "https://www.usgs.gov/publications/estuarine-habitat-use-white-sturgeon-acipenser-transmontanus",
+        "https://wildlife.ca.gov/Conservation/Fishes/Sturgeon/White-Sturgeon"
+      ],
+      "gate": true,
+      "reason_template": "Depth is {value} m, within prime Pacific depth zone for white sturgeon.",
+      "value_notes": "White sturgeon primarily occupy river channels and estuaries. USGS sampling found subadult/adult use of estuarine open-water shoals and deep channels averaging about 2-7 m; CDFW notes only occasional ocean excursions. The runtime bathymetry layer represents marine seafloor and does not capture river-channel depth or flow; the configured 2-30 m range is therefore a weak/poor proxy for most of the species' distribution."
+    }
+  ],
+  "timing": {
+    "status": "angler_lore",
+    "light": {
+      "map": {
+        "day": 1,
+        "dawn": 0.9,
+        "dusk": 0.9,
+        "night": 0.5
+      },
+      "text": {
+        "day": "Full daylight when Pacific gamefish actively hunt.",
+        "dawn": "Dawn low-light feeding window.",
+        "dusk": "Dusk feeding window."
+      }
+    },
+    "note": "West Coast captain reports and biological upwelling patterns.",
+    "sources": [
+      "https://wildlife.ca.gov/Fishing/Ocean/Regulations/Sport-Fishing"
+    ]
+  },
+  "regulations": {
+    "summary": "CDFW/WDFW: 42\"-48\" slot TL; strict tag limits",
+    "min_size": "42 inches TL",
+    "max_size": "48 inches TL",
+    "bag_limit": "1 per year / tag required",
+    "season": "Seasonal strict openings",
+    "jurisdiction": "CDFW / WDFW / ODFW",
+    "source_name": "West Coast State Regulations (CDFW/WDFW/ODFW/NOAA)",
+    "source_url": "https://wildlife.ca.gov/Fishing/Ocean/Regulations/Sport-Fishing"
+  },
+  "lon_range": [
+    -138,
+    -110
+  ],
+  "open_items": [
+    "Decide whether this species belongs in the ocean-grid prediction catalog. CDFW describes white sturgeon as primarily resident in large rivers and associated estuaries, with only occasional ocean occurrence. The current model scores marine-grid SST and seafloor bathymetry, but lacks river-channel depth, flow, and estuary-specific habitat inputs. Candidate paths: exclude from ocean-grid predictions, or design a separate freshwater/estuary model. No model activation, factor, range, weight, gate, or scoring change made."
+  ]
+}

@@ -1,0 +1,197 @@
+{
+  "schema_version": 1,
+  "id": "blue-marlin",
+  "common_name": "Atlantic blue marlin",
+  "scientific_name": "Makaira nigricans",
+  "aliases": [
+    "marlin",
+    "blue marlin"
+  ],
+  "habitat_zone": "offshore",
+  "display": {
+    "color": "#0ce9f2"
+  },
+  "review_status": "draft v1 - apex oceanic pelagic profile",
+  "image": {
+    "status": "placeholder",
+    "kind": "illustration",
+    "url": "fish/blue-marlin.png",
+    "credit": "Original illustration",
+    "license": "",
+    "plan": "web/fish/blue-marlin.png placeholder illustration."
+  },
+  "profile": {
+    "size": "Up to 1000+ lb; apex oceanic billfish",
+    "diet": "Tunas, mackerels, squids, and dolphin",
+    "swimming_depth": "Upper mixed layer (surface to 100 m)",
+    "behavior": "Oceanic solitary billfish that favors warm blue offshore currents, thermal boundaries, and current convergences.",
+    "regulations_link": "https://myfwc.com/",
+    "sources": [
+      "https://repository.library.noaa.gov/view/noaa/58935",
+      "https://www.usgs.gov/publications/horizontal-movements-atlantic-blue-marlin-makaira-nigricans-gulf-mexico",
+      "https://doi.org/10.3390/fishes10050201",
+      "https://academic.oup.com/icesjms/article/80/4/1002/7067461",
+      "https://onlinelibrary.wiley.com/doi/10.1111/fog.12183"
+    ]
+  },
+  "factors": [
+    {
+      "param": "sst_c",
+      "kind": "range",
+      "range": [
+        23,
+        31
+      ],
+      "ideal": [
+        26,
+        29
+      ],
+      "weight": 0.35,
+      "active": true,
+      "value_status": "partly_sourced",
+      "sources": [
+        "https://repository.library.noaa.gov/view/noaa/58935",
+        "https://doi.org/10.3390/fishes10050201",
+        "https://academic.oup.com/icesjms/article/80/4/1002/7067461"
+      ],
+      "reason_template": "Water is {value} C, in warm tropical offshore waters favored by blue marlin.",
+      "value_notes": "Satellite-tag studies in the North Atlantic and Southwest Atlantic report blue marlin spending most tracked time in warm surface waters, commonly around 26–30 °C; the Southwest Atlantic study (21 fish) reports most time at 26–28 °C. These data support the broad 23–31 °C band and 26–29 °C ideal as a reasonable species-level habitat association, but population/region and tag-sample differences remain, and the studies do not establish a South Florida catch-probability curve."
+    },
+    {
+      "param": "sst_gradient",
+      "kind": "higher_is_better",
+      "weight": 0.2,
+      "active": true,
+      "value_status": "partly_sourced",
+      "sources": [
+        "https://repository.library.noaa.gov/view/noaa/58935",
+        "https://www.usgs.gov/publications/horizontal-movements-atlantic-blue-marlin-makaira-nigricans-gulf-mexico",
+        "https://onlinelibrary.wiley.com/doi/10.1111/fog.12183"
+      ],
+      "reason_template": "SST break is {per10km} C per 10 km, marking front lines where marlin hunt.",
+      "value_notes": "North Atlantic tagging work and Gulf movement research describe seasonal distribution shifts with SST, primary production, fronts/eddies, and temperature/oxygen structure. These support the relevance of oceanographic boundaries, but do not directly validate the pipeline's scalar SST-gradient magnitude or its higher-is-better response."
+    },
+    {
+      "param": "current_convergence",
+      "kind": "higher_is_better",
+      "weight": 0.08,
+      "active": true,
+      "value_status": "partly_sourced",
+      "sources": [
+        "https://www.usgs.gov/publications/horizontal-movements-atlantic-blue-marlin-makaira-nigricans-gulf-mexico",
+        "https://repository.library.noaa.gov/view/noaa/58935"
+      ],
+      "reason_template": "Current convergence concentrates weed lines and pelagic prey.",
+      "value_notes": "Tagging studies describe seasonal movement along shelf-edge and productive oceanographic features and report associations with fronts/eddies and changing current/temperature structure. This supports a broad dynamic-feature relationship, but does not directly measure current convergence or calibrate a higher-is-better convergence score."
+    },
+    {
+      "param": "gulf_stream_edge",
+      "kind": "range",
+      "range": [
+        -20,
+        50
+      ],
+      "ideal": [
+        0,
+        25
+      ],
+      "weight": 0.12,
+      "active": true,
+      "value_status": "provisional",
+      "sources": [
+        "https://www.usgs.gov/publications/horizontal-movements-atlantic-blue-marlin-makaira-nigricans-gulf-mexico",
+        "https://repository.library.noaa.gov/view/noaa/58935"
+      ],
+      "reason_template": "Inshore Gulf Stream edge is {abs_value} km {side}.",
+      "value_notes": "Regional tagging studies document seasonal use of shelf-edge/offshore habitats and movements through the Gulf of Mexico/Florida Straits, but do not establish a species-specific distance-response curve to the Gulf Stream edge. The configured -20 to 50 km band and 0 to 25 km ideal remain a provisional spatial proxy."
+    },
+    {
+      "param": "depth_m",
+      "kind": "range",
+      "range": [
+        100,
+        4000
+      ],
+      "ideal": [
+        200,
+        2000
+      ],
+      "weight": 0.05,
+      "active": true,
+      "value_status": "partly_sourced",
+      "sources": [
+        "https://repository.library.noaa.gov/view/noaa/58935",
+        "https://doi.org/10.3390/fishes10050201",
+        "https://academic.oup.com/icesjms/article/80/4/1002/7067461"
+      ],
+      "gate": true,
+      "reason_template": "Depth is {value} m, in deep pelagic waters.",
+      "value_notes": "Satellite tags show blue marlin primarily occupying the upper 100 m while making occasional dives to several hundred meters and, in some North Atlantic deployments, nearly 1,000 m. These are fish vertical dive depths, not bathymetric depths of the seafloor. The sources support pelagic water-column use but do not validate the configured 100–4,000 m bathymetric range or 200–2,000 m ideal. Depth remains an active gate."
+    },
+    {
+      "param": "season_presence",
+      "kind": "season",
+      "weight": 0.2,
+      "active": true,
+      "value_status": "partly_sourced",
+      "sources": [
+        "https://www.usgs.gov/publications/horizontal-movements-atlantic-blue-marlin-makaira-nigricans-gulf-mexico",
+        "https://doi.org/10.3390/fishes10050201"
+      ],
+      "months": [
+        5,
+        6,
+        7,
+        8,
+        9
+      ],
+      "peak_months": [
+        6,
+        7,
+        8
+      ],
+      "in_score": 0.8,
+      "off_score": 0.2,
+      "value_text": {
+        "peak": "It is peak blue marlin season.",
+        "in_season": "It is blue marlin season.",
+        "off": "It is outside the peak blue marlin season."
+      },
+      "value_notes": "Gulf of Mexico tagging documented seasonal distribution shifts, summer use of northern Gulf shelf-edge waters during spawning, and overwintering habitat in the Bay of Campeche. The configured May–September window broadly represents Gulf summer/spawning seasonality but does not establish a South Florida monthly catch curve or uniform presence across the Atlantic stock."
+    }
+  ],
+  "timing": {
+    "status": "angler_lore",
+    "light": {
+      "map": {
+        "day": 1,
+        "dawn": 0.8,
+        "dusk": 0.8,
+        "night": 0.3
+      },
+      "text": {
+        "day": "It is full daylight, when fish feed actively.",
+        "dawn": "It is dawn, a low-light time when fish feed actively.",
+        "dusk": "It is dusk, a low-light time when fish feed actively."
+      }
+    },
+    "note": "Patterns reported by local captains and fishing writers, not tested by studies.",
+    "sources": [
+      "https://myfwc.com/"
+    ]
+  },
+  "regulations": {
+    "summary": "Regulated species - See MyFWC/NOAA guidelines",
+    "min_size": "Check MyFWC/NOAA rules",
+    "max_size": "None",
+    "bag_limit": "Varies by region / state",
+    "season": "Open year-round (subject to local quota/closures)",
+    "jurisdiction": "Atlantic & Gulf State/Federal Waters",
+    "source_name": "MyFWC Saltwater Regulations",
+    "source_url": "https://myfwc.com/fishing/saltwater/recreational/"
+  },
+  "lon_range": [
+    -100,
+    -50
+  ]
+}

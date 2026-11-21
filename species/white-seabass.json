@@ -1,0 +1,120 @@
+{
+  "schema_version": 1,
+  "id": "white-seabass",
+  "common_name": "White seabass",
+  "scientific_name": "Atractoscion nobilis",
+  "aliases": [
+    "white seabass"
+  ],
+  "habitat_zone": "inshore",
+  "display": {
+    "color": "#f2503c"
+  },
+  "review_status": "Evidence reviewed 2026-11-17. NOAA archival tagging of 173 adults and 41 recaptures supports seasonal ambient-temperature and depth use; vertical depth is not identical to seafloor bathymetry.",
+  "image": {
+    "status": "placeholder",
+    "kind": "illustration",
+    "url": "fish/white-seabass.png",
+    "credit": "Original illustration",
+    "license": "",
+    "plan": "web/fish/white-seabass.png placeholder illustration."
+  },
+  "profile": {
+    "size": "Min limit 28 inches TL / Bag limit 1 per day (Mar 15-Jun 15); 3 per day otherwise",
+    "diet": "Small fish, crustaceans, squids, and pelagic prey",
+    "swimming_depth": "2 to 40 m",
+    "behavior": "Navigates West Coast kelp forests, rocky reefs, and coastal upwelling zones.",
+    "regulations_link": "https://wildlife.ca.gov/Fishing/Ocean/Regulations/Sport-Fishing",
+    "sources": [
+      "https://wildlife.ca.gov/Fishing/Ocean/Regulations/Sport-Fishing",
+      "https://spo.nmfs.noaa.gov/sites/default/files/aalbers.pdf",
+      "https://www.fisheries.noaa.gov/species/white-seabass",
+      "https://nrm.dfg.ca.gov/FileHandler.ashx?DocumentID=34195&inline=true"
+    ]
+  },
+  "lat_range": [
+    24,
+    38
+  ],
+  "factors": [
+    {
+      "param": "sst_c",
+      "kind": "range",
+      "range": [
+        14,
+        22
+      ],
+      "ideal": [
+        16,
+        20
+      ],
+      "weight": 0.5,
+      "active": true,
+      "value_status": "partly_sourced",
+      "sources": [
+        "https://wildlife.ca.gov/Fishing/Ocean/Regulations/Sport-Fishing",
+        "https://spo.nmfs.noaa.gov/sites/default/files/aalbers.pdf"
+      ],
+      "reason_template": "Water is {value} C, inside preferred Pacific temperature range for white seabass.",
+      "value_notes": "Aalbers and Sepulveda deployed 173 depth/temperature tags on adult white seabass and recovered 41 fish, yielding 9,130 days of records. Ambient temperature ranged 8.7-23.6 °C (mean 15.2 °C); 52% of time was 13-16 °C, with a peak around 14 °C, and 95% of surface-oriented records occurred at 12-19 °C. This supports thermal relevance, but ambient temperature at fish depth is not always satellite SST; the configured 14-22 °C range and 16-20 °C ideal are shifted warmer than the central observed temperatures."
+    },
+    {
+      "param": "depth_m",
+      "kind": "range",
+      "range": [
+        2,
+        40
+      ],
+      "ideal": [
+        4,
+        35
+      ],
+      "weight": 0.5,
+      "active": true,
+      "value_status": "partly_sourced",
+      "sources": [
+        "https://wildlife.ca.gov/Fishing/Ocean/Regulations/Sport-Fishing",
+        "https://spo.nmfs.noaa.gov/sites/default/files/aalbers.pdf",
+        "https://wildlife.ca.gov/Conservation/Marine/Nearshore",
+        "https://nrm.dfg.ca.gov/FileHandler.ashx?DocumentID=34195&inline=true"
+      ],
+      "gate": true,
+      "reason_template": "Depth is {value} m, within prime Pacific depth zone for white seabass.",
+      "value_notes": "The same adult tagging study found 95% of vertical depth records shallower than 50 m, with a maximum of 245 m and seasonal deeper winter profiles. CDFW describes white seabass as a nearshore/inner-shelf species commonly caught in 3-27 m. These support a shallow coastal context, but fish vertical depth is not seafloor bathymetry; the configured 2-40 m band and 4-35 m ideal are not a measured bottom-depth preference curve."
+    }
+  ],
+  "timing": {
+    "status": "angler_lore",
+    "light": {
+      "map": {
+        "day": 1,
+        "dawn": 0.9,
+        "dusk": 0.9,
+        "night": 0.5
+      },
+      "text": {
+        "day": "Full daylight when Pacific gamefish actively hunt.",
+        "dawn": "Dawn low-light feeding window.",
+        "dusk": "Dusk feeding window."
+      }
+    },
+    "note": "West Coast captain reports and biological upwelling patterns.",
+    "sources": [
+      "https://wildlife.ca.gov/Fishing/Ocean/Regulations/Sport-Fishing"
+    ]
+  },
+  "regulations": {
+    "summary": "CDFW: 28\" min TL; 1-3 per day",
+    "min_size": "28 inches TL",
+    "max_size": "None",
+    "bag_limit": "1 per day (Mar 15-Jun 15); 3 per day otherwise",
+    "season": "Open year-round",
+    "jurisdiction": "California State Waters (CDFW)",
+    "source_name": "West Coast State Regulations (CDFW/WDFW/ODFW/NOAA)",
+    "source_url": "https://wildlife.ca.gov/Fishing/Ocean/Regulations/Sport-Fishing"
+  },
+  "lon_range": [
+    -138,
+    -110
+  ]
+}
