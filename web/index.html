@@ -254,6 +254,7 @@
           <option value="socal_baja">Southern California & Baja</option>
           <option value="norcal_or">NorCal & Oregon</option>
           <option value="pnw_canada">Pacific NW & Canada</option>
+          <option value="south_fl">South Florida & Florida Keys</option>
           <option value="fl_se">US Southeast & Florida</option>
           <option value="mid_ne">US Mid-Atlantic & Northeast</option>
           <option value="canada">Atlantic Canada & North</option>
@@ -345,12 +346,13 @@ const REGIONS = {
   socal_baja: { name: "Southern California & Baja", bounds: [[-121.0, 22.0], [-114.0, 35.0]], filter: s => s.coords[1] >= 22.0 && s.coords[1] <= 35.0 && s.coords[0] <= -114.0 && s.coords[0] >= -122.0 },
   norcal_or: { name: "NorCal & Oregon", bounds: [[-126.0, 35.0], [-120.0, 46.0]], filter: s => s.coords[1] >= 35.0 && s.coords[1] <= 46.0 && s.coords[0] <= -120.0 && s.coords[0] >= -126.0 },
   pnw_canada: { name: "Pacific NW & Canada", bounds: [[-135.0, 45.0], [-122.0, 58.0]], filter: s => s.coords[1] >= 45.0 && s.coords[1] <= 58.0 && s.coords[0] <= -122.0 && s.coords[0] >= -136.0 },
+  south_fl: { name: "South Florida & Florida Keys", bounds: [[-83.5, 24.0], [-78.0, 28.5]], filter: s => s.coords[1] >= 24.0 && s.coords[1] <= 28.5 && s.coords[0] >= -83.5 && s.coords[0] <= -78.0 },
   fl_se: { name: "US Southeast & Florida", bounds: [[-83.5, 24.0], [-74.0, 35.0]], filter: s => s.coords[1] >= 24.0 && s.coords[1] <= 35.0 && s.coords[0] >= -83.5 && s.coords[0] <= -74.0 },
   mid_ne: { name: "US Mid-Atlantic & Northeast", bounds: [[-77.5, 35.0], [-66.0, 45.0]], filter: s => s.coords[1] >= 35.0 && s.coords[1] <= 45.0 && s.coords[0] >= -77.5 && s.coords[0] <= -66.0 },
   canada: { name: "Atlantic Canada & North", bounds: [[-70.0, 42.0], [-50.0, 52.0]], filter: s => s.coords[1] >= 42.0 && s.coords[1] <= 52.0 && s.coords[0] >= -70.0 && s.coords[0] <= -50.0 },
   gulf_mex: { name: "Gulf of Mexico & Mexico", bounds: [[-98.0, 15.0], [-81.0, 30.0]], filter: s => s.coords[1] >= 15.0 && s.coords[1] <= 30.0 && s.coords[0] >= -98.0 && s.coords[0] <= -81.0 }
 };
-let FISH = null, CATALOG = null, BUOYS = null, CLOSURES = null, LATEST = null, SELECTED_SPECIES = [], REGION_FILTER = store.get("fhm.region") || "all";
+let FISH = null, CATALOG = null, BUOYS = null, CLOSURES = null, LATEST = null, SELECTED_SPECIES = [], REGION_FILTER = store.get("fhm.region") || "south_fl";
 let NOLA_MODE = false;
 const SPECIES = {}, SPOTS = {};
 
