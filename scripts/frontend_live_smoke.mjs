@@ -55,6 +55,7 @@ async function runViewport(name, viewport, mobile = false) {
     if (!opportunityText.includes("Habitat match")) throw new Error("Habitat-match score label missing");
     if (!opportunityText.includes("Model confidence")) throw new Error("Model confidence label missing");
     if (!opportunityText.includes("Measured input at prediction")) throw new Error("Prediction-time measured buoy context missing");
+    await page.screenshot({ path: path.join(outputDir, name + "-opportunities.png"), fullPage: false });
 
     const beforePan = await page.locator("#opportunityContent .opportunity-meta").allTextContents();
     await page.evaluate(() => map.jumpTo({ center: [-100, 35], zoom: 4 }));
@@ -71,6 +72,7 @@ async function runViewport(name, viewport, mobile = false) {
     }, { timeout: 10000 });
     const detailText = await page.locator("#sheetBody").innerText();
     if (!detailText.toLowerCase().includes("spanish mackerel")) throw new Error("Opportunity card did not open its species detail sheet");
+    await page.screenshot({ path: path.join(outputDir, name + "-area-detail.png"), fullPage: false });
     await page.locator("#sheetClose").click();
 
     // Verify an explicitly no-favorable-areas species is reported honestly.
