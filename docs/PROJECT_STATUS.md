@@ -1,6 +1,6 @@
 ## Front-end results and model transparency | 2026-11-22
 
-**Status:** first user-facing diagnostics and explainability batch committed to `main`; Vercel deployment completed successfully for frontend commit `febb87d59fe111eca570b975e9371b7079ccf225`. Python CI run [45034880374](https://github.com/markeetox/LUPITA/actions/runs/45034880374) completed successfully: inline map-client JavaScript syntax check passed, **326 Python tests passed, 0 failed, 115 warnings**, and the species audit artifact was generated.
+**Status:** first user-facing diagnostics and explainability batch committed to `main`; latest frontend commit `85bcbccb50cc4e4286414f07c973db257642f2e3` deployed successfully through Vercel. Python CI run [45035145928](https://github.com/markeetox/LUPITA/actions/runs/45035145928) completed successfully: inline map-client JavaScript syntax check passed, **326 Python tests passed, 0 failed, 115 warnings**, and the species audit artifact was generated.
 
 ### Front-end changes
 - `web/index.html` now has a collapsible **Data health** panel using the published `latest.json` diagnostics.
