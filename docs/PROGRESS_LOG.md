@@ -1,3 +1,7 @@
+## 2026-11-22 | Live desktop/mobile browser QA harness
+
+Added `scripts/frontend_live_smoke.mjs` and manual workflow `.github/workflows/frontend-live-smoke.yml`. The workflow uses Playwright 1.55.0 + Chromium against the public LUPITA URL in desktop (1440×1000) and mobile (390×844) browser contexts. Checks cover published species catalog load, Spanish mackerel opportunity ranking and measured buoy context, card-to-detail-sheet navigation, Gopher rockfish no-favorable-area messaging, mobile control-sheet viewport/scroll behavior, uncaught browser errors and failed API-v1 responses. Screenshots and JSON results are uploaded for 14 days. The workflow has not yet been dispatched; the user must run it from GitHub Actions. The regular Python CI now syntax-checks the smoke script. Commits: script `365a8616324010204200f8d880b487407ac7b197`; workflow `4662991784fd5405a2ee7246223fed5f00f68626`; corrected workflow expression `b77303d62115d1a129830c2829a9dab1674b96f2`; CI syntax check `de09ff09161cdae1e2b62a6ad05d170995f7f855`.
+
 ## 2026-11-22 | API v1-backed species opportunity shortlist
 
 Found that the published `data` branch has an empty root `fish.json`, while `api/v1/index.json` contains the live prediction catalog: 130 species, 125 with modeled areas, 5 with no favorable areas and 960 areas total (snapshot generated 2026-11-22 11:06:59 UTC). This meant the existing frontend's legacy `fish.json` dependency could leave the map without modeled areas even though the versioned API was populated.
