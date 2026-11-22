@@ -1,3 +1,13 @@
+## 2026-11-22 | API v1-backed species opportunity shortlist
+
+Found that the published `data` branch has an empty root `fish.json`, while `api/v1/index.json` contains the live prediction catalog: 130 species, 125 with modeled areas, 5 with no favorable areas and 960 areas total (snapshot generated 2026-11-22 11:06:59 UTC). This meant the existing frontend's legacy `fish.json` dependency could leave the map without modeled areas even though the versioned API was populated.
+
+Added `web/lupita-data-adapter.js` to normalize API-v1 species detail files for the existing MapLibre spot/map/detail components and rank by habitat-match score, then distance from map center for ties. The frontend now falls back to `api/v1/index.json` when legacy `fish.json` is empty/unavailable, lazily loads only selected species detail files, caches them in memory, and shows up to three top habitat-match areas per selected species in the current region. Opportunity cards show model confidence, distance, declared profile evidence labels and any measured buoy input/station/time attached at prediction; selecting a card opens the existing detail sheet and centers the map. The nearby-conditions panel remains a separate live buoy view.
+
+Added `tests/test_frontend_opportunity_adapter.py` for API-v1 normalization, coordinate rejection, species scoping and score/distance ranking. Updated `.github/workflows/python-tests.yml` to syntax-check the standalone adapter as well as the inline map client. Commits: adapter `805535ae01f7e5d5bd2b967aa65624cbdc101d83`; tests `f06a44db267bb95eaec68f2899e86381fe65fa6e`; UI integration `11566d3090aa1bdf95aca55d9432a1b490d9e41c`; robustness `c0059d7851a154055dce2f6f474cbde025087ea2`; CI `0b2fa1be968a823dacf69990526a52daf04f6a53`. No scoring, species profiles, production ingestion or source configuration changed. CI and device QA are pending.
+
+**Next:** verify automatic CI, then manually inspect desktop/mobile behavior with Spanish mackerel and one multi-factor species, including a no-favorable-area species and map pan/region change.
+
 ## 2026-11-22 | Nearby marine conditions panel
 
 Added a user-facing **Nearby conditions** panel to `web/index.html`, using the already-published `latest.json` buoy array. No new external feed or production ingestion was introduced.
