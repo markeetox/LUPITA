@@ -28,7 +28,7 @@ jobs:
         run: npx playwright install --with-deps chromium
       - name: Run desktop and mobile live checks
         env:
-          LUPITA_BASE_URL: \${{ inputs.base_url }}
+          LUPITA_BASE_URL: ${{ inputs.base_url }}
           SMOKE_OUTPUT_DIR: artifacts/frontend-smoke
         run: node scripts/frontend_live_smoke.mjs
       - name: Upload screenshots and results
