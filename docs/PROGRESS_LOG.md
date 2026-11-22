@@ -1,3 +1,9 @@
+## 2026-11-22 | South Florida first-visit map region
+
+Added a dedicated **South Florida & Florida Keys** region to the map selector (24.0–28.5°N, 83.5–78.0°W) and made it the default for first-time visitors. Existing saved region preferences are retained, and the broader US Southeast, Gulf, Pacific, Northeast, Canada, and all-coasts options remain available. No scoring, species, or environmental data behavior changed. Frontend commit: `85bcbccb50cc4e4286414f07c973db257642f2e3`. JavaScript CI and Vercel deployment checks are running.
+
+---
+
 ## 2026-11-22 | First user-facing model diagnostics and factor explanations
 
 Inspected the actual published `data` branch snapshot before editing the map. The API index generated at 2026-11-22T11:06:59Z reports 130 catalog species, 125 with modeled areas, 5 with no favorable areas, and 960 modeled areas. The paired `latest.json` snapshot reports a degraded refresh with predictions refreshed, SST delayed by 50.1 hours (55.2% aligned grid validity), chlorophyll stale by 167.1 hours (21.6% aligned grid validity), and NOAA HF Radar fresh by 8.1 hours but covering only 1.5% of its local query grid (152/10,101 cells). ETOPO depth coverage is 53.2%; FWC habitat inventory contains 49,903 source features and 514 mapped query cells; reef inventory contains 4,548 artificial reef records and 25,362 natural reef polygons.
