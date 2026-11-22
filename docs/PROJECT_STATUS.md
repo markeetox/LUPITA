@@ -1,3 +1,24 @@
+## Live frontend browser QA harness | 2026-11-22
+
+**Status:** implemented on `main`; manual execution pending.
+
+Added `scripts/frontend_live_smoke.mjs` and `.github/workflows/frontend-live-smoke.yml`. The workflow installs pinned Playwright 1.55.0 and Chromium, then exercises the public LUPITA site in desktop (1440×1000) and mobile (390×844) contexts. It verifies:
+- at least 100 species checkboxes load from the published catalog;
+- selecting Spanish mackerel returns 1–3 modeled opportunity cards;
+- cards show habitat-match score, model confidence and measured buoy input attached at prediction time;
+- selecting a card opens the existing species/area detail sheet;
+- Gopher rockfish is reported as having no favorable areas;
+- the mobile control sheet remains within the viewport and has vertical scrolling;
+- no uncaught browser errors or failed API-v1 requests occur.
+
+Screenshots and a JSON report upload as `lupita-frontend-live-smoke` with 14-day retention, including failure screenshots when possible. The workflow is manual-only and defaults to `https://lupita.fuglymon.com`; it has not yet been dispatched. The Python CI workflow now syntax-checks the smoke script in addition to the map client and data adapter.
+
+Commits: browser script `365a8616324010204200f8d880b487407ac7b197`; workflow `4662991784fd5405a2ee7246223fed5f00f68626`; workflow expression fix `b77303d62115d1a129830c2829a9dab1674b96f2`; CI syntax check `de09ff09161cdae1e2b62a6ad05d170995f7f855`.
+
+No production frontend, species, scoring, source, or ingestion behavior was changed by this QA harness.
+
+---
+
 ## Species-conditioned opportunity shortlist and API v1 fallback | 2026-11-22
 
 **Status:** implemented on `main`; Vercel reports a successful deployment for final web commit `51ce8e128c76c29b9fedae2f8c13172662142626`. Python CI run [45037594236](https://github.com/markeetox/LUPITA/actions/runs/45037594236) completed successfully: inline map-client and standalone adapter JavaScript syntax checks passed; **329 Python tests passed, 0 failed, 115 warnings**; the species audit artifact was generated. The audit found 130 structurally valid profiles, 0 model-compatibility issues, and 130 still needing research or model rebuilding.
