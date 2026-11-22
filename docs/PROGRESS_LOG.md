@@ -1,6 +1,6 @@
 ## 2026-11-22 | South Florida first-visit map region
 
-Added a dedicated **South Florida & Florida Keys** region to the map selector (24.0–28.5°N, 83.5–78.0°W) and made it the default for first-time visitors. Existing saved region preferences are retained, and the broader US Southeast, Gulf, Pacific, Northeast, Canada, and all-coasts options remain available. No scoring, species, or environmental data behavior changed. Frontend commit: `85bcbccb50cc4e4286414f07c973db257642f2e3`. JavaScript CI and Vercel deployment checks are running.
+Added a dedicated **South Florida & Florida Keys** region to the map selector (24.0–28.5°N, 83.5–78.0°W) and made it the default for first-time visitors. Existing saved region preferences are retained, and the broader US Southeast, Gulf, Pacific, Northeast, Canada, and all-coasts options remain available. No scoring, species, or environmental data behavior changed. Frontend commit: `85bcbccb50cc4e4286414f07c973db257642f2e3`. Vercel deployment completed successfully, and [CI run 45035145928](https://github.com/markeetox/LUPITA/actions/runs/45035145928) passed the JavaScript syntax check and full suite (**326 passed, 0 failed, 115 warnings**).
 
 ---
 
