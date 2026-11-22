@@ -44,6 +44,7 @@ jobs:
           PY
           node --check /tmp/lupita-map-client.js
           node --check web/lupita-data-adapter.js
+          node --check scripts/frontend_live_smoke.mjs
       - uses: actions/setup-python@v5
         with:
           python-version: "3.12"
