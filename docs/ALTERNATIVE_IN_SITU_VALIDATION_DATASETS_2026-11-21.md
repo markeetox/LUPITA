@@ -126,3 +126,15 @@ Crucially, all three legacy NODC parent directory listings returned HTTP 206 wit
 - 0190533: `https://www.nodc.noaa.gov/archive/arc0141/0190533/1.1/` and `0190533.1.1.xml`
 
 The 206 responses confirm that legacy directory listings are reachable, but no data files have yet been listed or downloaded. Expanded `scripts/probe_noaa_archive_access.py` to probe each nested `1.1/` directory and XML metadata header using bounded HTTP Range requests; it remains read-only and does not retrieve archive payloads. Commit: 9720d80122387f5f55365c6fadd40018f3b220dd. Next: manually rerun the same workflow and inspect nested file names, sizes, and metadata. Prioritize identifying the actual bottom-temperature logger series within 0181331; keep 0190271 and 0190533 distinct. No Copernicus matchups, conversion, species/scoring, ingestion or production changes.
+
+
+## Legacy archive discovery update | 2026-11-21
+
+Manual probe run [44962696916](https://github.com/markeetox/LUPITA/actions/runs/44962696916) succeeded; artifact ID 14730466940 (expires 2026-12-05). The artifact confirms that legacy NODC 1.1/ directories and full accession manifests can be read with HTTP Range requests (HTTP 206). The modern NCEI landing/download routes remain unavailable (503/timeouts).
+
+Manifest facts:
+- **0181331 (ADCP bottom-temperature candidate):** 42 files, 35,389,302 bytes; manifest 0181331.1.1.xml is 54,374 bytes. The 1.1/ root lists NCEI-Readme.txt, about/, and data/.
+- **0190271 (separate temperature-logger series):** 18 files, 8,027,615 bytes; manifest is 22,051 bytes. Its 1.1/ root likewise lists NCEI-Readme.txt, about/, and data/.
+- **0190533 (separate CTD profile archive):** 95 files, 48,033,891 bytes; manifest is 121,058 bytes. Its 1.1/ root likewise lists NCEI-Readme.txt, about/, and data/.
+
+These are archive inventory facts, not yet sensor-level metadata or evidence of near-bottom suitability. No scientific data payloads were downloaded. The first probe's nested root listing was not the actual data/ listing; therefore the next probe now checks each accession's 1.1/data/, 1.1/about/, and README, and retrieves complete manifest XML (bounded at 200 KB) so we can identify exact data filenames, sizes, formats, and checksums before downloading anything. Script update commit: 59ab59318e014034e1b6c5148606a32f0f06ffb7. Next: manually rerun the NOAA archive probe workflow at https://github.com/markeetox/LUPITA/actions/workflows/noaa-archive-access-probe.yml. Prioritize 0181331 and keep 0190271/0190533 distinct. No Copernicus matchup, temperature conversion, species/scoring, ingestion or production changes.
