@@ -101,6 +101,27 @@
   .chip { font-size: 15px; font-weight: 600; padding: 4px 12px; border-radius: 2px; border: 1px solid var(--line); color: var(--muted); background: rgba(255,255,255,0.02); text-transform: uppercase; letter-spacing: 1px; }
   .chip.warn { color: #fbbf24; border-color: #785210; background: rgba(251,191,36,0.08); }
   .chip.ok { color: var(--accent); border-color: var(--accent); background: rgba(255,102,0,0.08); text-shadow: 0 0 6px rgba(255,102,0,0.3); }
+  .health-details { position: relative; }
+  .health-details > summary { cursor: pointer; list-style: none; }
+  .health-details > summary::-webkit-details-marker { display: none; }
+  .health-details > summary::after { content: " +"; font-weight: 800; }
+  .health-details[open] > summary::after { content: " −"; }
+  .health-content { position: absolute; right: 0; bottom: calc(100% + 10px); z-index: 70; width: min(460px, calc(100vw - 32px)); max-height: min(65vh, 520px); overflow: auto; padding: 16px; color: var(--text); background: rgba(12,14,18,.98); border: 1px solid var(--accent); border-top: 3px solid var(--accent); box-shadow: 0 18px 48px rgba(0,0,0,.8); backdrop-filter: blur(12px); }
+  .health-content h3 { margin: 0 0 10px; color: var(--accent); font-size: 18px; letter-spacing: 1px; text-transform: uppercase; }
+  .health-metrics { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-bottom: 12px; }
+  .health-metric { padding: 9px 10px; background: rgba(255,255,255,.035); border: 1px solid var(--line); }
+  .health-metric b { display: block; font-size: 21px; color: var(--text); }
+  .health-metric span { display: block; color: var(--muted); font-size: 13px; text-transform: uppercase; letter-spacing: .7px; }
+  .health-row { display: grid; grid-template-columns: 105px 1fr; gap: 8px; padding: 7px 0; border-top: 1px solid rgba(255,255,255,.08); font-size: 15px; line-height: 1.25; }
+  .health-row b { color: var(--text); }
+  .health-row span { color: var(--muted); }
+  .health-row .fresh { color: #86efac; }
+  .health-row .delayed, .health-row .stale, .health-row .unknown { color: #fbbf24; }
+  .health-caveat { margin: 12px 0 0; padding-top: 10px; border-top: 1px dashed var(--line); color: var(--muted); font-size: 14px; line-height: 1.4; }
+  @media (max-width: 600px) {
+    .health-content { right: -6px; width: min(420px, calc(100vw - 24px)); }
+    .health-metrics { grid-template-columns: 1fr 1fr; }
+  }
   .legend { display: flex; align-items: center; gap: 10px; font-size: 15px; font-weight: 600; color: var(--muted); min-width: 220px; text-transform: uppercase; letter-spacing: 1px; }
   .legend i { flex: 1; height: 8px; border-radius: 2px; border: 1px solid var(--line); background: linear-gradient(90deg, rgba(163,163,163,.14), var(--accent), #ffffff); }
 
@@ -258,6 +279,10 @@
         <span id="status" class="chip">Loading...</span>
         <span id="buoyStatus" class="chip">Buoys: loading...</span>
         <span id="closuresStatus" class="chip">No-fishing areas: loading...</span>
+        <details id="healthDetails" class="health-details">
+          <summary id="healthSummary" class="chip warn">Data health: loading...</summary>
+          <div id="healthContent" class="health-content"><h3>System diagnostics</h3><p>Waiting for the latest published data report.</p></div>
+        </details>
       </div>
       <div class="legend" aria-hidden="true"><span>Lower match</span><i id="legendBar"></i><span>Higher match</span></div>
     </div>
@@ -290,56 +315,6 @@ const FALLBACK_STYLE = {
   sources: { osm: { type: "raster", tileSize: 256, tiles: ["https://tile.openstreetmap.org/{z}/{x}/{y}.png"],
     attribution: "&copy; OpenStreetMap contributors" } },
   layers: [{ id: "osm", type: "raster", source: "osm" }]
-};
-
-const SAMPLE = {
-  sample: true,
-  species: [
-    { id: "mahi-mahi", name: "Mahi-mahi", sci: "Coryphaena hippurus", color: "#34d399", status: "ok", message: "", spots: 1, lat_range: [15, 38],
-      specs: [["Typical size", "Common up to about 50 lb"], ["Diet", "Small fish, crabs, shrimp, flying fish"], ["Behavior", "Offshore, near floating weed lines"]],
-      regulations: { summary: '20" min fork length; 5 per harvester / 30 per vessel', min_size: '20 inches FL', max_size: 'None', bag_limit: '5 per harvester / day', season: 'Open year-round', jurisdiction: 'FL State & Atlantic SAFMC', source_name: 'MyFWC Mahi Regulations', source_url: 'https://myfwc.com/fishing/saltwater/recreational/dolphinfish/' } },
-    { id: "yellowtail-snapper", name: "Yellowtail snapper", sci: "Ocyurus chrysurus", color: "#fbbf24", status: "ok", message: "", spots: 1, lat_range: [15, 32],
-      specs: [["Typical size", "8 to 14 in; up to about 34 in"], ["Adult depth", "Mostly 10-70 m near offshore reefs"], ["Spawning", "April through August"]],
-      regulations: { summary: '12" min total length; 10 per harvester', min_size: '12 inches TL', max_size: 'None', bag_limit: '10 per harvester / day', season: 'Open year-round', jurisdiction: 'Florida State Waters (FWC)', source_name: 'MyFWC Snapper Regulations', source_url: 'https://myfwc.com/fishing/saltwater/recreational/snappers/' } },
-    { id: "snook", name: "Common snook", sci: "Centropomus undecimalis", color: "#60a5fa", status: "ok", message: "", spots: 1, lat_range: [15, 30],
-      specs: [["Typical size", "Up to about 48 in"], ["Where", "Mangroves, inlets, docks, beaches"], ["Cold limit", "Below about 60 F"]],
-      regulations: { summary: '28" - 32" slot limit (Atlantic); 1 per harvester', min_size: '28 inches TL', max_size: '32 inches TL', bag_limit: '1 per harvester / day', season: 'Closed Dec 15 - Jan 31 & Jun 1 - Aug 31', jurisdiction: 'Florida State Waters (FWC)', source_name: 'MyFWC Snook Regulations', source_url: 'https://myfwc.com/fishing/saltwater/recreational/snook/' } },
-    { id: "california-yellowtail", name: "California yellowtail", sci: "Seriola lalandi", color: "#facc15", status: "ok", message: "", spots: 1, lat_range: [15, 35],
-      specs: [["Typical size", "12 to 30 lb; up to 50+ lb"], ["Diet", "Anchovies, sardines, squid, mackerel"], ["Behavior", "Offshore islands, kelp edges, structure"]],
-      regulations: { summary: '24" min FL; 5 per harvester / day', min_size: '24 inches FL', max_size: 'None', bag_limit: '5 per harvester / day', season: 'Open year-round', jurisdiction: 'California State Waters (CDFW)', source_name: 'CDFW Ocean Sport Fishing', source_url: 'https://wildlife.ca.gov/Fishing/Ocean/Regulations/Sport-Fishing' } },
-    { id: "chinook-salmon", name: "Chinook salmon", sci: "Oncorhynchus tshawytscha", color: "#f87171", status: "ok", message: "", spots: 1, lat_range: [36, 60],
-      specs: [["Typical size", "10 to 30 lb; up to 60+ lb"], ["Diet", "Herring, sand lance, squid, krill"], ["Behavior", "Coastal ocean feeding, upwelling zones"]],
-      regulations: { summary: '20"-24" min TL; 1-2 per harvester / day', min_size: '20-24 inches TL', max_size: 'None', bag_limit: '1-2 per harvester / day', season: 'Seasonal ocean openings', jurisdiction: 'CDFW / WDFW / ODFW / NOAA', source_name: 'WDFW / CDFW Salmon Rules', source_url: 'https://wdfw.wa.gov/fishing/regulations' } },
-    { id: "lingcod", name: "Lingcod", sci: "Ophiodon elongatus", color: "#a855f7", status: "ok", message: "", spots: 1, lat_range: [34, 60],
-      specs: [["Typical size", "10 to 40 lb; up to 80+ lb"], ["Diet", "Rockfish, herring, crabs, squid"], ["Behavior", "Deep rocky reefs, pinnacles, chasms"]],
-      regulations: { summary: '22" min TL; 1-2 per harvester / day', min_size: '22 inches TL', max_size: 'None', bag_limit: '1-2 per harvester / day', season: 'Seasonal groundfish window', jurisdiction: 'CDFW / ODFW / WDFW', source_name: 'Pacific Groundfish Regulations', source_url: 'https://wildlife.ca.gov/Fishing/Ocean/Regulations/Sport-Fishing' } }
-  ],
-  spots: [
-    { id: "m1", species: "mahi-mahi", title: "Temperature break, offshore", score: 0.78, confidence: "Medium", coords: [-79.93, 25.52],
-      ring: [[-80.00, 25.42], [-79.84, 25.40], [-79.80, 25.62], [-79.96, 25.66], [-80.00, 25.42]],
-      reasons: [["measured", "Water is 27.8 C, inside the 25-29 C range where mahi are most active. (sample)"], ["modeled", "A sharp temperature break runs through this zone. (sample)"]],
-      location: [["Water depth", "About 300 m (sample)"], ["Surface temp", "27.8 C (sample)"]] },
-    { id: "y1", species: "yellowtail-snapper", title: "Reef ledge, Fowey Rocks area", score: 0.71, confidence: "Medium", coords: [-80.078, 25.585],
-      ring: [[-80.12, 25.56], [-80.04, 25.55], [-80.03, 25.63], [-80.11, 25.64], [-80.12, 25.56]],
-      reasons: [["static", "This is natural reef, the structure yellowtail hold on. (sample)"], ["static", "Depth of about 18 m is inside the 10-70 m adult range. (sample)"]],
-      location: [["Water depth", "About 18 m (sample)"], ["Bottom", "Natural reef (sample)"]] },
-    { id: "s1", species: "snook", title: "Inlet and mangrove edge", score: 0.66, confidence: "Low", coords: [-80.125, 25.903],
-      ring: [[-80.15, 25.88], [-80.10, 25.88], [-80.10, 25.93], [-80.15, 25.93], [-80.15, 25.88]],
-      reasons: [["static", "Mangrove edge and seawalls give snook cover. (sample)"], ["modeled", "The tide is falling. (sample)"]],
-      location: [["Water depth", "1-4 m (sample)"], ["Nearest inlet", "Haulover Inlet (sample)"]] },
-    { id: "cy1", species: "california-yellowtail", title: "Coronado Islands / Point Loma kelp bed", score: 0.82, confidence: "Medium", coords: [-117.28, 32.61],
-      ring: [[-117.32, 32.55], [-117.22, 32.55], [-117.22, 32.68], [-117.32, 32.68], [-117.32, 32.55]],
-      reasons: [["measured", "Water is 20.2 C, inside prime California yellowtail range. (sample)"], ["static", "High relief rocky ledge and kelp forest edge. (sample)"]],
-      location: [["Water depth", "About 35 m (sample)"], ["Surface temp", "20.2 C (sample)"]] },
-    { id: "cs1", species: "chinook-salmon", title: "Columbia River Bar & Ocean Banks", score: 0.79, confidence: "Medium", coords: [-124.18, 46.26],
-      ring: [[-124.25, 46.20], [-124.10, 46.20], [-124.10, 46.32], [-124.25, 46.32], [-124.25, 46.20]],
-      reasons: [["measured", "Water is 12.4 C, optimal temperature for feeding Chinook. (sample)"], ["modeled", "Strong tidal river plume creating bait concentration. (sample)"]],
-      location: [["Water depth", "About 45 m (sample)"], ["Nearest inlet", "Columbia River Entrance (sample)"]] },
-    { id: "lc1", species: "lingcod", title: "Neah Bay & Strait Pinnacles", score: 0.76, confidence: "Medium", coords: [-124.75, 48.48],
-      ring: [[-124.82, 48.42], [-124.68, 48.42], [-124.68, 48.54], [-124.82, 48.54], [-124.82, 48.42]],
-      reasons: [["static", "Deep rocky chasm and pinnacle structure. (sample)"], ["modeled", "Strong upwelling currents bringing baitfish. (sample)"]],
-      location: [["Water depth", "About 85 m (sample)"], ["Nearest inlet", "Strait of Juan de Fuca (sample)"]] }
-  ]
 };
 
 /* ---------------- state ---------------- */
@@ -420,6 +395,72 @@ function renderSea() {
   row.hidden = false;
   row.innerHTML = `${icon("wind")}<span class="lvl ${esc(lvl)}">${esc(SEA_LABEL[lvl] || lvl)}</span><span>` +
     (now ? esc(now.text.replace(/^[^:]+: /, "")) : "") + (now && out ? "<br>" : "") + (out ? esc(out.text) : "") + "</span>";
+}
+
+function renderHealth() {
+  const summary = document.getElementById("healthSummary");
+  const content = document.getElementById("healthContent");
+  if (!summary || !content) return;
+  if (!LATEST) {
+    summary.textContent = "Data health: diagnostics unavailable";
+    summary.className = "chip warn";
+    content.innerHTML = "<h3>System diagnostics</h3><p>The latest source report has not loaded. Predictions are not proof that every input is fresh.</p>";
+    return;
+  }
+
+  const health = LATEST.pipeline_health || {};
+  const layers = (LATEST.data_quality && LATEST.data_quality.layers) || {};
+  const freshness = layer => (layer && (layer.freshness || layer.primary_freshness)) || {};
+  const fmtAge = value => Number.isFinite(Number(value)) ? Number(value).toFixed(1) + " h old" : "age unknown";
+  const fmtPct = value => Number.isFinite(Number(value)) ? (Number(value) * 100).toFixed(1) + "%" : "coverage unknown";
+  const row = (name, detail, status) => `<div class="health-row"><b>${esc(name)}</b><span class="${esc(status || "unknown")}">${esc(detail)}</span></div>`;
+  const sst = layers.sst || {};
+  const chl = layers.chlorophyll || {};
+  const currents = layers.currents || {};
+  const bathy = layers.bathymetry || {};
+  const habitat = layers.benthic_habitat || {};
+  const reefs = layers.reef_structure || {};
+  const sstFresh = freshness(sst);
+  const chlFresh = freshness(chl);
+  const currentFresh = freshness(currents);
+  const currentCoverage = currents.query_region_coverage || {};
+  const predictionRefreshed = health.prediction_refreshed === true || LATEST.fish_updated === true;
+  const status = String(health.status || "unknown").toLowerCase();
+  const issues = [...(health.critical_issues || []), ...(health.optional_layer_issues || []), ...(health.freshness_issues || [])];
+  const issueCount = issues.length;
+  const stateClass = status === "healthy" ? "chip ok" : "chip warn";
+  summary.textContent = status === "healthy" ? "Data health: healthy" :
+    status === "degraded" ? `Data health: degraded · ${issueCount} warning${issueCount === 1 ? "" : "s"}` :
+    status === "failed" ? "Data health: failed" : "Data health: status unknown";
+  summary.className = stateClass;
+
+  const species = FISH && Array.isArray(FISH.species) ? FISH.species : [];
+  const areas = FISH && Array.isArray(FISH.spots) ? FISH.spots.length :
+    species.reduce((total, item) => total + (Number(item.spots) || 0), 0);
+  const activeSpecies = species.filter(item => item.status === "ok").length;
+  const catalogCount = CATALOG && Array.isArray(CATALOG.species) ? CATALOG.species.length : species.length;
+  const generated = LATEST.generated_utc || (FISH && FISH.generated_utc) || null;
+  const currentCoveragePct = currentCoverage.hfr_valid_fraction;
+  const habitatFeatures = habitat.feature_count;
+  const habitatCells = habitat.mapped_cell_count;
+  const issueHtml = issues.length
+    ? `<p class="health-caveat"><b>Why degraded:</b> ${issues.map(esc).join(" · ")}</p>`
+    : "";
+  content.innerHTML = `
+    <h3>Published model snapshot</h3>
+    <div class="health-metrics">
+      <div class="health-metric"><b>${areas.toLocaleString()}</b><span>Mapped prediction areas</span></div>
+      <div class="health-metric"><b>${activeSpecies}/${catalogCount}</b><span>Species with areas</span></div>
+    </div>
+    <div class="health-row"><b>Snapshot</b><span>${predictionRefreshed ? "Predictions refreshed" : "Last-known-good predictions"} · ${esc(generated ? ago(generated) : "time unknown")}</span></div>
+    ${row("SST", `${sstFresh.status || sst.status || "unknown"} · ${fmtAge(sstFresh.age_hours)} · ${fmtPct(sst.valid_fraction)} grid valid`, sstFresh.status || sst.status)}
+    ${row("Chlorophyll", `${chlFresh.status || chl.status || "unknown"} · ${fmtAge(chlFresh.age_hours)} · ${fmtPct(chl.final_valid_fraction || chl.primary_aligned_valid_fraction)} grid valid`, chlFresh.status || chl.status)}
+    ${row("HF Radar", `${currentFresh.status || currents.status || "unknown"} · ${fmtAge(currentFresh.age_hours)} · ${fmtPct(currentCoverage.hfr_valid_fraction)} local query coverage`, currentFresh.status || currents.status)}
+    ${row("Bathymetry", `Static ETOPO · ${fmtPct(bathy.depth_valid_fraction)} sampled depth coverage`, bathy.status)}
+    ${row("FWC habitat", `${Number(habitatFeatures || 0).toLocaleString()} source features · ${Number(habitatCells || 0).toLocaleString()} mapped cells in query area`, habitat.status)}
+    ${row("Reef structure", `${Number(reefs.artificial_reef_records || 0).toLocaleString()} artificial reef records · ${Number(reefs.natural_reef_polygons || 0).toLocaleString()} natural reef polygons`, reefs.status)}
+    ${issueHtml}
+    <p class="health-caveat">A fresh source can still have sparse spatial coverage. Current HF Radar vectors cover only the reported fraction of the local query grid. Habitat scores show environmental match, not catch probability. Missing or unmapped data is unknown, not zero.</p>`;
 }
 
 function clock(iso, hourOnly) {
@@ -992,29 +1033,34 @@ regionSelect.addEventListener("change", () => {
 
 function renderPanel() {
   const chip = document.getElementById("status");
-  const isFresh = LATEST ? LATEST.fish_updated !== false : true;
+  renderHealth();
+  const health = (LATEST && LATEST.pipeline_health) || {};
+  const predictionRefreshed = health.prediction_refreshed === true || (LATEST && LATEST.fish_updated === true);
   if (!CATALOG && !FISH) {
-    chip.textContent = "Error: Species catalog could not be loaded";
+    chip.textContent = "Error: live catalog and predictions could not be loaded";
     chip.className = "chip warn";
     return;
   }
-  if (FISH && FISH.sample) {
-    chip.textContent = "Sample data (live data not found)";
-    chip.className = "chip warn";
-  } else if (FISH && FISH.error) {
+  if (FISH && FISH.error) {
     chip.textContent = FISH.error;
     chip.className = "chip warn";
   } else if (!FISH) {
     chip.textContent = "Species catalog loaded · Predictions unavailable";
     chip.className = "chip warn";
-  } else if (!isFresh) {
+  } else if (!predictionRefreshed || (LATEST && LATEST.fish_updated === false)) {
     const predAge = FISH.generated_utc ? ago(FISH.generated_utc) : "previous run";
-    chip.textContent = `Previous predictions (${predAge}) · Ocean satellite unavailable`;
+    chip.textContent = `Last-known-good predictions · ${predAge}`;
+    chip.className = "chip warn";
+  } else if (health.status === "degraded") {
+    chip.textContent = "Predictions refreshed · Some inputs degraded";
+    chip.className = "chip warn";
+  } else if (health.status === "failed") {
+    chip.textContent = "Refresh failed · Showing last-known-good predictions";
     chip.className = "chip warn";
   } else {
     const mins = FISH.generated_utc ? Math.round((Date.now() - new Date(FISH.generated_utc).getTime()) / 60000) : null;
     const stale = mins !== null && mins > 240;
-    chip.textContent = (stale ? "Stale: last updated " : "Live L.U.P.I.T.A. Model") + (FISH.generated_utc ? (stale ? "" : " · ") + ago(FISH.generated_utc) : "");
+    chip.textContent = (stale ? "Stale prediction snapshot · " : "L.U.P.I.T.A. Model updated · ") + (FISH.generated_utc ? ago(FISH.generated_utc) : "time unknown");
     chip.className = "chip " + (stale ? "warn" : "ok");
   }
   renderSea();
@@ -1087,7 +1133,7 @@ async function load() {
     setFish(await getJSON("fish.json"));
   } catch (err) {
     console.warn("fish.json failed:", err);
-    if (!CATALOG) setFish(SAMPLE);
+    // Do not substitute fabricated sample predictions when the live data file is unavailable.
   }
 
   if (!CATALOG && FISH) {
