@@ -189,7 +189,7 @@
 
   /* Score & Confidence aligned cleanly under the titles */
   .score-badge-row { display: flex; align-items: center; gap: 12px; margin-top: 10px; }
-  .score-badge { display: inline-flex; align-items: baseline; gap: 4px; background: rgba(11, 12, 15, 0.92);
+  .score-badge { display: grid; grid-template-columns: auto auto; align-items: baseline; column-gap: 8px; background: rgba(11, 12, 15, 0.92);
     border: 1px solid var(--accent); padding: 4px 12px; border-radius: 2px; box-shadow: 0 4px 12px rgba(0,0,0,0.5); }
   .score-badge b { font-size: 28px; font-weight: 800; color: var(--accent); letter-spacing: 1px; }
   .score-badge span { font-size: 15px; font-weight: 600; color: var(--text); text-transform: uppercase; letter-spacing: 0.5px; }
@@ -567,22 +567,20 @@ function factorDiagnosticsHTML(spot) {
     const sources = Array.isArray(factor.sources) ? factor.sources.filter(url => typeof url === "string" && /^https:\/\//i.test(url)) : [];
     const sourceCount = Number(factor.source_count) || sources.length;
     const notes = factor.value_notes ? `<p class="factor-notes">${esc(factor.value_notes)}</p>` : "";
-    const sourceList = sources.length ? `<details class="factor-sources"><summary>View ${sourceCount} supporting reference${sourceCount === 1 ? "" : "s"}</summary><ul>${sources.map(url => {
+    const sourceList = sources.length ? `<details class="factor-sources"><summary>View ${sourceCount} listed reference${sourceCount === 1 ? "" : "s"}</summary><ul>${sources.map(url => {
       const host = url.replace(/^https:\/\//i, "").split("/")[0];
       return `<li><a href="${esc(url)}" target="_blank" rel="noopener noreferrer">${esc(host)}</a></li>`;
     }).join("")}</ul></details>` : `<div class="factor-sources">${sourceCount} references recorded</div>`;
-    return `<div class="factor-card"><div class="factor-head"><b>${esc(param)}</b><span class="evidence-tag ${esc(status)}">${esc(statusLabel)}</span></div><div class="factor-meta"><span>${esc(match)}</span><span>${esc(weight)}</span><span>${sourceCount} source${sourceCount === 1 ? "" : "s"}</span></div>${notes}${sourceList}</div>`;
+    return `<div class="factor-card"><div class="factor-head"><b>${esc(param)}</b><span class="evidence-tag ${esc(status)}">${esc(statusLabel)}</span></div><div class="factor-meta"><span>${esc(match)}</span><span>${esc(weight)}</span><span>${sourceCount} listed source${sourceCount === 1 ? "" : "s"}</span></div>${notes}${sourceList}</div>`;
   }).join("");
   const basisHtml = basis.length ? `<div class="model-caveat"><b>Confidence limits:</b> ${basis.map(esc).join(" · ")}</div>` : "";
-  return `<div class="sec"><h3>${icon("info")}Model inputs at this area</h3><div class="model-caveat">${esc(coverageText)}. Factor match scores are model components, not catch probabilities.</div><div class="factor-list">${rows}</div>${basisHtml}</div>`;
+  return `<div class="sec"><h3>${icon("info")}Model inputs at this area</h3><div class="model-caveat">${esc(coverageText)}. Factor match scores are model components, not catch probabilities. Evidence labels are profile assessments; listed citations do not automatically prove the exact numeric claim.</div><div class="factor-list">${rows}</div>${basisHtml}</div>`;
 }
 
 /* Spot Detail HTML layout: Title block with Score % and Confidence cleanly aligned under titles */
 function spotHTML(id) {
   const s = SPOTS[id], sp = SPECIES[s.species];
-  const banner = FISH.sample
-    ? `<div class="banner sample">Sample data: placeholder values, not a real prediction.</div>`
-    : `<div class="banner live">L.U.P.I.T.A. Habitat Prediction Model &middot; Conditions match habitat preferences.</div>`;
+  const banner = `<div class="banner live">L.U.P.I.T.A. Habitat Prediction Model &middot; Conditions match habitat preferences.</div>`;
   return `
     <div class="sheet-content-grid">
       <div class="sheet-sidebar">
