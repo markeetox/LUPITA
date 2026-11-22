@@ -20,10 +20,11 @@ Acceptance / next work:
 1. Inspect the deployed map at desktop and mobile sizes, including the health details popover and selected-area factor breakdown.
 2. Ensure degraded input status is visible without obscuring the map or falsely implying every layer is current.
 3. **Completed:** added South Florida & Florida Keys as the first-visit default while retaining saved preferences and all wider region choices.
-4. Add a compact nearby-conditions overview using actual buoy and marine-condition readings, with station distance and observation time visible.
-5. Keep factor match scores, model confidence, evidence status, and catch probability semantically separate.
-6. Do not change species profiles, factor ranges, scoring weights, gates, or production sources as part of visual polish.
-7. Keep Copernicus bottom-temperature work research-only until independent paired validation is complete.
+4. **Completed:** added a map-centered nearby-conditions panel showing nearest buoy observations, station distance, water temperature, wind/gust, waves, and observation ages. Missing readings are not inferred.
+5. Test the nearby-conditions panel on desktop and mobile; confirm station cards, distance updates after panning, and the full buoy detail sheet behave correctly.
+6. Keep factor match scores, model confidence, evidence status, and catch probability semantically separate.
+7. Do not change species profiles, factor ranges, scoring weights, gates, or production sources as part of visual polish.
+8. Keep Copernicus bottom-temperature work research-only until independent paired validation is complete.
 
 Current published snapshot inspected 2026-11-22 11:06:59 UTC: 130 catalog species, 125 species with modeled areas, 5 with no favorable areas, and 960 mapped areas. Refresh health was degraded: SST 50.1 h delayed, chlorophyll 167.1 h stale, and HF Radar 8.1 h fresh but only 1.5% local query-grid coverage. These are current diagnostics, not catch-performance validation.
 
