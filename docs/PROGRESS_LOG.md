@@ -1,3 +1,20 @@
+## 2026-11-22 | Nearby marine conditions panel
+
+Added a user-facing **Nearby conditions** panel to `web/index.html`, using the already-published `latest.json` buoy array. No new external feed or production ingestion was introduced.
+
+- Shows the four nearest reporting stations with usable water-temperature, wind, or wave observations, ranked by haversine distance from the current map center.
+- Displays water temperature in °C and °F, wind speed/direction, gusts, wave height in metres and feet, station distance, and separate ages for water-temperature and wind/wave observations.
+- Refreshes the nearest-station ranking when the map view changes; the map center is the explicit reference point, not the user's device location.
+- Clicking a station card opens the existing full buoy detail sheet.
+- Missing fields remain marked unavailable; no interpolation or inferred values are shown. Future/invalid timestamps are handled explicitly.
+- The panel uses the existing NOAA buoy publication path and retains station-level provenance through station ID and observation timestamps.
+
+Frontend commits: `11c530fb21e74678d21487ce61fc238a3e5b0681` and `468c6dc089803e8a3238aae2a6a331ee74e5a9e3`. CI and deployment checks are triggered by the frontend update; results to be recorded after completion.
+
+No prediction scores, species profiles, environmental source configuration, or production data were changed.
+
+---
+
 ## 2026-11-22 | South Florida first-visit map region
 
 Added a dedicated **South Florida & Florida Keys** region to the map selector (24.0–28.5°N, 83.5–78.0°W) and made it the default for first-time visitors. Existing saved region preferences are retained, and the broader US Southeast, Gulf, Pacific, Northeast, Canada, and all-coasts options remain available. No scoring, species, or environmental data behavior changed. Frontend commit: `85bcbccb50cc4e4286414f07c973db257642f2e3`. Vercel deployment completed successfully, and [CI run 45035145928](https://github.com/markeetox/LUPITA/actions/runs/45035145928) passed the JavaScript syntax check and full suite (**326 passed, 0 failed, 115 warnings**).
