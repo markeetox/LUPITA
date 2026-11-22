@@ -34,9 +34,15 @@ Keep production changes separate from research-only work. Do not promote candida
 - `data/spatial/research/`: source-preserving NOAA/FWC/FDEP/county research datasets, derived comparison layers, and audit outputs.
 - `scripts/`: repeatable GIS extraction, curation, topology/audit tools, and read-only NOAA HF Radar product comparisons.
 - `tests/`: prediction, data-contract, extraction, and spatial QA tests.
-- `web/`: map client.
+- `web/`: MapLibre fishing map client with live species areas, heat overlays, buoy observations, closures, Gulf Stream context, source-freshness diagnostics, and factor-level explanations.
 - `.github/workflows/`: scheduled production refresh/export, lightweight PR validation, and manual-only source-acquisition workflows.
 - `requirements-research.txt`: optional GIS/research QA dependencies for tests and source analysis; not required by the production runtime.
+
+## Map interface and model transparency
+
+The static MapLibre client in `web/index.html` reads the published `data` branch. It displays the current species catalog, modeled habitat areas, heat layers, buoy observations, mapped closures, and Gulf Stream context. The status bar's **Data health** panel reports the published prediction snapshot and the freshness/coverage of major environmental inputs. Selecting a modeled area exposes active factor scores, model weights, declared evidence status, profile notes, and listed source links.
+
+The map score is a habitat-match score, **not catch probability**. Model confidence describes evidence and input limitations, not the chance of catching a fish. The client does not invent sample fishing areas when live prediction data fails to load; it reports prediction unavailability instead.
 
 ## Execution and data-export boundary
 
