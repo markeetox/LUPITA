@@ -14,7 +14,7 @@ This is the handoff record for future sessions. Read it with [Project Status](PR
 
 ## Active milestone: front-end results and explainability
 
-**Status:** first UI batch committed and deployed. The MapLibre client now exposes prediction snapshot health, environmental freshness/coverage, factor-level explanations, declared evidence status, source references, and confidence limitations. Fabricated sample predictions are no longer used as a fallback. Frontend commit `febb87d59fe111eca570b975e9371b7079ccf225` received a successful Vercel deployment status. CI run [45034880374](https://github.com/markeetox/LUPITA/actions/runs/45034880374) passed the JavaScript syntax-check step; the full Python suite was still in progress at the time of the status update.
+**Status:** first UI batch committed and deployed. The MapLibre client now exposes prediction snapshot health, environmental freshness/coverage, factor-level explanations, declared evidence status, source references, and confidence limitations. Fabricated sample predictions are no longer used as a fallback. Frontend commit `febb87d59fe111eca570b975e9371b7079ccf225` received a successful Vercel deployment status. CI run [45034880374](https://github.com/markeetox/LUPITA/actions/runs/45034880374) completed successfully: JavaScript syntax check passed, **326 Python tests passed, 0 failed, 115 warnings**, and the species audit artifact was generated.
 
 Acceptance / next work:
 1. Inspect the deployed map at desktop and mobile sizes, including the health details popover and selected-area factor breakdown.
