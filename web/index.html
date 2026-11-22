@@ -441,7 +441,8 @@ function renderHealth() {
   const chlFresh = freshness(chl);
   const currentFresh = freshness(currents);
   const currentCoverage = currents.query_region_coverage || {};
-  const predictionRefreshed = health.prediction_refreshed === true || LATEST.fish_updated === true;
+  const hasPredictions = !!(FISH && !FISH.error);
+  const predictionRefreshed = hasPredictions && (health.prediction_refreshed === true || LATEST.fish_updated === true);
   const status = String(health.status || "unknown").toLowerCase();
   const issues = [...(health.critical_issues || []), ...(health.optional_layer_issues || []), ...(health.freshness_issues || [])];
   const issueCount = issues.length;
@@ -465,8 +466,8 @@ function renderHealth() {
   content.innerHTML = `
     <h3>Published model snapshot</h3>
     <div class="health-metrics">
-      <div class="health-metric"><b>${areas.toLocaleString()}</b><span>Mapped prediction areas</span></div>
-      <div class="health-metric"><b>${activeSpecies}/${catalogCount}</b><span>Species with areas</span></div>
+      <div class="health-metric"><b>${hasPredictions ? areas.toLocaleString() : "—"}</b><span>${hasPredictions ? "Mapped prediction areas" : "Prediction file unavailable"}</span></div>
+      <div class="health-metric"><b>${hasPredictions ? activeSpecies + "/" + catalogCount : "—/" + catalogCount}</b><span>Species with areas</span></div>
     </div>
     <div class="health-row"><b>Snapshot</b><span>${predictionRefreshed ? "Predictions refreshed" : "Last-known-good predictions"} · ${esc(generated ? ago(generated) : "time unknown")}</span></div>
     ${row("SST", `${sstFresh.status || sst.status || "unknown"} · ${fmtAge(sstFresh.age_hours)} · ${fmtPct(sst.valid_fraction)} grid valid`, sstFresh.status || sst.status)}
