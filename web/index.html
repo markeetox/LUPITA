@@ -117,6 +117,22 @@
   .health-row span { color: var(--muted); }
   .health-row .fresh, .health-row .loaded { color: #86efac; }
   .health-row .delayed, .health-row .stale, .health-row .unknown { color: #fbbf24; }
+  .factor-list { display: grid; gap: 9px; }
+  .factor-card { padding: 10px 12px; background: rgba(255,255,255,.025); border: 1px solid var(--line); border-left: 3px solid var(--accent); }
+  .factor-head { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 6px; }
+  .factor-head b { color: var(--text); font-size: 17px; text-transform: capitalize; }
+  .evidence-tag { padding: 2px 7px; border: 1px solid var(--line); color: var(--muted); font-size: 12px; text-transform: uppercase; letter-spacing: .6px; }
+  .evidence-tag.sourced { color: #86efac; border-color: #166534; }
+  .evidence-tag.partly_sourced { color: #fbbf24; border-color: #785210; }
+  .evidence-tag.provisional, .evidence-tag.needs_source { color: #fca5a5; border-color: #7f1d1d; }
+  .factor-meta { display: flex; flex-wrap: wrap; gap: 6px 12px; margin-top: 6px; color: var(--muted); font-size: 14px; }
+  .factor-notes { margin: 8px 0 0; color: var(--muted); font-size: 14px; line-height: 1.4; }
+  .factor-sources { margin-top: 7px; color: var(--accent); font-size: 14px; }
+  .factor-sources summary { cursor: pointer; }
+  .factor-sources ul { margin: 6px 0 0; padding-left: 18px; }
+  .factor-sources li { margin: 4px 0; overflow-wrap: anywhere; }
+  .factor-sources a { color: var(--accent); }
+  .model-caveat { margin-top: 9px; color: var(--muted); font-size: 14px; line-height: 1.4; }
   .health-caveat { margin: 12px 0 0; padding-top: 10px; border-top: 1px dashed var(--line); color: var(--muted); font-size: 14px; line-height: 1.4; }
   @media (max-width: 600px) {
     .health-content { right: -6px; width: min(420px, calc(100vw - 24px)); }
@@ -524,6 +540,43 @@ function regulationsHTML(reg) {
     </div>`;
 }
 
+function factorDiagnosticsHTML(spot) {
+  const factors = Array.isArray(spot.factor_diagnostics) ? spot.factor_diagnostics : [];
+  if (!factors.length) return "";
+  const coverage = spot.environmental_data_coverage ?? spot.data_coverage;
+  const coverageText = coverage != null && Number.isFinite(Number(coverage))
+    ? (Number(coverage) * 100).toFixed(0) + "% of active inputs available at this cell"
+    : "Input coverage not reported";
+  const basisLabels = {
+    limited_model_inputs: "Limited number of active model inputs",
+    incomplete_environmental_inputs: "One or more environmental inputs were unavailable",
+    profile_confidence_cap: "Species profile has a confidence cap",
+    gap_filled_input: "A gap-filled environmental input was used"
+  };
+  const basis = (spot.confidence_basis || []).map(key => basisLabels[key] || key.replace(/_/g, " "));
+  const rows = factors.map(factor => {
+    const param = String(factor.param || "Unknown factor").replace(/_/g, " ");
+    const status = String(factor.value_status || "unspecified").toLowerCase();
+    const statusLabel = status.replace(/_/g, " ");
+    const available = factor.available === true;
+    const match = available && factor.factor_score != null && Number.isFinite(Number(factor.factor_score))
+      ? Math.round(Number(factor.factor_score) * 100) + "% factor match"
+      : (available ? "Available" : "Unavailable at this cell");
+    const weight = factor.weight != null && Number.isFinite(Number(factor.weight))
+      ? Math.round(Number(factor.weight) * 100) + "% model weight" : "Weight not reported";
+    const sources = Array.isArray(factor.sources) ? factor.sources.filter(url => typeof url === "string" && /^https:\/\//i.test(url)) : [];
+    const sourceCount = Number(factor.source_count) || sources.length;
+    const notes = factor.value_notes ? `<p class="factor-notes">${esc(factor.value_notes)}</p>` : "";
+    const sourceList = sources.length ? `<details class="factor-sources"><summary>View ${sourceCount} supporting reference${sourceCount === 1 ? "" : "s"}</summary><ul>${sources.map(url => {
+      const host = url.replace(/^https:\/\//i, "").split("/")[0];
+      return `<li><a href="${esc(url)}" target="_blank" rel="noopener noreferrer">${esc(host)}</a></li>`;
+    }).join("")}</ul></details>` : `<div class="factor-sources">${sourceCount} references recorded</div>`;
+    return `<div class="factor-card"><div class="factor-head"><b>${esc(param)}</b><span class="evidence-tag ${esc(status)}">${esc(statusLabel)}</span></div><div class="factor-meta"><span>${esc(match)}</span><span>${esc(weight)}</span><span>${sourceCount} source${sourceCount === 1 ? "" : "s"}</span></div>${notes}${sourceList}</div>`;
+  }).join("");
+  const basisHtml = basis.length ? `<div class="model-caveat"><b>Confidence limits:</b> ${basis.map(esc).join(" · ")}</div>` : "";
+  return `<div class="sec"><h3>${icon("info")}Model inputs at this area</h3><div class="model-caveat">${esc(coverageText)}. Factor match scores are model components, not catch probabilities.</div><div class="factor-list">${rows}</div>${basisHtml}</div>`;
+}
+
 /* Spot Detail HTML layout: Title block with Score % and Confidence cleanly aligned under titles */
 function spotHTML(id) {
   const s = SPOTS[id], sp = SPECIES[s.species];
@@ -541,7 +594,7 @@ function spotHTML(id) {
             <div class="score-badge-row">
               <div class="score-badge">
                 <b>${Math.round(s.score * 100)}%</b>
-                <span>${esc(s.confidence)} Confidence</span>
+                <span>Model confidence: ${esc(s.confidence)}</span><small>Habitat match, not catch probability</small>
               </div>
             </div>
           </div>
@@ -557,6 +610,7 @@ function spotHTML(id) {
         <div class="sec"><h3>${icon("info")}Why it may be here</h3>
           ${s.reasons.map(r => `<div class="reason">${reasonIcon(r[1])}<span class="tag ${esc(r[0])}">${esc(TAG_LABEL[r[0]] || r[0])}</span><span>${esc(r[1])}</span></div>`).join("")}
         </div>
+        ${factorDiagnosticsHTML(s)}
         ${timingHTML(s, sp.color)}
         <div class="sec"><h3>${icon("pin")}About this spot: ${esc(s.title)}</h3>
           <dl>${dlRows(s.location)}</dl>
