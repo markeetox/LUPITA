@@ -455,10 +455,13 @@ function renderNearbyConditions() {
     return;
   }
   const center = map.getCenter();
-  const stations = BUOYS.map((b, idx) => ({ b, idx, distance: haversineKm(center.lat, center.lng, Number(b.lat), Number(b.lon)) }))
-    .filter(x => x.b && x.b.ok === true && Number.isFinite(Number(x.b.lat)) && Number.isFinite(Number(x.b.lon)) &&
+  const stations = BUOYS
+    .map((b, idx) => ({ b, idx }))
+    .filter(x => x.b && x.b.ok === true && x.b.lat != null && x.b.lon != null &&
+      Number.isFinite(Number(x.b.lat)) && Number.isFinite(Number(x.b.lon)) &&
       [x.b.water_temp_c, x.b.wind_kn, x.b.wave_height_m].some(v => v != null && Number.isFinite(Number(v))))
-    .sort((a, b) => a.distance - b.distance).slice(0, 4);
+    .map(x => ({ ...x, distance: haversineKm(center.lat, center.lng, Number(x.b.lat), Number(x.b.lon)) }))
+    .sort((a, b) => a.distance - b.distance).slice(0, 3);
   if (!stations.length) {
     root.className = "nearby-empty";
     root.textContent = "No reporting buoy stations with usable water-temperature, wind, or wave readings near this map view.";
