@@ -8,6 +8,7 @@
 - Overall prediction status now distinguishes a successful but degraded refresh from a healthy refresh and from last-known-good predictions.
 - The hardcoded fabricated `SAMPLE` species/spot fallback has been removed. If live prediction data cannot load, the page reports that predictions are unavailable instead of showing invented fishing locations.
 - Added a **South Florida & Florida Keys** region (24.0–28.5°N, 83.5–78.0°W) and made it the first-visit default. Previously saved region choices remain respected; the wider regional and all-coasts views remain available.
+- Added a **Nearby conditions** panel sourced from the published `latest.json` buoy observations. It ranks reporting stations by haversine distance from the current map center, displays water temperature in °C/°F, wind/direction/gust, wave height in metres/feet, station distance, and separate observation ages. It refreshes when the map view changes; selecting a station opens its existing detailed buoy view. Missing fields remain unavailable rather than estimated. It does not request precise device location.
 - Selecting a mapped area now exposes active factor match scores, configured weights, declared evidence statuses, profile notes, listed source links, input coverage, and confidence limitations.
 - The score badge explicitly labels the percentage as habitat match and says it is not catch probability. Evidence tags are described as profile assessments; source links are not treated as proof of the exact numeric claim.
 - `.github/workflows/python-tests.yml` now checks the inline map-client JavaScript with `node --check` and runs when `web/**` changes.
@@ -30,7 +31,7 @@ These counts describe the published model output and input inventory, not valida
 ### Next
 1. Inspect the deployed map at desktop and mobile sizes, including the diagnostics popover and a selected-area factor breakdown.
 2. Improve the selected-area panel based on real device use and verify long evidence notes/source lists remain readable.
-3. Build a clearer nearby-conditions overview using actual buoy and marine-condition readings, with station distance and observation time visible.
+3. **Completed:** nearby-conditions overview now uses published buoy observations, distance from map center, and explicit observation ages. Next, test the panel at desktop/mobile sizes and improve the view based on actual use.
 4. Continue independent Copernicus validation separately; do not expose exploratory bottom-temperature results as production inputs before validation.
 
 ---
