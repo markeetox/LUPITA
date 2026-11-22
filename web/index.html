@@ -231,6 +231,19 @@
   .nearby-age { grid-column: 1 / -1; color: #9ca3af; font-size: 11px; }
   .nearby-empty { color: var(--muted); font-size: 13px; line-height: 1.4; }
   .nearby-foot { margin-top: 7px; line-height: 1.35; }
+  .opportunity-panel { margin-top: 12px; padding: 10px; border: 1px solid var(--line); border-left: 3px solid #60a5fa; background: rgba(255,255,255,.025); }
+  .opportunity-head { display: flex; justify-content: space-between; align-items: baseline; flex-wrap: wrap; gap: 4px 10px; margin-bottom: 8px; }
+  .opportunity-head b { color: var(--text); font-size: 14px; text-transform: uppercase; letter-spacing: .9px; }
+  .opportunity-head small, .opportunity-note { color: var(--muted); font-size: 12px; line-height: 1.35; }
+  .opportunity-groups { display: grid; gap: 9px; }
+  .opportunity-group-title { margin: 2px 0 5px; color: var(--accent); font-size: 13px; text-transform: uppercase; letter-spacing: .8px; }
+  .opportunity-card { display: grid; grid-template-columns: minmax(0,1fr) auto; gap: 4px 8px; width: 100%; padding: 8px 9px; margin-top: 5px; text-align: left; color: var(--text); background: rgba(0,0,0,.22); border: 1px solid var(--line); cursor: pointer; }
+  .opportunity-card:hover, .opportunity-card:focus-visible { border-color: #60a5fa; outline: none; }
+  .opportunity-card strong { font-size: 13px; line-height: 1.25; }
+  .opportunity-score { color: #93c5fd; font-size: 12px; white-space: nowrap; }
+  .opportunity-meta, .opportunity-source { grid-column: 1 / -1; color: var(--muted); font-size: 12px; line-height: 1.35; }
+  .opportunity-source { color: #9ca3af; font-size: 11px; }
+  .opportunity-note { margin-top: 7px; }
   .sea { margin-top: 10px; font-size: 16px; line-height: 1.35; display: flex; gap: 10px; align-items: flex-start; }
   .lvl { flex: none; font-size: 14px; font-weight: 700; padding: 2px 10px; border-radius: 2px; border: 1px solid; white-space: nowrap; text-transform: uppercase; }
   .lvl.good { color: #34d399; border-color: #1c5a47; } .lvl.fair { color: #fbbf24; border-color: #5b4a1a; }
@@ -297,6 +310,10 @@
           <div class="nearby-head"><b>Nearby conditions</b><small>Closest stations to map center</small></div>
           <div id="nearbyConditionsContent" class="nearby-empty">Waiting for published buoy observations…</div>
         </div>
+        <div id="opportunityPanel" class="opportunity-panel" aria-live="polite">
+          <div class="opportunity-head"><b>Modeled opportunities</b><small>Top habitat matches in this region</small></div>
+          <div id="opportunityContent" class="nearby-empty">Select a species to load its modeled areas.</div>
+        </div>
       </div>
 
       <div class="ctrl-group toggles-group">
@@ -334,6 +351,7 @@
 </section>
 
 <script src="https://cdn.jsdelivr.net/npm/maplibre-gl@4.7.1/dist/maplibre-gl.js"></script>
+<script src="./lupita-data-adapter.js"></script>
 <script>
 /* ------------------------------------------------------------------
    CONFIG
@@ -371,6 +389,8 @@ const REGIONS = {
 };
 let FISH = null, CATALOG = null, BUOYS = null, CLOSURES = null, LATEST = null, SELECTED_SPECIES = [], REGION_FILTER = store.get("fhm.region") || "south_fl";
 let NOLA_MODE = false;
+let V1_MODE = false, V1_INDEX = null, V1_LOADING = false, V1_ERROR = "", V1_LOAD_SEQUENCE = 0;
+const V1_DETAIL_CACHE = new Map();
 const SPECIES = {}, SPOTS = {};
 
 function setCatalog(data) {
@@ -495,6 +515,86 @@ function renderNearbyConditions() {
       if (!button || !BUOYS) return;
       const buoy = BUOYS[Number(button.dataset.buoyIndex)];
       if (buoy) openSheet(buoyHTML(buoy), [buoy.lon, buoy.lat]);
+    });
+    root.dataset.bound = "true";
+  }
+}
+
+function opportunityMeasuredContext(spot) {
+  const factors = Array.isArray(spot.factor_diagnostics) ? spot.factor_diagnostics : [];
+  const measured = factors.find(factor => factor && factor.input_tag === "measured" && factor.input_details);
+  if (!measured) return "No measured buoy input is attached to this model area";
+  const details = measured.input_details;
+  const station = details.station_name || details.station || "buoy station";
+  const distance = details.distance_km != null && Number.isFinite(Number(details.distance_km))
+    ? Number(details.distance_km).toFixed(1) + " km away" : "distance unavailable";
+  const observed = details.observed_at
+    ? new Date(details.observed_at).toLocaleTimeString([], { hour: "2-digit", minute: "2-digit", timeZone: "UTC" }) + " UTC"
+    : "observation time unavailable";
+  return "Measured input: " + station + " · " + distance + " · " + observed;
+}
+
+function renderOpportunityPanel() {
+  const root = document.getElementById("opportunityContent");
+  if (!root) return;
+  if (!SELECTED_SPECIES.length) {
+    root.className = "nearby-empty";
+    root.textContent = "Select a species to see its highest-scoring modeled habitat matches.";
+    return;
+  }
+  if (V1_LOADING) {
+    root.className = "nearby-empty";
+    root.textContent = "Loading selected species areas from the published prediction API…";
+    return;
+  }
+  if (V1_ERROR) {
+    root.className = "nearby-empty";
+    root.textContent = V1_ERROR;
+    return;
+  }
+  if (!window.LupitaDataAdapter || typeof window.LupitaDataAdapter.rankOpportunities !== "function") {
+    root.className = "nearby-empty";
+    root.textContent = "Opportunity ranking is unavailable. The map predictions remain accessible.";
+    return;
+  }
+  const center = map.getCenter();
+  const groups = window.LupitaDataAdapter.rankOpportunities(visibleSpots(), SELECTED_SPECIES, center, 3);
+  if (!groups.length) {
+    const noAreas = SELECTED_SPECIES.filter(id => {
+      const detail = V1_DETAIL_CACHE.get(id);
+      return detail && detail.status === "no_favorable_areas";
+    }).map(id => (SPECIES[id] || {}).name || id);
+    root.className = "nearby-empty";
+    root.textContent = noAreas.length
+      ? "No favorable areas in the current snapshot for: " + noAreas.join(", ") + "."
+      : "No modeled areas for the selected species in this region.";
+    return;
+  }
+  root.className = "opportunity-groups";
+  root.innerHTML = groups.map(group => {
+    const speciesName = (SPECIES[group.speciesId] || {}).name || group.speciesId;
+    const cards = group.spots.map(spot => {
+      const score = Math.round(Number(spot.score) * 100);
+      const confidence = spot.confidence || "Unknown";
+      const evidence = [...new Set((spot.factor_diagnostics || []).map(f => f && f.value_status).filter(Boolean))];
+      const evidenceText = evidence.length ? "Declared profile evidence: " + evidence.join(" · ") : "Profile evidence status not reported";
+      const meta = "Model confidence: " + confidence + " · " + spot.distance_km.toFixed(1) + " km from map center";
+      return '<button type="button" class="opportunity-card" data-opportunity-id="' + esc(spot.id) +
+        '" aria-label="View ' + esc(speciesName) + ' habitat match at ' + esc(spot.title) + '">' +
+        '<strong>' + esc(spot.title) + '</strong><span class="opportunity-score">Habitat match ' + score + '%</span>' +
+        '<span class="opportunity-meta">' + esc(meta) + '</span>' +
+        '<span class="opportunity-source">' + esc(opportunityMeasuredContext(spot)) + ' · ' + esc(evidenceText) + '</span></button>';
+    }).join("");
+    return '<section class="opportunity-group"><h4 class="opportunity-group-title">' + esc(speciesName) + '</h4>' + cards + '</section>';
+  }).join("");
+  if (root.dataset.bound !== "true") {
+    root.addEventListener("click", event => {
+      const button = event.target.closest("[data-opportunity-id]");
+      if (!button) return;
+      const spot = SPOTS[button.dataset.opportunityId];
+      if (!spot) return;
+      openSheet(spotHTML(spot.id), spot.coords);
+      setSelected(spot.id);
     });
     root.dataset.bound = "true";
   }
@@ -1031,7 +1131,8 @@ clearBtn.addEventListener("click", e => {
   renderNote();
   renderLegend();
   closeSheet();
-  refreshSpots();
+  if (V1_MODE) loadSelectedV1Species();
+  else refreshSpots();
 });
 
 function getAllSpeciesIds() {
@@ -1215,6 +1316,7 @@ function renderPanel() {
   }
   renderSea();
   renderNearbyConditions();
+  renderOpportunityPanel();
   if (!REGIONS[REGION_FILTER]) REGION_FILTER = "all";
   regionSelect.value = REGION_FILTER;
 
@@ -1257,7 +1359,8 @@ function renderPanel() {
       renderNote();
       renderLegend();
       closeSheet();
-      refreshSpots();
+      if (V1_MODE) loadSelectedV1Species();
+      else refreshSpots();
     });
   });
 
@@ -1272,6 +1375,55 @@ async function getJSON(name) {
   if (!res.ok) throw new Error(name + " HTTP " + res.status);
   return res.json();
 }
+
+async function loadSelectedV1Species() {
+  if (!V1_MODE || !V1_INDEX || !window.LupitaDataAdapter) return;
+  const requestId = ++V1_LOAD_SEQUENCE;
+  const selectedIds = SELECTED_SPECIES.slice();
+  V1_ERROR = "";
+  V1_LOADING = selectedIds.length > 0;
+  renderOpportunityPanel();
+
+  if (!selectedIds.length) {
+    for (const key in SPOTS) delete SPOTS[key];
+    if (FISH) FISH.spots = [];
+    V1_LOADING = false;
+    refreshSpots();
+    renderOpportunityPanel();
+    return;
+  }
+
+  const results = await Promise.all(selectedIds.map(async id => {
+    const item = (V1_INDEX.species || []).find(species => species.id === id);
+    if (!item || !item.details) return { id, error: "No published detail path for " + id };
+    try {
+      if (!V1_DETAIL_CACHE.has(id)) {
+        const detail = await getJSON("api/v1/" + item.details);
+        V1_DETAIL_CACHE.set(id, window.LupitaDataAdapter.normalizeSpeciesDetail(detail));
+      }
+      return { id, detail: V1_DETAIL_CACHE.get(id) };
+    } catch (error) {
+      return { id, error: error && error.message ? error.message : String(error) };
+    }
+  }));
+
+  if (requestId !== V1_LOAD_SEQUENCE) return;
+  for (const key in SPOTS) delete SPOTS[key];
+  results.forEach(result => {
+    if (!result.detail) return;
+    result.detail.areas.forEach(spot => { SPOTS[spot.id] = spot; });
+  });
+  if (FISH) FISH.spots = Object.values(SPOTS);
+  V1_LOADING = false;
+  const failures = results.filter(result => result.error);
+  V1_ERROR = failures.length
+    ? "Some species details could not be loaded: " + failures.map(result => result.id).join(", ") + "."
+    : "";
+  refreshSpots();
+  renderNote();
+  renderOpportunityPanel();
+}
+
 async function load() {
   try {
     const catData = await getJSON("species_catalog.json");
@@ -1281,10 +1433,27 @@ async function load() {
   }
 
   try {
-    setFish(await getJSON("fish.json"));
+    const legacyFish = await getJSON("fish.json");
+    if (!legacyFish || !Array.isArray(legacyFish.spots)) throw new Error("Legacy fish snapshot is empty or invalid");
+    setFish(legacyFish);
   } catch (err) {
-    console.warn("fish.json failed:", err);
-    // Do not substitute fabricated sample predictions when the live data file is unavailable.
+    console.warn("fish.json unavailable; trying the published API v1 index:", err);
+    try {
+      V1_INDEX = await getJSON("api/v1/index.json");
+      if (!V1_INDEX || !Array.isArray(V1_INDEX.species)) throw new Error("API v1 index has no species catalog");
+      V1_MODE = true;
+      const fallbackSpecies = V1_INDEX.species.map(item => ({
+        id: item.id, name: item.name, sci: item.scientific_name, color: item.color
+      }));
+      FISH = {
+        generated_utc: V1_INDEX.generated_utc || null,
+        species: CATALOG && CATALOG.species && CATALOG.species.length ? CATALOG.species : fallbackSpecies,
+        spots: []
+      };
+    } catch (apiError) {
+      V1_ERROR = "Published prediction data could not be loaded: " + (apiError && apiError.message ? apiError.message : String(apiError));
+      console.warn("API v1 index failed:", apiError);
+    }
   }
 
   if (!CATALOG && FISH) {
