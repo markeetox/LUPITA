@@ -1,6 +1,6 @@
 ## Species-conditioned opportunity shortlist and API v1 fallback | 2026-11-22
 
-**Status:** implemented on `main`; Vercel reports a successful deployment for final web commit `51ce8e128c76c29b9fedae2f8c13172662142626`. The connected GitHub status endpoint exposes Vercel but not the automatic Actions run, so the new full CI result remains unverified. The workflow is configured to run on `web/**` and Python test changes.
+**Status:** implemented on `main`; Vercel reports a successful deployment for final web commit `51ce8e128c76c29b9fedae2f8c13172662142626`. Python CI run [45037594236](https://github.com/markeetox/LUPITA/actions/runs/45037594236) completed successfully: inline map-client and standalone adapter JavaScript syntax checks passed; **329 Python tests passed, 0 failed, 115 warnings**; the species audit artifact was generated. The audit found 130 structurally valid profiles, 0 model-compatibility issues, and 130 still needing research or model rebuilding.
 
 ### Why this was needed
 The published `data` branch currently has an empty legacy root `fish.json`, while `api/v1/index.json` is populated with 130 species, 125 species with modeled areas, 5 with no favorable areas, and 960 mapped areas. The previous map client depended on `fish.json`, so it could load the catalog and buoy panel but could not reliably populate modeled fishing areas from the current published API. The UI now falls back to the versioned API rather than inventing a sample dataset.
@@ -15,7 +15,7 @@ The published `data` branch currently has an empty legacy root `fish.json`, whil
 
 Commits: adapter `805535ae01f7e5d5bd2b967aa65624cbdc101d83`; adapter tests `f06a44db267bb95eaec68f2899e86381fe65fa6e`; UI integration `11566d3090aa1bdf95aca55d9432a1b490d9e41c`; robustness follow-up `c0059d7851a154055dce2f6f474cbde025087ea2`; CI adapter syntax check `0b2fa1be968a823dacf69990526a52daf04f6a53`.
 
-No species biology, factor values, scoring weights, gates, confidence calculations, production source settings or pipeline behavior changed. Node smoke checks of the adapter's normalization and ranking logic passed. Full GitHub CI and desktop/mobile interaction QA remain acceptance checks. Workflow: [Python tests](https://github.com/markeetox/LUPITA/actions/workflows/python-tests.yml).
+No species biology, factor values, scoring weights, gates, confidence calculations, production source settings or pipeline behavior changed. Node smoke checks and the full GitHub CI passed. Desktop/mobile interaction QA remains the outstanding acceptance check. Workflow: [Python tests](https://github.com/markeetox/LUPITA/actions/workflows/python-tests.yml).
 
 ---
 
