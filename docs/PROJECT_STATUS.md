@@ -271,3 +271,6 @@ Run [45032750496](https://github.com/markeetox/LUPITA/actions/runs/45032750496) 
 - **0190271 logger:** 216,929 rows (66,044 deep shelf 20–30m; 150,885 shallow shelf 0–10m), HOBO U22-001, 5-minute intervals in 2012 and 10-minute from 2013-10-07, 20.222–31.74°C. Documented site coordinates. Sensor height above bottom is unspecified; supplementary context only, not proven bottom reference.
 
 Next: parse ADCP time-series quality/completeness and CTD profiles/cast identities; join CTD depth to ETOPO for bottom clearance; then consider carefully time-matched Copernicus comparison. No conversion, matchup, species/scoring, ingestion or production changes.
+
+### Frontend browser smoke runner fix (2026-11-22)
+The first live browser smoke attempt, GitHub Actions run [#45045780761](https://github.com/markeetox/LUPITA/actions/runs/45045780761), failed before launching Chromium. GitHub assigned Ubuntu 26.04 through `ubuntu-latest`; Playwright 1.55.0 does not support Chromium installation on that image. The workflow is now pinned to `ubuntu-24.04` (commit `61b0701fa983400050e3eebea01ed73b5586aa46`). The desktop/mobile smoke assertions have not run yet; rerun the manual workflow and inspect its results/screenshots before claiming browser QA passed.
