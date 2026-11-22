@@ -274,3 +274,8 @@ Next: parse ADCP time-series quality/completeness and CTD profiles/cast identiti
 
 ### Frontend browser smoke runner fix (2026-11-22)
 The first live browser smoke attempt, GitHub Actions run [#45045780761](https://github.com/markeetox/LUPITA/actions/runs/45045780761), failed before launching Chromium. GitHub assigned Ubuntu 26.04 through `ubuntu-latest`; Playwright 1.55.0 does not support Chromium installation on that image. The workflow is now pinned to `ubuntu-24.04` (commit `61b0701fa983400050e3eebea01ed73b5586aa46`). The desktop/mobile smoke assertions have not run yet; rerun the manual workflow and inspect its results/screenshots before claiming browser QA passed.
+
+
+## Live frontend browser QA | first execution result | 2026-11-22
+
+Manual browser run [45047547674](https://github.com/markeetox/LUPITA/actions/runs/45047547674) successfully installed Chromium on the pinned Ubuntu 24.04 runner and reached the public site in both desktop and mobile contexts. The first assertion then failed because the test waited for a visible checkbox while the species checklist was intentionally collapsed behind `#selectBtn`. The DOM contained all 130 checkbox entries; the test simply had not opened the selector. No uncaught page errors or failed API-v1 responses were recorded before the timeout. Failure screenshots confirm the page rendered and the selector was closed. Updated the smoke script to open the selector before waiting for visible checklist items and removed the now-redundant later click. This is a test-harness correction, not an application behavior change. Desktop/mobile interaction QA remains unverified until the corrected workflow is run and its screenshots/results are inspected.
