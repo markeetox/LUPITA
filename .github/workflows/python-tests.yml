@@ -17,6 +17,7 @@ on:
       - "data/species/**"
       - "data/parameters.json"
       - "requirements.txt"
+      - "web/**"
       - ".github/workflows/python-tests.yml"
   workflow_dispatch: {}
 
