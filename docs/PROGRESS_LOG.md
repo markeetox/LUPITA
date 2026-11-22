@@ -9,7 +9,7 @@ Updated `web/index.html`:
 - Added factor-level detail to mapped-area cards: factor match score, model weight, declared evidence status, notes, source links, input coverage, and confidence limitations.
 - Clarified that the percentage is a habitat-match score, not catch probability, and that evidence status/source links do not establish that every numeric claim is validated.
 
-Updated `.github/workflows/python-tests.yml` so changes under `web/**` run the CI workflow and the inline map JavaScript is checked with `node --check`. The syntax-check step passed on [run 45034880374](https://github.com/markeetox/LUPITA/actions/runs/45034880374); the full Python suite was still running when this entry was written. Vercel reported successful deployment for frontend commit `febb87d59fe111eca570b975e9371b7079ccf225`.
+Updated `.github/workflows/python-tests.yml` so changes under `web/**` run the CI workflow and the inline map JavaScript is checked with `node --check`. The syntax-check step passed and the full suite completed with **326 passed, 0 failed, 115 warnings** on [run 45034880374](https://github.com/markeetox/LUPITA/actions/runs/45034880374). The species audit artifact was also generated. Vercel reported successful deployment for frontend commit `febb87d59fe111eca570b975e9371b7079ccf225`.
 
 Updated README, Project Status, and Roadmap. No prediction/scoring behavior, species biology, factor ranges, weights, gates, production environmental sources, or experimental Copernicus research inputs were changed.
 
