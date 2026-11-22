@@ -542,3 +542,6 @@ Copernicus Marine global physics forecast is the leading candidate for a bottom-
 ## 2026-11-17 | Copernicus bottom-temperature validation protocol
 
 Confirmed daily `tob` sea-bottom potential temperature in the official Copernicus dataset documentation. Identified independent observation candidates across South Florida, Gulf, Atlantic, and Pacific regions, with important sensor-depth and geographic-coverage caveats. Added a read-only protocol covering data pairing, coastal coverage, freshness, and error metrics. No dataset sample has been downloaded yet and no accuracy result is claimed. Next: run a compact recent/historical subset pilot, inspect returned metadata and coastal wet-cell behavior, then match qualifying in-situ profiles. Do not add production ingestion or alter SST/species factors.
+
+### Browser smoke workflow runner pin (2026-11-22)
+Pin `.github/workflows/frontend-live-smoke.yml` to `ubuntu-24.04` for Playwright 1.55.0 compatibility. The failed run #45045780761 did not execute browser assertions; rerun and review screenshots/results before marking desktop/mobile QA complete.
