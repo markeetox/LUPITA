@@ -435,8 +435,11 @@ function directionLabel(deg) {
 }
 function readingAge(iso) {
   if (!iso) return "time not reported";
-  const age = ago(iso);
-  return age || "time unavailable";
+  const minutes = (Date.now() - new Date(iso).getTime()) / 60000;
+  if (!Number.isFinite(minutes)) return "time unavailable";
+  if (minutes < -5) return "timestamp is in the future";
+  if (minutes < 1) return "just now";
+  return ago(iso) || "time unavailable";
 }
 function temperatureLabel(c) {
   if (c == null || !Number.isFinite(Number(c))) return "Water temp n/a";
