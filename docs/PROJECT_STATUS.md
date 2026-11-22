@@ -1,3 +1,39 @@
+## Front-end results and model transparency | 2026-11-22
+
+**Status:** first user-facing diagnostics and explainability batch committed to `main`; Vercel deployment completed successfully for frontend commit `febb87d59fe111eca570b975e9371b7079ccf225`. Python CI run [45034880374](https://github.com/markeetox/LUPITA/actions/runs/45034880374) confirmed the map client's inline JavaScript syntax check passed; the full Python suite was still running at the time of this status entry.
+
+### Front-end changes
+- `web/index.html` now has a collapsible **Data health** panel using the published `latest.json` diagnostics.
+- The panel reports prediction snapshot freshness, total mapped areas, species with areas, SST/chlorophyll/HF Radar freshness and coverage, ETOPO depth coverage, FWC habitat mapping, and reef-structure inventory.
+- Overall prediction status now distinguishes a successful but degraded refresh from a healthy refresh and from last-known-good predictions.
+- The hardcoded fabricated `SAMPLE` species/spot fallback has been removed. If live prediction data cannot load, the page reports that predictions are unavailable instead of showing invented fishing locations.
+- Selecting a mapped area now exposes active factor match scores, configured weights, declared evidence statuses, profile notes, listed source links, input coverage, and confidence limitations.
+- The score badge explicitly labels the percentage as habitat match and says it is not catch probability. Evidence tags are described as profile assessments; source links are not treated as proof of the exact numeric claim.
+- `.github/workflows/python-tests.yml` now checks the inline map-client JavaScript with `node --check` and runs when `web/**` changes.
+
+### Published snapshot inspected before the UI change
+Source: `data/api/v1/index.json` and `data/latest.json`, generated **2026-11-22 11:06:59 UTC**.
+- 130 species catalog entries.
+- 125 species with at least one modeled area; 5 report no favorable areas.
+- 960 modeled areas across the current snapshot.
+- Pipeline health: **degraded**, with no critical issues and a refreshed prediction snapshot.
+- SST: 50.1 hours old, delayed; 55.2% aligned grid validity.
+- Chlorophyll: 167.1 hours old, stale; 21.6% aligned grid validity.
+- NOAA HF Radar: 8.1 hours old, fresh; 152 of 10,101 cells in the local query grid (1.5%) have valid aligned vectors. Freshness does not imply broad coverage.
+- ETOPO: static, 53.2% sampled depth coverage; broad regional context, not reef-scale navigation data.
+- FWC habitat: 49,903 source features and 514 mapped cells in the local query area.
+- Reef structure: 4,548 artificial reef records and 25,362 natural reef polygons.
+
+These counts describe the published model output and input inventory, not validated catch performance. No Copernicus bottom-temperature research data, NOAA validation artifacts, species factor ranges, scoring weights, gates, or production ingestion settings were changed in this front-end batch.
+
+### Next
+1. Inspect the deployed map at desktop and mobile sizes, including the diagnostics popover and a selected-area factor breakdown.
+2. Improve the selected-area panel based on real device use and verify long evidence notes/source lists remain readable.
+3. Prioritize region-first map navigation and a clearer nearby-conditions overview, without changing prediction math.
+4. Continue independent Copernicus validation separately; do not expose exploratory bottom-temperature results as production inputs before validation.
+
+---
+
 
 
 ## Actual pinned parser attempt blocked by NCEI delivery outage | 2026-11-19
