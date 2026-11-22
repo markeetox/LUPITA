@@ -1,6 +1,6 @@
 # LUPITA engineering roadmap
 
-**Last updated:** 2026-11-17 | **Code:** `main` | **Generated-data export:** `data` only
+**Last updated:** 2026-11-22 | **Code:** `main` | **Generated-data export:** `data` only
 
 This is the handoff record for future sessions. Read it with [Project Status](PROJECT_STATUS.md) and [Progress Log](PROGRESS_LOG.md). Do not restart completed work or repeat expensive research workflows without a specific reason.
 
@@ -11,6 +11,21 @@ This is the handoff record for future sessions. Read it with [Project Status](PR
 - Do not change species biology, prediction weights or scoring gates without evidence and regression tests.
 - Make production changes directly on `main` in coherent batches. Update README, Project Status, Progress Log and this roadmap.
 - Run focused tests first, full tests for integration milestones, and no unrelated NOAA/FWC extraction workflows.
+
+## Active milestone: front-end results and explainability
+
+**Status:** first UI batch committed and deployed. The MapLibre client now exposes prediction snapshot health, environmental freshness/coverage, factor-level explanations, declared evidence status, source references, and confidence limitations. Fabricated sample predictions are no longer used as a fallback. Frontend commit `febb87d59fe111eca570b975e9371b7079ccf225` received a successful Vercel deployment status. CI run [45034880374](https://github.com/markeetox/LUPITA/actions/runs/45034880374) passed the JavaScript syntax-check step; the full Python suite was still in progress at the time of the status update.
+
+Acceptance / next work:
+1. Inspect the deployed map at desktop and mobile sizes, including the health details popover and selected-area factor breakdown.
+2. Ensure degraded input status is visible without obscuring the map or falsely implying every layer is current.
+3. Add a region-first landing experience with South Florida readily accessible while preserving national region selection.
+4. Add a compact nearby-conditions overview using actual buoy and marine-condition readings, with station distance and observation time visible.
+5. Keep factor match scores, model confidence, evidence status, and catch probability semantically separate.
+6. Do not change species profiles, factor ranges, scoring weights, gates, or production sources as part of visual polish.
+7. Keep Copernicus bottom-temperature work research-only until independent paired validation is complete.
+
+Current published snapshot inspected 2026-11-22 11:06:59 UTC: 130 catalog species, 125 species with modeled areas, 5 with no favorable areas, and 960 mapped areas. Refresh health was degraded: SST 50.1 h delayed, chlorophyll 167.1 h stale, and HF Radar 8.1 h fresh but only 1.5% local query-grid coverage. These are current diagnostics, not catch-performance validation.
 
 ## Verified baseline
 - Freshness diagnostics: `536984e0af96ddf0cc0c7a8edd344a2b4050568c`; chlorophyll fallback correction: `9c7ed75a739652e54f1989b0a224d1a0d3419cb8`.
