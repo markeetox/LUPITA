@@ -582,7 +582,9 @@ function renderOpportunityPanel() {
         '<span class="opportunity-source">' + esc(opportunityMeasuredContext(spot)) + ' · ' + esc(evidenceText) + '</span></button>';
     }).join("");
     return '<section class="opportunity-group"><h4 class="opportunity-group-title">' + esc(speciesName) + '</h4>' + cards + '</section>';
-  }).join("") + (V1_ERROR ? '<div class="opportunity-note">' + esc(V1_ERROR) + '</div>' : "");
+  }).join("") +
+    '<div class="opportunity-note">Habitat match is a model score, not a catch probability. Measured inputs shown here are from prediction time; current nearby buoy readings are displayed separately above.</div>' +
+    (V1_ERROR ? '<div class="opportunity-note">' + esc(V1_ERROR) + '</div>' : "");
   if (root.dataset.bound !== "true") {
     root.addEventListener("click", event => {
       const button = event.target.closest("[data-opportunity-id]");
