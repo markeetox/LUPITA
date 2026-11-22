@@ -18,13 +18,15 @@ This is the handoff record for future sessions. Read it with [Project Status](PR
 
 Acceptance / next work:
 1. Verify the latest Vercel deployment at desktop and mobile sizes, including opportunity cards, nearby buoy cards, diagnostics and selected-area detail sheet.
-2. Verify the Python tests workflow, including inline and standalone JavaScript syntax checks and the adapter regression tests.\n3. Select one species, then multiple species; confirm lazy API detail loading, top-three ranking per species, region filtering and card-to-map navigation.
-3. Confirm a species with no favorable areas is reported as such rather than presented with fabricated spots.
-4. Confirm measured buoy context shows the station and observation time at prediction, while model score and model confidence remain separate.
-5. **Completed:** added South Florida & Florida Keys as the first-visit default while retaining saved preferences and all wider region choices.
-6. **Completed:** added map-centered nearby conditions with buoy station distance, water temperature, wind/gust, waves and observation ages. Missing readings are not inferred.
-7. Do not change species profiles, factor ranges, scoring weights, gates, or production sources as part of this front-end work.
-8. Keep Copernicus bottom-temperature work research-only until independent paired validation is complete.
+2. Verify the Python tests workflow, including inline and standalone JavaScript syntax checks and the adapter regression tests.
+3. Select one species, then multiple species; confirm lazy API detail loading, top-three ranking per species, region filtering and card-to-map navigation.
+4. Confirm a species with no favorable areas is reported as such rather than presented with fabricated spots.
+5. Confirm measured buoy context shows the station and observation time at prediction, while model score and model confidence remain separate.
+6. Confirm opportunity distances refresh after panning and the top sheet remains scrollable on mobile.
+7. **Completed:** added South Florida & Florida Keys as the first-visit default while retaining saved preferences and all wider region choices.
+8. **Completed:** added map-centered nearby conditions with buoy station distance, water temperature, wind/gust, waves and observation ages. Missing readings are not inferred.
+9. Do not change species profiles, factor ranges, scoring weights, gates, or production sources as part of this front-end work.
+10. Keep Copernicus bottom-temperature work research-only until independent paired validation is complete.
 
 Published snapshot inspected 2026-11-22 11:06:59 UTC: 130 catalog species, 125 species with modeled areas, 5 with no favorable areas, and 960 mapped areas. Refresh health was degraded: SST 50.1 h delayed, chlorophyll 167.1 h stale, and HF Radar 8.1 h fresh but only 1.5% local query-grid coverage. These are input/model diagnostics, not catch-performance validation.
 
