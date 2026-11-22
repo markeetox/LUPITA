@@ -55,6 +55,8 @@ async function runViewport(name, viewport, mobile = false) {
     if (!opportunityText.includes("Habitat match")) throw new Error("Habitat-match score label missing");
     if (!opportunityText.includes("Model confidence")) throw new Error("Model confidence label missing");
     if (!opportunityText.includes("Measured input at prediction")) throw new Error("Prediction-time measured buoy context missing");
+    if (!opportunityText.includes("not a catch probability")) throw new Error("Habitat-match disclaimer missing");
+    if (!opportunityText.includes("current nearby buoy readings are displayed separately")) throw new Error("Prediction-time/current buoy distinction missing");
     await page.screenshot({ path: path.join(outputDir, name + "-opportunities.png"), fullPage: false });
 
     const beforePan = await page.locator("#opportunityContent .opportunity-meta").allTextContents();
