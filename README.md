@@ -40,7 +40,7 @@ Keep production changes separate from research-only work. Do not promote candida
 
 ## Map interface and model transparency
 
-The static MapLibre client in `web/index.html` reads the published `data` branch. It displays the current species catalog, modeled habitat areas, heat layers, buoy observations, mapped closures, and Gulf Stream context. The status bar's **Data health** panel reports the published prediction snapshot and the freshness/coverage of major environmental inputs. Selecting a modeled area exposes active factor scores, model weights, declared evidence status, profile notes, and listed source links.
+The static MapLibre client in `web/index.html` reads the published `data` branch and opens to South Florida & the Florida Keys on a first visit, while retaining saved region choices and national/regional options. It displays the current species catalog, modeled habitat areas, heat layers, buoy observations, mapped closures, and Gulf Stream context. The status bar's **Data health** panel reports the published prediction snapshot and the freshness/coverage of major environmental inputs. Selecting a modeled area exposes active factor scores, model weights, declared evidence status, profile notes, and listed source links.
 
 The map score is a habitat-match score, **not catch probability**. Model confidence describes evidence and input limitations, not the chance of catching a fish. The client does not invent sample fishing areas when live prediction data fails to load; it reports prediction unavailability instead.
 
