@@ -1,3 +1,24 @@
+## Species-conditioned opportunity shortlist and API v1 fallback | 2026-11-22
+
+**Status:** implemented on `main`; latest frontend deployment status and full CI are being checked.
+
+### Why this was needed
+The published `data` branch currently has an empty legacy root `fish.json`, while `api/v1/index.json` is populated with 130 species, 125 species with modeled areas, 5 with no favorable areas, and 960 mapped areas. The previous map client depended on `fish.json`, so it could load the catalog and buoy panel but could not reliably populate modeled fishing areas from the current published API. The UI now falls back to the versioned API rather than inventing a sample dataset.
+
+### Implementation
+- Added `web/lupita-data-adapter.js` to normalize API-v1 species detail records into the map client's spot shape and rank areas by model score, then distance for ties.
+- Added lazy loading: the client fetches `api/v1/index.json` once, then retrieves only the detail files for selected species. It caches details in memory for the current page session.
+- Added a **Modeled opportunities** panel with up to three highest habitat-match areas per selected species in the active region. Each card shows habitat-match percentage, model confidence, distance from map center, declared profile-evidence labels, and any measured buoy input/station observation time attached to that prediction.
+- Selecting a card opens the existing map detail sheet and centers the map on the area. Nearby buoy conditions continue to update from the current map center.
+- The UI does not recalculate or alter scores. It does not label habitat match as catch probability. Measured buoy context at prediction time remains distinct from current nearby station readings and from modeled environmental layers.
+- Added `tests/test_frontend_opportunity_adapter.py` covering API-v1 normalization, invalid coordinates, species scoping, score ranking and distance tie-breaking. CI now syntax-checks the standalone adapter as well as the inline map client.
+
+Commits: adapter `805535ae01f7e5d5bd2b967aa65624cbdc101d83`; adapter tests `f06a44db267bb95eaec68f2899e86381fe65fa6e`; UI integration `11566d3090aa1bdf95aca55d9432a1b490d9e41c`; robustness follow-up `c0059d7851a154055dce2f6f474cbde025087ea2`; CI adapter syntax check `0b2fa1be968a823dacf69990526a52daf04f6a53`.
+
+No species biology, factor values, scoring weights, gates, confidence calculations, production source settings or pipeline behavior changed. Full CI and desktop/mobile interaction QA remain acceptance checks.
+
+---
+
 ## Front-end results and model transparency | 2026-11-22
 
 **Status:** first user-facing diagnostics and explainability batch committed to `main`; latest frontend commit `85bcbccb50cc4e4286414f07c973db257642f2e3` deployed successfully through Vercel. Python CI run [45035145928](https://github.com/markeetox/LUPITA/actions/runs/45035145928) completed successfully: inline map-client JavaScript syntax check passed, **326 Python tests passed, 0 failed, 115 warnings**, and the species audit artifact was generated.
