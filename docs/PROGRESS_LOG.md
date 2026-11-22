@@ -1,3 +1,22 @@
+## 2026-11-22 | First user-facing model diagnostics and factor explanations
+
+Inspected the actual published `data` branch snapshot before editing the map. The API index generated at 2026-11-22T11:06:59Z reports 130 catalog species, 125 with modeled areas, 5 with no favorable areas, and 960 modeled areas. The paired `latest.json` snapshot reports a degraded refresh with predictions refreshed, SST delayed by 50.1 hours (55.2% aligned grid validity), chlorophyll stale by 167.1 hours (21.6% aligned grid validity), and NOAA HF Radar fresh by 8.1 hours but covering only 1.5% of its local query grid (152/10,101 cells). ETOPO depth coverage is 53.2%; FWC habitat inventory contains 49,903 source features and 514 mapped query cells; reef inventory contains 4,548 artificial reef records and 25,362 natural reef polygons.
+
+Updated `web/index.html`:
+- Added a collapsible Data health panel driven by published `latest.json` diagnostics, with prediction snapshot counts, freshness, and spatial coverage.
+- Corrected prediction status messaging so a degraded refresh is not presented as fully healthy.
+- Removed the fabricated hardcoded sample species/spot fallback. When live prediction data is unavailable, the UI now reports that rather than inventing fishing areas.
+- Added factor-level detail to mapped-area cards: factor match score, model weight, declared evidence status, notes, source links, input coverage, and confidence limitations.
+- Clarified that the percentage is a habitat-match score, not catch probability, and that evidence status/source links do not establish that every numeric claim is validated.
+
+Updated `.github/workflows/python-tests.yml` so changes under `web/**` run the CI workflow and the inline map JavaScript is checked with `node --check`. The syntax-check step passed on [run 45034880374](https://github.com/markeetox/LUPITA/actions/runs/45034880374); the full Python suite was still running when this entry was written. Vercel reported successful deployment for frontend commit `febb87d59fe111eca570b975e9371b7079ccf225`.
+
+Updated README, Project Status, and Roadmap. No prediction/scoring behavior, species biology, factor ranges, weights, gates, production environmental sources, or experimental Copernicus research inputs were changed.
+
+Next: inspect the deployed UI at desktop/mobile sizes, refine the selected-area panel from actual use, then prioritize region-first navigation and a compact nearby-conditions view. Continue scientific validation as a separate workstream.
+
+---
+
 
 
 ## 2026-11-19 | Pinned wodpy installation succeeded; NOAA source delivery returned HTTP 503
