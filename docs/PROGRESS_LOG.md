@@ -2,7 +2,7 @@
 
 Added a user-facing **Nearby conditions** panel to `web/index.html`, using the already-published `latest.json` buoy array. No new external feed or production ingestion was introduced.
 
-- Shows the four nearest reporting stations with usable water-temperature, wind, or wave observations, ranked by haversine distance from the current map center.
+- Shows the three nearest reporting stations with usable water-temperature, wind, or wave observations, ranked by haversine distance from the current map center.
 - Displays water temperature in °C and °F, wind speed/direction, gusts, wave height in metres and feet, station distance, and separate ages for water-temperature and wind/wave observations.
 - Refreshes the nearest-station ranking when the map view changes; the map center is the explicit reference point, not the user's device location.
 - Clicking a station card opens the existing full buoy detail sheet.
