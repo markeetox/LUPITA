@@ -43,6 +43,7 @@ jobs:
           Path("/tmp/lupita-map-client.js").write_text(scripts[-1], encoding="utf-8")
           PY
           node --check /tmp/lupita-map-client.js
+          node --check web/lupita-data-adapter.js
       - uses: actions/setup-python@v5
         with:
           python-version: "3.12"
