@@ -19,7 +19,7 @@ This is the handoff record for future sessions. Read it with [Project Status](PR
 Acceptance / next work:
 1. Inspect the deployed map at desktop and mobile sizes, including the health details popover and selected-area factor breakdown.
 2. Ensure degraded input status is visible without obscuring the map or falsely implying every layer is current.
-3. Add a region-first landing experience with South Florida readily accessible while preserving national region selection.
+3. **Completed:** added South Florida & Florida Keys as the first-visit default while retaining saved preferences and all wider region choices.
 4. Add a compact nearby-conditions overview using actual buoy and marine-condition readings, with station distance and observation time visible.
 5. Keep factor match scores, model confidence, evidence status, and catch probability semantically separate.
 6. Do not change species profiles, factor ranges, scoring weights, gates, or production sources as part of visual polish.
