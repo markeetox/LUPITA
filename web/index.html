@@ -1395,21 +1395,25 @@ async function loadSelectedV1Species() {
     return;
   }
 
-  const results = await Promise.all(selectedIds.map(async id => {
-    const item = (V1_INDEX.species || []).find(species => species.id === id);
-    if (!item || !item.details) return { id, error: "No published detail path for " + id };
-    try {
-      if (!V1_DETAIL_CACHE.has(id)) {
-        const detail = await getJSON("api/v1/" + item.details);
-        V1_DETAIL_CACHE.set(id, window.LupitaDataAdapter.normalizeSpeciesDetail(detail));
+  const results = [];
+  for (let offset = 0; offset < selectedIds.length; offset += 8) {
+    const batch = await Promise.all(selectedIds.slice(offset, offset + 8).map(async id => {
+      const item = (V1_INDEX.species || []).find(species => species.id === id);
+      if (!item || !item.details) return { id, error: "No published detail path for " + id };
+      try {
+        if (!V1_DETAIL_CACHE.has(id)) {
+          const detail = await getJSON("api/v1/" + item.details);
+          V1_DETAIL_CACHE.set(id, window.LupitaDataAdapter.normalizeSpeciesDetail(detail));
+        }
+        return { id, detail: V1_DETAIL_CACHE.get(id) };
+      } catch (error) {
+        return { id, error: error && error.message ? error.message : String(error) };
       }
-      return { id, detail: V1_DETAIL_CACHE.get(id) };
-    } catch (error) {
-      return { id, error: error && error.message ? error.message : String(error) };
-    }
-  }));
+    }));
+    results.push(...batch);
+    if (requestId !== V1_LOAD_SEQUENCE) return;
+  }
 
-  if (requestId !== V1_LOAD_SEQUENCE) return;
   for (const key in SPOTS) delete SPOTS[key];
   results.forEach(result => {
     if (!result.detail) return;
