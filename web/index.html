@@ -115,7 +115,7 @@
   .health-row { display: grid; grid-template-columns: 105px 1fr; gap: 8px; padding: 7px 0; border-top: 1px solid rgba(255,255,255,.08); font-size: 15px; line-height: 1.25; }
   .health-row b { color: var(--text); }
   .health-row span { color: var(--muted); }
-  .health-row .fresh { color: #86efac; }
+  .health-row .fresh, .health-row .loaded { color: #86efac; }
   .health-row .delayed, .health-row .stale, .health-row .unknown { color: #fbbf24; }
   .health-caveat { margin: 12px 0 0; padding-top: 10px; border-top: 1px dashed var(--line); color: var(--muted); font-size: 14px; line-height: 1.4; }
   @media (max-width: 600px) {
@@ -411,8 +411,8 @@ function renderHealth() {
   const health = LATEST.pipeline_health || {};
   const layers = (LATEST.data_quality && LATEST.data_quality.layers) || {};
   const freshness = layer => (layer && (layer.freshness || layer.primary_freshness)) || {};
-  const fmtAge = value => Number.isFinite(Number(value)) ? Number(value).toFixed(1) + " h old" : "age unknown";
-  const fmtPct = value => Number.isFinite(Number(value)) ? (Number(value) * 100).toFixed(1) + "%" : "coverage unknown";
+  const fmtAge = value => value != null && value !== "" && Number.isFinite(Number(value)) ? Number(value).toFixed(1) + " h old" : "age unknown";
+  const fmtPct = value => value != null && value !== "" && Number.isFinite(Number(value)) ? (Number(value) * 100).toFixed(1) + "%" : "coverage unknown";
   const row = (name, detail, status) => `<div class="health-row"><b>${esc(name)}</b><span class="${esc(status || "unknown")}">${esc(detail)}</span></div>`;
   const sst = layers.sst || {};
   const chl = layers.chlorophyll || {};
@@ -440,7 +440,6 @@ function renderHealth() {
   const activeSpecies = species.filter(item => item.status === "ok").length;
   const catalogCount = CATALOG && Array.isArray(CATALOG.species) ? CATALOG.species.length : species.length;
   const generated = LATEST.generated_utc || (FISH && FISH.generated_utc) || null;
-  const currentCoveragePct = currentCoverage.hfr_valid_fraction;
   const habitatFeatures = habitat.feature_count;
   const habitatCells = habitat.mapped_cell_count;
   const issueHtml = issues.length
