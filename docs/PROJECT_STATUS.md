@@ -11,7 +11,7 @@ Added `scripts/frontend_live_smoke.mjs` and `.github/workflows/frontend-live-smo
 - the mobile control sheet remains within the viewport and has vertical scrolling; opportunity distances change after map panning;
 - no uncaught browser errors or failed API-v1 requests occur.
 
-Screenshots and a JSON report upload as `lupita-frontend-live-smoke` with 14-day retention, including failure screenshots when possible. The workflow is manual-only and defaults to `https://lupita.fuglymon.com`; it has not yet been dispatched. The Python CI workflow now syntax-checks the smoke script in addition to the map client and data adapter.
+Screenshots and a JSON report upload as `lupita-frontend-live-smoke` with 14-day retention, including failure screenshots when possible. The workflow is manual-only and defaults to `https://lupita.fuglymon.com`; it has not yet been dispatched. The Python CI workflow now syntax-checks the smoke script in addition to the map client and data adapter. Follow-up CI [45037948643](https://github.com/markeetox/LUPITA/actions/runs/45037948643) passed all three JavaScript syntax checks and **329 Python tests, 0 failures**. The live-browser workflow itself remains unrun.
 
 Commits: browser script `365a8616324010204200f8d880b487407ac7b197`; workflow `4662991784fd5405a2ee7246223fed5f00f68626`; workflow expression fix `b77303d62115d1a129830c2829a9dab1674b96f2`; panning assertion `1b609964dd21d79eca013b06ad2828130a809d9f`; CI syntax check `de09ff09161cdae1e2b62a6ad05d170995f7f855`.
 
