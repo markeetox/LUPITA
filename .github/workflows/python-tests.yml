@@ -8,6 +8,7 @@ on:
       - "data/parameters.json"
       - "requirements.txt"
       - "web/**"
+      - "scripts/frontend_live_smoke.mjs"
       - ".github/workflows/python-tests.yml"
   push:
     branches:
@@ -18,6 +19,7 @@ on:
       - "data/parameters.json"
       - "requirements.txt"
       - "web/**"
+      - "scripts/frontend_live_smoke.mjs"
       - ".github/workflows/python-tests.yml"
   workflow_dispatch: {}
 
