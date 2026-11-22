@@ -30,7 +30,9 @@ async function runViewport(name, viewport, mobile = false) {
   try {
     const response = await page.goto(baseUrl, { waitUntil: "domcontentloaded", timeout: 60000 });
     if (!response || !response.ok()) throw new Error("Site navigation failed: " + (response && response.status()));
-    await page.waitForSelector("#checklist input[type='checkbox']", { timeout: 60000 });
+    // The species checklist is intentionally collapsed until its control is opened.
+    await page.locator("#selectBtn").click();
+    await page.waitForSelector("#checklist input[type='checkbox']", { state: "visible", timeout: 60000 });
     await page.waitForFunction(() => {
       const box = document.querySelector("#checklist");
       return box && box.querySelectorAll("input[type='checkbox']").length >= 100;
@@ -38,7 +40,6 @@ async function runViewport(name, viewport, mobile = false) {
 
     const speciesCount = await page.locator("#checklist input[type='checkbox']").count();
     const initialRegion = await page.locator("#regionSelect").inputValue();
-    await page.locator("#selectBtn").click();
     await page.locator("#checklist .check-item").filter({ hasText: "Spanish mackerel" }).click();
 
     await page.waitForFunction(() => {
