@@ -7,6 +7,7 @@ on:
       - "data/species/**"
       - "data/parameters.json"
       - "requirements.txt"
+      - "web/**"
       - ".github/workflows/python-tests.yml"
   push:
     branches:
@@ -28,6 +29,19 @@ jobs:
     timeout-minutes: 15
     steps:
       - uses: actions/checkout@v4
+      - name: Check map client JavaScript syntax
+        run: |
+          python - <<'PY'
+          import re
+          from pathlib import Path
+
+          html = Path("web/index.html").read_text(encoding="utf-8")
+          scripts = re.findall(r"<script>(.*?)</script>", html, flags=re.DOTALL)
+          if not scripts or not scripts[-1].strip():
+              raise SystemExit("No inline map client script found")
+          Path("/tmp/lupita-map-client.js").write_text(scripts[-1], encoding="utf-8")
+          PY
+          node --check /tmp/lupita-map-client.js
       - uses: actions/setup-python@v5
         with:
           python-version: "3.12"
