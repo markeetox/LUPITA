@@ -14,19 +14,19 @@ This is the handoff record for future sessions. Read it with [Project Status](PR
 
 ## Active milestone: front-end results and explainability
 
-**Status:** first UI batch committed and deployed. The MapLibre client now exposes prediction snapshot health, environmental freshness/coverage, factor-level explanations, declared evidence status, source references, and confidence limitations. Fabricated sample predictions are no longer used as a fallback. South Florida & Florida Keys is the first-visit default while saved choices and broader region options remain available. Latest frontend commit `85bcbccb50cc4e4286414f07c973db257642f2e3` received a successful Vercel deployment status. CI run [45035145928](https://github.com/markeetox/LUPITA/actions/runs/45035145928) completed successfully: JavaScript syntax check passed, **326 Python tests passed, 0 failed, 115 warnings**, and the species audit artifact was generated.
+**Status:** the diagnostics/nearby-conditions batch is deployed, and the species-conditioned opportunity shortlist plus API-v1 compatibility path are implemented on `main`. The page now falls back to the published `api/v1/index.json` when the legacy root `fish.json` is empty/unavailable, then loads only the detail JSON for selected species. This restores access to the published prediction areas without downloading all 130 species detail files on first load. The shortlist shows up to three highest habitat-match areas per selected species in the current region, breaks equal scores by distance from map center, and opens the existing area detail sheet. It keeps habitat-match score, model confidence, declared profile evidence and measured buoy inputs distinct. Latest web change: `c0059d7851a154055dce2f6f474cbde025087ea2`; API adapter: `805535ae01f7e5d5bd2b967aa65624cbdc101d83`; adapter tests: `f06a44db267bb95eaec68f2899e86381fe65fa6e`. Vercel reported success for the initial integration deployment; full CI for the final adapter/shortlist batch is pending.
 
 Acceptance / next work:
-1. Inspect the deployed map at desktop and mobile sizes, including the health details popover and selected-area factor breakdown.
-2. Ensure degraded input status is visible without obscuring the map or falsely implying every layer is current.
-3. **Completed:** added South Florida & Florida Keys as the first-visit default while retaining saved preferences and all wider region choices.
-4. **Completed:** added a map-centered nearby-conditions panel showing nearest buoy observations, station distance, water temperature, wind/gust, waves, and observation ages. Missing readings are not inferred.
-5. Test the nearby-conditions panel on desktop and mobile; confirm station cards, distance updates after panning, and the full buoy detail sheet behave correctly.
-6. Keep factor match scores, model confidence, evidence status, and catch probability semantically separate.
-7. Do not change species profiles, factor ranges, scoring weights, gates, or production sources as part of visual polish.
+1. Verify the latest Vercel deployment at desktop and mobile sizes, including opportunity cards, nearby buoy cards, diagnostics and selected-area detail sheet.
+2. Select one species, then multiple species; confirm lazy API detail loading, top-three ranking per species, region filtering and card-to-map navigation.
+3. Confirm a species with no favorable areas is reported as such rather than presented with fabricated spots.
+4. Confirm measured buoy context shows the station and observation time at prediction, while model score and model confidence remain separate.
+5. **Completed:** added South Florida & Florida Keys as the first-visit default while retaining saved preferences and all wider region choices.
+6. **Completed:** added map-centered nearby conditions with buoy station distance, water temperature, wind/gust, waves and observation ages. Missing readings are not inferred.
+7. Do not change species profiles, factor ranges, scoring weights, gates, or production sources as part of this front-end work.
 8. Keep Copernicus bottom-temperature work research-only until independent paired validation is complete.
 
-Current published snapshot inspected 2026-11-22 11:06:59 UTC: 130 catalog species, 125 species with modeled areas, 5 with no favorable areas, and 960 mapped areas. Refresh health was degraded: SST 50.1 h delayed, chlorophyll 167.1 h stale, and HF Radar 8.1 h fresh but only 1.5% local query-grid coverage. These are current diagnostics, not catch-performance validation.
+Published snapshot inspected 2026-11-22 11:06:59 UTC: 130 catalog species, 125 species with modeled areas, 5 with no favorable areas, and 960 mapped areas. Refresh health was degraded: SST 50.1 h delayed, chlorophyll 167.1 h stale, and HF Radar 8.1 h fresh but only 1.5% local query-grid coverage. These are input/model diagnostics, not catch-performance validation.
 
 ## Verified baseline
 - Freshness diagnostics: `536984e0af96ddf0cc0c7a8edd344a2b4050568c`; chlorophyll fallback correction: `9c7ed75a739652e54f1989b0a224d1a0d3419cb8`.
