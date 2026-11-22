@@ -248,3 +248,9 @@ Run [45030930943](https://github.com/markeetox/LUPITA/actions/runs/45030930943) 
 - Inspected CTD documentation and headers. Six unique casts across three mooring sites/two cruises, each represented as WS/dWS/uWS variants (18 files are not 18 independent casts). Sea-Bird SBE9plus; final processed output; ITS-90 temperature, Digiquartz dbar pressure, salt-water depth, potential temperature, GPS position and UTC. WS profile maximum depths 48.68–67.553m. Next parse cast identity and down/upcast, then ETOPO bottom-clearance screening.
 - Inspected logger documentation/data: 216,929 records, deep shelf 66,044 (20–30m), shallow shelf 150,885 (0–10m), HOBO U22-001, 5/10-minute cadence, 20.222–31.74°C; sensor bottom clearance unspecified. Supplementary context only.
 - Updated alternative dataset and project continuity docs. No Copernicus matchup, TEOS-10 conversion, scoring, ingestion or production changes.
+
+## 2026-11-22 - Browser smoke runner compatibility fix
+- Investigated failed live smoke run [#45045780761](https://github.com/markeetox/LUPITA/actions/runs/45045780761).
+- Root cause: runner resolved `ubuntu-latest` to Ubuntu 26.04, which Playwright 1.55.0 does not support for Chromium installation (`Install Chromium` failed); browser tests were skipped.
+- Pinned `.github/workflows/frontend-live-smoke.yml` to `ubuntu-24.04` in commit `61b0701fa983400050e3eebea01ed73b5586aa46`.
+- No frontend application code or production behavior changed. Browser QA remains pending until a new manual run completes and screenshots/results are reviewed.
