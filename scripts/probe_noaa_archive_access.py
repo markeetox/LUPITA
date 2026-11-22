@@ -13,16 +13,25 @@ URLS = {
     "adcp_ncei_download": "https://www.ncei.noaa.gov/archive/accession/download/181331",
     "adcp_legacy_index": "https://www.nodc.noaa.gov/archive/arc0139/0181331/",
     "adcp_legacy_data_index": "https://www.nodc.noaa.gov/archive/arc0139/0181331/1.1/",
+    "adcp_legacy_about_index": "https://www.nodc.noaa.gov/archive/arc0139/0181331/1.1/about/",
+    "adcp_legacy_files_index": "https://www.nodc.noaa.gov/archive/arc0139/0181331/1.1/data/",
+    "adcp_legacy_readme": "https://www.nodc.noaa.gov/archive/arc0139/0181331/1.1/NCEI-Readme.txt",
     "adcp_legacy_metadata_xml": "https://www.nodc.noaa.gov/archive/arc0139/0181331/0181331.1.1.xml",
     "logger_ncei_landing": "https://www.ncei.noaa.gov/archive/accession/0190271",
     "logger_ncei_download": "https://www.ncei.noaa.gov/archive/accession/download/190271",
     "logger_legacy_index": "https://www.nodc.noaa.gov/archive/arc0139/0190271/",
     "logger_legacy_data_index": "https://www.nodc.noaa.gov/archive/arc0139/0190271/1.1/",
+    "logger_legacy_about_index": "https://www.nodc.noaa.gov/archive/arc0139/0190271/1.1/about/",
+    "logger_legacy_files_index": "https://www.nodc.noaa.gov/archive/arc0139/0190271/1.1/data/",
+    "logger_legacy_readme": "https://www.nodc.noaa.gov/archive/arc0139/0190271/1.1/NCEI-Readme.txt",
     "logger_legacy_metadata_xml": "https://www.nodc.noaa.gov/archive/arc0139/0190271/0190271.1.1.xml",
     "ctd_ncei_landing": "https://www.ncei.noaa.gov/archive/accession/0190533",
     "ctd_ncei_download": "https://www.ncei.noaa.gov/archive/accession/download/190533",
     "ctd_legacy_index": "https://www.nodc.noaa.gov/archive/arc0141/0190533/",
     "ctd_legacy_data_index": "https://www.nodc.noaa.gov/archive/arc0141/0190533/1.1/",
+    "ctd_legacy_about_index": "https://www.nodc.noaa.gov/archive/arc0141/0190533/1.1/about/",
+    "ctd_legacy_files_index": "https://www.nodc.noaa.gov/archive/arc0141/0190533/1.1/data/",
+    "ctd_legacy_readme": "https://www.nodc.noaa.gov/archive/arc0141/0190533/1.1/NCEI-Readme.txt",
     "ctd_legacy_metadata_xml": "https://www.nodc.noaa.gov/archive/arc0141/0190533/0190533.1.1.xml",
     "seamap_ncei_landing": "https://www.ncei.noaa.gov/archive/accession/0131259",
     "seamap_oas_download": "https://www.ncei.noaa.gov/archive/archive-management-system/OAS/bin/prd/jquery/accession/download/131259",
@@ -30,14 +39,17 @@ URLS = {
 
 
 def probe(name: str, url: str) -> dict:
+    # Manifests are small (largest known candidate is ~121 KB); retrieve enough
+    # to parse every file path, size, and checksum. Other endpoints stay bounded.
+    end = 200000 if name.endswith("_metadata_xml") else 8191
     req = urllib.request.Request(
         url,
-        headers={"User-Agent": "LUPITA-research-archive-probe/1.1", "Range": "bytes=0-4095"},
+        headers={"User-Agent": "LUPITA-research-archive-probe/1.2", "Range": f"bytes=0-{end}"},
         method="GET",
     )
     try:
         with urllib.request.urlopen(req, timeout=45) as response:
-            body = response.read(4096)
+            body = response.read(end + 1)
             return {
                 "name": name, "requested_url": url, "final_url": response.geturl(),
                 "status": response.status, "content_type": response.headers.get("Content-Type"),
@@ -62,8 +74,8 @@ def main() -> None:
     report = {
         "generated_utc": datetime.now(timezone.utc).isoformat(),
         "purpose": (
-            "Read-only endpoint, nested directory-listing, and metadata-header discovery; "
-            "no archive payloads downloaded."
+            "Read-only endpoint, complete manifest, nested file-listing, and README discovery; "
+            "no scientific archive payloads downloaded."
         ),
         "results": results,
     }
