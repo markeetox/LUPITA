@@ -1,0 +1,41 @@
+name: Frontend live smoke test
+
+on:
+  workflow_dispatch:
+    inputs:
+      base_url:
+        description: Public LUPITA frontend URL
+        required: true
+        default: https://lupita.fuglymon.com
+
+permissions:
+  contents: read
+
+jobs:
+  browser-smoke:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - name: Checkout main
+        uses: actions/checkout@v4
+      - name: Set up Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - name: Install Playwright
+        run: npm install --no-save --no-package-lock playwright@1.55.0
+      - name: Install Chromium
+        run: npx playwright install --with-deps chromium
+      - name: Run desktop and mobile live checks
+        env:
+          LUPITA_BASE_URL: \${{ inputs.base_url }}
+          SMOKE_OUTPUT_DIR: artifacts/frontend-smoke
+        run: node scripts/frontend_live_smoke.mjs
+      - name: Upload screenshots and results
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: lupita-frontend-live-smoke
+          path: artifacts/frontend-smoke/
+          if-no-files-found: warn
+          retention-days: 14
