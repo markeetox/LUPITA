@@ -56,6 +56,14 @@ async function runViewport(name, viewport, mobile = false) {
     if (!opportunityText.includes("Model confidence")) throw new Error("Model confidence label missing");
     if (!opportunityText.includes("Measured input at prediction")) throw new Error("Prediction-time measured buoy context missing");
 
+    const beforePan = await page.locator("#opportunityContent .opportunity-meta").allTextContents();
+    await page.evaluate(() => map.jumpTo({ center: [-100, 35], zoom: 4 }));
+    await page.waitForFunction(previous => {
+      const current = Array.from(document.querySelectorAll("#opportunityContent .opportunity-meta")).map(node => node.textContent);
+      return current.length > 0 && current.some((value, index) => value !== previous[index]);
+    }, beforePan, { timeout: 10000 });
+    const afterPan = await page.locator("#opportunityContent .opportunity-meta").allTextContents();
+
     await cards.first().click();
     await page.waitForFunction(() => {
       const sheet = document.querySelector("#sheet");
@@ -102,6 +110,7 @@ async function runViewport(name, viewport, mobile = false) {
       initialRegion,
       spanishMackerelCards: cardCount,
       measuredContextShown: true,
+      mapPanRefreshesDistances: beforePan.some((value, index) => value !== afterPan[index]),
       cardOpensDetailSheet: true,
       gopherRockfishNoFavorableAreas: true,
       layout
