@@ -1,3 +1,16 @@
+## 2026-11-25 | Species-specific geographic mask design review
+
+## Species-specific geographic mask design review | research complete, geometry still gated | 2026-11-25
+
+Reviewed authoritative and agency sources for Southern flounder and white sturgeon and documented the evidence and spatial-mask requirements in [SPECIES_GEOGRAPHIC_MASK_DESIGN_REVIEW_2026-11-25.md](SPECIES_GEOGRAPHIC_MASK_DESIGN_REVIEW_2026-11-25.md), commit `8c08aabb032386b2c9cad169e49059a8c23490b8`.
+
+Southern flounder: SCDNR and USGS NAS support a discontinuous Florida range (Atlantic occurrence to the Loxahatchee/Jupiter Inlet area, a gap south and around the peninsula tip, and a separate Caloosahatchee Estuary/Gulf occurrence). Seafood Watch 2023 repeats the gap but is not an independent geospatial dataset. FWC supplies habitat context but no polygon; Florida Museum's broad Florida distribution summary requires reconciliation against underlying georeferenced records; the 2021 NC FMP supports distinct Atlantic/Gulf population contexts. No source reviewed supplies a ready-to-use authoritative coastal occupancy polygon. Do not infer coordinates from named endpoints or turn occurrence-point convex hulls into occupancy boundaries.
+
+White sturgeon: CDFW, CA Marine Species Portal and WDFW describe a broad coastal range but dominant riverine/estuarine use and only occasional open-coast movements. The current SST/ETOPO marine grid lacks river flow, channel hydraulics and estuary habitat. A geographic mask alone would not correct this model-domain mismatch. Evaluate exclusion from the marine-grid product versus a separately designed river/estuary model; no deactivation or catalog change made.
+
+Documented future mask requirements: optional/backward-compatible, versioned WGS84 geometry with provenance, multiple disjoint polygons and holes, explicit edge semantics, synthetic tests, before/after eligible-cell audit, and no change to scoring factors/weights/gates/confidence. No profile, scorer, data-source, ingestion, or publication behavior changed. Browser smoke test passing was user-reported; the exact run/artifacts have not yet been independently inspected in this update.
+
+
 ## 2026-11-25 | No-favorable-areas assertion moved to correct UI scope
 
 Manual browser run [45707532332](https://github.com/markeetox/LUPITA/actions/runs/45707532332) again timed out in both desktop and mobile at the Gopher rockfish check. Artifact screenshots show the correct status rendered in the **Target Predictions** panel as “Gopher rockfish: No favorable areas right now.” The test incorrectly searched only `#opportunityContent`, the separate modeled-opportunities card container, which instead says there are no modeled areas for the selected species in the region. No uncaught browser errors or failed API-v1 responses were recorded. Changed the assertion to inspect rendered page text for both the species and no-favorable-areas meaning. This is a test scope fix only; no application behavior, species data, scoring, or model logic changed. Next: rerun the manual frontend live smoke workflow and review desktop/mobile artifacts. Browser QA remains pending.
