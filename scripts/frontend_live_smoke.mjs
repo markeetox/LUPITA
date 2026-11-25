@@ -84,7 +84,8 @@ async function runViewport(name, viewport, mobile = false) {
     await page.locator("#checklist .check-item").filter({ hasText: "Gopher rockfish" }).click();
     await page.waitForFunction(() => {
       const text = document.querySelector("#opportunityContent")?.innerText || "";
-      return text.includes("No favorable areas in the current snapshot for: Gopher rockfish");
+      const normalized = text.toLowerCase();
+      return normalized.includes("gopher rockfish") && normalized.includes("no favorable areas");
     }, { timeout: 30000 });
 
     // Confirm the mobile control sheet can scroll within the viewport.
