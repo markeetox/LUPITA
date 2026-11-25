@@ -82,10 +82,11 @@ async function runViewport(name, viewport, mobile = false) {
     await page.locator("#selectBtn").click();
     await page.locator("#checklist .check-item").filter({ hasText: "Spanish mackerel" }).click();
     await page.locator("#checklist .check-item").filter({ hasText: "Gopher rockfish" }).click();
+    // The no-favorable-areas status is rendered in Target Predictions,
+    // not in #opportunityContent (which only contains modeled opportunity cards).
     await page.waitForFunction(() => {
-      const text = document.querySelector("#opportunityContent")?.innerText || "";
-      const normalized = text.toLowerCase();
-      return normalized.includes("gopher rockfish") && normalized.includes("no favorable areas");
+      const text = document.body.innerText.toLowerCase();
+      return text.includes("gopher rockfish") && text.includes("no favorable areas");
     }, { timeout: 30000 });
 
     // Confirm the mobile control sheet can scroll within the viewport.
