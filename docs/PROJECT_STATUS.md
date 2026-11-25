@@ -1,3 +1,7 @@
+## Live frontend browser QA | case-sensitive assertion corrected | 2026-11-25
+
+Manual run [45703423878](https://github.com/markeetox/LUPITA/actions/runs/45703423878) installed Chromium and reached the public site at desktop and mobile sizes. Both contexts displayed the Spanish mackerel modeled-opportunities heading and cards. The smoke test nevertheless failed because it compared the rendered species name case-sensitively against title case, while the UI heading is uppercase. Screenshots confirm the species label and opportunity cards are present. No uncaught browser errors or failed API-v1 responses were recorded. Updated the test to compare the species name case-insensitively. This is a test-harness correction only; no frontend application behavior or scientific model behavior changed. Browser QA remains pending until the next full desktop/mobile run passes and its screenshots are reviewed.
+
 ## Live frontend browser QA harness | 2026-11-22
 
 **Status:** implemented on `main`; manual execution pending.
