@@ -1,7 +1,5 @@
 ## 2026-11-25 | Species-specific geographic mask design review
 
-## Species-specific geographic mask design review | research complete, geometry still gated | 2026-11-25
-
 Reviewed authoritative and agency sources for Southern flounder and white sturgeon and documented the evidence and spatial-mask requirements in [SPECIES_GEOGRAPHIC_MASK_DESIGN_REVIEW_2026-11-25.md](SPECIES_GEOGRAPHIC_MASK_DESIGN_REVIEW_2026-11-25.md), commit `8c08aabb032386b2c9cad169e49059a8c23490b8`.
 
 Southern flounder: SCDNR and USGS NAS support a discontinuous Florida range (Atlantic occurrence to the Loxahatchee/Jupiter Inlet area, a gap south and around the peninsula tip, and a separate Caloosahatchee Estuary/Gulf occurrence). Seafood Watch 2023 repeats the gap but is not an independent geospatial dataset. FWC supplies habitat context but no polygon; Florida Museum's broad Florida distribution summary requires reconciliation against underlying georeferenced records; the 2021 NC FMP supports distinct Atlantic/Gulf population contexts. No source reviewed supplies a ready-to-use authoritative coastal occupancy polygon. Do not infer coordinates from named endpoints or turn occurrence-point convex hulls into occupancy boundaries.
