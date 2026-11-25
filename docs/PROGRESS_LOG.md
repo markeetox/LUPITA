@@ -1,3 +1,7 @@
+## 2026-11-25 | Occurrence-data acquisition routes identified
+
+Identified Florida Museum Ichthyology's Darwin Core Archive as the leading candidate for georeferenced voucher records (CC-BY-NC 4.0), and NOAA Fisheries DisMAP as a candidate for survey-informed distribution context. Clarified that the USGS NAS occurrence API is for its Nonindigenous Aquatic Species database; the NAS species fact sheet can inform range review, but its occurrence API is not a primary source for native Florida southern flounder occurrence and missing records cannot indicate absence. No raw records downloaded or committed; no mask or model behavior changed. Research details added to `docs/SPECIES_GEOGRAPHIC_MASK_DESIGN_REVIEW_2026-11-25.md` in commit `7ecb97d91d9cbe9cd6c4736f083510b5c9e2ece2`. Next: inspect Florida Museum records and verify DisMAP survey coverage/effort.
+
 ## 2026-11-25 | Species-specific geographic mask design review
 
 Reviewed authoritative and agency sources for Southern flounder and white sturgeon and documented the evidence and spatial-mask requirements in [SPECIES_GEOGRAPHIC_MASK_DESIGN_REVIEW_2026-11-25.md](SPECIES_GEOGRAPHIC_MASK_DESIGN_REVIEW_2026-11-25.md), commit `8c08aabb032386b2c9cad169e49059a8c23490b8`.
