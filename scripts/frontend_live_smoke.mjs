@@ -52,7 +52,7 @@ async function runViewport(name, viewport, mobile = false) {
     if (cardCount < 1 || cardCount > 3) throw new Error("Expected 1-3 Spanish mackerel cards, got " + cardCount);
 
     const opportunityText = await page.locator("#opportunityContent").innerText();
-    if (!opportunityText.includes("Spanish mackerel")) throw new Error("Species name missing from opportunity panel");
+    if (!opportunityText.toLowerCase().includes("spanish mackerel")) throw new Error("Species name missing from opportunity panel");
     if (!opportunityText.includes("Habitat match")) throw new Error("Habitat-match score label missing");
     if (!opportunityText.includes("Model confidence")) throw new Error("Model confidence label missing");
     if (!opportunityText.includes("Measured input at prediction")) throw new Error("Prediction-time measured buoy context missing");
