@@ -96,3 +96,19 @@ No species JSON, geographic bounds, scorer code, data source, model activation s
 - CA Marine Species Portal White Sturgeon report: https://marinespecies.wildlife.ca.gov/white-sturgeon/true/
 - WDFW White Sturgeon: https://wdfw.wa.gov/species-habitats/species/acipenser-transmontanus
 - Runtime geographic contract: `pipeline/scoring.py::score_species` and `config/sources.json`
+
+## Occurrence-data acquisition review
+
+A follow-up source-discovery pass identified these practical routes:
+
+- **Florida Museum of Natural History Ichthyology IPT / Darwin Core Archive.** The museum publishes a downloadable occurrence archive under CC-BY-NC 4.0. The resource contains georeferenced fish collection records and is updated frequently. It is a strong candidate for inspecting Florida-vouchered *P. lethostigma* specimens, provided each record is filtered by accepted scientific name/synonyms and reviewed for coordinate uncertainty, event date, basis of record, identification verification, and duplicate lots. It is a museum collection, not a standardized survey; collection density must not be interpreted as abundance or absence. Dataset: https://ipt.floridamuseum.ufl.edu/ipt/resource?r=ichthyology ; archive: https://ipt.floridamuseum.ufl.edu/ipt/archive.do?r=ichthyology ; GBIF dataset DOI: https://doi.org/10.15468/8mjsel
+- **USGS NAS API.** The API documentation says its machine-readable occurrence API serves spatially referenced observations in the Nonindigenous Aquatic Species database. Although the NAS fact sheet provides a useful native-range summary for southern flounder, the NAS occurrence API is not a suitable primary source for native Florida distribution because its occurrence collection is designed around nonindigenous records. Do not treat the lack of NAS Florida occurrence records as evidence of absence. API documentation: https://nas.er.usgs.gov/api/documentation.aspx
+- **NOAA Fisheries DisMAP.** This is a useful candidate for fishery-independent survey context and temporal distribution shifts. It exposes survey-informed distribution analyses, range limits, biomass interpolation, and links to regional survey datasets/metadata. Before use, confirm that southern flounder is represented in the relevant Atlantic/Gulf survey domain and inspect the underlying survey effort and model metadata. Its interpolated biomass surface is not automatically an occupancy polygon. Portal: https://apps-st.fisheries.noaa.gov/dismap/DisMAP.html
+
+### Acquisition priority
+
+1. Inspect the Florida Museum archive for verified *P. lethostigma* records in Florida and adjacent states. Preserve the raw Darwin Core fields and archive version/DOI; do not publish raw records in the repository.
+2. Check NOAA DisMAP and underlying survey metadata for southern flounder coverage, years, gear, sampling footprint, and non-detection/effort treatment.
+3. Compare museum records and survey evidence by region (Atlantic Florida, Caloosahatchee, other Gulf Florida, Florida Keys/Florida Bay). Explicitly report sample counts and temporal coverage, but do not convert sparse records or unbalanced sampling into hard exclusion boundaries.
+4. Only then evaluate candidate estuary/coastal polygons and the effect on LUPITA's eligible grid cells.
+
