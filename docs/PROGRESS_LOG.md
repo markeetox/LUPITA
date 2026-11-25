@@ -259,3 +259,11 @@ Run [45030930943](https://github.com/markeetox/LUPITA/actions/runs/45030930943) 
 ## 2026-11-22 | Browser smoke test reached site; selector sequencing corrected
 
 Live run [45047547674](https://github.com/markeetox/LUPITA/actions/runs/45047547674) resolved the previous runner issue: Ubuntu 24.04 and Chromium installation succeeded. The browser opened the published site at desktop and mobile sizes. Both contexts found 130 species checkboxes in the DOM, but timed out waiting for a visible checkbox because the species checklist starts collapsed. No page errors or failed API-v1 responses were recorded before the timeout. Reviewed both uploaded failure screenshots; both show the expected closed selector state. Corrected `scripts/frontend_live_smoke.mjs` to click `#selectBtn` before waiting for visible checklist inputs and removed the redundant later click. No frontend application behavior changed. Next: rerun the manual live smoke workflow and inspect the full interaction results/screenshots; do not mark browser QA passed yet.
+
+
+## 2026-11-25 | Live browser smoke assertion corrected
+- Inspected failed run [45703423878](https://github.com/markeetox/LUPITA/actions/runs/45703423878), job logs, JSON results and desktop/mobile failure screenshots.
+- Chromium installation and site navigation succeeded on Ubuntu 24.04. Both viewports loaded the catalog and rendered Spanish mackerel opportunity cards.
+- The failure was a case-sensitive assertion: the test expected `Spanish mackerel`, while the UI visibly renders `SPANISH MACKEREL`. Both viewports had no captured uncaught page errors or failed API-v1 responses.
+- Changed the species-name assertion in `scripts/frontend_live_smoke.mjs` to compare lowercase text. Test-only correction; no app or scientific model changes.
+- Next: manually rerun [Frontend live browser smoke](https://github.com/markeetox/LUPITA/actions/workflows/frontend-live-smoke.yml). Desktop/mobile acceptance remains unverified until all checks pass and the new artifact is reviewed.
