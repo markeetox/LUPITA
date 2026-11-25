@@ -267,3 +267,13 @@ Live run [45047547674](https://github.com/markeetox/LUPITA/actions/runs/45047547
 - The failure was a case-sensitive assertion: the test expected `Spanish mackerel`, while the UI visibly renders `SPANISH MACKEREL`. Both viewports had no captured uncaught page errors or failed API-v1 responses.
 - Changed the species-name assertion in `scripts/frontend_live_smoke.mjs` to compare lowercase text. Test-only correction; no app or scientific model changes.
 - Next: manually rerun [Frontend live browser smoke](https://github.com/markeetox/LUPITA/actions/workflows/frontend-live-smoke.yml). Desktop/mobile acceptance remains unverified until all checks pass and the new artifact is reviewed.
+
+
+## 2026-11-25 | No-favorable-areas browser assertion corrected
+- Inspected live smoke run [45704137281](https://github.com/markeetox/LUPITA/actions/runs/45704137281), job logs, JSON results and desktop/mobile screenshots.
+- Both viewports passed the Spanish mackerel opportunity checks; opportunity cards, distance refresh after map movement, and detail-sheet opening completed.
+- Final check timed out because the test expected exact copy: "No favorable areas in the current snapshot for: Gopher rockfish". The live UI instead says "Gopher rockfish: No favorable areas right now." Failure screenshots confirm the selected species and correct no-favorable-areas state.
+- No uncaught browser errors or failed API-v1 requests were recorded.
+- Updated `scripts/frontend_live_smoke.mjs` to assert that normalized panel text contains both "gopher rockfish" and "no favorable areas", without requiring one exact sentence. Commit: `1ca0a33ac3cde68dfb3f16905d861b3e37cc090a`.
+- Test-only correction. No frontend application behavior, species data, scoring or scientific model behavior changed.
+- Next: manually rerun [Frontend live browser smoke](https://github.com/markeetox/LUPITA/actions/workflows/frontend-live-smoke.yml). Browser QA remains pending until the full desktop/mobile run passes and its screenshots are reviewed.
