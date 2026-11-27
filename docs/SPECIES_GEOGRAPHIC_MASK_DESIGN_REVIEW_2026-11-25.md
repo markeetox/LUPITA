@@ -164,3 +164,23 @@ DisMAP's interpolated biomass surface uses inverse-distance weighting with a 200
 5. Only after the evidence review, assess whether candidate estuary/coastal polygons are justified and calculate the before/after eligible-cell impact.
 
 No raw occurrence/survey records were downloaded or committed. No profile, mask, scoring, confidence, ingestion, or production behavior changed.
+
+
+## Read-only NOAA extraction workflow implemented | 2026-11-27
+
+Added `scripts/extract_noaa_southern_flounder.py`, `.github/workflows/noaa-southern-flounder-extraction.yml`, and `tests/test_noaa_dismap_extractor.py`.
+
+The extractor reads the canonical common/scientific name from `data/species/southern-flounder.json`, inspects the distinct values in NOAA's `Species`, `CommonName`, `SpeciesCommonName`, and `CommonNameSpecies` fields, and matches the full target name. The generic alias "flounder" is deliberately not used as a match, to avoid pulling in unrelated species. The repository did not expose a separate species-filter table in the reviewed tree; the existing species profile is the canonical target-name source.
+
+For each of the four current Gulf/Southeast seasonal layers, the script writes:
+- target-species observation CSV;
+- same-`SampleID` context CSV;
+- extraction report with matched NOAA name combinations, year/season/stratum counts, coordinates/depth/WTCPUE null counts, and basic WTCPUE summaries.
+
+Same-`SampleID` context is explicitly not represented as complete tow effort or verified non-detection coverage. The script does not infer absences, generate occupancy polygons, or create masks. Output is temporary and intended for a 14-day Actions artifact, not committed raw data.
+
+Workflow is manual-dispatch only: https://github.com/markeetox/LUPITA/actions/workflows/noaa-southern-flounder-extraction.yml
+
+Commits: extractor `d48a6d6d13f041f1bd6b2a7245943790c0f4808b`; matching/pagination hardening `5932d4cad7a31b9be562ead6ab0e2b37a91db532`; workflow `2190ff34d86e9f5869a45af72650c5bd48ad1f0a`; CI inclusion `d0a3b7100211e012b22e662e1321affc9fad3df0`.
+
+The Python CI workflow was triggered by the commits and was still running at documentation time (runs `46018349544` and `46018358533`). The extraction workflow has not yet been manually dispatched, so no NOAA target records have been downloaded. No production code, species profile, scoring, confidence, mask, ingestion, or published data changed.
