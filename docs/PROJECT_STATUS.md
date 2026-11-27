@@ -6,7 +6,7 @@ Identified NOAA InPort 69743, Survey Catch-per-unit-effort CURRENT, as the corre
 
 The DisMAP interpolation uses a 200 km IDW search radius with 10–15 sample sites, a five-year temporal window, and 2 km grid cells. Therefore its interpolated surfaces must not be used as hard occupancy polygons. The portal also labels the Species Persistence module as a preliminary pilot. Florida Museum's current IPT resource reports 241,689 occurrence records under CC-BY-NC 4.0, but no archive records have yet been acquired.
 
-Details and source links are recorded in the species geographic mask design review. No raw data, profile, mask, scorer, scoring factor, gate, confidence, ingestion, or production behavior changed. Next: query the four NOAA point layers, resolve taxon codes against the current Species Filter table, retrieve tow-effort/sample footprints, and audit actual Southern flounder observations by region/season/year/stratum before any geometry is proposed.
+Details and source links are recorded in the species geographic mask design review. No raw data, profile, mask, scorer, scoring factor, gate, confidence, ingestion, or production behavior changed. Next: query the four NOAA point layers, resolve the Species string value against the current Species Filter table, retrieve tow-effort/sample footprints, and audit actual Southern flounder observations by region/season/year/stratum before any geometry is proposed.
 
 ## Species-specific geographic mask design review | research complete, geometry still gated | 2026-11-25
 
