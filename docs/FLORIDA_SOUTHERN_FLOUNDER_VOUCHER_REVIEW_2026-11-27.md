@@ -10,6 +10,10 @@ The evidence does **not** support a hard South Florida exclusion or a simple lat
 
 Taken together, these sources support a cautious interpretation: Southern flounder may occur in low numbers or as infrequent records in parts of South Florida, while the peninsula remains a meaningful distribution/population break. The historical records are not evidence of a dense, continuous, or currently established population throughout South Florida. They are enough to reject a hard geographic absence mask.
 
+## Collection resource version check | 2026-11-27
+
+The Florida Museum IPT resource has since published version 117.576 on 2026-11-23, containing 241,696 occurrence records. The prior review's cited 241,689-record count was from the 2026-11-16 version 117.575. This is a resource-wide record-count update, not evidence that any of the three target catalog entries changed. The current public BioGator listing still exposes their core catalog metadata, but the latest DwC-A archive was not downloaded and the full records, label scans, and multimedia links remain unverified. Keep the record count/version separate from the catalog-level evidence.
+
 ## Florida Museum collection records
 
 The UF FLMNH Ichthyology resource is a published Darwin Core occurrence dataset maintained by the Florida Museum. The resource page reports daily updates and a November 2026 publication with 241,689 occurrence records; its license is CC-BY-NC 4.0. The targeted BioGator UF-ICHTHYOLOGY search for genus *Paralichthys* lists 479 records, including the following exact *P. lethostigma* entries.
