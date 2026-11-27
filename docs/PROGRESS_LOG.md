@@ -409,3 +409,10 @@ Verified the live FWC/FWRI Inshore Saltwater FIM Stratified-Random Sampling ArcG
 Verified the NPS Everglades recreational catch-and-effort public package, covering January 1980 through April 2025, with >270,000 surveys and >4 million fish reported. Identified its catch, QA/QC, fishing-area, trailer-count, and metadata files. CSV download returned an unsupported content type in this session, so the files were not ingested and no target species result is claimed. Verified the current Florida Museum UF Ichthyology Darwin Core Archive endpoint; the archive was not downloaded or filtered in this review.
 
 Added docs/FLORIDA_SOUTHERN_FLOUNDER_PUBLIC_DATA_EXPANSION_2026-11-27.md and updated docs/PROJECT_STATUS.md. Next: acquire NOAA event-level records if available; retrieve and filter FWC SRS target records; ingest NPS creel files; download/filter the current museum archive. Keep survey positives, survey non-detections, fisheries-dependent catch reports, and museum vouchers separate. No species profile, geographic mask, scoring, confidence, ingestion, production-source, or publishing behavior changed.
+
+
+## 2026-11-27 | Read-only public evidence acquisition workflow implemented
+
+Added scripts/acquire_south_florida_public_evidence.py and the manual GitHub Actions workflow .github/workflows/south-florida-public-evidence-acquisition.yml. The workflow is designed to download the NPS Everglades creel source files, query exact-name positive-catch Southern flounder records from the FWC/FWRI Inshore FIM SRS ArcGIS layer, and download/filter the Florida Museum UF Ichthyology Darwin Core Archive. It packages raw sources, exact-name candidate extracts, metadata, and a summary into a 14-day artifact. No raw data are committed. The script was corrected to emit valid GeoJSON Point geometry and to label the ArcGIS layer's maxRecordCount accurately.
+
+The workflow is committed on main but has not been run. The next action is a manual workflow dispatch, followed by inspection of the artifact and source-specific QA. No production code, species profile, geographic mask, scoring, confidence, ingestion, or publishing behavior changed.
