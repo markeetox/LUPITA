@@ -129,3 +129,14 @@ The NOAA 2007 compendium's omission of Southern flounder is not evidence of abse
 - National Park Service. 2026. [Recreational fishing catch and effort in Everglades National Park, 1980–2025, data package](https://catalog.data.gov/dataset/recreational-fishing-catch-and-effort-in-everglades-national-park-1980-2025-data-package). DOI: https://doi.org/10.57830/2318429.
 - Florida Museum of Natural History. [UF FLMNH Ichthyology IPT resource and Darwin Core Archive](https://ipt.floridamuseum.ufl.edu/ipt/resource.do?r=ichthyology).
 - Florida Museum of Natural History. [Darwin Core Archive download endpoint](https://ipt.floridamuseum.ufl.edu/ipt/archive.do?r=ichthyology).
+
+
+## Reproducible acquisition workflow added
+
+Added a manual-only, read-only GitHub Actions workflow:
+- Workflow: [South Florida Public Evidence Acquisition](../actions/workflows/south-florida-public-evidence-acquisition.yml)
+- Script: [scripts/acquire_south_florida_public_evidence.py](../blob/main/scripts/acquire_south_florida_public_evidence.py)
+
+The workflow is designed to download the NPS creel package, query exact-name positive-catch records from the FWC/FWRI ArcGIS layer, and download/filter the Florida Museum Darwin Core Archive. It writes raw source files, exact-name candidate extracts, metadata, and a summary to a 14-day Actions artifact. It does not commit raw source data or modify LUPITA's model or species profiles.
+
+The workflow and script have been committed to main but **have not yet been run**. The first run must be inspected for source failures, returned date coverage, target record counts, field names, taxonomy, QA flags, and spatial plausibility before any result is treated as validated.
