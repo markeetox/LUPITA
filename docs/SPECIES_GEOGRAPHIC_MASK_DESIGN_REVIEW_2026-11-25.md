@@ -211,3 +211,12 @@ The current InPort metadata time extents end in 2024 for Gulf, Southeast Fall an
 
 No species profile, mask, scoring, confidence, ingestion, production source or publishing behavior changed.
 
+
+
+## Additional Southern flounder survey crosswalk evidence | 2026-11-27
+
+A follow-up audit matched NOAA DisMAP Gulf SampleIDs to the uploaded SEAMAP original station, gear-deployment, and biological-catch tables. Of 4,805 identifier matches, 4,795 are independently corroborated by year, exact depth, and tow-midpoint coordinates; ten vessel-35 / cruise-2001 records have unresolved 2020/2021 date and spatial mismatches and are excluded. Among the 4,795 corroborated samples, all 277 positive WTCPUE samples have a matching Southern flounder BGS record, and all 4,518 zero-CPUE samples have other-taxa biological records but no Southern flounder BGS record.
+
+All 572 Gulf samples south of 26°N are in the corroborated set and have ST shrimp-trawl effort, positive total live catch, other-species BGS records, and no Southern flounder BGS record. The 73 shallow eastern samples (4.3–20.1 m) show the same pattern with 29–31 minutes recorded. This strengthens the evidence for sample-level no-catch at those bottom-trawl stations, but it does not establish absence in estuaries, tidal creeks, bays, or unsampled habitat. The ichthyoplankton archive also contains one 7.8 mm species-level *P. lethostigma* specimen from the northern Gulf in 2008; it does not provide a South Florida occurrence polygon.
+
+The ten identifier anomalies, an undocumented HAULVALUE code, and one 56-minute tow remain under review. No geometry, profile, mask, scorer, score, confidence, ingestion, or production behavior changed. Full details: [NOAA_SEAMAP_CROSSWALK_ANALYSIS_2026-11-27.md](NOAA_SEAMAP_CROSSWALK_ANALYSIS_2026-11-27.md).
