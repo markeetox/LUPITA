@@ -225,7 +225,16 @@ def acquire_fwc(report: dict[str, Any]) -> None:
             "features": [
                 {
                     "type": "Feature",
-                    "geometry": feature.get("geometry"),
+                    "geometry": (
+                        {
+                            "type": "Point",
+                            "coordinates": [feature["geometry"]["x"], feature["geometry"]["y"]],
+                        }
+                        if feature.get("geometry")
+                        and feature["geometry"].get("x") is not None
+                        and feature["geometry"].get("y") is not None
+                        else None
+                    ),
                     "properties": feature.get("attributes", {}),
                 }
                 for feature in features
@@ -235,7 +244,7 @@ def acquire_fwc(report: dict[str, Any]) -> None:
     report["fwc_inshore_fim_srs"] = {
         "service_url": FWC_SERVICE,
         "layer_id": layer_id,
-        "metadata_feature_count": metadata.get("maxRecordCount"),
+        "layer_max_record_count": metadata.get("maxRecordCount"),
         "exact_name_query_expected_count": expected_count,
         "retrieved_feature_count": len(features),
         "date_min": min((r.get("Sampling_Date") for r in rows if r.get("Sampling_Date") is not None), default=None),
