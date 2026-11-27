@@ -64,9 +64,7 @@ def is_target_record(attributes: dict[str, Any], terms: set[str]) -> bool:
             return True
         # Scientific names may be accompanied by authority strings; common names
         # must remain exact so unrelated flounder species are not swept in.
-        if " " in term and term.startswith("paralichthys ") and any(
-            value.startswith(term + " ") for value in values
-        ):
+        if " " in term and any(value.startswith(term + " ") for value in values):
             return True
     return False
 
@@ -115,7 +113,10 @@ def query_all(
         if not features:
             break
         page_ids = tuple(
-            feature.get("attributes", {}).get("OBJECTID") for feature in features
+            feature.get("attributes", {}).get("OBJECTID")
+            if feature.get("attributes", {}).get("OBJECTID") is not None
+            else tuple(sorted(feature.get("attributes", {}).items()))
+            for feature in features
         )
         if page_ids in seen_page_ids:
             raise RuntimeError(f"ArcGIS repeated a page at resultOffset={offset}")
