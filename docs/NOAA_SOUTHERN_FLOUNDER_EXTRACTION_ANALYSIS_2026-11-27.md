@@ -44,6 +44,7 @@ NOAA describes WTCPUE as biomass weight catch per unit effort standardized to kg
 - Positive WTCPUE records: 26.0134–30.3292°N, 97.3158–83.2316°W; depth 7.3–105.7 m.
 - The southernmost positive sample is `004-290-00072`, 2010, at 26.0134°N, 97.0138°W, depth 26.0 m, WTCPUE 0.05207.
 - There are 572 sample records south of 26°N; all 572 have WTCPUE = 0. Their depths range 4.3–103.2 m (median 43.0 m; mean 44.9 m) and span 2010–2025.
+- Of those 572 southern records, 73 are in the easternmost longitude slice (25.0031–25.9421°N, 81.9985–81.3310°W). Those 73 samples are 4.3–20.1 m deep (median 13.2 m), and every one has WTCPUE = 0. This is a notably shallow subset near the southwest Florida coast, but it remains bottom-trawl sample evidence rather than estuary-wide coverage.
 - Within the eastern Gulf sample area east of 85°W, there are 1,816 records and 11 positive samples. East of 84°W there are 1,400 records and 4 positive samples.
 
 This is meaningful offshore/shelf survey no-catch evidence at sampled trawl locations, especially south of 26°N. It does **not** establish absence in Florida Bay, the Keys' nearshore waters, tidal creeks, bays, or the Caloosahatchee estuary. The sampling footprint and depth distribution are not a substitute for estuarine sampling.
