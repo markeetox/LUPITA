@@ -17,7 +17,7 @@ All **4,805 records** therefore have strong cross-source agreement:
 - NOAA depth matches the SEAMAP start-station depth exactly.
 - NOAA point coordinates match the midpoint of the SEAMAP tow start/end coordinates within 69.5 meters (median 27.8 meters; 99th percentile 61.3 meters).
 - All 277 NOAA samples with WTCPUE > 0 have a corresponding Southern flounder biological record in SEAMAP.
-- All 4,518 NOAA samples with WTCPUE = 0 have no Southern flounder biological record in SEAMAP. Every one of these 4,518 samples has biological records for other taxa, so the catch table is populated rather than simply absent.
+- All 4,528 NOAA samples with WTCPUE = 0 have no Southern flounder biological record in the corrected SEAMAP station/deployment records. Every one of these 4,528 samples has biological records for other taxa, so the catch table is populated rather than simply absent.
 
 This is strong independent confirmation of sample-level no-catch records for the matched bottom-trawl samples. It is not evidence of absence from unsampled places or habitats.
 
@@ -60,9 +60,9 @@ The documented relationship was followed: BGSREC was joined to INVREC by INVRECI
 
 ## Crosswalk results
 
-### 4,795 corroborated records
+### All 4,805 corroborated records
 
-Of the 4,805 identifier matches, 4,795 also agree on survey year, depth, and tow midpoint:
+Of the 4,805 NOAA records, 4,795 match the vessel-cruise-station composite key directly. The remaining ten have the cruise-number segment discrepancy described below, but are independently matched to the correct 2021 cruise 2101 stations using vessel, station number, year, exact depth, and tow midpoint:
 - 4,805 / 4,805 have matching calendar year between NOAA Year and the corrected SEAMAP START_DATE.
 - 4,805 / 4,805 have exact depth agreement between NOAA Depth and SEAMAP DEPTH_SSTA.
 - Tow-midpoint separation ranges from 0 to 0.0695 km; median 0.0278 km; maximum 0.0695 km.
@@ -73,8 +73,8 @@ Within all 4,805 corrected station matches:
 | NOAA WTCPUE result | Samples | Matching Southern flounder BGS record |
 |---|---:|---|
 | Positive (> 0) | 277 | 277 |
-| Zero (= 0) | 4,518 | 0 |
-| **Total** | **4,795** | **277 positive matches** |
+| Zero (= 0) | 4,528 | 0 |
+| **Total** | **4,805** | **277 positive matches** |
 
 All 277 positive NOAA samples match one Southern flounder BGS record under current biocode 183072404. The ten corrected cruise-2101 stations are zero-CPUE samples and have no Southern flounder BGS record; each has other-taxa biological records. The source-agency breakdown is:
 - US / NMFS: 231
@@ -83,7 +83,7 @@ All 277 positive NOAA samples match one Southern flounder BGS record under curre
 - Alabama: 3
 - Florida: 2
 
-All 4,518 corroborated zero-CPUE samples have BGS records for other taxa but no Southern flounder BGS record. This is a much stronger sample-level no-catch check than relying on a missing NOAA target row alone.
+All 4,528 corrected zero-CPUE samples have BGS records for other taxa but no Southern flounder BGS record. This is a much stronger sample-level no-catch check than relying on a missing NOAA target row alone.
 
 ### Ten NOAA SampleIDs with a mismatched cruise-number segment
 
@@ -132,7 +132,7 @@ The STAREC HAULVALUE field is described in the uploaded data dictionary as a one
 
 ## South of 26°N: stronger evidence for sampled no-catch
 
-The 572 Gulf NOAA samples south of 26°N all have WTCPUE = 0. All 572 are within the 4,795 corroborated crosswalk records:
+The 572 Gulf NOAA samples south of 26°N all have WTCPUE = 0. All 572 are within the 4,805 corrected crosswalk records:
 - Exact depth agreement with SEAMAP.
 - Tow-midpoint separation no greater than approximately 68 meters.
 - All 572 have ST shrimp-trawl gear deployments.
@@ -182,9 +182,9 @@ The separate SEAMAPBL archive is a Bottom Longline dataset. Its CSV export conta
 
 Supported now:
 - The NOAA Gulf SampleID structure can be crosswalked to original SEAMAP station and gear records.
-- For 4,795 records, independent date, depth, and tow-midpoint checks strongly corroborate the identifier match.
+- All 4,805 records are crosswalked to original station/deployment records; 4,795 match the composite key directly and ten are resolved through the independent vessel/station/year/depth/tow-midpoint fallback.
 - All 277 positive NOAA WTCPUE samples in that corroborated set have matching Southern flounder biological records.
-- All 4,518 zero-CPUE samples in that set have other biological catch records but no Southern flounder biological record.
+- All 4,528 zero-CPUE samples have other biological catch records but no Southern flounder biological record.
 - The 572 southern Gulf zero-CPUE samples, including the 73 shallow eastern samples, have matching effort and biological catch context.
 - The ichthyoplankton archive contains one additional species-level northern Gulf specimen record.
 
