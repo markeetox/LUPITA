@@ -157,7 +157,7 @@ DisMAP's interpolated biomass surface uses inverse-distance weighting with a 200
 
 ### Revised next research step
 
-1. Query the four current ArcGIS point layers for the accepted Southern flounder taxon code/name and obtain all matching survey observations, using pagination/record limits and preserving original fields.
+1. Query the four current ArcGIS point layers for the Southern flounder Species value resolved against the current Species Filter table and obtain all matching survey observations, using pagination/record limits and preserving original fields.
 2. Separately retrieve the all-species tow/sample footprint or survey effort records for the same seasons/years so zero catch can be interpreted only where a valid tow occurred.
 3. Audit species counts by region, season, year, stratum, coordinates, depth, WTCPUE, and sample ID. Check duplicates, null coordinates, and any taxonomic code mapping in the current Species Filter table.
 4. Compare actual survey points with Florida Museum voucher records and the published Florida range summaries. Report sampled locations and non-detections separately; do not convert sparse records or unbalanced sampling into hard exclusion boundaries.
