@@ -193,9 +193,9 @@ Matching was hardened after the first CI run exposed that the profile's one-word
 The earlier corrected CI run `46018358533` completed the test suite with **335 passed, 0 failed** and completed the species audit/artifact steps successfully. A later run including the added compound-name regression test and the current script hardening was still in progress at the time of this note. The first run on the pre-fix code failed the generic-alias regression test as expected; that issue was corrected in subsequent commits. Latest extractor hardening commit: `848ad0fbcbd375742da8dbcad7637bfaa72226c2`.
 
 
-### Latest CI result | 2026-11-27
+### Latest CI and extraction verification | 2026-11-27
 
-The run including the compound common/scientific-name regression test completed successfully: GitHub Actions run [46018451314](https://github.com/markeetox/LUPITA/actions/runs/46018451314), **336 passed, 0 failed** (115 existing warnings). A subsequent script-only change to preserve the diagnostic artifact when zero target records match is being checked in run [46018508487](https://github.com/markeetox/LUPITA/actions/runs/46018508487); it was still in progress at this update. No NOAA extraction workflow has been manually dispatched yet.
+The latest extractor CI run [46018508487](https://github.com/markeetox/LUPITA/actions/runs/46018508487) completed successfully: **336 passed, 0 failed** (115 existing warnings); JavaScript syntax checks and species audit/artifact steps also passed. The manual NOAA extraction workflow [46019958931](https://github.com/markeetox/LUPITA/actions/runs/46019958931) completed successfully and its artifact was audited. See [NOAA_SOUTHERN_FLOUNDER_EXTRACTION_ANALYSIS_2026-11-27.md](NOAA_SOUTHERN_FLOUNDER_EXTRACTION_ANALYSIS_2026-11-27.md) for sample counts, zero-CPUE interpretation, spatial findings and limitations.
 
 ## NOAA Southern flounder point extraction | first-pass results | 2026-11-27
 
