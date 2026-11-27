@@ -19,6 +19,21 @@ A 2019 FWC/FWRI-authored SEDAR data-workshop paper provides useful sampling-desi
 
 These totals describe broad multi-species survey effort. They do not establish that every sample was equally suitable for detecting Southern flounder, and they do not substitute for the species-by-sample catch data. The SEDAR paper is a yellowtail snapper study and does not publish a Southern flounder catch table.
 
+
+
+## Additional confirmation from later FWC annual reports | 2026-11-27
+
+The 2021 and 2023 FWC/FWRI FIM Annual Data Summary Reports independently state that Florida Bay sampling occurred from 1993 through 1997. The 2021 report describes its then-current monthly SRS monitoring areas as Tampa Bay, Charlotte Harbor, northern and southern Indian River Lagoon, Cedar Key, Apalachicola Bay, and northeast Florida; Florida Bay is described only as a historical 1993–1997 program. The 2023 report likewise lists Florida Bay only in the historical sampling summary and its current core-sampling estuary sections do not include Florida Bay. This corroborates the end of the Florida Bay FIM period, but neither report publishes the underlying 1994–1997 Southern flounder sample-level catch records.
+
+The 2023 report's bibliography explicitly cites three primary FIM annual summaries that should be requested from FWRI:
+- FDEP-FMRI (1995), *Fisheries-Independent Monitoring program 1994 annual data summary report*.
+- FDEP-FMRI (1997), *Fisheries-Independent Monitoring program 1996 annual data summary report*.
+- FDEP-FMRI (1998), *Fisheries-Independent Monitoring program 1997 annual data summary report*.
+
+The 1995 annual summary for 1994 is 451 pages; this page count is independently given in a NOAA technical memorandum's bibliography. A separate Florida Bay juvenile-fish publication also cites the 1995 and 1996 annual summaries, providing a second bibliographic trail. The reports have not yet been obtained or checked for Southern flounder tables. Their existence is a retrieval lead, not confirmation of the GSMFC species-specific non-detection statement.
+
+**Acquisition priority:** request the three original annual reports, plus the full fixed-station and 1997 SRS sample/gear and species-catch extracts. Request all samples including zero-catch and invalid deployments, taxonomic codes, lengths, sample effort, habitat/depth, and QA/QC fields. The 2019 SEDAR summary and later FWC annual reports establish survey design and program history only; they cannot replace the original sample-level denominator and catch table.
+
 ## Survey design and interpretation
 
 The fixed-station design sampled a predetermined network of sites. FWC/FWRI methods documentation explains that fixed-station samples describe observations at the sampled sites and cannot be statistically expanded to the entire estuary in the same way as stratified-random samples. SRS sampling began alongside fixed stations in Florida Bay in 1997, but was cut short in October of that year.
