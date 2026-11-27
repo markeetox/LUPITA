@@ -1,3 +1,13 @@
+## Southern flounder survey evidence and public point-layer discovery | 2026-11-27
+
+NOAA Fisheries' June 2026 DisMAP technical report lists Paralichthys lethostigma in the Gulf of Mexico and Southeast U.S. Shelf Fall, Spring, and Summer survey products. The report documents survey-year and stratum filtering, including Gulf years retained from 2010 onward with 2022 dropped, and Southeast seasonal series from 1989–2025 with season-specific exclusions/stratum-coverage thresholds. The report's inclusion rules are based on catch frequency (at least 5% of tows in required proportions of years); they do not define native occupancy limits.
+
+Identified NOAA InPort 69743, Survey Catch-per-unit-effort CURRENT, as the correct public point-level source. It links current ArcGIS Feature Services for Gulf of Mexico and Southeast Fall, Spring, and Summer sample locations. Their schemas expose sample ID, year/time, species identifiers/names, WTCPUE, stratum, latitude, longitude, depth, and point geometry. The separate DisMAP Indicators service contains summary metrics, not the tow-level point records. The NOAA point-data metadata declares CC0-1.0. The ArcGIS query endpoints could not be retrieved through this session, so no species-specific point counts or observations have yet been downloaded.
+
+The DisMAP interpolation uses a 200 km IDW search radius with 10–15 sample sites, a five-year temporal window, and 2 km grid cells. Therefore its interpolated surfaces must not be used as hard occupancy polygons. The portal also labels the Species Persistence module as a preliminary pilot. Florida Museum's current IPT resource reports 241,689 occurrence records under CC-BY-NC 4.0, but no archive records have yet been acquired.
+
+Details and source links are recorded in the species geographic mask design review. No raw data, profile, mask, scorer, scoring factor, gate, confidence, ingestion, or production behavior changed. Next: query the four NOAA point layers, resolve taxon codes against the current Species Filter table, retrieve tow-effort/sample footprints, and audit actual Southern flounder observations by region/season/year/stratum before any geometry is proposed.
+
 ## Species-specific geographic mask design review | research complete, geometry still gated | 2026-11-25
 
 Reviewed authoritative and agency sources for Southern flounder and white sturgeon and documented the evidence and spatial-mask requirements in [SPECIES_GEOGRAPHIC_MASK_DESIGN_REVIEW_2026-11-25.md](SPECIES_GEOGRAPHIC_MASK_DESIGN_REVIEW_2026-11-25.md), commit `8c08aabb032386b2c9cad169e49059a8c23490b8`.
