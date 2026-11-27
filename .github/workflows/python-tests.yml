@@ -9,6 +9,8 @@ on:
       - "requirements.txt"
       - "web/**"
       - "scripts/frontend_live_smoke.mjs"
+      - "scripts/extract_noaa_southern_flounder.py"
+      - "tests/test_noaa_dismap_extractor.py"
       - ".github/workflows/python-tests.yml"
   push:
     branches:
