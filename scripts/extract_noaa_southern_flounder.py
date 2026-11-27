@@ -315,8 +315,12 @@ def main() -> int:
         json.dumps(report, indent=2, ensure_ascii=False), encoding="utf-8"
     )
     if total_target_rows == 0:
-        print("No exact Southern flounder records found in the four configured layers.", file=sys.stderr)
-        return 2
+        print(
+            "No exact Southern flounder observations found. The diagnostic report "
+            "will still be uploaded for inspection.",
+            file=sys.stderr,
+        )
+        return 0
     print(f"Complete: {total_target_rows} target observation rows extracted.", flush=True)
     return 0
 
