@@ -1,3 +1,23 @@
+## 2026-11-27 | Florida Museum and South Florida distribution review
+
+Reviewed the public UF FLMNH Ichthyology collection search and GSMFC Publication 247. The UF collection listing includes exact *Paralichthys lethostigma* entries at Port Everglades (UF 233907, 1959; UF 142820, 1960) and Buttonwood Canal in Everglades National Park (UF 164232, March 1962), plus southwest Florida records near Sanibel, south of St. Petersburg, Boca Grande, Old Tampa Bay, and Placida. GSMFC Publication 247 separately summarizes two Caloosahatchee River estuary specimens, two Florida Bay specimens reported by Tabb and Manning (1961), no Florida Bay detections in routine monthly FWC/FMRI monitoring from 1994–1997 (as unpublished data cited by GSMFC), and a 1998 specimen approximately 16 km north of Marathon.
+
+Interpretation: the historical records reject a hard South Florida absence boundary, but they do not establish a dense, continuous, or currently established population. Range summaries and a peer-reviewed population-genetics paper describe a southern Florida distribution/connectivity break; this can coexist with rare historical records and local survey non-detections. Keep museum records, published historical reports, and survey non-detections as separate evidence classes. Do not create an absence polygon or change species scoring/profile behavior.
+
+Added `docs/FLORIDA_SOUTHERN_FLOUNDER_VOUCHER_REVIEW_2026-11-27.md` and updated the project status. Remaining evidence work: obtain original specimen labels/full metadata for the South Florida catalog entries and locate the underlying FWC/FMRI Florida Bay monitoring dataset or methods report.
+
+## 2026-11-27 | SEAMAP haul quality and 56-minute tow review
+
+GSMFC's March 2010 SEAMAP Subcommittee minutes state that HAULVALUE indicates whether a trawl was good or bad. The archive contains G (38,220), B (39), and null (23,721); within the 4,805 NOAA Gulf matches, 161 are G and 4,644 are null, with no B values. Thirty-six of 39 B records have comments describing gear/tow problems, and two explicitly say “BAD TOW.” However, some G records also have comments about unrepresentative tows or serious gear problems, so HAULVALUE is not a standalone validity guarantee and the formal codebook is still needed.
+
+One 2024 sample (017-2401-00018) records a single 56-minute tow; its timestamps span 56m21s. Current public survey descriptions document standardized 30-minute tows. This is flagged for data-steward review, not automatic rejection. No profile, scoring, mask, ingestion, production-source, or publishing behavior changed.
+
+## 2026-11-27 | Ten NOAA SampleID cruise discrepancies resolved
+
+Revisited the ten vessel-35 records previously excluded because the NOAA SampleID cruise segment was `2001` while the literal SEAMAP match pointed to a December 2020 cruise. The mismatch is isolated to that cruise-number segment: all ten NOAA points independently match vessel 35, station numbers 12–18 and 20–22, and SEAMAP cruise `2101` in 2021. All ten match survey year and exact depth; NOAA point positions are 18.5–61.7 m from the SEAMAP tow midpoints. Each corrected station has ST shrimp-trawl gear, 30 minutes fished, no operation code, positive total live catch (3.3–33.6 kg), and 7–38 biological records for other taxa, with no Southern flounder BGS record.
+
+The corrected crosswalk now covers all 4,805 NOAA Gulf samples: 277 positive WTCPUE samples have matching Southern flounder BGS records, and all 4,528 zero-CPUE samples have other-taxa catch records but no Southern flounder BGS record. The NOAA source SampleID strings were not rewritten; their cruise-component discrepancy remains documented for the data steward. Updated the crosswalk analysis and current project status. No species profile, geographic mask, scoring, confidence, ingestion, production-source, or publishing behavior changed.
+
 ## 2026-11-27 | SEAMAP original haul metadata and data-access review
 
 Identified the original survey programs behind the DisMAP Southern flounder layers and documented their methods, effort standards, quality-control implications, and data-access paths in [NOAA_SEAMAP_HAUL_METADATA_REVIEW_2026-11-27.md](NOAA_SEAMAP_HAUL_METADATA_REVIEW_2026-11-27.md).
