@@ -101,3 +101,9 @@ The southernmost positive Southeast records are near 28.76°N, 80.70–80.71°W.
 - Workflow artifact: [run 46019958931](https://github.com/markeetox/LUPITA/actions/runs/46019958931).
 
 No raw NOAA data was committed. No species profile, geographic mask, scoring factor, weight, gate, confidence logic, ingestion, production source, or publishing behavior changed.
+
+
+## Original SEAMAP record crosswalk follow-up | 2026-11-27
+
+The uploaded SEAMAP original station, gear-deployment, and biological-catch archives were crosswalked to all 4,805 NOAA Gulf SampleIDs. The independent date/depth/tow-midpoint checks corroborate 4,795 records and identify ten vessel-35 / cruise-2001 records requiring quarantine. Within the corroborated set, all 277 positive NOAA WTCPUE samples have matching Southern flounder BGS records; all 4,518 zero-CPUE samples have other-taxa BGS records but no Southern flounder BGS record. The 572 samples south of 26°N and the 73 shallow eastern samples are all in the corroborated set and have recorded trawl effort and other-species catch context. See [NOAA_SEAMAP_CROSSWALK_ANALYSIS_2026-11-27.md](NOAA_SEAMAP_CROSSWALK_ANALYSIS_2026-11-27.md) for methods, exact counts, the ten exceptions, effort audit, and the 2008 ichthyoplankton specimen.
+
