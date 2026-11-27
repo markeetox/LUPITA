@@ -280,7 +280,9 @@ def acquire_museum(report: dict[str, Any]) -> None:
         if not fields:
             raise RuntimeError("Florida Museum occurrence core has no header")
         target_rows = []
+        core_row_count = 0
         for row in reader:
+            core_row_count += 1
             scientific = normalize(row.get("scientificName"))
             verbatim = normalize(row.get("verbatimIdentification"))
             accepted = normalize(row.get("acceptedNameUsage"))
@@ -290,7 +292,7 @@ def acquire_museum(report: dict[str, Any]) -> None:
         write_csv(museum_dir / "southern_flounder_occurrences.csv", fields, target_rows)
         museum_summary.update({
             "core_file": core_name,
-            "core_row_count": sum(1 for _ in io.StringIO(text)) - 1,
+            "core_row_count": core_row_count,
             "exact_name_candidate_rows": len(target_rows),
             "candidate_catalog_numbers": sorted({
                 row.get("catalogNumber", "") for row in target_rows
