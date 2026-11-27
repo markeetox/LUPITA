@@ -1,3 +1,13 @@
+## 2026-11-27 | SEAMAP original haul metadata and data-access review
+
+Identified the original survey programs behind the DisMAP Southern flounder layers and documented their methods, effort standards, quality-control implications, and data-access paths in [NOAA_SEAMAP_HAUL_METADATA_REVIEW_2026-11-27.md](NOAA_SEAMAP_HAUL_METADATA_REVIEW_2026-11-27.md).
+
+- Gulf layer: SEAMAP Gulf Summer Shrimp/Groundfish bottom-trawl survey. Published protocol documents 30-minute bottom-time tows (post-2010 design), a 42-foot trawl, target speed 2.5–3 knots, random station selection with proportional allocation by bottom area, and station/catch fields. Original haul validity, actual tow distance, swept area, operation codes, and source-to-DisMAP SampleID crosswalk still need to be requested.
+- Southeast seasonal layers: SEAMAP South Atlantic Coastal Trawl Survey. Published methods document daytime 20-minute tows, target 2.5-knot speed, paired 75-foot Falcon trawls, inner-stratum depth limits, and a swept-area formula using 13.5 m net opening width multiplied by tow distance. The method says to omit tows whose swept area cannot be estimated accurately. Beginning in 2021, only one net's catch was processed while the other net's tail bag was untied; in 2023 the survey moved from three seasonal cruise windows to two combined windows.
+- SEAMAP-SA data access requires an account after reviewing the Intellectual Property Protocol. Gulf SEAMAP verified, non-confidential records are conditionally available by request.
+
+This establishes a much clearer interpretation framework, but it does not independently validate each zero-CPUE sample. Request original station/tow records, validity flags, tow duration/distance, gear/net mensuration, swept-area values, operation codes/comments, full catch records, and verified SampleID crosswalks. Preserve the zero-CPUE interpretation as sample-level no-catch only. No raw haul data were acquired and no species profile, mask, scoring, confidence, ingestion, production source, or publishing behavior changed.
+
 
 
 ## 2026-11-27 | NOAA extractor CI regression suite passes
