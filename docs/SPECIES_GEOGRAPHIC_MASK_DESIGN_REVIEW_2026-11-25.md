@@ -191,3 +191,8 @@ The Python CI workflow was triggered by the commits and was still running at doc
 Matching was hardened after the first CI run exposed that the profile's one-word alias `flounder` would admit false positives. Generic one-word aliases are now excluded; a combined common-name plus taxon string is accepted when it begins with the full target common name. Distinct-query pagination now uses the returned name fields rather than assuming an ObjectID exists in a distinct-value result. If no target rows match, the extractor preserves and uploads its diagnostic JSON rather than failing before artifact upload.
 
 The earlier corrected CI run `46018358533` completed the test suite with **335 passed, 0 failed** and completed the species audit/artifact steps successfully. A later run including the added compound-name regression test and the current script hardening was still in progress at the time of this note. The first run on the pre-fix code failed the generic-alias regression test as expected; that issue was corrected in subsequent commits. Latest extractor hardening commit: `848ad0fbcbd375742da8dbcad7637bfaa72226c2`.
+
+
+### Latest CI result | 2026-11-27
+
+The run including the compound common/scientific-name regression test completed successfully: GitHub Actions run [46018451314](https://github.com/markeetox/LUPITA/actions/runs/46018451314), **336 passed, 0 failed** (115 existing warnings). A subsequent script-only change to preserve the diagnostic artifact when zero target records match is being checked in run [46018508487](https://github.com/markeetox/LUPITA/actions/runs/46018508487); it was still in progress at this update. No NOAA extraction workflow has been manually dispatched yet.
