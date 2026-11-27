@@ -112,3 +112,55 @@ A follow-up source-discovery pass identified these practical routes:
 3. Compare museum records and survey evidence by region (Atlantic Florida, Caloosahatchee, other Gulf Florida, Florida Keys/Florida Bay). Explicitly report sample counts and temporal coverage, but do not convert sparse records or unbalanced sampling into hard exclusion boundaries.
 4. Only then evaluate candidate estuary/coastal polygons and the effect on LUPITA's eligible grid cells.
 
+
+
+## NOAA DisMAP survey coverage and data-access review | 2026-11-27
+
+### Species coverage confirmed
+
+The June 2026 DisMAP technical report's Appendix I lists Southern flounder (Paralichthys lethostigma) for the Gulf of Mexico survey and all three Southeast U.S. Shelf seasonal survey products (Fall, Spring, Summer). The survey inventory table documents the following retained coverage and filtering:
+
+- **Gulf of Mexico, Summer:** survey series 1982–2025; the DisMAP analysis retains years from 2010 onward, drops 2022, and retains strata sampled in 13 of the years from 2010–2025.
+- **Southeast U.S. Shelf, Fall:** 1989–2025; retained strata sampled in more than 33 years.
+- **Southeast U.S. Shelf, Spring:** 1989–2025; drops 1989 because of inconsistent sampling protocol and retains strata sampled in at least 30 years.
+- **Southeast U.S. Shelf, Summer:** 1989–2025; drops 2021 because it was poorly sampled.
+
+The report states that taxa are included in the Species Persistence module when caught in at least 5% of tows per year in at least two survey years, and in the Single Species Shift module when caught in at least 5% of tows in at least three quarters of survey years. The survey data are expanded with zeroes for tows where a regionally recorded species was not caught. These are survey/module inclusion rules, not proof of absence outside survey coverage. The Gulf survey inventory links to SEAMAP; the Southeast shelf source is identified as direct data from the survey steward.
+
+Sources:
+- NOAA Fisheries DisMAP Technical Report, June 2026: https://apps-st.fisheries.noaa.gov/dismap/docs/DisMAP_Tech_Report_06_2026.pdf
+- NOAA DisMAP portal: https://apps-st.fisheries.noaa.gov/dismap/DisMAP.html
+
+### Public point-level survey layers identified
+
+NOAA InPort's current Survey Catch-per-unit-effort dataset (record 69743) explicitly describes point-level survey observations: locations where species were caught and standardized biomass weight catch-per-unit-effort (kg/ha). It links to current ArcGIS Feature Services for Gulf of Mexico and Southeast US Fall, Spring, and Summer sample locations. Dataset metadata lists CC0-1.0 for these data.
+
+The published point-layer schema includes:
+- survey identity/context: DatasetCode, Region, Season, DistributionProjectName, SummaryProduct, SampleID, Year, StdTime;
+- species/catch: Species, CommonName, SpeciesCommonName, CommonNameSpecies, WTCPUE, MapValue, TransformUnit, CoreSpecies;
+- sampling/spatial context: Stratum, StratumArea, Latitude, Longitude, Depth; and point geometry.
+
+Layer endpoints:
+- Gulf of Mexico: https://services2.arcgis.com/C8EMgrsFcRFL6LrL/arcgis/rest/services/GMEX_Sample_Locations_CURRENT/FeatureServer
+- Southeast Fall: https://services2.arcgis.com/C8EMgrsFcRFL6LrL/arcgis/rest/services/SEUS_FAL_Sample_Locations_CURRENT/FeatureServer
+- Southeast Spring: https://services2.arcgis.com/C8EMgrsFcRFL6LrL/arcgis/rest/services/SEUS_SPR_Sample_Locations_CURRENT/FeatureServer
+- Southeast Summer: https://services2.arcgis.com/C8EMgrsFcRFL6LrL/arcgis/rest/services/SEUS_SUM_Sample_Locations_CURRENT/FeatureServer
+- Dataset metadata: https://www.fisheries.noaa.gov/inport/item/69743
+
+Important distinction: the separate DisMAP Indicators service is a summary table (species/region/season/year and distribution metrics), not the underlying tow-level point layer. The Survey Catch-per-unit-effort service is the correct point-level target.
+
+### Limitations and retrieval status
+
+The ArcGIS layer metadata and field schemas were inspected, but the ArcGIS REST query endpoints could not be retrieved through the current web session. No point records, species-specific counts, or map were downloaded or calculated in this pass. The Florida Museum archive is still not acquired; its current IPT page reports 241,689 occurrence records and a CC-BY-NC 4.0 license, but that collection remains a voucher-occurrence source rather than a standardized survey.
+
+DisMAP's interpolated biomass surface uses inverse-distance weighting with a 200 km search radius and 10–15 nearby sampling locations, with a five-year temporal window and 2 km grid cells for bottom-trawl data. This is useful for broad survey-informed context but fills unsampled spaces by interpolation; it must not be converted directly into a species occupancy mask. NOAA's portal also flags the Species Persistence module as a pilot with preliminary results not yet intended for analysis.
+
+### Revised next research step
+
+1. Query the four current ArcGIS point layers for the accepted Southern flounder taxon code/name and obtain all matching survey observations, using pagination/record limits and preserving original fields.
+2. Separately retrieve the all-species tow/sample footprint or survey effort records for the same seasons/years so zero catch can be interpreted only where a valid tow occurred.
+3. Audit species counts by region, season, year, stratum, coordinates, depth, WTCPUE, and sample ID. Check duplicates, null coordinates, and any taxonomic code mapping in the current Species Filter table.
+4. Compare actual survey points with Florida Museum voucher records and the published Florida range summaries. Report sampled locations and non-detections separately; do not convert sparse records or unbalanced sampling into hard exclusion boundaries.
+5. Only after the evidence review, assess whether candidate estuary/coastal polygons are justified and calculate the before/after eligible-cell impact.
+
+No raw occurrence/survey records were downloaded or committed. No profile, mask, scoring, confidence, ingestion, or production behavior changed.
