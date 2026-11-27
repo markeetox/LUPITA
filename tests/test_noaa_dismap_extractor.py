@@ -46,3 +46,10 @@ def test_does_not_match_other_flounder_species():
         },
         target_terms(PROFILE),
     )
+
+
+def test_matches_common_name_with_taxon_suffix():
+    assert is_target_record(
+        {"CommonNameSpecies": "Southern flounder (Paralichthys lethostigma)"},
+        target_terms(PROFILE),
+    )
