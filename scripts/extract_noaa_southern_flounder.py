@@ -48,7 +48,10 @@ def normalize(value: Any) -> str:
 
 def target_terms(profile: dict[str, Any]) -> set[str]:
     terms = {normalize(profile.get("scientific_name")), normalize(profile.get("common_name"))}
-    terms.update(normalize(alias) for alias in profile.get("aliases", []))
+    terms.update(
+        normalize(alias) for alias in profile.get("aliases", [])
+        if len(normalize(alias).split()) >= 2
+    )
     return {term for term in terms if term}
 
 
@@ -89,7 +92,10 @@ def request_json(url: str, params: dict[str, Any], attempts: int = 4) -> dict[st
     raise RuntimeError(f"Request failed after {attempts} attempts: {url}: {last_error}")
 
 
-def query_all(layer_url: str, params: dict[str, Any], page_size: int) -> list[dict[str, Any]]:
+def query_all(
+    layer_url: str, params: dict[str, Any], page_size: int,
+    order_by: str = "OBJECTID ASC",
+) -> list[dict[str, Any]]:
     """Fetch a query result with offset pagination and guard against repeated pages."""
     rows: list[dict[str, Any]] = []
     offset = 0
@@ -101,7 +107,7 @@ def query_all(layer_url: str, params: dict[str, Any], page_size: int) -> list[di
                 **params,
                 "resultOffset": offset,
                 "resultRecordCount": page_size,
-                "orderByFields": "OBJECTID ASC",
+                "orderByFields": order_by,
                 "f": "json",
             },
         )
@@ -209,6 +215,7 @@ def main() -> int:
                 "returnGeometry": "false",
             },
             page_size,
+            order_by=",".join(f"{field} ASC" for field in MATCH_FIELDS),
         )
         matched_combinations = [
             row for row in attrs(distinct) if is_target_record(row, terms)
