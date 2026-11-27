@@ -351,3 +351,14 @@ Live run [45047547674](https://github.com/markeetox/LUPITA/actions/runs/45047547
 - No raw data committed; no species profile, mask, scoring, confidence, ingestion, source or production behavior changed.
 - Next: acquire original SEAMAP haul/effort metadata, audit the 572 southern Gulf zero-CPUE records by location/year/stratum, reconcile 2025 metadata coverage, and compare with Florida Museum voucher records.
 
+
+
+## 2026-11-27 | Original SEAMAP record crosswalk
+
+- Inspected the uploaded SEAMAPDATAV3, SEAMAP Bottom Longline, and ichthyoplankton archives. Recorded archive SHA-256 hashes and table counts in [NOAA_SEAMAP_CROSSWALK_ANALYSIS_2026-11-27.md](NOAA_SEAMAP_CROSSWALK_ANALYSIS_2026-11-27.md). Raw archives/CSV files were not committed.
+- Crosswalked all 4,805 NOAA Gulf SampleIDs to SEAMAP station keys. 4,795 also agree on survey year, depth, and tow midpoint; ten vessel-35 / cruise-2001 records have major date, depth, and location conflicts and are quarantined pending source reconciliation.
+- In the 4,795 corroborated samples, all 277 positive NOAA WTCPUE records have matching Southern flounder BGS records. All 4,518 zero-CPUE records have other-taxa BGS catch records and no Southern flounder BGS record.
+- Audited the 572 Gulf samples south of 26°N: all have matching ST shrimp-trawl effort (29–32 minutes), positive total live catch, other-species BGS records, and no Southern flounder BGS record. The 73 shallow eastern samples (4.3–20.1 m) show the same pattern with 29–31 minutes recorded.
+- Found one species-level *Paralichthys lethostigma* ichthyoplankton specimen record from 2008 in the northern Gulf (7.8 mm). Other plankton records identified only to *Paralichthys* genus were not treated as Southern flounder.
+- Flagged two operation-coded deployments (M retow and B gear-bogged), one 56-minute record for current-protocol review, and the undocumented HAULVALUE=G code. No model/profile/mask/scoring/production changes.
+- Next: reconcile the ten vessel-35 / cruise-2001 records, obtain the HAULVALUE codebook/current tow protocol, then compare Florida Museum voucher records and authoritative estuary/coastal sources.
