@@ -1,3 +1,12 @@
+## 2026-11-27 | NOAA Southern flounder read-only extractor implemented
+
+Added a manual GitHub Actions workflow and read-only Python extractor for the four NOAA DisMAP Gulf/Southeast seasonal point layers. The script reads the common/scientific name from the existing Southern flounder profile, discovers distinct NOAA values in Species/CommonName/SpeciesCommonName/CommonNameSpecies, and matches complete target names (not generic "flounder"). No separate species-filter table was found in the repository tree, so the existing profile is used as canonical taxon-name source.
+
+Outputs are target observation CSVs, same-SampleID context CSVs, and an extraction report with matched field values, year/season/stratum counts, coordinate/depth/WTCPUE completeness and summary statistics. Same-SampleID context is not interpreted as complete tow effort or valid non-detection coverage. Workflow uploads a 14-day artifact and does not commit raw records. Added six focused unit tests for exact-name matching and false-positive rejection. CI inclusion updated.
+
+Commits: extractor d48a6d6d13f041f1bd6b2a7245943790c0f4808b; hardening 5932d4cad7a31b9be562ead6ab0e2b37a91db532; manual workflow 2190ff34d86e9f5869a45af72650c5bd48ad1f0a; Python CI path update d0a3b7100211e012b22e662e1321affc9fad3df0. Python CI runs 46018349544 and 46018358533 were in progress when logged. The manual extraction workflow has not yet run; no NOAA observations have been acquired. No production, profile, scoring, confidence, mask, ingestion or published data changed.
+
+Next: verify Python CI, manually dispatch the NOAA extraction workflow, inspect its temporary artifact, then determine whether independent tow-effort/non-detection data are available.
 ## 2026-11-27 | NOAA Southern flounder survey coverage and point layers identified
 
 Confirmed from NOAA Fisheries' June 2026 DisMAP technical report that Southern flounder (Paralichthys lethostigma) is listed for the Gulf of Mexico and Southeast U.S. Shelf Fall, Spring, and Summer survey products. The report documents the survey-year/stratum filters: Gulf summer series 1982–2025 with years before 2010 excluded, 2022 dropped, and strata retained when sampled in 13 years from 2010–2025; Southeast Fall 1989–2025 with strata sampled >33 years; Spring 1989–2025 with 1989 dropped and strata sampled >=30 years; Summer 1989–2025 with 2021 dropped. DisMAP species inclusion thresholds depend on catch frequency in tows and survey years, so module inclusion is not an occupancy polygon or proof of absence elsewhere.
