@@ -325,3 +325,19 @@ Live run [45047547674](https://github.com/markeetox/LUPITA/actions/runs/45047547
 - Updated `scripts/frontend_live_smoke.mjs` to assert that normalized panel text contains both "gopher rockfish" and "no favorable areas", without requiring one exact sentence. Commit: `1ca0a33ac3cde68dfb3f16905d861b3e37cc090a`.
 - Test-only correction. No frontend application behavior, species data, scoring or scientific model behavior changed.
 - Next: manually rerun [Frontend live browser smoke](https://github.com/markeetox/LUPITA/actions/workflows/frontend-live-smoke.yml). Browser QA remains pending until the full desktop/mobile run passes and its screenshots are reviewed.
+
+## 2026-11-27 | NOAA Southern flounder extraction completed and audited
+
+- Manually dispatched and verified successful workflow [46019958931](https://github.com/markeetox/LUPITA/actions/runs/46019958931) on `main`.
+- Downloaded artifact `noaa-southern-flounder-survey-extraction`, artifact ID `15206869499`, 58,180,821 bytes, SHA-256 `dc005fc8558889844f2ad2b8240ed882240d085339e1d2606b7a23f20b9282f7`, expires 2026-12-11.
+- Inspected extraction report and all four target observation CSVs plus the four same-SampleID context CSVs. Total: 13,703 target sample records; 1,658 WTCPUE-positive and 12,045 zero-CPUE.
+- Verified NOAA's June 2026 DisMAP technical report states the compiled regional dataset is expanded with zeros for trawls where a regionally recorded species was not caught, and survey presence is WTCPUE > 0. This supports treating zero values as sample-level no-catch records, not as absence outside sampled tows.
+- Gulf: 4,805 records, 277 positive, 4,528 zero. All 572 records south of 26°N are zero; depths 4.3–103.2m. This is bottom-trawl sample evidence only, not estuary/nearshore coverage.
+- Southeast Fall/Spring/Summer: 3,045/2,865/2,988 records; positive counts 564/454/363. Survey coverage begins around 28.75°N and does not reach South Florida.
+- All extracted Southern flounder records have `CoreSpecies=No`. Southeast coordinates repeat across seasons/years and must not be treated as independent sites.
+- Found a metadata mismatch: current NOAA InPort extents end in 2024 for Gulf/Fall/Spring, while extracted current layers include 2025 rows. Summer ends in 2022. Documented for follow-up.
+- Added detailed audit and interpretation limits in `docs/NOAA_SOUTHERN_FLOUNDER_EXTRACTION_ANALYSIS_2026-11-27.md`, and updated project status/research review.
+- Latest extractor CI [46018508487](https://github.com/markeetox/LUPITA/actions/runs/46018508487) completed successfully: 336 passed, 0 failed, 115 warnings; syntax checks and species audit passed.
+- No raw data committed; no species profile, mask, scoring, confidence, ingestion, source or production behavior changed.
+- Next: acquire original SEAMAP haul/effort metadata, audit the 572 southern Gulf zero-CPUE records by location/year/stratum, reconcile 2025 metadata coverage, and compare with Florida Museum voucher records.
+
