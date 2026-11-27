@@ -1,7 +1,7 @@
 # NOAA DisMAP–SEAMAP original-record crosswalk
 
 **Date:** 2026-11-27  
-**Status:** read-only data audit complete; 10 identifier matches quarantined for unresolved record mismatch  
+**Status:** read-only data audit complete; all 4,805 Gulf records independently crosswalked; ten NOAA SampleIDs contain a mismatched cruise-number segment  
 **Target:** Southern flounder (*Paralichthys lethostigma*)  
 **NOAA point extraction:** [workflow run 46019958931](https://github.com/markeetox/LUPITA/actions/runs/46019958931)  
 **Related analysis:** [NOAA Southern flounder extraction analysis](NOAA_SOUTHERN_FLOUNDER_EXTRACTION_ANALYSIS_2026-11-27.md)
@@ -10,9 +10,9 @@
 
 The uploaded SEAMAP archives provide the original station, gear-deployment, and biological-catch tables needed to audit the NOAA DisMAP Gulf of Mexico point records.
 
-All **4,805 NOAA Gulf SampleIDs** have an identifier-level match to a SEAMAP station key using vessel, cruise number, and station number. Identifier matching alone is not sufficient: 10 records from one cruise fail independent date, depth, and tow-location checks and are quarantined.
+All **4,805 NOAA Gulf SampleIDs** are now crosswalked to SEAMAP station/deployment records. For 4,795 records, the vessel-cruise-station composite key matches directly and year, exact depth, and tow midpoint independently agree. Ten additional records have a cruise-number discrepancy in the NOAA SampleID (`2001`) but independently match vessel 35, station numbers 12–18 and 20–22, and SEAMAP cruise `2101` in 2021. Those ten also agree on year, exact depth, and tow midpoint (maximum 61.7 meters). The discrepancy is isolated to the cruise-number segment; it does not invalidate the underlying station matches.
 
-The remaining **4,795 records** have strong cross-source agreement:
+All **4,805 records** therefore have strong cross-source agreement:
 - NOAA survey year matches the SEAMAP station start-date year.
 - NOAA depth matches the SEAMAP start-station depth exactly.
 - NOAA point coordinates match the midpoint of the SEAMAP tow start/end coordinates within 69.5 meters (median 27.8 meters; 99th percentile 61.3 meters).
@@ -54,7 +54,7 @@ The crosswalk was built against the composite station key, then independently ch
 1. NOAA Year versus SEAMAP START_DATE year.
 2. NOAA Depth versus SEAMAP DEPTH_SSTA.
 3. NOAA Latitude/Longitude versus the midpoint calculated from SEAMAP DECSLAT/DECSLON and DECELAT/DECELON.
-4. SEAMAP gear-deployment records and biological catch records.
+4. SEAMAP gear-deployment records and biological catch records. For the ten cruise-component exceptions, the crosswalk was independently resolved using vessel, station number, survey year, exact depth, and tow midpoint, rather than accepting the malformed cruise component.
 
 The documented relationship was followed: BGSREC was joined to INVREC by INVRECID, and station metadata was joined through the deployment's station/cruise identifiers. A station-only join was not used to assign biological records to gear deployments.
 
@@ -63,12 +63,12 @@ The documented relationship was followed: BGSREC was joined to INVREC by INVRECI
 ### 4,795 corroborated records
 
 Of the 4,805 identifier matches, 4,795 also agree on survey year, depth, and tow midpoint:
-- 4,795 / 4,795 have matching calendar year between NOAA Year and SEAMAP START_DATE.
-- 4,795 / 4,795 have exact depth agreement between NOAA Depth and SEAMAP DEPTH_SSTA.
-- Tow-midpoint separation ranges from 0 to 0.0695 km; median 0.0278 km; 99th percentile 0.0613 km.
-- All 4,795 have at least one SEAMAP BGS biological record.
+- 4,805 / 4,805 have matching calendar year between NOAA Year and the corrected SEAMAP START_DATE.
+- 4,805 / 4,805 have exact depth agreement between NOAA Depth and SEAMAP DEPTH_SSTA.
+- Tow-midpoint separation ranges from 0 to 0.0695 km; median 0.0278 km; maximum 0.0695 km.
+- All 4,805 have at least one SEAMAP BGS biological record.
 
-Within this corroborated set:
+Within all 4,805 corrected station matches:
 
 | NOAA WTCPUE result | Samples | Matching Southern flounder BGS record |
 |---|---:|---|
@@ -76,7 +76,7 @@ Within this corroborated set:
 | Zero (= 0) | 4,518 | 0 |
 | **Total** | **4,795** | **277 positive matches** |
 
-All 277 positive NOAA samples match one Southern flounder BGS record under current biocode 183072404. The source-agency breakdown is:
+All 277 positive NOAA samples match one Southern flounder BGS record under current biocode 183072404. The ten corrected cruise-2101 stations are zero-CPUE samples and have no Southern flounder BGS record; each has other-taxa biological records. The source-agency breakdown is:
 - US / NMFS: 231
 - Louisiana: 28
 - Mississippi: 13
@@ -85,19 +85,19 @@ All 277 positive NOAA samples match one Southern flounder BGS record under curre
 
 All 4,518 corroborated zero-CPUE samples have BGS records for other taxa but no Southern flounder BGS record. This is a much stronger sample-level no-catch check than relying on a missing NOAA target row alone.
 
-### Ten unresolved identifier matches
+### Ten NOAA SampleIDs with a mismatched cruise-number segment
 
-Ten records match the composite key but fail the independent spatial/depth/date checks. All ten are NOAA Year 2021 records with SEAMAP station dates from 2020-12-09 through 2020-12-11, all use vessel 35 / cruise 2001, and all have NOAA WTCPUE = 0.
+Ten NOAA records carry SampleIDs beginning `035-2001-`, but the matching original SEAMAP records are vessel 35 / cruise `2101` (2021), not cruise `2001` (December 2020). The first crosswalk used the complete SampleID composite literally and therefore attached these records to the wrong 2020 cruise. The mismatch was resolved by searching the same vessel and station numbers and checking independent survey year, exact depth, and tow-midpoint position.
 
-For these ten:
-- NOAA points are 24.7–140.0 km from the midpoint of the matched SEAMAP start/end coordinates.
-- NOAA depth differs from SEAMAP DEPTH_SSTA for every record.
-- NOAA Year does not match the SEAMAP station date year.
-- Two have Southern flounder BGS rows, but those rows have SAMPLE_BGS null/zero and SELECT_BGS positive (0.209 kg and 0.380 kg); counts are 1 and 2.
-- One has no BGS records, zero total live catch, and operation code B (gear bogged).
-- The remaining seven have other-taxa BGS records but no Southern flounder BGS row.
+For all ten:
+- NOAA Year is 2021 and SEAMAP START_DATE is June 3–4, 2021.
+- NOAA depth matches SEAMAP DEPTH_SSTA exactly.
+- NOAA coordinates match the SEAMAP tow midpoint within 18.5–61.7 meters.
+- SEAMAP gear is ST shrimp trawl; recorded effort is 30 minutes; no operation code is present.
+- Each has positive total live catch (3.3–33.6 kg) and 7–38 BGS rows for other taxa.
+- None has a Southern flounder BGS row.
 
-These records are excluded from the cross-source concordance calculation. The pattern is consistent with a reused identifier, source-version mismatch, or incorrect station linkage; the exact cause is unresolved. Do not treat the two target BGS rows as contradictions of the NOAA zero-CPUE result until the underlying 2020/2021 cruise records are reconciled.
+This resolves the biological and station crosswalk for all ten records. The NOAA SampleID cruise segment remains a source-quality discrepancy and should be reported as such; do not silently rewrite the source identifier. The corrected station mapping uses SEAMAP cruise 2101 and is supported by independent spatial, depth, year, gear, and catch evidence.
 
 SampleIDs in this exception group:
 - 035-2001-00012
@@ -124,13 +124,11 @@ The NOAA InPort Station Data metadata describes ST as shrimp trawl and states th
 
 The 2001 SEAMAP Field Operations Manual says MINUTES FISHED is actual bottom time and documents a 55-minute maximum for SEAMAP trawl stations. The single 56-minute record (SampleID 017-2401-00018, 2024) should be checked against the current survey protocol; it is flagged for review, not automatically rejected.
 
-Two deployments have non-empty operation codes:
-- Sample 004-340-00043 has a 4-minute deployment with code M and a second 30-minute deployment without an operation code. The station comment documents a retow. The 4-minute deployment has zero total catch; the 30-minute deployment has 3.9 kg total live catch. NOAA WTCPUE is zero and there is no Southern flounder BGS record.
-- Sample 035-2001-00012 has code B, zero total live catch, and a station comment noting a mud tow. It belongs to the ten-record unresolved identifier group.
+One station has non-empty operation codes across its deployments: Sample 004-340-00043 has a 4-minute deployment with code M and a second 30-minute deployment without an operation code. The station comment documents a retow. The 4-minute deployment has zero total catch; the 30-minute retow has 3.9 kg total live catch. NOAA WTCPUE is zero and there is no Southern flounder BGS record. The ten corrected vessel-35 / cruise-2101 stations have no non-empty operation codes.
 
 The manual defines B as gear bogged and M as miscellaneous, with details to be recorded in comments. It also says operation codes are entered only for unsuccessful or abnormal stations. No operation code means no abnormal operation was recorded in that field; it does not independently certify every tow as valid.
 
-The STAREC HAULVALUE field is described in the uploaded data dictionary only as a one-character haul-quality value. It contains G for 161 of the 4,805 matched stations and is null for 4,644. No code list defining G was present in the uploaded dictionary, so HAULVALUE was not interpreted as a good/bad flag. It is null for all 572 southern Gulf samples and all 73 shallow eastern samples discussed below.
+The STAREC HAULVALUE field is described in the uploaded data dictionary as a one-character haul-quality value. It contains G for 161 of the 4,805 matched stations and is null for 4,644. GSMFC's March 2010 SEAMAP Subcommittee minutes state that the new haul-value field indicates whether a trawl was good or bad and that explanations should be entered in comments. The minutes do not define the individual code values, and the uploaded dictionary contains no code list. Therefore G is not assigned a definitive meaning here. HAULVALUE is null for all 572 southern Gulf samples and all 73 shallow eastern samples discussed below.
 
 ## South of 26°N: stronger evidence for sampled no-catch
 
@@ -191,9 +189,9 @@ Supported now:
 - The ichthyoplankton archive contains one additional species-level northern Gulf specimen record.
 
 Still unresolved:
-1. Reconcile the ten vessel-35 / cruise-2001 records with their 2020 SEAMAP station records and 2021 NOAA point-layer labels. Keep them excluded until the source mismatch is resolved.
-2. Obtain the current codebook/metadata for HAULVALUE and confirm current survey rules for the one 56-minute record.
-3. Compare the new survey evidence with Florida Museum voucher records and authoritative Florida estuary/coastal sources.
+1. Ask the NOAA/SEAMAP data steward why the ten 2021 NOAA SampleIDs encode cruise `2001` while the original station records identify cruise `2101`. The station crosswalk itself is resolved; the source identifier discrepancy remains.
+2. Obtain the current codebook/metadata for HAULVALUE and confirm current survey rules for the one 56-minute record. GSMFC minutes establish that HAULVALUE is a good/bad trawl indicator, but the code mapping (including `G`) remains undocumented in the material reviewed.
+3. Compare the survey evidence with Florida Museum voucher records and authoritative Florida estuary/coastal sources.
 4. Keep bottom-trawl non-detections local to sampled tows. Do not generate an absence polygon, hard latitude cutoff, or estuary exclusion from these data.
 
 ## Sources
@@ -205,5 +203,6 @@ Still unresolved:
 - NOAA Fisheries InPort, [Station Data, item 53364](https://www.fisheries.noaa.gov/inport/item/53364), for the station key, start/end coordinates, gear type, gear size, and fishing-time fields.
 - NOAA Fisheries, [DisMAP Technical Report, June 2026](https://apps-st.fisheries.noaa.gov/dismap/docs/DisMAP_Tech_Report_06_2026.pdf).
 - NOAA Fisheries, [Survey Catch-per-unit-effort CURRENT, InPort 69743](https://www.fisheries.noaa.gov/inport/item/69743).
+- Gulf States Marine Fisheries Commission, [TCC SEAMAP Subcommittee Minutes, March 8, 2010](https://www.gsmfc.org/publications/minutes/2010/2010%20minutes.pdf), which describes the haul-value field as indicating whether a trawl was good or bad.
 
 No raw archives or raw CSV records were committed. No species profile, geographic mask, scoring factor, weight, gate, confidence logic, ingestion, production source, or publishing behavior changed.
