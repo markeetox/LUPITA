@@ -1,3 +1,9 @@
+
+### CI correction and latest verification state | 2026-11-27
+
+The first CI attempt on the initial extractor failed one new test because the generic profile alias "flounder" was included in matching. Fixed by excluding one-word aliases, adding compound common/scientific-name handling, and adding distinct-query pagination without assuming an ObjectID field. The corrected run `46018358533` passed **335 tests, 0 failures**; species audit and artifact steps also completed successfully. The latest run includes one additional compound-name test and subsequent no-match diagnostic preservation; it was still in progress at last inspection. Latest extractor hardening commit: `848ad0fbcbd375742da8dbcad7637bfaa72226c2`.
+
+The manual NOAA extraction workflow has not yet been dispatched, so no NOAA target observations have been downloaded. Use the workflow link above to run it after the latest CI finishes.
 ## NOAA Southern flounder extraction workflow | implemented, awaiting first run | 2026-11-27
 
 Added a read-only extractor (`scripts/extract_noaa_southern_flounder.py`), unit tests (`tests/test_noaa_dismap_extractor.py`), and manual GitHub Actions workflow (`.github/workflows/noaa-southern-flounder-extraction.yml`). It reads the accepted common/scientific name from the existing Southern flounder profile, discovers actual values in NOAA's species/name fields, and uses exact full-name matching. Generic "flounder" matching is intentionally excluded. No separate species-filter table was identified in the repository tree; the species profile is the canonical target.
