@@ -1,3 +1,8 @@
+
+
+## 2026-11-27 | NOAA extractor CI regression suite passes
+
+GitHub Actions run [46018451314](https://github.com/markeetox/LUPITA/actions/runs/46018451314), including the compound common/scientific-name matching test, completed with **336 passed, 0 failed** and 115 warnings. The subsequent commit 848ad0fbcbd375742da8dbcad7637bfaa72226c2 changes zero-match behavior so the workflow preserves/uploads the diagnostic report instead of failing before artifact upload; its CI run 46018508487 was still in progress at this log update. The manual NOAA extraction workflow has not yet been dispatched and no observations have been downloaded.
 ## 2026-11-27 | NOAA extractor false-positive fix and CI verification
 
 The first CI attempt for the initial extractor failed the new test that rejects generic "flounder" matches; the existing species profile contains that one-word alias. Corrected matching to ignore generic one-word aliases and match full common/scientific names, including combined name strings. Fixed distinct-value pagination so it does not assume the query result includes ObjectID. Changed zero-match behavior to retain/upload the diagnostic report rather than failing before artifact upload. Added a compound-name regression test.
