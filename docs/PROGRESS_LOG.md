@@ -1,3 +1,8 @@
+## 2026-11-27 | NOAA extractor false-positive fix and CI verification
+
+The first CI attempt for the initial extractor failed the new test that rejects generic "flounder" matches; the existing species profile contains that one-word alias. Corrected matching to ignore generic one-word aliases and match full common/scientific names, including combined name strings. Fixed distinct-value pagination so it does not assume the query result includes ObjectID. Changed zero-match behavior to retain/upload the diagnostic report rather than failing before artifact upload. Added a compound-name regression test.
+
+Corrected CI run 46018358533 passed 335 tests, 0 failed; species audit and artifact steps succeeded. The newest run includes the additional compound-name test and latest no-match behavior and was still in progress at log time. Latest extractor hardening commit 848ad0fbcbd375742da8dbcad7637bfaa72226c2. Manual NOAA extraction has not yet been dispatched; no NOAA observations have been downloaded.
 ## 2026-11-27 | NOAA Southern flounder read-only extractor implemented
 
 Added a manual GitHub Actions workflow and read-only Python extractor for the four NOAA DisMAP Gulf/Southeast seasonal point layers. The script reads the common/scientific name from the existing Southern flounder profile, discovers distinct NOAA values in Species/CommonName/SpeciesCommonName/CommonNameSpecies, and matches complete target names (not generic "flounder"). No separate species-filter table was found in the repository tree, so the existing profile is used as canonical taxon-name source.
