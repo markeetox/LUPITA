@@ -353,3 +353,14 @@ The current InPort time extents end in 2024 for Gulf/Fall/Spring while extracted
 
 The latest extractor CI run [46018508487](https://github.com/markeetox/LUPITA/actions/runs/46018508487) also completed successfully: **336 passed, 0 failed** (115 warnings); map-client JavaScript syntax checks and species audit/artifact steps passed.
 
+
+
+### NOAA–SEAMAP original-record crosswalk audit | 2026-11-27
+
+Inspected the uploaded SEAMAPDATAV3 CSV/Access archives, Bottom Longline archives, and ichthyoplankton archive. Added [NOAA_SEAMAP_CROSSWALK_ANALYSIS_2026-11-27.md](NOAA_SEAMAP_CROSSWALK_ANALYSIS_2026-11-27.md) with archive hashes, methods, counts, exceptions, and interpretation.
+
+All 4,805 NOAA Gulf SampleIDs have an identifier-level SEAMAP station match. Independent checks of year, depth, and tow midpoint corroborate 4,795; ten vessel-35 / cruise-2001 records from the 2021 NOAA layer conflict with 2020 SEAMAP dates, coordinates, and depths and are quarantined. In the corroborated set, all 277 positive WTCPUE samples match a Southern flounder BGS record, while all 4,518 zero-CPUE samples have other-species biological records but no Southern flounder BGS record.
+
+The 572 samples south of 26°N are all corroborated, have recorded ST-trawl effort and biological catch context, and have no Southern flounder BGS record. The 73 shallow eastern samples (4.3–20.1 m) show the same pattern; all have 29–31 minutes recorded and no non-empty operation code. This remains sample-level bottom-trawl no-catch evidence, not estuary-wide absence. The plankton archive adds one species-level *P. lethostigma* record from 2008 in the northern Gulf (7.8 mm); genus-level *Paralichthys* records remain taxonomically unresolved.
+
+The uploaded data dictionary does not define the HAULVALUE code G. One 56-minute tow requires protocol review, and the ten mismatched vessel-35 records remain excluded. No raw archives were committed and no profile, mask, scoring, confidence, ingestion, production source, or publishing behavior changed.
