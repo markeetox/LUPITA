@@ -196,3 +196,18 @@ The earlier corrected CI run `46018358533` completed the test suite with **335 p
 ### Latest CI result | 2026-11-27
 
 The run including the compound common/scientific-name regression test completed successfully: GitHub Actions run [46018451314](https://github.com/markeetox/LUPITA/actions/runs/46018451314), **336 passed, 0 failed** (115 existing warnings). A subsequent script-only change to preserve the diagnostic artifact when zero target records match is being checked in run [46018508487](https://github.com/markeetox/LUPITA/actions/runs/46018508487); it was still in progress at this update. No NOAA extraction workflow has been manually dispatched yet.
+
+## NOAA Southern flounder point extraction | first-pass results | 2026-11-27
+
+The manual read-only extraction workflow completed successfully: [run 46019958931](https://github.com/markeetox/LUPITA/actions/runs/46019958931). Its artifact was inspected and summarized in [NOAA_SOUTHERN_FLOUNDER_EXTRACTION_ANALYSIS_2026-11-27.md](NOAA_SOUTHERN_FLOUNDER_EXTRACTION_ANALYSIS_2026-11-27.md).
+
+The four point layers returned 13,703 sample records: Gulf 4,805; Southeast Fall 3,045; Spring 2,865; Summer 2,988. Across all records, 1,658 have WTCPUE > 0 and 12,045 have WTCPUE = 0. The June 2026 DisMAP technical report (section 3) states that the regional dataset is expanded with zeros for tows where a species known from that region is not caught; section 6.2 defines survey presence as positive biomass. Thus zero WTCPUE is meaningful sample-level no-catch evidence, but not evidence of absence outside the sampled tow/domain.
+
+The Gulf layer has 4,805 unique sample coordinates; 277 positive records. All 572 Gulf samples south of 26°N have zero WTCPUE, with depths from 4.3 to 103.2m. Positive Gulf records extend south to 26.0134°N in the western Gulf. Southeast seasonal layers have 537/532/578 unique coordinates, with 272/234/203 sites ever positive; their survey domain starts around 28.75°N and does not cover South Florida. The Southeast site coordinates repeat between seasons and years. Every target record has `CoreSpecies=No`.
+
+This is a useful advance: we now have explicit survey no-catch records at sampled stations, not just missing target rows. However, the source is a fishery-independent bottom-trawl survey. The southern Gulf zeros do not establish absence in Florida Bay, the Keys' shallow nearshore waters, tidal creeks, bays, or the Caloosahatchee estuary. Do not convert the sampled zeros into an absence polygon or a hard latitude cutoff.
+
+The current InPort metadata time extents end in 2024 for Gulf, Southeast Fall and Spring, but the downloaded current point layers include 2025 records. Resolve this release/metadata mismatch before longitudinal use. Next research: obtain original SEAMAP haul/effort metadata and validate haul status, gear, duration/distance, swept area and sampling footprint; inspect the 572 southern Gulf zero samples by subregion, year, depth and stratum; compare with Florida Museum voucher records and authoritative estuary/coastal range sources.
+
+No species profile, mask, scoring, confidence, ingestion, production source or publishing behavior changed.
+
