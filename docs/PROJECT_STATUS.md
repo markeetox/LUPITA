@@ -1,3 +1,12 @@
+## NOAA Southern flounder extraction workflow | implemented, awaiting first run | 2026-11-27
+
+Added a read-only extractor (`scripts/extract_noaa_southern_flounder.py`), unit tests (`tests/test_noaa_dismap_extractor.py`), and manual GitHub Actions workflow (`.github/workflows/noaa-southern-flounder-extraction.yml`). It reads the accepted common/scientific name from the existing Southern flounder profile, discovers actual values in NOAA's species/name fields, and uses exact full-name matching. Generic "flounder" matching is intentionally excluded. No separate species-filter table was identified in the repository tree; the species profile is the canonical target.
+
+The extractor writes target observation CSVs, same-SampleID context CSVs, and a JSON summary by source/season/year/stratum, including coordinate/depth/WTCPUE completeness. Same-SampleID context is not treated as a complete effort record or verified non-detection. The workflow uploads results as a 14-day artifact; it does not commit raw data. No mask, scoring, profile, confidence, ingestion, production or publication behavior changed.
+
+Manual workflow: https://github.com/markeetox/LUPITA/actions/workflows/noaa-southern-flounder-extraction.yml
+
+Python CI was triggered and remained in progress at this status update (runs 46018349544 and 46018358533). The new extraction workflow has not yet been manually run; actual NOAA species records/counts remain unknown. Next: confirm CI, manually run the extraction workflow, inspect the artifact and resolve whether separate survey-effort/non-detection records can be obtained.
 ## Southern flounder survey evidence and public point-layer discovery | 2026-11-27
 
 NOAA Fisheries' June 2026 DisMAP technical report lists Paralichthys lethostigma in the Gulf of Mexico and Southeast U.S. Shelf Fall, Spring, and Summer survey products. The report documents survey-year and stratum filtering, including Gulf years retained from 2010 onward with 2022 dropped, and Southeast seasonal series from 1989–2025 with season-specific exclusions/stratum-coverage thresholds. The report's inclusion rules are based on catch frequency (at least 5% of tows in required proportions of years); they do not define native occupancy limits.
