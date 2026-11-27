@@ -1,8 +1,8 @@
 
 
-### Latest CI result | 2026-11-27
+### Latest CI and NOAA extraction status | 2026-11-27
 
-The CI run containing the compound-name regression test completed successfully: [run 46018451314](https://github.com/markeetox/LUPITA/actions/runs/46018451314), **336 passed, 0 failed** (115 warnings). A subsequent script-only commit changes zero-match handling so the diagnostic report still uploads; its CI run [46018508487](https://github.com/markeetox/LUPITA/actions/runs/46018508487) was still in progress at this update. The manual NOAA extraction workflow remains undispatched; no NOAA target observations have been downloaded.
+The latest extractor CI run [46018508487](https://github.com/markeetox/LUPITA/actions/runs/46018508487) completed successfully: **336 passed, 0 failed** (115 warnings), including map-client JavaScript syntax checks and species audit/artifact steps. The manual NOAA extraction workflow [46019958931](https://github.com/markeetox/LUPITA/actions/runs/46019958931) also completed successfully; 13,703 target sample records were downloaded and audited. See [NOAA_SOUTHERN_FLOUNDER_EXTRACTION_ANALYSIS_2026-11-27.md](NOAA_SOUTHERN_FLOUNDER_EXTRACTION_ANALYSIS_2026-11-27.md).
 
 ### CI correction and latest verification state | 2026-11-27
 
