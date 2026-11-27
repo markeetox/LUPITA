@@ -122,13 +122,13 @@ For station-level effort using the longest recorded deployment:
 
 The NOAA InPort Station Data metadata describes ST as shrimp trawl and states that gear size 40 represents a 42-foot trawl. The uploaded database records gear size 40 and mesh size 1.63 for the matched ST deployments.
 
-The 2001 SEAMAP Field Operations Manual says MINUTES FISHED is actual bottom time and documents a 55-minute maximum for SEAMAP trawl stations. The single 56-minute record (SampleID 017-2401-00018, 2024) should be checked against the current survey protocol; it is flagged for review, not automatically rejected.
+The 2001 SEAMAP Field Operations Manual says MINUTES FISHED is actual bottom time and documents a 55-minute maximum under that manual. A later SEDAR 87 data-workshop report (August 2024) says the SEAMAP design changed in 2008 to standardized 30-minute tows; NOAA InPort's current Groundfish and Shrimp Survey description also says 30 minutes. The single 56-minute record (SampleID 017-2401-00018, 2024) is one recorded tow (TOW_NO=1, one INVREC deployment); its recorded start/end timestamps span 56 minutes 21 seconds. It is outside the documented 30-minute standard and just beyond the old 55-minute maximum. Flag it for data-steward review, not automatic rejection.
 
 One station has non-empty operation codes across its deployments: Sample 004-340-00043 has a 4-minute deployment with code M and a second 30-minute deployment without an operation code. The station comment documents a retow. The 4-minute deployment has zero total catch; the 30-minute retow has 3.9 kg total live catch. NOAA WTCPUE is zero and there is no Southern flounder BGS record. The ten corrected vessel-35 / cruise-2101 stations have no non-empty operation codes.
 
 The manual defines B as gear bogged and M as miscellaneous, with details to be recorded in comments. It also says operation codes are entered only for unsuccessful or abnormal stations. No operation code means no abnormal operation was recorded in that field; it does not independently certify every tow as valid.
 
-The STAREC HAULVALUE field is described in the uploaded data dictionary as a one-character haul-quality value. It contains G for 161 of the 4,805 matched stations and is null for 4,644. GSMFC's March 2010 SEAMAP Subcommittee minutes state that the new haul-value field indicates whether a trawl was good or bad and that explanations should be entered in comments. The minutes do not define the individual code values, and the uploaded dictionary contains no code list. Therefore G is not assigned a definitive meaning here. HAULVALUE is null for all 572 southern Gulf samples and all 73 shallow eastern samples discussed below.
+The STAREC HAULVALUE field is described in the uploaded data dictionary as a one-character haul-quality value. In the full archive it contains G (38,220 records), B (39), or null (23,721); within the 4,805 NOAA Gulf matches, 161 are G and 4,644 are null, with no B values. GSMFC's March 2010 SEAMAP Subcommittee minutes state that the field indicates whether a trawl was good or bad and that comments should explain the value. The 39 B records are consistent with a bad-tow flag: 36 have comments, many describing torn/lost gear, repeated tows, lost catch, or unrepresentative hauls, and two explicitly say “BAD TOW.” However, some G records also have comments describing serious gear/tow problems, including “TOW NOT REPRESENTATIVE” and lost/torn nets. The source dictionary still lacks the formal code list, so HAULVALUE must not be treated as a standalone validity gate; G is not accepted as proof that a tow was valid. The field is null for all 572 southern Gulf samples and all 73 shallow eastern samples discussed below.
 
 ## South of 26°N: stronger evidence for sampled no-catch
 
@@ -183,14 +183,14 @@ The separate SEAMAPBL archive is a Bottom Longline dataset. Its CSV export conta
 Supported now:
 - The NOAA Gulf SampleID structure can be crosswalked to original SEAMAP station and gear records.
 - All 4,805 records are crosswalked to original station/deployment records; 4,795 match the composite key directly and ten are resolved through the independent vessel/station/year/depth/tow-midpoint fallback.
-- All 277 positive NOAA WTCPUE samples in that corroborated set have matching Southern flounder biological records.
+- All 277 positive NOAA WTCPUE samples have matching Southern flounder biological records.
 - All 4,528 zero-CPUE samples have other biological catch records but no Southern flounder biological record.
 - The 572 southern Gulf zero-CPUE samples, including the 73 shallow eastern samples, have matching effort and biological catch context.
 - The ichthyoplankton archive contains one additional species-level northern Gulf specimen record.
 
 Still unresolved:
 1. Ask the NOAA/SEAMAP data steward why the ten 2021 NOAA SampleIDs encode cruise `2001` while the original station records identify cruise `2101`. The station crosswalk itself is resolved; the source identifier discrepancy remains.
-2. Obtain the current codebook/metadata for HAULVALUE and confirm current survey rules for the one 56-minute record. GSMFC minutes establish that HAULVALUE is a good/bad trawl indicator, but the code mapping (including `G`) remains undocumented in the material reviewed.
+2. Obtain the formal HAULVALUE codebook and ask the data steward how to interpret conflicting G-coded comments. Confirm whether the single 56-minute 2024 tow is a protocol exception, a recording issue, or an actual extended tow; current public sources describe a 30-minute standard, but do not explain this record.
 3. Compare the survey evidence with Florida Museum voucher records and authoritative Florida estuary/coastal sources.
 4. Keep bottom-trawl non-detections local to sampled tows. Do not generate an absence polygon, hard latitude cutoff, or estuary exclusion from these data.
 
@@ -203,6 +203,8 @@ Still unresolved:
 - NOAA Fisheries InPort, [Station Data, item 53364](https://www.fisheries.noaa.gov/inport/item/53364), for the station key, start/end coordinates, gear type, gear size, and fishing-time fields.
 - NOAA Fisheries, [DisMAP Technical Report, June 2026](https://apps-st.fisheries.noaa.gov/dismap/docs/DisMAP_Tech_Report_06_2026.pdf).
 - NOAA Fisheries, [Survey Catch-per-unit-effort CURRENT, InPort 69743](https://www.fisheries.noaa.gov/inport/item/69743).
+- NOAA Fisheries, [Groundfish and Shrimp Survey, InPort 20890](https://www.fisheries.noaa.gov/inport/item/20890), for the current 30-minute survey description.
+- SEDAR 87, [Gulf of Mexico White, Pink, and Brown Shrimp Data Workshop Report, August 2024](https://sedarweb.org/documents/sedar-87-gulf-of-mexico-white-pink-and-brown-shrimp-data-workshop-report/), section 4.4.1, for the 2008 change to standardized 30-minute tows.
 - Gulf States Marine Fisheries Commission, [TCC SEAMAP Subcommittee Minutes, March 8, 2010](https://www.gsmfc.org/publications/minutes/2010/2010%20minutes.pdf), which describes the haul-value field as indicating whether a trawl was good or bad.
 
 No raw archives or raw CSV records were committed. No species profile, geographic mask, scoring factor, weight, gate, confidence logic, ingestion, production source, or publishing behavior changed.
