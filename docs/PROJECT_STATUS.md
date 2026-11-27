@@ -334,3 +334,14 @@ Manual browser run [45047547674](https://github.com/markeetox/LUPITA/actions/run
 
 
 Occurrence-data acquisition review added in commit `7ecb97d91d9cbe9cd6c4736f083510b5c9e2ece2`: Florida Museum's Ichthyology Darwin Core Archive (CC-BY-NC 4.0) is the leading candidate for georeferenced voucher records, subject to taxonomic/coordinate/effort review. NOAA DisMAP is a candidate for fishery-independent survey context, but coverage and sampling metadata must be confirmed. Important limitation: the USGS NAS occurrence API serves its Nonindigenous Aquatic Species database; its species fact sheet is useful range context, but its occurrence API must not be treated as a primary native Florida occurrence dataset or as evidence of absence. Next research action: inspect museum occurrence records and DisMAP survey coverage without committing raw records or deriving a hard mask from sparse points.
+
+## NOAA Southern flounder extraction and first-pass audit | 2026-11-27
+
+Manual workflow [46019958931](https://github.com/markeetox/LUPITA/actions/runs/46019958931) completed successfully on `main`. Artifact `noaa-southern-flounder-survey-extraction` (ID `15206869499`, 58,180,821 bytes) was downloaded and inspected; it contains 13,703 target-species sample records across Gulf, Southeast Fall, Spring and Summer layers. The artifact expires 2026-12-11. Full analysis: [NOAA_SOUTHERN_FLOUNDER_EXTRACTION_ANALYSIS_2026-11-27.md](NOAA_SOUTHERN_FLOUNDER_EXTRACTION_ANALYSIS_2026-11-27.md).
+
+First-pass results: 1,658 records have WTCPUE > 0 and 12,045 have WTCPUE = 0. NOAA's June 2026 DisMAP technical report states that its compiled dataset is expanded with zeroes for trawls where a regionally recorded species was not caught; therefore these are sample-level no-catch values, not merely missing records. They do not prove absence outside those sampled tows. All 572 Gulf sample records south of 26°N have WTCPUE = 0, but their depth range is 4.3–103.2 m and this bottom-trawl footprint does not represent South Florida estuaries. Southeast survey samples reach approximately 28.75°N and do not cover South Florida. Southern flounder is marked `CoreSpecies=No` throughout.
+
+The current InPort time extents end in 2024 for Gulf/Fall/Spring while extracted point layers contain 2025 rows; this metadata mismatch is documented for follow-up. No raw records were committed and no profile, mask, scoring, confidence, ingestion, source or production behavior changed.
+
+The latest extractor CI run [46018508487](https://github.com/markeetox/LUPITA/actions/runs/46018508487) also completed successfully: **336 passed, 0 failed** (115 warnings); map-client JavaScript syntax checks and species audit/artifact steps passed.
+
