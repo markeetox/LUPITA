@@ -1,3 +1,11 @@
+## Current verified state | 2026-11-27 (supersedes earlier pending notes below)
+
+The NOAA Southern flounder extraction is complete, not pending. Workflow [46019958931](https://github.com/markeetox/LUPITA/actions/runs/46019958931) completed successfully and produced 13,703 sample records across Gulf and Southeast Fall/Spring/Summer layers. The extractor CI run [46018508487](https://github.com/markeetox/LUPITA/actions/runs/46018508487) passed 336 tests. The full extraction findings are in [NOAA_SOUTHERN_FLOUNDER_EXTRACTION_ANALYSIS_2026-11-27.md](NOAA_SOUTHERN_FLOUNDER_EXTRACTION_ANALYSIS_2026-11-27.md).
+
+The next evidence step is now the original SEAMAP haul/station metadata review. Survey methods and data-access routes are documented in [NOAA_SEAMAP_HAUL_METADATA_REVIEW_2026-11-27.md](NOAA_SEAMAP_HAUL_METADATA_REVIEW_2026-11-27.md). SEAMAP-SA provides a user-account data portal; Gulf SEAMAP data are available by request subject to verification/access conditions. Original haul-level validity, effort, swept-area and source-to-DisMAP SampleID crosswalks have **not** yet been acquired. Until those are verified, zero WTCPUE remains sample-level no-catch evidence only, not a geographic absence boundary.
+
+Historical sections below are retained as project history. Any earlier statement that the extraction workflow was awaiting dispatch or that no observations had been downloaded is superseded by the verified run and analysis above.
+
 
 
 ### Latest CI and NOAA extraction status | 2026-11-27
