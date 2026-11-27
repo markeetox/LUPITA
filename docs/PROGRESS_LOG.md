@@ -6,7 +6,7 @@ Identified NOAA InPort 69743, Survey Catch-per-unit-effort CURRENT, and its curr
 
 Florida Museum IPT currently reports 241,689 collection records under CC-BY-NC 4.0; archive records still have not been acquired. Updated the geographic mask design review and project status with the NOAA coverage, layer schema, limits and next acquisition steps. No raw records, profiles, masks, scoring, confidence, ingestion or production behavior changed.
 
-Next: retrieve/query the four NOAA point layers, resolve species identifiers using the current Species Filter table, obtain survey tow-effort footprints, then audit Southern flounder observations by region, season, year and stratum. Do not draw a mask until observations and sampling effort have been reviewed together.
+Next: retrieve/query the four NOAA point layers, resolve the Species string value using the current Species Filter table, obtain survey tow-effort footprints, then audit Southern flounder observations by region, season, year and stratum. Do not draw a mask until observations and sampling effort have been reviewed together.
 
 ## 2026-11-25 | Occurrence-data acquisition routes identified
 
