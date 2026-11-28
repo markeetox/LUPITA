@@ -541,3 +541,10 @@ Detailed audit and limitations added to docs/FLORIDA_SOUTHERN_FLOUNDER_PUBLIC_DA
 - Alabama DCNR 2025 article describes a broader five-year acoustic/conventional tagging program, offshore residency, and migration research, but supplies no tag-level Southern Flounder records or Florida detections: https://www.outdooralabama.com/articles/research-inshore-species-yields-interesting-revelations.
 - These Gulf studies document migration/residency context but do not establish Southern Flounder detections in Florida or South Florida. No raw telemetry data downloaded, no new Florida occurrence points, no occupancy/model/profile/mask/scoring/confidence/production changes.
 
+## 2026-11-28 | NOAA Gray's Reef report: one Southern Flounder detected from SC at Georgia sanctuary
+
+- NOAA Technical Memorandum NOS NCCOS 259 (2019), *Using Acoustic Telemetry to Understand Connectivity of Gray's Reef National Marine Sanctuary to the U.S. Atlantic Coastal Ocean*, reports one Southern Flounder tagged in Ashley River, SC (368 mm TL), detected at Gray's Reef NMS, Georgia, in January 2017. Five detections occurred over ten minutes. The fish had been detected 54 days earlier about 181 km north of Gray's Reef, near its Ashley River tagging area; it was not detected again after leaving the sanctuary.
+- This is direct evidence of one SC-to-Georgia movement, not Florida. NOAA explicitly cautions against generalization from one individual and notes receiver coverage gaps. Acknowledgements confirm outside detection data were supplied by FACT and ACT networks, but the Southern Flounder case description reports only the Georgia visit.
+- Source: https://nmsgraysreefeus2-dev.azurewebsites.net/media/docs/20200505-grnms-acoustic-telemetry.pdf (Section 3.3.5, Table 3.17, pp. 58–59; discussion p. 66).
+- No verified Southern Flounder telemetry detection in Florida/South Florida found in reviewed public sources; do not infer absence from lack of public detections. No raw tags downloaded, no Florida points added, no model/profile/mask/scoring/confidence/ingestion/production changes.
+
