@@ -187,3 +187,84 @@ This strengthens the conclusion that South Florida is not an absolute historical
 ### Artifact contents
 
 The complete read-only artifact contains source CSV/XML files, the FWC ArcGIS metadata and 6,008-row positive-catch extract (CSV and GeoJSON), the Florida Museum Darwin Core Archive and 221-row candidate extract, NPS source files and candidate extracts, plus `acquisition_summary.json`. No raw data were committed to the repository.
+
+
+## FWC gear-code and NPS creel metadata audit | 2026-11-28
+
+### FWC/FWRI gear codes resolved
+
+The FWC FGDC metadata explicitly defines every gear code present in the 6,008-record Southern flounder positive-catch extract. The previous open question about gear-code meaning is resolved:
+
+| Gear code | FWC definition | Southern flounder positive-catch rows | Fish represented by TotalNum |
+|---:|---|---:|---:|
+| 20 | 21.3-m seine (bay set) | 151 | 284 |
+| 23 | 21.3-m seine (river set) | 1,365 | 2,194 |
+| 160 | 183-m haul seine | 1,562 | 3,338 |
+| 300 | 6.1-m trawl (straight tow) | 2,723 | 4,135 |
+| 301 | 6.1-m trawl (arc tow) | 207 | 531 |
+| **Total** | | **6,008** | **10,482** |
+
+The metadata defines `avg_size`, `min_size`, and `max_size` in **millimeters**. This resolves the unit uncertainty for the previously extracted FWC size fields. `Reference` is a unique alphanumeric identifier for each gear deployment.
+
+The southernmost positive record remains:
+- Reference: `TQM1997070901`
+- Date: 1997-07-09
+- Position: 26.843167°N, 80.042667°W
+- Gear: 160, 183-m haul seine
+- `TotalNum`: 2
+- Size: average 95 mm, range 85–105 mm
+
+Across the target extract, only this one positive record is south of 27°N; no positive record is south of 26.5°N. The metadata also confirms the export is filtered to `CNT > 0`, and that the export's 2025 processing step selected only gear types 5, 20, 23, 160, 300, and 301. The 6,008 records therefore describe positive catches within this selected gear domain, not every FIM deployment.
+
+### FWC sampling-frame qualification
+
+FWC's public SRS overview states that routine FIM sampling is currently conducted in seven estuarine regions: Apalachicola Bay, Cedar Key, Tampa Bay, Sarasota Bay, Charlotte Harbor, Indian River Lagoon, and Northeast Florida. It separately says similar surveys are conducted with special funding in St. Andrew's Bay, the Florida Everglades, and Florida Bay.
+
+The 2023 FIM Annual Data Summary's core SRS methods/table lists routine study areas and gears, but does not list Florida Bay or the Everglades among the ten routine SRS areas in its 2023 table. This supports treating the public Inshore SRS layer and the separate Florida Bay/Everglades special-funded monitoring programs as potentially distinct evidence streams until their source records are crosswalked. It does **not** prove that no Florida Bay data exist in FWC systems.
+
+The layer's metadata bounding box extends south to 24.5°N, but a broad geographic bounding box is not proof that each estuary or habitat stratum was sampled. Likewise, a lack of Southern flounder rows in a positive-catch-only export is not a zero-catch result. The target's southernmost positive point is an observation boundary in this extract only, not a species range boundary.
+
+### NPS Everglades creel fishing-area codes resolved
+
+The NPS metadata states that `areaFished` refers to the polygons in `EVER_creel_fishing_areas.csv`. Before 1998, the dataset used numeric fishing areas 1–6; in 1998 these were subdivided into alphanumeric zones. The 210 Southern flounder catch rows map to:
+
+| Recorded area code | Interpreted area from NPS area file | Catch rows | Reported fish |
+|---:|---|---:|---:|
+| 1 | Northeastern / Northwestern Florida Bay (later 1E / 1W) | 86 | 110 |
+| 2 | Southeastern / Southwestern Florida Bay (later 2E / 2W) | 8 | 11 |
+| 3 | Eastern / Western Cape Sable (later 3E / 3W) | 39 | 44 |
+| 4 | Whitewater Bay | 34 | 36 |
+| 5 | Shark River | 42 | 69 |
+| 6 | Ten Thousand Islands (later 6N / 6C / 6S) | 1 | 1 |
+| **Total** | | **210** | **271** |
+
+The 209 Flamingo rows and one Everglades City row are all retained. The one Everglades City catch row is in area 4. The NPS polygon file supplies the current alphanumeric zone names and geometries; historical numeric records can only be resolved to the corresponding grouped geography, not to a more precise subzone.
+
+### NPS key and QA/QC qualification
+
+The NPS metadata describes the catch table's compound primary key as `interviewLocation + eventDate + interviewNumber + scientificName_catch`, and says it joins to the flags table. The Southern flounder subset has 210 rows but only 205 unique combinations of those four fields. Five combinations occur twice, once as `harvested` and once as `released`. Thus the documented four-field key is **not unique in this target subset**. Preserve disposition as an additional row discriminator when retaining the 210 catch records; do not collapse the split harvested/released records or treat them as duplicate fish observations. The metadata's stated key needs a broader source-level uniqueness audit before it is relied on as a strict primary key.
+
+The metadata defines `disposition` as harvested or released, and says it is NA for a non-fishing vessel or when no fish were caught. It defines `interviewNumber` as a survey number assigned at the interview location and date, generally incrementing through the weekend. The `flags` field is the number of unique automated QA/QC flags assigned to a data record; detailed descriptions are in the separate flags file.
+
+The 538 flag rows associated with the Southern flounder candidate set occur across 179 of the 205 interview combinations. The flag descriptions are:
+- `trip_hours should be >= 0` (179)
+- `Party composition should be 0; 1; 2; 3; or 4` (179)
+- `Species preference valid?` (179)
+- `Number of people fishing seems high (>8) for rec trip` (1)
+
+These descriptions concern interview-level trip-hours, party-composition, species-preference, and party-size checks. None directly states that the Southern flounder identification or its catch count is invalid. Keep the flags attached as QA context; do not automatically discard the catch records. Because the catch subset contains repeated four-field keys, the join must preserve disposition and must not imply that each flag is uniquely tied to one disposition row unless the source data establish that.
+
+The NPS catch records are angler-intercept reports from sampled returning anglers, not standardized fishery-independent survey catches. They document reported historical catches in the named fishing areas through 1997; they do not estimate abundance or establish that the species was absent after the last recorded candidate.
+
+### Updated evidence interpretation
+
+This audit resolves FWC gear meanings and size units, and resolves the broad geographic interpretation of NPS area codes. It also finds a source metadata inconsistency: the NPS-declared four-field compound primary key is not unique for the Southern flounder candidate rows because five interview/species combinations are split into separate harvest and release records. Preserve all 210 rows and add disposition when constructing a working key.
+
+The FWC extract still cannot provide a South Florida non-detection denominator, and its sampling coverage must not be conflated with separate Florida Bay/Everglades projects. The NPS dataset adds historically localized angler-reported catches across Florida Bay, Cape Sable, Whitewater Bay, Shark River, and one Ten Thousand Islands record. These findings strengthen historical occurrence evidence but do not support a current occupancy boundary or a production mask.
+
+### Additional sources
+
+- FWC/FWRI. [Inshore Saltwater FIM SRS FGDC metadata](https://www.arcgis.com/sharing/rest/content/items/68fb6774b58a40a08a6f87959aaa53c4/info/metadata/metadata.xml?format=default&output=html), especially gear-code domain, size units, filtering, and quality statements.
+- FWC/FWRI. [Fisheries-Independent Monitoring Using Stratified-Random Sampling](https://myfwc.com/research/saltwater/fim/stratified/), current routine regions and separately funded Florida Everglades / Florida Bay surveys.
+- FWC/FWRI. [2023 FIM Annual Data Summary Report](https://archive.myfwc.com/archive/Research/Saltwater/FIM/fim-annual-report-2023.pdf), Methods and Table 1–2, routine 2023 SRS study areas and gear usage.
+- National Park Service. [Everglades recreational catch and effort data package](https://catalog.data.gov/dataset/recreational-fishing-catch-and-effort-in-everglades-national-park-1980-2025-data-package), source metadata, fishing-area polygons, catch/flags definitions.
