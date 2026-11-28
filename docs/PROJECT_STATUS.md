@@ -1,3 +1,11 @@
+## Current verified update | 2026-11-28 | NOAA workbook retrieval
+
+Latest manual acquisition run [46160840439](https://github.com/markeetox/LUPITA/actions/runs/46160840439) succeeded overall on main (source SHA 92491226ff379597cb50b1cfcf3b05873f355a4f; artifact ID 15269970886). NOAA ERDDAP, NPS, FWC/FIM, and Florida Museum downloads completed, but the separate NOAA/AOML June 2019 workbook request returned HTTP 403 after retries. The workbook is not in the artifact and remains unaudited.
+
+The acquisition script now retries the same workbook URL with browser-compatible request headers and the official NOAA/AOML data-products page as Referer after the standard request fails. This is a public-source compatibility retry, not an authentication bypass. Next: manually rerun the workflow and inspect the artifact summary. If the workbook is acquired, audit it before comparing with the nine ERDDAP detections and Table 5's n=12. If it remains blocked, resolve the current official download URL or another public NOAA-hosted copy.
+
+No scientific model, species profile, range mask, scoring, confidence, ingestion, production source, or publishing behavior changed. No raw source data were committed.
+
 ## Current verified state | 2026-11-28 (supersedes older pending notes below)
 
 ## Southern flounder Florida Bay evidence | 2026-11-28
