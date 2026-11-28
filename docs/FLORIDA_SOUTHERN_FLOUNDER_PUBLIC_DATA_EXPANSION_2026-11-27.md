@@ -421,3 +421,16 @@ Sources:
 - 2019 workbook URL cited by James et al. (2023): https://www.aoml.noaa.gov/wp-content/uploads/2019/06/Master-Juvenile-Sportfish-NOAA-updated-06.11.19.xlsx
 
 No raw workbook was committed. No species profile, geographic mask, scoring, confidence, ingestion, production source, or publishing behavior changed.
+
+
+### 2026-11-28 follow-up | NOAA workbook acquisition attempt
+
+Manual workflow [run 46160840439](https://github.com/markeetox/LUPITA/actions/runs/46160840439) completed successfully on `main`, source SHA `92491226ff379597cb50b1cfcf3b05873f355a4f`. Artifact ID `15269970886` (`south-florida-public-evidence`, 28,887,271 bytes; expires 2026-12-12). The existing ERDDAP, NPS, FWC, and Florida Museum downloads completed and were retained in the artifact.
+
+The newly added NOAA/AOML 2019 workbook request was attempted four times by the acquisition script but failed with HTTP 403 Forbidden at the cited direct URL. The workbook is not present in this artifact and has not been audited. The failure is explicitly recorded in `acquisition_summary.json`; it is not a failure of the overall acquisition job.
+
+NOAA/AOML's current public data-products page still advertises a downloadable Juvenile Sportfish Survey Data workbook, confirming that a workbook download remains an official acquisition route. However, the current page's link target could not be independently recovered in this run, and the previously cited 2019 URL remains blocked to the workflow client. Next step: resolve the current official download URL or test a browser-style request with an appropriate referer before repeating the manual acquisition. Do not infer workbook contents or use the report's n=12 to fill the three-row gap until the underlying records are inspected.
+
+Sources: https://www.aoml.noaa.gov/data-products/ ; https://www.aoml.noaa.gov/juvenile-sportfish-survey/ ; https://www.aoml.noaa.gov/wp-content/uploads/2019/06/Master-Juvenile-Sportfish-NOAA-updated-06.11.19.xlsx
+
+No raw data were committed. No species profile, geographic mask, scoring, confidence, ingestion, production source, or publishing behavior changed.
