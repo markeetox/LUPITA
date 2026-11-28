@@ -500,3 +500,11 @@ Detailed audit and limitations added to docs/FLORIDA_SOUTHERN_FLOUNDER_PUBLIC_DA
 - Latest NOAA workbook acquisition run [46168260876](https://github.com/markeetox/LUPITA/actions/runs/46168260876) succeeded overall, but both standard and browser-header requests returned HTTP 403. Artifact 15272448030 does not contain the workbook.
 - Current reconciliation status: nine exact ERDDAP sample rows through 2016 versus 2021 report n=12 site samples remains unresolved. The 2024 report extends program-level context through 2023 but does not currently resolve the event-row discrepancy. No rows imputed; no raw source files committed; no species profile, mask, scoring, confidence, ingestion, production source, or publishing behavior changed.
 
+## 2026-11-28 | FWC full FIM data access routes assessed
+
+- Located FWC Fisheries-Independent Monitoring Program 69 in the Florida SEACAR Data Discovery Interface: https://data.florida-seacar.org/programs/details/69.
+- The current program record describes monthly stratified-random monitoring from 1989 to current, approximately 10,000 net deployments annually, and species/catch/length plus water-quality, habitat, and location fields. It lists standardized Nekton and Discrete Water Quality exports updated in September 2026.
+- The same portal states that full FIM data are available by request from the FWC program director and that downloads require a valid email address plus name, organization, occupation, and purpose. No form was submitted and no contact details were supplied; no download or outreach was performed. Florida Bay special-program coverage in these exports remains unverified.
+- Assessed public SECOORA ERDDAP dataset FIMMAP_Counts: https://erddap.secoora.org/erddap/tabledap/FIMMAP_Counts.html. Its dataset summary lists Tampa Bay, Charlotte Harbor, both Indian River Lagoon sectors, Cedar Key, Apalachicola Bay, and Jacksonville, not Florida Bay. It is not a Florida Bay denominator source. The IOOS schema states individualCount=0 represents absence only when the method for establishing absence is documented.
+- No new FWC Southern flounder rows are claimed. The existing positive-catch-only FWC GIS limitation remains. No species/profile/mask/scoring/confidence/ingestion/production changes; no raw data acquired.
+
