@@ -512,3 +512,21 @@ Sources:
 
 No download form was submitted, no contact information was used, and no raw data were acquired. No species profile, geographic mask, scoring, confidence, ingestion, production source, or publishing behavior changed.
 
+### 2026-11-28 follow-up | Florida Bay acoustic telemetry network identified as a supplementary lead
+
+Located the FACT/SECOORA project *How are Fish using Florida Bay: Impacts and Effects of Seagrass Distribution*: https://secoora.org/fact/projects/how-are-fish-using-florida-bay-impacts-and-effects-of-seagrass-distribution/.
+
+The project page describes a Florida Bay acoustic telemetry study using 70 listening stations and 250 internal fish tags to investigate recreational sportfish movement in relation to seagrass distribution and the 2015 seagrass die-off. Lead organizations include Florida International University, NOAA, FWC/FWRI, with Everglades National Park as a partner. The project is marked ongoing and identifies FACT code CELASE.
+
+The Ocean Tracking Network public data discovery catalog lists a corresponding project dataset, V2LCELASE, titled *Sportfish movement in Florida Bay*. The catalog reports 20,730,746 records and a last-modified date of 2026-10-16. Its public listing identifies 100 stations and 478 deployments. These are catalog record/deployment counts, not unique fish counts, detections of Southern Flounder, or proof of a target-species occurrence.
+
+This is a strong candidate supplementary source for Florida Bay habitat connectivity and movement context. However, the public project description does not name the tagged species, and a species-specific Southern Flounder inclusion/detection has not been verified. Do not treat the large telemetry record count as abundance or occupancy evidence. Before using this source for Southern Flounder, the tagged-animal metadata and species list must be inspected and any individual tag/detection records must be taxonomically confirmed. If the target species is not among the tagged animals, the dataset may still be relevant only as general ecosystem/movement context, not target-species evidence.
+
+The OTN/FACT telemetry dataset is distinct from NOAA's juvenile sportfish otter-trawl monitoring and from FWC FIM sampling. Keep those data streams separate. No OTN data were downloaded or incorporated in this review.
+
+Sources:
+- FACT/SECOORA project description: https://secoora.org/fact/projects/how-are-fish-using-florida-bay-impacts-and-effects-of-seagrass-distribution/
+- OTN public data discovery listing: https://members.oceantrack.org/data/discovery/bypublic.htm
+
+No species-specific Southern Flounder telemetry record is claimed. No model/profile/mask/scoring/production change.
+
