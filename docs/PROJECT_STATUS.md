@@ -381,3 +381,14 @@ All 4,805 NOAA Gulf SampleIDs have an identifier-level SEAMAP station match. Ind
 The 572 samples south of 26°N are all corroborated, have recorded ST-trawl effort and biological catch context, and have no Southern flounder BGS record. The 73 shallow eastern samples (4.3–20.1 m) show the same pattern; all have 29–31 minutes recorded and no non-empty operation code. This remains sample-level bottom-trawl no-catch evidence, not estuary-wide absence. The plankton archive adds one species-level *P. lethostigma* record from 2008 in the northern Gulf (7.8 mm); genus-level *Paralichthys* records remain taxonomically unresolved.
 
 The uploaded data dictionary does not define the HAULVALUE code G. One 56-minute tow requires protocol review, and the ten mismatched vessel-35 records remain excluded. No raw archives were committed and no profile, mask, scoring, confidence, ingestion, production source, or publishing behavior changed.
+
+
+### South Florida public evidence acquisition audited | 2026-11-28
+
+The manual-only [acquisition workflow](../actions/workflows/south-florida-public-evidence-acquisition.yml) ran successfully on main: [run 46154737377](https://github.com/markeetox/LUPITA/actions/runs/46154737377). Artifact `south-florida-public-evidence` (ID `15266424962`) was downloaded and audited; no source failures were reported.
+
+- FWC/FWRI Inshore FIM SRS: 6,008 exact-name positive-catch records, 1996-04-15 to 2023-12-21, representing 10,482 fish in `TotalNum`. Only one record is south of 27°N (26.843167°N); none is south of 26.5°N. The public layer contains positive-catch records only, so missing target records cannot be treated as non-detections.
+- NPS Everglades creel: full source catch file parsed (828,222 rows); 210 Southern flounder catch rows across 205 interview keys, with 271 reported fish, all between 1980-01-05 and 1997-03-16. Almost all are from Flamingo. This is fisheries-dependent angler-intercept data, not standardized abundance; later missing records do not establish absence.
+- Florida Museum UF Ichthyology: 241,669 occurrence rows in the downloaded archive; 221 exact-name candidates, including 170 Florida records. Ten Florida vouchers are at or south of 27°N, including Port Everglades, Buttonwood Canal / Everglades National Park, and Sands Key / Miami-Dade. Museum records are preserved-specimen occurrences, not abundance estimates. License CC-BY-NC 4.0.
+
+The evidence streams remain separate. Together they document historical South Florida occurrence, but do not establish current occupancy, abundance, or an ecological range boundary. No hard mask or model change is justified. Full methods, counts, caveats, and next steps are in [FLORIDA_SOUTHERN_FLOUNDER_PUBLIC_DATA_EXPANSION_2026-11-27.md](FLORIDA_SOUTHERN_FLOUNDER_PUBLIC_DATA_EXPANSION_2026-11-27.md). No species profile, model, mask, scoring, confidence, ingestion, production source, or publishing behavior changed.
