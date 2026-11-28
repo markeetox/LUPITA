@@ -1,4 +1,22 @@
-## Current verified state | 2026-11-27 (supersedes earlier pending notes below)
+## Current verified state | 2026-11-28 (supersedes older pending notes below)
+
+## Southern flounder Florida Bay evidence | 2026-11-28
+
+The manual-only [South Florida Public Evidence Acquisition workflow](../actions/workflows/south-florida-public-evidence-acquisition.yml) completed successfully in run [46158258337](https://github.com/markeetox/LUPITA/actions/runs/46158258337). Artifact `south-florida-public-evidence` (ID `15268192641`, 28,887,077 bytes) contains the acquired NOAA/AOML, NPS, FWC/FIM, and Florida Museum source files and expires 2026-12-12. The full audit is documented in [FLORIDA_SOUTHERN_FLOUNDER_PUBLIC_DATA_EXPANSION_2026-11-27.md](FLORIDA_SOUTHERN_FLOUNDER_PUBLIC_DATA_EXPANSION_2026-11-27.md). Raw data remain in the artifact, not the repository.
+
+The NOAA/AOML main Florida Bay species-sample table contains **9 exact-name Southern flounder rows**, each with SpeciesCount=1 and a unique sample key, dated 2005-11-11 through 2016-11-10. Five rows include individual lengths (72–255 mm); four lengths are missing. The 65,454-row collection-station measurement subset contains no exact-name records, but it is a distinct 12-station-per-month lab-measurement subset and is not the full survey species table.
+
+**Unresolved NOAA discrepancy:** NOAA Technical Report OAR-AOML-48 Table 5 reports **n=12 site samples** for 2004–2019. The ERDDAP main table ends on 2016-11-12, so the nine extracted rows do not cover the full report period. A NOAA/AOML June 2019 Excel workbook is publicly linked and cited in a 2023 paper; it is now added as a separate acquisition target in the script. Its contents have not yet been audited, so the three-sample gap remains unresolved. Next: manually dispatch the acquisition workflow, inspect the workbook sheets and target rows, and reconcile unique sample keys and salinity statistics against ERDDAP and report Table 5.
+
+The latest acquisition workflow also returned:
+- NPS Everglades recreational catch: 210 exact-name candidate rows in the full catch file (205 unique interview keys, 271 fish after disposition rows are retained); fisheries-dependent catch, not standardized abundance.
+- FWC/FWRI Inshore FIM SRS: 6,008 exact-name positive-catch records; public layer is filtered to positive catches and cannot provide zero-catch denominators.
+- Florida Museum Ichthyology DwC-A: 221 exact-name candidates (170 Florida records; 169 with year, 1929–2024); preserved voucher occurrences, not abundance.
+These source-specific findings are detailed in the research report and must remain separate evidence classes.
+
+No species profile, range mask, scoring, confidence, ingestion, production source, or publishing behavior changed. No raw source files were committed. Preserve the distinction between positive survey detections, sample-level non-detections, fisheries-dependent catch, and museum vouchers.
+
+
 
 ## Public South Florida evidence expansion | 2026-11-27
 
