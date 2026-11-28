@@ -445,3 +445,14 @@ The acquisition script now retries this workbook alone after a standard-request 
 **Next:** manually dispatch the acquisition workflow again. If the fallback succeeds, inspect workbook sheets, date coverage, taxonomic fields/aliases, unique sample keys, and Southern flounder rows before reconciling the nine ERDDAP records with Table 5's n=12. If it still returns 403, identify the current official NOAA workbook link or another publicly accessible NOAA-hosted copy. Do not treat the workbook as acquired until it appears in the artifact and passes file-format/integrity checks.
 
 No raw data were committed. No species profile, range mask, scoring, confidence, ingestion, production source, or publishing behavior changed.
+
+
+### 2026-11-28 follow-up | acquisition run 5: browser fallback also blocked
+
+Manual acquisition [run 46168260876](https://github.com/markeetox/LUPITA/actions/runs/46168260876) completed successfully on `main` at `97d1c7419d31ae2f1c8aaaa717b67cb83681aa92`. Artifact ID `15272448030` (28,887,331 bytes; expires 2026-12-12). The NOAA/AOML 2019 workbook was attempted using both the standard request and the browser-header fallback (User-Agent, XLSX Accept header, and official data-products Referer). Both attempts returned HTTP 403. The workbook is absent from the artifact and remains unaudited.
+
+The current NOAA/AOML [Data Products page](https://www.aoml.noaa.gov/data-products/) still advertises a downloadable Juvenile Sportfish Survey .xlsx workbook, but indexed page content does not expose a different verified download URL. The NOAA ERDDAP main species dataset remains available in the artifact: 11,473 rows, nine exact `Paralichthys lethostigma` records, each with SpeciesCount=1. Searching distinct scientific/common-name combinations in the full table found only `Paralichthys lethostigma` (Southern Flounder) and `Paralichthys albigutta` (Gulf Flounder); no alternate Southern Flounder spelling or common-name alias was found in this export.
+
+This does not resolve the difference between the nine accessible ERDDAP rows and report Table 5's n=12 site samples. The ERDDAP table advertises coverage ending 2016-11-12, while the report summarizes 2004–2019; the later workbook remains the most direct public lead, but its current advertised link is blocked from automated retrieval. Do not infer that the three-row difference represents later years without row-level evidence. No raw data were committed and no species/model behavior changed.
+
+**Next:** investigate the NOAA/AOML page's actual current link target through another public, verifiable source or accessible browser route. If no public route exposes the file, retain the documented limitation and continue using the nine ERDDAP records as a distinct, bounded evidence set. Do not add inferred rows or reconcile n=12 by assumption.
