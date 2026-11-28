@@ -1,3 +1,8 @@
+
+### NOAA Table 5 denominator clarification | 2026-11-28
+
+The primary report captions Table 5's `n` as **site sample size**, not number of individual fish. Methods say other sportfish caught in every tow were identified/measured/counted; separately, a subset of 12 stations per month from 2009 onward had all organisms under 100 mm preserved for lab identification. Do not confuse that 12-station/month collection subset with Table 5's Southern flounder `n=12`. The ERDDAP main table still has nine Southern flounder sample rows (each SpeciesCount=1) through 2016-11-12; the report covers 2004–2019. Later-year rows could explain the difference, but this is unverified. See the [NOAA report](https://repository.library.noaa.gov/view/noaa/28764/noaa_28764_DS1.pdf). No inference or model change.
+
 ## Current verified update | 2026-11-28 | NOAA workbook remains blocked
 
 Manual acquisition [run 46168260876](https://github.com/markeetox/LUPITA/actions/runs/46168260876) succeeded on `main` at `97d1c7419d31ae2f1c8aaaa717b67cb83681aa92`; artifact ID `15272448030` (28,887,331 bytes; expires 2026-12-12). Both the standard NOAA/AOML workbook request and the browser-header fallback returned HTTP 403. The workbook is not in the artifact.
