@@ -533,3 +533,11 @@ Detailed audit and limitations added to docs/FLORIDA_SOUTHERN_FLOUNDER_PUBLIC_DA
 - OTN lists SCSOFL (SCDNR Southern Flounder tracking), SOFLONC (ECU Southern Flounder Spawning Study), and SOFLOAR (Southern Flounder on Artificial Reefs), all with Records=NA and LastModified=NA. Exact project-to-publication crosswalks and public tag-data access remain unverified.
 - No raw tag data downloaded, no new South Florida detections or locations added, no occupancy/mask/profile/scoring/confidence/ingestion/production changes.
 
+## 2026-11-28 | Northern Gulf Southern Flounder acoustic telemetry sources
+
+- Galveston Bay Complex, Texas: Steffen et al. 2023 tagged 60 adult Southern Flounder with acoustic transmitters and used 42 receivers. Array recorded 370,918 detections from Nov 2016–Jul 2018. Analysis: 21 migrators, 11 residents, 26 unclassified, 2 never detected. Migrators generally exited through tidal passes in November–December; residents often remained through winter/spring. Separate conventional tagging included one 221-km southward recapture within Texas. No Florida detection documented. Full paper: https://www.tamug.edu/grihms/pdf/Steffen%20et%20al.%202023%20ECSS.pdf.
+- Saint Louis Bay, Mississippi: Chee et al. 2025 reports 80 acoustic-tagged Southern Flounder; 11 classified as migrators to offshore spawning locations and 16 as residents overwintering inshore. University of Southern Mississippi repository: https://aquila.usm.edu/fac_pubs/22320/.
+- Mobile Bay, Alabama: Dauphin Island Sea Lab CAAMP redesigned in 2019 for Southern Flounder offshore migration, using a 68-receiver array across Mobile Bay and tidal rivers. Public project page gives design but no sample count or event-level results: https://www.disl.edu/who-we-are/spowers/projects/caamp/.
+- Alabama DCNR 2025 article describes a broader five-year acoustic/conventional tagging program, offshore residency, and migration research, but supplies no tag-level Southern Flounder records or Florida detections: https://www.outdooralabama.com/articles/research-inshore-species-yields-interesting-revelations.
+- These Gulf studies document migration/residency context but do not establish Southern Flounder detections in Florida or South Florida. No raw telemetry data downloaded, no new Florida occurrence points, no occupancy/model/profile/mask/scoring/confidence/production changes.
+
