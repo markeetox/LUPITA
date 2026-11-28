@@ -463,3 +463,33 @@ This does not resolve the difference between the nine accessible ERDDAP rows and
 A closer review of the primary NOAA report clarifies the denominator terminology. Table 5 is explicitly captioned as reporting “site sample size (n)” for the listed species; Southern flounder is listed as `n=12`, salinity range 33.3–40.4 ppt, mean 36.7 ± 2.31. This is a count of site samples, not a count of individual fish. The report's methods state that all sizes of other sportfish caught in every tow were identified, measured, and counted; a separate subset of 12 stations per month beginning in 2009 was used to preserve and lab-identify all organisms under 100 mm. These are different concepts and should not be conflated. See the [NOAA report](https://repository.library.noaa.gov/view/noaa/28764/noaa_28764_DS1.pdf), especially its Methods section and Table 5.
 
 The accessible ERDDAP main species table contains nine exact Southern flounder sample rows, each with `SpeciesCount=1`, and its advertised coverage ends 2016-11-12. The report covers 2004–2019. Later-year records are one possible explanation for the difference, but this remains unverified; no three records are imputed. The 12-station collection-measurement subset is not a substitute for the full species-sample table.
+
+### 2026-11-28 follow-up | NOAA/AOML 2024 annual report extends Florida Bay evidence through 2023
+
+Located and reviewed the NOAA/AOML 2024 annual report, *Juvenile Sportfish Monitoring in Florida Bay, Everglades National Park: Monitoring and Assessment Plan Results from 2004 through 2023* (SeFSC-PEMD-HEB 2024-02; August 1, 2024). Public report: https://cerp-sfwmd.dataone.org/metacat/d1/mn/v2/object/urn:uuid:8e477b75-cc15-49c4-b009-2d3d5408abae.
+
+The report's Table 1 is captioned as the list of 26 target species observed in the study area since the project's inception in 2004; Southern Flounder is included in the report's species list. Table 5 also includes Southern Flounder among the 26 taxa and describes salinity ranges, means, standard deviations, and sample size. Figure 14 is explicitly based on all MAP observations from 2004–2023. This is a more recent program-level source than the 2004–2019 report and confirms that Southern Flounder remains part of the Florida Bay monitoring record through the report's 2023 reporting period. It does not provide event-level Southern flounder dates, coordinates, or sample identifiers in the extracted report text.
+
+The 2024 report's Methods section clarifies that juvenile spotted seatrout were the main target, but all sizes of other sportfish and additional fish/macroinvertebrate species caught in every tow were identified, measured, and counted. Separately, from 2009 onward, a subset of 12 stations per month (five West, two Rankin, two Whipray, three Crocodile Dragover) had all organisms under 100 mm preserved and identified/measured in the lab. This 12-station monthly subset is a laboratory-processing design, not the Southern flounder sample count in the 2021 report.
+
+**Important denominator distinction:** the 2021 OAR-AOML-48 Table 5 caption explicitly calls its n a *site sample size*; Southern Flounder is reported as n=12. The 2024 report's Table 5 caption instead describes n as the *number of individuals sampled*. These are not interchangeable denominators. The nine ERDDAP records are nine species-sample rows, each with SpeciesCount=1, and the accessible table ends in 2016. The newer report's table values were not independently extracted from its rendered table graphic in this review. Do not compare its n directly with the 2021 n=12, and do not infer that the three-row ERDDAP difference represents 2017–2019 records.
+
+The 2018 OAR-AOML-54 report's Table 4 caption says it covers 25 species enumerated since inception in 2004, but the extracted searchable text does not expose the individual species rows. The absence of a searchable “Southern Flounder” or “Paralichthys” hit in that PDF is therefore not evidence that the taxon was absent from the table or program. No species-list change between the 2018 and 2019 reports is established here.
+
+### Current reconciliation status
+
+- 2021 OAR-AOML-48: Southern Flounder listed; n=12 site samples; salinity 33.3–40.4 ppt; mean 36.7 ± 2.31 ppt.
+- Public NOAA/AOML ERDDAP main table: nine exact Southern Flounder sample rows, each SpeciesCount=1; dates 2005-11-11 to 2016-11-10; salinity 33.3–40.4 PSU, mean 36.82, sample SD 2.43.
+- 2024 SeFSC-PEMD-HEB 2024-02 report: Southern Flounder remains in the species list; report covers MAP observations 2004–2023; Table 5 defines n as individuals sampled rather than site sample size. Event-level dates/coordinates and the rendered table's Southern Flounder numeric row were not extracted.
+- NOAA 2019 workbook: still blocked with HTTP 403 on both standard and browser-header attempts in acquisition run 46168260876.
+
+This adds stronger program-level occurrence evidence but does not resolve the row-count/denominator discrepancy. The correct status remains **unresolved, not contradictory**. Do not impute three records or change any species model/profile/mask/scoring behavior.
+
+Sources:
+- 2024 NOAA/AOML annual report: https://cerp-sfwmd.dataone.org/metacat/d1/mn/v2/object/urn:uuid:8e477b75-cc15-49c4-b009-2d3d5408abae
+- 2021 OAR-AOML-48 report: https://repository.library.noaa.gov/view/noaa/28764/noaa_28764_DS1.pdf
+- 2018 OAR-AOML-54 report: https://repository.library.noaa.gov/view/noaa/32734/noaa_32734_DS1.pdf
+- Main ERDDAP dataset: https://gcoos4.geos.tamu.edu/erddap/tabledap/juvenile_sportfish.html
+
+No raw data were committed. No species profile, geographic mask, scoring, confidence, ingestion, production source, or publishing behavior changed.
+
