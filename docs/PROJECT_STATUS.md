@@ -1,3 +1,9 @@
+## Current verified update | 2026-11-28 | NOAA workbook remains blocked
+
+Manual acquisition [run 46168260876](https://github.com/markeetox/LUPITA/actions/runs/46168260876) succeeded on `main` at `97d1c7419d31ae2f1c8aaaa717b67cb83681aa92`; artifact ID `15272448030` (28,887,331 bytes; expires 2026-12-12). Both the standard NOAA/AOML workbook request and the browser-header fallback returned HTTP 403. The workbook is not in the artifact.
+
+The artifact's current ERDDAP main species table contains 11,473 rows and nine exact Southern Flounder records (`Paralichthys lethostigma`), each with SpeciesCount=1. No alternate Paralichthys/flounder taxon alias was found in the full table. The ERDDAP product ends 2016-11-12; NOAA report Table 5 reports n=12 site samples for 2004–2019. This difference remains unresolved. The NOAA/AOML Data Products page still advertises an XLSX workbook, but a different verified link target has not been recovered. Do not infer the three-row difference or alter scientific behavior.
+
 ## Current verified update | 2026-11-28 | NOAA workbook retrieval
 
 Latest manual acquisition run [46160840439](https://github.com/markeetox/LUPITA/actions/runs/46160840439) succeeded overall on main (source SHA 92491226ff379597cb50b1cfcf3b05873f355a4f; artifact ID 15269970886). NOAA ERDDAP, NPS, FWC/FIM, and Florida Museum downloads completed, but the separate NOAA/AOML June 2019 workbook request returned HTTP 403 after retries. The workbook is not in the artifact and remains unaudited.
