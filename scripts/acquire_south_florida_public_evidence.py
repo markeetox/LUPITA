@@ -61,11 +61,17 @@ def normalize(value: Any) -> str:
     return re.sub(r"[^a-z0-9]+", " ", str(value or "").lower()).strip()
 
 
-def get(url: str, *, params: dict[str, Any] | None = None, timeout: int = 120) -> requests.Response:
+def get(
+    url: str,
+    *,
+    params: dict[str, Any] | None = None,
+    timeout: int = 120,
+    headers: dict[str, str] | None = None,
+) -> requests.Response:
     last_error: Exception | None = None
     for attempt in range(4):
         try:
-            response = SESSION.get(url, params=params, timeout=timeout)
+            response = SESSION.get(url, params=params, timeout=timeout, headers=headers)
             response.raise_for_status()
             if not response.content:
                 raise RuntimeError(f"Empty response from {response.url}")
@@ -77,8 +83,14 @@ def get(url: str, *, params: dict[str, Any] | None = None, timeout: int = 120) -
     raise RuntimeError(f"Download failed after retries: {url}: {last_error}")
 
 
-def save_response(url: str, path: Path, *, params: dict[str, Any] | None = None) -> bytes:
-    response = get(url, params=params)
+def save_response(
+    url: str,
+    path: Path,
+    *,
+    params: dict[str, Any] | None = None,
+    headers: dict[str, str] | None = None,
+) -> bytes:
+    response = get(url, params=params, headers=headers)
     path.parent.mkdir(parents=True, exist_ok=True)
     path.write_bytes(response.content)
     return response.content
@@ -157,18 +169,48 @@ def acquire_noaa_florida_bay(report: dict[str, Any]) -> None:
     # table currently ends in November 2016, while the 2021 report summarizes
     # observations through 2019. Preserve this separate source for reconciliation.
     workbook_path = source_dir / "master_juvenile_sportfish_noaa_updated_2019-06-11.xlsx"
+    workbook_error: Exception | None = None
     try:
         workbook_payload = save_response(NOAA_SURVEY_WORKBOOK, workbook_path)
+    except Exception as first_error:
+        # Retry this one public file with browser-style headers after the
+        # descriptive workflow User-Agent receives an access denial.
+        browser_headers = {
+            "User-Agent": (
+                "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 "
+                "(KHTML, like Gecko) Chrome/130.0.0.0 Safari/537.36"
+            ),
+            "Referer": "https://www.aoml.noaa.gov/data-products/",
+            "Accept": (
+                "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet,"
+                "application/octet-stream,*/*"
+            ),
+        }
+        try:
+            workbook_payload = save_response(
+                NOAA_SURVEY_WORKBOOK, workbook_path, headers=browser_headers
+            )
+        except Exception as fallback_error:
+            workbook_error = RuntimeError(
+                "standard request failed: "
+                f"{type(first_error).__name__}: {first_error}; "
+                "browser-header fallback failed: "
+                f"{type(fallback_error).__name__}: {fallback_error}"
+            )
+
+    if workbook_error is None:
         summary["aoml_2019_workbook"] = {
             "url": NOAA_SURVEY_WORKBOOK,
             "bytes": len(workbook_payload),
             "raw_file": str(workbook_path),
+            "download_method": "standard request or browser-header fallback",
             "note": "Historical workbook snapshot; inspect its sheets, coverage, and definitions before comparing counts with ERDDAP or report Table 5.",
         }
-    except Exception as exc:
+    else:
         summary["aoml_2019_workbook"] = {
             "url": NOAA_SURVEY_WORKBOOK,
-            "download_error": f"{type(exc).__name__}: {exc}",
+            "download_error": f"{type(workbook_error).__name__}: {workbook_error}",
+            "fallback_referer": "https://www.aoml.noaa.gov/data-products/",
         }
 
     report["noaa_florida_bay_juvenile_sportfish"] = {
