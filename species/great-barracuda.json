@@ -1,0 +1,144 @@
+{
+  "schema_version": 1,
+  "id": "great-barracuda",
+  "common_name": "Great barracuda",
+  "scientific_name": "Sphyraena barracuda",
+  "aliases": [
+    "cuda"
+  ],
+  "habitat_zone": "inshore",
+  "review_status": "reviewed 2026-11-14 - profile and South Florida recreational regulations checked against FWC",
+  "image": {
+    "status": "placeholder",
+    "kind": "illustration",
+    "url": "fish/great-barracuda.png",
+    "credit": "Placeholder graphic",
+    "license": "",
+    "plan": "web/fish/great-barracuda.png placeholder illustration."
+  },
+  "profile": {
+    "size": "Up to about 106 lb (FWC).",
+    "diet": "Predatory fish; feeds on other fishes, squid and shrimp.",
+    "behavior": "Large, fast predator occurring from inshore coastal waters to offshore reef areas. Young barracuda are commonly found inshore in seagrass beds. Adults are top predators around reef habitat.",
+    "habitat": "Inshore to offshore; juveniles use seagrass beds, while larger fish range through coastal and reef environments.",
+    "life_history": "Native Florida species. The current FWC profile supports the habitat and feeding summary but does not establish a precise South Florida spawning calendar.",
+    "regulations_link": "https://myfwc.com/fishing/saltwater/recreational/barracuda/",
+    "sources": [
+      "https://nsuworks.nova.edu/occ_stuetd/32",
+      "https://www.fishbase.se/country/CountrySpeciesSummary.php?c_code=690&id=1235"
+    ]
+  },
+  "factors": [
+    {
+      "param": "sst_c",
+      "kind": "range",
+      "range": [
+        20,
+        32
+      ],
+      "ideal": [
+        24,
+        30
+      ],
+      "weight": 0.35,
+      "active": true,
+      "value_status": "partly_sourced",
+      "value_notes": "A South Florida NSU thesis reports pop-up archival tagging of only two large adults (>100 cm), which experienced 17.8–31.3 °C; the sample is too small to establish preference. FishBase reports a model-derived preferred-temperature estimate of 21.7–28.9 °C (mean 27.2 °C; 2,020 cells). These support broad exposure context but do not validate the configured 20–32 °C range or 24–30 °C ideal as a catch optimum.",
+      "reason_template": "Water is {value} C, within the preferred thermal range for Great barracuda.",
+      "sources": [
+        "https://nsuworks.nova.edu/occ_stuetd/32",
+        "https://www.fishbase.se/country/CountrySpeciesSummary.php?c_code=690&id=1235"
+      ],
+      "gate": true,
+      "required": true
+    }
+  ],
+  "open_items": [
+    "Species-specific preferred and limiting temperature ranges are not established by the cited FWC profile; current SST factor bounds remain provisional and unchanged.",
+    "Do not encode a precise spawning season without a primary life-history source."
+  ],
+  "display": {
+    "color": "#da3cf2"
+  },
+  "model": "sites",
+  "site_kinds": [
+    "inlet",
+    "cut",
+    "flat"
+  ],
+  "min_score_report": 0.35,
+  "max_spots": 15,
+  "confidence_cap": "Medium",
+  "timing": {
+    "status": "angler_lore",
+    "note": "Timing weights and light/tide preferences for Great barracuda.",
+    "sources": [
+      "https://www.fisheries.noaa.gov/"
+    ],
+    "weights": {
+      "light": 0.5,
+      "tide": 0.3,
+      "front": 0.2
+    },
+    "light": {
+      "map": {
+        "dusk": 1,
+        "night": 0.8,
+        "dawn": 0.9,
+        "day": 0.6
+      },
+      "text": {
+        "dusk": "Dusk activity peak for Great barracuda.",
+        "night": "Night feeding period for Great barracuda.",
+        "dawn": "Dawn activity peak for Great barracuda.",
+        "day": "Daytime feeding period for Great barracuda."
+      }
+    },
+    "tide": {
+      "map": {
+        "falling": 1,
+        "slack_low": 0.6,
+        "rising": 0.7,
+        "slack_high": 0.5
+      },
+      "text": {
+        "falling": "Outgoing tide flushes food for Great barracuda.",
+        "slack_low": "Slack low tide for Great barracuda.",
+        "rising": "Incoming tide brings bait for Great barracuda.",
+        "slack_high": "Slack high tide for Great barracuda."
+      }
+    },
+    "front": {
+      "map": {
+        "approaching": 0.8,
+        "just_passed": 0.4,
+        "lull": 0.5
+      },
+      "text": {
+        "approaching": "Pre-front feeding spree for Great barracuda.",
+        "just_passed": "Post-front slow period for Great barracuda.",
+        "lull": "Stable weather pattern for Great barracuda."
+      }
+    }
+  },
+  "lat_range": [
+    15,
+    32
+  ],
+  "regulations": {
+    "summary": "Collier through Martin counties, including Monroe, Miami-Dade and Broward: 15-36 in fork-length slot; one fish over 36 in allowed per person or vessel per day; 2 per person per day, maximum 6 per vessel; open year-round.",
+    "min_size": "15 inches fork length (Collier through Martin counties)",
+    "max_size": "36 inches fork length, with one fish greater than 36 inches allowed per person or vessel per day",
+    "bag_limit": "2 per person per day, maximum 6 per vessel per day; one fish over 36 inches may be retained per person or vessel per day",
+    "season": "Open year-round",
+    "jurisdiction": "Florida state and federal waters off Collier, Monroe, Miami-Dade, Broward, Palm Beach and Martin counties; other Florida counties have different/no barracuda-specific limits",
+    "source_name": "Florida Fish and Wildlife Conservation Commission",
+    "source_url": "https://myfwc.com/fishing/saltwater/recreational/barracuda/",
+    "notes": "Special regulations apply inside Biscayne National Park. These South Florida county rules should not be generalized to the rest of Florida.",
+    "verified_date": "2026-11-14"
+  },
+  "lon_range": [
+    -100,
+    -50
+  ]
+}

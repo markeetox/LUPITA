@@ -1,0 +1,162 @@
+{
+  "schema_version": 1,
+  "id": "jack-crevalle",
+  "common_name": "Jack crevalle",
+  "scientific_name": "Caranx hippos",
+  "aliases": [
+    "jack",
+    "crevalle jack"
+  ],
+  "habitat_zone": "coastal",
+  "display": {
+    "color": "#3cdcf2"
+  },
+  "review_status": "draft v1 - fast aggressive coastal schooling predator",
+  "image": {
+    "status": "placeholder",
+    "kind": "illustration",
+    "url": "fish/jack-crevalle.png",
+    "credit": "Original illustration",
+    "license": "",
+    "plan": "web/fish/jack-crevalle.png placeholder illustration."
+  },
+  "profile": {
+    "size": "Common 3-15 lb; up to 35+ lb",
+    "diet": "Mullet, menhaden, pilchards, squids, and crabs",
+    "swimming_depth": "0.5 to 30 m",
+    "behavior": "Aggressive, fast-swimming schooling predator that blitzes bait in inlets, bays, surf lines, and coastal beaches.",
+    "regulations_link": "https://myfwc.com/",
+    "sources": [
+      "https://myfwc.com/",
+      "https://myfwc.com/wildlifehabitats/profiles/saltwater/jacks/crevalle-jack/",
+      "https://www.floridamuseum.ufl.edu/discover-fish/species-profiles/crevalle-jack/",
+      "https://www.dnr.sc.gov/marine/species/crevallejack.html"
+    ]
+  },
+  "factors": [
+    {
+      "param": "sst_c",
+      "kind": "range",
+      "range": [
+        20,
+        32
+      ],
+      "ideal": [
+        24,
+        30
+      ],
+      "weight": 0.4,
+      "active": true,
+      "value_status": "partly_sourced",
+      "sources": [
+        "https://www.floridamuseum.ufl.edu/discover-fish/species-profiles/crevalle-jack/"
+      ],
+      "reason_template": "Water is {value} C, in warm tropical range favored by jack crevalle.",
+      "value_notes": "The Florida Museum species account reports adult occurrence at approximately 18–33.6 °C and larval occurrence at 20.4–29.4 °C. This provides species-specific thermal context, but occurrence is not a preferred-temperature or catch-response curve and the configured 20–32 °C range / 24–30 °C ideal are not directly validated."
+    },
+    {
+      "param": "depth_m",
+      "kind": "range",
+      "range": [
+        0.5,
+        30
+      ],
+      "ideal": [
+        1,
+        15
+      ],
+      "weight": 0.35,
+      "active": true,
+      "value_status": "partly_sourced",
+      "sources": [
+        "https://www.floridamuseum.ufl.edu/discover-fish/species-profiles/crevalle-jack/",
+        "https://www.dnr.sc.gov/marine/species/crevallejack.html"
+      ],
+      "gate": true,
+      "reason_template": "Depth is {value} m, in shallow coastal and inlet waters.",
+      "value_notes": "The Florida Museum account reports occurrence along the continental shelf and depths to about 100 m, with habitat varying by life stage; SCDNR describes both offshore and estuarine use. This supports broad coastal depth context but does not validate the configured 0.5–30 m range or 1–15 m ideal as a universal preference."
+    },
+    {
+      "param": "season_presence",
+      "kind": "season",
+      "weight": 0.25,
+      "active": true,
+      "value_status": "partly_sourced",
+      "sources": [
+        "https://myfwc.com/wildlifehabitats/profiles/saltwater/jacks/crevalle-jack/",
+        "https://www.dnr.sc.gov/marine/species/crevallejack.html"
+      ],
+      "months": [
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11
+      ],
+      "peak_months": [
+        4,
+        5,
+        9,
+        10
+      ],
+      "in_score": 0.9,
+      "off_score": 0.4,
+      "value_text": {
+        "peak": "It is peak jack crevalle run season.",
+        "in_season": "It is jack crevalle season.",
+        "off": "Outside main jack crevalle runs."
+      },
+      "value_notes": "FWC reports peak offshore spawning from March through September in subtropical waters; SCDNR describes seasonal north/south movement and summer occurrence in South Carolina. These sources support seasonal reproductive and migration context, not the configured March–November presence window or April–May/September–October peak catch scores in South Florida. Retain the monthly map as a provisional seasonal screening proxy."
+    }
+  ],
+  "timing": {
+    "status": "angler_lore",
+    "light": {
+      "map": {
+        "day": 1,
+        "dawn": 0.9,
+        "dusk": 0.9,
+        "night": 0.4
+      },
+      "text": {
+        "day": "It is full daylight, when fish feed actively.",
+        "dawn": "It is dawn, a low-light time when fish feed actively.",
+        "dusk": "It is dusk, a low-light time when fish feed actively."
+      }
+    },
+    "tide": {
+      "map": {
+        "rising": 1,
+        "falling": 1,
+        "slack_high": 0.5,
+        "slack_low": 0.4
+      },
+      "text": {
+        "rising": "The tide is rising, bringing in fresh water and bait.",
+        "falling": "The tide is falling, flushing bait out through structure."
+      }
+    },
+    "note": "Patterns reported by local captains and fishing writers, not tested by studies.",
+    "sources": [
+      "https://myfwc.com/"
+    ]
+  },
+  "regulations": {
+    "summary": "Regulated species - See MyFWC/NOAA guidelines",
+    "min_size": "Check MyFWC/NOAA rules",
+    "max_size": "None",
+    "bag_limit": "Varies by region / state",
+    "season": "Open year-round (subject to local quota/closures)",
+    "jurisdiction": "Atlantic & Gulf State/Federal Waters",
+    "source_name": "MyFWC Saltwater Regulations",
+    "source_url": "https://myfwc.com/fishing/saltwater/recreational/"
+  },
+  "lon_range": [
+    -100,
+    -50
+  ]
+}

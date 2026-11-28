@@ -1,0 +1,121 @@
+{
+  "schema_version": 1,
+  "id": "common-thresher-shark",
+  "common_name": "Common thresher shark",
+  "scientific_name": "Alopias vulpinus",
+  "aliases": [
+    "common thresher shark"
+  ],
+  "habitat_zone": "pelagic",
+  "display": {
+    "color": "#3cf27f"
+  },
+  "review_status": "Evidence reviewed 2026-11-17. Southern California and western North Atlantic archival tagging support SST use; vertical dive depth is not seafloor bathymetry.",
+  "image": {
+    "status": "placeholder",
+    "kind": "illustration",
+    "url": "fish/common-thresher-shark.png",
+    "credit": "Original illustration",
+    "license": "",
+    "plan": "web/fish/common-thresher-shark.png placeholder illustration."
+  },
+  "profile": {
+    "size": "Min limit None / Bag limit 2 per harvester / day",
+    "diet": "Small fish, crustaceans, squids, and pelagic prey",
+    "swimming_depth": "0 to 150 m",
+    "behavior": "Navigates West Coast kelp forests, rocky reefs, and coastal upwelling zones.",
+    "regulations_link": "https://wildlife.ca.gov/Fishing/Ocean/Regulations/Sport-Fishing",
+    "sources": [
+      "https://wildlife.ca.gov/Fishing/Ocean/Regulations/Sport-Fishing",
+      "https://pmc.ncbi.nlm.nih.gov/articles/PMC3873052/",
+      "https://www.neaq.org/publication/horizontal-and-vertical-movements-and-habitat-use-of-the-common-thresher-shark-alopias-vulpinus-in-the-western-north-atlantic/",
+      "https://repository.library.noaa.gov/view/noaa/29562/noaa_29562_DS1.pdf"
+    ]
+  },
+  "lat_range": [
+    22,
+    42
+  ],
+  "factors": [
+    {
+      "param": "sst_c",
+      "kind": "range",
+      "range": [
+        14,
+        21
+      ],
+      "ideal": [
+        16,
+        19
+      ],
+      "weight": 0.5,
+      "active": true,
+      "value_status": "partly_sourced",
+      "sources": [
+        "https://wildlife.ca.gov/Fishing/Ocean/Regulations/Sport-Fishing",
+        "https://pmc.ncbi.nlm.nih.gov/articles/PMC3873052/",
+        "https://www.neaq.org/publication/horizontal-and-vertical-movements-and-habitat-use-of-the-common-thresher-shark-alopias-vulpinus-in-the-western-north-atlantic/",
+        "https://repository.library.noaa.gov/view/noaa/29562/noaa_29562_DS1.pdf"
+      ],
+      "reason_template": "Water is {value} C, inside preferred Pacific temperature range for common thresher shark.",
+      "value_notes": "Southern California archival tags (57 deployed, 4 recovered) recorded use of waters with SST 16-21 °C. A 2025 western North Atlantic study of 48 tagged threshers found a broad -0.5 to 25.6 °C range, with about 90% of time in 14-20 °C water. This supports the configured 14-21 °C / 16-19 °C band as broad thermal context, but sample sizes, regions and seasonal behavior differ; it is not a universal catch-probability curve."
+    },
+    {
+      "param": "depth_m",
+      "kind": "range",
+      "range": [
+        0,
+        150
+      ],
+      "ideal": [
+        2,
+        145
+      ],
+      "weight": 0.5,
+      "active": true,
+      "value_status": "weak_factor",
+      "sources": [
+        "https://wildlife.ca.gov/Fishing/Ocean/Regulations/Sport-Fishing",
+        "https://pmc.ncbi.nlm.nih.gov/articles/PMC3873052/",
+        "https://www.neaq.org/publication/horizontal-and-vertical-movements-and-habitat-use-of-the-common-thresher-shark-alopias-vulpinus-in-the-western-north-atlantic/"
+      ],
+      "gate": true,
+      "reason_template": "Depth is {value} m, within prime Pacific depth zone for common thresher shark.",
+      "value_notes": "Archival tags show common threshers move through the water column from the surface to at least 320 m in Southern California and up to much greater depths in western North Atlantic records. The runtime variable is seafloor bathymetry, not shark vertical dive depth; the configured 0-150 m seabed band is only a weak shelf/offshore context proxy, not a preferred bottom-depth interval."
+    }
+  ],
+  "timing": {
+    "status": "angler_lore",
+    "light": {
+      "map": {
+        "day": 1,
+        "dawn": 0.9,
+        "dusk": 0.9,
+        "night": 0.5
+      },
+      "text": {
+        "day": "Full daylight when Pacific gamefish actively hunt.",
+        "dawn": "Dawn low-light feeding window.",
+        "dusk": "Dusk feeding window."
+      }
+    },
+    "note": "West Coast captain reports and biological upwelling patterns.",
+    "sources": [
+      "https://wildlife.ca.gov/Fishing/Ocean/Regulations/Sport-Fishing"
+    ]
+  },
+  "regulations": {
+    "summary": "CDFW: 2 per day limit",
+    "min_size": "None",
+    "max_size": "None",
+    "bag_limit": "2 per harvester / day",
+    "season": "Open year-round",
+    "jurisdiction": "CDFW / NOAA",
+    "source_name": "West Coast State Regulations (CDFW/WDFW/ODFW/NOAA)",
+    "source_url": "https://wildlife.ca.gov/Fishing/Ocean/Regulations/Sport-Fishing"
+  },
+  "lon_range": [
+    -138,
+    -110
+  ]
+}

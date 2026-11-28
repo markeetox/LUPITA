@@ -1,0 +1,120 @@
+{
+  "schema_version": 1,
+  "id": "kelp-rockfish",
+  "common_name": "Kelp rockfish",
+  "scientific_name": "Sebastes atrovirens",
+  "aliases": [
+    "kelp rockfish"
+  ],
+  "habitat_zone": "reef",
+  "display": {
+    "color": "#36d85d"
+  },
+  "review_status": "Evidence reviewed 2026-11-17. FishBase and California coastal survey references support demersal kelp/rock habitat and broad depth occurrence; numeric SST preference remains unsupported.",
+  "image": {
+    "status": "placeholder",
+    "kind": "illustration",
+    "url": "fish/kelp-rockfish.png",
+    "credit": "Original illustration",
+    "license": "",
+    "plan": "web/fish/kelp-rockfish.png placeholder illustration."
+  },
+  "profile": {
+    "size": "Min limit None / Bag limit 10 per harvester / day aggregate",
+    "diet": "Small fish, crustaceans, squids, and pelagic prey",
+    "swimming_depth": "1 to 40 m",
+    "behavior": "Navigates West Coast kelp forests, rocky reefs, and coastal upwelling zones.",
+    "regulations_link": "https://wildlife.ca.gov/Fishing/Ocean/Regulations/Sport-Fishing",
+    "sources": [
+      "https://wildlife.ca.gov/Fishing/Ocean/Regulations/Sport-Fishing",
+      "https://fishbase.org/FieldGuide/FieldGuideSummary.php?GenusName=Sebastes&SpeciesName=atrovirens&pda=1&sps=",
+      "https://www.waterboards.ca.gov/water_issues/programs/swamp/docs/coast_study/bog2012may/apx1.pdf",
+      "https://wildlife.ca.gov/Conservation/Marine/Groundfish/Nearshore-Shelf-And-Slope"
+    ]
+  },
+  "lat_range": [
+    28,
+    38
+  ],
+  "factors": [
+    {
+      "param": "sst_c",
+      "kind": "range",
+      "range": [
+        11,
+        18
+      ],
+      "ideal": [
+        13,
+        17
+      ],
+      "weight": 0.5,
+      "active": true,
+      "value_status": "needs_source",
+      "sources": [
+        "https://wildlife.ca.gov/Fishing/Ocean/Regulations/Sport-Fishing",
+        "https://fishbase.org/FieldGuide/FieldGuideSummary.php?GenusName=Sebastes&SpeciesName=atrovirens&pda=1&sps=",
+        "https://www.waterboards.ca.gov/water_issues/programs/swamp/docs/coast_study/bog2012may/apx1.pdf"
+      ],
+      "reason_template": "Water is {value} C, inside preferred Pacific temperature range for kelp rockfish.",
+      "value_notes": "The reviewed sources document kelp/rock habitat and distribution but provide no species-specific numeric SST preference or tolerance curve for adult kelp rockfish. The configured 11-18 °C range and 13-17 °C ideal are not substantiated by the cited habitat records; retain values unchanged and mark needs_source."
+    },
+    {
+      "param": "depth_m",
+      "kind": "range",
+      "range": [
+        1,
+        40
+      ],
+      "ideal": [
+        3,
+        35
+      ],
+      "weight": 0.5,
+      "active": true,
+      "value_status": "partly_sourced",
+      "sources": [
+        "https://wildlife.ca.gov/Fishing/Ocean/Regulations/Sport-Fishing",
+        "https://fishbase.org/FieldGuide/FieldGuideSummary.php?GenusName=Sebastes&SpeciesName=atrovirens&pda=1&sps=",
+        "https://www.waterboards.ca.gov/water_issues/programs/swamp/docs/coast_study/bog2012may/apx1.pdf"
+      ],
+      "gate": true,
+      "reason_template": "Depth is {value} m, within prime Pacific depth zone for kelp rockfish.",
+      "value_notes": "FishBase reports demersal occurrence from 9-46 m, usually on or near the bottom in kelp beds and rocky areas; the California coastal survey appendix reports 0-46 m. This supports the configured 1-40 m outer interval broadly, but not the 3-35 m ideal as a measured preference curve."
+    }
+  ],
+  "timing": {
+    "status": "angler_lore",
+    "light": {
+      "map": {
+        "day": 1,
+        "dawn": 0.9,
+        "dusk": 0.9,
+        "night": 0.5
+      },
+      "text": {
+        "day": "Full daylight when Pacific gamefish actively hunt.",
+        "dawn": "Dawn low-light feeding window.",
+        "dusk": "Dusk feeding window."
+      }
+    },
+    "note": "West Coast captain reports and biological upwelling patterns.",
+    "sources": [
+      "https://wildlife.ca.gov/Fishing/Ocean/Regulations/Sport-Fishing"
+    ]
+  },
+  "regulations": {
+    "summary": "CDFW: Part of 10-rockfish aggregate bag",
+    "min_size": "None",
+    "max_size": "None",
+    "bag_limit": "10 per harvester / day aggregate",
+    "season": "Seasonal groundfish window",
+    "jurisdiction": "CDFW",
+    "source_name": "West Coast State Regulations (CDFW/WDFW/ODFW/NOAA)",
+    "source_url": "https://wildlife.ca.gov/Fishing/Ocean/Regulations/Sport-Fishing"
+  },
+  "lon_range": [
+    -138,
+    -110
+  ]
+}

@@ -1,0 +1,162 @@
+{
+  "schema_version": 1,
+  "id": "bluefin-tuna",
+  "common_name": "Atlantic bluefin tuna",
+  "scientific_name": "Thunnus thynnus",
+  "aliases": [
+    "bluefin",
+    "giant bluefin"
+  ],
+  "habitat_zone": "offshore",
+  "display": {
+    "color": "#8224f2"
+  },
+  "review_status": "draft v1 - giant oceanic pelagic profile",
+  "image": {
+    "status": "placeholder",
+    "kind": "illustration",
+    "url": "fish/bluefin-tuna.png",
+    "credit": "Original illustration",
+    "license": "",
+    "plan": "web/fish/bluefin-tuna.png placeholder illustration."
+  },
+  "profile": {
+    "size": "Common 200-600+ lb; up to 1000+ lb",
+    "diet": "Herring, mackerel, squids, and crustaceans",
+    "swimming_depth": "Pelagic open ocean; 10 to 500+ m",
+    "behavior": "Massive pelagic migrator that travels along deep oceanic fronts and Gulf Stream boundaries.",
+    "regulations_link": "https://myfwc.com/",
+    "sources": [
+      "https://cd1-www.fisheries.noaa.gov/species/western-atlantic-bluefin-tuna",
+      "https://www.habitat.noaa.gov/application/efhinventory/docs/a10_hms_efh.pdf",
+      "https://pmc.ncbi.nlm.nih.gov/articles/PMC2701635/",
+      "https://www.iccat.int/Documents/CVSP/CV075_2018/n_6/CV075061494.pdf",
+      "https://www.ncei.noaa.gov/waf/data-atlas-waf/products/html/lmrPlates/HabitatSuitability_BluefinTunaLayerGuidance.htm"
+    ]
+  },
+  "factors": [
+    {
+      "param": "sst_c",
+      "kind": "range",
+      "range": [
+        12,
+        24
+      ],
+      "ideal": [
+        16,
+        22
+      ],
+      "weight": 0.35,
+      "active": true,
+      "value_status": "partly_sourced",
+      "sources": [
+        "https://pmc.ncbi.nlm.nih.gov/articles/PMC2701635/",
+        "https://www.iccat.int/Documents/CVSP/CV075_2018/n_6/CV075061494.pdf",
+        "https://www.habitat.noaa.gov/application/efhinventory/docs/a10_hms_efh.pdf"
+      ],
+      "reason_template": "Water is {value} C, cool oceanic water favored by bluefin tuna.",
+      "value_notes": "Archival-tag data report Atlantic bluefin tuna occupying 10–23 °C for most of the record, with peak occupancy around 13–20 °C; ICCAT analyses report broad adult and juvenile temperature ranges. This supports the configured 12–24 °C range and 16–22 °C ideal as broad species-level conditions, but temperature use varies by stock, life stage, season, and dive depth; it is not a single South Florida SST optimum."
+    },
+    {
+      "param": "sst_gradient",
+      "kind": "higher_is_better",
+      "weight": 0.25,
+      "active": true,
+      "value_status": "partly_sourced",
+      "sources": [
+        "https://www.ncei.noaa.gov/waf/data-atlas-waf/products/html/lmrPlates/HabitatSuitability_BluefinTunaLayerGuidance.htm",
+        "https://www.habitat.noaa.gov/application/efhinventory/docs/a10_hms_efh.pdf"
+      ],
+      "reason_template": "Thermal break strength is {per10km} C per 10 km, marking oceanic fronts.",
+      "value_notes": "NOAA's habitat guidance describes bluefin feeding along productive frontal features, including chlorophyll-a fronts, and tracking changing water temperature and currents. This supports frontal habitat association, but a chlorophyll front is not identical to the runtime SST-gradient magnitude and does not calibrate a higher-is-better score."
+    },
+    {
+      "param": "depth_m",
+      "kind": "range",
+      "range": [
+        100,
+        3000
+      ],
+      "ideal": [
+        200,
+        1500
+      ],
+      "weight": 0.15,
+      "active": true,
+      "value_status": "partly_sourced",
+      "sources": [
+        "https://www.fisheries.noaa.gov/species/western-atlantic-bluefin-tuna",
+        "https://pmc.ncbi.nlm.nih.gov/articles/PMC2701635/",
+        "https://www.habitat.noaa.gov/application/efhinventory/docs/a10_hms_efh.pdf"
+      ],
+      "gate": true,
+      "reason_template": "Depth is {value} m, in open ocean pelagic waters.",
+      "value_notes": "NOAA reports bluefin tuna frequently diving to 500–1,000 m; archival tags document broad vertical use. These are fish dive depths, not seafloor bathymetry. Bluefin are highly migratory and occupy both shelf and open-ocean habitats, so these sources do not validate the configured 100–3,000 m bathymetric band or 200–1,500 m ideal. Depth remains an active gate."
+    },
+    {
+      "param": "season_presence",
+      "kind": "season",
+      "weight": 0.25,
+      "active": true,
+      "value_status": "partly_sourced",
+      "sources": [
+        "https://www.fisheries.noaa.gov/species/western-atlantic-bluefin-tuna",
+        "https://www.habitat.noaa.gov/application/efhinventory/docs/a10_hms_efh.pdf"
+      ],
+      "months": [
+        1,
+        2,
+        3,
+        4,
+        5
+      ],
+      "peak_months": [
+        2,
+        3,
+        4
+      ],
+      "in_score": 0.8,
+      "off_score": 0.2,
+      "value_text": {
+        "peak": "It is peak bluefin tuna winter/spring migration season.",
+        "in_season": "It is bluefin migration season.",
+        "off": "Outside main bluefin migration window."
+      },
+      "value_notes": "NOAA reports western Atlantic bluefin spawning from mid-April through June, mainly in the Gulf of Mexico, while NOAA EFH tagging summaries describe seasonal movements and shifting depth/temperature use. The configured January–May window may represent winter-to-spring migration/availability, but it does not match the full Gulf spawning period and needs local catch/telemetry calibration."
+    }
+  ],
+  "timing": {
+    "status": "angler_lore",
+    "light": {
+      "map": {
+        "day": 1,
+        "dawn": 0.9,
+        "dusk": 0.9,
+        "night": 0.4
+      },
+      "text": {
+        "day": "It is full daylight, when fish feed actively.",
+        "dawn": "It is dawn, a low-light time when fish feed actively.",
+        "dusk": "It is dusk, a low-light time when fish feed actively."
+      }
+    },
+    "note": "Patterns reported by local captains and fishing writers, not tested by studies.",
+    "sources": [
+      "https://myfwc.com/"
+    ]
+  },
+  "regulations": {
+    "summary": "Regulated species - See MyFWC/NOAA guidelines",
+    "min_size": "Check MyFWC/NOAA rules",
+    "max_size": "None",
+    "bag_limit": "Varies by region / state",
+    "season": "Open year-round (subject to local quota/closures)",
+    "jurisdiction": "Atlantic & Gulf State/Federal Waters",
+    "source_name": "MyFWC Saltwater Regulations",
+    "source_url": "https://myfwc.com/fishing/saltwater/recreational/"
+  },
+  "lon_range": [
+    -100,
+    -50
+  ]
+}

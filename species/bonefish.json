@@ -1,0 +1,186 @@
+{
+  "schema_version": 1,
+  "id": "bonefish",
+  "common_name": "Bonefish",
+  "scientific_name": "Albula vulpes",
+  "aliases": [
+    "gray ghost"
+  ],
+  "habitat_zone": "inshore",
+  "review_status": "reviewed 2026-11-14 - habitat and life history checked against FWC; catch-and-release rules checked against current FWC regulations",
+  "image": {
+    "status": "placeholder",
+    "kind": "illustration",
+    "url": "fish/placeholder.png",
+    "credit": "Placeholder graphic",
+    "license": "",
+    "plan": "web/fish/placeholder.png is a transparent placeholder image."
+  },
+  "profile": {
+    "size": "Can reach about 3 feet and 15-18 lb, though fish over 10 lb are uncommon. FWC reports typical Florida catches averaging roughly 3-5 lb.",
+    "diet": "Feeds primarily on benthic invertebrates including shrimp, crabs and other small crustaceans found in seagrass and sand-flat sediments.",
+    "behavior": "Shallow-water flats specialist, often in less than one foot of water over seagrass and sometimes white sand. Small schools move across grass and sand flats searching for shrimp, crabs and other invertebrates. Fish are wary and rely on speed and a deeply forked tail. Northern Florida Keys telemetry also documents use of deeper channels that may provide refuge; this does not locate fish in real time.",
+    "life_history": "Matures at approximately 3-4 years and 17-18 inches total length; can live more than 23 years. Spawning occurs offshore, with seasonal movements between home ranges and spawning sites documented in some regional populations. Bahamas migration findings should not automatically be transferred to South Florida.",
+    "regulations_link": "https://myfwc.com/fishing/saltwater/recreational/bonefish/",
+    "sources": [
+      "https://doi.org/10.1007/s10641-015-0420-6",
+      "https://doi.org/10.1016/j.jtherbio.2010.10.005"
+    ],
+    "spawning": "Some Bahamas studies document spawning-site linkages and seasonal movements, but those findings should not be assumed for South Florida. FWC reports spawning from November through May, probably in deep or offshore water; the timing and routes of individual South Florida spawning migrations remain incompletely understood.",
+    "overwintering": "No South Florida overwintering route or seasonal refuge rule is encoded in this pilot profile."
+  },
+  "factors": [
+    {
+      "param": "sst_c",
+      "kind": "range",
+      "range": [
+        20,
+        35
+      ],
+      "ideal": [
+        25,
+        31
+      ],
+      "weight": 0.35,
+      "active": true,
+      "value_status": "provisional",
+      "value_notes": "A peer-reviewed adult Eleuthera study measured laboratory performance optima of 28.0 °C for critical swimming speed and 26.7 °C for scope for activity; field loggers recorded 14.5–37.9 °C, but only eight fish were recaptured with functioning loggers from 138 implanted. A separate study reported critical thermal maxima of 36.4 ± 0.5 and 37.9 ± 0.5 °C and habitat temperatures up to 40.6 °C. These are performance and tolerance data, not a validated preferred-SST measure or catch-response curve, and therefore do not validate the configured numeric SST suitability band. Transfer from Bahamian tidal creeks to South Florida is also unvalidated.",
+      "reason_template": "Water is {value} C, within the currently configured provisional screening band for Bonefish; this is not a validated thermal preference.",
+      "sources": [
+        "https://doi.org/10.1007/s10641-015-0420-6",
+        "https://doi.org/10.1016/j.jtherbio.2010.10.005"
+      ],
+      "gate": true,
+      "required": true
+    }
+  ],
+  "open_items": [
+    "Find a primary study supporting adult Albula vulpes thermal tolerance or preferred temperature; do not infer SST thresholds from habitat-use telemetry.",
+    "Determine whether Bahamas spawning-site linkage findings transfer to South Florida timing, routes, and population structure.",
+    "Add independent South Florida observations or telemetry for seasonal presence and movement validation.",
+    "Represent shallow-flat foraging, channel/refuge context, and spawning movement as separate candidate dimensions.",
+    "Document the provenance and applicability of each habitat feature, including mapped-coverage gaps.",
+    "Keep current SST range, weight, active state, gate, and required flag unchanged until evidence and validation justify a model change."
+  ],
+  "display": {
+    "color": "#aff20c"
+  },
+  "model": "sites",
+  "site_kinds": [
+    "inlet",
+    "flat",
+    "cut"
+  ],
+  "min_score_report": 0.35,
+  "max_spots": 15,
+  "confidence_cap": "Medium",
+  "timing": {
+    "status": "angler_lore",
+    "note": "Angler-derived timing hypotheses only. The numeric light, tide, and front maps are legacy uncalibrated settings, not demonstrated Bonefish feeding probabilities. Calibrate against timestamped, effort-aware observations before using them as biological claims.",
+    "sources": [],
+    "weights": {
+      "light": 0.5,
+      "tide": 0.3,
+      "front": 0.2
+    },
+    "light": {
+      "map": {
+        "dusk": 1,
+        "night": 0.8,
+        "dawn": 0.9,
+        "day": 0.6
+      },
+      "text": {
+        "dusk": "Dusk activity peak for Bonefish.",
+        "night": "Night feeding period for Bonefish.",
+        "dawn": "Dawn activity peak for Bonefish.",
+        "day": "Daytime feeding period for Bonefish."
+      }
+    },
+    "tide": {
+      "map": {
+        "falling": 1,
+        "slack_low": 0.6,
+        "rising": 0.7,
+        "slack_high": 0.5
+      },
+      "text": {
+        "falling": "Outgoing tide flushes food for Bonefish.",
+        "slack_low": "Slack low tide for Bonefish.",
+        "rising": "Incoming tide brings bait for Bonefish.",
+        "slack_high": "Slack high tide for Bonefish."
+      }
+    },
+    "front": {
+      "map": {
+        "approaching": 0.8,
+        "just_passed": 0.4,
+        "lull": 0.5
+      },
+      "text": {
+        "approaching": "Pre-front feeding spree for Bonefish.",
+        "just_passed": "Post-front slow period for Bonefish.",
+        "lull": "Stable weather pattern for Bonefish."
+      }
+    }
+  },
+  "lat_range": [
+    15,
+    27
+  ],
+  "regulations": {
+    "summary": "Florida bonefish are a catch-and-release-only fishery. Harvest is prohibited; temporary possession at the capture site for photography, measuring and weighing is allowed under FWC handling rules.",
+    "min_size": "No harvest size limit because harvest is prohibited",
+    "max_size": "No harvest size limit because harvest is prohibited",
+    "bag_limit": "Catch-and-release only; no harvest bag limit",
+    "season": "Open year-round for catch-and-release",
+    "jurisdiction": "Florida bonefish management rules extend into adjacent federal waters",
+    "source_name": "Florida Fish and Wildlife Conservation Commission",
+    "source_url": "https://myfwc.com/fishing/saltwater/recreational/bonefish/",
+    "verified_date": "2026-11-14",
+    "notes": "Harvest is prohibited. Multiple hooks used with live or dead natural bait to harvest or attempt harvest are prohibited. Temporary possession of one fish at a time for photography, measuring and weighing is allowed at the site of capture. Handle carefully and release promptly."
+  },
+  "lon_range": [
+    -100,
+    -50
+  ],
+  "habitat_contexts": {
+    "schema_version": 1,
+    "contexts": [
+      {
+        "id": "shallow-flat-use",
+        "feature_types": [
+          "flat",
+          "bay_subregion",
+          "nearshore_zone"
+        ],
+        "habitat_roles": [
+          "foraging",
+          "movement"
+        ],
+        "evidence_status": "supported_general_association",
+        "local_validation": "required",
+        "sources": [
+          "https://doi.org/10.3354/meps291237"
+        ],
+        "notes": "Northern Florida Keys telemetry supports use of shallow foraging areas. Transfer to individual Biscayne Bay flats and mapped habitat classes requires local validation."
+      },
+      {
+        "id": "channel-and-refuge-context",
+        "feature_types": [
+          "channel"
+        ],
+        "habitat_roles": [
+          "movement",
+          "refuge"
+        ],
+        "evidence_status": "candidate_association",
+        "local_validation": "required",
+        "sources": [
+          "https://doi.org/10.3354/meps291237"
+        ],
+        "notes": "The cited telemetry documents use of deeper channels that may provide thermal refuge. Do not treat this as a validated South Florida channel preference or a real-time location claim."
+      }
+    ]
+  }
+}

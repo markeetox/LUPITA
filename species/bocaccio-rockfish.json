@@ -1,0 +1,122 @@
+{
+  "schema_version": 1,
+  "id": "bocaccio-rockfish",
+  "common_name": "Bocaccio rockfish",
+  "scientific_name": "Sebastes paucispinis",
+  "aliases": [
+    "bocaccio rockfish"
+  ],
+  "habitat_zone": "reef",
+  "display": {
+    "color": "#206dd8"
+  },
+  "review_status": "Evidence reviewed 2026-11-17. NOAA, WDFW and Canadian species accounts support adult/juvenile depth and habitat shifts; no suitable species-specific SST preference evidence was found.",
+  "image": {
+    "status": "placeholder",
+    "kind": "illustration",
+    "url": "fish/bocaccio-rockfish.png",
+    "credit": "Original illustration",
+    "license": "",
+    "plan": "web/fish/bocaccio-rockfish.png placeholder illustration."
+  },
+  "profile": {
+    "size": "Min limit None / Bag limit 10 per day (rockfish sublimit)",
+    "diet": "Small fish, crustaceans, squids, and pelagic prey",
+    "swimming_depth": "20 to 200 m",
+    "behavior": "Navigates West Coast kelp forests, rocky reefs, and coastal upwelling zones.",
+    "regulations_link": "https://wildlife.ca.gov/Fishing/Ocean/Regulations/Sport-Fishing",
+    "sources": [
+      "https://wildlife.ca.gov/Fishing/Ocean/Regulations/Sport-Fishing",
+      "https://www.fisheries.noaa.gov/species/bocaccio",
+      "https://wdfw.wa.gov/species-habitats/species/sebastes-paucispinis",
+      "https://www.canada.ca/en/environment-climate-change/services/species-risk-public-registry/cosewic-assessments-status-reports/bocaccio-2013.html",
+      "https://repository.library.noaa.gov/view/noaa/2161/noaa_2161_DS1.pdf"
+    ]
+  },
+  "lat_range": [
+    30,
+    52
+  ],
+  "factors": [
+    {
+      "param": "sst_c",
+      "kind": "range",
+      "range": [
+        8,
+        16
+      ],
+      "ideal": [
+        10,
+        14
+      ],
+      "weight": 0.5,
+      "active": true,
+      "value_status": "needs_source",
+      "sources": [
+        "https://wildlife.ca.gov/Fishing/Ocean/Regulations/Sport-Fishing",
+        "https://www.fisheries.noaa.gov/species/bocaccio",
+        "https://wdfw.wa.gov/species-habitats/species/sebastes-paucispinis"
+      ],
+      "reason_template": "Water is {value} C, inside preferred Pacific temperature range for bocaccio rockfish.",
+      "value_notes": "The reviewed NOAA, WDFW and COSEWIC sources document distribution, habitat and depth but do not establish a numeric preferred surface-temperature range for bocaccio. Adult demersal/midwater habitat and pelagic juvenile stages also experience different thermal environments. The configured 8-16 °C range and 10-14 °C ideal remain unchanged but are unsupported by a species-specific SST preference source."
+    },
+    {
+      "param": "depth_m",
+      "kind": "range",
+      "range": [
+        20,
+        200
+      ],
+      "ideal": [
+        22,
+        195
+      ],
+      "weight": 0.5,
+      "active": true,
+      "value_status": "partly_sourced",
+      "sources": [
+        "https://wildlife.ca.gov/Fishing/Ocean/Regulations/Sport-Fishing",
+        "https://www.fisheries.noaa.gov/species/bocaccio",
+        "https://wdfw.wa.gov/species-habitats/species/sebastes-paucispinis",
+        "https://www.canada.ca/en/environment-climate-change/services/species-risk-public-registry/cosewic-assessments-status-reports/bocaccio-2013.html"
+      ],
+      "gate": true,
+      "reason_template": "Depth is {value} m, within prime Pacific depth zone for bocaccio rockfish.",
+      "value_notes": "NOAA reports adult bocaccio primarily in rocky habitat at 130-980 feet (about 40-299 m), while WDFW reports a broad 20-475 m range and greatest abundance around 95-225 m. Juveniles settle in shallower nearshore rocky/kelp habitat and move deeper as they mature; adults can also be midwater. This supports depth as a habitat dimension but does not validate the configured 20-200 m range or 22-195 m ideal across life stages."
+    }
+  ],
+  "timing": {
+    "status": "angler_lore",
+    "light": {
+      "map": {
+        "day": 1,
+        "dawn": 0.9,
+        "dusk": 0.9,
+        "night": 0.5
+      },
+      "text": {
+        "day": "Full daylight when Pacific gamefish actively hunt.",
+        "dawn": "Dawn low-light feeding window.",
+        "dusk": "Dusk feeding window."
+      }
+    },
+    "note": "West Coast captain reports and biological upwelling patterns.",
+    "sources": [
+      "https://wildlife.ca.gov/Fishing/Ocean/Regulations/Sport-Fishing"
+    ]
+  },
+  "regulations": {
+    "summary": "CDFW: Included in rockfish 10-bag sub-limit",
+    "min_size": "None",
+    "max_size": "None",
+    "bag_limit": "10 per day (rockfish sublimit)",
+    "season": "Seasonal groundfish window",
+    "jurisdiction": "CDFW / NOAA",
+    "source_name": "West Coast State Regulations (CDFW/WDFW/ODFW/NOAA)",
+    "source_url": "https://wildlife.ca.gov/Fishing/Ocean/Regulations/Sport-Fishing"
+  },
+  "lon_range": [
+    -138,
+    -110
+  ]
+}

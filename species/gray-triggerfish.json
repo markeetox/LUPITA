@@ -1,0 +1,141 @@
+{
+  "schema_version": 1,
+  "id": "gray-triggerfish",
+  "common_name": "Gray triggerfish",
+  "scientific_name": "Balistes capriscus",
+  "aliases": [
+    "triggerfish",
+    "gray triggerfish"
+  ],
+  "habitat_zone": "reef",
+  "display": {
+    "color": "#b7d80a"
+  },
+  "review_status": "draft v1 - reef hardbottom species",
+  "image": {
+    "status": "placeholder",
+    "kind": "illustration",
+    "url": "fish/gray-triggerfish.png",
+    "credit": "Original illustration",
+    "license": "",
+    "plan": "web/fish/gray-triggerfish.png placeholder illustration."
+  },
+  "profile": {
+    "size": "Common 2-5 lb; up to 13 lb",
+    "diet": "Sea urchins, sand dollars, crabs, and mollusks",
+    "swimming_depth": "10 to 100 m",
+    "behavior": "Strong-jawed reef fish that builds shallow nests in sand near reefs and feeds on hard-shelled invertebrates.",
+    "regulations_link": "https://myfwc.com/",
+    "sources": [
+      "https://www.ncei.noaa.gov/waf/data-atlas-waf/products/html/lmrPlates/GrayTriggerfishLayerGuidance.htm",
+      "https://www.floridamuseum.ufl.edu/discover-fish/species-profiles/gray-triggerfish/",
+      "https://www.frontiersin.org/journals/marine-science/articles/10.3389/fmars.2026.1743605/full",
+      "https://repository.library.noaa.gov/view/noaa/17687/noaa_17687_DS1.pdf"
+    ]
+  },
+  "factors": [
+    {
+      "param": "sst_c",
+      "kind": "range",
+      "range": [
+        18,
+        28
+      ],
+      "ideal": [
+        21,
+        26
+      ],
+      "weight": 0.35,
+      "active": true,
+      "value_status": "partly_sourced",
+      "sources": [
+        "https://www.frontiersin.org/journals/marine-science/articles/10.3389/fmars.2026.1743605/full",
+        "https://repository.library.noaa.gov/view/noaa/17687/noaa_17687_DS1.pdf"
+      ],
+      "reason_template": "Water is {value} C, favorable for triggerfish.",
+      "value_notes": "A 2026 Florida Panhandle tag-return analysis of 3,744 released gray triggerfish recorded capture SST of 15–31 °C (median 22 °C) and reported lower recapture proportions with increasing SST, especially above 20 °C. A southeastern U.S. spawning survey recorded spawning females at 15–27 °C (mean 22.7 °C). These are release/recapture and spawning observations, not a validated habitat-preference curve or local South Florida catch optimum; they do not directly validate 18–28 °C / 21–26 °C."
+    },
+    {
+      "param": "structure_type",
+      "kind": "category",
+      "preferred": [
+        "artificial_reef",
+        "natural_reef",
+        "wreck",
+        "hardbottom"
+      ],
+      "weight": 0.35,
+      "active": true,
+      "value_status": "partly_sourced",
+      "sources": [
+        "https://www.ncei.noaa.gov/waf/data-atlas-waf/products/html/lmrPlates/GrayTriggerfishLayerGuidance.htm",
+        "https://www.floridamuseum.ufl.edu/discover-fish/species-profiles/gray-triggerfish/"
+      ],
+      "map": {
+        "artificial_reef": 1,
+        "natural_reef": 1,
+        "wreck": 0.9,
+        "hardbottom": 0.8
+      },
+      "reason_template": "Structure is {value}, where triggerfish feed.",
+      "value_notes": "NOAA and Florida Museum describe adults using natural/artificial reefs, hardbottom, ledges, and seaward reefs; juveniles and some adults associate with Sargassum. The sources support reef/hardbottom use but do not validate wreck preference or the exact numeric category ranking."
+    },
+    {
+      "param": "depth_m",
+      "kind": "range",
+      "range": [
+        10,
+        100
+      ],
+      "ideal": [
+        15,
+        50
+      ],
+      "weight": 0.3,
+      "active": true,
+      "value_status": "partly_sourced",
+      "sources": [
+        "https://www.ncei.noaa.gov/waf/data-atlas-waf/products/html/lmrPlates/GrayTriggerfishLayerGuidance.htm",
+        "https://www.floridamuseum.ufl.edu/discover-fish/species-profiles/gray-triggerfish/",
+        "https://www.frontiersin.org/journals/marine-science/articles/10.3389/fmars.2026.1743605/full"
+      ],
+      "gate": true,
+      "reason_template": "Depth is {value} m, in reef depth zone.",
+      "value_notes": "NOAA reports adult depth around 10–55 m and Florida Museum reports reef habitat to about 55 m; the 2026 Florida Panhandle tag-return dataset sampled 20–67 m. These observations support a mid-depth reef association but do not validate the configured 10–100 m outer band or 15–50 m ideal. Depth is an active gate."
+    }
+  ],
+  "timing": {
+    "status": "angler_lore",
+    "light": {
+      "map": {
+        "day": 1,
+        "dawn": 0.8,
+        "dusk": 0.8,
+        "night": 0.2
+      },
+      "text": {
+        "day": "It is full daylight, when fish feed actively.",
+        "dawn": "It is dawn, a low-light time when fish feed actively.",
+        "dusk": "It is dusk, a low-light time when fish feed actively."
+      }
+    },
+    "note": "Patterns reported by local captains and fishing writers, not tested by studies.",
+    "sources": [
+      "https://myfwc.com/"
+    ]
+  },
+  "regulations": {
+    "summary": "Regulated species - See MyFWC/NOAA guidelines",
+    "min_size": "Check MyFWC/NOAA rules",
+    "max_size": "None",
+    "bag_limit": "Varies by region / state",
+    "season": "Open year-round (subject to local quota/closures)",
+    "jurisdiction": "Atlantic & Gulf State/Federal Waters",
+    "source_name": "MyFWC Saltwater Regulations",
+    "source_url": "https://myfwc.com/fishing/saltwater/recreational/"
+  },
+  "lon_range": [
+    -100,
+    -50
+  ]
+}

@@ -1,0 +1,122 @@
+{
+  "schema_version": 1,
+  "id": "kelp-greenling",
+  "common_name": "Kelp greenling",
+  "scientific_name": "Hexagrammos decagrammus",
+  "aliases": [
+    "kelp greenling"
+  ],
+  "habitat_zone": "reef",
+  "display": {
+    "color": "#870cf2"
+  },
+  "review_status": "Evidence reviewed 2026-11-17. WDFW/ODFW and NOAA/California habitat sources support shallow rocky/kelp habitat; no numeric preferred SST evidence found.",
+  "image": {
+    "status": "placeholder",
+    "kind": "illustration",
+    "url": "fish/kelp-greenling.png",
+    "credit": "Original illustration",
+    "license": "",
+    "plan": "web/fish/kelp-greenling.png placeholder illustration."
+  },
+  "profile": {
+    "size": "Min limit 12 inches TL / Bag limit 2-10 per harvester / day",
+    "diet": "Small fish, crustaceans, squids, and pelagic prey",
+    "swimming_depth": "1 to 40 m",
+    "behavior": "Navigates West Coast kelp forests, rocky reefs, and coastal upwelling zones.",
+    "regulations_link": "https://wildlife.ca.gov/Fishing/Ocean/Regulations/Sport-Fishing",
+    "sources": [
+      "https://wildlife.ca.gov/Fishing/Ocean/Regulations/Sport-Fishing",
+      "https://wdfw.wa.gov/species-habitats/species/hexagrammos-decagrammus",
+      "https://nrimp.dfw.state.or.us/mrp/default.aspx?p=74",
+      "https://www.webapps.nwfsc.noaa.gov/assets/26/6864_03092012_104420_Washington.1977a.pdf",
+      "https://doi.org/10.2305/IUCN.UK.2020-2.RLTS.T158882453A158883838.en"
+    ]
+  },
+  "lat_range": [
+    34,
+    58
+  ],
+  "factors": [
+    {
+      "param": "sst_c",
+      "kind": "range",
+      "range": [
+        8,
+        16
+      ],
+      "ideal": [
+        10,
+        14
+      ],
+      "weight": 0.5,
+      "active": true,
+      "value_status": "needs_source",
+      "sources": [
+        "https://wildlife.ca.gov/Fishing/Ocean/Regulations/Sport-Fishing",
+        "https://wdfw.wa.gov/species-habitats/species/hexagrammos-decagrammus",
+        "https://doi.org/10.2305/IUCN.UK.2020-2.RLTS.T158882453A158883838.en"
+      ],
+      "reason_template": "Water is {value} C, inside preferred Pacific temperature range for kelp greenling.",
+      "value_notes": "WDFW, ODFW and IUCN sources document kelp/rock habitat and geographic range but do not establish a numeric preferred SST or adult thermal-response curve. The configured 8-16 °C range and 10-14 °C ideal remain unsupported by species-specific temperature evidence; keep values unchanged and mark needs_source."
+    },
+    {
+      "param": "depth_m",
+      "kind": "range",
+      "range": [
+        1,
+        40
+      ],
+      "ideal": [
+        3,
+        35
+      ],
+      "weight": 0.5,
+      "active": true,
+      "value_status": "partly_sourced",
+      "sources": [
+        "https://wildlife.ca.gov/Fishing/Ocean/Regulations/Sport-Fishing",
+        "https://wdfw.wa.gov/species-habitats/species/hexagrammos-decagrammus",
+        "https://nrimp.dfw.state.or.us/mrp/default.aspx?p=74",
+        "https://doi.org/10.2305/IUCN.UK.2020-2.RLTS.T158882453A158883838.en"
+      ],
+      "gate": true,
+      "reason_template": "Depth is {value} m, within prime Pacific depth zone for kelp greenling.",
+      "value_notes": "WDFW reports rocky inshore habitat and kelp beds to about 46 m; ODFW reports to 25 fathoms, and the IUCN account describes intertidal/subtidal rocky reefs, kelp and eelgrass typically to 50 m. A Farallon Islands survey records a broader 0-100 m range. This supports shallow demersal habitat, but the configured 1-40 m / 3-35 m interval is not a universal preference across regions."
+    }
+  ],
+  "timing": {
+    "status": "angler_lore",
+    "light": {
+      "map": {
+        "day": 1,
+        "dawn": 0.9,
+        "dusk": 0.9,
+        "night": 0.5
+      },
+      "text": {
+        "day": "Full daylight when Pacific gamefish actively hunt.",
+        "dawn": "Dawn low-light feeding window.",
+        "dusk": "Dusk feeding window."
+      }
+    },
+    "note": "West Coast captain reports and biological upwelling patterns.",
+    "sources": [
+      "https://wildlife.ca.gov/Fishing/Ocean/Regulations/Sport-Fishing"
+    ]
+  },
+  "regulations": {
+    "summary": "CDFW/WDFW: 12\" min TL; 2-10 per day",
+    "min_size": "12 inches TL",
+    "max_size": "None",
+    "bag_limit": "2-10 per harvester / day",
+    "season": "Seasonal groundfish rules",
+    "jurisdiction": "CDFW / ODFW / WDFW",
+    "source_name": "West Coast State Regulations (CDFW/WDFW/ODFW/NOAA)",
+    "source_url": "https://wildlife.ca.gov/Fishing/Ocean/Regulations/Sport-Fishing"
+  },
+  "lon_range": [
+    -138,
+    -110
+  ]
+}

@@ -1,0 +1,157 @@
+{
+  "schema_version": 1,
+  "id": "mangrove-snapper",
+  "common_name": "Gray (mangrove) snapper",
+  "scientific_name": "Lutjanus griseus",
+  "aliases": [
+    "mangrove snapper",
+    "gray snapper",
+    "grover"
+  ],
+  "habitat_zone": "coastal",
+  "display": {
+    "color": "#1dd80a"
+  },
+  "review_status": "reviewed 2026-11-14 - profile checked against FWC species biology; Atlantic state/federal limits checked against current FWC snapper guidance",
+  "image": {
+    "status": "placeholder",
+    "kind": "illustration",
+    "url": "fish/mangrove-snapper.png",
+    "credit": "Original illustration",
+    "license": "",
+    "plan": "web/fish/mangrove-snapper.png placeholder illustration."
+  },
+  "profile": {
+    "size": "Commonly reaches about 24 inches and 10 lb; larger fish occur offshore.",
+    "diet": "Crustaceans and small fishes.",
+    "swimming_depth": "Occurs from shallow coastal and estuarine habitat to offshore reef and shelf waters; documented depth range extends to about 180 m.",
+    "behavior": "Uses a broad range of coastal structure, including mangroves, seagrass, reefs and artificial structure. Juveniles commonly occupy estuarine nursery habitat and may enter freshwater; adults also occur offshore around reefs. Spawning occurs offshore during summer.",
+    "spawning": "June through August according to FWC's Florida species profile.",
+    "habitat": "Coastal, estuarine and shelf waters; mangrove shorelines, seagrass beds, reefs and artificial structure.",
+    "regulations_link": "https://myfwc.com/fishing/saltwater/recreational/snappers/",
+    "sources": [
+      "https://www.floridamuseum.ufl.edu/discover-fish/species-profiles/gray-snapper/",
+      "https://www.swg.usace.army.mil/Portals/26/docs/Planning/Public%20Notices-Civil%20Works/HSC-ECIP%20FIFR-EIS/App%20L%20-%20Essential%20Fish%20Habitat%20Assessment%20%2818%20Nov%202019%29.pdf",
+      "https://myfwc.com/wildlifehabitats/profiles/saltwater/snapper/gray-snapper/",
+      "https://www.fisheries.noaa.gov/s3//2024-05/Red-gray-snapper-12-20-23-final-wRevRFA.pdf"
+    ]
+  },
+  "factors": [
+    {
+      "param": "sst_c",
+      "kind": "range",
+      "range": [
+        20,
+        31
+      ],
+      "ideal": [
+        24,
+        29
+      ],
+      "weight": 0.35,
+      "active": true,
+      "value_status": "partly_sourced",
+      "sources": [
+        "https://www.swg.usace.army.mil/Portals/26/docs/Planning/Public%20Notices-Civil%20Works/HSC-ECIP%20FIFR-EIS/App%20L%20-%20Essential%20Fish%20Habitat%20Assessment%20%2818%20Nov%202019%29.pdf"
+      ],
+      "reason_template": "Water is {value} C, ideal for mangrove snapper.",
+      "value_notes": "The regional essential-fish-habitat assessment reports adult gray snapper occurrence at 13.4–32.5 °C across estuarine, nearshore, and offshore environments. This is a broad occurrence envelope, not a preferred temperature interval or South Florida SST response curve; it does not validate 20–31 °C / 24–29 °C as an optimum."
+    },
+    {
+      "param": "structure_type",
+      "kind": "category",
+      "preferred": [
+        "natural_reef",
+        "artificial_reef",
+        "wreck",
+        "hardbottom",
+        "mangrove_edge"
+      ],
+      "weight": 0.4,
+      "active": true,
+      "value_status": "partly_sourced",
+      "sources": [
+        "https://www.floridamuseum.ufl.edu/discover-fish/species-profiles/gray-snapper/",
+        "https://www.swg.usace.army.mil/Portals/26/docs/Planning/Public%20Notices-Civil%20Works/HSC-ECIP%20FIFR-EIS/App%20L%20-%20Essential%20Fish%20Habitat%20Assessment%20%2818%20Nov%202019%29.pdf"
+      ],
+      "map": {
+        "natural_reef": 1,
+        "artificial_reef": 1,
+        "wreck": 0.9,
+        "hardbottom": 0.8,
+        "mangrove_edge": 0.8
+      },
+      "reason_template": "Structure is {value}, perfect cover for mangrove snapper.",
+      "value_notes": "Florida Museum and the regional EFH assessment describe gray snapper using mangroves, coral/rocky ledges, reefs, and hard/soft bottom habitats. This supports broad coastal structure association, but the sources do not validate every preferred category (especially wrecks/artificial reefs) or their numeric score ordering."
+    },
+    {
+      "param": "depth_m",
+      "kind": "range",
+      "range": [
+        0.5,
+        50
+      ],
+      "ideal": [
+        2,
+        30
+      ],
+      "weight": 0.25,
+      "active": true,
+      "value_status": "partly_sourced",
+      "sources": [
+        "https://www.swg.usace.army.mil/Portals/26/docs/Planning/Public%20Notices-Civil%20Works/HSC-ECIP%20FIFR-EIS/App%20L%20-%20Essential%20Fish%20Habitat%20Assessment%20%2818%20Nov%202019%29.pdf",
+        "https://www.floridamuseum.ufl.edu/discover-fish/species-profiles/gray-snapper/"
+      ],
+      "reason_template": "Depth is {value} m, inside mangrove snapper depth zone.",
+      "value_notes": "The EFH assessment reports adult occurrence from 0–180 m, while the profile's 0.5–50 m range and 2–30 m ideal represent a shallow coastal subset. This may be appropriate for an inshore/estuarine model but does not represent the full species depth distribution or validate the exact ideal band."
+    }
+  ],
+  "timing": {
+    "status": "angler_lore",
+    "light": {
+      "map": {
+        "night": 1,
+        "dusk": 0.9,
+        "dawn": 0.9,
+        "day": 0.5
+      },
+      "text": {
+        "night": "It is night, when nocturnal feeding is high.",
+        "dusk": "It is dusk, a low-light time when fish feed actively.",
+        "dawn": "It is dawn, a low-light time when fish feed actively."
+      }
+    },
+    "tide": {
+      "map": {
+        "rising": 1,
+        "falling": 0.9,
+        "slack_high": 0.5,
+        "slack_low": 0.4
+      },
+      "text": {
+        "rising": "The tide is rising, bringing in fresh water and bait.",
+        "falling": "The tide is falling, flushing bait out through structure."
+      }
+    },
+    "note": "Patterns reported by local captains and fishing writers, not tested by studies.",
+    "sources": [
+      "https://myfwc.com/"
+    ]
+  },
+  "regulations": {
+    "summary": "Atlantic Florida: 10 in total length in state waters and 12 in in federal waters; 5 per person in state waters or 10 per person in federal waters, within the 10-snapper aggregate; open year-round.",
+    "min_size": "10 inches total length (Atlantic state waters); 12 inches total length (federal waters)",
+    "max_size": "None",
+    "bag_limit": "5 per person per day in Atlantic state waters; 10 per person per day in federal waters; counts toward the 10-snapper aggregate",
+    "season": "Open year-round",
+    "jurisdiction": "Florida Atlantic state waters and adjacent federal waters; special rules apply in Biscayne National Park",
+    "source_name": "Florida Fish and Wildlife Conservation Commission",
+    "source_url": "https://myfwc.com/fishing/saltwater/recreational/snappers/",
+    "notes": "Atlantic state-water size and bag limits differ from federal-water limits. Biscayne National Park has additional species-specific rules; verify park limits before harvest.",
+    "verified_date": "2026-11-14"
+  },
+  "lon_range": [
+    -100,
+    -50
+  ]
+}

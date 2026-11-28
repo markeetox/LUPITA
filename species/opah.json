@@ -1,0 +1,130 @@
+{
+  "schema_version": 1,
+  "id": "opah",
+  "common_name": "Opah",
+  "scientific_name": "Lampris incognitus",
+  "aliases": [
+    "opah",
+    "smalleye Pacific opah"
+  ],
+  "habitat_zone": "pelagic",
+  "display": {
+    "color": "#3c54f2"
+  },
+  "review_status": "Taxonomic identity reviewed 2026-11-17. The 2018 revision and NOAA Monterey Bay National Marine Sanctuary checklist identify Lampris incognitus as the opah occurring in the Eastern North Pacific. Pre-revision Hawaii tagging remains complex-level evidence and is not confidently attributable to this species.",
+  "image": {
+    "status": "placeholder",
+    "kind": "illustration",
+    "url": "fish/opah.png",
+    "credit": "Original illustration",
+    "license": "",
+    "plan": "web/fish/opah.png placeholder illustration."
+  },
+  "profile": {
+    "size": "Min limit None / Bag limit 10 per harvester / day",
+    "diet": "Small fish, crustaceans, squids, and pelagic prey",
+    "swimming_depth": "50 to 400 m",
+    "behavior": "Navigates West Coast kelp forests, rocky reefs, and coastal upwelling zones.",
+    "regulations_link": "https://wildlife.ca.gov/Fishing/Ocean/Regulations/Sport-Fishing",
+    "sources": [
+      "https://wildlife.ca.gov/Fishing/Ocean/Regulations/Sport-Fishing",
+      "https://www.soest.hawaii.edu/PFRP/reprints/polovina_opah2008.pdf",
+      "https://repository.library.noaa.gov/view/noaa/19480/noaa_19480_DS1.pdf",
+      "https://caseagrant.ucsd.edu/seafood-profiles/opah",
+      "https://pubmed.ncbi.nlm.nih.gov/29690102/",
+      "https://www.itis.gov/servlet/SingleRpt/RefRpt?search_id=pub_id&search_id_value=20949&search_type=publication",
+      "https://repository.library.noaa.gov/view/noaa/23850/noaa_23850_DS1.pdf",
+      "https://www.itis.gov/servlet/SingleRpt/SingleRpt?search_topic=Scientific_Name&search_value=Lampris+incognitus"
+    ]
+  },
+  "lat_range": [
+    20,
+    40
+  ],
+  "factors": [
+    {
+      "param": "sst_c",
+      "kind": "range",
+      "range": [
+        14,
+        22
+      ],
+      "ideal": [
+        16,
+        20
+      ],
+      "weight": 0.5,
+      "active": true,
+      "value_status": "partly_sourced",
+      "sources": [
+        "https://wildlife.ca.gov/Fishing/Ocean/Regulations/Sport-Fishing",
+        "https://www.soest.hawaii.edu/PFRP/reprints/polovina_opah2008.pdf",
+        "https://pubmed.ncbi.nlm.nih.gov/29690102/",
+        "https://caseagrant.ucsd.edu/seafood-profiles/opah"
+      ],
+      "reason_template": "Water is {value} C, inside preferred Pacific temperature range for opah.",
+      "value_notes": "Hawaii archival-tag data published before the 2018 taxonomic revision for the legacy opah complex show fish in roughly 8-20 °C water by day and 16-22 °C at night, with peak nighttime frequency at 18-20 °C. These are ambient temperatures associated with diel vertical behavior, not a fixed surface-temperature preference. The historical tagging cannot be confidently assigned specifically to Lampris incognitus; treat it as legacy Pacific-opah-complex context only. It does not validate the configured 14-22 °C / 16-20 °C SST suitability curve."
+    },
+    {
+      "param": "depth_m",
+      "kind": "range",
+      "range": [
+        50,
+        400
+      ],
+      "ideal": [
+        52,
+        395
+      ],
+      "weight": 0.5,
+      "active": true,
+      "value_status": "partly_sourced",
+      "sources": [
+        "https://wildlife.ca.gov/Fishing/Ocean/Regulations/Sport-Fishing",
+        "https://www.soest.hawaii.edu/PFRP/reprints/polovina_opah2008.pdf",
+        "https://repository.library.noaa.gov/view/noaa/19480/noaa_19480_DS1.pdf",
+        "https://pubmed.ncbi.nlm.nih.gov/29690102/"
+      ],
+      "gate": true,
+      "reason_template": "Depth is {value} m, within prime Pacific depth zone for opah.",
+      "value_notes": "Hawaii archival tags published before the 2018 revision report opah vertical occupancy around 50-400 m by day and 50-150 m at night; this is fish depth in the water column, not seabed depth, and the records cannot be confidently assigned specifically to Lampris incognitus. NOAA EcoCast analysis of California drift-gillnet catches reports opah catch association with continental shelf/slope bathymetry, but the pre-revision taxonomic identity and regional sampling limit species-specific interpretation. This supports bathymetry as a possible regional distribution proxy, not the configured 50-400 m seafloor-depth response interval."
+    }
+  ],
+  "timing": {
+    "status": "angler_lore",
+    "light": {
+      "map": {
+        "day": 1,
+        "dawn": 0.9,
+        "dusk": 0.9,
+        "night": 0.5
+      },
+      "text": {
+        "day": "Full daylight when Pacific gamefish actively hunt.",
+        "dawn": "Dawn low-light feeding window.",
+        "dusk": "Dusk feeding window."
+      }
+    },
+    "note": "West Coast captain reports and biological upwelling patterns.",
+    "sources": [
+      "https://wildlife.ca.gov/Fishing/Ocean/Regulations/Sport-Fishing"
+    ]
+  },
+  "regulations": {
+    "summary": "CDFW/NOAA: Finfish limits apply",
+    "min_size": "None",
+    "max_size": "None",
+    "bag_limit": "10 per harvester / day",
+    "season": "Open year-round",
+    "jurisdiction": "CDFW / NOAA",
+    "source_name": "West Coast State Regulations (CDFW/WDFW/ODFW/NOAA)",
+    "source_url": "https://wildlife.ca.gov/Fishing/Ocean/Regulations/Sport-Fishing"
+  },
+  "lon_range": [
+    -138,
+    -110
+  ],
+  "open_items": [
+    "The East North Pacific profile is assigned to Lampris incognitus based on the 2018 taxonomic revision and NOAA Monterey Bay National Marine Sanctuary checklist. Older Hawaii archival-tag and California catch studies may predate the split and cannot automatically be treated as species-specific evidence for L. incognitus. Revisit factor evidence if source-level specimen/genetic identifications become available."
+  ]
+}

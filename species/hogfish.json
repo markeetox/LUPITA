@@ -1,0 +1,151 @@
+{
+  "schema_version": 1,
+  "id": "hogfish",
+  "common_name": "Hogfish",
+  "scientific_name": "Lachnolaimus maximus",
+  "aliases": [
+    "hog snapper",
+    "hogfish"
+  ],
+  "habitat_zone": "reef",
+  "display": {
+    "color": "#d80a84"
+  },
+  "review_status": "reviewed 2026-11-14 - biology checked against FWC species and research profiles; Atlantic South Florida harvest rules checked against current FWC regulations",
+  "image": {
+    "status": "placeholder",
+    "kind": "illustration",
+    "url": "fish/hogfish.png",
+    "credit": "Original illustration",
+    "license": "",
+    "plan": "web/fish/hogfish.png placeholder illustration."
+  },
+  "profile": {
+    "size": "Can reach about 36 inches; FWC reports a Florida state record of 19 lb 8 oz.",
+    "diet": "Benthic invertebrates including mollusks, crabs and other small crustaceans. Uses its elongated snout to root through sand and sediment.",
+    "swimming_depth": "Juveniles settle in shallow inshore nursery habitat such as seagrass beds. As they mature, hogfish move toward deeper rocky bottoms, ledges and offshore reefs. The current FWC profile does not establish a single preferred depth band.",
+    "behavior": "Reef-associated wrasse that forages by rooting through sand and sediment, often around reefs, ledges and hard bottom. Adults may associate with gorgonian-rich reef habitat. Juveniles use shallow inshore nursery areas before moving deeper with growth.",
+    "life_history": "Sequential protogynous hermaphrodite: all begin life as females and some larger/older individuals transition to males. FWC reports a breeding season from November through June, with peaks in March and April; territorial males maintain harems and spawning commonly occurs in late afternoon.",
+    "spawning": "Breeding season can extend November-June, peaking around March-April according to FWC. Spawning is typically in late afternoon; do not treat the full breeding window as a precise daily or local aggregation forecast.",
+    "regulations_link": "https://myfwc.com/fishing/saltwater/recreational/hogfish/",
+    "sources": [
+      "https://myfwc.com/wildlifehabitats/profiles/saltwater/hogfish/",
+      "https://myfwc.com/research/saltwater/hogfish/",
+      "https://myfwc.com/fishing/saltwater/recreational/hogfish/",
+      "https://www.floridamuseum.ufl.edu/discover-fish/species-profiles/hogfish/",
+      "https://sanctuaries.noaa.gov/science/conservation/pdfs/lindholm2.pdf"
+    ]
+  },
+  "factors": [
+    {
+      "param": "sst_c",
+      "kind": "range",
+      "range": [
+        22,
+        30
+      ],
+      "ideal": [
+        24,
+        28
+      ],
+      "weight": 0.35,
+      "active": true,
+      "value_status": "needs_source",
+      "sources": [],
+      "reason_template": "Water is {value} C, within the currently configured provisional screening band for hogfish; this is not a validated thermal preference.",
+      "value_notes": "The FWC and Florida Museum species accounts document habitat and distribution but do not establish a species-specific thermal preference or tolerance band. No factor-level reference located supports the configured 22–30 °C range or 24–28 °C ideal. Retain these legacy screening values only for compatibility; the numeric SST claim needs direct evidence."
+    },
+    {
+      "param": "structure_type",
+      "kind": "category",
+      "preferred": [
+        "natural_reef",
+        "hardbottom",
+        "open_sand"
+      ],
+      "weight": 0.35,
+      "active": true,
+      "value_status": "partly_sourced",
+      "sources": [
+        "https://myfwc.com/wildlifehabitats/profiles/saltwater/hogfish/",
+        "https://myfwc.com/research/saltwater/hogfish/",
+        "https://www.floridamuseum.ufl.edu/discover-fish/species-profiles/hogfish/",
+        "https://sanctuaries.noaa.gov/science/conservation/pdfs/lindholm2.pdf"
+      ],
+      "map": {
+        "natural_reef": 1,
+        "hardbottom": 0.9,
+        "open_sand": 0.7
+      },
+      "reason_template": "Structure is {value}, where hogfish forage for mollusks and crabs.",
+      "value_notes": "FWC, Florida Museum, and NOAA sanctuary research describe adult hogfish on rocky bottoms, ledges, reefs, and low-relief hard bottom, with juveniles using seagrass and inshore nursery habitat. This supports broad habitat associations, not the exact score ranking among natural_reef, hardbottom, and open_sand or occupancy at an individual mapped polygon."
+    },
+    {
+      "param": "depth_m",
+      "kind": "range",
+      "range": [
+        3,
+        30
+      ],
+      "ideal": [
+        8,
+        25
+      ],
+      "weight": 0.3,
+      "active": true,
+      "value_status": "partly_sourced",
+      "sources": [
+        "https://www.floridamuseum.ufl.edu/discover-fish/species-profiles/hogfish/",
+        "https://myfwc.com/wildlifehabitats/profiles/saltwater/hogfish/"
+      ],
+      "gate": true,
+      "reason_template": "Depth is {value} m, in shallow patch reef depth.",
+      "value_notes": "The Florida Museum species account reports hogfish over open bottoms and coral reefs at 3–30 m, matching the configured outer range. FWC documents an ontogenetic shift from shallow juvenile nursery habitat to deeper adult reef habitat. The sources do not validate the narrower 8–25 m ideal interval or a single depth preference across life stages."
+    }
+  ],
+  "timing": {
+    "status": "angler_lore",
+    "light": {
+      "map": {
+        "day": 1,
+        "dawn": 0.8,
+        "dusk": 0.8,
+        "night": 0.2
+      },
+      "text": {
+        "day": "It is full daylight, when fish feed actively.",
+        "dawn": "It is dawn, a low-light time when fish feed actively.",
+        "dusk": "It is dusk, a low-light time when fish feed actively."
+      }
+    },
+    "note": "Patterns reported by local captains and fishing writers, not tested by studies.",
+    "sources": [
+      "https://myfwc.com/"
+    ]
+  },
+  "lat_range": [
+    15,
+    36
+  ],
+  "regulations": {
+    "summary": "Atlantic waters south of Cape Sable, including the Florida Keys: 16 inches fork length minimum; 1 per harvester per day; open May 1-October 31. Special Biscayne National Park rules apply.",
+    "min_size": "16 inches fork length",
+    "max_size": "None",
+    "bag_limit": "1 per harvester per day",
+    "season": "Open May 1-October 31; closed November 1-April 30",
+    "jurisdiction": "Atlantic state waters and all state/federal waters south of Cape Sable, including the Florida Keys",
+    "source_name": "Florida Fish and Wildlife Conservation Commission",
+    "source_url": "https://myfwc.com/fishing/saltwater/recreational/hogfish/",
+    "verified_date": "2026-11-14",
+    "notes": "Gulf waters north of Cape Sable have different rules (14-inch fork length, 5 per harvester, year-round). South Florida Atlantic rules apply south of Cape Sable, including the Keys. Special regulations apply inside Biscayne National Park. Reef-fish gear requirements apply."
+  },
+  "lon_range": [
+    -100,
+    -50
+  ],
+  "open_items": [
+    "The configured SST numeric band and adult depth band remain provisional; locate species-specific thermal/depth studies before treating them as validated preferences.",
+    "Keep juvenile seagrass nursery habitat distinct from adult reef habitat; the current structure score is a broad habitat proxy.",
+    "Verify Biscayne National Park-specific hogfish harvest rules before providing park-level harvest advice."
+  ]
+}

@@ -1,0 +1,276 @@
+{
+  "schema_version": 1,
+  "id": "tarpon",
+  "common_name": "Atlantic tarpon",
+  "scientific_name": "Megalops atlanticus",
+  "aliases": [
+    "silver king",
+    "tarpon"
+  ],
+  "habitat_zone": "inshore",
+  "display": {
+    "color": "#3c83f2"
+  },
+  "model": "sites",
+  "site_kinds": [
+    "inlet",
+    "cut",
+    "channel_bridge",
+    "flat"
+  ],
+  "min_score_report": 0.4,
+  "max_spots": 12,
+  "confidence_cap": "Low",
+  "review_status": "reviewed 2026-11-14 - biology checked against FWC and Florida Museum; catch-and-release regulations checked against current FWC rules",
+  "image": {
+    "status": "placeholder",
+    "kind": "illustration",
+    "url": "fish/tarpon.png",
+    "credit": "Original illustration",
+    "license": "",
+    "plan": "web/fish/tarpon.png is a transparent placeholder illustration. To use a real photo: replace that file with a transparent PNG of the same name (cropped tight to the fish, facing left looks best), then set kind to \"photo\" and fill in credit and license here. Only use images you have the right to show: NOAA Fisheries species pages and Wikimedia Commons are good places to look; FWC illustrations are copyrighted."
+  },
+  "profile": {
+    "diet": "Feeds on fishes and large crustaceans. Adults consume mid-water prey such as mullet, pinfish and marine catfish; crabs are important prey in some seasonal inlet fisheries.",
+    "depth": "Primarily coastal and inshore as adults, with offshore migrations to spawn. Juveniles commonly occupy estuaries and can use freshwater habitats. The current sources do not establish one universal preferred depth range.",
+    "behavior": "Large, slow-growing coastal migratory fish. Adults concentrate in South Florida during cooler months and are widespread along Florida's coast in summer. Juveniles use estuarine and freshwater nursery habitats; adults migrate offshore to spawn. Tarpon gulp air at the surface and tolerate a wide salinity range.",
+    "spawning": "FWC reports a Florida spawning season of May through September. Florida Museum describes typical spawning in May, June and July and extensive migrations to offshore spawning areas. The Keys spring adult run is a seasonal movement pattern and should not be conflated with the full statewide spawning window.",
+    "regulations_note": "Florida tarpon are catch-and-release only except for a single fish harvested in pursuit of a Florida state or world record with a valid tarpon tag. Tarpon over 40 inches must remain in the water unless the tag exception applies.",
+    "regulations_link": "https://myfwc.com/fishing/saltwater/recreational/tarpon/",
+    "sources": [
+      "https://int-res.com/abstracts/meps/v684/p133-155",
+      "https://news.miami.edu/rosenstiel/stories/2020/01/new-study-reveals-international-movements-of-atlantic-tarpon-need-for-protection.html",
+      "https://www.floridamuseum.ufl.edu/discover-fish/species-profiles/tarpon",
+      "https://www.ncbi.nlm.nih.gov/pmc/articles/PMC12710809/",
+      "https://www.swg.usace.army.mil/Portals/26/docs/Planning/Public%20Notices-Civil%20Works/HSC-ECIP%20FIFR-EIS/App%20L%20-%20Essential%20Fish%20Habitat%20Assessment%20%2818%20Nov%202019%29.pdf"
+    ],
+    "size": "Can reach about 8 feet and 300 lb (FWC).",
+    "life_history": "Slow-growing; FWC reports maturity at roughly 7-13 years. Spawning occurs mainly May-September in Florida, with offshore spawning migrations and a ribbon-like leptocephalus larval stage. Females may produce more than 12 million eggs.",
+    "overwintering": "During winter, tarpon concentrate in South Florida as colder temperatures push them out of cooler parts of the state. Individual movement patterns vary and the Keys spring run should not be treated as a fixed route for every fish."
+  },
+  "factors": [
+    {
+      "param": "sst_c",
+      "kind": "range",
+      "weight": 0.25,
+      "active": true,
+      "value_status": "partly_sourced",
+      "value_notes": "Keys tagging (FWC and FIU): most adults arrived in April once water reached 26 C and left in June at 27-29 C, with peak presence in May (26-28 C). Satellite tagging follows a 26 C isotherm. Guides cite 75-80 F (24-27 C), biting best in the low 80s F. Juvenile tarpon left creeks below 20 C, and adults retreat to warmer, deeper water in cold snaps, so cooler water is a hard stop.",
+      "sources": [
+        "https://int-res.com/abstracts/meps/v684/p133-155",
+        "https://news.miami.edu/rosenstiel/stories/2020/01/new-study-reveals-international-movements-of-atlantic-tarpon-need-for-protection.html",
+        "https://www.ncbi.nlm.nih.gov/pmc/articles/PMC12710809/",
+        "https://www.thefisherman.com/article/head-south-silver-kings-in-the-spring/"
+      ],
+      "reason_template": "Water is {value} C, inside the {ideal_min}-{ideal_max} C range where tarpon run.",
+      "range": [
+        20,
+        33
+      ],
+      "ideal": [
+        25,
+        29
+      ],
+      "gate": true,
+      "required": true
+    },
+    {
+      "param": "season_presence",
+      "kind": "season",
+      "weight": 0.25,
+      "active": true,
+      "value_status": "partly_sourced",
+      "value_notes": "In the Keys, adults are present mainly April to June (spawning season), with lowest numbers August to October. The run is applied to Miami-area inlets as a judgment call; Miami's timing may differ a little.",
+      "sources": [
+        "https://int-res.com/abstracts/meps/v684/p133-155",
+        "https://www.floridamuseum.ufl.edu/discover-fish/species-profiles/tarpon"
+      ],
+      "months": [
+        4,
+        5,
+        6,
+        7
+      ],
+      "peak_months": [
+        5,
+        6
+      ],
+      "in_score": 0.8,
+      "off_score": 0.2,
+      "value_text": {
+        "peak": "It is peak tarpon season (May and June), when adults are in South Florida passes.",
+        "in_season": "It is tarpon run season (about April to July).",
+        "off": "It is outside the spring and early-summer tarpon run, so far fewer tarpon are in South Florida passes."
+      }
+    },
+    {
+      "param": "tide_stage",
+      "kind": "category",
+      "weight": 0.2,
+      "active": true,
+      "value_status": "provisional",
+      "value_notes": "Angler guidance only: tarpon feed in passes when the tide is moving. The mapping from tide stage to score is a judgment call.",
+      "sources": [
+        "https://anglersjournal.com/saltwater/spring-tarpon-fishing-in-florida/"
+      ],
+      "preferred": [
+        "falling",
+        "rising"
+      ],
+      "map": {
+        "falling": 1,
+        "rising": 1,
+        "slack_low": 0.5,
+        "slack_high": 0.4
+      },
+      "value_text": {
+        "falling": "The tide is falling ({station}); moving water through passes is when tarpon feed.",
+        "rising": "The tide is rising ({station}); moving water through passes is when tarpon feed.",
+        "slack_low": "The tide is near low ({station}), so little water is moving and tarpon feed less.",
+        "slack_high": "The tide is near high ({station}), so little water is moving and tarpon feed less."
+      }
+    },
+    {
+      "param": "structure_type",
+      "kind": "category",
+      "weight": 0.15,
+      "active": true,
+      "value_status": "partly_sourced",
+      "value_notes": "Tarpon travel through inlets and passes, where crabs and baitfish are carried out on the tide.",
+      "sources": [
+        "https://anglersjournal.com/saltwater/spring-tarpon-fishing-in-florida/"
+      ],
+      "preferred": [
+        "inlet"
+      ],
+      "map": {
+        "inlet": 1
+      },
+      "value_text": {
+        "inlet": "This is an inlet or pass. Tarpon travel through passes and feed on crabs and baitfish the tide carries."
+      }
+    },
+    {
+      "param": "time_of_day",
+      "kind": "category",
+      "weight": 0.1,
+      "active": true,
+      "value_status": "provisional",
+      "value_notes": "An acoustic-telemetry study of four juvenile tarpon (80–95 cm fork length) in Brewers Bay, St. Thomas found greater daytime activity with crepuscular peaks and distinct day/night space use. This does not establish an adult feeding-time preference or validate the current day/dawn/dusk/night scores for South Florida. Retain as provisional context only.",
+      "sources": [
+        "https://link.springer.com/article/10.1186/s40317-021-00239-x"
+      ],
+      "preferred": [
+        "night",
+        "dusk",
+        "dawn"
+      ],
+      "map": {
+        "night": 1,
+        "dusk": 0.9,
+        "dawn": 0.9,
+        "day": 0.6
+      },
+      "value_text": {
+        "night": "It is night; the configured tarpon time-of-day preference is provisional.",
+        "dusk": "It is dusk, a crepuscular period; the configured tarpon time-of-day preference is provisional.",
+        "dawn": "It is dawn, a crepuscular period; the configured tarpon time-of-day preference is provisional.",
+        "day": "It is daylight; the configured tarpon time-of-day score is provisional."
+      }
+    },
+    {
+      "param": "salinity",
+      "kind": "range",
+      "weight": 0,
+      "active": false,
+      "value_status": "partly_sourced",
+      "value_notes": "Regional EFH and species accounts document tarpon across fresh/brackish/marine environments and broad salinity exposure, supporting euryhaline tolerance. This does not establish a predictive salinity suitability curve; the factor is inactive with zero weight and is not used by current scoring.",
+      "sources": [
+        "https://www.swg.usace.army.mil/Portals/26/docs/Planning/Public%20Notices-Civil%20Works/HSC-ECIP%20FIFR-EIS/App%20L%20-%20Essential%20Fish%20Habitat%20Assessment%20%2818%20Nov%202019%29.pdf",
+        "https://www.floridamuseum.ufl.edu/discover-fish/species-profiles/tarpon"
+      ]
+    },
+    {
+      "param": "bridges_lights",
+      "kind": "presence",
+      "weight": 0,
+      "active": false,
+      "value_status": "needs_source",
+      "value_notes": "Bridges and lit docks are key tarpon spots. Needs a bridge dataset (planned).",
+      "sources": []
+    }
+  ],
+  "timing": {
+    "status": "angler_lore",
+    "note": "Angler lore: patterns reported by local captains and fishing writers, not tested by studies. Numbers are judgment calls to be calibrated against trip logs.",
+    "sources": [
+      "https://www.thefisherman.com/article/head-south-silver-kings-in-the-spring/",
+      "https://www.floridamuseum.ufl.edu/discover-fish/species-profiles/tarpon"
+    ],
+    "weights": {
+      "light": 0.35,
+      "tide": 0.4,
+      "front": 0.25
+    },
+    "light": {
+      "map": {
+        "night": 1,
+        "dusk": 0.9,
+        "dawn": 0.9,
+        "day": 0.6
+      },
+      "text": {
+        "night": "It is night, a favored time for tarpon around passes and bridges.",
+        "dusk": "It is dusk, a low-light time tarpon feed actively.",
+        "dawn": "It is dawn, a low-light time tarpon feed actively.",
+        "day": "It is daylight, when tarpon fishing is usually slower."
+      }
+    },
+    "tide": {
+      "map": {
+        "falling": 1,
+        "rising": 1,
+        "slack_low": 0.5,
+        "slack_high": 0.4
+      },
+      "text": {
+        "falling": "The tide is falling ({station}); moving water through passes is when tarpon feed.",
+        "rising": "The tide is rising ({station}); moving water through passes is when tarpon feed.",
+        "slack_low": "The tide is near low ({station}), so little water is moving and tarpon feed less.",
+        "slack_high": "The tide is near high ({station}), so little water is moving and tarpon feed less."
+      }
+    },
+    "front": {
+      "map": {
+        "approaching": 0.75,
+        "just_passed": 0.25,
+        "lull": 0.35
+      },
+      "text": {
+        "approaching": "A cold front is on the way. Tarpon head for warmer, deeper water when a front arrives.",
+        "just_passed": "A cold front just passed. Tarpon pull back to warmer, deeper water and feed less.",
+        "lull": "Cooler water after a front keeps tarpon off the passes for a day or two."
+      }
+    }
+  },
+  "lat_range": [
+    15,
+    36
+  ],
+  "regulations": {
+    "summary": "Catch-and-release only in Florida state and federal waters. One tarpon tag per person per year may be used only when pursuing a Florida state or world record. Tarpon over 40 inches must remain in the water unless legally harvested under the tag exception.",
+    "min_size": "No minimum size limit",
+    "max_size": "No harvest slot; tarpon over 40 inches must remain in the water unless the state/world-record tag exception applies",
+    "bag_limit": "Catch-and-release only; one tagged harvest per person per year only in pursuit of a Florida state or world record. Vessel, transport and shipment limits apply.",
+    "season": "Open year-round for catch-and-release, subject to area-specific gear restrictions",
+    "jurisdiction": "Florida state and federal waters, Gulf and Atlantic",
+    "source_name": "Florida Fish and Wildlife Conservation Commission",
+    "source_url": "https://myfwc.com/fishing/saltwater/recreational/tarpon/",
+    "verified_date": "2026-11-14",
+    "notes": "Hook-and-line only. Snagging, snatch hooking, spearing and multiple hooks used with live/dead natural bait are prohibited. Tarpon over 40 inches must remain in the water. Additional gear restrictions apply in Boca Grande Pass."
+  },
+  "lon_range": [
+    -100,
+    -50
+  ]
+}

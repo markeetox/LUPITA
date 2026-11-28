@@ -1,0 +1,118 @@
+{
+  "schema_version": 1,
+  "id": "opaleye",
+  "common_name": "Opaleye",
+  "scientific_name": "Girella nigricans",
+  "aliases": [
+    "opaleye"
+  ],
+  "habitat_zone": "reef",
+  "display": {
+    "color": "#6ed820"
+  },
+  "review_status": "Evidence reviewed 2026-11-17. Smithsonian and FishBase sources support resident rocky-shore habitat and depth occurrence; broad temperature envelope is not a preferred SST curve.",
+  "image": {
+    "status": "placeholder",
+    "kind": "illustration",
+    "url": "fish/opaleye.png",
+    "credit": "Original illustration",
+    "license": "",
+    "plan": "web/fish/opaleye.png placeholder illustration."
+  },
+  "profile": {
+    "size": "Min limit None / Bag limit 10 per harvester / day",
+    "diet": "Small fish, crustaceans, squids, and pelagic prey",
+    "swimming_depth": "1 to 25 m",
+    "behavior": "Navigates West Coast kelp forests, rocky reefs, and coastal upwelling zones.",
+    "regulations_link": "https://wildlife.ca.gov/Fishing/Ocean/Regulations/Sport-Fishing",
+    "sources": [
+      "https://wildlife.ca.gov/Fishing/Ocean/Regulations/Sport-Fishing",
+      "https://biogeodb.stri.si.edu/sftep/en/thefishes/species/1566",
+      "https://fishbase.se/summary/girella-nigricans"
+    ]
+  },
+  "lat_range": [
+    26,
+    36
+  ],
+  "factors": [
+    {
+      "param": "sst_c",
+      "kind": "range",
+      "range": [
+        14,
+        22
+      ],
+      "ideal": [
+        16,
+        20
+      ],
+      "weight": 0.5,
+      "active": true,
+      "value_status": "provisional",
+      "sources": [
+        "https://wildlife.ca.gov/Fishing/Ocean/Regulations/Sport-Fishing",
+        "https://fishbase.se/summary/girella-nigricans"
+      ],
+      "reason_template": "Water is {value} C, inside preferred Pacific temperature range for opaleye.",
+      "value_notes": "FishBase reports a very broad environmental temperature envelope (0-33 °C) and a subtropical/north-temperate distribution, but this is not a preferred SST interval or a validated catch-response curve. The configured 14-22 °C range and 16-20 °C ideal remain provisional; no numeric preference should be inferred from the climate label or tolerance envelope."
+    },
+    {
+      "param": "depth_m",
+      "kind": "range",
+      "range": [
+        1,
+        25
+      ],
+      "ideal": [
+        3,
+        20
+      ],
+      "weight": 0.5,
+      "active": true,
+      "value_status": "partly_sourced",
+      "sources": [
+        "https://wildlife.ca.gov/Fishing/Ocean/Regulations/Sport-Fishing",
+        "https://biogeodb.stri.si.edu/sftep/en/thefishes/species/1566",
+        "https://fishbase.se/summary/girella-nigricans"
+      ],
+      "gate": true,
+      "reason_template": "Depth is {value} m, within prime Pacific depth zone for opaleye.",
+      "value_notes": "The Smithsonian Tropical Research Institute reports demersal rocky-shore habitat from 1-32 m; FishBase reports 2-30 m, commonly 2-6 m, and resident intertidal/kelp-bed behavior. This supports shallow coastal depth use and the 1-25 m outer band, but the 3-20 m ideal is not a measured preference curve."
+    }
+  ],
+  "timing": {
+    "status": "angler_lore",
+    "light": {
+      "map": {
+        "day": 1,
+        "dawn": 0.9,
+        "dusk": 0.9,
+        "night": 0.5
+      },
+      "text": {
+        "day": "Full daylight when Pacific gamefish actively hunt.",
+        "dawn": "Dawn low-light feeding window.",
+        "dusk": "Dusk feeding window."
+      }
+    },
+    "note": "West Coast captain reports and biological upwelling patterns.",
+    "sources": [
+      "https://wildlife.ca.gov/Fishing/Ocean/Regulations/Sport-Fishing"
+    ]
+  },
+  "regulations": {
+    "summary": "CDFW: 10 per day limit",
+    "min_size": "None",
+    "max_size": "None",
+    "bag_limit": "10 per harvester / day",
+    "season": "Open year-round",
+    "jurisdiction": "CDFW",
+    "source_name": "West Coast State Regulations (CDFW/WDFW/ODFW/NOAA)",
+    "source_url": "https://wildlife.ca.gov/Fishing/Ocean/Regulations/Sport-Fishing"
+  },
+  "lon_range": [
+    -138,
+    -110
+  ]
+}

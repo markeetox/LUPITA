@@ -1,0 +1,157 @@
+{
+  "schema_version": 1,
+  "id": "gag-grouper",
+  "common_name": "Gag grouper",
+  "scientific_name": "Mycteroperca microlepis",
+  "aliases": [
+    "gag",
+    "velvet rockfish"
+  ],
+  "habitat_zone": "reef",
+  "display": {
+    "color": "#5c20d8"
+  },
+  "review_status": "draft v1 - coastal and offshore reef grouper",
+  "image": {
+    "status": "placeholder",
+    "kind": "illustration",
+    "url": "fish/gag-grouper.png",
+    "credit": "Original illustration",
+    "license": "",
+    "plan": "web/fish/gag-grouper.png placeholder illustration."
+  },
+  "profile": {
+    "size": "Common 10-25 lb; up to 50 lb",
+    "diet": "Crabs, shrimp, and reef fishes",
+    "swimming_depth": "10 to 80 m",
+    "behavior": "Moves inshore to shallower ledges in winter and migrates offshore to deep reefs in spring.",
+    "regulations_link": "https://myfwc.com/",
+    "sources": [
+      "https://www.fisheries.noaa.gov/species/gag-grouper",
+      "https://www.floridamuseum.ufl.edu/discover-fish/species-profiles/gag-grouper/",
+      "https://safmc.net/wp-content/uploads/2025/01/SG-FMP-SAFE-Report-for-html.html",
+      "https://repository.library.noaa.gov/view/noaa/55544/noaa_55544_DS1.pdf",
+      "https://sedarweb.org/documents/s10dw25-habitat-use-by-juvenile-gag-in-subtropical-charlotte-harbor-fl/",
+      "https://ufdcimages.uflib.ufl.edu/UF/E0/00/89/25/00001/UFE0008925.pdf",
+      "https://academic.oup.com/mcf/article/10/1/40/7827023"
+    ]
+  },
+  "factors": [
+    {
+      "param": "sst_c",
+      "kind": "range",
+      "range": [
+        18,
+        28
+      ],
+      "ideal": [
+        20,
+        25
+      ],
+      "weight": 0.35,
+      "active": true,
+      "value_status": "partly_sourced",
+      "sources": [
+        "https://repository.library.noaa.gov/view/noaa/55544/noaa_55544_DS1.pdf",
+        "https://sedarweb.org/documents/s10dw25-habitat-use-by-juvenile-gag-in-subtropical-charlotte-harbor-fl/",
+        "https://ufdcimages.uflib.ufl.edu/UF/E0/00/89/25/00001/UFE0008925.pdf"
+      ],
+      "reason_template": "Water is {value} C, in the comfortable thermal range for gag grouper.",
+      "value_notes": "NOAA's Gulf climate vulnerability synthesis reports a FishBase model-derived preferred range of 18–27 °C (mean 23 °C). A Florida estuary study recorded juvenile gag at 14.5–33.5 °C, while an adult metabolic experiment tested acclimation at 15, 22, and 30 °C. These sources provide context but do not validate the configured 18–28 °C range or 20–25 °C ideal as a wild adult SST preference."
+    },
+    {
+      "param": "structure_type",
+      "kind": "category",
+      "preferred": [
+        "natural_reef",
+        "hardbottom",
+        "ledge",
+        "artificial_reef"
+      ],
+      "weight": 0.25,
+      "active": true,
+      "value_status": "partly_sourced",
+      "sources": [
+        "https://www.fisheries.noaa.gov/species/gag-grouper",
+        "https://www.floridamuseum.ufl.edu/discover-fish/species-profiles/gag-grouper/",
+        "https://safmc.net/wp-content/uploads/2025/01/SG-FMP-SAFE-Report-for-html.html"
+      ],
+      "map": {
+        "natural_reef": 1,
+        "ledge": 0.9,
+        "hardbottom": 0.8,
+        "artificial_reef": 0.8
+      },
+      "reason_template": "Structure is {value}, ideal for gag grouper ambush.",
+      "value_notes": "NOAA, Florida Museum, and SAFMC describe adult gag using rocky/hard-bottom habitat, reefs, wrecks, live bottom, depressions, and ledges; juveniles use structured estuarine seagrass and oyster habitat. This supports the categories broadly but does not validate their relative numeric scores."
+    },
+    {
+      "param": "bottom_curvature",
+      "kind": "higher_is_better",
+      "weight": 0.1,
+      "active": true,
+      "value_status": "partly_sourced",
+      "sources": [
+        "https://academic.oup.com/mcf/article/10/1/40/7827023"
+      ],
+      "reason_template": "Seafloor curvature indicates sharp ledge breaks and drop-offs favored by gag grouper.",
+      "value_notes": "A regional ecosystem-based habitat analysis reports increasing adult gag encounter probability with terrain ruggedness index and associates spawning aggregations with rocky ridges. Terrain ruggedness is related to relief/complexity but is not the same measurement as the pipeline's bottom_curvature variable; this factor remains a proxy rather than a directly validated species response."
+    },
+    {
+      "param": "depth_m",
+      "kind": "range",
+      "range": [
+        8,
+        80
+      ],
+      "ideal": [
+        15,
+        45
+      ],
+      "weight": 0.3,
+      "active": true,
+      "value_status": "partly_sourced",
+      "sources": [
+        "https://academic.oup.com/mcf/article/10/1/40/7827023",
+        "https://www.fisheries.noaa.gov/species/gag-grouper",
+        "https://safmc.net/wp-content/uploads/2025/01/SG-FMP-SAFE-Report-for-html.html"
+      ],
+      "gate": true,
+      "reason_template": "Depth is {value} m, in coastal reef depths.",
+      "value_notes": "The regional habitat analysis reports adult gag across 0–135 m, with encounter probability peaking near 85 m; NOAA/SAFMC describe adults mainly offshore and generally shallower than about 114 m, with juveniles in very shallow estuarine habitat. This supports broad depth use but not the exact 8–80 m range or 15–45 m ideal across all life stages. Depth is an active gate."
+    }
+  ],
+  "timing": {
+    "status": "angler_lore",
+    "light": {
+      "map": {
+        "dawn": 1,
+        "dusk": 0.9,
+        "day": 0.7,
+        "night": 0.4
+      },
+      "text": {
+        "dawn": "It is dawn, a low-light time when fish feed actively.",
+        "dusk": "It is dusk, a low-light time when fish feed actively."
+      }
+    },
+    "note": "Patterns reported by local captains and fishing writers, not tested by studies.",
+    "sources": [
+      "https://myfwc.com/"
+    ]
+  },
+  "regulations": {
+    "summary": "Regulated species - See MyFWC/NOAA guidelines",
+    "min_size": "Check MyFWC/NOAA rules",
+    "max_size": "None",
+    "bag_limit": "Varies by region / state",
+    "season": "Open year-round (subject to local quota/closures)",
+    "jurisdiction": "Atlantic & Gulf State/Federal Waters",
+    "source_name": "MyFWC Saltwater Regulations",
+    "source_url": "https://myfwc.com/fishing/saltwater/recreational/"
+  },
+  "lon_range": [
+    -100,
+    -50
+  ]
+}

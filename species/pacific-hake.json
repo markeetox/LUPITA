@@ -1,0 +1,120 @@
+{
+  "schema_version": 1,
+  "id": "pacific-hake",
+  "common_name": "Pacific hake",
+  "scientific_name": "Merluccius productus",
+  "aliases": [
+    "pacific hake"
+  ],
+  "habitat_zone": "pelagic",
+  "display": {
+    "color": "#3cf251"
+  },
+  "review_status": "Evidence reviewed 2026-11-17. NOAA distribution and survey sources support broad shelf/slope occurrence; the species is pelagic and no numeric preferred SST curve was found.",
+  "image": {
+    "status": "placeholder",
+    "kind": "illustration",
+    "url": "fish/pacific-hake.png",
+    "credit": "Original illustration",
+    "license": "",
+    "plan": "web/fish/pacific-hake.png placeholder illustration."
+  },
+  "profile": {
+    "size": "Min limit None / Bag limit 15 per harvester / day",
+    "diet": "Small fish, crustaceans, squids, and pelagic prey",
+    "swimming_depth": "50 to 400 m",
+    "behavior": "Navigates West Coast kelp forests, rocky reefs, and coastal upwelling zones.",
+    "regulations_link": "https://wdfw.wa.gov/fishing/regulations",
+    "sources": [
+      "https://wdfw.wa.gov/fishing/regulations",
+      "https://repository.library.noaa.gov/view/noaa/5807/noaa_5807_DS1.pdf",
+      "https://www.fisheries.noaa.gov/species/pacific-whiting",
+      "https://www.webapps.nwfsc.noaa.gov/assets/26/6864_03092012_104420_Washington.1977a.pdf"
+    ]
+  },
+  "lat_range": [
+    32,
+    60
+  ],
+  "factors": [
+    {
+      "param": "sst_c",
+      "kind": "range",
+      "range": [
+        6,
+        15
+      ],
+      "ideal": [
+        8,
+        13
+      ],
+      "weight": 0.5,
+      "active": true,
+      "value_status": "needs_source",
+      "sources": [
+        "https://wdfw.wa.gov/fishing/regulations",
+        "https://repository.library.noaa.gov/view/noaa/5807/noaa_5807_DS1.pdf",
+        "https://www.fisheries.noaa.gov/species/pacific-whiting"
+      ],
+      "reason_template": "Water is {value} C, inside preferred Pacific temperature range for pacific hake.",
+      "value_notes": "NOAA species and survey sources describe Pacific hake as pelagic/neritic and report depth distributions, but the reviewed evidence does not establish a numeric preferred surface-temperature interval. Bottom or midwater temperatures cannot validate the configured 6-15 °C SST range or 8-13 °C ideal. Keep values unchanged and mark needs_source."
+    },
+    {
+      "param": "depth_m",
+      "kind": "range",
+      "range": [
+        50,
+        400
+      ],
+      "ideal": [
+        52,
+        395
+      ],
+      "weight": 0.5,
+      "active": true,
+      "value_status": "partly_sourced",
+      "sources": [
+        "https://wdfw.wa.gov/fishing/regulations",
+        "https://repository.library.noaa.gov/view/noaa/5807/noaa_5807_DS1.pdf",
+        "https://www.webapps.nwfsc.noaa.gov/assets/26/6864_03092012_104420_Washington.1977a.pdf"
+      ],
+      "gate": true,
+      "reason_template": "Depth is {value} m, within prime Pacific depth zone for pacific hake.",
+      "value_notes": "NOAA's species record reports occurrence from 0-914 m, generally deeper than 229 m; survey data show 25-575 m, with 97.9% of occurrences between 50-500 m. This supports the configured 50-400 m shelf/slope range as a broad occurrence screen, but hake is pelagic and often well off bottom; the 52-395 m ideal is not a measured seafloor preference curve."
+    }
+  ],
+  "timing": {
+    "status": "angler_lore",
+    "light": {
+      "map": {
+        "day": 1,
+        "dawn": 0.9,
+        "dusk": 0.9,
+        "night": 0.5
+      },
+      "text": {
+        "day": "Full daylight when Pacific gamefish actively hunt.",
+        "dawn": "Dawn low-light feeding window.",
+        "dusk": "Dusk feeding window."
+      }
+    },
+    "note": "West Coast captain reports and biological upwelling patterns.",
+    "sources": [
+      "https://wdfw.wa.gov/fishing/regulations"
+    ]
+  },
+  "regulations": {
+    "summary": "WDFW/NOAA: Bottomfish daily bag",
+    "min_size": "None",
+    "max_size": "None",
+    "bag_limit": "15 per harvester / day",
+    "season": "Open year-round",
+    "jurisdiction": "NOAA Fisheries / WDFW",
+    "source_name": "West Coast State Regulations (CDFW/WDFW/ODFW/NOAA)",
+    "source_url": "https://wdfw.wa.gov/fishing/regulations"
+  },
+  "lon_range": [
+    -138,
+    -110
+  ]
+}

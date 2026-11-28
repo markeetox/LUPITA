@@ -1,0 +1,137 @@
+{
+  "schema_version": 1,
+  "id": "almaco-jack",
+  "common_name": "Almaco jack",
+  "scientific_name": "Seriola rivoliana",
+  "aliases": [
+    "almaco",
+    "almaco jack"
+  ],
+  "habitat_zone": "offshore",
+  "display": {
+    "color": "#f23cdb"
+  },
+  "review_status": "draft v1 - deep offshore reef jack profile",
+  "image": {
+    "status": "placeholder",
+    "kind": "illustration",
+    "url": "fish/almaco-jack.png",
+    "credit": "Original illustration",
+    "license": "",
+    "plan": "web/fish/almaco-jack.png placeholder illustration."
+  },
+  "profile": {
+    "size": "Common 5-20 lb; up to 70 lb",
+    "diet": "Small fishes, squids, and crabs",
+    "swimming_depth": "40 to 200 m",
+    "behavior": "Deepwater pelagic jack that schools around deep wrecks, offshore oil platforms, and steep shelf ledges.",
+    "regulations_link": "https://myfwc.com/",
+    "sources": [
+      "https://www.fisheries.noaa.gov/species/almaco-jack/science",
+      "https://ask.ifas.ufl.edu/publication/FA249",
+      "https://biogeodb.stri.si.edu/caribbean/en/thefishes/species/1283"
+    ]
+  },
+  "factors": [
+    {
+      "param": "sst_c",
+      "kind": "range",
+      "range": [
+        20,
+        28
+      ],
+      "ideal": [
+        22,
+        26
+      ],
+      "weight": 0.35,
+      "active": true,
+      "value_status": "needs_source",
+      "sources": [],
+      "reason_template": "Water is {value} C, favorable for almaco jack.",
+      "value_notes": "No traceable wild-population thermal-preference study was located that validates the configured 20–28 °C range or 22–26 °C ideal. UF/IFAS reports 26 °C as a captive broodstock conditioning temperature, which is not evidence of wild habitat preference. Retain the current band only as an unvalidated screening assumption."
+    },
+    {
+      "param": "structure_type",
+      "kind": "category",
+      "preferred": [
+        "wreck",
+        "artificial_reef",
+        "natural_reef",
+        "ledge"
+      ],
+      "weight": 0.35,
+      "active": true,
+      "value_status": "partly_sourced",
+      "sources": [
+        "https://www.fisheries.noaa.gov/species/almaco-jack/science",
+        "https://ask.ifas.ufl.edu/publication/FA249"
+      ],
+      "map": {
+        "wreck": 1,
+        "artificial_reef": 1,
+        "ledge": 0.9,
+        "natural_reef": 0.8
+      },
+      "reason_template": "Structure is {value}, where almaco jacks school.",
+      "value_notes": "NOAA describes association with rocky outcrops and reef structures and notes artificial reefs as important habitat for transient predators. UF/IFAS documents use of artificial reefs, wrecks, and high-relief structures. These sources support the broad structure association but do not validate the exact category ranking or map scores."
+    },
+    {
+      "param": "depth_m",
+      "kind": "range",
+      "range": [
+        30,
+        200
+      ],
+      "ideal": [
+        40,
+        120
+      ],
+      "weight": 0.3,
+      "active": true,
+      "value_status": "partly_sourced",
+      "sources": [
+        "https://www.fisheries.noaa.gov/species/almaco-jack/science",
+        "https://ask.ifas.ufl.edu/publication/FA249",
+        "https://biogeodb.stri.si.edu/caribbean/en/thefishes/species/1283"
+      ],
+      "gate": true,
+      "reason_template": "Depth is {value} m, in deep reef and wreck zone.",
+      "value_notes": "NOAA reports a 15–110 m depth range; UF/IFAS reports 3–35 m in subtropical regions and use of artificial reefs/wrecks to 245 m; the STRI account reports 3–340 m. These sources support broad depth use but do not validate the configured 30–200 m band or 40–120 m ideal for the relevant South Florida population. Depth is an active gate."
+    }
+  ],
+  "timing": {
+    "status": "angler_lore",
+    "light": {
+      "map": {
+        "day": 1,
+        "dawn": 0.9,
+        "dusk": 0.9,
+        "night": 0.4
+      },
+      "text": {
+        "day": "It is full daylight, when fish feed actively.",
+        "dawn": "It is dawn, a low-light time when fish feed actively.",
+        "dusk": "It is dusk, a low-light time when fish feed actively."
+      }
+    },
+    "note": "Patterns reported by local captains and fishing writers, not tested by studies.",
+    "sources": [
+      "https://myfwc.com/"
+    ]
+  },
+  "regulations": {
+    "summary": "Regulated species - See MyFWC/NOAA guidelines",
+    "min_size": "Check MyFWC/NOAA rules",
+    "max_size": "None",
+    "bag_limit": "Varies by region / state",
+    "season": "Open year-round (subject to local quota/closures)",
+    "jurisdiction": "Atlantic & Gulf State/Federal Waters",
+    "source_name": "MyFWC Saltwater Regulations",
+    "source_url": "https://myfwc.com/fishing/saltwater/recreational/"
+  },
+  "lon_range": [
+    -100,
+    -50
+  ]
+}

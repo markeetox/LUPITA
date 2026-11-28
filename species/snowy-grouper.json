@@ -1,0 +1,126 @@
+{
+  "schema_version": 1,
+  "id": "snowy-grouper",
+  "common_name": "Snowy grouper",
+  "scientific_name": "Hyporthodus niveatus",
+  "aliases": [
+    "snowy grouper"
+  ],
+  "habitat_zone": "offshore",
+  "display": {
+    "color": "#38d836"
+  },
+  "review_status": "draft v1 - deepwater continental slope grouper",
+  "image": {
+    "status": "placeholder",
+    "kind": "illustration",
+    "url": "fish/snowy-grouper.png",
+    "credit": "Original illustration",
+    "license": "",
+    "plan": "web/fish/snowy-grouper.png placeholder illustration."
+  },
+  "profile": {
+    "size": "Common 10-30 lb; up to 70 lb",
+    "diet": "Deepwater crabs, squids, and fishes",
+    "swimming_depth": "100 to 400 m",
+    "behavior": "Deepwater bottom dweller that inhabits rocky drop-offs, mud-bottom mounds, and canyons along the continental slope.",
+    "regulations_link": "https://myfwc.com/",
+    "sources": [
+      "https://safmc.net/documents/snapper-grouper-amendment-51-final-03-02-2023/",
+      "https://safmc.net/species/grouper-snowy/",
+      "https://myfwc.com/wildlifehabitats/profiles/saltwater/grouper/snowy-grouper/",
+      "https://pmc.ncbi.nlm.nih.gov/articles/PMC5338871/",
+      "https://www.boem.gov/sites/default/files/documents/environment/BOEM-EIS-2016-049-v2_0.pdf"
+    ]
+  },
+  "factors": [
+    {
+      "param": "sst_c",
+      "kind": "range",
+      "range": [
+        12,
+        24
+      ],
+      "ideal": [
+        14,
+        20
+      ],
+      "weight": 0.3,
+      "active": true,
+      "value_status": "needs_source",
+      "sources": [],
+      "reason_template": "Water temperature is {value} C.",
+      "value_notes": "The available numeric temperature observations are from spawning-condition females at deep bottom depths (175–223 m) and report 9–15 °C, not surface temperature. No traceable source was found validating the configured 12–24 °C SST range or 14–20 °C ideal. The factor is an active input, but surface temperature is not established as a valid proxy for this deep-water species."
+    },
+    {
+      "param": "bottom_slope",
+      "kind": "higher_is_better",
+      "weight": 0.3,
+      "active": true,
+      "value_status": "partly_sourced",
+      "sources": [
+        "https://safmc.net/documents/snapper-grouper-amendment-51-final-03-02-2023/",
+        "https://safmc.net/species/grouper-snowy/"
+      ],
+      "reason_template": "Seafloor drops steeply ({value} m/km), forming continental slope drop-offs.",
+      "value_notes": "SAFMC describes snowy grouper habitat on the outer continental shelf and upper slope, including ridges, terraces, and precipitous cliffs. This supports a broad slope/relief association, but does not validate the pipeline's continuous bottom_slope metric or the assumption that higher slope is always more suitable."
+    },
+    {
+      "param": "depth_m",
+      "kind": "range",
+      "range": [
+        100,
+        400
+      ],
+      "ideal": [
+        150,
+        280
+      ],
+      "weight": 0.4,
+      "active": true,
+      "value_status": "partly_sourced",
+      "sources": [
+        "https://safmc.net/documents/snapper-grouper-amendment-51-final-03-02-2023/",
+        "https://pmc.ncbi.nlm.nih.gov/articles/PMC5338871/",
+        "https://myfwc.com/wildlifehabitats/profiles/saltwater/grouper/snowy-grouper/"
+      ],
+      "gate": true,
+      "reason_template": "Depth is {value} m, in deep continental slope habitat.",
+      "value_notes": "SAFMC reports adult depths of 116–259 m on the southeastern U.S. shelf/slope; a spawning survey recorded females at 175–223 m (N=48); FWC describes reef/rocky habitat to 1,700 ft. This supports the configured 100–400 m / 150–280 m band as broad deep-water context, but not a locally calibrated depth optimum. Depth is an active gate."
+    }
+  ],
+  "timing": {
+    "status": "angler_lore",
+    "light": {
+      "map": {
+        "day": 1,
+        "dawn": 0.8,
+        "dusk": 0.8,
+        "night": 0.5
+      },
+      "text": {
+        "day": "It is full daylight, when fish feed actively.",
+        "dawn": "It is dawn, a low-light time when fish feed actively.",
+        "dusk": "It is dusk, a low-light time when fish feed actively."
+      }
+    },
+    "note": "Patterns reported by local captains and fishing writers, not tested by studies.",
+    "sources": [
+      "https://myfwc.com/"
+    ]
+  },
+  "regulations": {
+    "summary": "Regulated species - See MyFWC/NOAA guidelines",
+    "min_size": "Check MyFWC/NOAA rules",
+    "max_size": "None",
+    "bag_limit": "Varies by region / state",
+    "season": "Open year-round (subject to local quota/closures)",
+    "jurisdiction": "Atlantic & Gulf State/Federal Waters",
+    "source_name": "MyFWC Saltwater Regulations",
+    "source_url": "https://myfwc.com/fishing/saltwater/recreational/"
+  },
+  "lon_range": [
+    -100,
+    -50
+  ]
+}

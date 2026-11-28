@@ -1,0 +1,122 @@
+{
+  "schema_version": 1,
+  "id": "treefish",
+  "common_name": "Treefish",
+  "scientific_name": "Sebastes serriceps",
+  "aliases": [
+    "treefish"
+  ],
+  "habitat_zone": "reef",
+  "display": {
+    "color": "#36d8ad"
+  },
+  "review_status": "Evidence reviewed 2026-11-17. NOAA and California species accounts support shallow high-relief rocky habitat; no numeric SST preference evidence found.",
+  "image": {
+    "status": "placeholder",
+    "kind": "illustration",
+    "url": "fish/treefish.png",
+    "credit": "Original illustration",
+    "license": "",
+    "plan": "web/fish/treefish.png placeholder illustration."
+  },
+  "profile": {
+    "size": "Min limit None / Bag limit 10 per harvester / day aggregate",
+    "diet": "Small fish, crustaceans, squids, and pelagic prey",
+    "swimming_depth": "2 to 45 m",
+    "behavior": "Navigates West Coast kelp forests, rocky reefs, and coastal upwelling zones.",
+    "regulations_link": "https://wildlife.ca.gov/Fishing/Ocean/Regulations/Sport-Fishing",
+    "sources": [
+      "https://wildlife.ca.gov/Fishing/Ocean/Regulations/Sport-Fishing",
+      "https://www.fisheries.noaa.gov/s3/2026-02/am-37-fpa-analysis-01-2026.pdf",
+      "https://nrm.dfg.ca.gov/FileHandler.ashx?DocumentID=33928",
+      "https://apps-afsc.fisheries.noaa.gov/Publications/AFSC-TM/NOAA-TM-AFSC-95.pdf",
+      "https://www.fishbase.se/FieldGuide/FieldGuideSummary.php?c_code=840&genusname=Sebastes&speciesname=serriceps"
+    ]
+  },
+  "lat_range": [
+    26,
+    35
+  ],
+  "factors": [
+    {
+      "param": "sst_c",
+      "kind": "range",
+      "range": [
+        12,
+        20
+      ],
+      "ideal": [
+        14,
+        18
+      ],
+      "weight": 0.5,
+      "active": true,
+      "value_status": "needs_source",
+      "sources": [
+        "https://wildlife.ca.gov/Fishing/Ocean/Regulations/Sport-Fishing",
+        "https://www.fisheries.noaa.gov/s3/2026-02/am-37-fpa-analysis-01-2026.pdf",
+        "https://nrm.dfg.ca.gov/FileHandler.ashx?DocumentID=33928"
+      ],
+      "reason_template": "Water is {value} C, inside preferred Pacific temperature range for treefish.",
+      "value_notes": "The reviewed NOAA and California sources document distribution and rocky habitat but do not establish a numeric preferred SST range for treefish. FishBase's subtropical climate label is not a measured thermal preference or a basis for the configured 12-20 °C range and 14-18 °C ideal. Keep values unchanged and mark needs_source."
+    },
+    {
+      "param": "depth_m",
+      "kind": "range",
+      "range": [
+        2,
+        45
+      ],
+      "ideal": [
+        4,
+        40
+      ],
+      "weight": 0.5,
+      "active": true,
+      "value_status": "partly_sourced",
+      "sources": [
+        "https://wildlife.ca.gov/Fishing/Ocean/Regulations/Sport-Fishing",
+        "https://www.fisheries.noaa.gov/s3/2026-02/am-37-fpa-analysis-01-2026.pdf",
+        "https://nrm.dfg.ca.gov/FileHandler.ashx?DocumentID=33928",
+        "https://apps-afsc.fisheries.noaa.gov/Publications/AFSC-TM/NOAA-TM-AFSC-95.pdf"
+      ],
+      "gate": true,
+      "reason_template": "Depth is {value} m, within prime Pacific depth zone for treefish.",
+      "value_notes": "NOAA's Pacific groundfish analysis describes treefish in high-relief habitats shallower than 60 m; a California life-history account reports shallow rocky reefs and caves to about 150 feet (46 m), with limited home range. These sources support the configured 2-45 m outer interval, but do not establish the 4-40 m ideal as a quantified preference curve."
+    }
+  ],
+  "timing": {
+    "status": "angler_lore",
+    "light": {
+      "map": {
+        "day": 1,
+        "dawn": 0.9,
+        "dusk": 0.9,
+        "night": 0.5
+      },
+      "text": {
+        "day": "Full daylight when Pacific gamefish actively hunt.",
+        "dawn": "Dawn low-light feeding window.",
+        "dusk": "Dusk feeding window."
+      }
+    },
+    "note": "West Coast captain reports and biological upwelling patterns.",
+    "sources": [
+      "https://wildlife.ca.gov/Fishing/Ocean/Regulations/Sport-Fishing"
+    ]
+  },
+  "regulations": {
+    "summary": "CDFW: Part of 10-rockfish aggregate bag",
+    "min_size": "None",
+    "max_size": "None",
+    "bag_limit": "10 per harvester / day aggregate",
+    "season": "Seasonal groundfish window",
+    "jurisdiction": "CDFW",
+    "source_name": "West Coast State Regulations (CDFW/WDFW/ODFW/NOAA)",
+    "source_url": "https://wildlife.ca.gov/Fishing/Ocean/Regulations/Sport-Fishing"
+  },
+  "lon_range": [
+    -138,
+    -110
+  ]
+}

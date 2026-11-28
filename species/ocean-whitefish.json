@@ -1,0 +1,118 @@
+{
+  "schema_version": 1,
+  "id": "ocean-whitefish",
+  "common_name": "Ocean whitefish",
+  "scientific_name": "Caulolatilus princeps",
+  "aliases": [
+    "ocean whitefish"
+  ],
+  "habitat_zone": "reef",
+  "display": {
+    "color": "#24f280"
+  },
+  "review_status": "Evidence reviewed 2026-11-17. STRI eastern Pacific account supports bottom-associated rocky/sand habitat and broad depth range; no numeric preferred SST evidence found.",
+  "image": {
+    "status": "placeholder",
+    "kind": "illustration",
+    "url": "fish/ocean-whitefish.png",
+    "credit": "Original illustration",
+    "license": "",
+    "plan": "web/fish/ocean-whitefish.png placeholder illustration."
+  },
+  "profile": {
+    "size": "Min limit None / Bag limit 10 per harvester / day",
+    "diet": "Small fish, crustaceans, squids, and pelagic prey",
+    "swimming_depth": "10 to 100 m",
+    "behavior": "Navigates West Coast kelp forests, rocky reefs, and coastal upwelling zones.",
+    "regulations_link": "https://wildlife.ca.gov/Fishing/Ocean/Regulations/Sport-Fishing",
+    "sources": [
+      "https://wildlife.ca.gov/Fishing/Ocean/Regulations/Sport-Fishing",
+      "https://biogeodb.stri.si.edu/sftep/en/thefishes/species/1220",
+      "https://stri-apps.si.edu/docs/publications/pdfs/Sanchez-Jimenez_A_et_al.2018-Rev_Biol_Trop.66-Suplemento_5_S1-S113.pdf"
+    ]
+  },
+  "lat_range": [
+    24,
+    38
+  ],
+  "factors": [
+    {
+      "param": "sst_c",
+      "kind": "range",
+      "range": [
+        13,
+        22
+      ],
+      "ideal": [
+        15,
+        20
+      ],
+      "weight": 0.5,
+      "active": true,
+      "value_status": "needs_source",
+      "sources": [
+        "https://wildlife.ca.gov/Fishing/Ocean/Regulations/Sport-Fishing",
+        "https://biogeodb.stri.si.edu/sftep/en/thefishes/species/1220"
+      ],
+      "reason_template": "Water is {value} C, inside preferred Pacific temperature range for ocean whitefish.",
+      "value_notes": "The reviewed STRI species account and regional survey do not provide a numeric preferred SST or validated thermal response curve for ocean whitefish. The configured 13-22 °C range and 15-20 °C ideal remain unsupported by species-specific surface-temperature evidence; keep values unchanged and mark needs_source."
+    },
+    {
+      "param": "depth_m",
+      "kind": "range",
+      "range": [
+        10,
+        100
+      ],
+      "ideal": [
+        12,
+        95
+      ],
+      "weight": 0.5,
+      "active": true,
+      "value_status": "partly_sourced",
+      "sources": [
+        "https://wildlife.ca.gov/Fishing/Ocean/Regulations/Sport-Fishing",
+        "https://biogeodb.stri.si.edu/sftep/en/thefishes/species/1220",
+        "https://stri-apps.si.edu/docs/publications/pdfs/Sanchez-Jimenez_A_et_al.2018-Rev_Biol_Trop.66-Suplemento_5_S1-S113.pdf"
+      ],
+      "gate": true,
+      "reason_template": "Depth is {value} m, within prime Pacific depth zone for ocean whitefish.",
+      "value_notes": "STRI reports ocean whitefish on rock and sand bottoms at 3-160 m, with observations around 80-160 m at Isla del Coco. This supports a demersal depth factor but shows the configured 10-100 m range and 12-95 m ideal do not represent the full species depth envelope; no single preferred interval is established."
+    }
+  ],
+  "timing": {
+    "status": "angler_lore",
+    "light": {
+      "map": {
+        "day": 1,
+        "dawn": 0.9,
+        "dusk": 0.9,
+        "night": 0.5
+      },
+      "text": {
+        "day": "Full daylight when Pacific gamefish actively hunt.",
+        "dawn": "Dawn low-light feeding window.",
+        "dusk": "Dusk feeding window."
+      }
+    },
+    "note": "West Coast captain reports and biological upwelling patterns.",
+    "sources": [
+      "https://wildlife.ca.gov/Fishing/Ocean/Regulations/Sport-Fishing"
+    ]
+  },
+  "regulations": {
+    "summary": "CDFW: 10 per day limit; no depth restrictions",
+    "min_size": "None",
+    "max_size": "None",
+    "bag_limit": "10 per harvester / day",
+    "season": "Open year-round",
+    "jurisdiction": "CDFW",
+    "source_name": "West Coast State Regulations (CDFW/WDFW/ODFW/NOAA)",
+    "source_url": "https://wildlife.ca.gov/Fishing/Ocean/Regulations/Sport-Fishing"
+  },
+  "lon_range": [
+    -138,
+    -110
+  ]
+}
