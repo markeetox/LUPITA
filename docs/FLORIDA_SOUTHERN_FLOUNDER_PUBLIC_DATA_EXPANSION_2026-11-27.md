@@ -90,7 +90,7 @@ The Data.gov package lists five downloadable resources:
 - EVER_creel_rec_trailer_count.csv
 - EVER_creel_rec_metadata.xml
 
-The dataset is public domain (CC0). The files were identified and package metadata reviewed, but the CSV download endpoint returned an unsupported content type in this research session and the files were not successfully ingested. **No Southern flounder recreational catch count or absence claim is made.**
+The dataset is public domain (CC0). During the initial source-discovery review, the CSV download endpoint returned an unsupported content type and the files were not ingested at that stage. They were subsequently acquired and audited in the 2026-11-28 workflow run documented below.
 
 When acquired, analyze species identity, catch disposition, fishing area, date, number of anglers, trip duration/effort, and QA/QC flags. This is fisheries-dependent evidence and must remain separate from standardized FIM or NOAA survey evidence. Angler target, access, gear, effort, and reporting affect detection.
 
@@ -98,7 +98,7 @@ When acquired, analyze species identity, catch disposition, fishing area, date, 
 
 The Florida Museum's UF FLMNH Ichthyology IPT resource publishes a Darwin Core Archive and metadata, is updated daily, and carries a CC-BY-NC 4.0 license. The archive is a reproducible public source for expanding the voucher review beyond the currently reviewed catalog records.
 
-The current resource page and archive endpoint were verified, but the archive was not downloaded and reprocessed in this review. The earlier catalog-level findings for UF 164232, UF 142820, and UF 233907 remain as previously documented. A resource-wide record count is not a substitute for verifying target taxon records and catalog-level metadata.
+During the initial source-discovery review, the resource page and archive endpoint were verified but the archive had not yet been downloaded. The archive was subsequently acquired and reprocessed in the 2026-11-28 workflow run documented below. The earlier catalog-level findings for UF 164232, UF 142820, and UF 233907 remain as previously documented. A resource-wide record count is not a substitute for verifying target taxon records and catalog-level metadata.
 
 When acquired, query accepted and verbatim scientific names, synonyms, catalog numbers, event dates, locality, decimal coordinates, georeference uncertainty, basis of record, identification history, collector, and multimedia references. Retain source record identifiers and do not interpret collection density as survey abundance.
 
