@@ -124,7 +124,7 @@ def acquire_noaa_florida_bay(report: dict[str, Any]) -> None:
         normalized_fields = {normalize(field): field for field in fields}
         scientific_field = next(
             (normalized_fields[name] for name in (
-                "scientificname", "genussp", "scientificnamecatch",
+                "scientificname", "genussp", "genus sp", "scientificnamecatch",
                 "scientific name", "scientific_name",
             ) if name in normalized_fields),
             None,
