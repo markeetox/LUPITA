@@ -548,3 +548,11 @@ Detailed audit and limitations added to docs/FLORIDA_SOUTHERN_FLOUNDER_PUBLIC_DA
 - Source: https://nmsgraysreefeus2-dev.azurewebsites.net/media/docs/20200505-grnms-acoustic-telemetry.pdf (Section 3.3.5, Table 3.17, pp. 58–59; discussion p. 66).
 - No verified Southern Flounder telemetry detection in Florida/South Florida found in reviewed public sources; do not infer absence from lack of public detections. No raw tags downloaded, no Florida points added, no model/profile/mask/scoring/confidence/ingestion/production changes.
 
+## 2026-11-28 | FACT/iTAG cross-network detection access assessed
+
+- FWC describes FACT as a partnership of 20+ organizations and 850+ receivers across the U.S. South Atlantic, Bahamas, and Caribbean, with 3,000+ tagged individuals from 60 species: https://myfwc.com/research/saltwater/telemetry/fact/.
+- SECOORA states FACT members use an online system to match detections across FACT, ACT-MATOS, Migramar, ATAP, and OTN. Its public FAQ does not expose anonymous tag-ID searches or a downloadable full event feed: https://secoora.org/fact/the-facts/.
+- FWC describes iTAG's orphan-tag database as a membership benefit for searching cross-array detections and uploading detections: https://myfwc.com/research/saltwater/telemetry/itag/. iTAG describes a collaborative Gulf data node: https://itagscience.com/ ; https://itagscience.com/about/.
+- Cross-network matching exists, but the public sources reviewed do not provide open tag-level queries for all Southern Flounder IDs against Florida receivers. No outreach, membership request, or data-access form submitted due to public-source-only/no-outreach constraint.
+- Public evidence documents one SC-tagged fish at Gray's Reef, GA, but no Florida detection for that individual or another identified Southern Flounder tag. This is an access/evidence limitation, not proof of absence. No restricted data accessed, no raw files downloaded, no Florida points or model changes.
+
