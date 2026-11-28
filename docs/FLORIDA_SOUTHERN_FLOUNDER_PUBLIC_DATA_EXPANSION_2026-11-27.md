@@ -596,3 +596,27 @@ These sources add credible Southern Flounder movement evidence from South Caroli
 
 No telemetry raw data or individual tag detections were downloaded. No new South Florida locations were added. No occupancy inference, geographic mask, species profile, scoring, confidence, ingestion, production source, or publishing behavior changed.
 
+### 2026-11-28 follow-up | Additional northern Gulf acoustic telemetry projects assessed
+
+#### Galveston Bay Complex, Texas (2016–2018)
+
+Steffen et al. (2023), *Estuarine-coastal connectivity and partial migration of southern flounder in the Gulf of Mexico*, provides a fully accessible peer-reviewed acoustic telemetry study. Sixty adult Southern Flounder were acoustically tagged in the Galveston Bay Complex from November 2016 to December 2017 and monitored by a 42-receiver array. The array recorded 370,918 detections from November 2016 through July 2018. Twenty-one fish were classified as migrators (maximum distance detected >5 km; mean 13.8 km), 11 as residents (<5 km; mean 0.6 km), 26 as unclassified due to short tracking duration, and two were never detected. Migrators generally moved through tidal passes in November–December, peaking in mid-to-late December; residents often remained in the bay through winter and spring. No tagged fish that exited the Galveston Bay Complex were detected returning to it during the study. Conventional tagging of more than 1,350 fish complemented the acoustic study; one conventional-tag recapture moved 221 km south to Espiritu Santo Bay, Texas, about three weeks after release. That conventional recapture is not an acoustic detection.
+
+The study area is the upper Texas coast, not Florida. It supports Gulf estuarine/coastal movement and partial-migration context but does not document a Florida or South Florida detection. Source: https://www.tamug.edu/grihms/pdf/Steffen%20et%20al.%202023%20ECSS.pdf (DOI 10.1016/j.ecss.2023.108545).
+
+#### Saint Louis Bay, Mississippi (2021 tagging; 2025 publication)
+
+Chee, Graham, and Leaf (2025), *Development of a spatiotemporally integrated per-recruit model for Southern Flounder in the northern Gulf of America*, reports 80 Southern Flounder tagged with acoustic transmitters in Saint Louis Bay, Mississippi. The analysis classified 11 individuals as migrators moving to offshore spawning locations and 16 as residents overwintering in inshore habitats. The movement information was incorporated into a spatiotemporally integrated per-recruit model. The university repository abstract does not provide receiver-level detections, exact dates, or evidence of movement into Florida waters. This is northern Gulf movement evidence, not a Florida occurrence record. Source: https://aquila.usm.edu/fac_pubs/22320/ (Fisheries Research 288, August 2025; DOI 10.1016/j.fishres.2025.107444).
+
+#### Mobile Bay / coastal Alabama acoustic monitoring
+
+The Dauphin Island Sea Lab's Coastal Alabama Acoustic Monitoring Program (CAAMP) page states that the program was redesigned in 2019 to study Southern Flounder. Its stated objective is to determine female offshore migration during late fall/winter. The described array contains 68 acoustic receivers throughout Mobile Bay and its tidal rivers; fish are tagged in early fall and monitored through fall, winter, and spring. The page does not report the number of Southern Flounder tagged, event-level detections, study years with complete results, or any Florida detections. Treat this as a confirmed project and receiver-array design, not as an acquired occurrence dataset. Source: https://www.disl.edu/who-we-are/spowers/projects/caamp/.
+
+A 2025 Alabama Department of Conservation and Natural Resources article describes a longer-running University of South Alabama / Alabama Marine Resources Division effort using conventional and acoustic tags, with tagging and tracking over approximately five years and Gulf coastal hydrophone arrays. The article discusses offshore residency and potential spawning-related movement but provides no Southern Flounder tag-level data or Florida detections. Source: https://www.outdooralabama.com/articles/research-inshore-species-yields-interesting-revelations.
+
+#### Gulf telemetry synthesis
+
+The Gulf studies now identified include Galveston Bay (60 acoustic-tagged fish, 2016–2018), Saint Louis Bay (80 tagged fish, 2021 tagging reported in a 2025 paper), and Mobile Bay (CAAMP project, 68-receiver array, redesigned for Southern Flounder in 2019). These studies provide useful Gulf-wide evidence that adult Southern Flounder can show both estuarine residency and offshore migration. They do not currently provide verified event-level Southern Flounder detections in Florida or South Florida. Do not extrapolate a Gulf-wide migration corridor from receiver arrays in Texas, Mississippi, and Alabama, and do not treat offshore egress as a Florida detection.
+
+No raw telemetry detections or individual-tag files were downloaded. No Florida occurrence points were added. No occupancy inference, geographic mask, species profile, scoring, confidence, ingestion, production source, or publishing behavior changed.
+
