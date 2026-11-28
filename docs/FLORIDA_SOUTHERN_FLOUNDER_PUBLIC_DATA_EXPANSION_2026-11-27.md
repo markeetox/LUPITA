@@ -393,3 +393,31 @@ The workflow artifact contains:
 - `noaa_florida_bay/collection_station_erddap_metadata.html`
 
 No raw source files were committed to the repository. No species profile, geographic mask, scoring, confidence, ingestion, production source, or publishing behavior changed.
+
+
+## 2026-11-28 follow-up | NOAA report-versus-ERDDAP coverage reconciliation
+
+A fresh inspection of the primary NOAA report and current ERDDAP metadata identified a concrete coverage gap that may explain the unresolved count difference:
+
+- NOAA Technical Report OAR-AOML-48 covers monitoring results from 2004 through 2019. Table 5 reports Southern flounder at **12 site samples**.
+- The main NOAA/AOML ERDDAP species-sample table advertises temporal coverage only from **2004-09-21 through 2016-11-12**. Its nine exact-name Southern flounder rows therefore cannot, by themselves, represent the full 2004–2019 report period.
+- The NOAA/AOML public data page links a historical Excel workbook titled **Juvenile Sportfish Survey Data**. A 2023 peer-reviewed paper's reference list identifies the downloadable workbook as `Master-Juvenile-Sportfish-NOAA-updated-06.11.19.xlsx`, hosted at:
+  https://www.aoml.noaa.gov/wp-content/uploads/2019/06/Master-Juvenile-Sportfish-NOAA-updated-06.11.19.xlsx
+- The workbook is a newly identified acquisition target, not yet an audited data source in this repository. Its actual sheet structure, coverage, taxonomic fields, and Southern flounder rows have not yet been inspected. Do not assume it contains the three missing site samples until it is downloaded and cross-checked.
+
+The report's Methods section also clarifies two different sampling products: all sizes of other sportfish caught were identified, measured, and counted in every tow; separately, a subset of 12 stations per month beginning in 2009 had all organisms under 100 mm total length preserved and measured in the lab. The ERDDAP collection-station table describes this latter subset, not the complete main survey species table. Its zero exact-name rows therefore do not contradict the nine detections in the main table.
+
+### Reconciliation status and next action
+
+The most defensible current explanation is that the ERDDAP export's 2016 endpoint may omit later survey records included in the report's 2004–2019 summary. This is a hypothesis supported by the difference in coverage periods, not a verified reconciliation. Other differences in aggregation or data processing remain possible.
+
+The manual acquisition script now downloads the NOAA/AOML June 2019 workbook into the same expiring research artifact as the ERDDAP files. On the next dispatch, inspect workbook sheets, row counts, date coverage, species/code columns, and all exact `Paralichthys lethostigma` / `Pal` records. Compare unique sample keys and salinity values with both the nine ERDDAP rows and Table 5. Keep the workbook separate from the ERDDAP extract until provenance and inclusion rules are established.
+
+Sources:
+- NOAA report: https://doi.org/10.25923/sec9-mf34
+- Main ERDDAP metadata and coverage: https://gcoos4.geos.tamu.edu/erddap/tabledap/juvenile_sportfish.html
+- Collection-station ERDDAP metadata and subset definition: https://gcoos4.geos.tamu.edu/erddap/tabledap/juvenile_sportfish_collection_stn.html
+- NOAA/AOML data portal: https://www.aoml.noaa.gov/data-products/
+- 2019 workbook URL cited by James et al. (2023): https://www.aoml.noaa.gov/wp-content/uploads/2019/06/Master-Juvenile-Sportfish-NOAA-updated-06.11.19.xlsx
+
+No raw workbook was committed. No species profile, geographic mask, scoring, confidence, ingestion, production source, or publishing behavior changed.
