@@ -268,3 +268,63 @@ The FWC extract still cannot provide a South Florida non-detection denominator, 
 - FWC/FWRI. [Fisheries-Independent Monitoring Using Stratified-Random Sampling](https://myfwc.com/research/saltwater/fim/stratified/), current routine regions and separately funded Florida Everglades / Florida Bay surveys.
 - FWC/FWRI. [2023 FIM Annual Data Summary Report](https://archive.myfwc.com/archive/Research/Saltwater/FIM/fim-annual-report-2023.pdf), Methods and Table 1–2, routine 2023 SRS study areas and gear usage.
 - National Park Service. [Everglades recreational catch and effort data package](https://catalog.data.gov/dataset/recreational-fishing-catch-and-effort-in-everglades-national-park-1980-2025-data-package), source metadata, fishing-area polygons, catch/flags definitions.
+
+
+## NOAA/AOML Florida Bay juvenile sportfish raw-data source located | 2026-11-28
+
+A further public source was located beyond the 2021 aggregate report: NOAA/AOML's Florida Bay juvenile sportfish observations are exposed through two GCOOS ERDDAP datasets with downloadable CSV source files. This creates a path to event-level target observations and individual measurements.
+
+### Main species-sample dataset
+
+**Dataset:** [Juvenile Sportfish Monitoring in Florida Bay, Everglades National Park](https://gcoos4.geos.tamu.edu/erddap/tabledap/juvenile_sportfish.html)  
+**Dataset ID:** `juvenile_sportfish`  
+**Source CSV:** [juvenilefish_sportfishlengths.csv](https://gcoos4.geos.tamu.edu/erddap/files/juvenile_sportfish/juvenilefish_sportfishlengths.csv)
+
+The ERDDAP metadata reports:
+- Coverage: 2004-09-21 through 2016-11-12.
+- Coordinates: 24.999–25.167°N, -81.063 to -80.642°W.
+- Instrument: otter trawl.
+- Fields include time, coordinates, station, location, zone, area towed, scientific/common name, species count, individual length, salinity, temperature, and seagrass metrics.
+- `SpeciesCount` is the number of individuals of a species collected in a sample.
+- `IndividualLength` is the measured length of a collected individual, in millimeters.
+- Salinity is in PSU; water temperature is in degrees Celsius.
+- The ERDDAP metadata identifies the source as a component of the CERP RECOVER Monitoring and Assessment Plan and displays a CC0 public-domain license.
+
+### Collection-station individual-measurement dataset
+
+**Dataset:** [Collection station measurements of the Juvenile Sportfish Monitoring in Florida Bay](https://gcoos4.geos.tamu.edu/erddap/tabledap/juvenile_sportfish_collection_stn.html)  
+**Dataset ID:** `juvenile_sportfish_collection_stn`  
+**Source CSV:** [juvenilefish_CollectionStnData.csv](https://gcoos4.geos.tamu.edu/erddap/files/juvenile_sportfish_collection_stn/juvenilefish_CollectionStnData.csv)
+
+Its metadata reports:
+- Coverage: 2009-06-06 through 2016-11-12.
+- The dataset complements the main species-sample table.
+- At a subset of 12 stations each month, all fish in the tow were collected, preserved in alcohol, and taken to the laboratory for measurement and identification.
+- Fields include time, coordinates, keyfield, station, subregion, scientific name (`Genus_sp`), common name, standard length, total length, weight, and species code.
+- Lengths are in millimeters; weight is in grams.
+- The keyfield is described as a concatenation of year, month, and station number.
+- The ERDDAP metadata displays a CC0 public-domain license.
+
+### Critical interpretation limits
+
+These datasets are not a complete replacement for the 2004–2019 report:
+- The main ERDDAP dataset currently advertises data only through November 2016, while the NOAA report summarizes a 2004–2019 period.
+- The collection-station dataset begins in June 2009 and covers only the subset of 12 stations sampled each month.
+- The phrase “12 stations each month” describes the collection-station design. It is **not** the same statistic as Table 5's `n = 12` Southern flounder site samples in the NOAA report. Do not conflate those two uses of 12.
+- The collection-station dataset contains measured individual specimens from a subset of stations, not a complete survey-wide zero-catch denominator.
+- The raw CSVs and candidate rows have not yet been downloaded and audited in GitHub Actions. No Southern flounder row count, dates, coordinates, or length result is claimed from these ERDDAP files yet.
+
+### Reproducible acquisition added
+
+Updated `scripts/acquire_south_florida_public_evidence.py` to download both ERDDAP source CSVs and their metadata pages, preserve the raw files in the temporary artifact, and produce exact-scientific-name candidate extracts. The two datasets are recorded separately so sample-level species counts are not confused with individual specimen measurements.
+
+The existing manual-only workflow remains the acquisition entry point:
+[South Florida Public Evidence Acquisition](../actions/workflows/south-florida-public-evidence-acquisition.yml).
+
+The script update is committed on `main`, but this expanded workflow has **not yet been run**. After dispatch, inspect source failures, CSV headers, exact-name candidate counts, repeated sample keys, species counts versus individual lengths, date/coordinate coverage, and agreement with the NOAA report before treating any target rows as verified.
+
+### Additional sources
+
+- NOAA/AOML + GCOOS. [Main juvenile sportfish ERDDAP dataset](https://gcoos4.geos.tamu.edu/erddap/tabledap/juvenile_sportfish.html).
+- NOAA/AOML + GCOOS. [Collection-station individual-measurement ERDDAP dataset](https://gcoos4.geos.tamu.edu/erddap/tabledap/juvenile_sportfish_collection_stn.html).
+- NOAA/AOML. [Juvenile Sportfish Survey project overview](https://www.aoml.noaa.gov/juvenile-sportfish-survey/), describing the ongoing Florida Bay monitoring project and its May–November sampling window.
