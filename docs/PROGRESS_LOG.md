@@ -447,3 +447,14 @@ Detailed audit and limitations added to docs/FLORIDA_SOUTHERN_FLOUNDER_PUBLIC_DA
 - Updated `scripts/acquire_south_florida_public_evidence.py` to download both raw ERDDAP CSVs and metadata pages, preserve raw source data in the temporary artifact, and extract exact scientific-name candidates separately for the species-sample and individual-measurement tables. Added recognition of the collection table's `Genus_sp` field.
 - Script commits: `8f6bdbe2a2590c6f734d88af5f3dda082b3ef7fe` (NOAA acquisition) and `aa89633a542e37b1880f2b8cb39ef5ffc459e68b` (field alias correction).
 - Expanded workflow has not yet been run. Next: manually dispatch [South Florida Public Evidence Acquisition](https://github.com/markeetox/LUPITA/actions/workflows/south-florida-public-evidence-acquisition.yml) and inspect raw CSV schemas, source failures, target row counts, event keys, individual lengths, and date/coordinate coverage. No model/profile/mask/scoring/production changes.
+
+
+## 2026-11-28 | NOAA/AOML Florida Bay raw-data acquisition and audit
+
+- Workflow [run 46158258337](https://github.com/markeetox/LUPITA/actions/runs/46158258337) completed successfully on `main`, source SHA `d9fd5caaa696951a8b6ec9d49b5e423617eb2b8d`. Artifact `south-florida-public-evidence`, ID `15268192641`, 28,887,077 bytes, expires 2026-12-12.
+- Acquired NOAA/AOML main juvenile sportfish table (11,473 rows) and collection-station individual-measurement subset (65,454 rows), plus metadata pages. No source failures.
+- Exact-name main-table extraction yielded nine `Paralichthys lethostigma` records, all `SpeciesCount=1`, nine unique `Keyfield` values. Dates 2005-11-11 through 2016-11-10; positions 25.100–25.167°N, 80.967–80.664°W; zones West 6, Crocodile 2, Rankin 1.
+- Five main-table rows have individual lengths: 72, 84, 120, 180, and 255 mm. Four length fields are missing. Salinity range 33.3–40.4 PSU, mean 36.82, sample SD 2.43. Temperature range 23.61–32.30°C.
+- Reconciliation issue: NOAA 2021 report Table 5 gives n=12 site samples and salinity 33.3–40.4 PSU, mean 36.7 ±2.31. The nine raw rows match the reported range and approximate mean, but not n or exact SD. Keep raw nine-row extract and published n=12 separate until source aggregation/provenance resolves the difference.
+- Collection-station subset produced zero exact-name `Paralichthys lethostigma` records and no broader Paralichthys/flounder string matches. This subset is separate from the full main species table; its lack of target rows does not negate main-table detections.
+- Detailed nine-row table, environmental fields, discrepancy, and interpretation documented in `docs/FLORIDA_SOUTHERN_FLOUNDER_PUBLIC_DATA_EXPANSION_2026-11-27.md`. No raw source files committed; no model/profile/mask/scoring/production changes.
