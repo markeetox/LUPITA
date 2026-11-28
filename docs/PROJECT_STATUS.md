@@ -512,3 +512,7 @@ Located three additional Gulf telemetry projects:
 
 These studies support Gulf estuarine residency and offshore migration context, but no event-level Southern Flounder detections in Florida/South Florida were verified. No new Florida points or model inputs added. Detailed sources and caveats are in the Florida Southern Flounder public data expansion report.
 
+### NOAA Gray's Reef Southern Flounder telemetry detection | 2026-11-28
+
+NOAA's 2019 Gray's Reef connectivity report documents one Southern Flounder tagged in the Ashley River, South Carolina (368 mm TL), then detected at Gray's Reef National Marine Sanctuary, Georgia, in January 2017. The fish produced five detections over ten minutes at the sanctuary, after a prior detection 54 days earlier approximately 181 km south of its tagging location. It was not detected again after leaving the sanctuary. This confirms one South Carolina-to-Georgia acoustic movement, not a Florida detection. The report cautions that one fish cannot support generalizations and notes that receiver coverage gaps limit interpretation. The report's acknowledgements confirm it used outside detections from FACT and ACT networks, but its Southern Flounder account does not report a Florida receiver detection. No verified Florida/South Florida telemetry point identified so far. Do not infer absence from missing receiver detections.
+
