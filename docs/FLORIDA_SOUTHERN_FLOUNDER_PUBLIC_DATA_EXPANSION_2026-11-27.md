@@ -493,3 +493,22 @@ Sources:
 
 No raw data were committed. No species profile, geographic mask, scoring, confidence, ingestion, production source, or publishing behavior changed.
 
+### 2026-11-28 follow-up | FWC full FIM data portal and SECOORA ERDDAP alternative assessed
+
+Located the Florida SEACAR Data Discovery record for FWC Fisheries-Independent Monitoring Program 69: https://data.florida-seacar.org/programs/details/69.
+
+The current program record (updated 2026-08-31) describes a monthly stratified-random program beginning in 1989 and continuing to the present, with approximately 10,000 net deployments annually. It says all collected nekton are identified to the lowest practical taxonomic level and records include species, size, sex, catch numbers, temperature, salinity, dissolved oxygen, pH, conductivity, habitat, coordinates, weather, tide, Secchi depth, and depth. SEACAR lists standardized Nekton and Discrete Water Quality exports updated September 2026, plus a GIS export and source documentation.
+
+This is a promising route to a fuller FWC sample/event denominator than the positive-catch-only ArcGIS layer previously audited. However, the SEACAR page also states that the underlying data location is by request from the FWC FIM program director and that downloads require a valid email address, first/last name, organization, occupation, and purpose. No form was submitted, no personal contact information was supplied, and no FWC export was downloaded. This route is therefore recorded as an access-gated lead, not as acquired public data. It also does not yet establish whether the full export includes Florida Bay special-program sampling; the 2023 core FIM report and current SEACAR managed-area list must not be treated as proof of a Florida Bay sampling frame.
+
+A separate public SECOORA ERDDAP dataset, FIMMAP_Counts, was assessed as a possible no-form alternative: https://erddap.secoora.org/erddap/tabledap/FIMMAP_Counts.html. Its metadata describes a limited large-haul-seine monitoring subset in Tampa Bay, Charlotte Harbor, Northern and Southern Indian River Lagoon, Cedar Key, Apalachicola Bay, and Jacksonville. Florida Bay is not in the dataset summary's listed coverage, so this is not a suitable substitute for the Florida Bay survey denominator. Its IOOS schema states that individualCount=0 represents absence only when the methodology for establishing absence is documented; positive values represent presence. No species-specific South Florida query or count is claimed from this dataset.
+
+**Conclusion:** the SEACAR FIM export is a potentially valuable source for a later, authorized download, but it is not currently accessible without submitting identifying contact information. The SECOORA ERDDAP alternative is openly queryable but does not cover Florida Bay in its documented summary. Neither source changes the existing Florida Bay evidence assessment. Continue to keep FWC positive-catch records, Florida Bay NOAA trawl records, NPS reported catch, and museum vouchers separate.
+
+Sources:
+- FWC/SEACAR Program 69: https://data.florida-seacar.org/programs/details/69
+- SECOORA FIMMAP_Counts ERDDAP: https://erddap.secoora.org/erddap/tabledap/FIMMAP_Counts.html
+- FWC 2023 FIM annual report: https://archive.myfwc.com/archive/Research/Saltwater/FIM/fim-annual-report-2023.pdf
+
+No download form was submitted, no contact information was used, and no raw data were acquired. No species profile, geographic mask, scoring, confidence, ingestion, production source, or publishing behavior changed.
+
