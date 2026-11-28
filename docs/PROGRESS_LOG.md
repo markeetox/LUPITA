@@ -1,3 +1,8 @@
+
+## 2026-11-28 | Clarified NOAA Table 5 sample-size meaning
+
+Re-reviewed the primary NOAA OAR-AOML-48 report. Table 5 explicitly defines n as site sample size; Southern Flounder n=12 is not an individual-fish count. Methods separately describe all sportfish caught in every tow being identified/measured/counted and a subset of 12 stations per month from 2009 onward where all organisms under 100 mm were preserved for lab identification. Do not conflate the 12-station collection subset with Table 5's species-specific site-sample n. ERDDAP's main species table has nine Southern Flounder sample rows, each SpeciesCount=1, through 2016-11-12; the report spans 2004-2019. Later years are a plausible but unverified explanation for the three-row gap. No rows imputed; no model/profile/mask/scoring/production change. Primary source: https://repository.library.noaa.gov/view/noaa/28764/noaa_28764_DS1.pdf
+
 ## 2026-11-28 | Acquisition run 5: workbook still blocked
 
 - Manual run [46168260876](https://github.com/markeetox/LUPITA/actions/runs/46168260876) succeeded on `main`, SHA `97d1c7419d31ae2f1c8aaaa717b67cb83681aa92`.
