@@ -638,3 +638,18 @@ Sources:
 
 No raw tag detections were downloaded. No Florida occurrence points were added. No model/profile/mask/scoring/confidence/ingestion/production changes.
 
+### 2026-11-28 follow-up | Cross-network telemetry detection systems and public-access boundary
+
+Confirmed that the Gray's Reef NOAA report used detections supplied by FACT and ACT network members outside the sanctuary. The broader networks have mechanisms for cross-array matching, but those matching services are not exposed as an unrestricted public query endpoint in the sources reviewed.
+
+- FWC describes the FACT Array as a partnership of more than two dozen research organizations with more than 850 submerged receivers, covering the U.S. South Atlantic, Bahamas, and Caribbean. FWC's public page reports more than 3,000 tagged/released individuals from 60 species. Source: https://myfwc.com/research/saltwater/telemetry/fact/.
+- SECOORA's FACT FAQ says members use an online system to match detections across FACT, ACT-MATOS, Migramar, ATAP, and OTN networks. The FAQ directs researchers who want to check whether their tags were detected to contact the network; it does not expose an anonymous public tag-ID query or downloadable event-level feed. Source: https://secoora.org/fact/the-facts/.
+- FWC's iTAG page describes an "orphan tag database" that allows iTAG members to search for their tags on other members' arrays and upload detections. The benefit is described as an iTAG membership feature, not an open public endpoint. Source: https://myfwc.com/research/saltwater/telemetry/itag/.
+- The iTAG network site describes a collaborative Gulf data node matching detections to member animals, while its About page identifies the membership/data-sharing infrastructure. Sources: https://itagscience.com/ ; https://itagscience.com/about/.
+
+The public sources establish that cross-network matching exists and is operationally important; they do not allow us to query all Southern Flounder tag IDs against Florida receivers without researcher/member access or a publicly released detection export. Because the user preference is to rely on public sources and avoid outreach, no contact request, email, membership request, or data-access form was submitted.
+
+**Current evidence boundary:** the NOAA Gray's Reef report documents one SC-tagged Southern Flounder detected at a Georgia sanctuary. Public sources reviewed so far do not document a Florida receiver detection for that individual or another identified Southern Flounder tag. This is a limit of accessible evidence, not proof that no Southern Flounder entered or was detected in Florida waters.
+
+No restricted network data accessed, no outreach performed, no raw telemetry files downloaded, and no new Florida occurrence points added. No species model/profile/mask/scoring/confidence/ingestion/production changes.
+
