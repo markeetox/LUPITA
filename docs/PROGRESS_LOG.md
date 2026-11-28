@@ -508,3 +508,11 @@ Detailed audit and limitations added to docs/FLORIDA_SOUTHERN_FLOUNDER_PUBLIC_DA
 - Assessed public SECOORA ERDDAP dataset FIMMAP_Counts: https://erddap.secoora.org/erddap/tabledap/FIMMAP_Counts.html. Its dataset summary lists Tampa Bay, Charlotte Harbor, both Indian River Lagoon sectors, Cedar Key, Apalachicola Bay, and Jacksonville, not Florida Bay. It is not a Florida Bay denominator source. The IOOS schema states individualCount=0 represents absence only when the method for establishing absence is documented.
 - No new FWC Southern flounder rows are claimed. The existing positive-catch-only FWC GIS limitation remains. No species/profile/mask/scoring/confidence/ingestion/production changes; no raw data acquired.
 
+## 2026-11-28 | Florida Bay acoustic telemetry source identified
+
+- Located FACT/SECOORA project *How are Fish using Florida Bay: Impacts and Effects of Seagrass Distribution*: https://secoora.org/fact/projects/how-are-fish-using-florida-bay-impacts-and-effects-of-seagrass-distribution/.
+- Project description reports 70 listening stations and 250 internal fish tags, with FIU, NOAA, FWC/FWRI, and Everglades National Park involvement. Project marked ongoing under FACT code CELASE.
+- OTN public catalog lists dataset V2LCELASE, *Sportfish movement in Florida Bay*, with 20,730,746 catalog records, 100 stations, 478 deployments, last modified 2026-10-16: https://members.oceantrack.org/data/discovery/bypublic.htm.
+- Catalog record counts are not unique fish counts, abundance, or target-species detections. Tagged species and Southern Flounder inclusion have not been verified. Do not use as Southern Flounder evidence until animal metadata are checked; possible use is habitat/movement context only.
+- No telemetry data downloaded or integrated. No species/profile/mask/scoring/confidence/ingestion/production changes.
+
