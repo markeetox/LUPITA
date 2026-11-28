@@ -140,3 +140,50 @@ Added a manual-only, read-only GitHub Actions workflow:
 The workflow is designed to download the NPS creel package, query exact-name positive-catch records from the FWC/FWRI ArcGIS layer, and download/filter the Florida Museum Darwin Core Archive. It writes raw source files, exact-name candidate extracts, metadata, and a summary to a 14-day Actions artifact. It does not commit raw source data or modify LUPITA's model or species profiles.
 
 The workflow and script have been committed to main but **have not yet been run**. The first run must be inspected for source failures, returned date coverage, target record counts, field names, taxonomy, QA flags, and spatial plausibility before any result is treated as validated.
+
+
+## First acquisition run audited | 2026-11-28
+
+The manual workflow completed successfully on `main`:
+- Run: [46154737377](https://github.com/markeetox/LUPITA/actions/runs/46154737377)
+- Source commit: `ab405884935af33b53434725af7d779d8ed9c06b`
+- Artifact: `south-florida-public-evidence`, ID `15266424962`, 27,709,716 bytes; expires 2026-12-12.
+- All workflow steps, including script syntax check, acquisition, and artifact upload, succeeded. The artifact summary reports no source failures.
+
+### FWC/FWRI Inshore FIM SRS positive-catch extract
+
+- Exact-name query returned and retrieved all 6,008 matching feature records (the service query's expected count and retrieved count agree).
+- Dates: 1996-04-15 through 2023-12-21.
+- Coordinates: 26.843167–30.745200°N, 87.048500–80.042667°W.
+- 10,482 fish represented by the `TotalNum` field across 6,008 positive-catch records.
+- Only one record is south of 27°N (26.843167°N, 1997-07-09, Reference `TQM1997070901`); none is south of 26.5°N. There are 251 records south of 28°N.
+- Gear codes returned: 20 (151 records), 23 (1,365), 160 (1,562), 300 (2,723), 301 (207). Gear-code interpretation still requires the FWC codebook.
+- Crucial limitation: the public layer is filtered to positive-catch species records (`CNT > 0`). It contains no zero-catch denominator. The absence of Southern flounder rows south of the southernmost positive record cannot be called a survey non-detection or biological absence. It does establish that this public target extract has virtually no positive records in the lower South Florida latitude band; survey frame/coverage and source export limitations must be resolved before interpretation.
+
+### NPS Everglades recreational creel catch extract
+
+- Full catch file parsed: 828,222 rows; source package covers 1980-01 through 2025-04.
+- Exact-name candidate extract: 210 catch rows, 205 unique interview keys, 271 fish summed from `individualCount`.
+- All candidates are from Flamingo (209 rows) except one Everglades City row. Candidate dates run 1980-01-05 through 1997-03-16.
+- Recorded disposition: 150 harvested rows and 60 released rows. Five interview keys have separate harvested/released rows; these must not be mistaken for duplicate interview events.
+- The candidate flags extract has 538 rows across 179 of the 205 candidate interview keys. The most frequent flag descriptions concern trip-hours and party-composition / species-preference fields. These are interview-level QA flags, not proof that the species identification or catch count is invalid. Retain flags for review; do not automatically discard catches.
+- This is fisheries-dependent angler-intercept information. Counts are reported catch among sampled returning anglers, not standardized abundance, and the lack of later target rows is not evidence of no catch after 1997.
+
+### Florida Museum UF Ichthyology vouchers
+
+- Current downloaded Darwin Core Archive contains 241,669 occurrence rows; 221 exact-name candidate occurrences were extracted.
+- 170 candidates have stateProvince = Florida; other records are from additional Gulf/Southeastern states and must remain outside Florida-only summaries.
+- Florida occurrence years with a usable year field: 1929–2024 (169 records with year values).
+- Ten Florida records have coordinates at or south of 27°N. They include Port Everglades (UF 142820, 1960; UF 233907, 1959), Buttonwood Canal / Everglades National Park (UF 164232, 1962), Sands Key / Miami-Dade (UF 193180, 1963), and additional offshore southwest Florida / eastern Gulf records. These are preserved-specimen occurrence records, not population estimates.
+- Recent Florida vouchers include Tampa Bay / Pinellas records from 2020 and 2024; these do not imply recent South Florida occupancy.
+- The archive's license is CC-BY-NC 4.0. Preserve attribution and non-commercial restrictions in any downstream use.
+
+### Combined interpretation and next research step
+
+The acquisition adds three distinct evidence streams: FWC standardized positive-catch survey records, NPS fisheries-dependent reported catches, and Florida Museum preserved vouchers. They must remain separate in any analysis. FWC has a large positive-catch extract but almost no target positives south of 27°N and no public zero-catch denominator; NPS documents historical reported catches around Flamingo through 1997; museum vouchers independently document historical South Florida occurrences, including Miami-Dade, Broward, and Everglades National Park.
+
+This strengthens the conclusion that South Florida is not an absolute historical biological void, while leaving contemporary distribution, abundance, and habitat-specific occupancy unresolved. Do not create a hard range boundary or mask from these data. Next: inspect the NPS metadata/code definitions and FWC gear/survey-zone documentation; then spatially reconcile the voucher and creel localities with the existing NOAA sample-level evidence. No model, species profile, geographic mask, scoring, confidence, ingestion, production source, or publishing behavior was changed.
+
+### Artifact contents
+
+The complete read-only artifact contains source CSV/XML files, the FWC ArcGIS metadata and 6,008-row positive-catch extract (CSV and GeoJSON), the Florida Museum Darwin Core Archive and 221-row candidate extract, NPS source files and candidate extracts, plus `acquisition_summary.json`. No raw data were committed to the repository.
