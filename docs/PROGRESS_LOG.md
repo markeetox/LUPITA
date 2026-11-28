@@ -516,3 +516,9 @@ Detailed audit and limitations added to docs/FLORIDA_SOUTHERN_FLOUNDER_PUBLIC_DA
 - Catalog record counts are not unique fish counts, abundance, or target-species detections. Tagged species and Southern Flounder inclusion have not been verified. Do not use as Southern Flounder evidence until animal metadata are checked; possible use is habitat/movement context only.
 - No telemetry data downloaded or integrated. No species/profile/mask/scoring/confidence/ingestion/production changes.
 
+## 2026-11-28 | Species-specific Southern Flounder telemetry catalog leads
+
+- OTN/FACT catalog lists SOFLOAR (*Southern Flounder on Artificial Reefs*) and SOFLONC (*ECU Southern Flounder Spawning Study*) as East Carolina University data projects.
+- Both entries show Records=NA and LastModified=NA. Their locations, methods, time coverage, sample sizes, and public event-level data access are unverified. They are metadata leads only, not South Florida/Florida Bay occurrence evidence.
+- No outreach or download performed; no new species locations claimed.
+
