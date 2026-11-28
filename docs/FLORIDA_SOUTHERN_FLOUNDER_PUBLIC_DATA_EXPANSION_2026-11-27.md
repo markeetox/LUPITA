@@ -328,3 +328,68 @@ The script update is committed on `main`, but this expanded workflow has **not y
 - NOAA/AOML + GCOOS. [Main juvenile sportfish ERDDAP dataset](https://gcoos4.geos.tamu.edu/erddap/tabledap/juvenile_sportfish.html).
 - NOAA/AOML + GCOOS. [Collection-station individual-measurement ERDDAP dataset](https://gcoos4.geos.tamu.edu/erddap/tabledap/juvenile_sportfish_collection_stn.html).
 - NOAA/AOML. [Juvenile Sportfish Survey project overview](https://www.aoml.noaa.gov/juvenile-sportfish-survey/), describing the ongoing Florida Bay monitoring project and its May–November sampling window.
+
+
+## NOAA/AOML Florida Bay raw-data audit | workflow run 46158258337 | 2026-11-28
+
+### Acquisition result
+
+The expanded [South Florida Public Evidence Acquisition workflow](https://github.com/markeetox/LUPITA/actions/runs/46158258337) completed successfully on `main` at source commit `d9fd5caaa696951a8b6ec9d49b5e423617eb2b8d`. Artifact: `south-florida-public-evidence`, ID `15268192641`, 28,887,077 bytes, expires 2026-12-12.
+
+Both NOAA/AOML ERDDAP source CSVs and their metadata pages were acquired:
+- Main species-sample table: 11,473 rows.
+- Collection-station individual-measurement table: 65,454 rows.
+- No acquisition source failures were recorded.
+
+### Main species-sample table: nine exact Southern flounder rows
+
+Exact `ScientificName = Paralichthys lethostigma` extraction returned **9 rows**, each with `SpeciesCount = 1`. The rows have nine unique `Keyfield` values and represent nine recorded individuals in this table.
+
+| Date (UTC) | Station | Zone | Latitude | Longitude | IndividualLength (mm) | Salinity (PSU) | Temperature (°C) |
+|---|---:|---|---:|---:|---:|---:|---:|
+| 2005-11-11 | 70 | West | 25.132 | -80.941 | not reported | 34.00 | 25.00 |
+| 2008-07-13 | 323 | Crocodile | 25.137 | -80.705 | 84 | 40.40 | 29.10 |
+| 2008-09-17 | 621 | Crocodile | 25.167 | -80.664 | 120 | 38.30 | 30.50 |
+| 2008-10-11 | 70 | West | 25.132 | -80.941 | 255 | 33.30 | 30.70 |
+| 2009-07-11 | 67 | West | 25.134 | -80.967 | 72 | 37.70 | 32.30 |
+| 2011-07-17 | 174 | West | 25.128 | -80.889 | 180 | 34.90 | 30.39 |
+| 2016-09-04 | 70 | West | 25.132 | -80.941 | not reported | 38.40 | 32.00 |
+| 2016-09-04 | 176 | West | 25.100 | -80.866 | not reported | 38.70 | 31.00 |
+| 2016-11-10 | 237 | Rankin | 25.126 | -80.863 | not reported | 35.64 | 23.61 |
+
+Summary:
+- Dates: 2005-11-11 through 2016-11-10.
+- Coordinates: 25.100–25.167°N, 80.967–80.664°W.
+- Zones: West (6 records), Crocodile (2), Rankin (1).
+- Nine rows, nine unique sample keyfields, nine individuals according to `SpeciesCount`.
+- Five records have an `IndividualLength` value: 72, 84, 120, 180, and 255 mm. Four rows have no individual length recorded. Do not treat missing length as zero or infer fish size from other fields.
+- Salinity: 33.3–40.4 PSU; mean 36.82 PSU; sample standard deviation 2.43 PSU.
+- Temperature: 23.61–32.30 °C.
+
+### Reconciliation with NOAA 2021 report Table 5
+
+The 2021 NOAA report's Table 5 reports `n = 12` site samples for Southern flounder, salinity range 33.3–40.4 PSU, and mean 36.7 ± 2.31 PSU. The nine raw-table rows audited here reproduce the reported salinity minimum and maximum, and their mean (36.82) is close to the report's rounded mean (36.7). Their sample standard deviation (2.43) is not identical to the reported ±2.31, and the raw extract contains nine rows rather than the report's 12 site samples.
+
+This is a material but unresolved discrepancy. The nine records may not represent the same aggregation unit or complete source extraction used for Table 5, or three site samples may be absent from this ERDDAP export. Do not assert that the nine rows fully reproduce the report's n=12. Follow-up should inspect the report's underlying table/definitions and source data provenance, and check for alternate taxonomic spellings, duplicate/aggregated observations, and any report-only records. The observed similarity of salinity range and mean is a consistency clue, not proof of a one-to-one match.
+
+### Collection-station measurement table
+
+The 65,454-row collection-station table produced **zero exact-name `Paralichthys lethostigma` rows** under its `Genus_sp` field. A broader text check also found no `Paralichthys` or flounder strings. This does not negate the nine main-table detections: the collection-station dataset is a subset of 12 stations per month, not the full species-sample table, and the two tables have different inclusion/measurement designs. The main table itself has five individual length values.
+
+### Evidence interpretation
+
+This is direct, georeferenced, fishery-independent survey evidence of Southern flounder in Florida Bay from 2005 through 2016, with recorded salinity and temperature at each sample. It is much more useful than a generalized range point because each row has a date, location, sample key, count, and environmental measurements.
+
+It still does not establish population abundance, current occupancy after 2016, a complete zero-catch denominator, or a southern range boundary. It is also not yet fully reconciled with the NOAA report's n=12. Keep the nine rows as raw-source observations and the report's 12 as a separate published summary until the discrepancy is resolved.
+
+### Reproducibility
+
+The workflow artifact contains:
+- `noaa_florida_bay/species_samples.csv` (full 11,473-row main source table)
+- `noaa_florida_bay/species_samples_southern_flounder_candidates.csv` (nine exact-name rows)
+- `noaa_florida_bay/species_samples_erddap_metadata.html`
+- `noaa_florida_bay/collection_station.csv` (full 65,454-row subset table)
+- `noaa_florida_bay/collection_station_southern_flounder_candidates.csv` (header only; zero target rows)
+- `noaa_florida_bay/collection_station_erddap_metadata.html`
+
+No raw source files were committed to the repository. No species profile, geographic mask, scoring, confidence, ingestion, production source, or publishing behavior changed.
