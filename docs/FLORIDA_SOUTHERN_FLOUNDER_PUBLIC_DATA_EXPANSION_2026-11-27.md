@@ -544,3 +544,55 @@ Sources:
 
 No data were downloaded; no new Southern Flounder locations or occurrences are claimed.
 
+### 2026-11-28 follow-up | Acoustic telemetry species crosswalk and Carolinas Southern Flounder studies
+
+#### Florida Bay CELASE project: tagged species identified
+
+The FACT/SECOORA project page for *How are Fish using Florida Bay: Impacts and Effects of Seagrass Distribution* (project code CELASE) describes 70 listening stations and 250 internal fish tags, with FIU, NOAA, FWC, and Everglades National Park involvement. Project page: https://secoora.org/fact/projects/how-are-fish-using-florida-bay-impacts-and-effects-of-seagrass-distribution/.
+
+A related Coastal Fisheries Research Lab / 3D Fish Telemetry project page, *How do Fish use Seascapes? (US)*, explicitly identifies the study species as:
+- Spotted Seatrout (*Cynoscion nebulosus*)
+- Goliath Grouper (*Epinephelus itajara*)
+- Grey Snapper (*Lutjanus griseus*)
+
+It describes two fine-scale acoustic telemetry arrays: one investigating spotted seatrout habitat use in patchy habitat, and one investigating juvenile habitat use by goliath grouper and grey snapper. It names the Coastal Fisheries Research Lab, Jonathan Rodemann, Jennifer Rehage, and Rolando Santos, and studies Florida Bay submerged aquatic vegetation and the seagrass die-off. This combination of matching personnel, geography, habitat question, and project framing strongly indicates that this is the species crosswalk for the CELASE Florida Bay work, although the two public pages use different project titles. Project page: https://telemetry.fish/project/florida_keys/.
+
+**Finding:** the three species named above are supported as the targets of the related Florida Bay telemetry study. Southern Flounder is not named as a tagged target on that page. Therefore CELASE is currently habitat/movement-context evidence for the Florida Bay ecosystem, not a Southern Flounder telemetry occurrence source. Do not interpret its receiver count or project record count as evidence that Southern Flounder was tagged or detected.
+
+The OTN public listing for CELASE/V2LCELASE exposes 100 station locations and 478 receiver deployments, but does not list a public Animal release product for this collection. The OTN catalog describes Animal products as tagged-animal release records including taxonomy and release metadata. Since no Animal product is listed for CELASE, the public catalog does not provide the species-level release file needed to independently enumerate all tagged individuals. OTN public listing: https://members.oceantrack.org/data/discovery/bypublic.htm.
+
+#### South Carolina: Charleston Harbor / Ashley River acoustic telemetry
+
+A 2016 Flatfish Biology Conference abstract, *Acoustic Tracking of Southern Flounder (Paralichthys lethostigma) in the Charleston Harbor System*, reports that 119 Southern Flounder larger than 275 mm total length were acoustically tagged and released into the Ashley River, Charleston, South Carolina. The study tested tag attachment methods, then monitored fish using fixed receivers and active tracking. Preliminary results reported 96% of tagged fish detected, 88% remaining within the river of release, and 12% moving into the Atlantic Ocean in fall months. Source: NOAA-hosted 11th Flatfish Biology Conference proceedings, https://repository.library.noaa.gov/view/noaa/12670/noaa_12670_DS1.pdf; also indexed in the 2016 conference abstract listing.
+
+A later Gulf States Marine Fisheries Commission synthesis reports results for 118 acoustically tagged fish from the Ashley River study: 96% detected, 88% remaining within the release river, 12% entering the Atlantic in fall, and release-to-last-detection distances of 0–263 km, with movements greater than 100 km occurring only in December and January. The conference abstract's initial 119 tagged fish and later synthesis's 118 analyzed fish are preserved as source-specific counts; no explanation for the one-fish difference was found. Source: *Floundering Around*, GSMFC Number 310, https://www.gsmfc.org/publications/GSMFC%20Number%20310.pdf.
+
+SCDNR's coastal receiver study describes a 120-receiver VR2W network spanning approximately 100 nautical miles of South Carolina coast, with Charleston arrays established in December 2013, southern coastal arrays expanded in April 2015, Port Royal Sound coverage from spring 2014, and additional St. Helena Sound coverage from summer 2016. Its other-finfish results describe Southern Flounder as one of the species detected in South Carolina and Georgia coastal waters; two-thirds of Southern Flounder detection days occurred within five miles of shore. The partnership listing names Frederick Scharf, Morgan Hart, and Steve Arnott for Southern Flounder. Sources:
+- Methods: https://dnr.sc.gov/marine/receiverstudy/methods.html
+- Results: https://www.dnr.sc.gov/marine/receiverstudy/finfish.html
+- Researcher listing: https://www.dnr.sc.gov/marine/receiverstudy/partnerships.html
+
+OTN's FACT catalog separately lists SCSOFL as a Southern Flounder tracking project associated with the South Carolina DNR institution, but shows Records=NA and LastModified=NA. This is a cataloged project lead, not an accessible event-level detection dataset. The matching species and research group make it a likely catalog representation of the South Carolina telemetry work, but an exact project-to-publication identifier crosswalk has not been independently verified.
+
+#### North Carolina: 210-fish acoustic migration project
+
+The North Carolina Southern Flounder Symposium page (March 20, 2024) summarizes an ECU-led acoustic telemetry study. Researchers captured and acoustically tagged 210 adult female Southern Flounder in Albemarle, Pamlico, and Core Sounds in fall 2020 and 2021. The 2022 NOAA Flatfish Biology Conference abstract reports that 85 of the 210 tagged fish had been detected at that time. Some fish moved offshore to the shelf break between January and March; others moved south along nearshore waters between Cape Lookout and Cape Fear. Seven fish showed potential skip-spawning behavior, eight returned to North Carolina sounds, and one made consecutive multiyear offshore migrations.
+
+The 2024 symposium summary reports that some exploratory tagged fish moved south in later years as far as Georgetown and Charleston, South Carolina, and Savannah, Georgia. It separately reports that a hydrodynamic larval dispersal model suggested episodic connectivity with populations as far south as Florida. These are different evidence types:
+- Adult telemetry detections documented southward movement to South Carolina and Georgia, not Florida.
+- Florida connectivity is a model-based larval-dispersal inference, not a direct adult-tag detection or a verified Florida occurrence.
+- The 2024 symposium page also summarizes five Southern Flounder eggs identified by DNA barcoding from offshore North Carolina collections; those eggs are North Carolina reproductive evidence, not Florida observations.
+
+Sources:
+- NC DEQ Southern Flounder Symposium, including the project summary and presentation abstracts: https://www.deq.nc.gov/about/divisions/marine-fisheries/hot-topics/flounder/southern-flounder-symposium
+- NOAA 17th Flatfish Biology Conference 2022 proceedings, especially the McGarigal et al. abstract: https://repository.library.noaa.gov/view/noaa/48077/noaa_48077_DS1.pdf
+- ECU 2024 dissertation by Brian Bartlett on modeled Southern Flounder spawning habitat near Beaufort Inlet, NC: https://thescholarship.ecu.edu/items/d3015a0c-fe38-4580-9df0-195eec3e578e
+
+OTN's public catalog lists SOFLONC (ECU Southern Flounder Spawning Study) and SOFLOAR (Southern Flounder on Artificial Reefs), both associated with East Carolina University and Rebecca Asch, but both show Records=NA and LastModified=NA. Their exact relationship to the publications above, geographic coverage, and availability of underlying tag-level data remain unverified. They are research metadata leads, not acquired data.
+
+#### Interpretation for LUPITA
+
+These sources add credible Southern Flounder movement evidence from South Carolina and North Carolina and help frame migration variability, estuarine residency, offshore movement, and possible larval connectivity. They do **not** add a verified Southern Flounder telemetry detection in Florida Bay or elsewhere in South Florida. The Florida Bay CELASE work names other target species and should remain a separate ecosystem-context stream.
+
+No telemetry raw data or individual tag detections were downloaded. No new South Florida locations were added. No occupancy inference, geographic mask, species profile, scoring, confidence, ingestion, production source, or publishing behavior changed.
+
