@@ -490,3 +490,16 @@ Located the FACT/SECOORA project *How are Fish using Florida Bay: Impacts and Ef
 
 Additional OTN catalog leads: SOFLOAR (*Southern Flounder on Artificial Reefs*) and SOFLONC (*ECU Southern Flounder Spawning Study*) are listed as species-specific data projects associated with East Carolina University. Both show Records=NA and LastModified=NA in the catalog. Geography, methods, dates, and public data accessibility are unverified; do not treat them as South Florida or Florida Bay evidence. No outreach or data download performed.
 
+### Acoustic telemetry research update | 2026-11-28
+
+The Florida Bay FACT/SECOORA CELASE project has a likely species crosswalk. Its related Coastal Fisheries Research Lab / 3D Fish Telemetry page identifies Spotted Seatrout (*Cynoscion nebulosus*), Goliath Grouper (*Epinephelus itajara*), and Grey Snapper (*Lutjanus griseus*) as the species studied using two fine-scale arrays. The project framing, Florida Bay seagrass focus, FIU lab, and Jonathan Rodemann connection strongly link this page to CELASE, though the page titles differ. Southern Flounder is not named as a tagged target. OTN's public V2LCELASE listing exposes 100 stations and 478 deployments but no public Animal release file. Treat as ecosystem/habitat context, not Southern Flounder occurrence evidence.
+
+Located direct Southern Flounder acoustic telemetry studies in the Carolinas:
+- Charleston Harbor/Ashley River, SC: a 2016 conference abstract reports 119 fish (>275 mm TL) tagged; 96% detected, 88% remained in the river, and 12% moved into the Atlantic in fall. A later GSMFC synthesis reports 118 analyzed fish and release-to-last-detection distances of 0–263 km. Preserve the 119 versus 118 source-specific counts; discrepancy unexplained.
+- North Carolina ECU project: 210 adult females tagged in Albemarle, Pamlico, and Core Sounds in fall 2020/2021; 85 fish had detections in the 2022 abstract. Adult telemetry documented some southward movement as far as Georgetown and Charleston, SC, and Savannah, GA. A separate larval-dispersal model suggested episodic connectivity as far south as Florida. That Florida statement is model inference, not a direct tagged-fish detection.
+- SCDNR coastal receiver network: 120 VR2W receivers across roughly 100 nautical miles of SC coast; SCDNR results describe Southern Flounder detections, with two-thirds of detection days within five miles of shore.
+
+OTN catalogs SCSOFL (SCDNR Southern Flounder tracking), SOFLONC (ECU Southern Flounder Spawning Study), and SOFLOAR (Southern Flounder on Artificial Reefs), but the listings show Records=NA and LastModified=NA. No tag-level files were downloaded; exact project-to-publication crosswalks and tag data availability remain unverified.
+
+**South Florida conclusion unchanged:** no direct Southern Flounder telemetry detection in Florida Bay or South Florida was established in this review. The new Carolinas studies support movement/connectivity context only; the Florida larval connection is a model inference. No new South Florida locations added and no profile, mask, scoring, confidence, ingestion, or production changes.
+
