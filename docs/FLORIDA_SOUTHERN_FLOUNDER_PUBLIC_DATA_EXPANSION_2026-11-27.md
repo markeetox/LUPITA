@@ -620,3 +620,21 @@ The Gulf studies now identified include Galveston Bay (60 acoustic-tagged fish, 
 
 No raw telemetry detections or individual-tag files were downloaded. No Florida occurrence points were added. No occupancy inference, geographic mask, species profile, scoring, confidence, ingestion, production source, or publishing behavior changed.
 
+### 2026-11-28 follow-up | NOAA Gray's Reef report confirms one South Carolina-to-Georgia Southern Flounder detection
+
+Located NOAA Technical Memorandum NOS NCCOS 259 (September 2019), *Using Acoustic Telemetry to Understand Connectivity of Gray's Reef National Marine Sanctuary to the U.S. Atlantic Coastal Ocean*: https://nmsgraysreefeus2-dev.azurewebsites.net/media/docs/20200505-grnms-acoustic-telemetry.pdf (DOI 10.25923/r2ma-5m96).
+
+The report's Southern Flounder section (Section 3.3.5, Table 3.17, pp. 58–59) identifies one fish tagged by Liz Vinyard / South Carolina Department of Natural Resources. The fish was 368 mm TL at tagging, released in the Ashley River, South Carolina, and detected at Gray's Reef National Marine Sanctuary, Georgia, in January 2017. The report records five detections over a ten-minute period. The fish had been detected at another receiver 54 days before arriving at Gray's Reef, approximately 181 km south of its Ashley River tagging location. It was not detected again after departing Gray's Reef.
+
+This independently confirms one individual Southern Flounder movement from the South Carolina coast to an offshore Georgia sanctuary. It is not evidence of a Florida detection. The report explicitly cautions that one individual cannot support generalizations about the sanctuary's role for Southern Flounder. It also notes that locations before and after sanctuary visits depend on where receiver networks exist, and unmonitored areas remain between detections.
+
+The report's acknowledgements state that detections outside Gray's Reef were supplied by the Florida Atlantic Coast Telemetry (FACT) Network and Atlantic Cooperative Telemetry (ACT) Network. This confirms that cross-network detection sharing was part of the study. However, the published Southern Flounder account documents only the single Georgia sanctuary visit; no Florida receiver detection for this individual is reported.
+
+Sources:
+- NOAA Technical Memorandum NOS NCCOS 259: https://nmsgraysreefeus2-dev.azurewebsites.net/media/docs/20200505-grnms-acoustic-telemetry.pdf
+- Relevant lines in the accessible PDF: Table 3.17 and Southern Flounder movements, pp. 58–59; summary discussion of receiver coverage limitations, p. 66.
+
+**Updated interpretation:** we now have one verified acoustic movement from South Carolina to Georgia (Ashley River to Gray's Reef), plus other Carolinas studies showing movements into South Carolina and Georgia. No verified Southern Flounder telemetry detection in Florida or South Florida has been identified in the public sources reviewed so far. The distinction between "no public detection found" and "no fish entered Florida" remains essential; receiver coverage is incomplete and no negative inference is justified.
+
+No raw tag detections were downloaded. No Florida occurrence points were added. No model/profile/mask/scoring/confidence/ingestion/production changes.
+
