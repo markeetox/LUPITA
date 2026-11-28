@@ -439,3 +439,10 @@ The main table contains **nine exact Southern flounder rows**, each `SpeciesCoun
 The NOAA 2021 report Table 5 says n=12 site samples and reports salinity 33.3–40.4 PSU, mean 36.7 ± 2.31. The raw extract reproduces the range and closely matches the mean, but contains nine rows, not 12, and its sample SD differs. This discrepancy remains unresolved; do not claim the nine rows fully reproduce Table 5. The collection-station subset has zero exact-name target rows, which does not negate the main-table detections because it is a separate 12-stations/month subset.
 
 This is direct georeferenced fishery-independent Florida Bay occurrence evidence through 2016, not an abundance estimate, current occupancy statement, complete zero-catch denominator, or range boundary. Detailed row-level table and caveats are in [the research report](FLORIDA_SOUTHERN_FLOUNDER_PUBLIC_DATA_EXPANSION_2026-11-27.md). No raw source files committed and no production/model/profile/mask/scoring changes.
+
+
+### NOAA/AOML workbook acquisition status | 2026-11-28
+
+Latest manual acquisition [run 46160840439](https://github.com/markeetox/LUPITA/actions/runs/46160840439) succeeded on `main` at `92491226ff379597cb50b1cfcf3b05873f355a4f`. Artifact ID `15269970886` (28,887,271 bytes; expires 2026-12-12). All existing public-source downloads succeeded. The 2019 NOAA/AOML juvenile sportfish workbook was attempted but returned HTTP 403 Forbidden after retries; it is not in the artifact and has not been audited. The error is captured in `acquisition_summary.json`.
+
+NOAA/AOML's current data-products and Juvenile Sportfish Survey pages continue to advertise a downloadable survey workbook, so the next task is to recover the current official download target or test an appropriate browser-style request/referer. Until then, the nine ERDDAP detections and report Table 5 n=12 remain separate, unreconciled evidence. No model, species profile, geographic mask, scoring, confidence, ingestion, production source, or publishing behavior changed.
