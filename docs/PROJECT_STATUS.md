@@ -503,3 +503,12 @@ OTN catalogs SCSOFL (SCDNR Southern Flounder tracking), SOFLONC (ECU Southern Fl
 
 **South Florida conclusion unchanged:** no direct Southern Flounder telemetry detection in Florida Bay or South Florida was established in this review. The new Carolinas studies support movement/connectivity context only; the Florida larval connection is a model inference. No new South Florida locations added and no profile, mask, scoring, confidence, ingestion, or production changes.
 
+### Northern Gulf Southern Flounder acoustic telemetry sources | 2026-11-28
+
+Located three additional Gulf telemetry projects:
+- Galveston Bay Complex, TX: peer-reviewed 2023 study tagged 60 adult Southern Flounder; 42 receivers recorded 370,918 detections (Nov 2016–Jul 2018). Twenty-one fish were classified as migrators, 11 residents, 26 unclassified, and two never detected. A separate conventional-tag recapture moved 221 km south within Texas. No Florida detections established.
+- Saint Louis Bay, MS: 2025 paper reports 80 acoustically tagged Southern Flounder; 11 migrators to offshore spawning locations and 16 residents overwintering inshore. Repository abstract does not report Florida detections.
+- Mobile Bay, AL: Dauphin Island Sea Lab's CAAMP was redesigned in 2019 to study Southern Flounder offshore migration; project page describes 68 receivers in Mobile Bay and tidal rivers, but no tag count or event-level results.
+
+These studies support Gulf estuarine residency and offshore migration context, but no event-level Southern Flounder detections in Florida/South Florida were verified. No new Florida points or model inputs added. Detailed sources and caveats are in the Florida Southern Flounder public data expansion report.
+
