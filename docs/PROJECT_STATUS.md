@@ -484,3 +484,7 @@ Also assessed the public SECOORA ERDDAP FIMMAP_Counts dataset. Its own summary l
 
 No FWC full export was acquired and no new target records are claimed. Existing FWC positive-catch-only GIS limitation remains. Detailed access assessment is in [FLORIDA_SOUTHERN_FLOUNDER_PUBLIC_DATA_EXPANSION_2026-11-27.md](FLORIDA_SOUTHERN_FLOUNDER_PUBLIC_DATA_EXPANSION_2026-11-27.md). No model/profile/mask/scoring/production changes.
 
+### Florida Bay acoustic telemetry lead | 2026-11-28
+
+Located the FACT/SECOORA project *How are Fish using Florida Bay: Impacts and Effects of Seagrass Distribution*, which describes 70 listening stations and 250 internal fish tags to study recreational sportfish movement in relation to seagrass distribution and the 2015 die-off. Lead organizations include FIU, NOAA, FWC/FWRI, with Everglades National Park as a partner. The Ocean Tracking Network public catalog lists project dataset V2LCELASE with 20,730,746 records (catalog last-modified 2026-10-16), 100 stations, and 478 deployments. These are not unique fish counts or target-species detections. Tagged species have not yet been verified; no Southern Flounder occurrence is claimed. Treat as a candidate movement/habitat-context source only until tagged-animal metadata are checked. Details in the Florida Southern Flounder public data expansion report.
+
