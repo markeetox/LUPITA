@@ -39,6 +39,7 @@ FWC_SERVICE = (
 )
 FLMNH_ARCHIVE = "https://ipt.floridamuseum.ufl.edu/ipt/archive.do?r=ichthyology"
 NOAA_REPORT = "https://repository.library.noaa.gov/view/noaa/28764/noaa_28764_DS1.pdf"
+NOAA_SURVEY_WORKBOOK = "https://www.aoml.noaa.gov/wp-content/uploads/2019/06/Master-Juvenile-Sportfish-NOAA-updated-06.11.19.xlsx"
 NOAA_ERDDAP_FILES = {
     "juvenile_sportfish": (
         "https://gcoos4.geos.tamu.edu/erddap/files/juvenile_sportfish/"
@@ -152,6 +153,24 @@ def acquire_noaa_florida_bay(report: dict[str, Any]) -> None:
             "raw_file": str(raw_path),
             "candidate_file": str(candidate_path),
         }
+    # NOAA/AOML also publishes a June 2019 workbook snapshot. The ERDDAP
+    # table currently ends in November 2016, while the 2021 report summarizes
+    # observations through 2019. Preserve this separate source for reconciliation.
+    workbook_path = source_dir / "master_juvenile_sportfish_noaa_updated_2019-06-11.xlsx"
+    try:
+        workbook_payload = save_response(NOAA_SURVEY_WORKBOOK, workbook_path)
+        summary["aoml_2019_workbook"] = {
+            "url": NOAA_SURVEY_WORKBOOK,
+            "bytes": len(workbook_payload),
+            "raw_file": str(workbook_path),
+            "note": "Historical workbook snapshot; inspect its sheets, coverage, and definitions before comparing counts with ERDDAP or report Table 5.",
+        }
+    except Exception as exc:
+        summary["aoml_2019_workbook"] = {
+            "url": NOAA_SURVEY_WORKBOOK,
+            "download_error": f"{type(exc).__name__}: {exc}",
+        }
+
     report["noaa_florida_bay_juvenile_sportfish"] = {
         "datasets": summary,
         "interpretation": (
@@ -385,6 +404,7 @@ def main() -> int:
         "sources": {
             "NOAA Florida Bay monitoring report": NOAA_REPORT,
             "NOAA/AOML juvenile sportfish ERDDAP": "https://gcoos4.geos.tamu.edu/erddap/tabledap/juvenile_sportfish.html",
+            "NOAA/AOML 2019 juvenile sportfish workbook": NOAA_SURVEY_WORKBOOK,
             "NOAA/AOML collection-station ERDDAP": "https://gcoos4.geos.tamu.edu/erddap/tabledap/juvenile_sportfish_collection_stn.html",
             "FWC/FWRI Inshore FIM SRS": FWC_SERVICE,
             "NPS Everglades creel": "https://catalog.data.gov/dataset/recreational-fishing-catch-and-effort-in-everglades-national-park-1980-2025-data-package",
@@ -416,7 +436,7 @@ def main() -> int:
 
 This artifact contains read-only copies/extracts of public source data for Southern flounder research.
 
-- NOAA/AOML Florida Bay juvenile sportfish: species-level otter-trawl table plus a separate 12-station individual-measurement subset; exact-name candidates require sample/length review.
+- NOAA/AOML Florida Bay juvenile sportfish: species-level otter-trawl table, a separate 12-station individual-measurement subset, and a June 2019 workbook snapshot for reconciliation; exact-name candidates require sample/length review.
 - FWC/FWRI Inshore FIM GIS: positive-catch species records only; missing target rows are not non-detections.
 - NPS Everglades creel: fisheries-dependent angler-intercept catch/effort; exact-name candidates require QA and taxonomy review.
 - Florida Museum Ichthyology: voucher occurrences; not abundance or current occupancy.
