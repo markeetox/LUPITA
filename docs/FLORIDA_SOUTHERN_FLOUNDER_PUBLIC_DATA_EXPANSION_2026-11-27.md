@@ -434,3 +434,14 @@ NOAA/AOML's current public data-products page still advertises a downloadable Ju
 Sources: https://www.aoml.noaa.gov/data-products/ ; https://www.aoml.noaa.gov/juvenile-sportfish-survey/ ; https://www.aoml.noaa.gov/wp-content/uploads/2019/06/Master-Juvenile-Sportfish-NOAA-updated-06.11.19.xlsx
 
 No raw data were committed. No species profile, geographic mask, scoring, confidence, ingestion, production source, or publishing behavior changed.
+
+
+### 2026-11-28 follow-up | workbook HTTP 403 and fallback request
+
+The subsequent manual acquisition run [46160840439](https://github.com/markeetox/LUPITA/actions/runs/46160840439) completed successfully overall, but the NOAA/AOML 2019 workbook request returned HTTP 403 after the standard request retries. The workbook is not in artifact 15269970886 and has not been audited. The other NOAA ERDDAP, NPS, FWC, and Florida Museum sources were acquired normally.
+
+The acquisition script now retries this workbook alone after a standard-request failure, using a conventional browser User-Agent, an Accept header for an XLSX download, and the official NOAA/AOML data-products page as the Referer. This is a compatibility retry against the same public URL; it does not bypass authentication or change source content. The first request's error and the fallback request's error are both retained in the artifact summary if both fail.
+
+**Next:** manually dispatch the acquisition workflow again. If the fallback succeeds, inspect workbook sheets, date coverage, taxonomic fields/aliases, unique sample keys, and Southern flounder rows before reconciling the nine ERDDAP records with Table 5's n=12. If it still returns 403, identify the current official NOAA workbook link or another publicly accessible NOAA-hosted copy. Do not treat the workbook as acquired until it appears in the artifact and passes file-format/integrity checks.
+
+No raw data were committed. No species profile, range mask, scoring, confidence, ingestion, production source, or publishing behavior changed.
