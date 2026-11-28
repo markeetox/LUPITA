@@ -462,3 +462,12 @@ Detailed audit and limitations added to docs/FLORIDA_SOUTHERN_FLOUNDER_PUBLIC_DA
 - Reconciliation issue: NOAA 2021 report Table 5 gives n=12 site samples and salinity 33.3–40.4 PSU, mean 36.7 ±2.31. The nine raw rows match the reported range and approximate mean, but not n or exact SD. Keep raw nine-row extract and published n=12 separate until source aggregation/provenance resolves the difference.
 - Collection-station subset produced zero exact-name `Paralichthys lethostigma` records and no broader Paralichthys/flounder string matches. This subset is separate from the full main species table; its lack of target rows does not negate main-table detections.
 - Detailed nine-row table, environmental fields, discrepancy, and interpretation documented in `docs/FLORIDA_SOUTHERN_FLOUNDER_PUBLIC_DATA_EXPANSION_2026-11-27.md`. No raw source files committed; no model/profile/mask/scoring/production changes.
+
+
+## 2026-11-28 | NOAA/AOML 2019 workbook acquisition blocked
+
+- Manual workflow [run 46160840439](https://github.com/markeetox/LUPITA/actions/runs/46160840439) succeeded on `main`, SHA `92491226ff379597cb50b1cfcf3b05873f355a4f`.
+- Artifact `south-florida-public-evidence`, ID `15269970886`, 28,887,271 bytes; expires 2026-12-12. Existing NOAA ERDDAP, NPS, FWC, and Florida Museum source files were acquired successfully.
+- The NOAA/AOML 2019 workbook URL was attempted four times and returned HTTP 403 Forbidden. The artifact's `acquisition_summary.json` records the failure; no workbook file is present.
+- NOAA/AOML's current [Data Products](https://www.aoml.noaa.gov/data-products/) and [Juvenile Sportfish Survey](https://www.aoml.noaa.gov/juvenile-sportfish-survey/) pages still advertise a downloadable workbook. Next: resolve the current official link target or test a browser-style request/referer, then rerun acquisition and audit the workbook before comparing with the nine ERDDAP rows and report Table 5 n=12.
+- The discrepancy remains unresolved. No missing records are imputed; no raw data committed; no model/profile/mask/scoring/production changes.
