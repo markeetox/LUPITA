@@ -530,3 +530,17 @@ Sources:
 
 No species-specific Southern Flounder telemetry record is claimed. No model/profile/mask/scoring/production change.
 
+### 2026-11-28 follow-up | Two additional Southern Flounder telemetry catalog leads
+
+The Ocean Tracking Network/FACT catalog also lists two species-specific data projects associated with East Carolina University:
+- SOFLOAR — *Southern Flounder on Artificial Reefs*
+- SOFLONC — *ECU Southern Flounder Spawning Study*
+
+The catalog lists both as data projects but reports Records=NA and LastModified=NA. This establishes that the projects are cataloged, not that downloadable event-level data are available or that either study covers South Florida. Their geographic coverage, methods, dates, sample sizes, and public data accessibility remain unverified. They may provide useful species ecology or movement context after their project metadata/publications are identified, but they must not be treated as Florida Bay occurrence evidence. No outreach or direct contact was initiated.
+
+Sources:
+- OTN catalog collection listing: https://members.oceantrack.org/data/discovery/bycollection.htm
+- OTN catalog contact/institution listing: https://members.oceantrack.org/data/discovery/bycontact.htm
+
+No data were downloaded; no new Southern Flounder locations or occurrences are claimed.
+
