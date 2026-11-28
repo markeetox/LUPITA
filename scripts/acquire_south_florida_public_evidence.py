@@ -39,6 +39,18 @@ FWC_SERVICE = (
 )
 FLMNH_ARCHIVE = "https://ipt.floridamuseum.ufl.edu/ipt/archive.do?r=ichthyology"
 NOAA_REPORT = "https://repository.library.noaa.gov/view/noaa/28764/noaa_28764_DS1.pdf"
+NOAA_ERDDAP_FILES = {
+    "juvenile_sportfish": (
+        "https://gcoos4.geos.tamu.edu/erddap/files/juvenile_sportfish/"
+        "juvenilefish_sportfishlengths.csv",
+        "https://gcoos4.geos.tamu.edu/erddap/tabledap/juvenile_sportfish.html",
+    ),
+    "juvenile_sportfish_collection_stn": (
+        "https://gcoos4.geos.tamu.edu/erddap/files/juvenile_sportfish_collection_stn/"
+        "juvenilefish_CollectionStnData.csv",
+        "https://gcoos4.geos.tamu.edu/erddap/tabledap/juvenile_sportfish_collection_stn.html",
+    ),
+}
 
 SESSION = requests.Session()
 SESSION.headers.update({"User-Agent": USER_AGENT})
@@ -90,6 +102,65 @@ def write_csv(path: Path, fields: list[str], rows: list[dict[str, Any]]) -> None
         writer = csv.DictWriter(handle, fieldnames=fields, extrasaction="ignore")
         writer.writeheader()
         writer.writerows(rows)
+
+
+def acquire_noaa_florida_bay(report: dict[str, Any]) -> None:
+    """Acquire NOAA/AOML Florida Bay juvenile sportfish source tables.
+
+    The main table contains species-level sample observations. The collection
+    station table contains individual measurements from a subset of 12 stations
+    per month. These are separate evidence products and must not be conflated.
+    """
+    source_dir = OUT / "noaa_florida_bay"
+    source_dir.mkdir(parents=True, exist_ok=True)
+    summary: dict[str, Any] = {}
+    for dataset_id, (data_url, metadata_url) in NOAA_ERDDAP_FILES.items():
+        stem = "collection_station" if dataset_id.endswith("_collection_stn") else "species_samples"
+        raw_path = source_dir / f"{stem}.csv"
+        metadata_path = source_dir / f"{stem}_erddap_metadata.html"
+        raw_payload = save_response(data_url, raw_path)
+        metadata_payload = save_response(metadata_url, metadata_path)
+        fields, rows = parse_csv_bytes(raw_payload)
+        normalized_fields = {normalize(field): field for field in fields}
+        scientific_field = next(
+            (normalized_fields[name] for name in (
+                "scientificname", "genussp", "scientificnamecatch",
+                "scientific name", "scientific_name",
+            ) if name in normalized_fields),
+            None,
+        )
+        if scientific_field is None:
+            raise RuntimeError(
+                f"NOAA {dataset_id} CSV lacks a recognized scientific-name field; "
+                f"available columns: {fields}"
+            )
+        target_rows = [
+            row for row in rows
+            if normalize(row.get(scientific_field)) == normalize(TARGET_SCIENTIFIC)
+        ]
+        candidate_path = source_dir / f"{stem}_southern_flounder_candidates.csv"
+        write_csv(candidate_path, fields, target_rows)
+        summary[dataset_id] = {
+            "data_url": data_url,
+            "metadata_url": metadata_url,
+            "raw_bytes": len(raw_payload),
+            "metadata_bytes": len(metadata_payload),
+            "row_count": len(rows),
+            "columns": fields,
+            "scientific_name_field": scientific_field,
+            "exact_scientific_name_candidate_rows": len(target_rows),
+            "raw_file": str(raw_path),
+            "candidate_file": str(candidate_path),
+        }
+    report["noaa_florida_bay_juvenile_sportfish"] = {
+        "datasets": summary,
+        "interpretation": (
+            "NOAA/AOML otter-trawl monitoring in Florida Bay. The main species table "
+            "and 12-station individual-measurement subset are distinct products. "
+            "Exact-name rows are observations requiring sample-key, count, length, "
+            "and QA review; missing rows are not interpreted as absence."
+        ),
+    }
 
 
 def acquire_nps(report: dict[str, Any]) -> None:
@@ -313,6 +384,8 @@ def main() -> int:
         "target": {"scientific_name": TARGET_SCIENTIFIC, "common_name": TARGET_COMMON},
         "sources": {
             "NOAA Florida Bay monitoring report": NOAA_REPORT,
+            "NOAA/AOML juvenile sportfish ERDDAP": "https://gcoos4.geos.tamu.edu/erddap/tabledap/juvenile_sportfish.html",
+            "NOAA/AOML collection-station ERDDAP": "https://gcoos4.geos.tamu.edu/erddap/tabledap/juvenile_sportfish_collection_stn.html",
             "FWC/FWRI Inshore FIM SRS": FWC_SERVICE,
             "NPS Everglades creel": "https://catalog.data.gov/dataset/recreational-fishing-catch-and-effort-in-everglades-national-park-1980-2025-data-package",
             "Florida Museum DwC-A": FLMNH_ARCHIVE,
@@ -325,6 +398,7 @@ def main() -> int:
     }
     failures = {}
     for name, fn in (
+        ("noaa_florida_bay_juvenile_sportfish", acquire_noaa_florida_bay),
         ("nps_everglades_creel", acquire_nps),
         ("fwc_inshore_fim_srs", acquire_fwc),
         ("florida_museum_ichthyology", acquire_museum),
@@ -342,6 +416,7 @@ def main() -> int:
 
 This artifact contains read-only copies/extracts of public source data for Southern flounder research.
 
+- NOAA/AOML Florida Bay juvenile sportfish: species-level otter-trawl table plus a separate 12-station individual-measurement subset; exact-name candidates require sample/length review.
 - FWC/FWRI Inshore FIM GIS: positive-catch species records only; missing target rows are not non-detections.
 - NPS Everglades creel: fisheries-dependent angler-intercept catch/effort; exact-name candidates require QA and taxonomy review.
 - Florida Museum Ichthyology: voucher occurrences; not abundance or current occupancy.
