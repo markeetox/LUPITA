@@ -1,3 +1,12 @@
+## 2026-11-28 | Acquisition run 5: workbook still blocked
+
+- Manual run [46168260876](https://github.com/markeetox/LUPITA/actions/runs/46168260876) succeeded on `main`, SHA `97d1c7419d31ae2f1c8aaaa717b67cb83681aa92`.
+- Artifact `south-florida-public-evidence`, ID `15272448030`, 28,887,331 bytes; expires 2026-12-12.
+- Both standard and browser-header fallback requests for the NOAA/AOML June 2019 XLSX returned HTTP 403. Workbook absent; not audited.
+- Re-audited artifact ERDDAP main species table: 11,473 rows; nine exact `Paralichthys lethostigma` rows, each SpeciesCount=1. Distinct name combinations show only Southern Flounder and Gulf Flounder among Paralichthys/flounder taxa; no alternate target alias in this export.
+- NOAA report Table 5 n=12 remains unreconciled with nine ERDDAP rows; ERDDAP coverage ends 2016-11-12 while report covers 2004–2019. Do not assume the three-row difference is from later years.
+- Next: recover a verifiable current NOAA/AOML workbook link or accessible public copy. If unavailable, preserve the limitation and proceed with the nine-record dataset as its own bounded evidence set. No raw files or model/scoring/profile/mask/production changes.
+
 ## 2026-11-28 | NOAA workbook HTTP 403 and browser-header fallback
 
 Inspected successful acquisition run [46160840439](https://github.com/markeetox/LUPITA/actions/runs/46160840439), source SHA 92491226ff379597cb50b1cfcf3b05873f355a4f, artifact 15269970886. NOAA ERDDAP, NPS, FWC/FIM, and Florida Museum sources were acquired; the NOAA/AOML June 2019 workbook returned HTTP 403 after the standard request retries and is absent from the artifact. Updated scripts/acquire_south_florida_public_evidence.py to retry the same public workbook URL with a browser User-Agent, XLSX-compatible Accept header, and official NOAA/AOML data-products Referer. Both request failures are retained in the acquisition summary if the fallback also fails. Next: manually dispatch the workflow, inspect whether the workbook is present and valid, then audit sheets, coverage, taxon aliases, sample keys, and salinity values. If still blocked, locate the current official public download endpoint. No raw data or scientific/model behavior changed.
