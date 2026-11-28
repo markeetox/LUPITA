@@ -476,3 +476,11 @@ Latest acquisition run [46168260876](https://github.com/markeetox/LUPITA/actions
 
 No species profile, geographic mask, scoring, confidence, ingestion, production source, or publishing behavior changed.
 
+### FWC full FIM export lead assessed | 2026-11-28
+
+Located the Florida SEACAR Data Discovery record for FWC Fisheries-Independent Monitoring Program 69. The program is described as monthly stratified-random monitoring from 1989 to current, with roughly 10,000 net deployments annually and species/catch, length, temperature, salinity, habitat, and location fields. SEACAR lists standardized Nekton and Discrete Water Quality exports updated September 2026. However, the page says data are available by request from the FWC program director and the download form requires valid email and identifying organization/occupation/purpose details. No form was submitted and no contact information was used. Florida Bay coverage in those full exports is not yet verified.
+
+Also assessed the public SECOORA ERDDAP FIMMAP_Counts dataset. Its own summary lists Tampa Bay, Charlotte Harbor, Northern/Southern Indian River Lagoon, Cedar Key, Apalachicola Bay, and Jacksonville, not Florida Bay. It is therefore not a valid substitute for Florida Bay survey events or no-catch denominators. Its schema defines zero individualCount as absence only when the absence methodology is documented.
+
+No FWC full export was acquired and no new target records are claimed. Existing FWC positive-catch-only GIS limitation remains. Detailed access assessment is in [FLORIDA_SOUTHERN_FLOUNDER_PUBLIC_DATA_EXPANSION_2026-11-27.md](FLORIDA_SOUTHERN_FLOUNDER_PUBLIC_DATA_EXPANSION_2026-11-27.md). No model/profile/mask/scoring/production changes.
+
